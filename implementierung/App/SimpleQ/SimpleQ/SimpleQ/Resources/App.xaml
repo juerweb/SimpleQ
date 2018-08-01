@@ -4,7 +4,10 @@
              x:Class="SimpleQ.App">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="FirstColor">#00d3d1</Color>
+            <Color x:Key="launcher_background">#FFFFFF</Color>
+            <Color x:Key="colorPrimary">#2196F3</Color>
+            <Color x:Key="colorPrimaryDark">#1976D2</Color>
+            <Color x:Key="colorAccent">#FF4081</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
