@@ -12,8 +12,8 @@ namespace SimpleQ
 		{
 			InitializeComponent();
 
-			MainPage = new Main();
-		}
+            MainPage = new Main();
+        }
 
 		protected override void OnStart ()
 		{

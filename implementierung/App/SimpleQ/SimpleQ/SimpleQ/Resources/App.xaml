@@ -4,6 +4,7 @@
              x:Class="SimpleQ.App">
     <Application.Resources>
         <ResourceDictionary>
+            <!--Default Colors for the whole App-->
             <Color x:Key="launcher_background">#FFFFFF</Color>
             <Color x:Key="colorPrimary">#2196F3</Color>
             <Color x:Key="colorPrimaryDark">#1976D2</Color>
