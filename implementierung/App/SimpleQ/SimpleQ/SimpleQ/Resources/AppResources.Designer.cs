@@ -77,5 +77,14 @@ namespace SimpleQ.Resources {
                 return ResourceManager.GetString("RegisterScanHelpText", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Scan starten 📷 ähnelt.
+        /// </summary>
+        public static string StartScan {
+            get {
+                return ResourceManager.GetString("StartScan", resourceCulture);
+            }
+        }
     }
 }

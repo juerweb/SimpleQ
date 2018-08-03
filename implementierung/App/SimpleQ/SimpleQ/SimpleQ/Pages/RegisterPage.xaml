@@ -6,7 +6,13 @@
     <ContentPage.Content>
         <StackLayout>
             <Image x:Name="logoImage"></Image>
-            <Label Text="{resx:TranslateExtension Text=RegisterScanHelpText}"></Label>
+            <Frame BorderColor="Black">
+                <StackLayout>
+                    <Label Text="{resx:Translate Text=RegisterScanHelpText}"></Label>
+                    <Button Command="SimpleQ.PageModels.Commands.ScanQRCodeCommand" Text="{resx:Translate Text=StartScan}"></Button>
+                </StackLayout>
+            </Frame>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

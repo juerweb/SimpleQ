@@ -124,4 +124,7 @@
   <data name="RegisterScanHelpText" xml:space="preserve">
     <value>Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten habem.</value>
   </data>
+  <data name="StartScan" xml:space="preserve">
+    <value>Scan starten 📷</value>
+  </data>
 </root>
