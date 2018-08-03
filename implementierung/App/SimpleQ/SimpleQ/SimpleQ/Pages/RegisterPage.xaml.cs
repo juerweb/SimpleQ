@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleQ.PageModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,12 @@ namespace SimpleQ.Pages
 	{
 		public RegisterPage ()
 		{
-			InitializeComponent ();
+            InitializeComponent ();
+
+            RegisterPageModel pageModel = new RegisterPageModel();
+            this.BindingContext = pageModel;
+
+            this.logoImage.Source = ImageSource.FromResource(pageModel.Model.ImageSource);
 		}
 	}
 }

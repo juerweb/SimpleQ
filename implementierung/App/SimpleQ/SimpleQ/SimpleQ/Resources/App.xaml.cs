@@ -1,7 +1,9 @@
+using SimpleQ.Pages;
 using SimpleQ.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Reflection;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -10,9 +12,10 @@ namespace SimpleQ
 	{
 		public App ()
 		{
-			InitializeComponent();
 
-            MainPage = new Main();
+            InitializeComponent();
+
+            MainPage = new RegisterPage();
         }
 
 		protected override void OnStart ()

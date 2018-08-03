@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:resx="clr-namespace:SimpleQ.Extensions"
              x:Class="SimpleQ.Pages.RegisterPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Image x:Name="logoImage"></Image>
+            <Label Text="{resx:TranslateExtension Text=RegisterScanHelpText}"></Label>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
