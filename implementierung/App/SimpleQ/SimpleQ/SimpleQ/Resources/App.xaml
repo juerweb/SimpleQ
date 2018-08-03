@@ -9,6 +9,8 @@
             <Color x:Key="colorPrimary">#2196F3</Color>
             <Color x:Key="colorPrimaryDark">#1976D2</Color>
             <Color x:Key="colorAccent">#FF4081</Color>
+            <Color x:Key="colorBorder">#000000</Color>
+            <Color x:Key="colorWarning">#ff4444</Color>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

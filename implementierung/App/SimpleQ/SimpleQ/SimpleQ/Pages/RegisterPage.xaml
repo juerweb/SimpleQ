@@ -6,13 +6,19 @@
     <ContentPage.Content>
         <StackLayout>
             <Image x:Name="logoImage"></Image>
-            <Frame BorderColor="Black">
+            <Frame BorderColor="{StaticResource colorBorder}">
                 <StackLayout>
-                    <Label Text="{resx:Translate Text=RegisterScanHelpText}"></Label>
-                    <Button Command="SimpleQ.PageModels.Commands.ScanQRCodeCommand" Text="{resx:Translate Text=StartScan}"></Button>
+                    <Label Text="{resx:Translate Text=RegisterScanHelpText}" HorizontalTextAlignment="Center"></Label>
+                    <Button Command="{Binding ScanCommand}" Text="{resx:Translate Text=StartScan}"></Button>
                 </StackLayout>
             </Frame>
-
+            <Frame BorderColor="{StaticResource colorBorder}">
+                <StackLayout>
+                    <Label Text="{resx:Translate Text=ManuelCodeEntry}" HorizontalTextAlignment="Center"></Label>
+                    <Entry Placeholder="{resx:Translate Text=SixDigitCode}" x:Name="sixDigitCodeEntry"></Entry>
+                    <Button></Button>
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

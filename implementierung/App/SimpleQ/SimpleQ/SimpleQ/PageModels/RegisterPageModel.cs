@@ -1,4 +1,6 @@
-﻿using SimpleQ.Models;
+﻿using SimpleQ.Extensions;
+using SimpleQ.Models;
+using SimpleQ.PageModels.Commands;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +21,8 @@ namespace SimpleQ.PageModels
         public RegisterPageModel()
         {
             this.Model = new RegisterModel();
+            ScanCommand = new ScanQRCodeCommand();
+            this.Behavior = new SixDigitCodeBehavior();
         }
         #endregion
 
@@ -27,6 +31,11 @@ namespace SimpleQ.PageModels
         /// The model field variable
         /// </summary>
         private RegisterModel model;
+
+        /// <summary>
+        /// The behavior
+        /// </summary>
+        private SixDigitCodeBehavior behavior;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -48,9 +57,21 @@ namespace SimpleQ.PageModels
                 OnPropertyChanged();
             }
         }
+
+        /// <summary>
+        /// Gets or sets the behavior.
+        /// </summary>
+        /// <value>
+        /// The behavior.
+        /// </value>
+        public SixDigitCodeBehavior Behavior { get => behavior; set => behavior = value; }
         #endregion
 
         #region Commands
+        public ScanQRCodeCommand ScanCommand
+        {
+            get;
+        }
         #endregion
 
         #region Methods

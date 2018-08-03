@@ -21,6 +21,8 @@ namespace SimpleQ.Pages
             this.BindingContext = pageModel;
 
             this.logoImage.Source = ImageSource.FromResource(pageModel.Model.ImageSource);
-		}
+            this.sixDigitCodeEntry.Behaviors.Add(pageModel.Behavior);
+
+        }
 	}
 }

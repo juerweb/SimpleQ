@@ -70,11 +70,29 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Alternative: Geben Sie den Code manuell ein ähnelt.
+        /// </summary>
+        public static string ManuelCodeEntry {
+            get {
+                return ResourceManager.GetString("ManuelCodeEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten habem. ähnelt.
         /// </summary>
         public static string RegisterScanHelpText {
             get {
                 return ResourceManager.GetString("RegisterScanHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 6-stelliger Code ähnelt.
+        /// </summary>
+        public static string SixDigitCode {
+            get {
+                return ResourceManager.GetString("SixDigitCode", resourceCulture);
             }
         }
         
