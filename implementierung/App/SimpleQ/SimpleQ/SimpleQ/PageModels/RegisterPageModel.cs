@@ -22,6 +22,7 @@ namespace SimpleQ.PageModels
         {
             this.Model = new RegisterModel();
             ScanCommand = new ScanQRCodeCommand();
+            ManualCommand = new ManualCodeCommand();
             this.Behavior = new SixDigitCodeBehavior();
         }
         #endregion
@@ -69,6 +70,11 @@ namespace SimpleQ.PageModels
 
         #region Commands
         public ScanQRCodeCommand ScanCommand
+        {
+            get;
+        }
+
+        public ManualCodeCommand ManualCommand
         {
             get;
         }

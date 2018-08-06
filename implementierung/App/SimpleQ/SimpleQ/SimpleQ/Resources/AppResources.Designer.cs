@@ -79,6 +79,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Anmelden ähnelt.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten habem. ähnelt.
         /// </summary>
         public static string RegisterScanHelpText {

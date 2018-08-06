@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Plugin.SimpleLogger;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Input;
 
@@ -16,7 +18,7 @@ namespace SimpleQ.PageModels.Commands
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            RegisterPageModel pageModel = (RegisterPageModel)parameter;
         }
     }
 }

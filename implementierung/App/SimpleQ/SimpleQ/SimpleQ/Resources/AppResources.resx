@@ -124,6 +124,9 @@
   <data name="ManuelCodeEntry" xml:space="preserve">
     <value>Alternative: Geben Sie den Code manuell ein</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
   <data name="RegisterScanHelpText" xml:space="preserve">
     <value>Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten habem.</value>
   </data>

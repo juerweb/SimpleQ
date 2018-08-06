@@ -9,14 +9,14 @@
             <Frame BorderColor="{StaticResource colorBorder}">
                 <StackLayout>
                     <Label Text="{resx:Translate Text=RegisterScanHelpText}" HorizontalTextAlignment="Center"></Label>
-                    <Button Command="{Binding ScanCommand}" Text="{resx:Translate Text=StartScan}"></Button>
+                    <Button Command="{Binding ScanCommand}" CommandParameter="{Binding}" Text="{resx:Translate Text=StartScan}"></Button>
                 </StackLayout>
             </Frame>
             <Frame BorderColor="{StaticResource colorBorder}">
                 <StackLayout>
                     <Label Text="{resx:Translate Text=ManuelCodeEntry}" HorizontalTextAlignment="Center"></Label>
                     <Entry Placeholder="{resx:Translate Text=SixDigitCode}" x:Name="sixDigitCodeEntry"></Entry>
-                    <Button></Button>
+                    <Button Command="{Binding ManualCommand}" CommandParameter="{Binding}" Text="{resx:Translate Text=Register}"></Button>
                 </StackLayout>
             </Frame>
         </StackLayout>

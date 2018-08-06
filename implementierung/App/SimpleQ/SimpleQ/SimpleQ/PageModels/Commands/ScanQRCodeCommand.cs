@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Windows.Input;
 
@@ -16,7 +17,11 @@ namespace SimpleQ.PageModels.Commands
 
         public void Execute(object parameter)
         {
-            Console.WriteLine("Button gedrückt!");
+            Debug.WriteLine("Execute ScanQRCodeCommand", "Info");
+            RegisterPageModel pageModel = (RegisterPageModel)parameter;
+
+            //Start QR Code Reader
+
         }
     }
 }
