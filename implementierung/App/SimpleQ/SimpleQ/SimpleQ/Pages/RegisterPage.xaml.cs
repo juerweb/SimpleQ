@@ -8,6 +8,8 @@ using Acr.UserDialogs;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using SimpleQ.Extensions;
+using SimpleQ.Resources;
 
 namespace SimpleQ.Pages
 {
@@ -18,11 +20,8 @@ namespace SimpleQ.Pages
 		{
             InitializeComponent ();
 
-            RegisterPageModel pageModel = new RegisterPageModel(this.Navigation, UserDialogs.Instance);
-            this.BindingContext = pageModel;
-
-            this.logoImage.Source = ImageSource.FromResource(pageModel.Model.ImageSource);
-            this.sixDigitCodeEntry.Behaviors.Add(pageModel.Behavior);
+            this.logoImage.Source = ImageSource.FromResource(AppResources.LogoResourcename);
+            this.sixDigitCodeEntry.Behaviors.Add(new SixDigitCodeBehavior());
         }
 	}
 }

@@ -1,4 +1,5 @@
-﻿using SimpleQ.Validations;
+﻿using FreshMvvm;
+using SimpleQ.Validations;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,11 +10,9 @@ using ZXing.Net.Mobile.Forms;
 
 namespace SimpleQ.PageModels.Commands
 {
-    public class ScanQRCodeCommand : ICommand
+    public class ScanQRCodeCommand : FreshBasePageModel, ICommand
     {
         public event EventHandler CanExecuteChanged;
-
-        private RegisterPageModel pageModel;
 
         public bool CanExecute(object parameter)
         {
@@ -23,41 +22,24 @@ namespace SimpleQ.PageModels.Commands
         public void Execute(object parameter)
         {
             Debug.WriteLine("Execute ScanQRCodeCommand", "Info");
-            pageModel = (RegisterPageModel)parameter;
 
-            //Start QR Code Reader
-            ScanQRCodeAsync();
-        }
+            String code = parameter.ToString();
+            //pageModel = (RegisterPageModel)parameter;
 
-        private async System.Threading.Tasks.Task ScanQRCodeAsync()
-        {
-            ZXingScannerPage scanPage = new ZXingScannerPage();
-            await pageModel.NavigationService.PushModalAsync(scanPage);
+            Debug.WriteLine("QR Code found. Code is " + code, "Info");
 
-            scanPage.OnScanResult += (result) =>
+            //Live-Check
+            if (SixDigitCodeValidation.IsValid(code))
             {
-                // Stop scanning
-                scanPage.IsScanning = false;
-
-                // Pop the page and show the result
-                Device.BeginInvokeOnMainThread(async () =>
-                {
-                    await pageModel.NavigationService.PopModalAsync();
-                    Debug.WriteLine("QR Code found. Code is " + result.Text, "Info");
-
-                    //Live-Check
-                    if (SixDigitCodeValidation.IsValid(result.Text))
-                    {
-                        pageModel.Model.RegisterCode = int.Parse(result.Text);
-                        pageModel.CheckingCode();
-                        Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
-                    }
-                    else
-                    {
-                        pageModel.DialogService.ShowDialog(Services.DialogType.Error, 101);
-                    }
-                });
-            };
+                CoreMethods.PushPageModel<QRCodeReaderPageModel>();
+                //pageModel.Model.RegisterCode = int.Parse(code);
+                //pageModel.CheckingCode();
+                Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
+            }
+            else
+            {
+                //pageModel.DialogService.ShowDialog(Services.DialogType.Error, 101);
+            }
         }
     }
 }

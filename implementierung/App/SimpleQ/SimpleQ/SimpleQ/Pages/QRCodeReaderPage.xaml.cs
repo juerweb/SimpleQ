@@ -1,5 +1,4 @@
-﻿using SimpleQ.PageModels;
-using SimpleQ.Resources;
+﻿using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +11,11 @@ using Xamarin.Forms.Xaml;
 namespace SimpleQ.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LoadingPage : ContentPage
+	public partial class QRCodeReaderPage : ContentPage
 	{
-		public LoadingPage ()
+		public QRCodeReaderPage ()
 		{
 			InitializeComponent ();
-
-            //this.BindingContext = new LoadingPageModel();
 
             this.logoImage.Source = ImageSource.FromResource(AppResources.LogoResourcename);
         }

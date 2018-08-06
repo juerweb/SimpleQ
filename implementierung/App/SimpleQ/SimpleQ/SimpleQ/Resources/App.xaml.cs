@@ -6,6 +6,8 @@ using System.Reflection;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using SimpleQ.PageModels;
+using FreshMvvm;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -16,7 +18,9 @@ namespace SimpleQ
 		{
             InitializeComponent();
 
-            MainPage = new RegisterPage();
+            var registerPageModel = FreshPageModelResolver.ResolvePageModel<RegisterPageModel>();
+            var navContainer = new FreshNavigationContainer(registerPageModel);
+            MainPage = navContainer;
         }
 
 		protected override void OnStart ()
