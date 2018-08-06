@@ -15,7 +15,6 @@ namespace SimpleQ
 	{
 		public App ()
 		{
-
             InitializeComponent();
 
             MainPage = new RegisterPage();

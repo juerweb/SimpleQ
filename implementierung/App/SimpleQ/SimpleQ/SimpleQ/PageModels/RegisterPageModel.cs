@@ -1,11 +1,14 @@
-﻿using SimpleQ.Extensions;
+﻿using Acr.UserDialogs;
+using SimpleQ.Extensions;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Commands;
+using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels
 {
@@ -18,12 +21,15 @@ namespace SimpleQ.PageModels
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterPageModel"/> class.
         /// </summary>
-        public RegisterPageModel()
+        public RegisterPageModel(INavigation navigation, IUserDialogs dialogs)
         {
             this.Model = new RegisterModel();
             ScanCommand = new ScanQRCodeCommand();
             ManualCommand = new ManualCodeCommand();
             this.Behavior = new SixDigitCodeBehavior();
+
+            this.navigationService = navigation;
+            this.dialogService = new DialogService(dialogs);
         }
         #endregion
 
@@ -37,6 +43,16 @@ namespace SimpleQ.PageModels
         /// The behavior
         /// </summary>
         private SixDigitCodeBehavior behavior;
+
+        /// <summary>
+        /// The navigation service
+        /// </summary>
+        private INavigation navigationService;
+
+        /// <summary>
+        /// The dialog service
+        /// </summary>
+        private DialogService dialogService;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -66,6 +82,22 @@ namespace SimpleQ.PageModels
         /// The behavior.
         /// </value>
         public SixDigitCodeBehavior Behavior { get => behavior; set => behavior = value; }
+
+        /// <summary>
+        /// Gets or sets the navigation service.
+        /// </summary>
+        /// <value>
+        /// The navigation service.
+        /// </value>
+        public INavigation NavigationService { get => navigationService; }
+
+        /// <summary>
+        /// Gets or sets the dialog service.
+        /// </summary>
+        /// <value>
+        /// The dialog service.
+        /// </value>
+        public DialogService DialogService { get => dialogService; }
         #endregion
 
         #region Commands
@@ -81,6 +113,7 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
+
         #endregion
 
         #region INotifyPropertyChanged Implementation

@@ -61,6 +61,33 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fehlercode ähnelt.
+        /// </summary>
+        public static string DialogErrorCode {
+            get {
+                return ResourceManager.GetString("DialogErrorCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fehler ähnelt.
+        /// </summary>
+        public static string DialogErrorTitle {
+            get {
+                return ResourceManager.GetString("DialogErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code. ähnelt.
+        /// </summary>
+        public static string Error101 {
+            get {
+                return ResourceManager.GetString("Error101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ.Resources.Images.logo.png ähnelt.
         /// </summary>
         public static string LogoResourcename {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Acr.UserDialogs;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -17,12 +18,11 @@ namespace SimpleQ.Pages
 		{
             InitializeComponent ();
 
-            RegisterPageModel pageModel = new RegisterPageModel();
+            RegisterPageModel pageModel = new RegisterPageModel(this.Navigation, UserDialogs.Instance);
             this.BindingContext = pageModel;
 
             this.logoImage.Source = ImageSource.FromResource(pageModel.Model.ImageSource);
             this.sixDigitCodeEntry.Behaviors.Add(pageModel.Behavior);
-
         }
 	}
 }

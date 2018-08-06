@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Acr.UserDialogs;
 
 namespace SimpleQ.Droid
 {
@@ -19,8 +20,16 @@ namespace SimpleQ.Droid
 
             base.OnCreate(bundle);
 
+            ZXing.Net.Mobile.Forms.Android.Platform.Init();
+            UserDialogs.Init(this);
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            global::ZXing.Net.Mobile.Android.PermissionsHandler.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 }

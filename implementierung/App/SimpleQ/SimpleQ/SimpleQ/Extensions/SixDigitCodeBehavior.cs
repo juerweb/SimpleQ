@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleQ.Validations;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -17,7 +18,6 @@ namespace SimpleQ.Extensions
         public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;
 
         private Boolean isValid = false;
-        const string sixDigitCodeRegex = @"^[0-6]{6}$";
 
         public bool IsValid
         {
@@ -33,7 +33,7 @@ namespace SimpleQ.Extensions
 
         void HandleTextChanged(object sender, TextChangedEventArgs e)
         {
-            this.IsValid = Regex.IsMatch(e.NewTextValue, sixDigitCodeRegex, RegexOptions.IgnoreCase);
+            this.IsValid = SixDigitCodeValidation.IsValid(e.NewTextValue);
             if (!this.IsValid)
             {
                 ((Entry)sender).TextColor = (Color)Application.Current.Resources["colorWarning"];
