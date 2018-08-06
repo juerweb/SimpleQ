@@ -6,6 +6,7 @@ using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
@@ -113,7 +114,10 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
-
+        public void CheckingCode()
+        {
+            Debug.WriteLine("Checking Code....", "Info");
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

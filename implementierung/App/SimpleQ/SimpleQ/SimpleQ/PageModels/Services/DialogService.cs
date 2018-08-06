@@ -1,7 +1,10 @@
 ﻿using Acr.UserDialogs;
+using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.Services
 {
@@ -20,7 +23,9 @@ namespace SimpleQ.PageModels.Services
             {
                 case DialogType.Error:
                     string textCode = "Error" + errorCode;
-                    this.dialogs.Alert(App.Current.Resources[textCode].ToString(), App.Current.Resources["DialogErrorTitle"] + "\n" + App.Current.Resources["DialogErrorCode"] + ": " + errorCode);
+
+                    this.dialogs.Alert(AppResources.ResourceManager.GetString(textCode) + "\n" + AppResources.DialogErrorCode + ": " + errorCode, AppResources.DialogErrorTitle);
+                    Debug.WriteLine("Error-Code: " + errorCode, "Error");
                     break;
             }
         }

@@ -27,7 +27,7 @@ namespace SimpleQ.Models
         /// <summary>
         /// The register code, which should the app scan from the qr-code
         /// </summary>
-        private int registerCode;
+        private int? registerCode;
         /// <summary>
         /// The image source, for the logo
         /// </summary>
@@ -41,7 +41,7 @@ namespace SimpleQ.Models
         /// <value>
         /// The register code.
         /// </value>
-        public int RegisterCode
+        public int? RegisterCode
         {
             get
             {

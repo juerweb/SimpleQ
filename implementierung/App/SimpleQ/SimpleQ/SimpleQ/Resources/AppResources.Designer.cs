@@ -79,7 +79,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code. ähnelt.
         /// </summary>
         public static string Error101 {
             get {

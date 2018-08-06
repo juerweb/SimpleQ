@@ -15,7 +15,7 @@
             <Frame BorderColor="{StaticResource colorBorder}">
                 <StackLayout>
                     <Label Text="{resx:Translate Text=ManuelCodeEntry}" HorizontalTextAlignment="Center"></Label>
-                    <Entry Placeholder="{resx:Translate Text=SixDigitCode}" x:Name="sixDigitCodeEntry"></Entry>
+                    <Entry Placeholder="{resx:Translate Text=SixDigitCode}" x:Name="sixDigitCodeEntry" Text="{Binding Model.RegisterCode}"></Entry>
                     <Button Command="{Binding ManualCommand}" CommandParameter="{Binding}" Text="{resx:Translate Text=Register}"></Button>
                 </StackLayout>
             </Frame>

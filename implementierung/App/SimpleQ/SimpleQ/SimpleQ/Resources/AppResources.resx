@@ -124,7 +124,7 @@
     <value>Fehler</value>
   </data>
   <data name="Error101" xml:space="preserve">
-    <value>Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code.</value>
+    <value>Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code.</value>
   </data>
   <data name="LogoResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.Images.logo.png</value>

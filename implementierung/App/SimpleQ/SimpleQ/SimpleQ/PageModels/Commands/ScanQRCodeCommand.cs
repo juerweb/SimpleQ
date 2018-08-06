@@ -48,7 +48,9 @@ namespace SimpleQ.PageModels.Commands
                     //Live-Check
                     if (SixDigitCodeValidation.IsValid(result.Text))
                     {
-                        
+                        pageModel.Model.RegisterCode = int.Parse(result.Text);
+                        pageModel.CheckingCode();
+                        Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
                     }
                     else
                     {

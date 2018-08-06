@@ -18,6 +18,7 @@ namespace SimpleQ.PageModels.Commands
         public void Execute(object parameter)
         {
             RegisterPageModel pageModel = (RegisterPageModel)parameter;
+            pageModel.CheckingCode();
         }
     }
 }
