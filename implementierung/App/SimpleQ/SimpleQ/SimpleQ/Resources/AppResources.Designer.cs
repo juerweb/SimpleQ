@@ -61,6 +61,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Verbindung aufbauen ähnelt.
+        /// </summary>
+        public static string CreateConnection {
+            get {
+                return ResourceManager.GetString("CreateConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fehlercode ähnelt.
         /// </summary>
         public static string DialogErrorCode {
@@ -88,6 +97,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Daten laden ähnelt.
+        /// </summary>
+        public static string LoadData {
+            get {
+                return ResourceManager.GetString("LoadData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ.Resources.Images.logo.png ähnelt.
         /// </summary>
         public static string LogoResourcename {
@@ -102,6 +120,15 @@ namespace SimpleQ.Resources {
         public static string ManuelCodeEntry {
             get {
                 return ResourceManager.GetString("ManuelCodeEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Daten abrufen ähnelt.
+        /// </summary>
+        public static string RecallData {
+            get {
+                return ResourceManager.GetString("RecallData", resourceCulture);
             }
         }
         

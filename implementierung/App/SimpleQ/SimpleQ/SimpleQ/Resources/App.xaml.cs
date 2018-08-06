@@ -1,5 +1,4 @@
 using SimpleQ.Pages;
-using SimpleQ.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

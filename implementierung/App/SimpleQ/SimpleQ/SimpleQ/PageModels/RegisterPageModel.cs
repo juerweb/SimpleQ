@@ -3,12 +3,14 @@ using SimpleQ.Extensions;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Commands;
 using SimpleQ.PageModels.Services;
+using SimpleQ.Pages;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using Xamarin.Forms;
 
 namespace SimpleQ.PageModels
@@ -28,6 +30,7 @@ namespace SimpleQ.PageModels
             ScanCommand = new ScanQRCodeCommand();
             ManualCommand = new ManualCodeCommand();
             this.Behavior = new SixDigitCodeBehavior();
+            IsIndicatorRunning = false;
 
             this.navigationService = navigation;
             this.dialogService = new DialogService(dialogs);
@@ -54,6 +57,8 @@ namespace SimpleQ.PageModels
         /// The dialog service
         /// </summary>
         private DialogService dialogService;
+
+        private Boolean isIndicatorRunning;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -99,6 +104,19 @@ namespace SimpleQ.PageModels
         /// The dialog service.
         /// </value>
         public DialogService DialogService { get => dialogService; }
+
+        public bool IsIndicatorRunning
+        {
+            get
+            {
+                return isIndicatorRunning;
+            }
+            set
+            {
+                isIndicatorRunning = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Commands
@@ -116,7 +134,27 @@ namespace SimpleQ.PageModels
         #region Methods
         public void CheckingCode()
         {
+            LoadingPage loadingPage = new LoadingPage();
             Debug.WriteLine("Checking Code....", "Info");
+            navigationService.PushModalAsync(loadingPage);
+            Debug.WriteLine("Loading Data...", "Info");
+
+            new Thread(() =>
+            {
+                Thread.Sleep(2000);
+                ((LoadingPageModel)loadingPage.BindingContext).IsFirstStepTicked = true;
+                Thread.Sleep(1000);
+                ((LoadingPageModel)loadingPage.BindingContext).IsSecondStepTicked = true;
+                Thread.Sleep(4000);
+                ((LoadingPageModel)loadingPage.BindingContext).IsThirdStepTicked = true;
+
+                navigationService.PopModalAsync();
+                //navigationService.PushModalAsync(new Main());
+            }).Start();
+
+
+            
+
         }
         #endregion
 

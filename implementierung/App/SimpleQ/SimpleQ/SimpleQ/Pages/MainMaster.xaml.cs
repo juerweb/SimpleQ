@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SimpleQ.Views
+namespace SimpleQ.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainMaster : ContentPage
