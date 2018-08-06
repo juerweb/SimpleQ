@@ -148,8 +148,7 @@ namespace SimpleQ.PageModels
                 Thread.Sleep(4000);
                 ((LoadingPageModel)loadingPage.BindingContext).IsThirdStepTicked = true;
 
-                navigationService.PopModalAsync();
-                //navigationService.PushModalAsync(new Main());
+                //Application.Current.MainPage = new Main();
             }).Start();
 
 
