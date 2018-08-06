@@ -1,5 +1,4 @@
-﻿using FreshMvvm;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -10,7 +9,7 @@ namespace SimpleQ.PageModels
     /// <summary>
     /// This is the LoadingPageModel for the Page xy.
     /// </summary>
-    public class LoadingPageModel : FreshBasePageModel, INotifyPropertyChanged
+    public class LoadingPageModel : INotifyPropertyChanged
     {
         #region Constructor(s)
         public LoadingPageModel()

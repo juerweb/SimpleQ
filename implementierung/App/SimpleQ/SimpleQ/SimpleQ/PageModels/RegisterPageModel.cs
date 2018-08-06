@@ -1,5 +1,4 @@
 ﻿using Acr.UserDialogs;
-using FreshMvvm;
 using SimpleQ.Extensions;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Commands;
@@ -19,28 +18,22 @@ namespace SimpleQ.PageModels
     /// <summary>
     /// This is the RegisterPageModel for the RegisterPage.
     /// </summary>
-    public class RegisterPageModel : FreshBasePageModel, INotifyPropertyChanged
+    public class RegisterPageModel : INotifyPropertyChanged
     {
         #region Constructor(s)
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterPageModel"/> class.
         /// </summary>
-        public RegisterPageModel()
+        public RegisterPageModel(INavigation navigation, IUserDialogs dialogs)
         {
             this.Model = new RegisterModel();
-
+            ScanCommand = new ScanQRCodeCommand();
             ManualCommand = new ManualCodeCommand();
-
-            OpenScanPageCommand = new Command(() =>
-            {
-                CoreMethods.PushPageModel<QRCodeReaderPageModel>();
-            });
-
             this.Behavior = new SixDigitCodeBehavior();
             IsIndicatorRunning = false;
 
-            //this.navigationService = navigation;
-            //this.dialogService = new DialogService(dialogs);
+            this.navigationService = navigation;
+            this.dialogService = new DialogService(dialogs);
         }
         #endregion
 
@@ -58,7 +51,7 @@ namespace SimpleQ.PageModels
         /// <summary>
         /// The navigation service
         /// </summary>
-        //private INavigation navigationService;
+        private INavigation navigationService;
 
         /// <summary>
         /// The dialog service
@@ -102,7 +95,7 @@ namespace SimpleQ.PageModels
         /// <value>
         /// The navigation service.
         /// </value>
-        //public INavigation NavigationService { get => navigationService; }
+        public INavigation NavigationService { get => navigationService; }
 
         /// <summary>
         /// Gets or sets the dialog service.
@@ -127,14 +120,12 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Commands
-
-
-        public ManualCodeCommand ManualCommand
+        public ScanQRCodeCommand ScanCommand
         {
             get;
         }
 
-        public Command OpenScanPageCommand
+        public ManualCodeCommand ManualCommand
         {
             get;
         }
@@ -145,7 +136,7 @@ namespace SimpleQ.PageModels
         {
             LoadingPage loadingPage = new LoadingPage();
             Debug.WriteLine("Checking Code....", "Info");
-            //navigationService.PushModalAsync(loadingPage);
+            navigationService.PushModalAsync(loadingPage);
             Debug.WriteLine("Loading Data...", "Info");
 
             new Thread(() =>
@@ -157,7 +148,7 @@ namespace SimpleQ.PageModels
                 Thread.Sleep(4000);
                 ((LoadingPageModel)loadingPage.BindingContext).IsThirdStepTicked = true;
 
-                //navigationService.PopModalAsync();
+                navigationService.PopModalAsync();
                 //navigationService.PushModalAsync(new Main());
             }).Start();
 
