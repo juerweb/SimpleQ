@@ -27,6 +27,7 @@ namespace SimpleQ.PageModels
         public QRCodeScannerPageModel()
         {
             ScanningResultCommand = new Command(OnScanningResult);
+            IsScanning = true;
         }
 
         public override void Init(object initData)
@@ -37,10 +38,13 @@ namespace SimpleQ.PageModels
 
         #region Fields
         private IDialogService dialogService;
+        private Boolean isScanning;
         #endregion
 
         #region Properties + Getter/Setter Methods
         public IDialogService DialogService { get => dialogService; set => dialogService = value; }
+
+        public bool IsScanning { get => isScanning; set { isScanning = value; OnPropertyChanged(); } }
         #endregion
 
         #region Commands
@@ -48,23 +52,30 @@ namespace SimpleQ.PageModels
         {
             get;
         }
+
         #endregion
 
         #region Methods
         private void OnScanningResult(object parameter)
         {
             Debug.WriteLine("QR Code found. Code is " + parameter.ToString(), "Info");
-
-            //Live-Check
-            if (SixDigitCodeValidation.IsValid(parameter.ToString()))
+            Device.BeginInvokeOnMainThread(async () =>
             {
-                //pageModel.CheckingCode();
-                Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
-            }
-            else
-            {
-                DialogService.ShowDialog(Services.DialogType.Error, 101);
-            }
+                IsScanning = false;
+                //Live-Check
+                if (SixDigitCodeValidation.IsValid(parameter.ToString()))
+                {
+                    Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
+                    //Check if Code is in DB
+                    await CoreMethods.PushPageModel<LoadingPageModel>(int.Parse(parameter.ToString()));
+                }
+                else
+                {
+                    Debug.WriteLine("Live-Check: QR-Code is not valid.", "Info");
+                    DialogService.ShowDialog(Services.DialogType.Error, 101);
+                    await CoreMethods.PopPageModel();
+                }
+            });
         }
         #endregion
 

@@ -34,7 +34,7 @@ namespace SimpleQ.PageModels
 
             this.dialogService.ShowLoading();
 
-            Debug.WriteLine("LoadingPageModel initalised", "Info");
+            Debug.WriteLine("LoadingPageModel initalised with InitData: " + initData, "Info");
 
             Boolean isValid = await this.SimulationService.CheckCode((int)initData);
 

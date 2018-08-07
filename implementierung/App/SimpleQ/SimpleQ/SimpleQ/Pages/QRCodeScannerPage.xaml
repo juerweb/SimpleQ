@@ -5,6 +5,6 @@
              x:Class="SimpleQ.Pages.QRCodeScannerPage"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <zxing:ZXingScannerView IsScanning="True" ScanResultCommand="{Binding ScanningResultCommand}"></zxing:ZXingScannerView>
+        <zxing:ZXingScannerView IsScanning="{Binding IsScanning}" IsAnalyzing="{Binding IsScanning}" ScanResultCommand="{Binding ScanningResultCommand}"></zxing:ZXingScannerView>
     </ContentPage.Content>
 </ContentPage>
