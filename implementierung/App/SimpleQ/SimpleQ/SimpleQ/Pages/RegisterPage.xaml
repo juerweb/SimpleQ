@@ -2,21 +2,26 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resx="clr-namespace:SimpleQ.Extensions"
-             x:Class="SimpleQ.Pages.RegisterPage">
+             x:Class="SimpleQ.Pages.RegisterPage"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout>
             <Image x:Name="logoImage"></Image>
             <Frame BorderColor="{StaticResource colorBorder}">
                 <StackLayout>
                     <Label Text="{resx:Translate Text=RegisterScanHelpText}" HorizontalTextAlignment="Center"></Label>
-                    <Button Command="{Binding ScanCommand}" CommandParameter="{Binding}" Text="{resx:Translate Text=StartScan}"></Button>
+                    <Button Command="{Binding OpenScannerCommand}" Text="{resx:Translate Text=StartScan}"></Button>
                 </StackLayout>
             </Frame>
             <Frame BorderColor="{StaticResource colorBorder}">
                 <StackLayout>
                     <Label Text="{resx:Translate Text=ManuelCodeEntry}" HorizontalTextAlignment="Center"></Label>
-                    <Entry Placeholder="{resx:Translate Text=SixDigitCode}" x:Name="sixDigitCodeEntry" Text="{Binding Model.RegisterCode}"></Entry>
-                    <Button Command="{Binding ManualCommand}" CommandParameter="{Binding}" Text="{resx:Translate Text=Register}"></Button>
+                    <Entry Placeholder="{resx:Translate Text=SixDigitCode}" Text="{Binding Path=RegisterCode, StringFormat='{}{0:#}'}">
+                        <Entry.Behaviors>
+                            <resx:SixDigitCodeBehavior x:Name="SixDigitCodeBehavior"></resx:SixDigitCodeBehavior>
+                        </Entry.Behaviors>
+                    </Entry>
+                    <Button Command="{Binding ManualCodeEntryCommand}" CommandParameter="{Binding}" Text="{resx:Translate Text=Register}" IsEnabled="{Binding Source={x:Reference SixDigitCodeBehavior}, Path=IsValid}"></Button>
                 </StackLayout>
             </Frame>
         </StackLayout>

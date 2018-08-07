@@ -6,6 +6,10 @@ using System.Reflection;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using FreshMvvm;
+using SimpleQ.PageModels;
+using Acr.UserDialogs;
+using SimpleQ.PageModels.Services;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -16,7 +20,18 @@ namespace SimpleQ
 		{
             InitializeComponent();
 
-            MainPage = new RegisterPage();
+            SetupIOC();
+
+            // To set MainPage for the Application  
+            var page = FreshPageModelResolver.ResolvePageModel<RegisterPageModel>();
+            var basicNavContainer = new FreshNavigationContainer(page);
+            MainPage = basicNavContainer;
+        }
+
+        private void SetupIOC()
+        {
+            FreshIOC.Container.Register<IUserDialogs>(UserDialogs.Instance);
+            FreshIOC.Container.Register<ISimulationService, SimulationService>();
         }
 
 		protected override void OnStart ()

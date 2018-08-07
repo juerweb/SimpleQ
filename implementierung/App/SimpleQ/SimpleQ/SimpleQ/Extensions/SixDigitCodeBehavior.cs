@@ -1,6 +1,7 @@
 ﻿using SimpleQ.Validations;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using System.Text.RegularExpressions;
 using Xamarin.Forms;
@@ -13,15 +14,15 @@ namespace SimpleQ.Extensions
     /// <seealso cref="Xamarin.Forms.Behavior{Xamarin.Forms.Entry}" />
     public class SixDigitCodeBehavior: Behavior<Entry>
     {
-        static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(SixDigitCodeBehavior), false);
+        static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(SixDigitCodeBehavior), true);
 
         public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;
 
-        private Boolean isValid = false;
-
         public bool IsValid
         {
-            get { return (bool)base.GetValue(IsValidProperty); }
+            get {
+                return (bool)base.GetValue(IsValidProperty);
+            }
             private set { base.SetValue(IsValidPropertyKey, value); }
         }
 

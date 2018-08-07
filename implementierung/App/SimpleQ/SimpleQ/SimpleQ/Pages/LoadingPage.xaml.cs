@@ -18,7 +18,7 @@ namespace SimpleQ.Pages
 		{
 			InitializeComponent ();
 
-            this.BindingContext = new LoadingPageModel();
+            //this.BindingContext = new LoadingPageModel();
 
             this.logoImage.Source = ImageSource.FromResource(AppResources.LogoResourcename);
         }

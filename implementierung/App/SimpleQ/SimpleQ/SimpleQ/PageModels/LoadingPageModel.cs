@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Acr.UserDialogs;
+using FreshMvvm;
+using SimpleQ.PageModels.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -9,21 +13,53 @@ namespace SimpleQ.PageModels
     /// <summary>
     /// This is the LoadingPageModel for the Page xy.
     /// </summary>
-    public class LoadingPageModel : INotifyPropertyChanged
+    public class LoadingPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
+        public LoadingPageModel(ISimulationService simulationService, IUserDialogs dialogService) : this()
+        {
+            this.simulationService = simulationService;
+            this.dialogService = dialogService;
+        }
         public LoadingPageModel()
         {
             IsFirstStepTicked = false;
             IsSecondStepTicked = false;
             IsThirdStepTicked = false;
         }
+
+        public override async void Init(object initData)
+        {
+            base.Init(initData);
+
+            this.dialogService.ShowLoading();
+
+            Debug.WriteLine("LoadingPageModel initalised", "Info");
+
+            Boolean isValid = await this.SimulationService.CheckCode((int)initData);
+
+            this.dialogService.HideLoading();
+
+            if (isValid)
+            {
+                this.dialogService.Alert("Gültig");
+            }
+            else
+            {
+                this.dialogService.Alert("Ungültig");
+            }
+
+        }
+
+
         #endregion
 
         #region Fields
         private Boolean isFirstStepTicked;
         private Boolean isSecondStepTicked;
         private Boolean isThirdStepTicked;
+        private ISimulationService simulationService;
+        private IUserDialogs dialogService;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -56,6 +92,9 @@ namespace SimpleQ.PageModels
                 OnPropertyChanged();
             }
         }
+
+        public ISimulationService SimulationService { get => simulationService; }
+        public IUserDialogs DialogService { get => dialogService; }
         #endregion
 
         #region Commands

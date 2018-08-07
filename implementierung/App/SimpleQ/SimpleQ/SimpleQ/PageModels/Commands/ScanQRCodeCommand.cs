@@ -32,7 +32,7 @@ namespace SimpleQ.PageModels.Commands
         private async System.Threading.Tasks.Task ScanQRCodeAsync()
         {
             ZXingScannerPage scanPage = new ZXingScannerPage();
-            await pageModel.NavigationService.PushModalAsync(scanPage);
+            //await pageModel.NavigationService.PushModalAsync(scanPage);
 
             scanPage.OnScanResult += (result) =>
             {
@@ -42,19 +42,20 @@ namespace SimpleQ.PageModels.Commands
                 // Pop the page and show the result
                 Device.BeginInvokeOnMainThread(async () =>
                 {
-                    await pageModel.NavigationService.PopModalAsync();
+                    //await pageModel.NavigationService.PopModalAsync();
                     Debug.WriteLine("QR Code found. Code is " + result.Text, "Info");
 
                     //Live-Check
                     if (SixDigitCodeValidation.IsValid(result.Text))
                     {
-                        pageModel.Model.RegisterCode = int.Parse(result.Text);
+                        //pageModel.Model.RegisterCode = int.Parse(result.Text);
                         pageModel.CheckingCode();
                         Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
                     }
                     else
                     {
-                        pageModel.DialogService.ShowDialog(Services.DialogType.Error, 101);
+                        pageModel.DialogService.Alert("Test");
+                        //pageModel.DialogService.ShowDialog(Services.DialogType.Error, 101);
                     }
                 });
             };

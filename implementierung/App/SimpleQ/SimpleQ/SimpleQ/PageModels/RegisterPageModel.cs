@@ -1,6 +1,6 @@
 ﻿using Acr.UserDialogs;
+using FreshMvvm;
 using SimpleQ.Extensions;
-using SimpleQ.Models;
 using SimpleQ.PageModels.Commands;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Pages;
@@ -18,22 +18,22 @@ namespace SimpleQ.PageModels
     /// <summary>
     /// This is the RegisterPageModel for the RegisterPage.
     /// </summary>
-    public class RegisterPageModel : INotifyPropertyChanged
+    public class RegisterPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
         /// <summary>
         /// Initializes a new instance of the <see cref="RegisterPageModel"/> class.
         /// </summary>
-        public RegisterPageModel(INavigation navigation, IUserDialogs dialogs)
+        public RegisterPageModel(IUserDialogs dialogs): this()
         {
-            this.Model = new RegisterModel();
-            ScanCommand = new ScanQRCodeCommand();
-            ManualCommand = new ManualCodeCommand();
-            this.Behavior = new SixDigitCodeBehavior();
-            IsIndicatorRunning = false;
+            this.dialogService = dialogs;
+        }
 
-            this.navigationService = navigation;
-            this.dialogService = new DialogService(dialogs);
+        public RegisterPageModel()
+        {
+            OpenScannerCommand = new Command(OnOpenScanner);
+            ManualCodeEntryCommand = new Command(OnManualCodeEntry);
+            this.Behavior = new SixDigitCodeBehavior();
         }
         #endregion
 
@@ -41,7 +41,7 @@ namespace SimpleQ.PageModels
         /// <summary>
         /// The model field variable
         /// </summary>
-        private RegisterModel model;
+        private int registerCode;
 
         /// <summary>
         /// The behavior
@@ -49,16 +49,9 @@ namespace SimpleQ.PageModels
         private SixDigitCodeBehavior behavior;
 
         /// <summary>
-        /// The navigation service
-        /// </summary>
-        private INavigation navigationService;
-
-        /// <summary>
         /// The dialog service
         /// </summary>
-        private DialogService dialogService;
-
-        private Boolean isIndicatorRunning;
+        private IUserDialogs dialogService;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -68,15 +61,15 @@ namespace SimpleQ.PageModels
         /// <value>
         /// The model.
         /// </value>
-        public RegisterModel Model
+        public int RegisterCode
         {
             get
             {
-                return model;
+                return registerCode;
             }
             set
             {
-                model = value;
+                registerCode = value;
                 OnPropertyChanged();
             }
         }
@@ -90,42 +83,21 @@ namespace SimpleQ.PageModels
         public SixDigitCodeBehavior Behavior { get => behavior; set => behavior = value; }
 
         /// <summary>
-        /// Gets or sets the navigation service.
-        /// </summary>
-        /// <value>
-        /// The navigation service.
-        /// </value>
-        public INavigation NavigationService { get => navigationService; }
-
-        /// <summary>
         /// Gets or sets the dialog service.
         /// </summary>
         /// <value>
         /// The dialog service.
         /// </value>
-        public DialogService DialogService { get => dialogService; }
-
-        public bool IsIndicatorRunning
-        {
-            get
-            {
-                return isIndicatorRunning;
-            }
-            set
-            {
-                isIndicatorRunning = value;
-                OnPropertyChanged();
-            }
-        }
+        public IUserDialogs DialogService { get => dialogService; }
         #endregion
 
         #region Commands
-        public ScanQRCodeCommand ScanCommand
+        public Command OpenScannerCommand
         {
             get;
         }
 
-        public ManualCodeCommand ManualCommand
+        public Command ManualCodeEntryCommand
         {
             get;
         }
@@ -136,7 +108,7 @@ namespace SimpleQ.PageModels
         {
             LoadingPage loadingPage = new LoadingPage();
             Debug.WriteLine("Checking Code....", "Info");
-            navigationService.PushModalAsync(loadingPage);
+            //navigationService.PushModalAsync(loadingPage);
             Debug.WriteLine("Loading Data...", "Info");
 
             new Thread(() =>
@@ -150,10 +122,19 @@ namespace SimpleQ.PageModels
 
                 //Application.Current.MainPage = new Main();
             }).Start();
+        }
 
+        public void OnManualCodeEntry()
+        {
+            Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
+            Debug.WriteLine(this.RegisterCode);
+            CoreMethods.PushPageModel<LoadingPageModel>(this.RegisterCode);
+        }
 
-            
-
+        public void OnOpenScanner()
+        {
+            Debug.WriteLine("OpenScannerCommand executed", "Info");
+            CoreMethods.PushPageModel<QRCodeScannerPageModel>(this.RegisterCode);
         }
         #endregion
 
