@@ -50,8 +50,6 @@ namespace SimpleQ.PageModels
             }
 
         }
-
-
         #endregion
 
         #region Fields
