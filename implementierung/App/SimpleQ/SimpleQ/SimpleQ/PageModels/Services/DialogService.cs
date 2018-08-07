@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using FreshMvvm;
 using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,13 @@ using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.Services
 {
-    public class DialogService
+    public class DialogService: IDialogService
     {
-        private IUserDialogs dialogs;
+        private IUserDialogs dialogService;
 
-        public DialogService(IUserDialogs dialogs)
+        public DialogService()
         {
-            this.dialogs = dialogs;
+            this.dialogService = FreshIOC.Container.Resolve<IUserDialogs>();
         }
 
         public void ShowDialog(DialogType type, int errorCode)
@@ -24,7 +25,7 @@ namespace SimpleQ.PageModels.Services
                 case DialogType.Error:
                     string textCode = "Error" + errorCode;
 
-                    this.dialogs.Alert(AppResources.ResourceManager.GetString(textCode) + "\n" + AppResources.DialogErrorCode + ": " + errorCode, AppResources.DialogErrorTitle);
+                    this.dialogService.Alert(AppResources.ResourceManager.GetString(textCode) + "\n" + AppResources.DialogErrorCode + ": " + errorCode, AppResources.DialogErrorTitle);
                     Debug.WriteLine("Error-Code: " + errorCode, "Error");
                     break;
             }

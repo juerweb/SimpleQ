@@ -31,6 +31,7 @@ namespace SimpleQ
         private void SetupIOC()
         {
             FreshIOC.Container.Register<IUserDialogs>(UserDialogs.Instance);
+            FreshIOC.Container.Register<IDialogService, DialogService>();
             FreshIOC.Container.Register<ISimulationService, SimulationService>();
         }
 

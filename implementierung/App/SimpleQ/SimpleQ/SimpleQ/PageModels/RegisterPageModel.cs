@@ -127,14 +127,13 @@ namespace SimpleQ.PageModels
         public void OnManualCodeEntry()
         {
             Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
-            Debug.WriteLine(this.RegisterCode);
             CoreMethods.PushPageModel<LoadingPageModel>(this.RegisterCode);
         }
 
         public void OnOpenScanner()
         {
             Debug.WriteLine("OpenScannerCommand executed", "Info");
-            CoreMethods.PushPageModel<QRCodeScannerPageModel>(this.RegisterCode);
+            CoreMethods.PushPageModel<QRCodeScannerPageModel>();
         }
         #endregion
 

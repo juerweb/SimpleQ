@@ -1,9 +1,12 @@
 ﻿using Acr.UserDialogs;
 using FreshMvvm;
 using SimpleQ.PageModels.Commands;
+using SimpleQ.PageModels.Services;
+using SimpleQ.Validations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
@@ -16,34 +19,32 @@ namespace SimpleQ.PageModels
     public class QRCodeScannerPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
-        public QRCodeScannerPageModel(IUserDialogs dialogs) : this()
+        public QRCodeScannerPageModel(IDialogService dialogService) : this()
         {
-            this.DialogService = dialogs;
+            this.DialogService = dialogService;
         }
 
         public QRCodeScannerPageModel()
         {
-            //this.DialogService.Alert("Test", "Tewst");
-            ResultCommand = new Command(OnScanningResult);
+            ScanningResultCommand = new Command(OnScanningResult);
         }
 
         public override void Init(object initData)
         {
             base.Init(initData);
-            this.DialogService.ShowLoading(initData.ToString());
         }
         #endregion
 
         #region Fields
-        private IUserDialogs dialogService;
+        private IDialogService dialogService;
         #endregion
 
         #region Properties + Getter/Setter Methods
-        public IUserDialogs DialogService { get => dialogService; set => dialogService = value; }
+        public IDialogService DialogService { get => dialogService; set => dialogService = value; }
         #endregion
 
         #region Commands
-        public Command ResultCommand
+        public Command ScanningResultCommand
         {
             get;
         }
@@ -52,7 +53,18 @@ namespace SimpleQ.PageModels
         #region Methods
         private void OnScanningResult(object parameter)
         {
-            this.DialogService.Alert(parameter.ToString());
+            Debug.WriteLine("QR Code found. Code is " + parameter.ToString(), "Info");
+
+            //Live-Check
+            if (SixDigitCodeValidation.IsValid(parameter.ToString()))
+            {
+                //pageModel.CheckingCode();
+                Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
+            }
+            else
+            {
+                DialogService.ShowDialog(Services.DialogType.Error, 101);
+            }
         }
         #endregion
 
