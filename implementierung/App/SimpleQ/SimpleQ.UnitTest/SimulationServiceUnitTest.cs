@@ -35,5 +35,18 @@ namespace SimpleQ.UnitTest
             Assert.IsTrue(result4.IsValid);
             Assert.IsFalse(result5.IsValid);
         }
+
+        [TestMethod]
+        public async Task GetDataTest()
+        {
+            //Arrange
+            ISimulationService simulationService = new SimulationService();
+
+            //Act
+            Boolean result1 = await simulationService.GetData();
+
+            //Assert
+            Assert.IsTrue(result1);
+        }
     }
 }
