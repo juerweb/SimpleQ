@@ -50,6 +50,11 @@ namespace SimpleQ.Models
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public static implicit operator bool(CodeValidationModel v)
+        {
+            throw new NotImplementedException();
+        }
         #endregion
     }
 }
