@@ -104,25 +104,6 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
-        public void CheckingCode()
-        {
-            LoadingPage loadingPage = new LoadingPage();
-            Debug.WriteLine("Checking Code....", "Info");
-            //navigationService.PushModalAsync(loadingPage);
-            Debug.WriteLine("Loading Data...", "Info");
-
-            new Thread(() =>
-            {
-                Thread.Sleep(2000);
-                ((LoadingPageModel)loadingPage.BindingContext).IsFirstStepTicked = true;
-                Thread.Sleep(1000);
-                ((LoadingPageModel)loadingPage.BindingContext).IsSecondStepTicked = true;
-                Thread.Sleep(4000);
-                ((LoadingPageModel)loadingPage.BindingContext).IsThirdStepTicked = true;
-
-                //Application.Current.MainPage = new Main();
-            }).Start();
-        }
 
         public void OnManualCodeEntry()
         {

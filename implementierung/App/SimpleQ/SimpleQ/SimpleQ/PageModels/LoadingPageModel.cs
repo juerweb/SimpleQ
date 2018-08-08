@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using FreshMvvm;
+using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels
 {
@@ -16,7 +18,7 @@ namespace SimpleQ.PageModels
     public class LoadingPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
-        public LoadingPageModel(ISimulationService simulationService, IUserDialogs dialogService) : this()
+        public LoadingPageModel(ISimulationService simulationService, IDialogService dialogService) : this()
         {
             this.simulationService = simulationService;
             this.dialogService = dialogService;
@@ -25,39 +27,60 @@ namespace SimpleQ.PageModels
         {
             IsFirstStepTicked = false;
             IsSecondStepTicked = false;
-            IsThirdStepTicked = false;
         }
 
         public override async void Init(object initData)
         {
             base.Init(initData);
-
-            this.dialogService.ShowLoading();
-
             Debug.WriteLine("LoadingPageModel initalised with InitData: " + initData, "Info");
 
-            Boolean isValid = await this.SimulationService.CheckCode((int)initData);
+            this.IsRunning = true;
 
-            this.dialogService.HideLoading();
+            //Code Check
+            CodeValidationModel codeValidationModel = await this.SimulationService.CheckCode((int)initData);
 
-            if (isValid)
+            Application.Current.Properties["IsValidCodeAvailable"] = codeValidationModel.IsValid;
+            Application.Current.Properties["CompanyName"] = codeValidationModel.CompanyName;
+            Application.Current.Properties["DepartmentName"] = codeValidationModel.DepartmentName;
+            Application.Current.Properties["RegisterCode"] = codeValidationModel.Code;
+
+            if (codeValidationModel.IsValid)
             {
-                this.dialogService.Alert("Gültig");
+                Debug.WriteLine("Code is valid...", "Info");
+                this.IsFirstStepTicked = true;
             }
             else
             {
-                this.dialogService.Alert("Ungültig");
+                Debug.WriteLine("Code is not valid...", "Info");
+                this.IsRunning = false;
+
+                this.dialogService.ShowDialog(DialogType.Error, 201);
+                await CoreMethods.PopPageModel();
+                return;
             }
 
+            //Load Data
+            Boolean success = await this.SimulationService.GetData();
+            if (success)
+            {
+                Debug.WriteLine("Data successfully loaded", "Info");
+            }
+            else
+            {
+                Debug.WriteLine("Data not successfully loaded", "Info");
+            }
+
+            //Set MainPageModel as new Main Page
+            App.NavigateToMainPageModel();
         }
         #endregion
 
         #region Fields
         private Boolean isFirstStepTicked;
         private Boolean isSecondStepTicked;
-        private Boolean isThirdStepTicked;
+        private Boolean isRunning;
         private ISimulationService simulationService;
-        private IUserDialogs dialogService;
+        private IDialogService dialogService;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -81,18 +104,18 @@ namespace SimpleQ.PageModels
             }
         }
 
-        public bool IsThirdStepTicked
+        public bool IsRunning
         {
-            get => isThirdStepTicked;
+            get => isRunning;
             set
             {
-                isThirdStepTicked = value;
+                isRunning = value;
                 OnPropertyChanged();
             }
         }
 
         public ISimulationService SimulationService { get => simulationService; }
-        public IUserDialogs DialogService { get => dialogService; }
+        public IDialogService DialogService { get => dialogService; }
         #endregion
 
         #region Commands
@@ -104,7 +127,7 @@ namespace SimpleQ.PageModels
         /// </summary>
         /// <param name="stepNr">The step nr. from 1 to 3</param>
         /// <param name="status">if set to <c>true</c> [status].</param>
-        public void TickStep(int stepNr, Boolean status)
+        private void TickStep(int stepNr, Boolean status)
         {
             switch (stepNr)
             {
@@ -113,9 +136,6 @@ namespace SimpleQ.PageModels
                     break;
                 case 2:
                     IsSecondStepTicked = status;
-                    break;
-                case 3:
-                    IsThirdStepTicked = status;
                     break;
             }
         }

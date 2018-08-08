@@ -10,7 +10,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Image x:Name="logoImage"></Image>
-            <ActivityIndicator IsRunning="True"></ActivityIndicator>
+            <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
@@ -21,15 +21,12 @@
                     <ColumnDefinition Width="10*"></ColumnDefinition>
                     <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Text="{resx:Translate CreateConnection}" Grid.Row="0" Grid.Column="0"></Label>
+                <Label Text="{resx:Translate CheckCode}" Grid.Row="0" Grid.Column="0"></Label>
                 <Label Grid.Row="0" Grid.Column="1" IsVisible="{Binding Path=IsFirstStepTicked}" FontSize="Large" HorizontalTextAlignment="End">☑</Label>
                 <Label Grid.Row="0" Grid.Column="1" IsVisible="{Binding Path=IsFirstStepTicked, Converter={StaticResource InvertableBooleanConverter}}" FontSize="Large" HorizontalTextAlignment="End">☐</Label>
                 <Label Text="{resx:Translate RecallData}" Grid.Row="1" Grid.Column="0"></Label>
                 <Label Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=IsSecondStepTicked}" FontSize="Large" HorizontalTextAlignment="End">☑</Label>
                 <Label Grid.Row="1" Grid.Column="1" IsVisible="{Binding Path=IsSecondStepTicked, Converter={StaticResource InvertableBooleanConverter}}" FontSize="Large" HorizontalTextAlignment="End">☐</Label>
-                <Label Text="{resx:Translate LoadData}" Grid.Row="2" Grid.Column="0"></Label>
-                <Label Grid.Row="2" Grid.Column="1" IsVisible="{Binding Path=IsThirdStepTicked}" FontSize="Large" HorizontalTextAlignment="End">☑</Label>
-                <Label Grid.Row="2" Grid.Column="1" IsVisible="{Binding Path=IsThirdStepTicked, Converter={StaticResource InvertableBooleanConverter}}" FontSize="Large" HorizontalTextAlignment="End">☐</Label>
             </Grid>
         </StackLayout>
 

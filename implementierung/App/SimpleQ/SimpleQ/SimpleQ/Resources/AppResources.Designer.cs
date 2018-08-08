@@ -61,11 +61,11 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Verbindung aufbauen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Code wird überprüft ähnelt.
         /// </summary>
-        public static string CreateConnection {
+        public static string CheckCode {
             get {
-                return ResourceManager.GetString("CreateConnection", resourceCulture);
+                return ResourceManager.GetString("CheckCode", resourceCulture);
             }
         }
         
@@ -97,11 +97,11 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Daten laden ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode. ähnelt.
         /// </summary>
-        public static string LoadData {
+        public static string Error201 {
             get {
-                return ResourceManager.GetString("LoadData", resourceCulture);
+                return ResourceManager.GetString("Error201", resourceCulture);
             }
         }
         
@@ -142,7 +142,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten habem. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten haben. ähnelt.
         /// </summary>
         public static string RegisterScanHelpText {
             get {

@@ -117,8 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CreateConnection" xml:space="preserve">
-    <value>Verbindung aufbauen</value>
+  <data name="CheckCode" xml:space="preserve">
+    <value>Code wird überprüft</value>
   </data>
   <data name="DialogErrorCode" xml:space="preserve">
     <value>Fehlercode</value>
@@ -129,8 +129,8 @@
   <data name="Error101" xml:space="preserve">
     <value>Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code.</value>
   </data>
-  <data name="LoadData" xml:space="preserve">
-    <value>Daten laden</value>
+  <data name="Error201" xml:space="preserve">
+    <value>Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode.</value>
   </data>
   <data name="LogoResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.Images.logo.png</value>
@@ -146,7 +146,7 @@
     <value>Anmelden</value>
   </data>
   <data name="RegisterScanHelpText" xml:space="preserve">
-    <value>Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten habem.</value>
+    <value>Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten haben.</value>
   </data>
   <data name="SixDigitCode" xml:space="preserve">
     <value>6-stelliger Code</value>
