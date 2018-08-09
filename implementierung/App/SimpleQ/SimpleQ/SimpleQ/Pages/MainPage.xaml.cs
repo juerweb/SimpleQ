@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleQ.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,22 +16,22 @@ namespace SimpleQ.Pages
         public MainPage()
         {
             InitializeComponent();
-            MasterPage.ListView.ItemSelected += ListView_ItemSelected;
+            MenuItemsListView.ItemSelected += ListView_ItemSelected;
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as MainPageMenuItem;
+            var item = e.SelectedItem as MainMenuItemModel;
             if (item == null)
                 return;
 
-            var page = (Page)Activator.CreateInstance(item.TargetType);
+            var page = (Page)Activator.CreateInstance(item.PageModelTyp);
             page.Title = item.Title;
 
             Detail = new NavigationPage(page);
             IsPresented = false;
 
-            MasterPage.ListView.SelectedItem = null;
+            MenuItemsListView.SelectedItem = null;
         }
     }
 }
