@@ -62,8 +62,9 @@ namespace SimpleQ
         {
             var masterDetailNav = new MainMasterPageModel();
             
-            masterDetailNav.AddPage("Kontakt", ItemType.Categorie, new SimulationPageModel("Kontakt"));
-            masterDetailNav.AddPage("Termine", ItemType.Navigation, new SimulationPageModel("Termine"));
+            masterDetailNav.AddPage("Test1", ItemType.Categorie, new Test1PageModel());
+            masterDetailNav.AddPage("Test2", ItemType.Navigation, new Test2PageModel());
+            masterDetailNav.AddPage("Test3", ItemType.Navigation, new Test3PageModel());
             masterDetailNav.Init("Menu");
             Application.Current.MainPage = masterDetailNav;
         }

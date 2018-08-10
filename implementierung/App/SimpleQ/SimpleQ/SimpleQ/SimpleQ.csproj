@@ -25,8 +25,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Pages\MainDetailPage.xaml.cs">
-      <DependentUpon>MainDetailPage.xaml</DependentUpon>
+    <Compile Update="Pages\Test3Page.xaml.cs">
+      <DependentUpon>Test3Page.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Test2Page.xaml.cs">
+      <DependentUpon>Test2Page.xaml</DependentUpon>
     </Compile>
     <Compile Update="Resources\AppResources.Designer.cs">
       <DesignTime>True</DesignTime>
@@ -39,16 +42,10 @@
     <EmbeddedResource Update="Pages\LoadingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\MainMasterPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Pages\MainDetailPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Pages\QRCodeScannerPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\SimulationPage.xaml">
+    <EmbeddedResource Update="Pages\Test1Page.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResources.resx">
