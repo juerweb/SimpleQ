@@ -61,6 +61,51 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Code wird überprüft ähnelt.
+        /// </summary>
+        public static string CheckCode {
+            get {
+                return ResourceManager.GetString("CheckCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fehlercode ähnelt.
+        /// </summary>
+        public static string DialogErrorCode {
+            get {
+                return ResourceManager.GetString("DialogErrorCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Fehler ähnelt.
+        /// </summary>
+        public static string DialogErrorTitle {
+            get {
+                return ResourceManager.GetString("DialogErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code. ähnelt.
+        /// </summary>
+        public static string Error101 {
+            get {
+                return ResourceManager.GetString("Error101", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode. ähnelt.
+        /// </summary>
+        public static string Error201 {
+            get {
+                return ResourceManager.GetString("Error201", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ.Resources.Images.logo.png ähnelt.
         /// </summary>
         public static string LogoResourcename {
@@ -70,11 +115,47 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten habem. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Alternative: Geben Sie den Code manuell ein ähnelt.
+        /// </summary>
+        public static string ManuelCodeEntry {
+            get {
+                return ResourceManager.GetString("ManuelCodeEntry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Daten abrufen ähnelt.
+        /// </summary>
+        public static string RecallData {
+            get {
+                return ResourceManager.GetString("RecallData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Anmelden ähnelt.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten haben. ähnelt.
         /// </summary>
         public static string RegisterScanHelpText {
             get {
                 return ResourceManager.GetString("RegisterScanHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 6-stelliger Code ähnelt.
+        /// </summary>
+        public static string SixDigitCode {
+            get {
+                return ResourceManager.GetString("SixDigitCode", resourceCulture);
             }
         }
         

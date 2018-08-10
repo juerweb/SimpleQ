@@ -21,6 +21,8 @@ namespace SimpleQ.UWP
         {
             this.InitializeComponent();
 
+            ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer.Init();
+
             LoadApplication(new SimpleQ.App());
         }
     }

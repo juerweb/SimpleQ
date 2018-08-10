@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SimpleQ.Views
+namespace SimpleQ.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MainDetail : ContentPage
+    public partial class MainDetailPage : ContentPage
     {
-        public MainDetail()
+        public MainDetailPage()
         {
             InitializeComponent();
         }
