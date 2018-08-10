@@ -14,29 +14,14 @@ using Xamarin.Forms;
 namespace SimpleQ.PageModels
 {
     /// <summary>
-    /// This is the MainPageModel for the Page xy.
+    /// This is the MainMasterPageModel for the Page xy.
     /// </summary>
-    public class MainPageModel : FreshBasePageModel, INotifyPropertyChanged
+    public class MainMasterPageModel : FreshMasterDetailNavigationContainer, INotifyPropertyChanged
     {
         #region Constructor(s)
-        public MainPageModel()
+        public MainMasterPageModel(): base()
         {
             MenuItems = new ObservableCollection<Grouping<ItemType, MainMenuItemModel>>();
-
-            List<MainMenuItemModel> categoriesItems = new List<MainMenuItemModel>();
-            //categoriesItems.Add(new MainMenuItemModel(1, "Test Categorie 1", typeof(SimulationPageModel)));
-
-            List<MainMenuItemModel> navigationItems = new List<MainMenuItemModel>();
-            //navigationItems.Add(new MainMenuItemModel(2, "Test Navigation 1", typeof(SimulationPageModel)));
-            //navigationItems.Add(new MainMenuItemModel(3, "Test Navigation 2", typeof(SimulationPageModel)));
-
-            this.MenuItems.Add(new Grouping<ItemType, MainMenuItemModel>(ItemType.Categorie, categoriesItems));
-            this.MenuItems.Add(new Grouping<ItemType, MainMenuItemModel>(ItemType.Navigation, navigationItems));
-        }
-
-        public override void Init(object initData)
-        {
-            base.Init(initData);
 
             //Generate CodeValidationModel from Application Properties
             Boolean isValidCodeAvailable = (bool)Application.Current.Properties["IsValidCodeAvailable"];
@@ -51,6 +36,11 @@ namespace SimpleQ.PageModels
         #region Fields
         private CodeValidationModel codeValidationModel;
         private MainMenuItemModel selectedItem;
+
+        private List<MainMenuItemModel> categories = new List<MainMenuItemModel>();
+        private List<MainMenuItemModel> navigations = new List<MainMenuItemModel>();
+
+        private Dictionary<String, Page> pages = new Dictionary<string, Page>();
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -82,14 +72,52 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
+        protected override void CreateMenuPage(string menuPageTitle, string menuIcon = null)
+        {
+            Debug.WriteLine("Create Menu Page...", "Info");
+            this.MenuItems.Add(new Grouping<ItemType, MainMenuItemModel>(ItemType.Categorie, categories));
+            this.MenuItems.Add(new Grouping<ItemType, MainMenuItemModel>(ItemType.Navigation, navigations));
+
+            MainMasterPage mainMasterPage = new MainMasterPage();
+            mainMasterPage.BindingContext = this;
+            Master = mainMasterPage;
+        }
+
+        public void AddPage(string title, ItemType itemType, FreshBasePageModel pageModel)
+        {
+            var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
+            page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
+            var navigationContainer = CreateContainerPage(page);
+            if (this.categories.Count == 0 && this.navigations.Count == 0)
+            {
+                Detail = navigationContainer;
+            }
+
+            Debug.WriteLine("Add new Page");
+
+            pages.Add(title, navigationContainer);
+
+            switch (itemType)
+            {
+                case ItemType.Categorie:
+                    categories.Add(new MainMenuItemModel(0, title, pageModel));
+                    break;
+                case ItemType.Navigation:
+                    navigations.Add(new MainMenuItemModel(0, title, pageModel));
+                    break;
+            }
+        }
+
         private void NavigateToNewPage()
         {
+
             if (selectedItem != null)
             {
                 Debug.WriteLine("Navigate to new page: " + selectedItem.Title, "Info");
 
-                //CoreMethods.PushPageModel(selectedItem.PageModelTyp);
-                
+                IsPresented = false;
+
+                Detail = pages[SelectedItem.Title];
             }
 
         }

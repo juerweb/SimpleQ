@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SimpleQ.Pages.MainMasterPage"
+             Title="Master">
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="MenuItemsListView" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding MenuItems}" IsGroupingEnabled="True" SelectedItem="{Binding SelectedItem}">
+                <ListView.Header>
+                    <Grid BackgroundColor="{StaticResource colorPrimary}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+
+                        <Image Source="ic_work_black_48dp.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start"></Image>
+                        <StackLayout Grid.Column="1" Grid.Row="2">
+                            <Label Text="{Binding Path=CodeValidationModel.CompanyName}" Style="{DynamicResource BodyStyle}"/>
+                            <Label Text="{Binding Path=CodeValidationModel.DepartmentName}" Style="{DynamicResource BodyStyle}"/>
+                        </StackLayout>
+                    </Grid>
+                </ListView.Header>
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="45">
+                            <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                <StackLayout VerticalOptions="CenterAndExpand" Margin="15, 0, 5, 0">
+                                    <Label Text="{Binding Key}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
+                                <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding Title}" Style="{DynamicResource BodyStyle}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -13,6 +13,7 @@ using SimpleQ.PageModels.Services;
 using SimpleQ.Models;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using SimpleQ.Extensions;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -59,9 +60,12 @@ namespace SimpleQ
 
         public static void NavigateToMainPageModel()
         {
-            var page = FreshPageModelResolver.ResolvePageModel<MainPageModel>();
-            var basicNavContainer = new FreshNavigationContainer(page);
-            Application.Current.MainPage = basicNavContainer;
+            var masterDetailNav = new MainMasterPageModel();
+            
+            masterDetailNav.AddPage("Kontakt", ItemType.Categorie, new SimulationPageModel("Kontakt"));
+            masterDetailNav.AddPage("Termine", ItemType.Navigation, new SimulationPageModel("Termine"));
+            masterDetailNav.Init("Menu");
+            Application.Current.MainPage = masterDetailNav;
         }
 
         private void SetupIOC()
