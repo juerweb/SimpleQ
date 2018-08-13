@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:extensions="clr-namespace:SimpleQ.Extensions"
              x:Class="SimpleQ.Pages.MainMasterPage"
              Title="Master">
     <ContentPage.Content>
@@ -41,8 +42,9 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
-                                <Label VerticalOptions="FillAndExpand" VerticalTextAlignment="Center" Text="{Binding Title}" Style="{DynamicResource BodyStyle}"/>
+                            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                <Image Source="{Binding IconResourceName}" HorizontalOptions="Center"></Image>
+                                <Label Text="{Binding Title}" Style="{DynamicResource BodyStyle}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

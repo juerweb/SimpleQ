@@ -203,4 +203,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_work_black_48pt%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_extension_black_18pt.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_extension_black_18pt%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_extension_black_18pt%403x.png" />
+  </ItemGroup>
 </Project>

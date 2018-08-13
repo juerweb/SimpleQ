@@ -83,7 +83,7 @@ namespace SimpleQ.PageModels
             Master = mainMasterPage;
         }
 
-        public void AddPage(string title, ItemType itemType, FreshBasePageModel pageModel)
+        public void AddPage(string title, ItemType itemType, FreshBasePageModel pageModel, String iconResourceName)
         {
             var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
             page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
@@ -100,10 +100,10 @@ namespace SimpleQ.PageModels
             switch (itemType)
             {
                 case ItemType.Categorie:
-                    categories.Add(new MainMenuItemModel(0, title, pageModel));
+                    categories.Add(new MainMenuItemModel(title, pageModel));
                     break;
                 case ItemType.Navigation:
-                    navigations.Add(new MainMenuItemModel(0, title, pageModel));
+                    navigations.Add(new MainMenuItemModel(title, pageModel, iconResourceName));
                     break;
             }
         }

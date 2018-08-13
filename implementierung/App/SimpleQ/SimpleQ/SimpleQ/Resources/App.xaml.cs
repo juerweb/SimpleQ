@@ -62,9 +62,9 @@ namespace SimpleQ
         {
             var masterDetailNav = new MainMasterPageModel();
             
-            masterDetailNav.AddPage("Test1", ItemType.Categorie, new Test1PageModel());
-            masterDetailNav.AddPage("Test2", ItemType.Navigation, new Test2PageModel());
-            masterDetailNav.AddPage("Test3", ItemType.Navigation, new Test3PageModel());
+            masterDetailNav.AddPage("Test1", ItemType.Categorie, new Test1PageModel(), null);
+            masterDetailNav.AddPage("Test2", ItemType.Navigation, new Test2PageModel(), "ic_extension_black_18dp.png");
+            masterDetailNav.AddPage("Test3", ItemType.Navigation, new Test3PageModel(), "ic_extension_black_18dp.png");
             masterDetailNav.Init("Menu");
             Application.Current.MainPage = masterDetailNav;
         }
