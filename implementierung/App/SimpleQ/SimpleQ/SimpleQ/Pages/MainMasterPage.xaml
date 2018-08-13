@@ -4,9 +4,32 @@
              xmlns:extensions="clr-namespace:SimpleQ.Extensions"
              x:Class="SimpleQ.Pages.MainMasterPage"
              Title="Master">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="navigationDataTemplate">
+            <ViewCell>
+                <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal" >
+                    <Image Source="{Binding IconResourceName}" VerticalOptions="Center"></Image>
+                    <Label Text="{Binding Title}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="categorieDataTemplate">
+            <ViewCell>
+                <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                    <Image Source="ic_label_black_18dp.png" VerticalOptions="Center"></Image>
+                    <Label Text="{Binding Title}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+
+        <extensions:ItemTemplateSelector x:Key="itemTemplateSelector" 
+                                         NavigationTemplate="{StaticResource navigationDataTemplate}" 
+                                         CategorieTemplate="{StaticResource categorieDataTemplate}"/>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="MenuItemsListView" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding MenuItems}" IsGroupingEnabled="True" SelectedItem="{Binding SelectedItem}">
+            <ListView x:Name="MenuItemsListView" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding MenuItems}" IsGroupingEnabled="True" SelectedItem="{Binding SelectedItem}" ItemTemplate="{StaticResource itemTemplateSelector}">
                 <ListView.Header>
                     <Grid BackgroundColor="{StaticResource colorPrimary}">
                         <Grid.ColumnDefinitions>
@@ -21,7 +44,7 @@
                             <RowDefinition Height="5"/>
                         </Grid.RowDefinitions>
 
-                        <Image Source="ic_work_black_48dp.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start"></Image>
+                        <Image Source="ic_business_black_48dp.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start"></Image>
                         <StackLayout Grid.Column="1" Grid.Row="2">
                             <Label Text="{Binding Path=CodeValidationModel.CompanyName}" Style="{DynamicResource BodyStyle}"/>
                             <Label Text="{Binding Path=CodeValidationModel.DepartmentName}" Style="{DynamicResource BodyStyle}"/>
@@ -39,16 +62,6 @@
                         </ViewCell>
                     </DataTemplate>
                 </ListView.GroupHeaderTemplate>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
-                                <Image Source="{Binding IconResourceName}" HorizontalOptions="Center"></Image>
-                                <Label Text="{Binding Title}" Style="{DynamicResource BodyStyle}"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
     </ContentPage.Content>
