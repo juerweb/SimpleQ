@@ -9,12 +9,12 @@ using Xamarin.Forms;
 namespace SimpleQ.Models
 {
     /// <summary>
-    /// This is the MainMenuItemModel.
+    /// This is the MenuItemModel.
     /// </summary>
-    public class MainMenuItemModel : INotifyPropertyChanged
+    public class MenuItemModel : INotifyPropertyChanged
     {
         #region Constructor(s)
-        public MainMenuItemModel(string title, FreshBasePageModel pageModelTyp, string iconResourceName = null)
+        public MenuItemModel(string title, FreshBasePageModel pageModelTyp, string iconResourceName = null)
         {
             this.Title = title;
             this.PageModelTyp = pageModelTyp;
