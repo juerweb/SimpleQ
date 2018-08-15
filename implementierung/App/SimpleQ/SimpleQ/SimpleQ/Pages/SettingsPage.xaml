@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout>
-                <ListView ItemsSource="{Binding MenuItems}" SelectedItem="{Binding SelectedItem}">
+                <ListView ItemsSource="{Binding MenuItems}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

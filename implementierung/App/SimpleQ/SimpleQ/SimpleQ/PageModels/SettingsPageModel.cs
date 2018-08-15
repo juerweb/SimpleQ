@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -35,7 +36,7 @@ namespace SimpleQ.PageModels
         {
             menuItems = new ObservableCollection<MenuItemModel>();
             menuItems.Add(new MenuItemModel(AppResources.Language, new LanguagePageModel(), "ic_language_black_18.png"));
-
+            Debug.WriteLine("Constructor of SettingsPageModel", "Info");
         }
 
 
@@ -63,8 +64,10 @@ namespace SimpleQ.PageModels
             {
                 selectedItem = value;
                 OnPropertyChanged();
-
-                NavigateToNewPage();
+                if (selectedItem != null)
+                {
+                    NavigateToNewPage();
+                }
             }
         }
         #endregion
@@ -73,13 +76,10 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
-        private void NavigateToNewPage()
+        private async void NavigateToNewPage()
         {
-            if (selectedItem != null)
-            {
-                CoreMethods.PushPageModel(selectedItem.PageModelTyp.GetType());
-            }
-
+            await CoreMethods.PushPageModel <LanguagePageModel> ();
+            SelectedItem = null;
         }
         #endregion
 
@@ -88,6 +88,7 @@ namespace SimpleQ.PageModels
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
+            Debug.WriteLine("PropertyChanged: " + propertyName, "Info");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion

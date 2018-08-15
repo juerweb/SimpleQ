@@ -69,6 +69,8 @@ namespace SimpleQ.PageModels.Services
             {
                 CrossMultilingual.Current.CurrentCultureInfo = GetLanguageFromCode(languageISOCode);
                 AppResources.Culture = CrossMultilingual.Current.CurrentCultureInfo;
+
+                App.NavigateToMainPageModel();
             }
 
         }

@@ -24,9 +24,12 @@ namespace SimpleQ.PageModels
         /// <param name="param">The parameter.</param>
         public LanguagePageModel(ILanguageService languageService): this()
         {
+            Debug.WriteLine("Constructor of LanguagePageModel", "Info");
             this.languageService = languageService;
 
             this.SelectedItem = languageService.GetCurrentLanguage();
+
+            Debug.WriteLine("1", "Info");
         }
 
         /// <summary>
@@ -35,9 +38,11 @@ namespace SimpleQ.PageModels
         /// </summary>
         public LanguagePageModel()
         {
+            Debug.WriteLine("2", "Info");
             ChangeLanguageCommand = new Command(ChangeLanguage);
 
             isSelected = false;
+            Debug.WriteLine("3", "Info");
         }
 
 
@@ -47,7 +52,9 @@ namespace SimpleQ.PageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
+            Debug.WriteLine("4", "Info");
             base.Init(initData);
+            Debug.WriteLine("5", "Info");
         }
         #endregion
 
@@ -97,9 +104,7 @@ namespace SimpleQ.PageModels
         {
             Debug.WriteLine("Change Language to: " + this.SelectedItem.TwoLetterISOLanguageName, "Info");
 
-            //LanguageService.SetCurrentLanguage(this.SelectedItem.TwoLetterISOLanguageName);
-
-            await CoreMethods.PopPageModel();
+            LanguageService.SetCurrentLanguage(this.SelectedItem.TwoLetterISOLanguageName);
         }
         #endregion
 

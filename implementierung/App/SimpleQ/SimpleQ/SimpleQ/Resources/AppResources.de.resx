@@ -139,7 +139,7 @@
     <value>Hilfe</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Sprache</value>
   </data>
   <data name="LogoResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.Images.logo.png</value>
@@ -161,7 +161,7 @@
     <value>Wählen sie eine neue Sprache aus.</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Options</value>
+    <value>Einstellungen</value>
   </data>
   <data name="SixDigitCode" xml:space="preserve">
     <value>6-stelliger Code</value>

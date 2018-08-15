@@ -40,7 +40,7 @@ namespace SimpleQ.PageModels
         private List<MenuItemModel> categories = new List<MenuItemModel>();
         private List<MenuItemModel> navigations = new List<MenuItemModel>();
 
-        private Dictionary<String, Page> pages = new Dictionary<string, Page>();
+        private Dictionary<String, Page> _pages = new Dictionary<string, Page>();
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -62,14 +62,15 @@ namespace SimpleQ.PageModels
             set
             {
                 selectedItem = value;
+                OnPropertyChanged();
                 if (selectedItem != null)
                 {
                     NavigateToNewPage();
                 }
-
-                OnPropertyChanged();
             }
         }
+
+        public Dictionary<string, Page> Pages { get => _pages;}
         #endregion
 
         #region Commands
@@ -99,7 +100,7 @@ namespace SimpleQ.PageModels
 
             Debug.WriteLine("Add new Page");
 
-            pages.Add(title, navigationContainer);
+            _pages.Add(title, navigationContainer);
 
             switch (itemType)
             {
@@ -121,7 +122,7 @@ namespace SimpleQ.PageModels
 
                 IsPresented = false;
 
-                Detail = pages[SelectedItem.Title];
+                Detail = _pages[SelectedItem.Title];
                 Debug.WriteLine("TEST");
             }
 

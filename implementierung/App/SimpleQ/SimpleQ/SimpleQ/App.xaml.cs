@@ -28,6 +28,7 @@ namespace SimpleQ
 		public App ()
 		{
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
+            //Application.Current.Properties["Language"] = "en";
 
             SetupIOC();
 

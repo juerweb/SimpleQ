@@ -22,7 +22,7 @@ namespace SimpleQ.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AppResources {
+    internal class AppResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SimpleQ.Resources {
         ///   Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SimpleQ.Resources.AppResources", typeof(AppResources).Assembly);
@@ -51,7 +51,7 @@ namespace SimpleQ.Resources {
         ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Sprache ändern ähnelt.
         /// </summary>
-        public static string ChangeLanguage {
+        internal static string ChangeLanguage {
             get {
                 return ResourceManager.GetString("ChangeLanguage", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Code wird überprüft ähnelt.
         /// </summary>
-        public static string CheckCode {
+        internal static string CheckCode {
             get {
                 return ResourceManager.GetString("CheckCode", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fehlercode ähnelt.
         /// </summary>
-        public static string DialogErrorCode {
+        internal static string DialogErrorCode {
             get {
                 return ResourceManager.GetString("DialogErrorCode", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fehler ähnelt.
         /// </summary>
-        public static string DialogErrorTitle {
+        internal static string DialogErrorTitle {
             get {
                 return ResourceManager.GetString("DialogErrorTitle", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code. ähnelt.
         /// </summary>
-        public static string Error101 {
+        internal static string Error101 {
             get {
                 return ResourceManager.GetString("Error101", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode. ähnelt.
         /// </summary>
-        public static string Error201 {
+        internal static string Error201 {
             get {
                 return ResourceManager.GetString("Error201", resourceCulture);
             }
@@ -117,16 +117,16 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Hilfe ähnelt.
         /// </summary>
-        public static string Help {
+        internal static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Sprache ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Language ähnelt.
         /// </summary>
-        public static string Language {
+        internal static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ.Resources.Images.logo.png ähnelt.
         /// </summary>
-        public static string LogoResourcename {
+        internal static string LogoResourcename {
             get {
                 return ResourceManager.GetString("LogoResourcename", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Alternative: Geben Sie den Code manuell ein ähnelt.
         /// </summary>
-        public static string ManuelCodeEntry {
+        internal static string ManuelCodeEntry {
             get {
                 return ResourceManager.GetString("ManuelCodeEntry", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Daten abrufen ähnelt.
         /// </summary>
-        public static string RecallData {
+        internal static string RecallData {
             get {
                 return ResourceManager.GetString("RecallData", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Anmelden ähnelt.
         /// </summary>
-        public static string Register {
+        internal static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten haben. ähnelt.
         /// </summary>
-        public static string RegisterScanHelpText {
+        internal static string RegisterScanHelpText {
             get {
                 return ResourceManager.GetString("RegisterScanHelpText", resourceCulture);
             }
@@ -180,16 +180,16 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Wählen sie eine neue Sprache aus. ähnelt.
         /// </summary>
-        public static string SelectALanguage {
+        internal static string SelectALanguage {
             get {
                 return ResourceManager.GetString("SelectALanguage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Einstellungen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Options ähnelt.
         /// </summary>
-        public static string Settings {
+        internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
@@ -198,7 +198,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 6-stelliger Code ähnelt.
         /// </summary>
-        public static string SixDigitCode {
+        internal static string SixDigitCode {
             get {
                 return ResourceManager.GetString("SixDigitCode", resourceCulture);
             }
@@ -207,7 +207,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scan starten 📷 ähnelt.
         /// </summary>
-        public static string StartScan {
+        internal static string StartScan {
             get {
                 return ResourceManager.GetString("StartScan", resourceCulture);
             }
