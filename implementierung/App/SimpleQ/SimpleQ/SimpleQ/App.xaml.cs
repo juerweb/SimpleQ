@@ -79,7 +79,7 @@ namespace SimpleQ
             
             masterDetailNav.AddPage("Test1", ItemType.Categorie, new Test1PageModel(), null);
             masterDetailNav.AddPage(AppResources.Settings, ItemType.Navigation, new SettingsPageModel(), "ic_settings_black_18.png");
-            masterDetailNav.AddPage(AppResources.Help, ItemType.Navigation, new Test3PageModel(), "ic_help_black_18.png");
+            masterDetailNav.AddPage(AppResources.Help, ItemType.Navigation, new HelpPageModel(), "ic_help_black_18.png");
             masterDetailNav.Init("Menu");
 
             Application.Current.MainPage = masterDetailNav;

@@ -1,6 +1,5 @@
 ﻿using FreshMvvm;
 using SimpleQ.Models;
-using SimpleQ.PageModels.Services;
 using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
@@ -13,26 +12,26 @@ using System.Text;
 namespace SimpleQ.PageModels
 {
     /// <summary>
-    /// This is the SettingsPageModel for the Page Settings.
+    /// This is the HelpPageModel for the HelpPage.
     /// </summary>
-    public class SettingsPageModel : StandardMenuPageModel, INotifyPropertyChanged
+    public class HelpPageModel : StandardMenuPageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsPageModel"/> class.
+        /// Initializes a new instance of the <see cref="HelpPageModel"/> class.
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public SettingsPageModel(object param): this()
+        public HelpPageModel(object param): this()
         {
 
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsPageModel"/> class.
+        /// Initializes a new instance of the <see cref="HelpPageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public SettingsPageModel(): base()
+        public HelpPageModel(): base()
         {
             MenuItems.Add(new MenuItemModel(AppResources.Language, new LanguagePageModel(), "ic_language_black_18.png"));
         }
@@ -42,7 +41,7 @@ namespace SimpleQ.PageModels
         /// Initializes the specified initialize data.
         /// </summary>
         /// <param name="initData">The initialize data.</param>
-        public override async void Init(object initData)
+        public override void Init(object initData)
         {
             base.Init(initData);
         }
@@ -65,7 +64,6 @@ namespace SimpleQ.PageModels
 
         private void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {
-            Debug.WriteLine("PropertyChanged: " + propertyName, "Info");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion

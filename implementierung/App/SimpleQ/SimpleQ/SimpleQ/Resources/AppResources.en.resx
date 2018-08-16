@@ -135,9 +135,6 @@
   <data name="Error201" xml:space="preserve">
     <value>Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode.</value>
   </data>
-  <data name="Help" xml:space="preserve">
-    <value>Help</value>
-  </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
