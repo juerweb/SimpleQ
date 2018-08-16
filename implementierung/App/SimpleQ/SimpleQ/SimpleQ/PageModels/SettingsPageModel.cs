@@ -51,12 +51,30 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Fields
+        /// <summary>
+        /// The menu items
+        /// </summary>
         private ObservableCollection<MenuItemModel> menuItems;
+        /// <summary>
+        /// The selected item
+        /// </summary>
         private MenuItemModel selectedItem;
         #endregion
 
         #region Properties + Getter/Setter Methods
+        /// <summary>
+        /// Gets or sets the menu items.
+        /// </summary>
+        /// <value>
+        /// The menu items.
+        /// </value>
         public ObservableCollection<MenuItemModel> MenuItems { get => menuItems; set => menuItems = value; }
+        /// <summary>
+        /// Gets or sets the selected item.
+        /// </summary>
+        /// <value>
+        /// The selected item.
+        /// </value>
         public MenuItemModel SelectedItem
         {
             get => selectedItem;
@@ -76,6 +94,9 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Navigates to new page.
+        /// </summary>
         private async void NavigateToNewPage()
         {
             await CoreMethods.PushPageModel <LanguagePageModel> ();
