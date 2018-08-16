@@ -133,8 +133,11 @@
     <Content Include="ic_business_black_48.png" />
     <Content Include="ic_extension_black_18.png" />
     <Content Include="ic_help_black_18.png" />
+    <Content Include="ic_info_black_18.png" />
     <Content Include="ic_label_black_18.png" />
     <Content Include="ic_language_black_18.png" />
+    <Content Include="ic_public_black_18.png" />
+    <Content Include="ic_question_answer_black_18.png" />
     <Content Include="ic_settings_black_18.png" />
     <Content Include="ic_work_black_48.png" />
     <Content Include="Properties\Default.rd.xml" />

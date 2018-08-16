@@ -97,7 +97,7 @@ namespace SimpleQ.PageModels
         /// </summary>
         private async void NavigateToNewPage()
         {
-            await CoreMethods.PushPageModel<LanguagePageModel>();
+            //await CoreMethods.PushPageModel<this.SelectedItem.PageModelTyp.GetType().MakeGenericType()> ();
             SelectedItem = null;
         }
         #endregion

@@ -61,6 +61,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die App Informationen ähnelt.
+        /// </summary>
+        internal static string AppInformation {
+            get {
+                return ResourceManager.GetString("AppInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Sprache ändern ähnelt.
         /// </summary>
         internal static string ChangeLanguage {
@@ -75,6 +84,15 @@ namespace SimpleQ.Resources {
         internal static string CheckCode {
             get {
                 return ResourceManager.GetString("CheckCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kontakt ähnelt.
+        /// </summary>
+        internal static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
             }
         }
         
@@ -111,6 +129,24 @@ namespace SimpleQ.Resources {
         internal static string Error201 {
             get {
                 return ResourceManager.GetString("Error201", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe (Internet) ähnelt.
+        /// </summary>
+        internal static string ExtendedHelp {
+            get {
+                return ResourceManager.GetString("ExtendedHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FAQ ähnelt.
+        /// </summary>
+        internal static string FAQ {
+            get {
+                return ResourceManager.GetString("FAQ", resourceCulture);
             }
         }
         
