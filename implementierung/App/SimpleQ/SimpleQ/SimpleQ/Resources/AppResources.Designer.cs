@@ -61,6 +61,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Über SimpleQ ähnelt.
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die App Informationen ähnelt.
         /// </summary>
         internal static string AppInformation {
@@ -97,6 +106,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copyright © 2018 by SimpleQ ähnelt.
+        /// </summary>
+        internal static string Copyright {
+            get {
+                return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fehlercode ähnelt.
         /// </summary>
         internal static string DialogErrorCode {
@@ -111,6 +129,15 @@ namespace SimpleQ.Resources {
         internal static string DialogErrorTitle {
             get {
                 return ResourceManager.GetString("DialogErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Schreiben Sie uns eine E-Mail ähnelt.
+        /// </summary>
+        internal static string EmailUs {
+            get {
+                return ResourceManager.GetString("EmailUs", resourceCulture);
             }
         }
         
@@ -187,6 +214,24 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ ähnelt.
+        /// </summary>
+        internal static string NameOfApp {
+            get {
+                return ResourceManager.GetString("NameOfApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rufen Sie uns an ähnelt.
+        /// </summary>
+        internal static string PhoneUs {
+            get {
+                return ResourceManager.GetString("PhoneUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Daten abrufen ähnelt.
         /// </summary>
         internal static string RecallData {
@@ -246,6 +291,15 @@ namespace SimpleQ.Resources {
         internal static string StartScan {
             get {
                 return ResourceManager.GetString("StartScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Besuchen Sie unsere Website ähnelt.
+        /// </summary>
+        internal static string VisitUs {
+            get {
+                return ResourceManager.GetString("VisitUs", resourceCulture);
             }
         }
     }

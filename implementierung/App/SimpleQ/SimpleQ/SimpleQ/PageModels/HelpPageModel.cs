@@ -34,9 +34,8 @@ namespace SimpleQ.PageModels
         public HelpPageModel(): base()
         {
             MenuItems.Add(new MenuItemModel(AppResources.FAQ, new Test1PageModel(), "ic_help_black_18.png"));
-            MenuItems.Add(new MenuItemModel(AppResources.Contact, new Test1PageModel(), "ic_question_answer_black_18.png"));
             MenuItems.Add(new MenuItemModel(AppResources.ExtendedHelp, new Test1PageModel(), "ic_public_black_18.png"));
-            MenuItems.Add(new MenuItemModel(AppResources.AppInformation, new Test1PageModel(), "ic_info_black_18.png"));
+            MenuItems.Add(new MenuItemModel(AppResources.About, new AboutPageModel(), "ic_info_black_18.png"));
         }
 
 
@@ -63,12 +62,7 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region INotifyPropertyChanged Implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        //The Implemenation of the INotifyPropertyChanged is in the Base Class
         #endregion
     }
 }

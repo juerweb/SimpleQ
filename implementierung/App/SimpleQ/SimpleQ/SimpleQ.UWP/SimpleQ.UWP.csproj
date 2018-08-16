@@ -96,6 +96,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VersionAndBuild_UWP.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -131,11 +132,13 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="ic_business_black_48.png" />
+    <Content Include="ic_email_black_18.png" />
     <Content Include="ic_extension_black_18.png" />
     <Content Include="ic_help_black_18.png" />
     <Content Include="ic_info_black_18.png" />
     <Content Include="ic_label_black_18.png" />
     <Content Include="ic_language_black_18.png" />
+    <Content Include="ic_phone_black_18.png" />
     <Content Include="ic_public_black_18.png" />
     <Content Include="ic_question_answer_black_18.png" />
     <Content Include="ic_settings_black_18.png" />

@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Über SimpleQ</value>
+  </data>
   <data name="AppInformation" xml:space="preserve">
     <value>App Informationen</value>
   </data>
@@ -129,11 +132,17 @@
   <data name="Contact" xml:space="preserve">
     <value>Kontakt</value>
   </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Copyright © 2018 by SimpleQ</value>
+  </data>
   <data name="DialogErrorCode" xml:space="preserve">
     <value>Fehlercode</value>
   </data>
   <data name="DialogErrorTitle" xml:space="preserve">
     <value>Fehler</value>
+  </data>
+  <data name="EmailUs" xml:space="preserve">
+    <value>Schreiben Sie uns eine E-Mail</value>
   </data>
   <data name="Error101" xml:space="preserve">
     <value>Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code.</value>
@@ -160,6 +169,13 @@
   <data name="ManuelCodeEntry" xml:space="preserve">
     <value>Alternative: Geben Sie den Code manuell ein</value>
   </data>
+  <data name="NameOfApp" xml:space="preserve">
+    <value>SimpleQ</value>
+    <comment>NT</comment>
+  </data>
+  <data name="PhoneUs" xml:space="preserve">
+    <value>Rufen Sie uns an</value>
+  </data>
   <data name="RecallData" xml:space="preserve">
     <value>Daten abrufen</value>
   </data>
@@ -180,5 +196,8 @@
   </data>
   <data name="StartScan" xml:space="preserve">
     <value>Scan starten 📷</value>
+  </data>
+  <data name="VisitUs" xml:space="preserve">
+    <value>Besuchen Sie unsere Website</value>
   </data>
 </root>

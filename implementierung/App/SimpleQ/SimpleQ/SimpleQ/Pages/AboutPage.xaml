@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.AboutPage"
+             Title="{ext:Translate Text=About}">
+    <ContentPage.Content>
+        <StackLayout>
+            <!--App Information Frame-->
+            <Frame BorderColor="{StaticResource colorBorder}" x:Name="AppInformation">
+                <StackLayout Orientation="Horizontal" >
+                    <Image Source="ic_info_black_18.png" VerticalOptions="Center"></Image>
+                    <StackLayout>
+                        <Label Text="{ext:Translate Text=NameOfApp}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center" FontAttributes="Bold"/>
+                        <Label Text="{Binding VersionNumber}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
+                        <Label Text="{ext:Translate Text=Copyright}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+
+            <!--Website Frame-->
+            <Frame BorderColor="{StaticResource colorBorder}" x:Name="WebsiteFrame">
+                <StackLayout Orientation="Horizontal" >
+                    <Image Source="ic_public_black_18.png" VerticalOptions="Center"></Image>
+                    <Button Text="{ext:Translate Text=VisitUs}" VerticalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+            
+            <!--Email Frame-->
+            <Frame BorderColor="{StaticResource colorBorder}" x:Name="EmailFrame">
+                <StackLayout Orientation="Horizontal" >
+                    <Image Source="ic_email_black_18.png" VerticalOptions="Center"></Image>
+                    <Button Text="{ext:Translate Text=EmailUs}" VerticalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+            
+            <!--Phone Frame-->
+            <Frame BorderColor="{StaticResource colorBorder}" x:Name="PhoneFrame">
+                <StackLayout Orientation="Horizontal" >
+                    <Image Source="ic_phone_black_18.png" VerticalOptions="Center"></Image>
+                    <Button Text="{ext:Translate Text=PhoneUs}" VerticalOptions="Center"/>
+                </StackLayout>
+            </Frame>
+
+            <!--Contact Formular Frame-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,40 +1,37 @@
 ﻿using FreshMvvm;
-using SimpleQ.Models;
-using SimpleQ.PageModels.Services;
-using SimpleQ.Resources;
+using SimpleQ.Extensions;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels
 {
     /// <summary>
-    /// This is the SettingsPageModel for the Page Settings.
+    /// This is the AboutPageModel for the Page xy.
     /// </summary>
-    public class SettingsPageModel : StandardMenuPageModel, INotifyPropertyChanged
+    public class AboutPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsPageModel"/> class.
+        /// Initializes a new instance of the <see cref="AboutPageModel"/> class.
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public SettingsPageModel(object param): this()
+        public AboutPageModel(object param): this()
         {
 
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SettingsPageModel"/> class.
+        /// Initializes a new instance of the <see cref="AboutPageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public SettingsPageModel(): base()
+        public AboutPageModel()
         {
-            MenuItems.Add(new MenuItemModel(AppResources.Language, new LanguagePageModel(), "ic_language_black_18.png"));
+
         }
 
 
@@ -42,7 +39,7 @@ namespace SimpleQ.PageModels
         /// Initializes the specified initialize data.
         /// </summary>
         /// <param name="initData">The initialize data.</param>
-        public override async void Init(object initData)
+        public override void Init(object initData)
         {
             base.Init(initData);
         }
@@ -58,10 +55,17 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
+        public string VersionNumber { get => DependencyService.Get<IAppVersionAndBuild>().GetVersionNumber(); }
+        public string BuildNumber { get => DependencyService.Get<IAppVersionAndBuild>().GetBuildNumber(); }
         #endregion
 
         #region INotifyPropertyChanged Implementation
-        //The Implemenation of the INotifyPropertyChanged is in the Base Class
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         #endregion
     }
 }
