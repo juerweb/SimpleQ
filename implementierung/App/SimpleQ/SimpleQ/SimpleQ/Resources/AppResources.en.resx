@@ -127,7 +127,7 @@
     <value>Fehlercode</value>
   </data>
   <data name="DialogErrorTitle" xml:space="preserve">
-    <value>Fehler</value>
+    <value>Error</value>
   </data>
   <data name="Error101" xml:space="preserve">
     <value>Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code.</value>
@@ -136,10 +136,10 @@
     <value>Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode.</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value>Hilfe</value>
+    <value>Help</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Sprache</value>
+    <value>Language</value>
   </data>
   <data name="LogoResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.Images.logo.png</value>
@@ -152,7 +152,7 @@
     <value>Daten abrufen</value>
   </data>
   <data name="Register" xml:space="preserve">
-    <value>Anmelden</value>
+    <value>Register</value>
   </data>
   <data name="RegisterScanHelpText" xml:space="preserve">
     <value>Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten haben.</value>
@@ -161,7 +161,7 @@
     <value>Wählen sie eine neue Sprache aus.</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Einstellungen</value>
+    <value>Settings</value>
   </data>
   <data name="SixDigitCode" xml:space="preserve">
     <value>6-stelliger Code</value>

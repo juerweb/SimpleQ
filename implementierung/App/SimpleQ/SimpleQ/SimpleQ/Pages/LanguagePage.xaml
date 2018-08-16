@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
-             x:Class="SimpleQ.Pages.LanguagePage">
+             x:Class="SimpleQ.Pages.LanguagePage"
+             Title="{ext:Translate Text=Language}">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{ext:Translate Text=SelectALanguage}" Style="{DynamicResource BodyStyle}"></Label>

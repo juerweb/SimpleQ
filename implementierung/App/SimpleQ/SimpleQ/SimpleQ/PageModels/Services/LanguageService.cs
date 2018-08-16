@@ -67,7 +67,9 @@ namespace SimpleQ.PageModels.Services
             }
             else
             {
-                CrossMultilingual.Current.CurrentCultureInfo = GetLanguageFromCode(languageISOCode);
+                CultureInfo ci = GetLanguageFromCode(languageISOCode);
+                Application.Current.Properties["Language"] = ci.TwoLetterISOLanguageName;
+                CrossMultilingual.Current.CurrentCultureInfo = ci;
                 AppResources.Culture = CrossMultilingual.Current.CurrentCultureInfo;
 
                 App.NavigateToMainPageModel();

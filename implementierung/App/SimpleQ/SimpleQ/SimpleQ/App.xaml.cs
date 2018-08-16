@@ -32,12 +32,6 @@ namespace SimpleQ
 
             SetupIOC();
 
-            //Localization Details
-            ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
-
-            languageService.SetCurrentLanguage();
-            Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
-
 
 
             InitializeComponent();
@@ -73,6 +67,14 @@ namespace SimpleQ
 
         public static void NavigateToMainPageModel()
         {
+            //Localization Details
+            ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
+
+            languageService.SetCurrentLanguage();
+            Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
+
+
+            //Set new Navigation Container
             var masterDetailNav = new MainMasterPageModel();
             
             masterDetailNav.AddPage("Test1", ItemType.Categorie, new Test1PageModel(), null);

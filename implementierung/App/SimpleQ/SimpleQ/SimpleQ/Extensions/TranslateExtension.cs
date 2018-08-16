@@ -30,7 +30,7 @@ namespace SimpleQ.Extensions
                 return "";
 
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            //Debug.WriteLine(ci.TwoLetterISOLanguageName);
+            Debug.WriteLine("Translation in: " + ci.TwoLetterISOLanguageName, "Info");
 
             var translation = resmgr.Value.GetString(Text, ci);
 
