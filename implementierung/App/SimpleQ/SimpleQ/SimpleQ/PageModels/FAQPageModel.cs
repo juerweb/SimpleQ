@@ -53,11 +53,23 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Fields
+        /// <summary>
+        /// The selected FAQ
+        /// </summary>
         private FAQModel selectedFAQ;
+        /// <summary>
+        /// The faqs Collection
+        /// </summary>
         private ObservableCollection<FAQModel> faqs;
         #endregion
 
         #region Properties + Getter/Setter Methods
+        /// <summary>
+        /// Gets or sets the selected FAQ.
+        /// </summary>
+        /// <value>
+        /// The selected FAQ.
+        /// </value>
         public FAQModel SelectedFAQ
         {
             get => selectedFAQ;
@@ -73,6 +85,12 @@ namespace SimpleQ.PageModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the faqs Collection
+        /// </summary>
+        /// <value>
+        /// The faqs collection
+        /// </value>
         public ObservableCollection<FAQModel> FAQs
         {
             get => faqs;
@@ -88,11 +106,17 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Disables all active FAQs
+        /// </summary>
         private void DisableAllActiveFAQs()
         {
             FAQs.Where(faq => faq.IsActive == true).ToList().ForEach(faq => faq.IsActive = false);
         }
 
+        /// <summary>
+        /// Opens the selected FAQ.
+        /// </summary>
         private void OpenSelectedFAQ()
         {
             DisableAllActiveFAQs();

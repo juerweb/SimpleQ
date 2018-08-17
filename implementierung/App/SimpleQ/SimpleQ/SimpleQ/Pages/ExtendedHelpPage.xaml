@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.ExtendedHelpPage"
+             Title="{ext:Translate Text=ExtendedHelp}">
+    <ContentPage.Content>
+        <WebView Source="{ext:Translate Text=LinkToSupportWebsite}"></WebView>
+    </ContentPage.Content>
+</ContentPage>

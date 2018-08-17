@@ -178,11 +178,20 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe (Internet) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe ähnelt.
         /// </summary>
         internal static string ExtendedHelp {
             get {
                 return ResourceManager.GetString("ExtendedHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe (Internet) ähnelt.
+        /// </summary>
+        internal static string ExtendedHelpInternet {
+            get {
+                return ResourceManager.GetString("ExtendedHelpInternet", resourceCulture);
             }
         }
         
@@ -219,6 +228,15 @@ namespace SimpleQ.Resources {
         internal static string LinkToContactForm {
             get {
                 return ResourceManager.GetString("LinkToContactForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://support.google.com/ ähnelt.
+        /// </summary>
+        internal static string LinkToSupportWebsite {
+            get {
+                return ResourceManager.GetString("LinkToSupportWebsite", resourceCulture);
             }
         }
         

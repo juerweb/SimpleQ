@@ -158,6 +158,9 @@
     <value>Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode.</value>
   </data>
   <data name="ExtendedHelp" xml:space="preserve">
+    <value>Erweiterte Hilfe</value>
+  </data>
+  <data name="ExtendedHelpInternet" xml:space="preserve">
     <value>Erweiterte Hilfe (Internet)</value>
   </data>
   <data name="FAQ" xml:space="preserve">
@@ -171,6 +174,9 @@
   </data>
   <data name="LinkToContactForm" xml:space="preserve">
     <value>https://www.google.at</value>
+  </data>
+  <data name="LinkToSupportWebsite" xml:space="preserve">
+    <value>https://support.google.com/</value>
   </data>
   <data name="LinkToWebsite" xml:space="preserve">
     <value>https://www.google.at/</value>
