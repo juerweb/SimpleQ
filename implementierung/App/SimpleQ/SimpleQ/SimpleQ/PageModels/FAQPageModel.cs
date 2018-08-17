@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Linq;
 using SimpleQ.Resources;
+using SimpleQ.Pages;
 
 namespace SimpleQ.PageModels
 {
@@ -121,6 +122,9 @@ namespace SimpleQ.PageModels
         {
             DisableAllActiveFAQs();
             this.selectedFAQ.IsActive = true;
+
+            ((FAQPage)CurrentPage).UpdateSize();
+
             SelectedFAQ = null;
         }
         #endregion

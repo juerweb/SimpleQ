@@ -28,7 +28,7 @@ namespace SimpleQ.Models
         /// </summary>
         public FAQModel()
         {
-            this.IsActive = false;
+            this.IsActive = true;
         }
         #endregion
 
@@ -44,7 +44,7 @@ namespace SimpleQ.Models
         /// <summary>
         /// Field, whichs shows the status of the faq.
         /// </summary>
-        private Boolean isActive;
+        private bool isActive;
 
         #endregion
 
@@ -69,7 +69,7 @@ namespace SimpleQ.Models
         /// <value>
         ///   <c>true</c> if this instance is active; otherwise, <c>false</c>.
         /// </value>
-        public Boolean IsActive
+        public bool IsActive
         {
             get => isActive;
             set

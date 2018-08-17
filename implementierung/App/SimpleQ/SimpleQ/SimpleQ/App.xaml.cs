@@ -60,6 +60,12 @@ namespace SimpleQ
 
         private void NavigateToRegisterPageModel()
         {
+            //Localization Details
+            ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
+
+            languageService.SetCurrentLanguage();
+            Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
+
             var page = FreshPageModelResolver.ResolvePageModel<RegisterPageModel>();
             var basicNavContainer = new FreshNavigationContainer(page);
             MainPage = basicNavContainer;

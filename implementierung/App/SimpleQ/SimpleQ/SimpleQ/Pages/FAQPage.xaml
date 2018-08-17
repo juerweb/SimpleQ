@@ -4,20 +4,24 @@
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
              x:Class="SimpleQ.Pages.FAQPage"
              Title="{ext:Translate Text=FAQ}">
+    <ContentPage.Resources>
+        <ext:BooleanHeightRequestConverter x:Key="BooleanHeightRequestConverter"></ext:BooleanHeightRequestConverter>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding FAQs}" SeparatorVisibility="None" HasUnevenRows="False" SelectedItem="{Binding SelectedFAQ, Mode=TwoWay}">
+            <ListView ItemsSource="{Binding FAQs}" SeparatorVisibility="None" HasUnevenRows="False" SelectedItem="{Binding SelectedFAQ, Mode=TwoWay}" x:Name="FAQListView" RowHeight="-1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand">
+                            <StackLayout HorizontalOptions="FillAndExpand" SizeChanged="StackLayout_SizeChanged">
                                 <Label Text="{Binding Question}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center" FontAttributes="Bold"></Label>
-                                <Label Text="{Binding Answer}" IsVisible="{Binding IsActive}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"></Label>
+                                <Label IsVisible="{Binding IsActive}" Text="{Binding Answer}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center" LineBreakMode="WordWrap"></Label>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
