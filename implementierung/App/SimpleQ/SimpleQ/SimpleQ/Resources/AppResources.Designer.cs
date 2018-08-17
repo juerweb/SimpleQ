@@ -106,6 +106,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kontaktieren Sie unseren Support ähnelt.
+        /// </summary>
+        internal static string ContactUs {
+            get {
+                return ResourceManager.GetString("ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Copyright © 2018 by SimpleQ ähnelt.
         /// </summary>
         internal static string Copyright {
@@ -129,6 +138,15 @@ namespace SimpleQ.Resources {
         internal static string DialogErrorTitle {
             get {
                 return ResourceManager.GetString("DialogErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die admin@juerweb.com ähnelt.
+        /// </summary>
+        internal static string EmailAdress {
+            get {
+                return ResourceManager.GetString("EmailAdress", resourceCulture);
             }
         }
         
@@ -196,6 +214,24 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.google.at ähnelt.
+        /// </summary>
+        internal static string LinkToContactForm {
+            get {
+                return ResourceManager.GetString("LinkToContactForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.google.at/ ähnelt.
+        /// </summary>
+        internal static string LinkToWebsite {
+            get {
+                return ResourceManager.GetString("LinkToWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ.Resources.Images.logo.png ähnelt.
         /// </summary>
         internal static string LogoResourcename {
@@ -219,6 +255,15 @@ namespace SimpleQ.Resources {
         internal static string NameOfApp {
             get {
                 return ResourceManager.GetString("NameOfApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die +43 00000000000 ähnelt.
+        /// </summary>
+        internal static string PhoneNumber {
+            get {
+                return ResourceManager.GetString("PhoneNumber", resourceCulture);
             }
         }
         

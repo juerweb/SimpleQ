@@ -1,5 +1,6 @@
 ﻿using FreshMvvm;
 using SimpleQ.Extensions;
+using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,7 +32,10 @@ namespace SimpleQ.PageModels
         /// </summary>
         public AboutPageModel()
         {
-
+            VisitUsCommand = new Command(VisitUs);
+            EmailUsCommand = new Command(EmailUs);
+            PhoneUsCommand = new Command(PhoneUs);
+            ContactUsCommand = new Command(ContactUs);
         }
 
 
@@ -49,14 +53,39 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Properties + Getter/Setter Methods
+        public string VersionNumber { get => DependencyService.Get<IAppVersionAndBuild>().GetVersionNumber(); }
+        public string BuildNumber { get => DependencyService.Get<IAppVersionAndBuild>().GetBuildNumber(); }
+        public string RuntimePlatform { get => Device.RuntimePlatform; }
         #endregion
 
         #region Commands
+        public Command VisitUsCommand { get; private set; }
+        public Command EmailUsCommand { get; private set; }
+        public Command PhoneUsCommand { get; private set; }
+        public Command ContactUsCommand { get; private set; }
         #endregion
 
         #region Methods
-        public string VersionNumber { get => DependencyService.Get<IAppVersionAndBuild>().GetVersionNumber(); }
-        public string BuildNumber { get => DependencyService.Get<IAppVersionAndBuild>().GetBuildNumber(); }
+        private void VisitUs(object obj)
+        {
+            Device.OpenUri(new Uri(AppResources.LinkToWebsite));
+        }
+
+        private void EmailUs(object obj)
+        {
+            String emailString = String.Format("mailto:{0}?body=//Plattform%20Information,%20DO%20NOT%20REMOVE!//%0ARuntime%20Plattform:%20{1}%0AVersion%20Number:%20{2}%0A//Plattform%20Information,%20DO%20NOT%20REMOVE!//", AppResources.EmailAdress, RuntimePlatform, VersionNumber);
+            Device.OpenUri(new Uri(emailString));
+        }
+
+        private void PhoneUs(object obj)
+        {
+            Device.OpenUri(new Uri("tel:" + AppResources.PhoneNumber));
+        }
+
+        private void ContactUs(object obj)
+        {
+            Device.OpenUri(new Uri(AppResources.LinkToContactForm));
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

@@ -132,6 +132,9 @@
   <data name="Contact" xml:space="preserve">
     <value>Kontakt</value>
   </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Kontaktieren Sie unseren Support</value>
+  </data>
   <data name="Copyright" xml:space="preserve">
     <value>Copyright © 2018 by SimpleQ</value>
   </data>
@@ -140,6 +143,10 @@
   </data>
   <data name="DialogErrorTitle" xml:space="preserve">
     <value>Fehler</value>
+  </data>
+  <data name="EmailAdress" xml:space="preserve">
+    <value>admin@juerweb.com</value>
+    <comment>NT</comment>
   </data>
   <data name="EmailUs" xml:space="preserve">
     <value>Schreiben Sie uns eine E-Mail</value>
@@ -162,6 +169,13 @@
   <data name="Language" xml:space="preserve">
     <value>Sprache</value>
   </data>
+  <data name="LinkToContactForm" xml:space="preserve">
+    <value>https://www.google.at</value>
+  </data>
+  <data name="LinkToWebsite" xml:space="preserve">
+    <value>https://www.google.at/</value>
+    <comment>NT</comment>
+  </data>
   <data name="LogoResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.Images.logo.png</value>
     <comment>NT</comment>
@@ -172,6 +186,9 @@
   <data name="NameOfApp" xml:space="preserve">
     <value>SimpleQ</value>
     <comment>NT</comment>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>+43 00000000000</value>
   </data>
   <data name="PhoneUs" xml:space="preserve">
     <value>Rufen Sie uns an</value>
