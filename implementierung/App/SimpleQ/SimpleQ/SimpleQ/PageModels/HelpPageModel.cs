@@ -33,7 +33,7 @@ namespace SimpleQ.PageModels
         /// </summary>
         public HelpPageModel(): base()
         {
-            MenuItems.Add(new MenuItemModel(AppResources.FAQ, new Test1PageModel(), "ic_help_black_18.png"));
+            MenuItems.Add(new MenuItemModel(AppResources.FAQ, new FAQPageModel(), "ic_help_black_18.png"));
             MenuItems.Add(new MenuItemModel(AppResources.ExtendedHelp, new Test1PageModel(), "ic_public_black_18.png"));
             MenuItems.Add(new MenuItemModel(AppResources.About, new AboutPageModel(), "ic_info_black_18.png"));
         }

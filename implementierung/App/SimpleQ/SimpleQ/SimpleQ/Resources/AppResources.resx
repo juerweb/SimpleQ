@@ -180,6 +180,10 @@
     <value>SimpleQ.Resources.Images.logo.png</value>
     <comment>NT</comment>
   </data>
+  <data name="LoremIpsum" xml:space="preserve">
+    <value>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</value>
+    <comment>NT</comment>
+  </data>
   <data name="ManuelCodeEntry" xml:space="preserve">
     <value>Alternative: Geben Sie den Code manuell ein</value>
   </data>
