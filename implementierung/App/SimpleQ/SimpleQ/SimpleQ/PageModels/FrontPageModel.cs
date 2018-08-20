@@ -1,9 +1,11 @@
 ﻿using FreshMvvm;
 using SimpleQ.Models;
+using SimpleQ.PageModels.QuestionPageModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -77,7 +79,23 @@ namespace SimpleQ.PageModels
         #region Methods
         private void NavigateToQuestion()
         {
-            CoreMethods.PushPageModel<QuestionPageModel>(selectedQuestion);
+            if (selectedQuestion.GetType() == typeof(YNQModel))
+            {
+                CoreMethods.PushPageModel<YNQPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.GetType() == typeof(TLQModel))
+            {
+                CoreMethods.PushPageModel<TLQPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.GetType() == typeof(OWQModel))
+            {
+                CoreMethods.PushPageModel<OWQPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.GetType() == typeof(GAQModel))
+            {
+                CoreMethods.PushPageModel<GAQPageModel>(selectedQuestion);
+            }
+            
             selectedQuestion = null;
         }
         #endregion

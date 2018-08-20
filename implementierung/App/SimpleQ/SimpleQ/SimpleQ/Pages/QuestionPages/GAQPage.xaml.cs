@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SimpleQ.Pages
+namespace SimpleQ.Pages.QuestionPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class QuestionPage : ContentPage
+	public partial class GAQPage : ContentPage
 	{
-		public QuestionPage ()
+		public GAQPage ()
 		{
 			InitializeComponent ();
 		}

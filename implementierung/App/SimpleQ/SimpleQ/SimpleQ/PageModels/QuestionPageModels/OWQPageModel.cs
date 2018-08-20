@@ -5,29 +5,29 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace SimpleQ.PageModels
+namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
-    /// This is the QuestionPageModel for the Page xy.
+    /// This is the OWQPageModel for the Page xy.
     /// </summary>
-    public class QuestionPageModel : FreshBasePageModel, INotifyPropertyChanged
+    public class OWQPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
         /// <summary>
-        /// Initializes a new instance of the <see cref="QuestionPageModel"/> class.
+        /// Initializes a new instance of the <see cref="OWQPageModel"/> class.
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public QuestionPageModel(object param): this()
+        public OWQPageModel(object param): this()
         {
 
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="QuestionPageModel"/> class.
+        /// Initializes a new instance of the <see cref="OWQPageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public QuestionPageModel()
+        public OWQPageModel()
         {
 
         }
