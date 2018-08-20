@@ -13,7 +13,7 @@ namespace SimpleQ.Extensions
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            MainMenuItemModel itemModel = (MainMenuItemModel)item;
+            MenuItemModel itemModel = (MenuItemModel)item;
 
             if (itemModel.IconResourceName == null)
             {

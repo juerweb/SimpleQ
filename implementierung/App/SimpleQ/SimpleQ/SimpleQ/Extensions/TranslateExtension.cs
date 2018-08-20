@@ -1,5 +1,10 @@
-﻿using System;
+﻿using FreshMvvm;
+using Plugin.Multilingual;
+using SimpleQ.PageModels.Services;
+using SimpleQ.Resources;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;
@@ -13,37 +18,32 @@ namespace SimpleQ.Extensions
     [ContentProperty("Text")]
     public class TranslateExtension : IMarkupExtension
     {
-        readonly CultureInfo ci = null;
         const string ResourceId = "SimpleQ.Resources.AppResources";
 
-        static readonly Lazy<ResourceManager> ResMgr = new Lazy<ResourceManager>(
-            () => new ResourceManager(ResourceId, IntrospectionExtensions.GetTypeInfo(typeof(TranslateExtension)).Assembly));
+        static readonly Lazy<ResourceManager> resmgr = new Lazy<ResourceManager>(() => new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly));
 
         public string Text { get; set; }
-
-        public TranslateExtension()
-        {
-            if (Device.RuntimePlatform == Device.iOS || Device.RuntimePlatform == Device.Android)
-            {
-                ci = DependencyService.Get<ILocalize>().GetCurrentCultureInfo();
-            }
-        }
 
         public object ProvideValue(IServiceProvider serviceProvider)
         {
             if (Text == null)
-                return string.Empty;
+                return "";
 
-            var translation = ResMgr.Value.GetString(Text, ci);
+            var ci = CrossMultilingual.Current.CurrentCultureInfo;
+            Debug.WriteLine("Translation in: " + ci.TwoLetterISOLanguageName, "Info");
+
+            var translation = resmgr.Value.GetString(Text, ci);
+
             if (translation == null)
             {
-            #if DEBUG
+                Debug.WriteLine(Application.Current.Resources[Text]);
+                #if DEBUG
                 throw new ArgumentException(
-                    string.Format("Key '{0}' was not found in resources '{1}' for culture '{2}'.", Text, ResourceId, ci.Name),
+                    String.Format("Key '{0}' was not found in resources '{1}' for culture '{2}'.", Text, ResourceId, ci.Name),
                     "Text");
-            #else
-                translation = Text; // HACK: returns the key, which GETS DISPLAYED TO THE USER
-            #endif
+                #else
+				translation = Text; // returns the key, which GETS DISPLAYED TO THE USER
+                #endif
             }
             return translation;
         }

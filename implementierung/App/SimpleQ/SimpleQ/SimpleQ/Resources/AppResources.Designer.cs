@@ -22,7 +22,7 @@ namespace SimpleQ.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AppResources {
+    internal class AppResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace SimpleQ.Resources {
         ///   Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SimpleQ.Resources.AppResources", typeof(AppResources).Assembly);
@@ -51,7 +51,7 @@ namespace SimpleQ.Resources {
         ///   Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,18 +61,72 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Über SimpleQ ähnelt.
+        /// </summary>
+        internal static string About {
+            get {
+                return ResourceManager.GetString("About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die App Informationen ähnelt.
+        /// </summary>
+        internal static string AppInformation {
+            get {
+                return ResourceManager.GetString("AppInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sprache ändern ähnelt.
+        /// </summary>
+        internal static string ChangeLanguage {
+            get {
+                return ResourceManager.GetString("ChangeLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Code wird überprüft ähnelt.
         /// </summary>
-        public static string CheckCode {
+        internal static string CheckCode {
             get {
                 return ResourceManager.GetString("CheckCode", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kontakt ähnelt.
+        /// </summary>
+        internal static string Contact {
+            get {
+                return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Kontaktieren Sie unseren Support ähnelt.
+        /// </summary>
+        internal static string ContactUs {
+            get {
+                return ResourceManager.GetString("ContactUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Copyright © 2018 by SimpleQ ähnelt.
+        /// </summary>
+        internal static string Copyright {
+            get {
+                return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fehlercode ähnelt.
         /// </summary>
-        public static string DialogErrorCode {
+        internal static string DialogErrorCode {
             get {
                 return ResourceManager.GetString("DialogErrorCode", resourceCulture);
             }
@@ -81,16 +135,34 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Fehler ähnelt.
         /// </summary>
-        public static string DialogErrorTitle {
+        internal static string DialogErrorTitle {
             get {
                 return ResourceManager.GetString("DialogErrorTitle", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die admin@juerweb.com ähnelt.
+        /// </summary>
+        internal static string EmailAdress {
+            get {
+                return ResourceManager.GetString("EmailAdress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Schreiben Sie uns eine E-Mail ähnelt.
+        /// </summary>
+        internal static string EmailUs {
+            get {
+                return ResourceManager.GetString("EmailUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code. ähnelt.
         /// </summary>
-        public static string Error101 {
+        internal static string Error101 {
             get {
                 return ResourceManager.GetString("Error101", resourceCulture);
             }
@@ -99,34 +171,142 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode. ähnelt.
         /// </summary>
-        public static string Error201 {
+        internal static string Error201 {
             get {
                 return ResourceManager.GetString("Error201", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe ähnelt.
+        /// </summary>
+        internal static string ExtendedHelp {
+            get {
+                return ResourceManager.GetString("ExtendedHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe (Internet) ähnelt.
+        /// </summary>
+        internal static string ExtendedHelpInternet {
+            get {
+                return ResourceManager.GetString("ExtendedHelpInternet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die FAQ ähnelt.
+        /// </summary>
+        internal static string FAQ {
+            get {
+                return ResourceManager.GetString("FAQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Hilfe ähnelt.
+        /// </summary>
+        internal static string Help {
+            get {
+                return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sprache ähnelt.
+        /// </summary>
+        internal static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.google.at ähnelt.
+        /// </summary>
+        internal static string LinkToContactForm {
+            get {
+                return ResourceManager.GetString("LinkToContactForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://support.google.com/ ähnelt.
+        /// </summary>
+        internal static string LinkToSupportWebsite {
+            get {
+                return ResourceManager.GetString("LinkToSupportWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.google.at/ ähnelt.
+        /// </summary>
+        internal static string LinkToWebsite {
+            get {
+                return ResourceManager.GetString("LinkToWebsite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ.Resources.Images.logo.png ähnelt.
         /// </summary>
-        public static string LogoResourcename {
+        internal static string LogoResourcename {
             get {
                 return ResourceManager.GetString("LogoResourcename", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Ste [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
+        /// </summary>
+        internal static string LoremIpsum {
+            get {
+                return ResourceManager.GetString("LoremIpsum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Alternative: Geben Sie den Code manuell ein ähnelt.
         /// </summary>
-        public static string ManuelCodeEntry {
+        internal static string ManuelCodeEntry {
             get {
                 return ResourceManager.GetString("ManuelCodeEntry", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ ähnelt.
+        /// </summary>
+        internal static string NameOfApp {
+            get {
+                return ResourceManager.GetString("NameOfApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die +43 00000000000 ähnelt.
+        /// </summary>
+        internal static string PhoneNumber {
+            get {
+                return ResourceManager.GetString("PhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Rufen Sie uns an ähnelt.
+        /// </summary>
+        internal static string PhoneUs {
+            get {
+                return ResourceManager.GetString("PhoneUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Daten abrufen ähnelt.
         /// </summary>
-        public static string RecallData {
+        internal static string RecallData {
             get {
                 return ResourceManager.GetString("RecallData", resourceCulture);
             }
@@ -135,7 +315,7 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Anmelden ähnelt.
         /// </summary>
-        public static string Register {
+        internal static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
             }
@@ -144,16 +324,34 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten haben. ähnelt.
         /// </summary>
-        public static string RegisterScanHelpText {
+        internal static string RegisterScanHelpText {
             get {
                 return ResourceManager.GetString("RegisterScanHelpText", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wählen sie eine neue Sprache aus. ähnelt.
+        /// </summary>
+        internal static string SelectALanguage {
+            get {
+                return ResourceManager.GetString("SelectALanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Einstellungen ähnelt.
+        /// </summary>
+        internal static string Settings {
+            get {
+                return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die 6-stelliger Code ähnelt.
         /// </summary>
-        public static string SixDigitCode {
+        internal static string SixDigitCode {
             get {
                 return ResourceManager.GetString("SixDigitCode", resourceCulture);
             }
@@ -162,9 +360,18 @@ namespace SimpleQ.Resources {
         /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scan starten 📷 ähnelt.
         /// </summary>
-        public static string StartScan {
+        internal static string StartScan {
             get {
                 return ResourceManager.GetString("StartScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Besuchen Sie unsere Website ähnelt.
+        /// </summary>
+        internal static string VisitUs {
+            get {
+                return ResourceManager.GetString("VisitUs", resourceCulture);
             }
         }
     }

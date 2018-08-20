@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.FAQPage"
+             Title="{ext:Translate Text=FAQ}">
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout VerticalOptions="FillAndExpand">
+                <ListView ItemsSource="{Binding FAQs}" SeparatorVisibility="None" SelectedItem="{Binding SelectedFAQ, Mode=TwoWay}" x:Name="FAQListView" HasUnevenRows="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout Padding="15,10">
+                                    <Label Text="{Binding Question}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center" FontAttributes="Bold"></Label>
+                                    <Label Text="{Binding Answer}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center" IsVisible="{Binding IsActive}"></Label>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

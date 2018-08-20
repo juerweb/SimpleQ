@@ -21,7 +21,7 @@ namespace SimpleQ.PageModels
         #region Constructor(s)
         public MainMasterPageModel(): base()
         {
-            MenuItems = new ObservableCollection<Grouping<ItemType, MainMenuItemModel>>();
+            MenuItems = new ObservableCollection<Grouping<ItemType, MenuItemModel>>();
 
             //Generate CodeValidationModel from Application Properties
             Boolean isValidCodeAvailable = (bool)Application.Current.Properties["IsValidCodeAvailable"];
@@ -35,12 +35,12 @@ namespace SimpleQ.PageModels
 
         #region Fields
         private CodeValidationModel codeValidationModel;
-        private MainMenuItemModel selectedItem;
+        private MenuItemModel selectedItem;
 
-        private List<MainMenuItemModel> categories = new List<MainMenuItemModel>();
-        private List<MainMenuItemModel> navigations = new List<MainMenuItemModel>();
+        private List<MenuItemModel> categories = new List<MenuItemModel>();
+        private List<MenuItemModel> navigations = new List<MenuItemModel>();
 
-        private Dictionary<String, Page> pages = new Dictionary<string, Page>();
+        private Dictionary<String, Page> _pages = new Dictionary<string, Page>();
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -54,18 +54,23 @@ namespace SimpleQ.PageModels
             }
         }
 
-        public ObservableCollection<Grouping<ItemType, MainMenuItemModel>> MenuItems { get; set; }
+        public ObservableCollection<Grouping<ItemType, MenuItemModel>> MenuItems { get; set; }
 
-        public MainMenuItemModel SelectedItem
+        public MenuItemModel SelectedItem
         {
             get => selectedItem;
             set
             {
                 selectedItem = value;
-                NavigateToNewPage();
                 OnPropertyChanged();
+                if (selectedItem != null)
+                {
+                    NavigateToNewPage();
+                }
             }
         }
+
+        public Dictionary<string, Page> Pages { get => _pages;}
         #endregion
 
         #region Commands
@@ -75,8 +80,8 @@ namespace SimpleQ.PageModels
         protected override void CreateMenuPage(string menuPageTitle, string menuIcon = null)
         {
             Debug.WriteLine("Create Menu Page...", "Info");
-            this.MenuItems.Add(new Grouping<ItemType, MainMenuItemModel>(ItemType.Categorie, categories));
-            this.MenuItems.Add(new Grouping<ItemType, MainMenuItemModel>(ItemType.Navigation, navigations));
+            this.MenuItems.Add(new Grouping<ItemType, MenuItemModel>(ItemType.Categorie, categories));
+            this.MenuItems.Add(new Grouping<ItemType, MenuItemModel>(ItemType.Navigation, navigations));
 
             MainMasterPage mainMasterPage = new MainMasterPage();
             mainMasterPage.BindingContext = this;
@@ -95,15 +100,15 @@ namespace SimpleQ.PageModels
 
             Debug.WriteLine("Add new Page");
 
-            pages.Add(title, navigationContainer);
+            _pages.Add(title, navigationContainer);
 
             switch (itemType)
             {
                 case ItemType.Categorie:
-                    categories.Add(new MainMenuItemModel(title, pageModel));
+                    categories.Add(new MenuItemModel(title, pageModel));
                     break;
                 case ItemType.Navigation:
-                    navigations.Add(new MainMenuItemModel(title, pageModel, iconResourceName));
+                    navigations.Add(new MenuItemModel(title, pageModel, iconResourceName));
                     break;
             }
         }
@@ -117,7 +122,8 @@ namespace SimpleQ.PageModels
 
                 IsPresented = false;
 
-                Detail = pages[SelectedItem.Title];
+                Detail = _pages[SelectedItem.Title];
+                Debug.WriteLine("TEST");
             }
 
         }

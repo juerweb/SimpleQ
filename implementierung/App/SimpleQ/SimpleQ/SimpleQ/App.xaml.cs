@@ -14,6 +14,10 @@ using SimpleQ.Models;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using SimpleQ.Extensions;
+using Plugin.Multilingual;
+using SimpleQ.Resources;
+using System.Globalization;
+using System.Collections.Generic;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -24,10 +28,13 @@ namespace SimpleQ
 		public App ()
 		{
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
-
-            InitializeComponent();
+            //Application.Current.Properties["Language"] = "en";
 
             SetupIOC();
+
+
+
+            InitializeComponent();
 
             // To set MainPage for the Application  
             if (!Application.Current.Properties.Keys.Contains("IsValidCodeAvailable"))
@@ -53,6 +60,12 @@ namespace SimpleQ
 
         private void NavigateToRegisterPageModel()
         {
+            //Localization Details
+            ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
+
+            languageService.SetCurrentLanguage();
+            Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
+
             var page = FreshPageModelResolver.ResolvePageModel<RegisterPageModel>();
             var basicNavContainer = new FreshNavigationContainer(page);
             MainPage = basicNavContainer;
@@ -60,12 +73,21 @@ namespace SimpleQ
 
         public static void NavigateToMainPageModel()
         {
+            //Localization Details
+            ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
+
+            languageService.SetCurrentLanguage();
+            Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
+
+
+            //Set new Navigation Container
             var masterDetailNav = new MainMasterPageModel();
             
             masterDetailNav.AddPage("Test1", ItemType.Categorie, new Test1PageModel(), null);
-            masterDetailNav.AddPage("Test2", ItemType.Navigation, new Test2PageModel(), "ic_extension_black_18dp.png");
-            masterDetailNav.AddPage("Test3", ItemType.Navigation, new Test3PageModel(), "ic_extension_black_18dp.png");
+            masterDetailNav.AddPage(AppResources.Settings, ItemType.Navigation, new SettingsPageModel(), "ic_settings_black_18.png");
+            masterDetailNav.AddPage(AppResources.Help, ItemType.Navigation, new HelpPageModel(), "ic_help_black_18.png");
             masterDetailNav.Init("Menu");
+
             Application.Current.MainPage = masterDetailNav;
         }
 
@@ -74,6 +96,7 @@ namespace SimpleQ
             FreshIOC.Container.Register<IUserDialogs>(UserDialogs.Instance);
             FreshIOC.Container.Register<IDialogService, DialogService>();
             FreshIOC.Container.Register<ISimulationService, SimulationService>();
+            FreshIOC.Container.Register<ILanguageService, LanguageService>();
         }
 
 		protected override async void OnStart ()

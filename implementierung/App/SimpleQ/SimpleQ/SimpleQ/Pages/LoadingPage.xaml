@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resx="clr-namespace:SimpleQ.Extensions"
-             x:Class="SimpleQ.Pages.LoadingPage"
-             NavigationPage.HasNavigationBar="False">
+             x:Class="SimpleQ.Pages.LoadingPage">
     <ContentPage.Resources>
         <resx:InvertableBooleanConverter x:Key="InvertableBooleanConverter"></resx:InvertableBooleanConverter>
     </ContentPage.Resources>
