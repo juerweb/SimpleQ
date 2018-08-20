@@ -1,10 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
              x:Class="SimpleQ.Pages.QuestionPages.GAQPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="GAQ"/>
+            <Label Text="{Binding Question.Categorie}" Style="{DynamicResource CaptionStyle}"></Label>
+            <Label Text="{Binding Question.QuestionDesc}" Style="{DynamicResource BodyStyle}"></Label>
+
+            <Picker ItemsSource="{Binding Question.GivenAnswers}" SelectedItem="{Binding SelectedAnswer, Mode=TwoWay}"></Picker>
+            <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsQuestionAnswered}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

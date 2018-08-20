@@ -1,9 +1,12 @@
 ﻿using FreshMvvm;
+using SimpleQ.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -29,7 +32,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         public OWQPageModel()
         {
-
+            SendAnswerCommand = new Command(QuestionAnswered);
         }
 
 
@@ -39,20 +42,39 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
+            this.question = (OWQModel)initData;
             base.Init(initData);
         }
         #endregion
 
         #region Fields
+        private OWQModel question;
+        private String answer;
+
         #endregion
 
         #region Properties + Getter/Setter Methods
+        public OWQModel Question { get => question; set => question = value; }
+        public String Answer
+        {
+            get => answer;
+            set
+            {
+                answer = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Commands
+        public Command SendAnswerCommand { get; private set; }
         #endregion
 
         #region Methods
+        private void QuestionAnswered()
+        {
+            Debug.WriteLine(String.Format("User answered the question with the id {0} with the answertext '{1}'...", Question.QuestionId, answer), "Info");
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

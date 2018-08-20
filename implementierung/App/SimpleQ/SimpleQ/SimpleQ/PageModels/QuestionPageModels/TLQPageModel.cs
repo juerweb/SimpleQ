@@ -1,9 +1,12 @@
 ﻿using FreshMvvm;
+using SimpleQ.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -29,7 +32,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         public TLQPageModel()
         {
-
+            GreenCommand = new Command(() => QuestionAnswered(TLQAnswer.Green));
+            RedCommand = new Command(() => QuestionAnswered(TLQAnswer.Red));
         }
 
 
@@ -39,20 +43,29 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
+            this.Question = (TLQModel)initData;
             base.Init(initData);
         }
         #endregion
 
         #region Fields
+        private TLQModel question;
         #endregion
 
         #region Properties + Getter/Setter Methods
+        public TLQModel Question { get => question; set => question = value; }
         #endregion
 
         #region Commands
+        public Command RedCommand { get; private set; }
+        public Command GreenCommand { get; private set; }
         #endregion
 
         #region Methods
+        private void QuestionAnswered(TLQAnswer answer)
+        {
+            Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.QuestionId, answer), "Info");
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

@@ -1,9 +1,12 @@
 ﻿using FreshMvvm;
+using SimpleQ.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -29,7 +32,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         public GAQPageModel()
         {
-
+            SendAnswerCommand = new Command(QuestionAnswered);
+            IsQuestionAnswered = false;
         }
 
 
@@ -39,20 +43,47 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
+            this.question = (GAQModel)initData;
             base.Init(initData);
         }
         #endregion
 
         #region Fields
+        private GAQModel question;
+        private String selectedAnswer;
+        private Boolean isQuestionAnswered;
+
         #endregion
 
         #region Properties + Getter/Setter Methods
+        public GAQModel Question { get => question; set => question = value; }
+        public string SelectedAnswer
+        {
+            get => selectedAnswer;
+            set
+            {
+                selectedAnswer = value;
+                IsQuestionAnswered = true;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool IsQuestionAnswered
+        {
+            get => isQuestionAnswered;
+            set { isQuestionAnswered = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Commands
+        public Command SendAnswerCommand { get; private set; }
         #endregion
 
         #region Methods
+        private void QuestionAnswered()
+        {
+            Debug.WriteLine(String.Format("User answered the question with the id {0} with the answer {1}...", Question.QuestionId, selectedAnswer), "Info");
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

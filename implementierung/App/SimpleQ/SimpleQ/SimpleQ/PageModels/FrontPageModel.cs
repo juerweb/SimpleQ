@@ -34,9 +34,10 @@ namespace SimpleQ.PageModels
         public FrontPageModel()
         {
             Questions = new ObservableCollection<QuestionModel>();
-            Questions.Add(new YNQModel("Sind Sie männlich?", "Allgemein", 0));
-            Questions.Add(new YNQModel("Sind Sie anwesend?", "Allgemein", 1));
-            Questions.Add(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "Allgemein", 2));
+            Questions.Add(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
+            Questions.Add(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
+            Questions.Add(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2));
+            Questions.Add(new GAQModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 1, new String[] { "Grün", "Rot", "Gelb", "Blau" }));
         }
 
 

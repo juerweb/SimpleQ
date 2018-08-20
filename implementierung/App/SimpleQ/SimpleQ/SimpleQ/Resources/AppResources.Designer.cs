@@ -88,6 +88,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Antwort ähnelt.
+        /// </summary>
+        internal static string Answer {
+            get {
+                return ResourceManager.GetString("Answer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die App Informationen ähnelt.
         /// </summary>
         internal static string AppInformation {
@@ -304,6 +313,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Nein ähnelt.
+        /// </summary>
+        internal static string No {
+            get {
+                return ResourceManager.GetString("No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die +43 00000000000 ähnelt.
         /// </summary>
         internal static string PhoneNumber {
@@ -358,6 +376,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Antwort senden ähnelt.
+        /// </summary>
+        internal static string SendAnswer {
+            get {
+                return ResourceManager.GetString("SendAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Einstellungen ähnelt.
         /// </summary>
         internal static string Settings {
@@ -390,6 +417,15 @@ namespace SimpleQ.Resources {
         internal static string VisitUs {
             get {
                 return ResourceManager.GetString("VisitUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Ja ähnelt.
+        /// </summary>
+        internal static string Yes {
+            get {
+                return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
     }
