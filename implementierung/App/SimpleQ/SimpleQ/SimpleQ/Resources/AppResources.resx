@@ -120,6 +120,12 @@
   <data name="About" xml:space="preserve">
     <value>Über SimpleQ</value>
   </data>
+  <data name="Abstract" xml:space="preserve">
+    <value>Übersicht</value>
+  </data>
+  <data name="AllCategories" xml:space="preserve">
+    <value>Alle Kategorien</value>
+  </data>
   <data name="AppInformation" xml:space="preserve">
     <value>App Informationen</value>
   </data>

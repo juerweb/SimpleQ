@@ -83,7 +83,7 @@ namespace SimpleQ
             //Set new Navigation Container
             var masterDetailNav = new MainMasterPageModel();
             
-            masterDetailNav.AddPage("Test1", ItemType.Categorie, new Test1PageModel(), null);
+            masterDetailNav.AddPage(AppResources.AllCategories, ItemType.Categorie, new FrontPageModel(), null);
             masterDetailNav.AddPage(AppResources.Settings, ItemType.Navigation, new SettingsPageModel(), "ic_settings_black_18.png");
             masterDetailNav.AddPage(AppResources.Help, ItemType.Navigation, new HelpPageModel(), "ic_help_black_18.png");
             masterDetailNav.Init("Menu");

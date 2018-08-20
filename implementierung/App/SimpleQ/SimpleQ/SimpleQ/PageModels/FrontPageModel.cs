@@ -1,6 +1,8 @@
 ﻿using FreshMvvm;
+using SimpleQ.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -29,7 +31,10 @@ namespace SimpleQ.PageModels
         /// </summary>
         public FrontPageModel()
         {
-
+            Questions = new ObservableCollection<QuestionModel>();
+            Questions.Add(new YNQModel("Sind Sie männlich?", "Allgemein", 0));
+            Questions.Add(new YNQModel("Sind Sie anwesend?", "Allgemein", 1));
+            Questions.Add(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "Allgemein", 2));
         }
 
 
@@ -44,15 +49,37 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Fields
+        private ObservableCollection<QuestionModel> questions;
+        private QuestionModel selectedQuestion;
         #endregion
 
         #region Properties + Getter/Setter Methods
+        public ObservableCollection<QuestionModel> Questions { get => questions; set => questions = value; }
+        public QuestionModel SelectedQuestion
+        {
+            get => selectedQuestion;
+            set
+            {
+                selectedQuestion = value;
+                OnPropertyChanged();
+
+                if (selectedQuestion != null)
+                {
+                    NavigateToQuestion();
+                }
+            }
+        }
         #endregion
 
         #region Commands
         #endregion
 
         #region Methods
+        private void NavigateToQuestion()
+        {
+            CoreMethods.PushPageModel<QuestionPageModel>(selectedQuestion);
+            selectedQuestion = null;
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

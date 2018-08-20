@@ -70,6 +70,24 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Übersicht ähnelt.
+        /// </summary>
+        internal static string Abstract {
+            get {
+                return ResourceManager.GetString("Abstract", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Alle Kategorien ähnelt.
+        /// </summary>
+        internal static string AllCategories {
+            get {
+                return ResourceManager.GetString("AllCategories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die App Informationen ähnelt.
         /// </summary>
         internal static string AppInformation {
