@@ -28,7 +28,7 @@ namespace SimpleQ.Models
         /// </summary>
         public FAQModel()
         {
-            this.IsActive = true;
+            this.IsActive = false;
         }
         #endregion
 

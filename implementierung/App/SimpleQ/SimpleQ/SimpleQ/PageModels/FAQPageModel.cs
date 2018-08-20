@@ -9,6 +9,7 @@ using System.Text;
 using System.Linq;
 using SimpleQ.Resources;
 using SimpleQ.Pages;
+using System.Diagnostics;
 
 namespace SimpleQ.PageModels
 {
@@ -75,12 +76,15 @@ namespace SimpleQ.PageModels
         {
             get => selectedFAQ;
             set
-            {
+            {   
                 selectedFAQ = value;
                 OnPropertyChanged();
+
+
+
                 if (selectedFAQ != null)
                 {
-                    OpenSelectedFAQ();
+                    OpenSelectedFAQ(selectedFAQ.IsActive);
                 }
 
             }
@@ -118,14 +122,15 @@ namespace SimpleQ.PageModels
         /// <summary>
         /// Opens the selected FAQ.
         /// </summary>
-        private void OpenSelectedFAQ()
+        private void OpenSelectedFAQ(Boolean isItTheSame)
         {
             DisableAllActiveFAQs();
-            this.selectedFAQ.IsActive = true;
-
-            ((FAQPage)CurrentPage).UpdateSize();
-
+            if (!isItTheSame)
+            {
+                this.selectedFAQ.IsActive = true;
+            }
             SelectedFAQ = null;
+
         }
         #endregion
 

@@ -21,18 +21,5 @@ namespace SimpleQ.Pages
         public void UpdateSize()
         {
         }
-
-        private void StackLayout_SizeChanged(object sender, EventArgs e)
-        {
-            var stackLayout = sender as StackLayout;
-            if (stackLayout != null)
-            {
-                var childrenHeight = stackLayout.Children.Sum(c => c.Height) + stackLayout.Children.Count * stackLayout.Spacing;
-                stackLayout.HeightRequest = childrenHeight;
-
-                var viewCell = stackLayout.Parent as ViewCell;
-                viewCell?.ForceUpdateSize();
-            }
-        }
     }
 }
