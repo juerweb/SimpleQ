@@ -1,12 +1,12 @@
 ﻿using SimpleQ.Validations;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.RegularExpressions;
 using Xamarin.Forms;
 
 namespace SimpleQ.Extensions
 {
+    /// <summary>
+    /// This class checks, if the user only enter one word on the OWQPage.
+    /// </summary>
+    /// <seealso cref="Xamarin.Forms.Behavior{Xamarin.Forms.Entry}" />
     public class OneWordBehavior: Behavior<Entry>
     {
         static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(OneWordBehavior), true);

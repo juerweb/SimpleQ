@@ -21,9 +21,8 @@ namespace SimpleQ.PageModels
         #region Constructor(s)
         /// <summary>
         /// Initializes a new instance of the <see cref="FrontPageModel"/> class.
-        /// With Parameter like Services
         /// </summary>
-        /// <param name="param">The parameter.</param>
+        /// <param name="questionService">The question service.</param>
         public FrontPageModel(IQuestionService questionService): this()
         {
             this.questionService = questionService;
@@ -49,12 +48,30 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Fields
+        /// <summary>
+        /// The question service
+        /// </summary>
         private IQuestionService questionService;
+        /// <summary>
+        /// The selected question
+        /// </summary>
         private QuestionModel selectedQuestion;
         #endregion
 
         #region Properties + Getter/Setter Methods
+        /// <summary>
+        /// Gets or sets the question service.
+        /// </summary>
+        /// <value>
+        /// The question service.
+        /// </value>
         public IQuestionService QuestionService { get => questionService; set => questionService = value; }
+        /// <summary>
+        /// Gets or sets the selected question.
+        /// </summary>
+        /// <value>
+        /// The selected question.
+        /// </value>
         public QuestionModel SelectedQuestion
         {
             get => selectedQuestion;
@@ -75,6 +92,9 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
+        /// <summary>
+        /// This method opens the detailpage from the specific question type, with the selectedQuestion as parameter.
+        /// </summary>
         private void NavigateToQuestion()
         {
             if (selectedQuestion.GetType() == typeof(YNQModel))

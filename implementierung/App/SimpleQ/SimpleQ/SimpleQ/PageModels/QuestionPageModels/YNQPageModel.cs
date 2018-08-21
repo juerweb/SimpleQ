@@ -12,19 +12,18 @@ using Xamarin.Forms;
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
-    /// This is the YNQPageModel for the Page xy.
+    /// This is the YNQPageModel for the Page YNQPage.
     /// </summary>
     public class YNQPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
         /// <summary>
-        /// Initializes a new instance of the <see cref="YNQPageModel"/> class.
-        /// With Parameter like Services
+        /// Initializes a new instance of the <see cref="YNQPageModel" /> class.
         /// </summary>
-        /// <param name="param">The parameter.</param>
-        public YNQPageModel(IQuestionService questionService): this()
+        /// <param name="questionService">The question service.</param>
+        public YNQPageModel(IQuestionService questionService) : this()
         {
-
+            this.questionService = questionService;
         }
 
         /// <summary>
@@ -50,22 +49,56 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Fields
+        /// <summary>
+        /// The actual question, with the answer and the question
+        /// </summary>
         private YNQModel question;
+        /// <summary>
+        /// The question service to set the answer of the actual question
+        /// </summary>
         private IQuestionService questionService;
         #endregion
 
         #region Properties + Getter/Setter Methods
+        /// <summary>
+        /// Gets or sets the question.
+        /// </summary>
+        /// <value>
+        /// The question.
+        /// </value>
         public YNQModel Question { get => question; set => question = value; }
 
+        /// <summary>
+        /// Gets or sets the question service.
+        /// </summary>
+        /// <value>
+        /// The question service.
+        /// </value>
         public IQuestionService QuestionService { get => questionService; set => questionService = value; }
         #endregion
 
         #region Commands
+        /// <summary>
+        /// Gets the yes command.
+        /// </summary>
+        /// <value>
+        /// The yes command.
+        /// </value>
         public Command YesCommand { get; private set; }
+        /// <summary>
+        /// Gets the no command.
+        /// </summary>
+        /// <value>
+        /// The no command.
+        /// </value>
         public Command NoCommand { get; private set; }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// This method is called, after the question was answered.
+        /// </summary>
+        /// <param name="answer">The answer.</param>
         private void QuestionAnswered(YNQAnswer answer)
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.QuestionId, answer), "Info");

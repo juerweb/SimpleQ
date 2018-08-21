@@ -2,17 +2,15 @@
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
-    /// This is the GAQPageModel for the Page xy.
+    /// This is the GAQPageModel for the GAQPage.
     /// </summary>
     public class GAQPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
@@ -50,15 +48,39 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Fields
+        /// <summary>
+        /// The question
+        /// </summary>
         private GAQModel question;
+        /// <summary>
+        /// The selected answer
+        /// </summary>
         private String selectedAnswer;
+        /// <summary>
+        /// The is question answered
+        /// </summary>
         private Boolean isQuestionAnswered;
+        /// <summary>
+        /// The question service
+        /// </summary>
         private IQuestionService questionService;
 
         #endregion
 
         #region Properties + Getter/Setter Methods
+        /// <summary>
+        /// Gets or sets the question.
+        /// </summary>
+        /// <value>
+        /// The question.
+        /// </value>
         public GAQModel Question { get => question; set => question = value; }
+        /// <summary>
+        /// Gets or sets the selected answer.
+        /// </summary>
+        /// <value>
+        /// The selected answer.
+        /// </value>
         public string SelectedAnswer
         {
             get => selectedAnswer;
@@ -70,8 +92,20 @@ namespace SimpleQ.PageModels.QuestionPageModels
             }
         }
 
+        /// <summary>
+        /// Gets or sets the question service.
+        /// </summary>
+        /// <value>
+        /// The question service.
+        /// </value>
         public IQuestionService QuestionService { get => questionService; set => questionService = value; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is question answered.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if this instance is question answered; otherwise, <c>false</c>.
+        /// </value>
         public bool IsQuestionAnswered
         {
             get => isQuestionAnswered;
@@ -80,10 +114,19 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Commands
+        /// <summary>
+        /// Gets the send answer command.
+        /// </summary>
+        /// <value>
+        /// The send answer command.
+        /// </value>
         public Command SendAnswerCommand { get; private set; }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// This method is called, after the user answered the question. The method calls a method in the questionService.
+        /// </summary>
         private void QuestionAnswered()
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0} with the answer {1}...", Question.QuestionId, selectedAnswer), "Info");

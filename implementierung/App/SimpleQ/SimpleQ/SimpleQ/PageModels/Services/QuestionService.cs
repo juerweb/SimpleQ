@@ -1,5 +1,4 @@
-﻿using FreshMvvm;
-using SimpleQ.Models;
+﻿using SimpleQ.Models;
 using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
@@ -8,7 +7,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace SimpleQ.PageModels.Services
 {
@@ -38,24 +36,53 @@ namespace SimpleQ.PageModels.Services
 
             AnsweredQuestions = new List<QuestionModel>();
 
+            //only in DEBUG Modus => Demo Data
             this.AddQuestion(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
             this.AddQuestion(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
             this.AddQuestion(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2));
             this.AddQuestion(new GAQModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 1, new String[] { "Grün", "Rot", "Gelb", "Blau" }));
+            //end of demo data
 
             this.PublicQuestions = Questions;
         }
         #endregion
 
         #region Fields
+        /// <summary>
+        /// All questions
+        /// </summary>
         private ObservableCollection<QuestionModel> questions;
+        /// <summary>
+        /// All questions, which the user answered and which aren't send to the server.
+        /// </summary>
         private List<QuestionModel> answeredQuestions;
+        /// <summary>
+        /// All questions, which are actual shown on the front page.
+        /// </summary>
         private ObservableCollection<QuestionModel> publicQuestions;
         #endregion
 
         #region Properties + Getter/Setter Methods
+        /// <summary>
+        /// Gets the questions.
+        /// </summary>
+        /// <value>
+        /// The questions.
+        /// </value>
         public ObservableCollection<QuestionModel> Questions { get => questions; private set => questions = value; }
+        /// <summary>
+        /// Gets or sets the answered questions.
+        /// </summary>
+        /// <value>
+        /// The answered questions.
+        /// </value>
         public List<QuestionModel> AnsweredQuestions { get => answeredQuestions; set => answeredQuestions = value; }
+        /// <summary>
+        /// Gets or sets the public questions.
+        /// </summary>
+        /// <value>
+        /// The public questions.
+        /// </value>
         public ObservableCollection<QuestionModel> PublicQuestions
         {
             get => publicQuestions;
@@ -73,11 +100,19 @@ namespace SimpleQ.PageModels.Services
         #endregion
 
         #region Methods
+        /// <summary>
+        /// This method is called, after the user answered the question. The method calls a method in the questionService.
+        /// </summary>
+        /// <param name="question">The question.</param>
         public void QuestionAnswered(QuestionModel question)
         {
             Debug.WriteLine("Question Service with question from type: " + question.GetType(), "Info");
         }
 
+        /// <summary>
+        /// This method add a new question and checks if the categorie of the question already exists.
+        /// </summary>
+        /// <param name="question">The question.</param>
         public void AddQuestion(QuestionModel question)
         {
             this.questions.Add(question);
@@ -89,6 +124,10 @@ namespace SimpleQ.PageModels.Services
             }
         }
 
+        /// <summary>
+        /// This method sets the actual categorie filter and furthermore the new public Collection with the questions in it.
+        /// </summary>
+        /// <param name="categorie">The categorie.</param>
         public void SetCategorieFilter(String categorie)
         {
             if (categorie == AppResources.AllCategories)

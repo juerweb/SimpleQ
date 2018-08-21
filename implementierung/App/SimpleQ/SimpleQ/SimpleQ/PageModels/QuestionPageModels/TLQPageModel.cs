@@ -2,26 +2,23 @@
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Text;
 using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
-    /// This is the TLQPageModel for the Page xy.
+    /// This is the TLQPageModel for the Page TLQPage.
     /// </summary>
     public class TLQPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
         /// <summary>
         /// Initializes a new instance of the <see cref="TLQPageModel"/> class.
-        /// With Parameter like Services
         /// </summary>
-        /// <param name="param">The parameter.</param>
+        /// <param name="questionService">The question service.</param>
         public TLQPageModel(IQuestionService questionService) : this()
         {
             this.questionService = questionService;
@@ -50,21 +47,55 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Fields
+        /// <summary>
+        /// The question
+        /// </summary>
         private TLQModel question;
+        /// <summary>
+        /// The question service
+        /// </summary>
         private IQuestionService questionService;
         #endregion
 
         #region Properties + Getter/Setter Methods
+        /// <summary>
+        /// Gets or sets the question.
+        /// </summary>
+        /// <value>
+        /// The question.
+        /// </value>
         public TLQModel Question { get => question; set => question = value; }
+        /// <summary>
+        /// Gets or sets the question service.
+        /// </summary>
+        /// <value>
+        /// The question service.
+        /// </value>
         public IQuestionService QuestionService { get => questionService; set => questionService = value; }
         #endregion
 
         #region Commands
+        /// <summary>
+        /// Gets the red command.
+        /// </summary>
+        /// <value>
+        /// The red command.
+        /// </value>
         public Command RedCommand { get; private set; }
+        /// <summary>
+        /// Gets the green command.
+        /// </summary>
+        /// <value>
+        /// The green command.
+        /// </value>
         public Command GreenCommand { get; private set; }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// This method is called, after the user answered the question. The method calls a method in the questionService.
+        /// </summary>
+        /// <param name="answer">The answer.</param>
         private void QuestionAnswered(TLQAnswer answer)
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.QuestionId, answer), "Info");
