@@ -85,7 +85,7 @@ namespace SimpleQ.PageModels.Services
             {
                 //categorie does not exists
 
-                App.MainMasterPageModel.AddPage(question.Categorie, ItemType.Categorie, new Test1PageModel(), null);
+                App.MainMasterPageModel.AddCategorie(question.Categorie);
             }
         }
 

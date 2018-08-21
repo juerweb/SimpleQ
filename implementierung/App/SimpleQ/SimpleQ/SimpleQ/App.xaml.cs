@@ -84,9 +84,9 @@ namespace SimpleQ
             MainMasterPageModel = new MainMasterPageModel();
 
             
-            MainMasterPageModel.AddPage(AppResources.AllCategories, ItemType.Categorie, new FrontPageModel(), null);
-            MainMasterPageModel.AddPage(AppResources.Settings, ItemType.Navigation, new SettingsPageModel(), "ic_settings_black_18.png");
-            MainMasterPageModel.AddPage(AppResources.Help, ItemType.Navigation, new HelpPageModel(), "ic_help_black_18.png");
+            MainMasterPageModel.AddCategorie(AppResources.AllCategories);
+            MainMasterPageModel.AddPage(AppResources.Settings, new SettingsPageModel(), "ic_settings_black_18.png");
+            MainMasterPageModel.AddPage(AppResources.Help, new HelpPageModel(), "ic_help_black_18.png");
             MainMasterPageModel.Init("Menu");
 
             Application.Current.MainPage = MainMasterPageModel;

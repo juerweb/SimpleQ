@@ -88,7 +88,7 @@ namespace SimpleQ.PageModels
             Master = mainMasterPage;
         }
 
-        public void AddPage(string title, ItemType itemType, FreshBasePageModel pageModel, String iconResourceName)
+        public void AddPage(string title, FreshBasePageModel pageModel, String iconResourceName)
         {
             var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
             page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
@@ -105,28 +105,34 @@ namespace SimpleQ.PageModels
                 }
                 
             }*/
-
-            if (title == AppResources.AllCategories)
-            {
-                Detail = navigationContainer;
-            }
-
             Debug.WriteLine("Add new Page");
 
             _pages.Add(title, navigationContainer);
 
-            switch (itemType)
+            this.MenuItems[1].Add(new MenuItemModel(title, pageModel, iconResourceName));
+        }
+
+        public void AddCategorie(string title)
+        {
+            if (title == AppResources.AllCategories)
             {
-                case ItemType.Categorie:
-                    Debug.WriteLine(title);
-                    Debug.WriteLine("Count before: " + this.MenuItems[0].Count);
-                    this.MenuItems[0].Add(new MenuItemModel(title, pageModel, iconResourceName));
-                    Debug.WriteLine("Count before: " + this.MenuItems[0].Count);
-                    break;
-                case ItemType.Navigation:
-                    this.MenuItems[1].Add(new MenuItemModel(title, pageModel, iconResourceName));
-                    break;
+                FrontPageModel pageModel = new FrontPageModel();
+                var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
+                page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
+                var navigationContainer = CreateContainerPage(page);
+
+                Detail = navigationContainer;
+
+                _pages.Add(title, navigationContainer);
+
+                this.MenuItems[0].Add(new MenuItemModel(title, pageModel, null));
             }
+            else
+            {
+                this.MenuItems[0].Add(new MenuItemModel(title, null, null));
+            }
+
+            
         }
 
         private void NavigateToNewPage()
