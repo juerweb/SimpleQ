@@ -1,5 +1,6 @@
 ﻿using FreshMvvm;
 using SimpleQ.Models;
+using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,7 +15,7 @@ namespace SimpleQ.PageModels.Services
     /// <summary>
     /// This is the QuestionService.
     /// </summary>
-    public class QuestionService : IQuestionService
+    public class QuestionService : IQuestionService, INotifyPropertyChanged
     {
         #region Constructor(s)
         /// <summary>
@@ -34,23 +35,38 @@ namespace SimpleQ.PageModels.Services
         public QuestionService()
         {
             Questions = new ObservableCollection<QuestionModel>();
+
             AnsweredQuestions = new List<QuestionModel>();
 
             this.AddQuestion(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
             this.AddQuestion(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
             this.AddQuestion(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2));
             this.AddQuestion(new GAQModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 1, new String[] { "Grün", "Rot", "Gelb", "Blau" }));
+
+            this.PublicQuestions = Questions;
         }
         #endregion
 
         #region Fields
         private ObservableCollection<QuestionModel> questions;
         private List<QuestionModel> answeredQuestions;
+        private ObservableCollection<QuestionModel> publicQuestions;
         #endregion
 
         #region Properties + Getter/Setter Methods
         public ObservableCollection<QuestionModel> Questions { get => questions; private set => questions = value; }
         public List<QuestionModel> AnsweredQuestions { get => answeredQuestions; set => answeredQuestions = value; }
+        public ObservableCollection<QuestionModel> PublicQuestions
+        {
+            get => publicQuestions;
+            set
+            {
+                publicQuestions = value;
+                Debug.WriteLine("Test");
+                OnPropertyChanged();
+            }
+            
+        }
         #endregion
 
         #region Commands
@@ -70,6 +86,18 @@ namespace SimpleQ.PageModels.Services
                 //categorie does not exists
 
                 App.MainMasterPageModel.AddPage(question.Categorie, ItemType.Categorie, new Test1PageModel(), null);
+            }
+        }
+
+        public void SetCategorieFilter(String categorie)
+        {
+            if (categorie == AppResources.AllCategories)
+            {
+                this.PublicQuestions = Questions;
+            }
+            else
+            {
+                this.PublicQuestions = new ObservableCollection<QuestionModel>(this.questions.Where(question => question.Categorie == categorie).ToList());
             }
         }
         #endregion

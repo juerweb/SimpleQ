@@ -12,6 +12,8 @@ namespace SimpleQ.PageModels.Services
         List<QuestionModel> AnsweredQuestions { get; set; }
 
         void QuestionAnswered(QuestionModel question);
+        void AddQuestion(QuestionModel question);
+        void SetCategorieFilter(String categorie);
 
     }
 }

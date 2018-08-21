@@ -1,6 +1,7 @@
 ﻿using FreshMvvm;
 using MvvmHelpers;
 using SimpleQ.Models;
+using SimpleQ.PageModels.Services;
 using SimpleQ.Pages;
 using SimpleQ.Resources;
 using System;
@@ -92,7 +93,20 @@ namespace SimpleQ.PageModels
             var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
             page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
             var navigationContainer = CreateContainerPage(page);
-            if (this.MenuItems[0].Count == 0 && this.MenuItems[1].Count == 0)
+            /*if (this.MenuItems[0].Count == 0 && this.MenuItems[1].Count == 0)
+            {
+                if (itemType == ItemType.Categorie)
+                {
+                    Detail = _pages[AppResources.AllCategories];
+                }
+                else
+                {
+                    Detail = navigationContainer;
+                }
+                
+            }*/
+
+            if (title == AppResources.AllCategories)
             {
                 Detail = navigationContainer;
             }
@@ -128,7 +142,11 @@ namespace SimpleQ.PageModels
                 if (this.MenuItems[0].Contains(SelectedItem))
                 {
                     //the selected item is a categorie
+                    IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+                    questionService.SetCategorieFilter(SelectedItem.Title);
+
                     Detail = _pages[AppResources.AllCategories];
+                    
                 }
                 else
                 {
