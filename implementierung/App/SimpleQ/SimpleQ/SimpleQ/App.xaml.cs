@@ -81,14 +81,15 @@ namespace SimpleQ
 
 
             //Set new Navigation Container
-            var masterDetailNav = new MainMasterPageModel();
-            
-            masterDetailNav.AddPage(AppResources.AllCategories, ItemType.Categorie, new FrontPageModel(), null);
-            masterDetailNav.AddPage(AppResources.Settings, ItemType.Navigation, new SettingsPageModel(), "ic_settings_black_18.png");
-            masterDetailNav.AddPage(AppResources.Help, ItemType.Navigation, new HelpPageModel(), "ic_help_black_18.png");
-            masterDetailNav.Init("Menu");
+            MainMasterPageModel = new MainMasterPageModel();
 
-            Application.Current.MainPage = masterDetailNav;
+            
+            MainMasterPageModel.AddPage(AppResources.AllCategories, ItemType.Categorie, new FrontPageModel(), null);
+            MainMasterPageModel.AddPage(AppResources.Settings, ItemType.Navigation, new SettingsPageModel(), "ic_settings_black_18.png");
+            MainMasterPageModel.AddPage(AppResources.Help, ItemType.Navigation, new HelpPageModel(), "ic_help_black_18.png");
+            MainMasterPageModel.Init("Menu");
+
+            Application.Current.MainPage = MainMasterPageModel;
         }
 
         private void SetupIOC()
@@ -97,6 +98,7 @@ namespace SimpleQ
             FreshIOC.Container.Register<IDialogService, DialogService>();
             FreshIOC.Container.Register<ISimulationService, SimulationService>();
             FreshIOC.Container.Register<ILanguageService, LanguageService>();
+            FreshIOC.Container.Register<IQuestionService, QuestionService>();
         }
 
 		protected override async void OnStart ()
@@ -117,5 +119,11 @@ namespace SimpleQ
 		{
 			// Handle when your app resumes
 		}
-	}
+
+        public static MainMasterPageModel MainMasterPageModel
+        {
+            get;
+            set;
+        }
+    }
 }

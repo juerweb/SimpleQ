@@ -7,11 +7,11 @@ namespace SimpleQ.Validations
 {
     public static class OneWordValidation
     {
-        private const string sixDigitCodeRegex = @"^[\S]+$";
+        private const string oneWordCodeRegex = @"^[\S]+$";
 
         public static Boolean IsValid(String text)
         {
-            return Regex.IsMatch(text, sixDigitCodeRegex, RegexOptions.IgnoreCase);
+            return Regex.IsMatch(text, oneWordCodeRegex, RegexOptions.IgnoreCase);
         }
     }
 }

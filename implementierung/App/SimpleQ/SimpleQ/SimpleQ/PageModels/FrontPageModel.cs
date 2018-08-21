@@ -1,6 +1,8 @@
 ﻿using FreshMvvm;
+using MvvmHelpers;
 using SimpleQ.Models;
 using SimpleQ.PageModels.QuestionPageModels;
+using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,9 +24,9 @@ namespace SimpleQ.PageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public FrontPageModel(object param): this()
+        public FrontPageModel(IQuestionService questionService): this()
         {
-
+            this.questionService = questionService;
         }
 
         /// <summary>
@@ -33,11 +35,6 @@ namespace SimpleQ.PageModels
         /// </summary>
         public FrontPageModel()
         {
-            Questions = new ObservableCollection<QuestionModel>();
-            Questions.Add(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
-            Questions.Add(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
-            Questions.Add(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2));
-            Questions.Add(new GAQModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 1, new String[] { "Grün", "Rot", "Gelb", "Blau" }));
         }
 
 
@@ -52,12 +49,12 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Fields
-        private ObservableCollection<QuestionModel> questions;
+        private IQuestionService questionService;
         private QuestionModel selectedQuestion;
         #endregion
 
         #region Properties + Getter/Setter Methods
-        public ObservableCollection<QuestionModel> Questions { get => questions; set => questions = value; }
+        public IQuestionService QuestionService { get => questionService; set => questionService = value; }
         public QuestionModel SelectedQuestion
         {
             get => selectedQuestion;

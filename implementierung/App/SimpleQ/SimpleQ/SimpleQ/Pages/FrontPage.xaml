@@ -7,7 +7,7 @@
     <ContentPage.Content>
         <StackLayout>
             <StackLayout VerticalOptions="FillAndExpand">
-                <ListView ItemsSource="{Binding Questions}" SeparatorVisibility="None" SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True">
+                <ListView ItemsSource="{Binding QuestionService.Questions}" SeparatorVisibility="None" SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

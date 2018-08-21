@@ -1,5 +1,6 @@
 ﻿using FreshMvvm;
 using SimpleQ.Models;
+using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,9 +22,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public GAQPageModel(object param): this()
+        public GAQPageModel(IQuestionService questionService) : this()
         {
-
+            this.questionService = questionService;
         }
 
         /// <summary>
@@ -52,6 +53,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private GAQModel question;
         private String selectedAnswer;
         private Boolean isQuestionAnswered;
+        private IQuestionService questionService;
 
         #endregion
 
@@ -68,6 +70,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
             }
         }
 
+        public IQuestionService QuestionService { get => questionService; set => questionService = value; }
+
         public bool IsQuestionAnswered
         {
             get => isQuestionAnswered;
@@ -83,6 +87,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private void QuestionAnswered()
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0} with the answer {1}...", Question.QuestionId, selectedAnswer), "Info");
+
+            this.question.Answer = selectedAnswer;
+
+            this.questionService.QuestionAnswered(question);
         }
         #endregion
 

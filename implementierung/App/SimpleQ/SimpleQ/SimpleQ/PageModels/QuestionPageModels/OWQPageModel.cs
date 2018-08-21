@@ -1,5 +1,6 @@
 ﻿using FreshMvvm;
 using SimpleQ.Models;
+using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,9 +22,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public OWQPageModel(object param): this()
+        public OWQPageModel(IQuestionService questionService) : this()
         {
-
+            this.questionService = questionService;
         }
 
         /// <summary>
@@ -33,6 +34,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         public OWQPageModel()
         {
             SendAnswerCommand = new Command(QuestionAnswered);
+            this.Answer = "";
         }
 
 
@@ -50,6 +52,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #region Fields
         private OWQModel question;
         private String answer;
+        private IQuestionService questionService;
 
         #endregion
 
@@ -64,6 +67,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
                 OnPropertyChanged();
             }
         }
+        public IQuestionService QuestionService { get => questionService; set => questionService = value; }
         #endregion
 
         #region Commands
@@ -74,6 +78,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private void QuestionAnswered()
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0} with the answertext '{1}'...", Question.QuestionId, answer), "Info");
+
+            this.question.Answer = answer;
+
+            this.questionService.QuestionAnswered(question);
         }
         #endregion
 

@@ -2,6 +2,7 @@
 using MvvmHelpers;
 using SimpleQ.Models;
 using SimpleQ.Pages;
+using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,7 +22,10 @@ namespace SimpleQ.PageModels
         #region Constructor(s)
         public MainMasterPageModel(): base()
         {
-            MenuItems = new ObservableCollection<Grouping<ItemType, MenuItemModel>>();
+            Debug.WriteLine("Constructor of MainMasterPageModel...", "Info");
+            MenuItems = new ObservableCollection<MenuItemListModel>();
+            this.MenuItems.Add(new MenuItemListModel(ItemType.Categorie.ToString()));
+            this.MenuItems.Add(new MenuItemListModel(ItemType.Navigation.ToString()));
 
             //Generate CodeValidationModel from Application Properties
             Boolean isValidCodeAvailable = (bool)Application.Current.Properties["IsValidCodeAvailable"];
@@ -37,9 +41,6 @@ namespace SimpleQ.PageModels
         private CodeValidationModel codeValidationModel;
         private MenuItemModel selectedItem;
 
-        private List<MenuItemModel> categories = new List<MenuItemModel>();
-        private List<MenuItemModel> navigations = new List<MenuItemModel>();
-
         private Dictionary<String, Page> _pages = new Dictionary<string, Page>();
         #endregion
 
@@ -54,7 +55,7 @@ namespace SimpleQ.PageModels
             }
         }
 
-        public ObservableCollection<Grouping<ItemType, MenuItemModel>> MenuItems { get; set; }
+        public ObservableCollection<MenuItemListModel> MenuItems { get; set; }
 
         public MenuItemModel SelectedItem
         {
@@ -80,8 +81,6 @@ namespace SimpleQ.PageModels
         protected override void CreateMenuPage(string menuPageTitle, string menuIcon = null)
         {
             Debug.WriteLine("Create Menu Page...", "Info");
-            this.MenuItems.Add(new Grouping<ItemType, MenuItemModel>(ItemType.Categorie, categories));
-            this.MenuItems.Add(new Grouping<ItemType, MenuItemModel>(ItemType.Navigation, navigations));
 
             MainMasterPage mainMasterPage = new MainMasterPage();
             mainMasterPage.BindingContext = this;
@@ -93,7 +92,7 @@ namespace SimpleQ.PageModels
             var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
             page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
             var navigationContainer = CreateContainerPage(page);
-            if (this.categories.Count == 0 && this.navigations.Count == 0)
+            if (this.MenuItems[0].Count == 0 && this.MenuItems[1].Count == 0)
             {
                 Detail = navigationContainer;
             }
@@ -105,10 +104,13 @@ namespace SimpleQ.PageModels
             switch (itemType)
             {
                 case ItemType.Categorie:
-                    categories.Add(new MenuItemModel(title, pageModel));
+                    Debug.WriteLine(title);
+                    Debug.WriteLine("Count before: " + this.MenuItems[0].Count);
+                    this.MenuItems[0].Add(new MenuItemModel(title, pageModel, iconResourceName));
+                    Debug.WriteLine("Count before: " + this.MenuItems[0].Count);
                     break;
                 case ItemType.Navigation:
-                    navigations.Add(new MenuItemModel(title, pageModel, iconResourceName));
+                    this.MenuItems[1].Add(new MenuItemModel(title, pageModel, iconResourceName));
                     break;
             }
         }
@@ -118,12 +120,20 @@ namespace SimpleQ.PageModels
 
             if (selectedItem != null)
             {
+
                 Debug.WriteLine("Navigate to new page: " + selectedItem.Title, "Info");
 
                 IsPresented = false;
 
-                Detail = _pages[SelectedItem.Title];
-                Debug.WriteLine("TEST");
+                if (this.MenuItems[0].Contains(SelectedItem))
+                {
+                    //the selected item is a categorie
+                    Detail = _pages[AppResources.AllCategories];
+                }
+                else
+                {
+                    Detail = _pages[SelectedItem.Title];
+                }
             }
 
         }

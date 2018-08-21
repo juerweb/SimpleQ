@@ -1,5 +1,6 @@
 ﻿using FreshMvvm;
 using SimpleQ.Models;
+using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,9 +22,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public TLQPageModel(object param): this()
+        public TLQPageModel(IQuestionService questionService) : this()
         {
-
+            this.questionService = questionService;
         }
 
         /// <summary>
@@ -50,10 +51,12 @@ namespace SimpleQ.PageModels.QuestionPageModels
 
         #region Fields
         private TLQModel question;
+        private IQuestionService questionService;
         #endregion
 
         #region Properties + Getter/Setter Methods
         public TLQModel Question { get => question; set => question = value; }
+        public IQuestionService QuestionService { get => questionService; set => questionService = value; }
         #endregion
 
         #region Commands
@@ -65,6 +68,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private void QuestionAnswered(TLQAnswer answer)
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.QuestionId, answer), "Info");
+
+            this.question.Answer = answer;
+
+            this.questionService.QuestionAnswered(question);
         }
         #endregion
 

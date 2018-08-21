@@ -8,7 +8,7 @@
             <Label Text="{Binding Question.Categorie}" Style="{DynamicResource CaptionStyle}"></Label>
             <Label Text="{Binding Question.QuestionDesc}" Style="{DynamicResource BodyStyle}"></Label>
 
-            <Entry Placeholder="{ext:Translate Text=Answer}" Text="{Binding Path=Answer, StringFormat='{}{0:#}'}">
+            <Entry Placeholder="{ext:Translate Text=Answer}" Text="{Binding Answer}" BindingContext="{Binding}">
                 <Entry.Behaviors>
                     <ext:OneWordBehavior x:Name="OneWordBehavior"></ext:OneWordBehavior>
                 </Entry.Behaviors>

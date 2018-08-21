@@ -1,5 +1,6 @@
 ﻿using FreshMvvm;
 using SimpleQ.Models;
+using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,7 +22,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public YNQPageModel(object param): this()
+        public YNQPageModel(IQuestionService questionService): this()
         {
 
         }
@@ -49,11 +50,14 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Fields
-        YNQModel question;
+        private YNQModel question;
+        private IQuestionService questionService;
         #endregion
 
         #region Properties + Getter/Setter Methods
         public YNQModel Question { get => question; set => question = value; }
+
+        public IQuestionService QuestionService { get => questionService; set => questionService = value; }
         #endregion
 
         #region Commands
@@ -65,6 +69,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private void QuestionAnswered(YNQAnswer answer)
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.QuestionId, answer), "Info");
+
+            this.question.Answer = answer;
+
+            this.questionService.QuestionAnswered(this.question);
         }
         #endregion
 
