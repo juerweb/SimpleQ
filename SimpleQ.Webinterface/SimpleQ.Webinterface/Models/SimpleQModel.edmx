@@ -10,77 +10,80 @@
             <PropertyRef Name="AnsId" />
           </Key>
           <Property Name="AnsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AnsDesc" Type="varchar(max)" Nullable="false" />
+          <Property Name="AnsDesc" Type="varchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="AskedPerson">
           <Key>
-            <PropertyRef Name="PersId" />
-            <PropertyRef Name="DepId" />
+            <PropertyRef Name="PersEmail" />
+            <PropertyRef Name="CustName" />
           </Key>
-          <Property Name="PersId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="DepId" Type="int" Nullable="false" />
-          <Property Name="PersFirstName" Type="varchar(max)" Nullable="false" />
-          <Property Name="PersLastName" Type="varchar(max)" Nullable="false" />
-          <Property Name="PersEmail" Type="varchar(max)" Nullable="false" />
+          <Property Name="PersEmail" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="DepName" Type="varchar" MaxLength="256" />
+          <Property Name="CustName" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="PersFirstName" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="PersLastName" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="PersPwdTmp" Type="varchar(max)" />
           <Property Name="PersPwdHash" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Bill">
           <Key>
             <PropertyRef Name="BillId" />
-            <PropertyRef Name="CustId" />
+            <PropertyRef Name="CustName" />
           </Key>
           <Property Name="BillId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="CustName" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="BillAmount" Type="money" Nullable="false" />
           <Property Name="BillDate" Type="datetime" Nullable="false" />
-          <Property Name="Payed" Type="bit" Nullable="false" />
+          <Property Name="Paid" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Contains">
           <Key>
             <PropertyRef Name="GroupId" />
-            <PropertyRef Name="DepId" />
+            <PropertyRef Name="DepName" />
+            <PropertyRef Name="CustName" />
           </Key>
           <Property Name="GroupId" Type="int" Nullable="false" />
-          <Property Name="DepId" Type="int" Nullable="false" />
+          <Property Name="DepName" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="CustName" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="Amount" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
-            <PropertyRef Name="CustId" />
+            <PropertyRef Name="CustName" />
           </Key>
-          <Property Name="CustId" Type="int" Nullable="false" />
-          <Property Name="CustName" Type="varchar" MaxLength="900" Nullable="false" />
-          <Property Name="CustEmail" Type="varchar" MaxLength="900" Nullable="false" />
+          <Property Name="CustName" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="CustEmail" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="CustPwdTmp" Type="varchar(max)" />
           <Property Name="CustPwdHash" Type="varbinary(max)" />
-          <Property Name="Street" Type="varchar(max)" Nullable="false" />
+          <Property Name="Street" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="Plz" Type="varchar" MaxLength="16" Nullable="false" />
-          <Property Name="City" Type="varchar(max)" Nullable="false" />
-          <Property Name="Country" Type="varchar(max)" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="PaymentMethodId" Type="int" Nullable="false" />
           <Property Name="CostBalance" Type="money" Nullable="false" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
-            <PropertyRef Name="DepId" />
+            <PropertyRef Name="DepName" />
+            <PropertyRef Name="CustName" />
           </Key>
-          <Property Name="DepId" Type="int" Nullable="false" />
-          <Property Name="CustId" Type="int" Nullable="false" />
-          <Property Name="DepName" Type="varchar(max)" Nullable="false" />
+          <Property Name="DepName" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="CustName" Type="varchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="DsgvoConstraint">
           <Key>
             <PropertyRef Name="ConstrName" />
           </Key>
-          <Property Name="ConstrName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="ConstrName" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="ConstrValue" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="GroupId" />
+            <PropertyRef Name="CustName" />
           </Key>
-          <Property Name="GroupId" Type="int" Nullable="false" />
+          <Property Name="GroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustName" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="GroupDesc" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="PaymentMethod">
@@ -93,10 +96,10 @@
         <EntityType Name="Survey">
           <Key>
             <PropertyRef Name="SvyId" />
-            <PropertyRef Name="CustId" />
+            <PropertyRef Name="CustName" />
           </Key>
           <Property Name="SvyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustId" Type="int" Nullable="false" />
+          <Property Name="CustName" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="SvyDesc" Type="varchar(max)" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
           <Property Name="EndDate" Type="datetime" Nullable="false" />
@@ -107,17 +110,17 @@
             <PropertyRef Name="TypeId" />
           </Key>
           <Property Name="TypeId" Type="int" Nullable="false" />
-          <Property Name="TypeDesc" Type="varchar(max)" Nullable="false" />
+          <Property Name="TypeDesc" Type="varchar" MaxLength="256" Nullable="false" />
         </EntityType>
         <EntityType Name="Vote">
           <Key>
-            <PropertyRef Name="SvyId" />
-            <PropertyRef Name="CustId" />
-            <PropertyRef Name="AnsId" />
+            <PropertyRef Name="VoteId" />
           </Key>
-          <Property Name="SvyId" Type="int" Nullable="false" />
-          <Property Name="CustId" Type="int" Nullable="false" />
-          <Property Name="AnsId" Type="int" Nullable="false" />
+          <Property Name="VoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SvyId" Type="int" />
+          <Property Name="CustName" Type="varchar" MaxLength="256" />
+          <Property Name="AnsId" Type="int" />
+          <Property Name="Note" Type="varchar(max)" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -131,55 +134,61 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="Amount" Type="int" />
           <Property Name="MinSize" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__AskedPers__DepId__47DBAE45">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+        <Association Name="FK__AskedPerson__25A691D2">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
           <End Role="AskedPerson" Type="Self.AskedPerson" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
-              <PropertyRef Name="DepId" />
+              <PropertyRef Name="DepName" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="AskedPerson">
-              <PropertyRef Name="DepId" />
+              <PropertyRef Name="DepName" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bill__CustId__3C69FB99">
+        <Association Name="FK__Bill__CustName__1940BAED">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Bill">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Contains__DepId__44FF419A">
+        <Association Name="FK__Contains__21D600EE">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="Contains" Type="Self.Contains" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
-              <PropertyRef Name="DepId" />
+              <PropertyRef Name="DepName" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Contains">
-              <PropertyRef Name="DepId" />
+              <PropertyRef Name="DepName" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Contains__GroupI__440B1D61">
+        <Association Name="FK__Contains__22CA2527">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Contains" Type="Self.Contains" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">
               <PropertyRef Name="GroupId" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Contains">
               <PropertyRef Name="GroupId" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Customer__Paymen__398D8EEE">
+        <Association Name="FK__Customer__Paymen__16644E42">
           <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -191,31 +200,43 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Departmen__CustI__3F466844">
+        <Association Name="FK__Departmen__CustN__1C1D2798">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Department" Type="Self.Department" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Department">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__CustId__4CA06362">
+        <Association Name="FK__Group__CustName__1EF99443">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustName" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="CustName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Survey__CustName__2A6B46EF">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Survey">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__TypeId__4D94879B">
+        <Association Name="FK__Survey__TypeId__2B5F6B28">
           <End Role="SurveyType" Type="Self.SurveyType" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -227,22 +248,22 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vote__534D60F1">
-          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+        <Association Name="FK__Vote__3118447E">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="0..1" />
           <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Survey">
               <PropertyRef Name="SvyId" />
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Vote">
               <PropertyRef Name="SvyId" />
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vote__AnsId__52593CB8">
-          <End Role="Answer" Type="Self.Answer" Multiplicity="1" />
+        <Association Name="FK__Vote__AnsId__30242045">
+          <End Role="Answer" Type="Self.Answer" Multiplicity="0..1" />
           <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Answer">
@@ -274,43 +295,47 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
     [vw_InvalidGroupSizes].[MinSize] AS [MinSize]
     FROM [dbo].[vw_InvalidGroupSizes] AS [vw_InvalidGroupSizes]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__AskedPers__DepId__47DBAE45" Association="Self.FK__AskedPers__DepId__47DBAE45">
+          <AssociationSet Name="FK__AskedPerson__25A691D2" Association="Self.FK__AskedPerson__25A691D2">
             <End Role="Department" EntitySet="Department" />
             <End Role="AskedPerson" EntitySet="AskedPerson" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bill__CustId__3C69FB99" Association="Self.FK__Bill__CustId__3C69FB99">
+          <AssociationSet Name="FK__Bill__CustName__1940BAED" Association="Self.FK__Bill__CustName__1940BAED">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
-          <AssociationSet Name="FK__Contains__DepId__44FF419A" Association="Self.FK__Contains__DepId__44FF419A">
+          <AssociationSet Name="FK__Contains__21D600EE" Association="Self.FK__Contains__21D600EE">
             <End Role="Department" EntitySet="Department" />
             <End Role="Contains" EntitySet="Contains" />
           </AssociationSet>
-          <AssociationSet Name="FK__Contains__GroupI__440B1D61" Association="Self.FK__Contains__GroupI__440B1D61">
+          <AssociationSet Name="FK__Contains__22CA2527" Association="Self.FK__Contains__22CA2527">
             <End Role="Group" EntitySet="Group" />
             <End Role="Contains" EntitySet="Contains" />
           </AssociationSet>
-          <AssociationSet Name="FK__Customer__Paymen__398D8EEE" Association="Self.FK__Customer__Paymen__398D8EEE">
+          <AssociationSet Name="FK__Customer__Paymen__16644E42" Association="Self.FK__Customer__Paymen__16644E42">
             <End Role="PaymentMethod" EntitySet="PaymentMethod" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
-          <AssociationSet Name="FK__Departmen__CustI__3F466844" Association="Self.FK__Departmen__CustI__3F466844">
+          <AssociationSet Name="FK__Departmen__CustN__1C1D2798" Association="Self.FK__Departmen__CustN__1C1D2798">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Department" EntitySet="Department" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__CustId__4CA06362" Association="Self.FK__Survey__CustId__4CA06362">
+          <AssociationSet Name="FK__Group__CustName__1EF99443" Association="Self.FK__Group__CustName__1EF99443">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Group" EntitySet="Group" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Survey__CustName__2A6B46EF" Association="Self.FK__Survey__CustName__2A6B46EF">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Survey" EntitySet="Survey" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__TypeId__4D94879B" Association="Self.FK__Survey__TypeId__4D94879B">
+          <AssociationSet Name="FK__Survey__TypeId__2B5F6B28" Association="Self.FK__Survey__TypeId__2B5F6B28">
             <End Role="SurveyType" EntitySet="SurveyType" />
             <End Role="Survey" EntitySet="Survey" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vote__534D60F1" Association="Self.FK__Vote__534D60F1">
+          <AssociationSet Name="FK__Vote__3118447E" Association="Self.FK__Vote__3118447E">
             <End Role="Survey" EntitySet="Survey" />
             <End Role="Vote" EntitySet="Vote" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vote__AnsId__52593CB8" Association="Self.FK__Vote__AnsId__52593CB8">
+          <AssociationSet Name="FK__Vote__AnsId__30242045" Association="Self.FK__Vote__AnsId__30242045">
             <End Role="Answer" EntitySet="Answer" />
             <End Role="Vote" EntitySet="Vote" />
           </AssociationSet>
@@ -325,91 +350,96 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             <PropertyRef Name="AnsId" />
           </Key>
           <Property Name="AnsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AnsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Survey" Relationship="Self.Vote" FromRole="Answer" ToRole="Survey" />
+          <Property Name="AnsDesc" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Votes" Relationship="Self.FK__Vote__AnsId__30242045" FromRole="Answer" ToRole="Vote" />
         </EntityType>
         <EntityType Name="AskedPerson">
           <Key>
-            <PropertyRef Name="PersId" />
-            <PropertyRef Name="DepId" />
+            <PropertyRef Name="PersEmail" />
+            <PropertyRef Name="CustName" />
           </Key>
-          <Property Name="PersId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DepId" Type="Int32" Nullable="false" />
-          <Property Name="PersFirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PersLastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PersEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PersEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DepName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="CustName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PersFirstName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PersLastName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PersPwdTmp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="PersPwdHash" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="Department" Relationship="Self.FK__AskedPers__DepId__47DBAE45" FromRole="AskedPerson" ToRole="Department" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__AskedPerson__25A691D2" FromRole="AskedPerson" ToRole="Department" />
         </EntityType>
         <EntityType Name="Bill">
           <Key>
             <PropertyRef Name="BillId" />
-            <PropertyRef Name="CustId" />
+            <PropertyRef Name="CustName" />
           </Key>
           <Property Name="BillId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="CustName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="BillAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Payed" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__Bill__CustId__3C69FB99" FromRole="Bill" ToRole="Customer" />
+          <Property Name="Paid" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Bill__CustName__1940BAED" FromRole="Bill" ToRole="Customer" />
         </EntityType>
-        <EntityType Name="Contains">
+        <EntityType Name="Contain">
           <Key>
             <PropertyRef Name="GroupId" />
-            <PropertyRef Name="DepId" />
+            <PropertyRef Name="DepName" />
+            <PropertyRef Name="CustName" />
           </Key>
           <Property Name="GroupId" Type="Int32" Nullable="false" />
-          <Property Name="DepId" Type="Int32" Nullable="false" />
+          <Property Name="DepName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Department" Relationship="Self.FK__Contains__DepId__44FF419A" FromRole="Contains" ToRole="Department" />
-          <NavigationProperty Name="Group" Relationship="Self.FK__Contains__GroupI__440B1D61" FromRole="Contains" ToRole="Group" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Contains__21D600EE" FromRole="Contains" ToRole="Department" />
+          <NavigationProperty Name="Group" Relationship="Self.FK__Contains__22CA2527" FromRole="Contains" ToRole="Group" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
-            <PropertyRef Name="CustId" />
+            <PropertyRef Name="CustName" />
           </Key>
-          <Property Name="CustId" Type="Int32" Nullable="false" />
-          <Property Name="CustName" Type="String" MaxLength="900" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CustEmail" Type="String" MaxLength="900" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustEmail" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CustPwdTmp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CustPwdHash" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="Street" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Street" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Plz" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
           <Property Name="CostBalance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Bill" Relationship="Self.FK__Bill__CustId__3C69FB99" FromRole="Customer" ToRole="Bill" />
-          <NavigationProperty Name="PaymentMethod" Relationship="Self.FK__Customer__Paymen__398D8EEE" FromRole="Customer" ToRole="PaymentMethod" />
-          <NavigationProperty Name="Department" Relationship="Self.FK__Departmen__CustI__3F466844" FromRole="Customer" ToRole="Department" />
-          <NavigationProperty Name="Survey" Relationship="Self.FK__Survey__CustId__4CA06362" FromRole="Customer" ToRole="Survey" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK__Bill__CustName__1940BAED" FromRole="Customer" ToRole="Bill" />
+          <NavigationProperty Name="PaymentMethod" Relationship="Self.FK__Customer__Paymen__16644E42" FromRole="Customer" ToRole="PaymentMethod" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK__Departmen__CustN__1C1D2798" FromRole="Customer" ToRole="Department" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK__Group__CustName__1EF99443" FromRole="Customer" ToRole="Group" />
+          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__CustName__2A6B46EF" FromRole="Customer" ToRole="Survey" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
-            <PropertyRef Name="DepId" />
+            <PropertyRef Name="DepName" />
+            <PropertyRef Name="CustName" />
           </Key>
-          <Property Name="DepId" Type="Int32" Nullable="false" />
-          <Property Name="CustId" Type="Int32" Nullable="false" />
-          <Property Name="DepName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="AskedPerson" Relationship="Self.FK__AskedPers__DepId__47DBAE45" FromRole="Department" ToRole="AskedPerson" />
-          <NavigationProperty Name="Contains" Relationship="Self.FK__Contains__DepId__44FF419A" FromRole="Department" ToRole="Contains" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__Departmen__CustI__3F466844" FromRole="Department" ToRole="Customer" />
+          <Property Name="DepName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AskedPersons" Relationship="Self.FK__AskedPerson__25A691D2" FromRole="Department" ToRole="AskedPerson" />
+          <NavigationProperty Name="Contains" Relationship="Self.FK__Contains__21D600EE" FromRole="Department" ToRole="Contains" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Departmen__CustN__1C1D2798" FromRole="Department" ToRole="Customer" />
         </EntityType>
         <EntityType Name="DsgvoConstraint">
           <Key>
             <PropertyRef Name="ConstrName" />
           </Key>
-          <Property Name="ConstrName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ConstrName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ConstrValue" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Group">
           <Key>
             <PropertyRef Name="GroupId" />
+            <PropertyRef Name="CustName" />
           </Key>
-          <Property Name="GroupId" Type="Int32" Nullable="false" />
+          <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="GroupDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Contains" Relationship="Self.FK__Contains__GroupI__440B1D61" FromRole="Group" ToRole="Contains" />
+          <NavigationProperty Name="Contains" Relationship="Self.FK__Contains__22CA2527" FromRole="Group" ToRole="Contains" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Group__CustName__1EF99443" FromRole="Group" ToRole="Customer" />
         </EntityType>
         <EntityType Name="PaymentMethod">
           <Key>
@@ -417,30 +447,42 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           </Key>
           <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
           <Property Name="PaymentMethodDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__Customer__Paymen__398D8EEE" FromRole="PaymentMethod" ToRole="Customer" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Paymen__16644E42" FromRole="PaymentMethod" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Survey">
           <Key>
             <PropertyRef Name="SvyId" />
-            <PropertyRef Name="CustId" />
+            <PropertyRef Name="CustName" />
           </Key>
           <Property Name="SvyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustId" Type="Int32" Nullable="false" />
+          <Property Name="CustName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="SvyDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__Survey__CustId__4CA06362" FromRole="Survey" ToRole="Customer" />
-          <NavigationProperty Name="SurveyType" Relationship="Self.FK__Survey__TypeId__4D94879B" FromRole="Survey" ToRole="SurveyType" />
-          <NavigationProperty Name="Answer" Relationship="Self.Vote" FromRole="Survey" ToRole="Answer" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Survey__CustName__2A6B46EF" FromRole="Survey" ToRole="Customer" />
+          <NavigationProperty Name="SurveyType" Relationship="Self.FK__Survey__TypeId__2B5F6B28" FromRole="Survey" ToRole="SurveyType" />
+          <NavigationProperty Name="Votes" Relationship="Self.FK__Vote__3118447E" FromRole="Survey" ToRole="Vote" />
         </EntityType>
         <EntityType Name="SurveyType">
           <Key>
             <PropertyRef Name="TypeId" />
           </Key>
           <Property Name="TypeId" Type="Int32" Nullable="false" />
-          <Property Name="TypeDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Survey" Relationship="Self.FK__Survey__TypeId__4D94879B" FromRole="SurveyType" ToRole="Survey" />
+          <Property Name="TypeDesc" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__TypeId__2B5F6B28" FromRole="SurveyType" ToRole="Survey" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="VoteId" />
+          </Key>
+          <Property Name="VoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SvyId" Type="Int32" />
+          <Property Name="CustName" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="AnsId" Type="Int32" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Answer" Relationship="Self.FK__Vote__AnsId__30242045" FromRole="Vote" ToRole="Answer" />
+          <NavigationProperty Name="Survey" Relationship="Self.FK__Vote__3118447E" FromRole="Vote" ToRole="Survey" />
         </EntityType>
         <EntityType Name="vw_InvalidGroupSizes">
           <Key>
@@ -452,55 +494,73 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="Amount" Type="Int32" />
           <Property Name="MinSize" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="FK__AskedPers__DepId__47DBAE45">
-          <End Role="Department" Type="Self.Department" Multiplicity="1" />
-          <End Role="AskedPerson" Type="Self.AskedPerson" Multiplicity="*" />
+        <Association Name="FK__Vote__AnsId__30242045">
+          <End Role="Answer" Type="Self.Answer" Multiplicity="0..1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepId" />
+            <Principal Role="Answer">
+              <PropertyRef Name="AnsId" />
             </Principal>
-            <Dependent Role="AskedPerson">
-              <PropertyRef Name="DepId" />
+            <Dependent Role="Vote">
+              <PropertyRef Name="AnsId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bill__CustId__3C69FB99">
+        <Association Name="FK__AskedPerson__25A691D2">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="AskedPerson" Type="Self.AskedPerson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepName" />
+              <PropertyRef Name="CustName" />
+            </Principal>
+            <Dependent Role="AskedPerson">
+              <PropertyRef Name="DepName" />
+              <PropertyRef Name="CustName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bill__CustName__1940BAED">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Bill">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Contains__DepId__44FF419A">
+        <Association Name="FK__Contains__21D600EE">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
-          <End Role="Contains" Type="Self.Contains" Multiplicity="*" />
+          <End Role="Contains" Type="Self.Contain" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Department">
-              <PropertyRef Name="DepId" />
+              <PropertyRef Name="DepName" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Contains">
-              <PropertyRef Name="DepId" />
+              <PropertyRef Name="DepName" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Contains__GroupI__440B1D61">
+        <Association Name="FK__Contains__22CA2527">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
-          <End Role="Contains" Type="Self.Contains" Multiplicity="*" />
+          <End Role="Contains" Type="Self.Contain" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Group">
               <PropertyRef Name="GroupId" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Contains">
               <PropertyRef Name="GroupId" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Customer__Paymen__398D8EEE">
+        <Association Name="FK__Customer__Paymen__16644E42">
           <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -512,31 +572,43 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Departmen__CustI__3F466844">
+        <Association Name="FK__Departmen__CustN__1C1D2798">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Department" Type="Self.Department" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Department">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__CustId__4CA06362">
+        <Association Name="FK__Group__CustName__1EF99443">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Group" Type="Self.Group" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustName" />
+            </Principal>
+            <Dependent Role="Group">
+              <PropertyRef Name="CustName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Survey__CustName__2A6B46EF">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Principal>
             <Dependent Role="Survey">
-              <PropertyRef Name="CustId" />
+              <PropertyRef Name="CustName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__TypeId__4D94879B">
+        <Association Name="FK__Survey__TypeId__2B5F6B28">
           <End Role="SurveyType" Type="Self.SurveyType" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -548,58 +620,77 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="Vote">
-          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
-          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+        <Association Name="FK__Vote__3118447E">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="0..1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SvyId" />
+              <PropertyRef Name="CustName" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="SvyId" />
+              <PropertyRef Name="CustName" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
         <EntityContainer Name="SimpleQDBEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Answer" EntityType="Self.Answer" />
-          <EntitySet Name="AskedPerson" EntityType="Self.AskedPerson" />
-          <EntitySet Name="Bill" EntityType="Self.Bill" />
-          <EntitySet Name="Contains" EntityType="Self.Contains" />
-          <EntitySet Name="Customer" EntityType="Self.Customer" />
-          <EntitySet Name="Department" EntityType="Self.Department" />
-          <EntitySet Name="DsgvoConstraint" EntityType="Self.DsgvoConstraint" />
-          <EntitySet Name="Group" EntityType="Self.Group" />
-          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" />
-          <EntitySet Name="Survey" EntityType="Self.Survey" />
-          <EntitySet Name="SurveyType" EntityType="Self.SurveyType" />
+          <EntitySet Name="Answers" EntityType="Self.Answer" />
+          <EntitySet Name="AskedPersons" EntityType="Self.AskedPerson" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Contains" EntityType="Self.Contain" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="DsgvoConstraints" EntityType="Self.DsgvoConstraint" />
+          <EntitySet Name="Groups" EntityType="Self.Group" />
+          <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethod" />
+          <EntitySet Name="Surveys" EntityType="Self.Survey" />
+          <EntitySet Name="SurveyTypes" EntityType="Self.SurveyType" />
+          <EntitySet Name="Votes" EntityType="Self.Vote" />
           <EntitySet Name="vw_InvalidGroupSizes" EntityType="Self.vw_InvalidGroupSizes" />
-          <AssociationSet Name="FK__AskedPers__DepId__47DBAE45" Association="Self.FK__AskedPers__DepId__47DBAE45">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="AskedPerson" EntitySet="AskedPerson" />
+          <AssociationSet Name="FK__Vote__AnsId__30242045" Association="Self.FK__Vote__AnsId__30242045">
+            <End Role="Answer" EntitySet="Answers" />
+            <End Role="Vote" EntitySet="Votes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bill__CustId__3C69FB99" Association="Self.FK__Bill__CustId__3C69FB99">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Bill" EntitySet="Bill" />
+          <AssociationSet Name="FK__AskedPerson__25A691D2" Association="Self.FK__AskedPerson__25A691D2">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="AskedPerson" EntitySet="AskedPersons" />
           </AssociationSet>
-          <AssociationSet Name="FK__Contains__DepId__44FF419A" Association="Self.FK__Contains__DepId__44FF419A">
-            <End Role="Department" EntitySet="Department" />
+          <AssociationSet Name="FK__Bill__CustName__1940BAED" Association="Self.FK__Bill__CustName__1940BAED">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Contains__21D600EE" Association="Self.FK__Contains__21D600EE">
+            <End Role="Department" EntitySet="Departments" />
             <End Role="Contains" EntitySet="Contains" />
           </AssociationSet>
-          <AssociationSet Name="FK__Contains__GroupI__440B1D61" Association="Self.FK__Contains__GroupI__440B1D61">
-            <End Role="Group" EntitySet="Group" />
+          <AssociationSet Name="FK__Contains__22CA2527" Association="Self.FK__Contains__22CA2527">
+            <End Role="Group" EntitySet="Groups" />
             <End Role="Contains" EntitySet="Contains" />
           </AssociationSet>
-          <AssociationSet Name="FK__Customer__Paymen__398D8EEE" Association="Self.FK__Customer__Paymen__398D8EEE">
-            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
-            <End Role="Customer" EntitySet="Customer" />
+          <AssociationSet Name="FK__Customer__Paymen__16644E42" Association="Self.FK__Customer__Paymen__16644E42">
+            <End Role="PaymentMethod" EntitySet="PaymentMethods" />
+            <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Departmen__CustI__3F466844" Association="Self.FK__Departmen__CustI__3F466844">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Department" EntitySet="Department" />
+          <AssociationSet Name="FK__Departmen__CustN__1C1D2798" Association="Self.FK__Departmen__CustN__1C1D2798">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Department" EntitySet="Departments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__CustId__4CA06362" Association="Self.FK__Survey__CustId__4CA06362">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Survey" EntitySet="Survey" />
+          <AssociationSet Name="FK__Group__CustName__1EF99443" Association="Self.FK__Group__CustName__1EF99443">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Group" EntitySet="Groups" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__TypeId__4D94879B" Association="Self.FK__Survey__TypeId__4D94879B">
-            <End Role="SurveyType" EntitySet="SurveyType" />
-            <End Role="Survey" EntitySet="Survey" />
+          <AssociationSet Name="FK__Survey__CustName__2A6B46EF" Association="Self.FK__Survey__CustName__2A6B46EF">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Survey" EntitySet="Surveys" />
           </AssociationSet>
-          <AssociationSet Name="Vote" Association="Self.Vote">
-            <End Role="Survey" EntitySet="Survey" />
-            <End Role="Answer" EntitySet="Answer" />
+          <AssociationSet Name="FK__Survey__TypeId__2B5F6B28" Association="Self.FK__Survey__TypeId__2B5F6B28">
+            <End Role="SurveyType" EntitySet="SurveyTypes" />
+            <End Role="Survey" EntitySet="Surveys" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vote__3118447E" Association="Self.FK__Vote__3118447E">
+            <End Role="Survey" EntitySet="Surveys" />
+            <End Role="Vote" EntitySet="Votes" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -608,7 +699,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="SimpleQDBModelStoreContainer" CdmEntityContainer="SimpleQDBEntities">
-          <EntitySetMapping Name="Answer">
+          <EntitySetMapping Name="Answers">
             <EntityTypeMapping TypeName="SimpleQDBModel.Answer">
               <MappingFragment StoreEntitySet="Answer">
                 <ScalarProperty Name="AnsId" ColumnName="AnsId" />
@@ -616,43 +707,43 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="AskedPerson">
+          <EntitySetMapping Name="AskedPersons">
             <EntityTypeMapping TypeName="SimpleQDBModel.AskedPerson">
               <MappingFragment StoreEntitySet="AskedPerson">
-                <ScalarProperty Name="PersId" ColumnName="PersId" />
-                <ScalarProperty Name="DepId" ColumnName="DepId" />
+                <ScalarProperty Name="PersEmail" ColumnName="PersEmail" />
+                <ScalarProperty Name="DepName" ColumnName="DepName" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
                 <ScalarProperty Name="PersFirstName" ColumnName="PersFirstName" />
                 <ScalarProperty Name="PersLastName" ColumnName="PersLastName" />
-                <ScalarProperty Name="PersEmail" ColumnName="PersEmail" />
                 <ScalarProperty Name="PersPwdTmp" ColumnName="PersPwdTmp" />
                 <ScalarProperty Name="PersPwdHash" ColumnName="PersPwdHash" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Bill">
+          <EntitySetMapping Name="Bills">
             <EntityTypeMapping TypeName="SimpleQDBModel.Bill">
               <MappingFragment StoreEntitySet="Bill">
                 <ScalarProperty Name="BillId" ColumnName="BillId" />
-                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
                 <ScalarProperty Name="BillAmount" ColumnName="BillAmount" />
                 <ScalarProperty Name="BillDate" ColumnName="BillDate" />
-                <ScalarProperty Name="Payed" ColumnName="Payed" />
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Contains">
-            <EntityTypeMapping TypeName="SimpleQDBModel.Contains">
+            <EntityTypeMapping TypeName="SimpleQDBModel.Contain">
               <MappingFragment StoreEntitySet="Contains">
                 <ScalarProperty Name="GroupId" ColumnName="GroupId" />
-                <ScalarProperty Name="DepId" ColumnName="DepId" />
+                <ScalarProperty Name="DepName" ColumnName="DepName" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Customer">
+          <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="SimpleQDBModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="CustId" ColumnName="CustId" />
                 <ScalarProperty Name="CustName" ColumnName="CustName" />
                 <ScalarProperty Name="CustEmail" ColumnName="CustEmail" />
                 <ScalarProperty Name="CustPwdTmp" ColumnName="CustPwdTmp" />
@@ -666,16 +757,15 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Department">
+          <EntitySetMapping Name="Departments">
             <EntityTypeMapping TypeName="SimpleQDBModel.Department">
               <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="DepId" ColumnName="DepId" />
-                <ScalarProperty Name="CustId" ColumnName="CustId" />
                 <ScalarProperty Name="DepName" ColumnName="DepName" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DsgvoConstraint">
+          <EntitySetMapping Name="DsgvoConstraints">
             <EntityTypeMapping TypeName="SimpleQDBModel.DsgvoConstraint">
               <MappingFragment StoreEntitySet="DsgvoConstraint">
                 <ScalarProperty Name="ConstrName" ColumnName="ConstrName" />
@@ -683,15 +773,16 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Group">
+          <EntitySetMapping Name="Groups">
             <EntityTypeMapping TypeName="SimpleQDBModel.Group">
               <MappingFragment StoreEntitySet="Group">
                 <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
                 <ScalarProperty Name="GroupDesc" ColumnName="GroupDesc" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PaymentMethod">
+          <EntitySetMapping Name="PaymentMethods">
             <EntityTypeMapping TypeName="SimpleQDBModel.PaymentMethod">
               <MappingFragment StoreEntitySet="PaymentMethod">
                 <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
@@ -699,11 +790,11 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Survey">
+          <EntitySetMapping Name="Surveys">
             <EntityTypeMapping TypeName="SimpleQDBModel.Survey">
               <MappingFragment StoreEntitySet="Survey">
                 <ScalarProperty Name="SvyId" ColumnName="SvyId" />
-                <ScalarProperty Name="CustId" ColumnName="CustId" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
                 <ScalarProperty Name="SvyDesc" ColumnName="SvyDesc" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="EndDate" ColumnName="EndDate" />
@@ -711,11 +802,22 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="SurveyType">
+          <EntitySetMapping Name="SurveyTypes">
             <EntityTypeMapping TypeName="SimpleQDBModel.SurveyType">
               <MappingFragment StoreEntitySet="SurveyType">
                 <ScalarProperty Name="TypeId" ColumnName="TypeId" />
                 <ScalarProperty Name="TypeDesc" ColumnName="TypeDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votes">
+            <EntityTypeMapping TypeName="SimpleQDBModel.Vote">
+              <MappingFragment StoreEntitySet="Vote">
+                <ScalarProperty Name="VoteId" ColumnName="VoteId" />
+                <ScalarProperty Name="SvyId" ColumnName="SvyId" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="AnsId" ColumnName="AnsId" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -729,15 +831,6 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Vote" TypeName="SimpleQDBModel.Vote" StoreEntitySet="Vote">
-            <EndProperty Name="Survey">
-              <ScalarProperty Name="SvyId" ColumnName="SvyId" />
-              <ScalarProperty Name="CustId" ColumnName="CustId" />
-            </EndProperty>
-            <EndProperty Name="Answer">
-              <ScalarProperty Name="AnsId" ColumnName="AnsId" />
-            </EndProperty>
-          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -752,7 +845,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

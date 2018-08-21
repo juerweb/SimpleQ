@@ -25,17 +25,18 @@ namespace SimpleQ.Webinterface.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Answer> Answer { get; set; }
-        public virtual DbSet<AskedPerson> AskedPerson { get; set; }
-        public virtual DbSet<Bill> Bill { get; set; }
-        public virtual DbSet<Contains> Contains { get; set; }
-        public virtual DbSet<Customer> Customer { get; set; }
-        public virtual DbSet<Department> Department { get; set; }
-        public virtual DbSet<DsgvoConstraint> DsgvoConstraint { get; set; }
-        public virtual DbSet<Group> Group { get; set; }
-        public virtual DbSet<PaymentMethod> PaymentMethod { get; set; }
-        public virtual DbSet<Survey> Survey { get; set; }
-        public virtual DbSet<SurveyType> SurveyType { get; set; }
+        public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<AskedPerson> AskedPersons { get; set; }
+        public virtual DbSet<Bill> Bills { get; set; }
+        public virtual DbSet<Contain> Contains { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<Department> Departments { get; set; }
+        public virtual DbSet<DsgvoConstraint> DsgvoConstraints { get; set; }
+        public virtual DbSet<Group> Groups { get; set; }
+        public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public virtual DbSet<Survey> Surveys { get; set; }
+        public virtual DbSet<SurveyType> SurveyTypes { get; set; }
+        public virtual DbSet<Vote> Votes { get; set; }
         public virtual DbSet<vw_InvalidGroupSizes> vw_InvalidGroupSizes { get; set; }
     }
 }

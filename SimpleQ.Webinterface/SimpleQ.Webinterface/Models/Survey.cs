@@ -17,11 +17,11 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Survey()
         {
-            this.Answer = new HashSet<Answer>();
+            this.Votes = new HashSet<Vote>();
         }
     
         public int SvyId { get; set; }
-        public int CustId { get; set; }
+        public string CustName { get; set; }
         public string SvyDesc { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
@@ -30,6 +30,6 @@ namespace SimpleQ.Webinterface.Models
         public virtual Customer Customer { get; set; }
         public virtual SurveyType SurveyType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Answer> Answer { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

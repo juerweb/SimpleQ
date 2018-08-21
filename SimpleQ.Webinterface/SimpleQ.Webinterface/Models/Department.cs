@@ -17,18 +17,17 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Department()
         {
-            this.AskedPerson = new HashSet<AskedPerson>();
-            this.Contains = new HashSet<Contains>();
+            this.AskedPersons = new HashSet<AskedPerson>();
+            this.Contains = new HashSet<Contain>();
         }
     
-        public int DepId { get; set; }
-        public int CustId { get; set; }
         public string DepName { get; set; }
+        public string CustName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AskedPerson> AskedPerson { get; set; }
+        public virtual ICollection<AskedPerson> AskedPersons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contains> Contains { get; set; }
+        public virtual ICollection<Contain> Contains { get; set; }
         public virtual Customer Customer { get; set; }
     }
 }

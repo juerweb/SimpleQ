@@ -15,10 +15,10 @@ namespace SimpleQ.Webinterface.Models
     public partial class Bill
     {
         public int BillId { get; set; }
-        public int CustId { get; set; }
+        public string CustName { get; set; }
         public decimal BillAmount { get; set; }
         public System.DateTime BillDate { get; set; }
-        public bool Payed { get; set; }
+        public bool Paid { get; set; }
     
         public virtual Customer Customer { get; set; }
     }
