@@ -17,13 +17,13 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SurveyType()
         {
-            this.Survey = new HashSet<Survey>();
+            this.Surveys = new HashSet<Survey>();
         }
     
         public int TypeId { get; set; }
         public string TypeDesc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Survey> Survey { get; set; }
+        public virtual ICollection<Survey> Surveys { get; set; }
     }
 }

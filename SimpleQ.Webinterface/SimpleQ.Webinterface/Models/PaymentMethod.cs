@@ -17,13 +17,13 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PaymentMethod()
         {
-            this.Customer = new HashSet<Customer>();
+            this.Customers = new HashSet<Customer>();
         }
     
         public int PaymentMethodId { get; set; }
         public string PaymentMethodDesc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Customer> Customer { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

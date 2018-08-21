@@ -12,18 +12,15 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Answer
+    public partial class Vote
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Answer()
-        {
-            this.Votes = new HashSet<Vote>();
-        }
+        public int VoteId { get; set; }
+        public Nullable<int> SvyId { get; set; }
+        public string CustName { get; set; }
+        public Nullable<int> AnsId { get; set; }
+        public string Note { get; set; }
     
-        public int AnsId { get; set; }
-        public string AnsDesc { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vote> Votes { get; set; }
+        public virtual Answer Answer { get; set; }
+        public virtual Survey Survey { get; set; }
     }
 }

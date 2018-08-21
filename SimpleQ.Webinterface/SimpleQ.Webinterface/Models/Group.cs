@@ -17,13 +17,15 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Group()
         {
-            this.Contains = new HashSet<Contains>();
+            this.Contains = new HashSet<Contain>();
         }
     
         public int GroupId { get; set; }
+        public string CustName { get; set; }
         public string GroupDesc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contains> Contains { get; set; }
+        public virtual ICollection<Contain> Contains { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

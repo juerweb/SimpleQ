@@ -12,10 +12,11 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Contains
+    public partial class Contain
     {
         public int GroupId { get; set; }
-        public int DepId { get; set; }
+        public string DepName { get; set; }
+        public string CustName { get; set; }
         public int Amount { get; set; }
     
         public virtual Department Department { get; set; }
