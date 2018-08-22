@@ -24,9 +24,10 @@ namespace SimpleQ.PageModels
         /// Initializes a new instance of the <see cref="FrontPageModel"/> class.
         /// </summary>
         /// <param name="questionService">The question service.</param>
-        public FrontPageModel(IQuestionService questionService): this()
+        public FrontPageModel(IQuestionService questionService, ISimulationService simulationService): this()
         {
             this.questionService = questionService;
+            this.simulationService = simulationService;
         }
 
         /// <summary>
@@ -36,6 +37,9 @@ namespace SimpleQ.PageModels
         public FrontPageModel()
         {
             DeleteCommand = new Command(DeleteCommandExecuted);
+            RefreshCommand = new Command(RefreshCommandExecuted);
+
+            IsRefreshing = false;
         }
 
 
@@ -58,6 +62,10 @@ namespace SimpleQ.PageModels
         /// The selected question
         /// </summary>
         private QuestionModel selectedQuestion;
+
+        private ISimulationService simulationService;
+
+        private Boolean isRefreshing;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -88,10 +96,17 @@ namespace SimpleQ.PageModels
                 }
             }
         }
+
+        public bool IsRefreshing
+        {
+            get => isRefreshing;
+            set { isRefreshing = value; OnPropertyChanged(); }
+        }
         #endregion
 
         #region Commands
         public Command DeleteCommand { get; set; }
+        public Command RefreshCommand { get; set; }
         #endregion
 
         #region Methods
@@ -124,6 +139,13 @@ namespace SimpleQ.PageModels
         {
             Debug.WriteLine("Delete Command Executed with object: " + question, "Info");
             questionService.MoveQuestion(questionService.GetQuestionWithRightType(question));
+        }
+
+        private async void RefreshCommandExecuted()
+        {
+            Debug.WriteLine("Refresh Command Executed...", "Info");
+            await simulationService.GetData();
+            this.IsRefreshing = false;
         }
         #endregion
 
