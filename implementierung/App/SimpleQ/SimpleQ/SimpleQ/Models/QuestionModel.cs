@@ -48,30 +48,6 @@ namespace SimpleQ.Models
         #endregion
 
         #region Methods
-        public static QuestionModel GetQuestionWithRightType(object question)
-        {
-            if (question.GetType() == typeof(YNQModel))
-            {
-                //YNQModel
-                return (YNQModel)question;
-            }
-            else if (question.GetType() == typeof(TLQModel))
-            {
-                return (TLQModel)question;
-            }
-            else if (question.GetType() == typeof(OWQModel))
-            {
-                return (OWQModel)question;
-            }
-            else if (question.GetType() == typeof(GAQModel))
-            {
-                return (GAQModel)question;
-            }
-            else
-            {
-                return null;
-            }
-        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

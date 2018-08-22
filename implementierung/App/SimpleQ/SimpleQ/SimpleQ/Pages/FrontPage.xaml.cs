@@ -16,5 +16,5 @@ namespace SimpleQ.Pages
 		{
 			InitializeComponent ();
 		}
-	}
+    }
 }

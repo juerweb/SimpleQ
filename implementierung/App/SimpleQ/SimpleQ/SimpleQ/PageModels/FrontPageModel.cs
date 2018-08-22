@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels
 {
@@ -34,6 +35,7 @@ namespace SimpleQ.PageModels
         /// </summary>
         public FrontPageModel()
         {
+            DeleteCommand = new Command(DeleteCommandExecuted);
         }
 
 
@@ -89,6 +91,7 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Commands
+        public Command DeleteCommand { get; set; }
         #endregion
 
         #region Methods
@@ -115,6 +118,12 @@ namespace SimpleQ.PageModels
             }
             
             selectedQuestion = null;
+        }
+
+        private void DeleteCommandExecuted(object question)
+        {
+            Debug.WriteLine("Delete Command Executed with object: " + question, "Info");
+            questionService.MoveQuestion(questionService.GetQuestionWithRightType(question));
         }
         #endregion
 

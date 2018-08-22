@@ -147,6 +147,9 @@
   <data name="Copyright" xml:space="preserve">
     <value>Copyright © 2018 by SimpleQ</value>
   </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
   <data name="DialogErrorCode" xml:space="preserve">
     <value>Fehlercode</value>
   </data>

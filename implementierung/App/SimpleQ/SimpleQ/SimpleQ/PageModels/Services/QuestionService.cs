@@ -34,7 +34,7 @@ namespace SimpleQ.PageModels.Services
         {
             Questions = new ObservableCollection<QuestionModel>();
 
-            AnsweredQuestions = new List<QuestionModel>();
+            answeredQuestions = new List<QuestionModel>();
 
             
 
@@ -77,13 +77,6 @@ namespace SimpleQ.PageModels.Services
         /// The questions.
         /// </value>
         public ObservableCollection<QuestionModel> Questions { get => questions; private set => questions = value; }
-        /// <summary>
-        /// Gets or sets the answered questions.
-        /// </summary>
-        /// <value>
-        /// The answered questions.
-        /// </value>
-        public List<QuestionModel> AnsweredQuestions { get => answeredQuestions; set => answeredQuestions = value; }
         /// <summary>
         /// Gets or sets the public questions.
         /// </summary>
@@ -157,7 +150,7 @@ namespace SimpleQ.PageModels.Services
             }
         }
 
-        private void MoveQuestion(QuestionModel question)
+        public void MoveQuestion(QuestionModel question)
         {
             if (questions.Contains(question))
             {
@@ -169,6 +162,31 @@ namespace SimpleQ.PageModels.Services
                 }
 
                 this.answeredQuestions.Add(question);
+            }
+        }
+
+        public QuestionModel GetQuestionWithRightType(object question)
+        {
+            if (question.GetType() == typeof(YNQModel))
+            {
+                //YNQModel
+                return (YNQModel)question;
+            }
+            else if (question.GetType() == typeof(TLQModel))
+            {
+                return (TLQModel)question;
+            }
+            else if (question.GetType() == typeof(OWQModel))
+            {
+                return (OWQModel)question;
+            }
+            else if (question.GetType() == typeof(GAQModel))
+            {
+                return (GAQModel)question;
+            }
+            else
+            {
+                return null;
             }
         }
 
