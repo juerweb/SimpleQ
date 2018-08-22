@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             xmlns:ui="clr-namespace:Vapolia.Lib.Ui;assembly=XamarinFormsGesture"
+             x:Class="SimpleQ.Pages.FrontPage"
+             x:Name="FrontPage"
+             Title="{ext:Translate Text=Abstract}">
+    <ContentPage.Resources>
+        <ext:InvertableBooleanConverter x:Key="InvertableBooleanConverter"></ext:InvertableBooleanConverter>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout VerticalOptions="FillAndExpand">
+                <ListView ItemsSource="{Binding QuestionService.PublicQuestions}" SeparatorVisibility="None" SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Converter={StaticResource InvertableBooleanConverter}, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <ViewCell.ContextActions>
+                                    <MenuItem CommandParameter="{Binding .}" Text="{ext:Translate Text=Delete}" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference FrontPage}}"/>
+                                </ViewCell.ContextActions>
+                                <StackLayout Padding="15,10">
+                                    <Label Text="{Binding Categorie}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"></Label>
+                                    <Label Text="{Binding QuestionDesc}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"></Label>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <Image Source="ic_folder_open_black_48.png" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Mode=TwoWay}"></Image>
+                    <Label Text="{ext:Translate Text=NothingIn}" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Mode=TwoWay}"></Label>
+                </StackLayout>
+
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

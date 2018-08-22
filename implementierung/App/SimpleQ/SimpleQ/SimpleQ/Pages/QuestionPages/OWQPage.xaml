@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.QuestionPages.OWQPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Question.Categorie}" Style="{DynamicResource CaptionStyle}"></Label>
+            <Label Text="{Binding Question.QuestionDesc}" Style="{DynamicResource BodyStyle}"></Label>
+
+            <Entry Placeholder="{ext:Translate Text=Answer}" Text="{Binding Answer}" BindingContext="{Binding}">
+                <Entry.Behaviors>
+                    <ext:OneWordBehavior x:Name="OneWordBehavior"></ext:OneWordBehavior>
+                </Entry.Behaviors>
+            </Entry>
+            <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Source={x:Reference OneWordBehavior}, Path=IsValid}"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.QuestionPages.YNQPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Question.Categorie}" Style="{DynamicResource CaptionStyle}"></Label>
+            <Label Text="{Binding Question.QuestionDesc}" Style="{DynamicResource BodyStyle}"></Label>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Text="{ext:Translate Text=Yes}" Grid.Column="0" Command="{Binding YesCommand}"></Button>
+                <Button Text="{ext:Translate Text=No}" Grid.Column="1" Command="{Binding NoCommand}"></Button>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,12 +1,15 @@
 ﻿using FreshMvvm;
 using MvvmHelpers;
 using SimpleQ.Models;
+using SimpleQ.PageModels.Services;
 using SimpleQ.Pages;
+using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
@@ -21,7 +24,10 @@ namespace SimpleQ.PageModels
         #region Constructor(s)
         public MainMasterPageModel(): base()
         {
-            MenuItems = new ObservableCollection<Grouping<ItemType, MenuItemModel>>();
+            Debug.WriteLine("Constructor of MainMasterPageModel...", "Info");
+            MenuItems = new ObservableCollection<MenuItemListModel>();
+            this.MenuItems.Add(new MenuItemListModel(ItemType.Categorie.ToString()));
+            this.MenuItems.Add(new MenuItemListModel(ItemType.Navigation.ToString()));
 
             //Generate CodeValidationModel from Application Properties
             Boolean isValidCodeAvailable = (bool)Application.Current.Properties["IsValidCodeAvailable"];
@@ -37,9 +43,6 @@ namespace SimpleQ.PageModels
         private CodeValidationModel codeValidationModel;
         private MenuItemModel selectedItem;
 
-        private List<MenuItemModel> categories = new List<MenuItemModel>();
-        private List<MenuItemModel> navigations = new List<MenuItemModel>();
-
         private Dictionary<String, Page> _pages = new Dictionary<string, Page>();
         #endregion
 
@@ -54,7 +57,7 @@ namespace SimpleQ.PageModels
             }
         }
 
-        public ObservableCollection<Grouping<ItemType, MenuItemModel>> MenuItems { get; set; }
+        public ObservableCollection<MenuItemListModel> MenuItems { get; set; }
 
         public MenuItemModel SelectedItem
         {
@@ -80,37 +83,57 @@ namespace SimpleQ.PageModels
         protected override void CreateMenuPage(string menuPageTitle, string menuIcon = null)
         {
             Debug.WriteLine("Create Menu Page...", "Info");
-            this.MenuItems.Add(new Grouping<ItemType, MenuItemModel>(ItemType.Categorie, categories));
-            this.MenuItems.Add(new Grouping<ItemType, MenuItemModel>(ItemType.Navigation, navigations));
 
             MainMasterPage mainMasterPage = new MainMasterPage();
             mainMasterPage.BindingContext = this;
             Master = mainMasterPage;
         }
 
-        public void AddPage(string title, ItemType itemType, FreshBasePageModel pageModel, String iconResourceName)
+        public void AddPage(string title, FreshBasePageModel pageModel, String iconResourceName)
         {
             var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
             page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
             var navigationContainer = CreateContainerPage(page);
-            if (this.categories.Count == 0 && this.navigations.Count == 0)
+            /*if (this.MenuItems[0].Count == 0 && this.MenuItems[1].Count == 0)
             {
-                Detail = navigationContainer;
-            }
-
+                if (itemType == ItemType.Categorie)
+                {
+                    Detail = _pages[AppResources.AllCategories];
+                }
+                else
+                {
+                    Detail = navigationContainer;
+                }
+                
+            }*/
             Debug.WriteLine("Add new Page");
 
             _pages.Add(title, navigationContainer);
 
-            switch (itemType)
+            this.MenuItems[1].Add(new MenuItemModel(title, pageModel, iconResourceName));
+        }
+
+        public void AddCategorie(string title)
+        {
+            if (title == AppResources.AllCategories)
             {
-                case ItemType.Categorie:
-                    categories.Add(new MenuItemModel(title, pageModel));
-                    break;
-                case ItemType.Navigation:
-                    navigations.Add(new MenuItemModel(title, pageModel, iconResourceName));
-                    break;
+                FrontPageModel pageModel = new FrontPageModel();
+                var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
+                page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
+                var navigationContainer = CreateContainerPage(page);
+
+                Detail = navigationContainer;
+
+                _pages.Add(title, navigationContainer);
+
+                this.MenuItems[0].Add(new MenuItemModel(title, pageModel, null));
             }
+            else
+            {
+                this.MenuItems[0].Add(new MenuItemModel(title, null, null));
+            }
+
+            
         }
 
         private void NavigateToNewPage()
@@ -118,12 +141,35 @@ namespace SimpleQ.PageModels
 
             if (selectedItem != null)
             {
+
                 Debug.WriteLine("Navigate to new page: " + selectedItem.Title, "Info");
 
                 IsPresented = false;
 
-                Detail = _pages[SelectedItem.Title];
-                Debug.WriteLine("TEST");
+                if (this.MenuItems[0].Contains(SelectedItem))
+                {
+                    //the selected item is a categorie
+                    IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+                    questionService.SetCategorieFilter(SelectedItem.Title);
+
+                    Detail = _pages[AppResources.AllCategories];
+                    
+                }
+                else
+                {
+                    Detail = _pages[SelectedItem.Title];
+                }
+            }
+
+        }
+
+        public void SetNewCategorie(String title)
+        {
+            if (MenuItems[0].Count(mi => mi.Title == title) == 1)
+            {
+                Debug.WriteLine("Set new categorie to: " + title, "Info");
+
+                this.SelectedItem = MenuItems[0].Where(mi => mi.Title == title).ToList()[0];
             }
 
         }

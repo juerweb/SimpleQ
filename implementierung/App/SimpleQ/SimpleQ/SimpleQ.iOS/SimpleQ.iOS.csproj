@@ -306,4 +306,22 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_email_black_18%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_folder_open_black_36.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_folder_open_black_36%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_folder_open_black_36%403x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_folder_open_black_48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_folder_open_black_48%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_folder_open_black_48%403x.png" />
+  </ItemGroup>
 </Project>

@@ -120,6 +120,15 @@
   <data name="About" xml:space="preserve">
     <value>Über SimpleQ</value>
   </data>
+  <data name="Abstract" xml:space="preserve">
+    <value>Übersicht</value>
+  </data>
+  <data name="AllCategories" xml:space="preserve">
+    <value>Alle Kategorien</value>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>Antwort</value>
+  </data>
   <data name="AppInformation" xml:space="preserve">
     <value>App Informationen</value>
   </data>
@@ -137,6 +146,9 @@
   </data>
   <data name="Copyright" xml:space="preserve">
     <value>Copyright © 2018 by SimpleQ</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Löschen</value>
   </data>
   <data name="DialogErrorCode" xml:space="preserve">
     <value>Fehlercode</value>
@@ -197,6 +209,12 @@
     <value>SimpleQ</value>
     <comment>NT</comment>
   </data>
+  <data name="No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="NothingIn" xml:space="preserve">
+    <value>Keine Elemente in dieser Kategorie</value>
+  </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>+43 00000000000</value>
   </data>
@@ -215,6 +233,9 @@
   <data name="SelectALanguage" xml:space="preserve">
     <value>Wählen sie eine neue Sprache aus.</value>
   </data>
+  <data name="SendAnswer" xml:space="preserve">
+    <value>Antwort senden</value>
+  </data>
   <data name="Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
@@ -226,5 +247,8 @@
   </data>
   <data name="VisitUs" xml:space="preserve">
     <value>Besuchen Sie unsere Website</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>
