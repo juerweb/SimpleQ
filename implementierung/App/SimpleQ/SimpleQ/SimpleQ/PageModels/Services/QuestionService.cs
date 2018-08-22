@@ -36,8 +36,6 @@ namespace SimpleQ.PageModels.Services
 
             answeredQuestions = new List<QuestionModel>();
 
-            
-
             //only in DEBUG Modus => Demo Data
             this.AddQuestion(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
             this.AddQuestion(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
@@ -49,6 +47,17 @@ namespace SimpleQ.PageModels.Services
 
             this.IsPublicQuestionsEmpty = false;
 
+        }
+
+        public QuestionService(Boolean test)
+        {
+            Questions = new ObservableCollection<QuestionModel>();
+
+            answeredQuestions = new List<QuestionModel>();
+
+            this.PublicQuestions = Questions;
+
+            this.IsPublicQuestionsEmpty = false;
         }
         #endregion
 
