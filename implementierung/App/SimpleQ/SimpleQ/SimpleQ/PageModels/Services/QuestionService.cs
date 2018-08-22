@@ -36,6 +36,8 @@ namespace SimpleQ.PageModels.Services
 
             AnsweredQuestions = new List<QuestionModel>();
 
+            
+
             //only in DEBUG Modus => Demo Data
             this.AddQuestion(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
             this.AddQuestion(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
@@ -44,6 +46,9 @@ namespace SimpleQ.PageModels.Services
             //end of demo data
 
             this.PublicQuestions = Questions;
+
+            this.IsPublicQuestionsEmpty = false;
+
         }
         #endregion
 
@@ -60,6 +65,8 @@ namespace SimpleQ.PageModels.Services
         /// All questions, which are actual shown on the front page.
         /// </summary>
         private ObservableCollection<QuestionModel> publicQuestions;
+
+        private Boolean isPublicQuestionsEmpty;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -89,10 +96,17 @@ namespace SimpleQ.PageModels.Services
             set
             {
                 publicQuestions = value;
-                Debug.WriteLine("Test");
                 OnPropertyChanged();
+                this.PublicQuestions.CollectionChanged += PublicQuestions_CollectionChanged;
+                PublicQuestions_CollectionChanged(null, null);
             }
             
+        }
+
+        public bool IsPublicQuestionsEmpty
+        {
+            get => isPublicQuestionsEmpty;
+            set { isPublicQuestionsEmpty = value; OnPropertyChanged(); }
         }
         #endregion
 
@@ -107,6 +121,9 @@ namespace SimpleQ.PageModels.Services
         public void QuestionAnswered(QuestionModel question)
         {
             Debug.WriteLine("Question Service with question from type: " + question.GetType(), "Info");
+
+            MoveQuestion(question);
+
         }
 
         /// <summary>
@@ -138,6 +155,27 @@ namespace SimpleQ.PageModels.Services
             {
                 this.PublicQuestions = new ObservableCollection<QuestionModel>(this.questions.Where(question => question.Categorie == categorie).ToList());
             }
+        }
+
+        private void MoveQuestion(QuestionModel question)
+        {
+            if (questions.Contains(question))
+            {
+                this.questions.Remove(question);
+
+                if (PublicQuestions.Contains(question))
+                {
+                    PublicQuestions.Remove(question);
+                }
+
+                this.answeredQuestions.Add(question);
+            }
+        }
+
+        private void PublicQuestions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            Debug.WriteLine("PubliQuestions Changed... Actual count of elements: " + PublicQuestions.Count, "Info");
+            IsPublicQuestionsEmpty = PublicQuestions.Count <= 0;
         }
         #endregion
 

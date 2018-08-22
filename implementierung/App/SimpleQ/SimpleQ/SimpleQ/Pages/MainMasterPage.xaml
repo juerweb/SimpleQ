@@ -29,7 +29,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <ListView x:Name="MenuItemsListView" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding MenuItems, Mode=TwoWay}" IsGroupingEnabled="True" SelectedItem="{Binding SelectedItem}" ItemTemplate="{StaticResource itemTemplateSelector}">
+            <ListView x:Name="MenuItemsListView" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding MenuItems, Mode=TwoWay}" IsGroupingEnabled="True" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ItemTemplate="{StaticResource itemTemplateSelector}">
                 <ListView.Header>
                     <Grid BackgroundColor="{StaticResource colorPrimary}">
                         <Grid.ColumnDefinitions>

@@ -10,6 +10,8 @@ namespace SimpleQ.PageModels.Services
     {
         ObservableCollection<QuestionModel> Questions { get; }
         List<QuestionModel> AnsweredQuestions { get; set; }
+        ObservableCollection<QuestionModel> PublicQuestions { get; set; }
+        Boolean IsPublicQuestionsEmpty { get; set; }
 
         void QuestionAnswered(QuestionModel question);
         void AddQuestion(QuestionModel question);

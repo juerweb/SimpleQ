@@ -1,6 +1,7 @@
 ﻿using FreshMvvm;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
+using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -106,6 +107,12 @@ namespace SimpleQ.PageModels.QuestionPageModels
             this.question.Answer = answer;
 
             this.questionService.QuestionAnswered(this.question);
+
+            CoreMethods.PopPageModel();
+            if (this.questionService.PublicQuestions.Count <= 0)
+            {
+                App.MainMasterPageModel.SetNewCategorie(AppResources.AllCategories);
+            }
         }
         #endregion
 

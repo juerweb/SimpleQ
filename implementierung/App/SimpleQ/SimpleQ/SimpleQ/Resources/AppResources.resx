@@ -209,6 +209,9 @@
   <data name="No" xml:space="preserve">
     <value>Nein</value>
   </data>
+  <data name="NothingIn" xml:space="preserve">
+    <value>Keine Elemente in dieser Kategorie</value>
+  </data>
   <data name="PhoneNumber" xml:space="preserve">
     <value>+43 00000000000</value>
   </data>

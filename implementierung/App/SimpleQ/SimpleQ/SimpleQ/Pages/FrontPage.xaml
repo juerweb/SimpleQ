@@ -4,10 +4,13 @@
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
              x:Class="SimpleQ.Pages.FrontPage"
              Title="{ext:Translate Text=Abstract}">
+    <ContentPage.Resources>
+        <ext:InvertableBooleanConverter x:Key="InvertableBooleanConverter"></ext:InvertableBooleanConverter>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <StackLayout VerticalOptions="FillAndExpand">
-                <ListView ItemsSource="{Binding QuestionService.PublicQuestions}" SeparatorVisibility="None" SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True">
+                <ListView ItemsSource="{Binding QuestionService.PublicQuestions}" SeparatorVisibility="None" SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Converter={StaticResource InvertableBooleanConverter}, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -19,6 +22,11 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <Image Source="ic_folder_open_black_48.png" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Mode=TwoWay}"></Image>
+                    <Label Text="{ext:Translate Text=NothingIn}" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Mode=TwoWay}"></Label>
+                </StackLayout>
+
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

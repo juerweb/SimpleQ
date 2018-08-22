@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
@@ -158,6 +159,17 @@ namespace SimpleQ.PageModels
                 {
                     Detail = _pages[SelectedItem.Title];
                 }
+            }
+
+        }
+
+        public void SetNewCategorie(String title)
+        {
+            if (MenuItems[0].Count(mi => mi.Title == title) == 1)
+            {
+                Debug.WriteLine("Set new categorie to: " + title, "Info");
+
+                this.SelectedItem = MenuItems[0].Where(mi => mi.Title == title).ToList()[0];
             }
 
         }

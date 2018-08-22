@@ -322,6 +322,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Keine Elemente in dieser Kategorie ähnelt.
+        /// </summary>
+        internal static string NothingIn {
+            get {
+                return ResourceManager.GetString("NothingIn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die +43 00000000000 ähnelt.
         /// </summary>
         internal static string PhoneNumber {
