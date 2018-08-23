@@ -35,6 +35,7 @@ namespace SimpleQ.Webinterface.Models
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
+        public virtual DbSet<SurveyCategory> SurveyCategories { get; set; }
         public virtual DbSet<SurveyType> SurveyTypes { get; set; }
         public virtual DbSet<Vote> Votes { get; set; }
         public virtual DbSet<vw_InvalidGroupSizes> vw_InvalidGroupSizes { get; set; }

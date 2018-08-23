@@ -1,20 +1,20 @@
-Customer (CustId, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, PaymentMethodId, CostBalance)
 PaymentMethod (PaymentMethodId, PaymentMethodDesc)
-Bill (BillId identity, BillAmount, BillDate, CustId)
+Customer (CustCode, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, PaymentMethodId, CostBalance)
+Bill (BillId, BillAmount, BillDate, CustCode)
 
-AskedPerson (PersId, PersFirstName, PersLastName, PersEmail, PersPwdHash, DepId)
-Department (DepId, DepName, CustId)
-Group (GroupId, GroupDesc)
-Contains (GroupId, DepId, Amount)
+Department (DepName, CustCode)
+Group (GroupId, CustCode, GroupDesc)
+Contains (GroupId, DepName, CustCode, Amount)
+AskedPerson (PersId, DepName, CustCode)
 
 SurveyType (TypeId, TypeDesc)
-Survey (SvyId, CustId, SvyDesc, StartDate, [EndDate], TypeId)
+SurveyCategory (CatId, CustCode, CatName)
+Survey (SvyId, CustCode, SvyDesc, StartDate, EndDate, TypeId, CatId)
 Answer (AnsId, AnsDesc)
-Vote (SvyId, CustId, AnsId)
+Vote (VoteId, SvyId, CustCode, AnsId, Note)
 
 DsgvoConstraint (ConstrName, ConstrValue)
 
 
 + vw_InvalidGroupSizes (wegen DSGVO)
 + tr_CustomerInsUpd (Passwort-Hashing)
-+ tr_AskedPersonInsUpd (Passwort-Hashing)

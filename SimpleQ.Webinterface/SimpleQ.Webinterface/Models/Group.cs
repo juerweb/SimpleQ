@@ -21,7 +21,7 @@ namespace SimpleQ.Webinterface.Models
         }
     
         public int GroupId { get; set; }
-        public string CustName { get; set; }
+        public string CustCode { get; set; }
         public string GroupDesc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

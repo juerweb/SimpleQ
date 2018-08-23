@@ -22,7 +22,7 @@ namespace SimpleQ.Webinterface.Models
         }
     
         public string DepName { get; set; }
-        public string CustName { get; set; }
+        public string CustCode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AskedPerson> AskedPersons { get; set; }

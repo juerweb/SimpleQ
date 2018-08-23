@@ -14,13 +14,9 @@ namespace SimpleQ.Webinterface.Models
     
     public partial class AskedPerson
     {
-        public string PersEmail { get; set; }
+        public int PersId { get; set; }
         public string DepName { get; set; }
-        public string CustName { get; set; }
-        public string PersFirstName { get; set; }
-        public string PersLastName { get; set; }
-        public string PersPwdTmp { get; set; }
-        public byte[] PersPwdHash { get; set; }
+        public string CustCode { get; set; }
     
         public virtual Department Department { get; set; }
     }

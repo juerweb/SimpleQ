@@ -16,7 +16,7 @@ namespace SimpleQ.Webinterface.Models
     {
         public int GroupId { get; set; }
         public string DepName { get; set; }
-        public string CustName { get; set; }
+        public string CustCode { get; set; }
         public int Amount { get; set; }
     
         public virtual Department Department { get; set; }

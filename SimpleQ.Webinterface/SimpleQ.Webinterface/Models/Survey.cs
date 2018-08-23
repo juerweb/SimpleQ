@@ -21,13 +21,15 @@ namespace SimpleQ.Webinterface.Models
         }
     
         public int SvyId { get; set; }
-        public string CustName { get; set; }
+        public string CustCode { get; set; }
         public string SvyDesc { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public int TypeId { get; set; }
+        public int CatId { get; set; }
     
         public virtual Customer Customer { get; set; }
+        public virtual SurveyCategory SurveyCategory { get; set; }
         public virtual SurveyType SurveyType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vote> Votes { get; set; }
