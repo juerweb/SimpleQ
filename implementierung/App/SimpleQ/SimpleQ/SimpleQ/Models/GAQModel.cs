@@ -13,10 +13,15 @@ namespace SimpleQ.Models
     {
 
         #region Constructor(s)
-        public GAQModel(string questionDesc, string categorie, int questionId, ICollection<String> givenAnswers) : base(questionDesc, categorie, questionId)
+        public GAQModel(string questionDesc, string categorie, int questionId, ICollection<String> givenAnswers) : base(questionDesc, categorie, questionId, QuestionType.GAQ)
         {
             this.givenAnswers = givenAnswers;
             IsAnswerAllowed = false;
+        }
+
+        public GAQModel()
+        {
+
         }
         #endregion
 

@@ -17,6 +17,8 @@ namespace SimpleQ.PageModels.Services
         void SetCategorieFilter(String categorie);
         void MoveQuestion(QuestionModel question);
         QuestionModel GetQuestionWithRightType(object question);
+        void RequestData();
+        void LoadDataFromCache();
 
     }
 }

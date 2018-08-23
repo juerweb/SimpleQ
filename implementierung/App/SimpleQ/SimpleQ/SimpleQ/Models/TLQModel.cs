@@ -12,7 +12,12 @@ namespace SimpleQ.Models
     public class TLQModel : QuestionModel, INotifyPropertyChanged
     {
         #region Constructor(s)
-        public TLQModel(string questionDesc, string categorie, int questionId) : base(questionDesc, categorie, questionId)
+        public TLQModel(string questionDesc, string categorie, int questionId) : base(questionDesc, categorie, questionId, QuestionType.TLQ)
+        {
+
+        }
+
+        public TLQModel()
         {
 
         }

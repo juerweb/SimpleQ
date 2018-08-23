@@ -12,11 +12,17 @@ namespace SimpleQ.Models
     public class QuestionModel : INotifyPropertyChanged
     {
         #region Constructor(s)
-        public QuestionModel(String questionDesc, String categorie, int questionId)
+        public QuestionModel(String questionDesc, String categorie, int questionId, QuestionType questionType): this()
         {
             this.questionDesc = questionDesc;
             this.categorie = categorie;
             this.questionId = questionId;
+            this.questionType = questionType;
+        }
+
+        public QuestionModel()
+        {
+
         }
         #endregion
 
@@ -24,6 +30,7 @@ namespace SimpleQ.Models
         private int questionId;
         private String questionDesc;
         private String categorie;
+        private QuestionType questionType;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -45,6 +52,8 @@ namespace SimpleQ.Models
             set { categorie = value; OnPropertyChanged(); }
             
         }
+
+        public QuestionType QuestionType { get => questionType; set => questionType = value; }
         #endregion
 
         #region Methods
@@ -58,5 +67,13 @@ namespace SimpleQ.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+    }
+
+    public enum QuestionType
+    {
+        YNQ = 0,
+        TLQ = 1,
+        OWQ = 2,
+        GAQ = 3
     }
 }

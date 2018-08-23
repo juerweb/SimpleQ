@@ -1,4 +1,6 @@
-﻿using SimpleQ.Models;
+﻿using Akavache;
+using FreshMvvm;
+using SimpleQ.Models;
 using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
@@ -33,19 +35,12 @@ namespace SimpleQ.PageModels.Services
         public QuestionService()
         {
             Questions = new ObservableCollection<QuestionModel>();
+            this.PublicQuestions = Questions;
+            currentCategorie = AppResources.AllCategories;
 
             answeredQuestions = new List<QuestionModel>();
+            this.IsPublicQuestionsEmpty = true;
 
-            //only in DEBUG Modus => Demo Data
-            this.AddQuestion(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
-            this.AddQuestion(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
-            this.AddQuestion(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2));
-            this.AddQuestion(new GAQModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 1, new String[] { "Grün", "Rot", "Gelb", "Blau" }));
-            //end of demo data
-
-            this.PublicQuestions = Questions;
-
-            this.IsPublicQuestionsEmpty = false;
 
         }
 
@@ -76,6 +71,8 @@ namespace SimpleQ.PageModels.Services
         private ObservableCollection<QuestionModel> publicQuestions;
 
         private Boolean isPublicQuestionsEmpty;
+
+        private String currentCategorie;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -110,6 +107,8 @@ namespace SimpleQ.PageModels.Services
             get => isPublicQuestionsEmpty;
             set { isPublicQuestionsEmpty = value; OnPropertyChanged(); }
         }
+
+        public string CurrentCategorie { get => currentCategorie; set => currentCategorie = value; }
         #endregion
 
         #region Commands
@@ -134,10 +133,11 @@ namespace SimpleQ.PageModels.Services
         /// <param name="question">The question.</param>
         public void AddQuestion(QuestionModel question)
         {
-            this.questions.Add(question);
+            this.Questions.Add(question);
             if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.Categorie) > 0))
             {
                 //categorie does not exists
+                Debug.WriteLine("Add new categorie from QuestionService", "Info");
 
                 App.MainMasterPageModel.AddCategorie(question.Categorie);
             }
@@ -149,6 +149,7 @@ namespace SimpleQ.PageModels.Services
         /// <param name="categorie">The categorie.</param>
         public void SetCategorieFilter(String categorie)
         {
+            CurrentCategorie = categorie;
             if (categorie == AppResources.AllCategories)
             {
                 this.PublicQuestions = Questions;
@@ -199,11 +200,76 @@ namespace SimpleQ.PageModels.Services
             }
         }
 
+        public QuestionModel GetQuestionWithRightType1(QuestionModel question)
+        {
+            Debug.WriteLine(question.QuestionType);
+            switch (question.QuestionType)
+            {
+                case QuestionType.YNQ:
+                    return (YNQModel)question;
+                case QuestionType.TLQ:
+                    return (TLQModel)question;
+                case QuestionType.OWQ:
+                    return (OWQModel)question;
+                case QuestionType.GAQ:
+                    return (GAQModel)question;
+            }
+            return null;
+        }
+
         private void PublicQuestions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             Debug.WriteLine("PubliQuestions Changed... Actual count of elements: " + PublicQuestions.Count, "Info");
             IsPublicQuestionsEmpty = PublicQuestions.Count <= 0;
         }
+
+        public async void RequestData()
+        {
+            ISimulationService simulationService = FreshIOC.Container.Resolve<ISimulationService>();
+
+            List<QuestionModel> questions = await simulationService.GetData();
+
+            if (questions != null)
+            {
+                if (questions.Count >= 0)
+                {
+                    this.Questions.Clear();
+                    foreach (QuestionModel question in questions)
+                    {
+                        Debug.WriteLine(question.GetType());
+                        this.AddQuestion(question);
+                    }
+
+                    this.SetCategorieFilter(this.currentCategorie);
+
+                    BlobCache.LocalMachine.InvalidateObject<List<QuestionModel>>("Questions");
+
+                    BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("Questions", questions);
+                }
+            }
+        }
+
+        public void LoadDataFromCache()
+        {
+            //Get Data from Cache
+            try
+            {
+                BlobCache.LocalMachine.GetObject<List<QuestionModel>>("Questions").Subscribe(questions =>
+                {
+                    Debug.WriteLine(questions.Count);
+                    foreach (QuestionModel question in questions)
+                    {
+                        Debug.WriteLine(GetQuestionWithRightType1(question));
+                    }
+                    this.SetCategorieFilter(this.currentCategorie);
+                });
+            }
+            catch (KeyNotFoundException ex)
+            {
+                Debug.WriteLine("No data in cache...", "Info");
+            }
+        }
+
         #endregion
 
         #region INotifyPropertyChanged Implementation

@@ -12,7 +12,12 @@ namespace SimpleQ.Models
     public class OWQModel : QuestionModel, INotifyPropertyChanged
     {
         #region Constructor(s)
-        public OWQModel(string questionDesc, string categorie, int questionId) : base(questionDesc, categorie, questionId)
+        public OWQModel(string questionDesc, string categorie, int questionId) : base(questionDesc, categorie, questionId, QuestionType.OWQ)
+        {
+
+        }
+
+        public OWQModel()
         {
 
         }

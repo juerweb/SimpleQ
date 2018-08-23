@@ -12,7 +12,12 @@ namespace SimpleQ.Models
     public class YNQModel : QuestionModel, INotifyPropertyChanged
     {
         #region Constructor(s)
-        public YNQModel(string questionDesc, string categorie, int questionId) : base(questionDesc, categorie, questionId)
+        public YNQModel(string questionDesc, string categorie, int questionId) : base(questionDesc, categorie, questionId, QuestionType.YNQ)
+        {
+
+        }
+
+        public YNQModel()
         {
 
         }

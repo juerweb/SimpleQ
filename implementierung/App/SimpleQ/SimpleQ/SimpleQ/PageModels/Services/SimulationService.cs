@@ -19,14 +19,17 @@ namespace SimpleQ.PageModels.Services
             return new CodeValidationModel(code == 123456, "Tina's Factory", "Development", code);
         }
 
-        public async Task<Boolean> GetData()
+        public async Task<List<QuestionModel>> GetData()
         {
             await Task.Delay(TimeSpan.FromSeconds(5));
 
-            //Random random = new Random();
-            //return random.Next(0, 2) == 0;
+            List<QuestionModel> questions = new List<QuestionModel>();
+            questions.Add(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
+            questions.Add(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
+            questions.Add(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2));
+            questions.Add(new GAQModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 1, new String[] { "Grün", "Rot", "Gelb", "Blau" }));
 
-            return true;
+            return questions;
         }
     }
 }

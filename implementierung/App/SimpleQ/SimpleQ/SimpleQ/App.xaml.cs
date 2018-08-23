@@ -18,6 +18,8 @@ using Plugin.Multilingual;
 using SimpleQ.Resources;
 using System.Globalization;
 using System.Collections.Generic;
+using Akavache;
+using System.Reactive.Linq;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -32,6 +34,7 @@ namespace SimpleQ
 
             SetupIOC();
 
+            SetupBlobCache();
 
 
             InitializeComponent();
@@ -75,6 +78,10 @@ namespace SimpleQ
         {
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
+
+            IQuestionService questonService = FreshIOC.Container.Resolve<IQuestionService>();
+            questonService.LoadDataFromCache();
+            questonService.RequestData();
 
             languageService.SetCurrentLanguage();
             Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
@@ -124,6 +131,11 @@ namespace SimpleQ
         {
             get;
             set;
+        }
+
+        private async void SetupBlobCache()
+        {
+            BlobCache.ApplicationName = "SimpleQ";
         }
     }
 }

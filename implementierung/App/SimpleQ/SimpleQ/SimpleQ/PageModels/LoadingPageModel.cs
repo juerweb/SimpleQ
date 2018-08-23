@@ -60,8 +60,8 @@ namespace SimpleQ.PageModels
             }
 
             //Load Data
-            Boolean success = await this.SimulationService.GetData();
-            if (success)
+            List<QuestionModel> questions = await this.SimulationService.GetData();
+            if (questions.Count >= 1)
             {
                 Debug.WriteLine("Data successfully loaded", "Info");
             }
