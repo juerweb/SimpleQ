@@ -18,6 +18,10 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpPost]
         public ActionResult New(Survey svy)
         {
+            using (var db = new SimpleQDBEntities())
+            {
+                db.Surveys.Add(svy);
+            }
             return View();
         }
     }
