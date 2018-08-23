@@ -47,8 +47,7 @@ namespace SimpleQ.Webinterface.Mobile
             if (LoggedIn(persEmail)) return new OperationStatus(StatusCode.LOGIN_FAILED, "Already logged in");
             using (var db = new SimpleQDBEntities())
             {
-                byte[] hash = SHA512.Create().ComputeHash(Encoding.UTF8.GetBytes(persPwd));
-                AskedPerson person = db.AskedPersons.Where(p => p.PersEmail == persEmail && p.PersPwdHash == hash && p.CustName == custName).FirstOrDefault();
+                AskedPerson person = db.AskedPersons.Where(p => p.PersEmail == persEmail && p.PersPwdHash == persPwd.GetSHA512() && p.CustName == custName).FirstOrDefault();
                 if (person != null)
                 {
                     connectedPersons.Add(Context.ConnectionId, person);

@@ -15,9 +15,9 @@ namespace SimpleQ.Webinterface.Models
     public partial class Vote
     {
         public int VoteId { get; set; }
-        public Nullable<int> SvyId { get; set; }
-        public string CustName { get; set; }
-        public Nullable<int> AnsId { get; set; }
+        public int SvyId { get; set; }
+        public string CustCode { get; set; }
+        public int AnsId { get; set; }
         public string Note { get; set; }
     
         public virtual Answer Answer { get; set; }

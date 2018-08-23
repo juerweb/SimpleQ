@@ -21,8 +21,10 @@ namespace SimpleQ.Webinterface.Models
             this.Departments = new HashSet<Department>();
             this.Groups = new HashSet<Group>();
             this.Surveys = new HashSet<Survey>();
+            this.SurveyCategories = new HashSet<SurveyCategory>();
         }
     
+        public string CustCode { get; set; }
         public string CustName { get; set; }
         public string CustEmail { get; set; }
         public string CustPwdTmp { get; set; }
@@ -43,5 +45,7 @@ namespace SimpleQ.Webinterface.Models
         public virtual ICollection<Group> Groups { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Survey> Surveys { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SurveyCategory> SurveyCategories { get; set; }
     }
 }

@@ -221,6 +221,9 @@
     <Compile Include="Models\Survey.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SurveyCategory.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SurveyType.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>

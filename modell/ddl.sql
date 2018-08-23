@@ -8,6 +8,7 @@ drop table DsgvoConstraint;
 drop table Vote;
 drop table Answer;
 drop table Survey;
+drop table SurveyCategory;
 drop table SurveyType;
 drop table AskedPerson;
 drop table [Contains];
@@ -17,6 +18,7 @@ drop table Bill;
 drop table Customer;
 drop table PaymentMethod;
 
+-- Nicht kundenabhängig
 create table PaymentMethod
 (
 	PaymentMethodId int primary key,
@@ -24,119 +26,141 @@ create table PaymentMethod
 );
 go
 
+
 create table Customer
 (
-	CustName varchar(256) primary key,
-	CustEmail varchar(256) unique not null,
+	CustCode char(6) primary key,
+	CustName varchar(max) not null,
+	CustEmail varchar(max) not null,
 	CustPwdTmp varchar(max),
 	CustPwdHash varbinary(max),
-	Street varchar(256) not null,
+	Street varchar(max) not null,
 	Plz varchar(16) not null,
-	City varchar(256) not null,
-	Country varchar(256) not null,
+	City varchar(max) not null,
+	Country varchar(max) not null,
 	PaymentMethodId int not null references PaymentMethod,
 	CostBalance money not null
 );
 go
 
+-- Kundenabhängig
 create table Bill
 (
 	BillId int identity,
-	CustName varchar(256) references Customer,
+	CustCode char(6) references Customer,
 	BillAmount money not null,
 	BillDate datetime not null,
 	Paid bit not null,
-	primary key (BillId, CustName)
+	primary key (BillId, CustCode)
 );
 go
 
+-- Kundenabhängig
 create table Department
 (
-	DepName varchar(256),
-	CustName varchar(256) references Customer,
-	primary key (DepName, CustName)
+	DepName varchar(512),
+	CustCode char(6) references Customer,
+	primary key (DepName, CustCode)
 );
 go
 
+-- Kundenabhängig
 create table [Group] 
 (
 	GroupId int identity,
-	CustName varchar(256) references Customer,
-	GroupDesc varchar(max),
-	primary key (GroupId, CustName)
+	CustCode char(6) references Customer,
+	GroupDesc varchar(max) not null,
+	primary key (GroupId, CustCode)
 );
 go
 
+-- Kundenabhängig
 create table [Contains]
 (
 	GroupId int,
-	DepName varchar(256),
-	CustName varchar(256), 
+	DepName varchar(512),
+	CustCode char(6), 
 	Amount int not null,
-	primary key (GroupId, DepName, CustName),
-	foreign key (DepName, CustName) references Department,
-	foreign key (GroupId, CustName) references [Group]
+	primary key (GroupId, DepName, CustCode),
+	foreign key (DepName, CustCode) references Department,
+	foreign key (GroupId, CustCode) references [Group]
 );
 go
 
+-- Kundenabhängig
 create table AskedPerson
 (
-	PersEmail varchar(256),
-	DepName varchar(256),
-	CustName varchar(256),
-	PersFirstName varchar(256) not null,
-	PersLastName varchar(256) not null,
-	PersPwdTmp varchar(max),
-	PersPwdHash varbinary(max),
-	primary key (PersEmail, CustName),
-	foreign key (DepName, CustName) references Department
+	PersId int identity,
+	DepName varchar(512) not null,
+	CustCode char(6),
+	primary key (PersId, CustCode),
+	foreign key (DepName, CustCode) references Department
 );
 go
 
+-- Nicht kundenabhängig
 create table SurveyType
 (
 	TypeId int primary key,
-	TypeDesc varchar(256) not null
+	TypeDesc varchar(max) not null
 );
 go
 
+-- Kundenabhängig
+create table SurveyCategory
+(
+	CatId int identity,
+	CustCode char(6) references Customer, 
+	CatName varchar(max) not null,
+	primary key (CatId, CustCode)
+);
+go
+
+-- Kundenabhängig
 create table Survey
 (
 	SvyId int identity,
-	CustName varchar(256) references Customer,
+	CustCode char(6) references Customer,
 	SvyDesc varchar(max) not null,
 	StartDate datetime not null,
 	EndDate datetime not null,
 	TypeId int not null references SurveyType,
-	primary key (SvyId, CustName)
+	CatId int not null
+	primary key (SvyId, CustCode),
+	foreign key (CatId, CustCode) references SurveyCategory
 );
 go
 
+-- Nicht kundenabhängig
 create table Answer
 (
-	AnsId int identity primary key,
-	AnsDesc varchar(256) not null,
+	AnsId int primary key,
+	AnsDesc varchar(max) not null,
 );
 go
 
+-- Kundenabhängig
 create table Vote
 (
 	VoteId int identity primary key,
-	SvyId int,
-	CustName varchar(256),
-	AnsId int references Answer,
+	SvyId int not null,
+	CustCode char(6),
+	AnsId int not null references Answer,
 	Note varchar(max) null,
-	foreign key (SvyId, CustName) references Survey
+	foreign key (SvyId, CustCode) references Survey
 );
 go
 
+-- Nicht kundenabhängig
 create table DsgvoConstraint
 (
-	ConstrName varchar(256) primary key,
+	ConstrName varchar(512) primary key,
 	ConstrValue int not null,
 );
 go
 
+insert into DsgvoConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
+go
 
 
 drop view vw_InvalidGroupSizes;
@@ -156,70 +180,24 @@ create trigger tr_CustomerInsUpd
 on Customer
 after insert, update as
 begin
-	declare @custName varchar(256), @hash varbinary(max);
-	declare c cursor local for select CustName, hashbytes('SHA2_512', CustPwdTmp) from inserted;
+	declare @CustCode char(6), @hash varbinary(max);
+	declare c cursor local for select CustCode, hashbytes('SHA2_512', CustPwdTmp) from inserted;
 	
 	open c;
-	fetch c into @custName, @hash;
+	fetch c into @CustCode, @hash;
 
 	while(@@FETCH_STATUS = 0)
 	begin
 		if(@hash is not null)
 		begin
 			update Customer set CustPwdHash = @hash, CustPwdTmp = null
-			where CustName = @custName
+			where CustCode = @CustCode
 		end
 		
-		fetch c into @custName, @hash
+		fetch c into @CustCode, @hash
 	end
 
 	close c;
 	deallocate c;
 end
 go
-
-create trigger tr_AskedPersonInsUpd
-on AskedPerson
-after insert, update as
-begin
-	declare @persEmail varchar(256), @hash varbinary(max);
-	declare c cursor local for select PersEmail, hashbytes('SHA2_512', PersPwdTmp) from inserted;
-	
-	open c;
-	fetch c into @persEmail, @hash;
-
-	while(@@FETCH_STATUS = 0)
-	begin
-		if(@hash is not null)
-		begin
-			update AskedPerson set PersPwdHash = @hash, PersPwdTmp = null
-			where PersEmail = @persEmail
-		end
-
-		fetch c into @persEmail, @hash
-	end
-
-	close c;
-	deallocate c;
-end
-go
-
-
-
---insert into DsgvoConstraint select 'MIN_GROUP_SIZE', 20;
-
---insert into PaymentMethod values (1, 'Bank payment');
---insert into Customer values (1, 'Mbappé Inc.', 'mb@p.pe', 'asdf1234', null, 'street', '1010', 'city', 'country', 1, 0);
---insert into Department values (1, 1, 'dep1');
---insert into Department values (2, 1, 'dep2');
---insert into Department values (3, 1, 'dep3');
---insert into [Group] values (1, 'Group 1');
---insert into [Group] values (2, 'Group 2');
---insert into [Contains] values (1, 1, 7);
---insert into [Contains] values (1, 2, 13);
---insert into [Contains] values (2, 3, 2);
---insert into [Contains] values (2, 2, 8);
-
---select * from vw_InvalidGroupSizes;
---select * from customer;
---select * from customer where CustPwdHash = hashbytes('SHA2_512', 'asdf1234');
