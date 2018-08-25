@@ -73,7 +73,7 @@ create table Department
 );
 go
 
--- Gruppe
+-- Befragtenruppe
 -- Kundenabhängig
 create table [Group] 
 (
@@ -178,7 +178,9 @@ create table Vote
 	CustCode char(6) collate Latin1_General_CS_AS,
 	AnsId int not null references Answer,
 	VoteText varchar(max) null, -- optional
-	foreign key (SvyId, CustCode) references Survey
+	SpecId int null,
+	foreign key (SvyId, CustCode) references Survey,
+	foreign key (SpecId, SvyId, CustCode) references SpecifiedTextAnswer
 );
 go
 
@@ -264,4 +266,24 @@ begin
 
 	select @custCount as 'Num of Customers';
 end
+go
+
+
+-- Fixe inserts (für alle gleich!)
+begin transaction;
+insert into DsgvoConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
+insert into PaymentMethod values (1, 'Visa'); -- Nur Testwert
+
+insert into AnswerType values (1, 'YesNo');
+insert into AnswerType values (2, 'TrafficLight');
+insert into AnswerType values (3, 'OneWord');
+insert into AnswerType values (4, 'SpecifiedText');
+insert into Answer values (1, 'Yes', 1);
+insert into Answer values (2, 'No', 1);
+insert into Answer values (3, 'Green', 2);
+insert into Answer values (4, 'Yellow', 2);
+insert into Answer values (5, 'Red', 2);
+insert into Answer values (6, 'OneWord', 3);
+insert into Answer values (7, 'SpecifiedText', 4);
+commit;
 go

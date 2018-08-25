@@ -9,6 +9,7 @@
 
 namespace SimpleQ.Webinterface.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -23,9 +24,11 @@ namespace SimpleQ.Webinterface.Models
         public int AnsId { get; set; }
         public string AnsDesc { get; set; }
         public int TypeId { get; set; }
-    
+
+        [JsonIgnore]
         public virtual AnswerType AnswerType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<Vote> Votes { get; set; }
     }
 }

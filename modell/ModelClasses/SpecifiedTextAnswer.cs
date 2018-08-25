@@ -9,16 +9,27 @@
 
 namespace SimpleQ.Webinterface.Models
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
     public partial class SpecifiedTextAnswer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public SpecifiedTextAnswer()
+        {
+            this.Votes = new HashSet<Vote>();
+        }
+    
         public int SpecId { get; set; }
         public int SvyId { get; set; }
         public string CustCode { get; set; }
         public string SpecText { get; set; }
-    
+        
+        [JsonIgnore]
         public virtual Survey Survey { get; set; }
+        [JsonIgnore]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

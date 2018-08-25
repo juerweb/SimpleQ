@@ -1,20 +1,20 @@
-PaymentMethod (PaymentMethodId, PaymentMethodDesc)
-Customer (CustCode, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, LanguageCode, DataStoragePeriod, LastExceededCheck, PaymentMethodId, CostBalance)
-Bill (BillId, BillAmount, BillDate, CustCode)
+PaymentMethod (PaymentMethodId, PaymentMethodDesc)  -- Zahlungsmethode, NICHT KUNDENABHÄNGIG
+Customer (CustCode, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, LanguageCode, DataStoragePeriod, LastExceededCheck, PaymentMethodId, CostBalance)  -- Kunde
+Bill (BillId, BillAmount, BillDate, CustCode)  -- Rechnung, KUNDENABHÄNGIG
 
-Department (DepId, CustCode)
-Group (GroupId, CustCode, GroupDesc)
-Contains (GroupId, DepId, CustCode, Amount)
-AskedPerson (PersId, DepId, CustCode)
+Department (DepId, CustCode)  -- Abteilung, KUNDENABHÄNGIG
+Group (GroupId, CustCode, GroupDesc)  -- Befragtenruppe, KUNDENABHÄNGIG
+Contains (GroupId, DepId, CustCode, Amount)  -- Information welche Gruppe wieviele Personen aus welchen Abteilungen beinhaltet, KUNDENABHÄNGIG
+AskedPerson (PersId, DepId, CustCode)  -- Befragte Person, KUNDENABHÄNGIG
 
-AnswerType (TypeId, TypeDesc)
-SurveyCategory (CatId, CustCode, CatName)
-Survey (SvyId, CustCode, SvyDesc, StartDate, EndDate, TypeId, CatId)
-Answer (AnsId, AnsDesc, TypeId)
-SpecifiedTextAnswer (SpecId, SvyId, CustCode, SpecText)
-Vote (VoteId, SvyId, CustCode, AnsId, VoteText)
+AnswerType (TypeId, TypeDesc)  -- Beantwortungsart, NICHT KUNDENABHÄNGIG
+SurveyCategory (CatId, CustCode, CatName)  -- Umfragekategorie, KUNDENABHÄNGIG
+Survey (SvyId, CustCode, SvyDesc, StartDate, EndDate, TypeId, CatId)  -- Umfrage, KUNDENABHÄNGIG
+Answer (AnsId, AnsDesc, TypeId)  -- Antwortmöglichkeit, NICHT KUNDENABHÄNGIG
+SpecifiedTextAnswer (SpecId, SvyId, CustCode, SpecText)  -- Vorgegebene Textantwort (wird nur benötigt falls entsprechender Antworttyp für die Umfrage verwendet wird), KUNDENABHÄNGIG
+Vote (VoteId, SvyId, CustCode, AnsId, VoteText, SpecId)  -- Antwort auf eine Umfrage, KUNDENABHÄNGIG
 
-DsgvoConstraint (ConstrName, ConstrValue)
+DsgvoConstraint (ConstrName, ConstrValue)  -- DSGVO-spezifische Bestimmung, NICHT KUNDENABHÄNGIG
 
 
 + vw_InvalidGroupSizes (wegen DSGVO)
