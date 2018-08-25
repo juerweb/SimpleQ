@@ -1,0 +1,24 @@
+Vorhandene Hub-Methoden server-side:
+- public OperationStatus Register(string regCode)  // bei Registrierung => regCode ergibt sich aus <custCode>;<depId> (ist im QR-Code enthalten)
+- public void Unregister(int persId, string custCode)  // (idealerweise) bei Deinstallation 
+- public OperationStatus Login(int persId, string custCode)  // nach jeder hergestellter Verbindung mit dem Server
+- public void Logout() // bei Logout
+- public Department[] LoadDepartments(string custCode) // zum Laden aller Abteilungen vor Abteilungsänderung
+- public OperationStatus ChangeDepartment(int persId, string custCode, int depId) // bei Abteilungsänderung
+- public Answer[] LoadAnswersOfType(int typeId) // zum Laden der Antwortmöglichkeiten nachdem eine Umfrage empfangen wurde
+- public string[] LoadSpecifiedTextAnswers(int svyId, string custCode) // zum Laden der vorgegebenen Textantworten nachdem eine Umfrage (mit der entsprechenden Kategorie empfangen wurde)
+- public OperationStatus AnswerSurvey(int svyId, string custCode, int ansId, string text) // bei Umfragebeantwortung
+- internal static void SendSurvey(int groupId, string custCode, Survey survey) // von Controller aufgerufen - bei Umfrageaussendung
+- internal static void AnonymityChanged(int configValue) // von Controller aufgerufen - bei geänderten Anonymitätseinstellungen
+
+
+Infos:
+- OperationStatus: eigene Klasse zum Austausch des aktuellen Status (AppClasses/OperationStatus.cs)
+- Department, Answer, Survey: Model-Klassen => EntityFramework (ModelClasses/...)
+
+
+Benötigte gespeicherte (aktuelle) Daten client-side (App):
+- persId (nach Registration)
+- custCode (nach Registration)
+- depId (nach Registration/Abteilungswechsel)
+- depName (nach Registration/Abteilungswechsel)

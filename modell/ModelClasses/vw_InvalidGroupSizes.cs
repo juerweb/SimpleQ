@@ -12,15 +12,11 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Vote
+    public partial class vw_InvalidGroupSizes
     {
-        public int VoteId { get; set; }
-        public int SvyId { get; set; }
-        public string CustCode { get; set; }
-        public int AnsId { get; set; }
-        public string VoteText { get; set; }
-    
-        public virtual Answer Answer { get; set; }
-        public virtual Survey Survey { get; set; }
+        public int GroupId { get; set; }
+        public string GroupDesc { get; set; }
+        public Nullable<int> Amount { get; set; }
+        public int MinSize { get; set; }
     }
 }

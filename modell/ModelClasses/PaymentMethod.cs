@@ -12,20 +12,18 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Answer
+    public partial class PaymentMethod
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Answer()
+        public PaymentMethod()
         {
-            this.Votes = new HashSet<Vote>();
+            this.Customers = new HashSet<Customer>();
         }
     
-        public int AnsId { get; set; }
-        public string AnsDesc { get; set; }
-        public int TypeId { get; set; }
+        public int PaymentMethodId { get; set; }
+        public string PaymentMethodDesc { get; set; }
     
-        public virtual AnswerType AnswerType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vote> Votes { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

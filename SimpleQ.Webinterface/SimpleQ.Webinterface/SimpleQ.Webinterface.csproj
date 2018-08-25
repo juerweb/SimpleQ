@@ -179,6 +179,9 @@
     <Compile Include="Models\Answer.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnswerType.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\AskedPerson.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
@@ -218,13 +221,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimpleQModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\SpecifiedTextAnswer.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Survey.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SurveyCategory.cs">
-      <DependentUpon>SimpleQModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\SurveyType.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Vote.cs">
@@ -279,7 +282,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

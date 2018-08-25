@@ -11,6 +11,10 @@ namespace MobileTest
     {
         static HubConnection conn = new HubConnection("http://localhost:55445");
         static IHubProxy hub;
+        static int persId;
+        static string custCode;
+        static int depId;
+        static string depName;
 
         static void Main(string[] args)
         {
@@ -26,13 +30,25 @@ namespace MobileTest
 
                 while ((input = ReadLine()) != "exit")
                 {
-                    if (input == "login")
+                    if (input == "register")
+                    {
+                        Register();
+                    }
+                    else if (input == "unregister")
+                    {
+                        Unregister();
+                    }
+                    else if (input == "login")
                     {
                         Login();
                     }
-                    else if (input == "register")
+                    else if (input == "logout")
                     {
-
+                        Logout();
+                    }
+                    else if (input == "props")
+                    {
+                        WriteLine($"{persId} {custCode} {depId} {depName}");
                     }
                     else if (input == "cls")
                     {
@@ -40,7 +56,8 @@ namespace MobileTest
                     }
                     else if (input == "help")
                     {
-                        WriteLine("Type 'login' to sign in, 'register' to sign up, 'cls' to clear the screen, 'exit' to close program.");
+                        WriteLine("Type 'register' to sign up, 'unregister' to unregister 'login' to sign in, 'logout' to sign out, " +
+                            "'props' to show the current properties, 'cls' to clear the screen, 'exit' to close program.");
                     }
                 }
                 return;
@@ -52,24 +69,43 @@ namespace MobileTest
             Console.ReadKey();
         }
 
+        static void Register()
+        {
+            WriteLine("Registration code:");
+            string regCode = ReadLine();
+
+            Task<OperationStatus> t = hub.Invoke<OperationStatus>("Register", regCode);
+            t.Wait();
+
+            if (t.Result.StatusCode == StatusCode.REGISTERED)
+            {
+                persId = t.Result.PersId;
+                custCode = t.Result.AssignedDepartment.CustCode;
+                depId = t.Result.AssignedDepartment.DepId;
+                depName = t.Result.AssignedDepartment.DepName;
+            }
+
+            WriteLine(t.Result);
+            WriteLine($"{persId} {custCode} {depId} {depName}");
+        }
+
+        static void Unregister()
+        {
+            hub.Invoke("Unregister", persId, custCode).Wait();
+            WriteLine("Unregistered successfully.");
+        }
+
         static void Login()
         {
-            WriteLine("E-Mail:");
-            string email = ReadLine();
-            WriteLine("Password:");
-            string pwd = ReadLine();
-            WriteLine("CustName:");
-            string custName = ReadLine();
-            WriteLine("Type 'commit' to login, 'abort' for cancelling");
-            string action;
-            while ((action = ReadLine()) != "commit" && (action = ReadLine()) != "abort") ;
+            Task<OperationStatus> t = hub.Invoke<OperationStatus>("Login", persId, custCode);
+            t.Wait();
+            WriteLine(t.Result);
+        }
 
-            if (action == "commit")
-            {
-                Task<OperationStatus> task = hub.Invoke<OperationStatus>("Login", email, pwd, custName);
-                task.Wait();
-                WriteLine(task.Result);
-            }
+        static void Logout()
+        {
+            hub.Invoke("Logout").Wait();
+            WriteLine("Logged out.");
         }
 
         static string ReadLine()

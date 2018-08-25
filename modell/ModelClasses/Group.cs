@@ -12,14 +12,20 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Contain
+    public partial class Group
     {
-        public int GroupId { get; set; }
-        public int DepId { get; set; }
-        public string CustCode { get; set; }
-        public int Amount { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Group()
+        {
+            this.Contains = new HashSet<Contain>();
+        }
     
-        public virtual Department Department { get; set; }
-        public virtual Group Group { get; set; }
+        public int GroupId { get; set; }
+        public string CustCode { get; set; }
+        public string GroupDesc { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Contain> Contains { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

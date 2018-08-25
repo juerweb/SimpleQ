@@ -12,18 +12,14 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SurveyType
+    public partial class Bill
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SurveyType()
-        {
-            this.Surveys = new HashSet<Survey>();
-        }
+        public int BillId { get; set; }
+        public string CustCode { get; set; }
+        public decimal BillAmount { get; set; }
+        public System.DateTime BillDate { get; set; }
+        public bool Paid { get; set; }
     
-        public int TypeId { get; set; }
-        public string TypeDesc { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Survey> Surveys { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

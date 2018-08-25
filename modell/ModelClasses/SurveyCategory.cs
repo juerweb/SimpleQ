@@ -12,20 +12,20 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Answer
+    public partial class SurveyCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Answer()
+        public SurveyCategory()
         {
-            this.Votes = new HashSet<Vote>();
+            this.Surveys = new HashSet<Survey>();
         }
     
-        public int AnsId { get; set; }
-        public string AnsDesc { get; set; }
-        public int TypeId { get; set; }
+        public int CatId { get; set; }
+        public string CustCode { get; set; }
+        public string CatName { get; set; }
     
-        public virtual AnswerType AnswerType { get; set; }
+        public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vote> Votes { get; set; }
+        public virtual ICollection<Survey> Surveys { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace SimpleQ.Webinterface.Models
 {
     using System;
     using System.Collections.Generic;
+    using Newtonsoft.Json;
     
     public partial class Department
     {
@@ -21,13 +22,17 @@ namespace SimpleQ.Webinterface.Models
             this.Contains = new HashSet<Contain>();
         }
     
+        public int DepId { get; set; }
         public string DepName { get; set; }
         public string CustCode { get; set; }
-    
+        
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AskedPerson> AskedPersons { get; set; }
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contain> Contains { get; set; }
+        [JsonIgnore]
         public virtual Customer Customer { get; set; }
     }
 }

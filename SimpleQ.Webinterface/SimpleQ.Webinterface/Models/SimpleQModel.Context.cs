@@ -12,6 +12,8 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class SimpleQDBEntities : DbContext
     {
@@ -26,6 +28,7 @@ namespace SimpleQ.Webinterface.Models
         }
     
         public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<AnswerType> AnswerTypes { get; set; }
         public virtual DbSet<AskedPerson> AskedPersons { get; set; }
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Contain> Contains { get; set; }
@@ -34,10 +37,15 @@ namespace SimpleQ.Webinterface.Models
         public virtual DbSet<DsgvoConstraint> DsgvoConstraints { get; set; }
         public virtual DbSet<Group> Groups { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public virtual DbSet<SpecifiedTextAnswer> SpecifiedTextAnswers { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<SurveyCategory> SurveyCategories { get; set; }
-        public virtual DbSet<SurveyType> SurveyTypes { get; set; }
         public virtual DbSet<Vote> Votes { get; set; }
         public virtual DbSet<vw_InvalidGroupSizes> vw_InvalidGroupSizes { get; set; }
+    
+        public virtual ObjectResult<Nullable<int>> sp_CheckExceededSurveyData()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_CheckExceededSurveyData");
+        }
     }
 }
