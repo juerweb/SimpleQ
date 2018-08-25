@@ -6,10 +6,11 @@ go
 
 drop table DsgvoConstraint;
 drop table Vote;
+drop table SpecifiedTextAnswer;
 drop table Answer;
 drop table Survey;
 drop table SurveyCategory;
-drop table SurveyType;
+drop table AnswerType;
 drop table AskedPerson;
 drop table [Contains];
 drop table [Group];
@@ -17,7 +18,9 @@ drop table Department;
 drop table Bill;
 drop table Customer;
 drop table PaymentMethod;
+go
 
+-- Zahlungsmethode
 -- Nicht kundenabhängig
 create table PaymentMethod
 (
@@ -26,10 +29,10 @@ create table PaymentMethod
 );
 go
 
-
+-- Kunde
 create table Customer
 (
-	CustCode char(6) primary key,
+	CustCode char(6) collate Latin1_General_CS_AS primary key,
 	CustName varchar(max) not null,
 	CustEmail varchar(max) not null,
 	CustPwdTmp varchar(max),
@@ -38,16 +41,20 @@ create table Customer
 	Plz varchar(16) not null,
 	City varchar(max) not null,
 	Country varchar(max) not null,
+	LanguageCode char(3) not null,
+	DataStoragePeriod int not null, -- in Monaten
+	LastExceededCheck datetime null,
 	PaymentMethodId int not null references PaymentMethod,
 	CostBalance money not null
 );
 go
 
+-- Rechnung
 -- Kundenabhängig
 create table Bill
 (
 	BillId int identity,
-	CustCode char(6) references Customer,
+	CustCode char(6) collate Latin1_General_CS_AS references Customer,
 	BillAmount money not null,
 	BillDate datetime not null,
 	Paid bit not null,
@@ -55,102 +62,127 @@ create table Bill
 );
 go
 
+-- Abteilung
 -- Kundenabhängig
 create table Department
 (
-	DepName varchar(512),
-	CustCode char(6) references Customer,
-	primary key (DepName, CustCode)
+	DepId int identity,
+	DepName varchar(max) not null,
+	CustCode char(6) collate Latin1_General_CS_AS references Customer,
+	primary key (DepId, CustCode)
 );
 go
 
+-- Gruppe
 -- Kundenabhängig
 create table [Group] 
 (
 	GroupId int identity,
-	CustCode char(6) references Customer,
+	CustCode char(6) collate Latin1_General_CS_AS references Customer,
 	GroupDesc varchar(max) not null,
 	primary key (GroupId, CustCode)
 );
 go
 
+-- Information welche Gruppe wieviele Personen aus welchen Abteilungen beinhaltet
 -- Kundenabhängig
 create table [Contains]
 (
 	GroupId int,
-	DepName varchar(512),
-	CustCode char(6), 
+	DepId int,
+	CustCode char(6) collate Latin1_General_CS_AS, 
 	Amount int not null,
-	primary key (GroupId, DepName, CustCode),
-	foreign key (DepName, CustCode) references Department,
+	primary key (GroupId, DepId, CustCode),
+	foreign key (DepId, CustCode) references Department,
 	foreign key (GroupId, CustCode) references [Group]
 );
 go
 
+-- Befragte Person
 -- Kundenabhängig
 create table AskedPerson
 (
 	PersId int identity,
-	DepName varchar(512) not null,
-	CustCode char(6),
+	DepId int not null,
+	CustCode char(6) collate Latin1_General_CS_AS,
 	primary key (PersId, CustCode),
-	foreign key (DepName, CustCode) references Department
+	foreign key (DepId, CustCode) references Department
 );
 go
 
+-- Beantwortungsart
 -- Nicht kundenabhängig
-create table SurveyType
+create table AnswerType
 (
 	TypeId int primary key,
 	TypeDesc varchar(max) not null
 );
 go
 
+-- Umfragekategorie
 -- Kundenabhängig
 create table SurveyCategory
 (
 	CatId int identity,
-	CustCode char(6) references Customer, 
+	CustCode char(6) collate Latin1_General_CS_AS references Customer, 
 	CatName varchar(max) not null,
 	primary key (CatId, CustCode)
 );
 go
 
+-- Umfrage
 -- Kundenabhängig
 create table Survey
 (
 	SvyId int identity,
-	CustCode char(6) references Customer,
-	SvyDesc varchar(max) not null,
+	CustCode char(6) collate Latin1_General_CS_AS references Customer,
+	SvyText varchar(max) not null,
 	StartDate datetime not null,
 	EndDate datetime not null,
-	TypeId int not null references SurveyType,
+	TypeId int not null references AnswerType,
 	CatId int not null
 	primary key (SvyId, CustCode),
 	foreign key (CatId, CustCode) references SurveyCategory
 );
 go
 
+-- AntwortMÖGLICHKEIT
 -- Nicht kundenabhängig
 create table Answer
 (
 	AnsId int primary key,
 	AnsDesc varchar(max) not null,
+	TypeId int not null references AnswerType
 );
 go
 
+-- Vorgegebene Textantwort (wird nur benötigt falls entsprechender Antworttyp für die Umfrage verwendet wird)
+-- kundenabhängig
+create table SpecifiedTextAnswer
+(
+	SpecId int identity,
+	SvyId int,
+	CustCode char(6) collate Latin1_General_CS_AS,
+	SpecText varchar(max),
+	primary key (SpecId, SvyId, CustCode),
+	foreign key (SvyId, CustCode) references Survey
+);
+go
+
+-- Antwort auf eine Umfrage
 -- Kundenabhängig
 create table Vote
 (
 	VoteId int identity primary key,
 	SvyId int not null,
-	CustCode char(6),
+	CustCode char(6) collate Latin1_General_CS_AS,
 	AnsId int not null references Answer,
-	Note varchar(max) null,
+	VoteText varchar(max) null, -- optional
 	foreign key (SvyId, CustCode) references Survey
 );
 go
 
+-- DSGVO-spezifische Bestimmung
 -- Nicht kundenabhängig
 create table DsgvoConstraint
 (
@@ -159,13 +191,11 @@ create table DsgvoConstraint
 );
 go
 
-insert into DsgvoConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
-go
 
 
+-- Alle Gruppen mit ungültigen Gruppengrößen
 drop view vw_InvalidGroupSizes;
 go
-
 create view vw_InvalidGroupSizes as
 select g.GroupId, GroupDesc, sum(Amount) as Amount, ConstrValue as MinSize
 from [Group] g
@@ -176,6 +206,9 @@ group by g.GroupId, GroupDesc, ConstrValue
 having sum(Amount) < ConstrValue;
 go
 
+
+
+-- Hasht das Passwort und setzt das im Klartext eingegebene NULL
 create trigger tr_CustomerInsUpd
 on Customer
 after insert, update as
@@ -199,5 +232,36 @@ begin
 
 	close c;
 	deallocate c;
+end
+go
+
+
+
+-- Zum Löschen der abgelaufenen Umfragedaten
+drop procedure sp_CheckExceededSurveyData;
+go
+create procedure sp_CheckExceededSurveyData
+as
+begin
+	declare @custCode char(6), @custCount int;
+	declare c cursor local for select CustCode from Customer where datediff(month, LastExceededCheck, getdate()) >= DataStoragePeriod;
+	
+	open c;
+	fetch c into @custCode;
+	set @custCount = 0;
+
+	while(@@FETCH_STATUS = 0)
+	begin
+		delete from Vote where CustCode = @custCode;
+		delete from SpecifiedTextAnswer where CustCode = @custCode;
+		delete from Survey where CustCode = @custCode;
+
+		update Customer set LastExceededCheck = getdate() where CustCode = @custCode;
+		set @custCount += 1;
+	end
+	close c;
+	deallocate c;
+
+	select @custCount as 'Num of Customers';
 end
 go

@@ -1,20 +1,22 @@
 PaymentMethod (PaymentMethodId, PaymentMethodDesc)
-Customer (CustCode, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, PaymentMethodId, CostBalance)
+Customer (CustCode, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, LanguageCode, DataStoragePeriod, LastExceededCheck, PaymentMethodId, CostBalance)
 Bill (BillId, BillAmount, BillDate, CustCode)
 
-Department (DepName, CustCode)
+Department (DepId, CustCode)
 Group (GroupId, CustCode, GroupDesc)
-Contains (GroupId, DepName, CustCode, Amount)
-AskedPerson (PersId, DepName, CustCode)
+Contains (GroupId, DepId, CustCode, Amount)
+AskedPerson (PersId, DepId, CustCode)
 
-SurveyType (TypeId, TypeDesc)
+AnswerType (TypeId, TypeDesc)
 SurveyCategory (CatId, CustCode, CatName)
 Survey (SvyId, CustCode, SvyDesc, StartDate, EndDate, TypeId, CatId)
-Answer (AnsId, AnsDesc)
-Vote (VoteId, SvyId, CustCode, AnsId, Note)
+Answer (AnsId, AnsDesc, TypeId)
+SpecifiedTextAnswer (SpecId, SvyId, CustCode, SpecText)
+Vote (VoteId, SvyId, CustCode, AnsId, VoteText)
 
 DsgvoConstraint (ConstrName, ConstrValue)
 
 
 + vw_InvalidGroupSizes (wegen DSGVO)
 + tr_CustomerInsUpd (Passwort-Hashing)
++ sp_CheckExceededSurveyData (zum Löschen abgelaufener Umfragen)
