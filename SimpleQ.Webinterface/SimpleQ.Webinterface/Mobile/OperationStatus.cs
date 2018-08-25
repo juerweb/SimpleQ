@@ -10,7 +10,7 @@ namespace SimpleQ.Webinterface.Mobile
     {
         public StatusCode StatusCode { get; set; }
         public string Message { get; set; }
-        public Department AssignedDepartment { get; set; } // Wird ausschließlich nach Registration gesetzt
+        public Department AssignedDepartment { get; set; } // Wird ausschließlich nach Registration/Abteilungswechsel gesetzt
         public int PersId { get; set; } // Wird ausschließlich nach Registration gesetzt
 
         public OperationStatus(StatusCode statusCode, string message)
@@ -36,6 +36,8 @@ namespace SimpleQ.Webinterface.Mobile
         REGISTRATION_FAILED_ALREADY_REGISTERED,
         REGISTRATION_FAILED_INVALID_CODE,
         LOGGED_IN,
-        LOGIN_FAILED_NOT_REGISTERED
+        LOGIN_FAILED_NOT_REGISTERED,
+        DEPARTMENT_CHANGED,
+        DEPARTMENT_CHANGING_FAILED_INVALID_DEPARTMENT
     }
 }

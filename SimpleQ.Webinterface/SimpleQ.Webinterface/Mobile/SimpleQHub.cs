@@ -10,6 +10,7 @@ using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Extensions;
 using System.Data.SqlClient;
 using System.Data.Entity.Infrastructure;
+using System.Configuration;
 
 namespace SimpleQ.Webinterface.Mobile
 {
@@ -96,12 +97,23 @@ namespace SimpleQ.Webinterface.Mobile
             }
         }
 
-        public void ChangeDepartment(int persId, string custCode, int depId)
+        public OperationStatus ChangeDepartment(int persId, string custCode, int depId)
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.AskedPersons.Where(p => p.PersId == persId && p.CustCode == custCode).First().DepId = depId;
-                db.SaveChanges();
+                try
+                {
+                    db.AskedPersons.Where(p => p.PersId == persId && p.CustCode == custCode).First().DepId = depId;
+                    db.SaveChanges();
+
+                    Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
+
+                    return new OperationStatus(StatusCode.DEPARTMENT_CHANGED, "Department changed") { AssignedDepartment = dep };
+                }
+                catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 547)
+                {
+                    return new OperationStatus(StatusCode.DEPARTMENT_CHANGING_FAILED_INVALID_DEPARTMENT, "No such department");
+                }
             }
         }
 
@@ -113,17 +125,22 @@ namespace SimpleQ.Webinterface.Mobile
             }
         }
 
-        public string[] LoadSpecifiedTextAnswers(int svyId, string custCode)
+        public SpecifiedTextAnswer[] LoadSpecifiedTextAnswers(int svyId, string custCode)
         {
             using (var db = new SimpleQDBEntities())
             {
-                return db.SpecifiedTextAnswers.Where(s => s.SvyId == svyId && s.CustCode == custCode).Select(s => s.SpecText).ToArray();
+                return db.SpecifiedTextAnswers.Where(s => s.SvyId == svyId && s.CustCode == custCode).ToArray();
             }
         }
 
-        public void AnswerSurvey(int svyId, string custCode, int ansId, string text)
+        public void AnswerSurvey(Vote vote)
         {
-
+            using (var db = new SimpleQDBEntities())
+            {
+                db.Votes.Add(vote);
+                db.Customers.Where(c => c.CustCode == vote.CustCode).First().CostBalance += decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
+                db.SaveChanges();
+            }
         }
 
         public override Task OnConnected()

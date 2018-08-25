@@ -144,6 +144,7 @@
           <Property Name="CustCode" Type="char" MaxLength="6" />
           <Property Name="AnsId" Type="int" Nullable="false" />
           <Property Name="VoteText" Type="varchar(max)" />
+          <Property Name="SpecId" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -158,7 +159,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="Amount" Type="int" />
           <Property Name="MinSize" Type="int" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Answer__TypeId__621B6E8C">
+        <Association Name="FK__Answer__TypeId__0DF9F0CA">
           <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
           <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -170,7 +171,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AskedPerson__55B597A7">
+        <Association Name="FK__AskedPerson__019419E5">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="AskedPerson" Type="Self.AskedPerson" Multiplicity="*" />
           <ReferentialConstraint>
@@ -184,7 +185,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bill__CustCode__494FC0C2">
+        <Association Name="FK__Bill__CustCode__752E4300">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -196,7 +197,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Contains__51E506C3">
+        <Association Name="FK__Contains__7DC38901">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="Contains" Type="Self.Contains" Multiplicity="*" />
           <ReferentialConstraint>
@@ -210,7 +211,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Contains__52D92AFC">
+        <Association Name="FK__Contains__7EB7AD3A">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Contains" Type="Self.Contains" Multiplicity="*" />
           <ReferentialConstraint>
@@ -224,7 +225,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Customer__Paymen__46735417">
+        <Association Name="FK__Customer__Paymen__7251D655">
           <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -236,7 +237,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Departmen__CustC__4C2C2D6D">
+        <Association Name="FK__Departmen__CustC__780AAFAB">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Department" Type="Self.Department" Multiplicity="*" />
           <ReferentialConstraint>
@@ -248,7 +249,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Group__CustCode__4F089A18">
+        <Association Name="FK__Group__CustCode__7AE71C56">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Group" Type="Self.Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -260,7 +261,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SpecifiedTextAns__64F7DB37">
+        <Association Name="FK__SpecifiedTextAns__10D65D75">
           <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
           <End Role="SpecifiedTextAnswer" Type="Self.SpecifiedTextAnswer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -274,7 +275,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__5F3F01E1">
+        <Association Name="FK__Survey__0B1D841F">
           <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -288,7 +289,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__CustCode__5D56B96F">
+        <Association Name="FK__Survey__CustCode__09353BAD">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -300,7 +301,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__TypeId__5E4ADDA8">
+        <Association Name="FK__Survey__TypeId__0A295FE6">
           <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -312,7 +313,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SurveyCat__CustC__5A7A4CC4">
+        <Association Name="FK__SurveyCat__CustC__0658CF02">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -324,7 +325,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vote__68C86C1B">
+        <Association Name="FK__Vote__14A6EE59">
           <End Role="Survey" Type="Self.Survey" Multiplicity="0..1" />
           <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
           <ReferentialConstraint>
@@ -338,7 +339,23 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vote__AnsId__67D447E2">
+        <Association Name="FK__Vote__159B1292">
+          <End Role="SpecifiedTextAnswer" Type="Self.SpecifiedTextAnswer" Multiplicity="0..1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpecifiedTextAnswer">
+              <PropertyRef Name="SpecId" />
+              <PropertyRef Name="SvyId" />
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="SpecId" />
+              <PropertyRef Name="SvyId" />
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vote__AnsId__13B2CA20">
           <End Role="Answer" Type="Self.Answer" Multiplicity="1" />
           <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
           <ReferentialConstraint>
@@ -374,63 +391,67 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
     [vw_InvalidGroupSizes].[MinSize] AS [MinSize]
     FROM [dbo].[vw_InvalidGroupSizes] AS [vw_InvalidGroupSizes]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK__Answer__TypeId__621B6E8C" Association="Self.FK__Answer__TypeId__621B6E8C">
+          <AssociationSet Name="FK__Answer__TypeId__0DF9F0CA" Association="Self.FK__Answer__TypeId__0DF9F0CA">
             <End Role="AnswerType" EntitySet="AnswerType" />
             <End Role="Answer" EntitySet="Answer" />
           </AssociationSet>
-          <AssociationSet Name="FK__AskedPerson__55B597A7" Association="Self.FK__AskedPerson__55B597A7">
+          <AssociationSet Name="FK__AskedPerson__019419E5" Association="Self.FK__AskedPerson__019419E5">
             <End Role="Department" EntitySet="Department" />
             <End Role="AskedPerson" EntitySet="AskedPerson" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bill__CustCode__494FC0C2" Association="Self.FK__Bill__CustCode__494FC0C2">
+          <AssociationSet Name="FK__Bill__CustCode__752E4300" Association="Self.FK__Bill__CustCode__752E4300">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
-          <AssociationSet Name="FK__Contains__51E506C3" Association="Self.FK__Contains__51E506C3">
+          <AssociationSet Name="FK__Contains__7DC38901" Association="Self.FK__Contains__7DC38901">
             <End Role="Department" EntitySet="Department" />
             <End Role="Contains" EntitySet="Contains" />
           </AssociationSet>
-          <AssociationSet Name="FK__Contains__52D92AFC" Association="Self.FK__Contains__52D92AFC">
+          <AssociationSet Name="FK__Contains__7EB7AD3A" Association="Self.FK__Contains__7EB7AD3A">
             <End Role="Group" EntitySet="Group" />
             <End Role="Contains" EntitySet="Contains" />
           </AssociationSet>
-          <AssociationSet Name="FK__Customer__Paymen__46735417" Association="Self.FK__Customer__Paymen__46735417">
+          <AssociationSet Name="FK__Customer__Paymen__7251D655" Association="Self.FK__Customer__Paymen__7251D655">
             <End Role="PaymentMethod" EntitySet="PaymentMethod" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
-          <AssociationSet Name="FK__Departmen__CustC__4C2C2D6D" Association="Self.FK__Departmen__CustC__4C2C2D6D">
+          <AssociationSet Name="FK__Departmen__CustC__780AAFAB" Association="Self.FK__Departmen__CustC__780AAFAB">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Department" EntitySet="Department" />
           </AssociationSet>
-          <AssociationSet Name="FK__Group__CustCode__4F089A18" Association="Self.FK__Group__CustCode__4F089A18">
+          <AssociationSet Name="FK__Group__CustCode__7AE71C56" Association="Self.FK__Group__CustCode__7AE71C56">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Group" EntitySet="Group" />
           </AssociationSet>
-          <AssociationSet Name="FK__SpecifiedTextAns__64F7DB37" Association="Self.FK__SpecifiedTextAns__64F7DB37">
+          <AssociationSet Name="FK__SpecifiedTextAns__10D65D75" Association="Self.FK__SpecifiedTextAns__10D65D75">
             <End Role="Survey" EntitySet="Survey" />
             <End Role="SpecifiedTextAnswer" EntitySet="SpecifiedTextAnswer" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__5F3F01E1" Association="Self.FK__Survey__5F3F01E1">
+          <AssociationSet Name="FK__Survey__0B1D841F" Association="Self.FK__Survey__0B1D841F">
             <End Role="SurveyCategory" EntitySet="SurveyCategory" />
             <End Role="Survey" EntitySet="Survey" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__CustCode__5D56B96F" Association="Self.FK__Survey__CustCode__5D56B96F">
+          <AssociationSet Name="FK__Survey__CustCode__09353BAD" Association="Self.FK__Survey__CustCode__09353BAD">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Survey" EntitySet="Survey" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__TypeId__5E4ADDA8" Association="Self.FK__Survey__TypeId__5E4ADDA8">
+          <AssociationSet Name="FK__Survey__TypeId__0A295FE6" Association="Self.FK__Survey__TypeId__0A295FE6">
             <End Role="AnswerType" EntitySet="AnswerType" />
             <End Role="Survey" EntitySet="Survey" />
           </AssociationSet>
-          <AssociationSet Name="FK__SurveyCat__CustC__5A7A4CC4" Association="Self.FK__SurveyCat__CustC__5A7A4CC4">
+          <AssociationSet Name="FK__SurveyCat__CustC__0658CF02" Association="Self.FK__SurveyCat__CustC__0658CF02">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="SurveyCategory" EntitySet="SurveyCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vote__68C86C1B" Association="Self.FK__Vote__68C86C1B">
+          <AssociationSet Name="FK__Vote__14A6EE59" Association="Self.FK__Vote__14A6EE59">
             <End Role="Survey" EntitySet="Survey" />
             <End Role="Vote" EntitySet="Vote" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vote__AnsId__67D447E2" Association="Self.FK__Vote__AnsId__67D447E2">
+          <AssociationSet Name="FK__Vote__159B1292" Association="Self.FK__Vote__159B1292">
+            <End Role="SpecifiedTextAnswer" EntitySet="SpecifiedTextAnswer" />
+            <End Role="Vote" EntitySet="Vote" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vote__AnsId__13B2CA20" Association="Self.FK__Vote__AnsId__13B2CA20">
             <End Role="Answer" EntitySet="Answer" />
             <End Role="Vote" EntitySet="Vote" />
           </AssociationSet>
@@ -447,8 +468,8 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="AnsId" Type="Int32" Nullable="false" />
           <Property Name="AnsDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TypeId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AnswerType" Relationship="Self.FK__Answer__TypeId__621B6E8C" FromRole="Answer" ToRole="AnswerType" />
-          <NavigationProperty Name="Votes" Relationship="Self.FK__Vote__AnsId__67D447E2" FromRole="Answer" ToRole="Vote" />
+          <NavigationProperty Name="AnswerType" Relationship="Self.FK__Answer__TypeId__0DF9F0CA" FromRole="Answer" ToRole="AnswerType" />
+          <NavigationProperty Name="Votes" Relationship="Self.FK__Vote__AnsId__13B2CA20" FromRole="Answer" ToRole="Vote" />
         </EntityType>
         <EntityType Name="AnswerType">
           <Key>
@@ -456,8 +477,8 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           </Key>
           <Property Name="TypeId" Type="Int32" Nullable="false" />
           <Property Name="TypeDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Answers" Relationship="Self.FK__Answer__TypeId__621B6E8C" FromRole="AnswerType" ToRole="Answer" />
-          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__TypeId__5E4ADDA8" FromRole="AnswerType" ToRole="Survey" />
+          <NavigationProperty Name="Answers" Relationship="Self.FK__Answer__TypeId__0DF9F0CA" FromRole="AnswerType" ToRole="Answer" />
+          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__TypeId__0A295FE6" FromRole="AnswerType" ToRole="Survey" />
         </EntityType>
         <EntityType Name="AskedPerson">
           <Key>
@@ -467,7 +488,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="PersId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DepId" Type="Int32" Nullable="false" />
           <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Department" Relationship="Self.FK__AskedPerson__55B597A7" FromRole="AskedPerson" ToRole="Department" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__AskedPerson__019419E5" FromRole="AskedPerson" ToRole="Department" />
         </EntityType>
         <EntityType Name="Bill">
           <Key>
@@ -479,7 +500,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="BillAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Paid" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__Bill__CustCode__494FC0C2" FromRole="Bill" ToRole="Customer" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Bill__CustCode__752E4300" FromRole="Bill" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Contain">
           <Key>
@@ -491,8 +512,8 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="DepId" Type="Int32" Nullable="false" />
           <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="Amount" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Department" Relationship="Self.FK__Contains__51E506C3" FromRole="Contains" ToRole="Department" />
-          <NavigationProperty Name="Group" Relationship="Self.FK__Contains__52D92AFC" FromRole="Contains" ToRole="Group" />
+          <NavigationProperty Name="Department" Relationship="Self.FK__Contains__7DC38901" FromRole="Contains" ToRole="Department" />
+          <NavigationProperty Name="Group" Relationship="Self.FK__Contains__7EB7AD3A" FromRole="Contains" ToRole="Group" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
@@ -512,12 +533,12 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="LastExceededCheck" Type="DateTime" Precision="3" />
           <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
           <Property Name="CostBalance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK__Bill__CustCode__494FC0C2" FromRole="Customer" ToRole="Bill" />
-          <NavigationProperty Name="PaymentMethod" Relationship="Self.FK__Customer__Paymen__46735417" FromRole="Customer" ToRole="PaymentMethod" />
-          <NavigationProperty Name="Departments" Relationship="Self.FK__Departmen__CustC__4C2C2D6D" FromRole="Customer" ToRole="Department" />
-          <NavigationProperty Name="Groups" Relationship="Self.FK__Group__CustCode__4F089A18" FromRole="Customer" ToRole="Group" />
-          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__CustCode__5D56B96F" FromRole="Customer" ToRole="Survey" />
-          <NavigationProperty Name="SurveyCategories" Relationship="Self.FK__SurveyCat__CustC__5A7A4CC4" FromRole="Customer" ToRole="SurveyCategory" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK__Bill__CustCode__752E4300" FromRole="Customer" ToRole="Bill" />
+          <NavigationProperty Name="PaymentMethod" Relationship="Self.FK__Customer__Paymen__7251D655" FromRole="Customer" ToRole="PaymentMethod" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK__Departmen__CustC__780AAFAB" FromRole="Customer" ToRole="Department" />
+          <NavigationProperty Name="Groups" Relationship="Self.FK__Group__CustCode__7AE71C56" FromRole="Customer" ToRole="Group" />
+          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__CustCode__09353BAD" FromRole="Customer" ToRole="Survey" />
+          <NavigationProperty Name="SurveyCategories" Relationship="Self.FK__SurveyCat__CustC__0658CF02" FromRole="Customer" ToRole="SurveyCategory" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -527,9 +548,9 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="DepId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DepName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="AskedPersons" Relationship="Self.FK__AskedPerson__55B597A7" FromRole="Department" ToRole="AskedPerson" />
-          <NavigationProperty Name="Contains" Relationship="Self.FK__Contains__51E506C3" FromRole="Department" ToRole="Contains" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__Departmen__CustC__4C2C2D6D" FromRole="Department" ToRole="Customer" />
+          <NavigationProperty Name="AskedPersons" Relationship="Self.FK__AskedPerson__019419E5" FromRole="Department" ToRole="AskedPerson" />
+          <NavigationProperty Name="Contains" Relationship="Self.FK__Contains__7DC38901" FromRole="Department" ToRole="Contains" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Departmen__CustC__780AAFAB" FromRole="Department" ToRole="Customer" />
         </EntityType>
         <EntityType Name="DsgvoConstraint">
           <Key>
@@ -546,8 +567,8 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="GroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="GroupDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Contains" Relationship="Self.FK__Contains__52D92AFC" FromRole="Group" ToRole="Contains" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__Group__CustCode__4F089A18" FromRole="Group" ToRole="Customer" />
+          <NavigationProperty Name="Contains" Relationship="Self.FK__Contains__7EB7AD3A" FromRole="Group" ToRole="Contains" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Group__CustCode__7AE71C56" FromRole="Group" ToRole="Customer" />
         </EntityType>
         <EntityType Name="PaymentMethod">
           <Key>
@@ -555,7 +576,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           </Key>
           <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
           <Property Name="PaymentMethodDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Paymen__46735417" FromRole="PaymentMethod" ToRole="Customer" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Paymen__7251D655" FromRole="PaymentMethod" ToRole="Customer" />
         </EntityType>
         <EntityType Name="SpecifiedTextAnswer">
           <Key>
@@ -567,7 +588,8 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="SvyId" Type="Int32" Nullable="false" />
           <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="SpecText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Survey" Relationship="Self.FK__SpecifiedTextAns__64F7DB37" FromRole="SpecifiedTextAnswer" ToRole="Survey" />
+          <NavigationProperty Name="Survey" Relationship="Self.FK__SpecifiedTextAns__10D65D75" FromRole="SpecifiedTextAnswer" ToRole="Survey" />
+          <NavigationProperty Name="Votes" Relationship="Self.FK__Vote__159B1292" FromRole="SpecifiedTextAnswer" ToRole="Vote" />
         </EntityType>
         <EntityType Name="Survey">
           <Key>
@@ -581,11 +603,11 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TypeId" Type="Int32" Nullable="false" />
           <Property Name="CatId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AnswerType" Relationship="Self.FK__Survey__TypeId__5E4ADDA8" FromRole="Survey" ToRole="AnswerType" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__Survey__CustCode__5D56B96F" FromRole="Survey" ToRole="Customer" />
-          <NavigationProperty Name="SpecifiedTextAnswers" Relationship="Self.FK__SpecifiedTextAns__64F7DB37" FromRole="Survey" ToRole="SpecifiedTextAnswer" />
-          <NavigationProperty Name="SurveyCategory" Relationship="Self.FK__Survey__5F3F01E1" FromRole="Survey" ToRole="SurveyCategory" />
-          <NavigationProperty Name="Votes" Relationship="Self.FK__Vote__68C86C1B" FromRole="Survey" ToRole="Vote" />
+          <NavigationProperty Name="AnswerType" Relationship="Self.FK__Survey__TypeId__0A295FE6" FromRole="Survey" ToRole="AnswerType" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Survey__CustCode__09353BAD" FromRole="Survey" ToRole="Customer" />
+          <NavigationProperty Name="SpecifiedTextAnswers" Relationship="Self.FK__SpecifiedTextAns__10D65D75" FromRole="Survey" ToRole="SpecifiedTextAnswer" />
+          <NavigationProperty Name="SurveyCategory" Relationship="Self.FK__Survey__0B1D841F" FromRole="Survey" ToRole="SurveyCategory" />
+          <NavigationProperty Name="Votes" Relationship="Self.FK__Vote__14A6EE59" FromRole="Survey" ToRole="Vote" />
         </EntityType>
         <EntityType Name="SurveyCategory">
           <Key>
@@ -595,8 +617,8 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="CatId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
           <Property Name="CatName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK__SurveyCat__CustC__5A7A4CC4" FromRole="SurveyCategory" ToRole="Customer" />
-          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__5F3F01E1" FromRole="SurveyCategory" ToRole="Survey" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__SurveyCat__CustC__0658CF02" FromRole="SurveyCategory" ToRole="Customer" />
+          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__0B1D841F" FromRole="SurveyCategory" ToRole="Survey" />
         </EntityType>
         <EntityType Name="Vote">
           <Key>
@@ -607,8 +629,10 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" />
           <Property Name="AnsId" Type="Int32" Nullable="false" />
           <Property Name="VoteText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Answer" Relationship="Self.FK__Vote__AnsId__67D447E2" FromRole="Vote" ToRole="Answer" />
-          <NavigationProperty Name="Survey" Relationship="Self.FK__Vote__68C86C1B" FromRole="Vote" ToRole="Survey" />
+          <Property Name="SpecId" Type="Int32" />
+          <NavigationProperty Name="Answer" Relationship="Self.FK__Vote__AnsId__13B2CA20" FromRole="Vote" ToRole="Answer" />
+          <NavigationProperty Name="SpecifiedTextAnswer" Relationship="Self.FK__Vote__159B1292" FromRole="Vote" ToRole="SpecifiedTextAnswer" />
+          <NavigationProperty Name="Survey" Relationship="Self.FK__Vote__14A6EE59" FromRole="Vote" ToRole="Survey" />
         </EntityType>
         <EntityType Name="vw_InvalidGroupSizes">
           <Key>
@@ -621,7 +645,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <Property Name="Amount" Type="Int32" />
           <Property Name="MinSize" Type="Int32" Nullable="false" />
         </EntityType>
-        <Association Name="FK__Answer__TypeId__621B6E8C">
+        <Association Name="FK__Answer__TypeId__0DF9F0CA">
           <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
           <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -633,7 +657,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vote__AnsId__67D447E2">
+        <Association Name="FK__Vote__AnsId__13B2CA20">
           <End Role="Answer" Type="Self.Answer" Multiplicity="1" />
           <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
           <ReferentialConstraint>
@@ -645,7 +669,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__TypeId__5E4ADDA8">
+        <Association Name="FK__Survey__TypeId__0A295FE6">
           <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -657,7 +681,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AskedPerson__55B597A7">
+        <Association Name="FK__AskedPerson__019419E5">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="AskedPerson" Type="Self.AskedPerson" Multiplicity="*" />
           <ReferentialConstraint>
@@ -671,7 +695,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bill__CustCode__494FC0C2">
+        <Association Name="FK__Bill__CustCode__752E4300">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -683,7 +707,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Contains__51E506C3">
+        <Association Name="FK__Contains__7DC38901">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="Contains" Type="Self.Contain" Multiplicity="*" />
           <ReferentialConstraint>
@@ -697,7 +721,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Contains__52D92AFC">
+        <Association Name="FK__Contains__7EB7AD3A">
           <End Role="Group" Type="Self.Group" Multiplicity="1" />
           <End Role="Contains" Type="Self.Contain" Multiplicity="*" />
           <ReferentialConstraint>
@@ -711,7 +735,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Customer__Paymen__46735417">
+        <Association Name="FK__Customer__Paymen__7251D655">
           <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -723,7 +747,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Departmen__CustC__4C2C2D6D">
+        <Association Name="FK__Departmen__CustC__780AAFAB">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Department" Type="Self.Department" Multiplicity="*" />
           <ReferentialConstraint>
@@ -735,7 +759,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Group__CustCode__4F089A18">
+        <Association Name="FK__Group__CustCode__7AE71C56">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Group" Type="Self.Group" Multiplicity="*" />
           <ReferentialConstraint>
@@ -747,7 +771,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__CustCode__5D56B96F">
+        <Association Name="FK__Survey__CustCode__09353BAD">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -759,7 +783,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SurveyCat__CustC__5A7A4CC4">
+        <Association Name="FK__SurveyCat__CustC__0658CF02">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -771,7 +795,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SpecifiedTextAns__64F7DB37">
+        <Association Name="FK__SpecifiedTextAns__10D65D75">
           <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
           <End Role="SpecifiedTextAnswer" Type="Self.SpecifiedTextAnswer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -785,7 +809,23 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__5F3F01E1">
+        <Association Name="FK__Vote__159B1292">
+          <End Role="SpecifiedTextAnswer" Type="Self.SpecifiedTextAnswer" Multiplicity="0..1" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SpecifiedTextAnswer">
+              <PropertyRef Name="SpecId" />
+              <PropertyRef Name="SvyId" />
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Vote">
+              <PropertyRef Name="SpecId" />
+              <PropertyRef Name="SvyId" />
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Survey__0B1D841F">
           <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -799,7 +839,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vote__68C86C1B">
+        <Association Name="FK__Vote__14A6EE59">
           <End Role="Survey" Type="Self.Survey" Multiplicity="0..1" />
           <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
           <ReferentialConstraint>
@@ -829,63 +869,67 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
           <EntitySet Name="SurveyCategories" EntityType="Self.SurveyCategory" />
           <EntitySet Name="Votes" EntityType="Self.Vote" />
           <EntitySet Name="vw_InvalidGroupSizes" EntityType="Self.vw_InvalidGroupSizes" />
-          <AssociationSet Name="FK__Answer__TypeId__621B6E8C" Association="Self.FK__Answer__TypeId__621B6E8C">
+          <AssociationSet Name="FK__Answer__TypeId__0DF9F0CA" Association="Self.FK__Answer__TypeId__0DF9F0CA">
             <End Role="AnswerType" EntitySet="AnswerTypes" />
             <End Role="Answer" EntitySet="Answers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vote__AnsId__67D447E2" Association="Self.FK__Vote__AnsId__67D447E2">
+          <AssociationSet Name="FK__Vote__AnsId__13B2CA20" Association="Self.FK__Vote__AnsId__13B2CA20">
             <End Role="Answer" EntitySet="Answers" />
             <End Role="Vote" EntitySet="Votes" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__TypeId__5E4ADDA8" Association="Self.FK__Survey__TypeId__5E4ADDA8">
+          <AssociationSet Name="FK__Survey__TypeId__0A295FE6" Association="Self.FK__Survey__TypeId__0A295FE6">
             <End Role="AnswerType" EntitySet="AnswerTypes" />
             <End Role="Survey" EntitySet="Surveys" />
           </AssociationSet>
-          <AssociationSet Name="FK__AskedPerson__55B597A7" Association="Self.FK__AskedPerson__55B597A7">
+          <AssociationSet Name="FK__AskedPerson__019419E5" Association="Self.FK__AskedPerson__019419E5">
             <End Role="Department" EntitySet="Departments" />
             <End Role="AskedPerson" EntitySet="AskedPersons" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bill__CustCode__494FC0C2" Association="Self.FK__Bill__CustCode__494FC0C2">
+          <AssociationSet Name="FK__Bill__CustCode__752E4300" Association="Self.FK__Bill__CustCode__752E4300">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Bill" EntitySet="Bills" />
           </AssociationSet>
-          <AssociationSet Name="FK__Contains__51E506C3" Association="Self.FK__Contains__51E506C3">
+          <AssociationSet Name="FK__Contains__7DC38901" Association="Self.FK__Contains__7DC38901">
             <End Role="Department" EntitySet="Departments" />
             <End Role="Contains" EntitySet="Contains" />
           </AssociationSet>
-          <AssociationSet Name="FK__Contains__52D92AFC" Association="Self.FK__Contains__52D92AFC">
+          <AssociationSet Name="FK__Contains__7EB7AD3A" Association="Self.FK__Contains__7EB7AD3A">
             <End Role="Group" EntitySet="Groups" />
             <End Role="Contains" EntitySet="Contains" />
           </AssociationSet>
-          <AssociationSet Name="FK__Customer__Paymen__46735417" Association="Self.FK__Customer__Paymen__46735417">
+          <AssociationSet Name="FK__Customer__Paymen__7251D655" Association="Self.FK__Customer__Paymen__7251D655">
             <End Role="PaymentMethod" EntitySet="PaymentMethods" />
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Departmen__CustC__4C2C2D6D" Association="Self.FK__Departmen__CustC__4C2C2D6D">
+          <AssociationSet Name="FK__Departmen__CustC__780AAFAB" Association="Self.FK__Departmen__CustC__780AAFAB">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Department" EntitySet="Departments" />
           </AssociationSet>
-          <AssociationSet Name="FK__Group__CustCode__4F089A18" Association="Self.FK__Group__CustCode__4F089A18">
+          <AssociationSet Name="FK__Group__CustCode__7AE71C56" Association="Self.FK__Group__CustCode__7AE71C56">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Group" EntitySet="Groups" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__CustCode__5D56B96F" Association="Self.FK__Survey__CustCode__5D56B96F">
+          <AssociationSet Name="FK__Survey__CustCode__09353BAD" Association="Self.FK__Survey__CustCode__09353BAD">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Survey" EntitySet="Surveys" />
           </AssociationSet>
-          <AssociationSet Name="FK__SurveyCat__CustC__5A7A4CC4" Association="Self.FK__SurveyCat__CustC__5A7A4CC4">
+          <AssociationSet Name="FK__SurveyCat__CustC__0658CF02" Association="Self.FK__SurveyCat__CustC__0658CF02">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="SurveyCategory" EntitySet="SurveyCategories" />
           </AssociationSet>
-          <AssociationSet Name="FK__SpecifiedTextAns__64F7DB37" Association="Self.FK__SpecifiedTextAns__64F7DB37">
+          <AssociationSet Name="FK__SpecifiedTextAns__10D65D75" Association="Self.FK__SpecifiedTextAns__10D65D75">
             <End Role="Survey" EntitySet="Surveys" />
             <End Role="SpecifiedTextAnswer" EntitySet="SpecifiedTextAnswers" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__5F3F01E1" Association="Self.FK__Survey__5F3F01E1">
+          <AssociationSet Name="FK__Vote__159B1292" Association="Self.FK__Vote__159B1292">
+            <End Role="SpecifiedTextAnswer" EntitySet="SpecifiedTextAnswers" />
+            <End Role="Vote" EntitySet="Votes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Survey__0B1D841F" Association="Self.FK__Survey__0B1D841F">
             <End Role="SurveyCategory" EntitySet="SurveyCategories" />
             <End Role="Survey" EntitySet="Surveys" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vote__68C86C1B" Association="Self.FK__Vote__68C86C1B">
+          <AssociationSet Name="FK__Vote__14A6EE59" Association="Self.FK__Vote__14A6EE59">
             <End Role="Survey" EntitySet="Surveys" />
             <End Role="Vote" EntitySet="Votes" />
           </AssociationSet>
@@ -1038,6 +1082,7 @@ warning 6002: The table/view 'SimpleQDB.dbo.vw_InvalidGroupSizes' does not have 
                 <ScalarProperty Name="CustCode" ColumnName="CustCode" />
                 <ScalarProperty Name="AnsId" ColumnName="AnsId" />
                 <ScalarProperty Name="VoteText" ColumnName="VoteText" />
+                <ScalarProperty Name="SpecId" ColumnName="SpecId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
