@@ -430,6 +430,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        /// </summary>
+        internal static string UpdateInterval {
+            get {
+                return ResourceManager.GetString("UpdateInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Besuchen Sie unsere Website ähnelt.
         /// </summary>
         internal static string VisitUs {

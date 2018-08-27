@@ -10,5 +10,6 @@ namespace SimpleQ.PageModels.Services
     {
         Task<CodeValidationModel> CheckCode(int code);
         Task<List<QuestionModel>> GetData();
+        void SetAnswerOfQuestion(QuestionModel question);
     }
 }

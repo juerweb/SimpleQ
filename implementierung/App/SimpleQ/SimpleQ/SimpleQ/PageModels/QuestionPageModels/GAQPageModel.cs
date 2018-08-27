@@ -43,7 +43,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.question = (GAQModel)initData;
+            this.question = (QuestionModel)initData;
             base.Init(initData);
         }
         #endregion
@@ -52,7 +52,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// The question
         /// </summary>
-        private GAQModel question;
+        private QuestionModel question;
         /// <summary>
         /// The selected answer
         /// </summary>
@@ -75,7 +75,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public GAQModel Question { get => question; set => question = value; }
+        public QuestionModel Question { get => question; set => question = value; }
         /// <summary>
         /// Gets or sets the selected answer.
         /// </summary>

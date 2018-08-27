@@ -36,7 +36,6 @@ namespace SimpleQ
 
             SetupBlobCache();
 
-
             InitializeComponent();
 
             // To set MainPage for the Application  
@@ -74,27 +73,27 @@ namespace SimpleQ
             MainPage = basicNavContainer;
         }
 
-        public static void NavigateToMainPageModel()
+        public async static void NavigateToMainPageModel()
         {
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
 
-            IQuestionService questonService = FreshIOC.Container.Resolve<IQuestionService>();
-            questonService.LoadDataFromCache();
-            questonService.RequestData();
-
             languageService.SetCurrentLanguage();
             Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
-
 
             //Set new Navigation Container
             MainMasterPageModel = new MainMasterPageModel();
 
-            
+            IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+            questionService.LoadDataFromCache();
+            questionService.CheckIfRequestIsNeeded();
+
+
             MainMasterPageModel.AddCategorie(AppResources.AllCategories);
             MainMasterPageModel.AddPage(AppResources.Settings, new SettingsPageModel(), "ic_settings_black_18.png");
             MainMasterPageModel.AddPage(AppResources.Help, new HelpPageModel(), "ic_help_black_18.png");
             MainMasterPageModel.Init("Menu");
+
 
             Application.Current.MainPage = MainMasterPageModel;
         }
@@ -133,7 +132,7 @@ namespace SimpleQ
             set;
         }
 
-        private async void SetupBlobCache()
+        private void SetupBlobCache()
         {
             BlobCache.ApplicationName = "SimpleQ";
         }

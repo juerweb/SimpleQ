@@ -42,7 +42,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.question = (OWQModel)initData;
+            this.question = (QuestionModel)initData;
             base.Init(initData);
         }
         #endregion
@@ -51,7 +51,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// The question
         /// </summary>
-        private OWQModel question;
+        private QuestionModel question;
         /// <summary>
         /// The answer
         /// </summary>
@@ -70,7 +70,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public OWQModel Question { get => question; set => question = value; }
+        public QuestionModel Question { get => question; set => question = value; }
         /// <summary>
         /// Gets or sets the answer.
         /// </summary>

@@ -9,6 +9,14 @@ namespace SimpleQ.PageModels.Services
 {
     public class SimulationService : ISimulationService
     {
+        public SimulationService()
+        {
+            questions.Add(new QuestionModel("Sind Sie männlich?", "YNQ Test", 0, QuestionType.YNQ));
+            questions.Add(new QuestionModel("Sind Sie anwesend?", "TLQ Test", 1, QuestionType.TLQ));
+            questions.Add(new QuestionModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2, QuestionType.OWQ));
+            questions.Add(new QuestionModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 3, QuestionType.GAQ, new List<String>(new String[] { "Grün", "Rot", "Gelb", "Blau" })));
+        }
+        List<QuestionModel> questions = new List<QuestionModel>();
         public async Task<CodeValidationModel> CheckCode(int code)
         {
             await Task.Delay(TimeSpan.FromSeconds(3));
@@ -23,13 +31,19 @@ namespace SimpleQ.PageModels.Services
         {
             await Task.Delay(TimeSpan.FromSeconds(5));
 
-            List<QuestionModel> questions = new List<QuestionModel>();
-            questions.Add(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
-            questions.Add(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
-            questions.Add(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2));
-            questions.Add(new GAQModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 1, new String[] { "Grün", "Rot", "Gelb", "Blau" }));
-
             return questions;
+        }
+
+        public void SetAnswerOfQuestion(QuestionModel question)
+        {
+            foreach (QuestionModel q in questions)
+            {
+                if (q.QuestionId == question.QuestionId)
+                {
+                    questions.Remove(q);
+                    return;
+                }
+            }
         }
     }
 }

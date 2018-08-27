@@ -9,6 +9,8 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
 
 namespace SimpleQ.PageModels.Services
 {
@@ -23,9 +25,9 @@ namespace SimpleQ.PageModels.Services
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public QuestionService(object param): this()
+        public QuestionService(ISimulationService simulationService): this()
         {
-
+            this.simulationService = simulationService;
         }
 
         /// <summary>
@@ -40,8 +42,6 @@ namespace SimpleQ.PageModels.Services
 
             answeredQuestions = new List<QuestionModel>();
             this.IsPublicQuestionsEmpty = true;
-
-
         }
 
         public QuestionService(Boolean test)
@@ -73,6 +73,8 @@ namespace SimpleQ.PageModels.Services
         private Boolean isPublicQuestionsEmpty;
 
         private String currentCategorie;
+
+        private ISimulationService simulationService;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -119,12 +121,26 @@ namespace SimpleQ.PageModels.Services
         /// This method is called, after the user answered the question. The method calls a method in the questionService.
         /// </summary>
         /// <param name="question">The question.</param>
-        public void QuestionAnswered(QuestionModel question)
+        public async void QuestionAnswered(QuestionModel question)
         {
             Debug.WriteLine("Question Service with question from type: " + question.GetType(), "Info");
 
             MoveQuestion(question);
 
+            await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("questions", this.questions.ToList<QuestionModel>());
+
+            simulationService.SetAnswerOfQuestion(question);
+        }
+
+        public async void RemoveQuestion(QuestionModel question)
+        {
+            Debug.WriteLine("Remove Question with the id: " + question.QuestionId, "Info");
+
+            this.Questions.Remove(question);
+
+            await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("questions", this.questions.ToList<QuestionModel>());
+
+            simulationService.SetAnswerOfQuestion(question);
         }
 
         /// <summary>
@@ -175,98 +191,85 @@ namespace SimpleQ.PageModels.Services
             }
         }
 
-        public QuestionModel GetQuestionWithRightType(object question)
-        {
-            if (question.GetType() == typeof(YNQModel))
-            {
-                //YNQModel
-                return (YNQModel)question;
-            }
-            else if (question.GetType() == typeof(TLQModel))
-            {
-                return (TLQModel)question;
-            }
-            else if (question.GetType() == typeof(OWQModel))
-            {
-                return (OWQModel)question;
-            }
-            else if (question.GetType() == typeof(GAQModel))
-            {
-                return (GAQModel)question;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
-        public QuestionModel GetQuestionWithRightType1(QuestionModel question)
-        {
-            Debug.WriteLine(question.QuestionType);
-            switch (question.QuestionType)
-            {
-                case QuestionType.YNQ:
-                    return (YNQModel)question;
-                case QuestionType.TLQ:
-                    return (TLQModel)question;
-                case QuestionType.OWQ:
-                    return (OWQModel)question;
-                case QuestionType.GAQ:
-                    return (GAQModel)question;
-            }
-            return null;
-        }
-
         private void PublicQuestions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             Debug.WriteLine("PubliQuestions Changed... Actual count of elements: " + PublicQuestions.Count, "Info");
             IsPublicQuestionsEmpty = PublicQuestions.Count <= 0;
         }
 
-        public async void RequestData()
+        public async void CheckIfRequestIsNeeded()
         {
-            ISimulationService simulationService = FreshIOC.Container.Resolve<ISimulationService>();
-
-            List<QuestionModel> questions = await simulationService.GetData();
-
-            if (questions != null)
+            try
             {
-                if (questions.Count >= 0)
+                Debug.WriteLine(BlobCache.UserAccount);
+                DateTime dt = await BlobCache.LocalMachine.GetObject<DateTime>("lastDataUpdate");
+                TimeSpan timeSpan = DateTime.Now - dt;
+                if (timeSpan.TotalMinutes > int.Parse(AppResources.UpdateInterval))
                 {
-                    this.Questions.Clear();
-                    foreach (QuestionModel question in questions)
-                    {
-                        Debug.WriteLine(question.GetType());
-                        this.AddQuestion(question);
-                    }
-
-                    this.SetCategorieFilter(this.currentCategorie);
-
-                    BlobCache.LocalMachine.InvalidateObject<List<QuestionModel>>("Questions");
-
-                    BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("Questions", questions);
+                    Debug.WriteLine("Request Data...", "Info");
+                    await RequestData();
                 }
+                else
+                {
+                    Debug.WriteLine("No Request needed...", "Info");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Last update doesn't exists...", "Info");
+                //LastDataUpdate doesn't exists!
+                await RequestData();
             }
         }
 
-        public void LoadDataFromCache()
+        public async Task RequestData()
         {
-            //Get Data from Cache
             try
             {
-                BlobCache.LocalMachine.GetObject<List<QuestionModel>>("Questions").Subscribe(questions =>
+                List<QuestionModel> questions = await simulationService.GetData();
+
+                if (questions != null)
                 {
-                    Debug.WriteLine(questions.Count);
-                    foreach (QuestionModel question in questions)
+                    if (questions.Count >= 0)
                     {
-                        Debug.WriteLine(GetQuestionWithRightType1(question));
+                        this.Questions.Clear();
+                        foreach (QuestionModel question in questions)
+                        {
+                            this.AddQuestion(question);
+                        }
+
+                        this.SetCategorieFilter(this.currentCategorie);
+
+                        await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("questions", questions);
+                        await BlobCache.LocalMachine.Flush();
+
+                        await BlobCache.LocalMachine.InsertObject<DateTime>("lastDataUpdate", DateTime.Now);
+                        //await BlobCache.Secure.Flush();
                     }
-                    this.SetCategorieFilter(this.currentCategorie);
-                });
+                }
             }
-            catch (KeyNotFoundException ex)
+            catch (Exception ex)
             {
-                Debug.WriteLine("No data in cache...", "Info");
+                Debug.WriteLine("An exception has occurred: " + ex.GetType(), "Exception");
+            }
+
+        }
+
+        public async void LoadDataFromCache()
+        {
+            try
+            {
+                List<QuestionModel> listAfter = await BlobCache.LocalMachine.GetObject<List<QuestionModel>>("questions");
+                foreach (QuestionModel model in listAfter)
+                {
+                    this.AddQuestion(model);
+                }
+
+                this.SetCategorieFilter(this.currentCategorie);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("An exception has occurred: " + ex.GetType(), "Exception");
             }
         }
 
