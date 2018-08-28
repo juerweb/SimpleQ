@@ -50,7 +50,7 @@ namespace SimpleQ
             {
                 //Code is available => MainPage
                 Debug.WriteLine("Code is valid now...", "Info");
-                NavigateToMainPageModel();
+                NavigateToMainPageModel(true);
             }
             else
             {
@@ -73,7 +73,7 @@ namespace SimpleQ
             MainPage = basicNavContainer;
         }
 
-        public static void NavigateToMainPageModel()
+        public static void NavigateToMainPageModel(Boolean LoadData)
         {
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
@@ -84,9 +84,14 @@ namespace SimpleQ
             //Set new Navigation Container
             MainMasterPageModel = new MainMasterPageModel();
 
-            IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+
             //questionService.LoadDataFromCache();
-            questionService.LoadData();
+            if (LoadData)
+            {
+                IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+                questionService.LoadData();
+            }
+
 
 
             MainMasterPageModel.AddCategorie(AppResources.AllCategories);

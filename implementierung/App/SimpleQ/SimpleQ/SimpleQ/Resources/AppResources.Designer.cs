@@ -430,7 +430,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 2 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1 ähnelt.
         /// </summary>
         internal static string UpdateInterval {
             get {

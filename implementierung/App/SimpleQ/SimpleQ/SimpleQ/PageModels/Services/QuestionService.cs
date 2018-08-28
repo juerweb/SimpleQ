@@ -54,8 +54,6 @@ namespace SimpleQ.PageModels.Services
             this.PublicQuestions = Questions;
 
             this.IsPublicQuestionsEmpty = false;
-
-            questionsTmp = new List<QuestionModel>();
         }
         #endregion
 
@@ -78,8 +76,6 @@ namespace SimpleQ.PageModels.Services
         private String currentCategorie;
 
         private ISimulationService simulationService;
-
-        private List<QuestionModel> questionsTmp;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -207,12 +203,16 @@ namespace SimpleQ.PageModels.Services
         public void LoadData()
         {
             BlobCache.LocalMachine.GetAndFetchLatest<List<QuestionModel>>("Questions", async () => await simulationService.GetData(), null, null).Subscribe(qst=> {
-                Device.BeginInvokeOnMainThread(() => { Questions.Clear(); });
-                foreach (QuestionModel question in qst)
+                if (qst != null)
                 {
-                    Device.BeginInvokeOnMainThread(() => { AddQuestion(question); });
+                    Device.BeginInvokeOnMainThread(() => { Questions.Clear(); });
+                    foreach (QuestionModel question in qst)
+                    {
+                        Device.BeginInvokeOnMainThread(() => { AddQuestion(question); });
+                    }
+                    this.SetCategorieFilter(this.currentCategorie);
                 }
-                this.SetCategorieFilter(this.currentCategorie);
+
             });
         }
 
