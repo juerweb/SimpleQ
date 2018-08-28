@@ -18,10 +18,11 @@ namespace SimpleQ.PageModels
     public class LoadingPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
-        public LoadingPageModel(ISimulationService simulationService, IDialogService dialogService) : this()
+        public LoadingPageModel(ISimulationService simulationService, IDialogService dialogService, IQuestionService questionService) : this()
         {
             this.simulationService = simulationService;
             this.dialogService = dialogService;
+            this.questionService = questionService;
         }
         public LoadingPageModel()
         {
@@ -60,15 +61,8 @@ namespace SimpleQ.PageModels
             }
 
             //Load Data
-            List<QuestionModel> questions = await this.SimulationService.GetData();
-            if (questions.Count >= 1)
-            {
-                Debug.WriteLine("Data successfully loaded", "Info");
-            }
-            else
-            {
-                Debug.WriteLine("Data not successfully loaded", "Info");
-            }
+            await questionService.RequestData();
+            Debug.WriteLine("Requested Data...", "Info");
 
             //Set MainPageModel as new Main Page
             App.NavigateToMainPageModel();
@@ -81,6 +75,7 @@ namespace SimpleQ.PageModels
         private Boolean isRunning;
         private ISimulationService simulationService;
         private IDialogService dialogService;
+        private IQuestionService questionService;
         #endregion
 
         #region Properties + Getter/Setter Methods

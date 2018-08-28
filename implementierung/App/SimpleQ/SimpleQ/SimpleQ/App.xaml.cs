@@ -73,7 +73,7 @@ namespace SimpleQ
             MainPage = basicNavContainer;
         }
 
-        public async static void NavigateToMainPageModel()
+        public static void NavigateToMainPageModel()
         {
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
@@ -85,8 +85,8 @@ namespace SimpleQ
             MainMasterPageModel = new MainMasterPageModel();
 
             IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
-            questionService.LoadDataFromCache();
-            questionService.CheckIfRequestIsNeeded();
+            //questionService.LoadDataFromCache();
+            questionService.LoadData();
 
 
             MainMasterPageModel.AddCategorie(AppResources.AllCategories);

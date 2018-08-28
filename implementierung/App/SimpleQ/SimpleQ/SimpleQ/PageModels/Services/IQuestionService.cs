@@ -17,10 +17,9 @@ namespace SimpleQ.PageModels.Services
         void AddQuestion(QuestionModel question);
         void SetCategorieFilter(String categorie);
         void MoveQuestion(QuestionModel question);
+        void LoadData();
         Task RequestData();
-        void LoadDataFromCache();
         void RemoveQuestion(QuestionModel questionModel);
-        void CheckIfRequestIsNeeded();
 
     }
 }

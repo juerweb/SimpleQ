@@ -11,6 +11,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.Services
 {
@@ -36,7 +37,7 @@ namespace SimpleQ.PageModels.Services
         /// </summary>
         public QuestionService()
         {
-            Questions = new ObservableCollection<QuestionModel>();
+            questions = new ObservableCollection<QuestionModel>();
             this.PublicQuestions = Questions;
             currentCategorie = AppResources.AllCategories;
 
@@ -46,13 +47,15 @@ namespace SimpleQ.PageModels.Services
 
         public QuestionService(Boolean test)
         {
-            Questions = new ObservableCollection<QuestionModel>();
+            questions = new ObservableCollection<QuestionModel>();
 
             answeredQuestions = new List<QuestionModel>();
 
             this.PublicQuestions = Questions;
 
             this.IsPublicQuestionsEmpty = false;
+
+            questionsTmp = new List<QuestionModel>();
         }
         #endregion
 
@@ -75,6 +78,8 @@ namespace SimpleQ.PageModels.Services
         private String currentCategorie;
 
         private ISimulationService simulationService;
+
+        private List<QuestionModel> questionsTmp;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -127,7 +132,7 @@ namespace SimpleQ.PageModels.Services
 
             MoveQuestion(question);
 
-            await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("questions", this.questions.ToList<QuestionModel>());
+            await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("Questions", this.questions.ToList<QuestionModel>());
 
             simulationService.SetAnswerOfQuestion(question);
         }
@@ -138,7 +143,7 @@ namespace SimpleQ.PageModels.Services
 
             this.Questions.Remove(question);
 
-            await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("questions", this.questions.ToList<QuestionModel>());
+            await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("Questions", this.questions.ToList<QuestionModel>());
 
             simulationService.SetAnswerOfQuestion(question);
         }
@@ -149,7 +154,9 @@ namespace SimpleQ.PageModels.Services
         /// <param name="question">The question.</param>
         public void AddQuestion(QuestionModel question)
         {
+
             this.Questions.Add(question);
+
             if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.Categorie) > 0))
             {
                 //categorie does not exists
@@ -197,80 +204,27 @@ namespace SimpleQ.PageModels.Services
             IsPublicQuestionsEmpty = PublicQuestions.Count <= 0;
         }
 
-        public async void CheckIfRequestIsNeeded()
+        public void LoadData()
         {
-            try
-            {
-                Debug.WriteLine(BlobCache.UserAccount);
-                DateTime dt = await BlobCache.LocalMachine.GetObject<DateTime>("lastDataUpdate");
-                TimeSpan timeSpan = DateTime.Now - dt;
-                if (timeSpan.TotalMinutes > int.Parse(AppResources.UpdateInterval))
+            BlobCache.LocalMachine.GetAndFetchLatest<List<QuestionModel>>("Questions", async () => await simulationService.GetData(), null, null).Subscribe(qst=> {
+                Device.BeginInvokeOnMainThread(() => { Questions.Clear(); });
+                foreach (QuestionModel question in qst)
                 {
-                    Debug.WriteLine("Request Data...", "Info");
-                    await RequestData();
+                    Device.BeginInvokeOnMainThread(() => { AddQuestion(question); });
                 }
-                else
-                {
-                    Debug.WriteLine("No Request needed...", "Info");
-                }
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("Last update doesn't exists...", "Info");
-                //LastDataUpdate doesn't exists!
-                await RequestData();
-            }
+                this.SetCategorieFilter(this.currentCategorie);
+            });
         }
 
         public async Task RequestData()
         {
-            try
+            List<QuestionModel> qst = await simulationService.GetData();
+            Questions.Clear();
+            foreach (QuestionModel question in qst)
             {
-                List<QuestionModel> questions = await simulationService.GetData();
-
-                if (questions != null)
-                {
-                    if (questions.Count >= 0)
-                    {
-                        this.Questions.Clear();
-                        foreach (QuestionModel question in questions)
-                        {
-                            this.AddQuestion(question);
-                        }
-
-                        this.SetCategorieFilter(this.currentCategorie);
-
-                        await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("questions", questions);
-                        await BlobCache.LocalMachine.Flush();
-
-                        await BlobCache.LocalMachine.InsertObject<DateTime>("lastDataUpdate", DateTime.Now);
-                        //await BlobCache.Secure.Flush();
-                    }
-                }
+                Device.BeginInvokeOnMainThread(() => { AddQuestion(question); });
             }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("An exception has occurred: " + ex.GetType(), "Exception");
-            }
-
-        }
-
-        public async void LoadDataFromCache()
-        {
-            try
-            {
-                List<QuestionModel> listAfter = await BlobCache.LocalMachine.GetObject<List<QuestionModel>>("questions");
-                foreach (QuestionModel model in listAfter)
-                {
-                    this.AddQuestion(model);
-                }
-
-                this.SetCategorieFilter(this.currentCategorie);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("An exception has occurred: " + ex.GetType(), "Exception");
-            }
+            this.SetCategorieFilter(this.currentCategorie);
         }
 
         #endregion

@@ -88,10 +88,12 @@ namespace SimpleQ.PageModels
             set
             {
                 selectedQuestion = value;
+                Debug.WriteLine(selectedQuestion);
                 OnPropertyChanged();
 
                 if (selectedQuestion != null)
                 {
+                    Debug.WriteLine(selectedQuestion.QuestionDesc);
                     NavigateToQuestion();
                 }
             }
@@ -132,7 +134,7 @@ namespace SimpleQ.PageModels
                 CoreMethods.PushPageModel<GAQPageModel>(selectedQuestion);
             }
             
-            selectedQuestion = null;
+            SelectedQuestion = null;
         }
 
         private void DeleteCommandExecuted(object question)
