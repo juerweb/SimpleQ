@@ -1,5 +1,5 @@
 PaymentMethod (PaymentMethodId, PaymentMethodDesc)  -- Zahlungsmethode, NICHT KUNDENABHÄNGIG
-Customer (CustCode, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, LanguageCode, DataStoragePeriod, LastExceededCheck, PaymentMethodId, CostBalance)  -- Kunde
+Customer (CustCode, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, LanguageCode, DataStoragePeriod, PaymentMethodId, CostBalance)  -- Kunde
 Bill (BillId, BillAmount, BillDate, CustCode)  -- Rechnung, KUNDENABHÄNGIG
 
 Department (DepId, CustCode)  -- Abteilung, KUNDENABHÄNGIG

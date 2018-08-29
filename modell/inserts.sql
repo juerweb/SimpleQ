@@ -5,7 +5,7 @@ go
 
 
 begin transaction;
-insert into Customer values ('m4rku5', 'musterreis gmbh.', 'm@rk.us', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, null, 1, 0);
+insert into Customer values ('m4rku5', 'musterreis gmbh.', 'm@rk.us', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 0);
 insert into Department values ('abteilung', 'm4rku5'); -- DepId 1
 insert into Department values ('abteilung2', 'm4rku5'); -- DepId 2
 insert into [Group] values ('m4rku5', 'Testgruppe');
@@ -33,9 +33,11 @@ go
 select * from AskedPerson;
 
 select * from Customer;
-select v.VoteId, s.SvyId, s.SvyText as 'Frage', t.TypeDesc as 'Fragetyp', a.AnsDesc as 'Antwort', v.VoteText as 'Ein-Wort-Antwort', sp.SpecText as 'Vorgegebene Antwort'
+select v.VoteId, s.SvyId, s.SvyText as 'Frage', t.TypeDesc as 'Fragetyp', a.AnsDesc as 'Antwort', v.VoteText as 'Ein-Wort-Antwort', sp.SpecText as 'Vorgegebene Antwort', s.StartDate as 'Datum'
 from Vote v 
 join Answer a on v.AnsId = a.AnsId
 join Survey s on v.SvyId = s.SvyId 
 join AnswerType t on a.TypeId = t.TypeId
 left join SpecifiedTextAnswer sp on v.SpecId = sp.SpecId;
+
+--exec sp_CheckExceededSurveyData;

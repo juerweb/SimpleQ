@@ -35,7 +35,6 @@ namespace SimpleQ.Webinterface.Models
         public string Country { get; set; }
         public string LanguageCode { get; set; }
         public int DataStoragePeriod { get; set; }
-        public Nullable<System.DateTime> LastExceededCheck { get; set; }
         public int PaymentMethodId { get; set; }
         public decimal CostBalance { get; set; }
     

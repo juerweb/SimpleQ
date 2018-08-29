@@ -14,7 +14,7 @@ namespace MobileTest
         static int persId = 1;
         static string custCode = "m4rku5";
         static int depId = 1;
-        static string depName = "abteilung2";
+        static string depName = "abteilung";
 
         static void Main(string[] args)
         {
@@ -75,6 +75,8 @@ namespace MobileTest
                         Help();
                     }
                 }
+                Logout();
+                conn.Stop();
                 return;
             }
             catch (Exception ex)
@@ -246,7 +248,7 @@ namespace MobileTest
             WriteLine("'relogin <persId> <custCode> to re-login after registered,");
             WriteLine("'props' to show the current properties,");
             WriteLine("'answeryesno' to answer a yes/no survey, 'answerspec' to answer a survey with specified text,");
-            WriteLine("'changedep <depName> to change your department,");
+            WriteLine("'changedep to change your department,");
             WriteLine("'cls' to clear the screen or 'exit' to close program.");
         }
 
