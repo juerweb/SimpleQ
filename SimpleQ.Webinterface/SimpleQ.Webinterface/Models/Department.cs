@@ -9,7 +9,6 @@
 
 namespace SimpleQ.Webinterface.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -25,14 +24,11 @@ namespace SimpleQ.Webinterface.Models
         public int DepId { get; set; }
         public string DepName { get; set; }
         public string CustCode { get; set; }
-        
-        [JsonIgnore]
+    
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AskedPerson> AskedPersons { get; set; }
-        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contain> Contains { get; set; }
-        [JsonIgnore]
         public virtual Customer Customer { get; set; }
     }
 }

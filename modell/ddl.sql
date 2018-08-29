@@ -8,6 +8,7 @@ drop table DsgvoConstraint;
 drop table Vote;
 drop table SpecifiedTextAnswer;
 drop table Answer;
+drop table Asking;
 drop table Survey;
 drop table SurveyCategory;
 drop table AnswerType;
@@ -145,6 +146,19 @@ create table Survey
 );
 go
 
+-- Mit Umfrage befragte Gruppen
+-- Kundenabhängig
+create table Asking
+(
+	SvyId int,
+	GroupId int,
+	CustCode char(6) collate Latin1_General_CS_AS,
+	primary key (SvyId, GroupId, CustCode),
+	foreign key (SvyId, CustCode) references Survey,
+	foreign key (GroupId, CustCode) references [Group]
+);
+go
+
 -- AntwortMÖGLICHKEIT
 -- Nicht kundenabhängig
 create table Answer
@@ -258,6 +272,7 @@ begin
 	begin
 		delete from Vote where SvyId = @svyId;
 		delete from SpecifiedTextAnswer where SvyId = @svyId;
+		delete from Asking where SvyID = @svyId;
 		delete from Survey where SvyId = @svyId;
 		
 		set @svyCount += 1;

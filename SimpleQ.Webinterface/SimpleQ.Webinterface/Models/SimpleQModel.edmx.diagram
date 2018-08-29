@@ -36,6 +36,9 @@
         <AssociationConnector Association="SimpleQDBModel.FK__Vote__159B1292" ManuallyRouted="false" />
         <AssociationConnector Association="SimpleQDBModel.FK__Survey__0B1D841F" ManuallyRouted="false" />
         <AssociationConnector Association="SimpleQDBModel.FK__Vote__14A6EE59" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SimpleQDBModel.Asking" Width="1.5" PointX="12.75" PointY="11.75" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Asking__0000D72E" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Asking__7F0CB2F5" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

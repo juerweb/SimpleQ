@@ -18,6 +18,7 @@ namespace SimpleQ.Webinterface.Models
         public Group()
         {
             this.Contains = new HashSet<Contain>();
+            this.Askings = new HashSet<Asking>();
         }
     
         public int GroupId { get; set; }
@@ -27,5 +28,7 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Contain> Contains { get; set; }
         public virtual Customer Customer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Asking> Askings { get; set; }
     }
 }

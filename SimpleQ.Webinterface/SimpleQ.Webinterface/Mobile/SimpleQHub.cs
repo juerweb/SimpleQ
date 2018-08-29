@@ -157,7 +157,7 @@ namespace SimpleQ.Webinterface.Mobile
 
 
         #region Invoked by server
-        internal static void SendSurvey(int groupId, string custCode, object svyData)
+        internal static void SendSurvey(int groupId, string custCode, Survey survey)
         {
             //using (var db = new SimpleQDBEntities())
             //{

@@ -1,20 +1,21 @@
-PaymentMethod (PaymentMethodId, PaymentMethodDesc)  -- Zahlungsmethode, NICHT KUNDENABHÄNGIG
-Customer (CustCode, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, LanguageCode, DataStoragePeriod, PaymentMethodId, CostBalance)  -- Kunde
-Bill (BillId, BillAmount, BillDate, CustCode)  -- Rechnung, KUNDENABHÄNGIG
+- PaymentMethod (PaymentMethodId, PaymentMethodDesc)  -- Zahlungsmethode, NICHT KUNDENABHÄNGIG
+- Customer (CustCode, CustName, CustEmail, CustPwdHash, Street, Plz, City, Country, LanguageCode, DataStoragePeriod, PaymentMethodId, CostBalance)  -- Kunde
+- Bill (BillId, BillAmount, BillDate, CustCode)  -- Rechnung, KUNDENABHÄNGIG
 
-Department (DepId, CustCode)  -- Abteilung, KUNDENABHÄNGIG
-Group (GroupId, CustCode, GroupDesc)  -- Befragtenruppe, KUNDENABHÄNGIG
-Contains (GroupId, DepId, CustCode, Amount)  -- Information welche Gruppe wieviele Personen aus welchen Abteilungen beinhaltet, KUNDENABHÄNGIG
-AskedPerson (PersId, DepId, CustCode)  -- Befragte Person, KUNDENABHÄNGIG
+- Department (DepId, CustCode)  -- Abteilung, KUNDENABHÄNGIG
+- Group (GroupId, CustCode, GroupDesc)  -- Befragtenruppe, KUNDENABHÄNGIG
+- Contains (GroupId, DepId, CustCode, Amount)  -- Information welche Gruppe wieviele Personen aus welchen Abteilungen beinhaltet, KUNDENABHÄNGIG
+- AskedPerson (PersId, DepId, CustCode)  -- Befragte Person, KUNDENABHÄNGIG
 
-AnswerType (TypeId, TypeDesc)  -- Beantwortungsart, NICHT KUNDENABHÄNGIG
-SurveyCategory (CatId, CustCode, CatName)  -- Umfragekategorie, KUNDENABHÄNGIG
-Survey (SvyId, CustCode, SvyDesc, StartDate, EndDate, TypeId, CatId)  -- Umfrage, KUNDENABHÄNGIG
-Answer (AnsId, AnsDesc, TypeId)  -- Antwortmöglichkeit, NICHT KUNDENABHÄNGIG
-SpecifiedTextAnswer (SpecId, SvyId, CustCode, SpecText)  -- Vorgegebene Textantwort (wird nur benötigt falls entsprechender Antworttyp für die Umfrage verwendet wird), KUNDENABHÄNGIG
-Vote (VoteId, SvyId, CustCode, AnsId, VoteText, SpecId)  -- Antwort auf eine Umfrage, KUNDENABHÄNGIG
+- AnswerType (TypeId, TypeDesc)  -- Beantwortungsart, NICHT KUNDENABHÄNGIG
+- SurveyCategory (CatId, CustCode, CatName)  -- Umfragekategorie, KUNDENABHÄNGIG
+- Survey (SvyId, CustCode, SvyDesc, StartDate, EndDate, TypeId, CatId)  -- Umfrage, KUNDENABHÄNGIG
+- Asking (SvyId, GroupId, CustCode)  -- Mit Umfrage befragte Gruppen, KUNDENABHÄNGIG
+- Answer (AnsId, AnsDesc, TypeId)  -- Antwortmöglichkeit, NICHT KUNDENABHÄNGIG
+- SpecifiedTextAnswer (SpecId, SvyId, CustCode, SpecText)  -- Vorgegebene Textantwort (wird nur benötigt falls entsprechender Antworttyp für die Umfrage verwendet wird), KUNDENABHÄNGIG
+- Vote (VoteId, SvyId, CustCode, AnsId, VoteText, SpecId)  -- Antwort auf eine Umfrage, KUNDENABHÄNGIG
 
-DsgvoConstraint (ConstrName, ConstrValue)  -- DSGVO-spezifische Bestimmung, NICHT KUNDENABHÄNGIG
+- DsgvoConstraint (ConstrName, ConstrValue)  -- DSGVO-spezifische Bestimmung, NICHT KUNDENABHÄNGIG
 
 
 + vw_InvalidGroupSizes (wegen DSGVO)

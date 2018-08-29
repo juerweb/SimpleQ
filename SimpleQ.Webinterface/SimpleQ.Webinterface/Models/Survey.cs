@@ -9,7 +9,6 @@
 
 namespace SimpleQ.Webinterface.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -20,6 +19,7 @@ namespace SimpleQ.Webinterface.Models
         {
             this.SpecifiedTextAnswers = new HashSet<SpecifiedTextAnswer>();
             this.Votes = new HashSet<Vote>();
+            this.Askings = new HashSet<Asking>();
         }
     
         public int SvyId { get; set; }
@@ -29,18 +29,15 @@ namespace SimpleQ.Webinterface.Models
         public System.DateTime EndDate { get; set; }
         public int TypeId { get; set; }
         public int CatId { get; set; }
-
-        [JsonIgnore]
+    
         public virtual AnswerType AnswerType { get; set; }
-        [JsonIgnore]
         public virtual Customer Customer { get; set; }
-        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SpecifiedTextAnswer> SpecifiedTextAnswers { get; set; }
-        [JsonIgnore]
         public virtual SurveyCategory SurveyCategory { get; set; }
-        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vote> Votes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Asking> Askings { get; set; }
     }
 }
