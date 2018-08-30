@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using Acr.UserDialogs;
 using Akavache;
+using Com.OneSignal;
 
 namespace SimpleQ.Droid
 {
@@ -20,6 +21,8 @@ namespace SimpleQ.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
+
+            OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540").EndInit();
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             UserDialogs.Init(this);

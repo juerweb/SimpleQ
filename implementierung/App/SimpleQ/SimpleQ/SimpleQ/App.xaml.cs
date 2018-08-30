@@ -20,6 +20,8 @@ using System.Globalization;
 using System.Collections.Generic;
 using Akavache;
 using System.Reactive.Linq;
+using Com.OneSignal;
+using Com.OneSignal.Abstractions;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -35,6 +37,8 @@ namespace SimpleQ
             SetupIOC();
 
             SetupBlobCache();
+
+            SetupOneSignal();
 
             InitializeComponent();
 
@@ -140,6 +144,29 @@ namespace SimpleQ
         private void SetupBlobCache()
         {
             BlobCache.ApplicationName = "SimpleQ";
+        }
+
+        private void SetupOneSignal()
+        {
+            OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540")
+                .InFocusDisplaying(OSInFocusDisplayOption.Notification)
+                .HandleNotificationOpened(HandleNotificationOpened)
+                .HandleNotificationReceived(HandleNotificationReceived)
+                .EndInit();
+        }
+
+        // Called when a notification is opened.
+        // The name of the method can be anything as long as the signature matches.
+        // Method must be static or this object should be marked as DontDestroyOnLoad
+        private void HandleNotificationOpened(OSNotificationOpenedResult result)
+        {
+            Debug.WriteLine("HandleNotificationOpened...", "Info");
+        }
+
+        void HandleNotificationReceived(OSNotification result)
+        {
+            Debug.WriteLine("HandleNotificationReceived...", "Info");
+            BlobCache.LocalMachine.InsertObject<String>("Test1002", "Hoho");
         }
     }
 }

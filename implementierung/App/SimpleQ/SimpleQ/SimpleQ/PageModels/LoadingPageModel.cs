@@ -55,7 +55,7 @@ namespace SimpleQ.PageModels
                 Debug.WriteLine("Code is not valid...", "Info");
                 this.IsRunning = false;
 
-                this.dialogService.ShowDialog(DialogType.Error, 201);
+                this.dialogService.ShowErrorDialog(201);
                 await CoreMethods.PopPageModel();
                 return;
             }

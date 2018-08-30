@@ -22,6 +22,7 @@
     <PackageReference Include="akavache" Version="5.0.0" />
     <PackageReference Include="akavache.core" Version="5.0.0" />
     <PackageReference Include="akavache.sqlite3" Version="5.0.0" />
+    <PackageReference Include="Com.OneSignal" Version="3.2.0" />
     <PackageReference Include="FreshMvvm" Version="2.2.4" />
     <PackageReference Include="Microsoft.AppCenter" Version="1.8.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="1.8.0" />
