@@ -6,9 +6,9 @@ using System.Web.Mvc;
 
 namespace SimpleQ.Webinterface.Controllers
 {
-    public class HomeController : Controller
+    public class SupportController : Controller
     {
-        // GET: Home
+        // GET: Support
         public ActionResult Index()
         {
             return View();

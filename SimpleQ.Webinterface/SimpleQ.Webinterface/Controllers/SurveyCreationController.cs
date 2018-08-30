@@ -6,12 +6,17 @@ using System.Web.Mvc;
 
 namespace SimpleQ.Webinterface.Controllers
 {
-    public class HomeController : Controller
+    public class SurveyCreationController : Controller
     {
-        // GET: Home
+        // GET: SurveyCreation
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult LoadPartialView(string partialView)
+        {
+            return PartialView(partialView);
         }
     }
 }
