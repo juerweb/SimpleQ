@@ -108,7 +108,9 @@ namespace SimpleQ.PageModels
         public void OnManualCodeEntry()
         {
             Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
-            CoreMethods.PushPageModel<LoadingPageModel>(this.RegisterCode);
+            int code = this.RegisterCode;
+            this.RegisterCode = 0;
+            CoreMethods.PushPageModel<LoadingPageModel>(code);
         }
 
         public void OnOpenScanner()

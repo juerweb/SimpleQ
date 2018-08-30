@@ -18,6 +18,8 @@ using Plugin.Multilingual;
 using SimpleQ.Resources;
 using System.Globalization;
 using System.Collections.Generic;
+using Akavache;
+using System.Reactive.Linq;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -32,7 +34,7 @@ namespace SimpleQ
 
             SetupIOC();
 
-
+            SetupBlobCache();
 
             InitializeComponent();
 
@@ -48,7 +50,7 @@ namespace SimpleQ
             {
                 //Code is available => MainPage
                 Debug.WriteLine("Code is valid now...", "Info");
-                NavigateToMainPageModel();
+                NavigateToMainPageModel(true);
             }
             else
             {
@@ -71,7 +73,7 @@ namespace SimpleQ
             MainPage = basicNavContainer;
         }
 
-        public static void NavigateToMainPageModel()
+        public static void NavigateToMainPageModel(Boolean LoadData)
         {
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
@@ -79,15 +81,24 @@ namespace SimpleQ
             languageService.SetCurrentLanguage();
             Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
 
-
             //Set new Navigation Container
             MainMasterPageModel = new MainMasterPageModel();
 
-            
+
+            //questionService.LoadDataFromCache();
+            if (LoadData)
+            {
+                IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+                questionService.LoadData();
+            }
+
+
+
             MainMasterPageModel.AddCategorie(AppResources.AllCategories);
             MainMasterPageModel.AddPage(AppResources.Settings, new SettingsPageModel(), "ic_settings_black_18.png");
             MainMasterPageModel.AddPage(AppResources.Help, new HelpPageModel(), "ic_help_black_18.png");
             MainMasterPageModel.Init("Menu");
+
 
             Application.Current.MainPage = MainMasterPageModel;
         }
@@ -124,6 +135,11 @@ namespace SimpleQ
         {
             get;
             set;
+        }
+
+        private void SetupBlobCache()
+        {
+            BlobCache.ApplicationName = "SimpleQ";
         }
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace SimpleQ.PageModels.Services
 {
@@ -16,7 +17,9 @@ namespace SimpleQ.PageModels.Services
         void AddQuestion(QuestionModel question);
         void SetCategorieFilter(String categorie);
         void MoveQuestion(QuestionModel question);
-        QuestionModel GetQuestionWithRightType(object question);
+        void LoadData();
+        Task RequestData();
+        void RemoveQuestion(QuestionModel questionModel);
 
     }
 }

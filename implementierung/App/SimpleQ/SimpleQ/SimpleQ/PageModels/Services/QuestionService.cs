@@ -1,4 +1,6 @@
-﻿using SimpleQ.Models;
+﻿using Akavache;
+using FreshMvvm;
+using SimpleQ.Models;
 using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,9 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Reactive.Linq;
+using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.Services
 {
@@ -21,9 +26,9 @@ namespace SimpleQ.PageModels.Services
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public QuestionService(object param): this()
+        public QuestionService(ISimulationService simulationService): this()
         {
-
+            this.simulationService = simulationService;
         }
 
         /// <summary>
@@ -32,23 +37,23 @@ namespace SimpleQ.PageModels.Services
         /// </summary>
         public QuestionService()
         {
-            Questions = new ObservableCollection<QuestionModel>();
+            questions = new ObservableCollection<QuestionModel>();
+            this.PublicQuestions = Questions;
+            currentCategorie = AppResources.AllCategories;
 
             answeredQuestions = new List<QuestionModel>();
+            this.IsPublicQuestionsEmpty = true;
+        }
 
-            
+        public QuestionService(Boolean test)
+        {
+            questions = new ObservableCollection<QuestionModel>();
 
-            //only in DEBUG Modus => Demo Data
-            this.AddQuestion(new YNQModel("Sind Sie männlich?", "YNQ Test", 0));
-            this.AddQuestion(new TLQModel("Sind Sie anwesend?", "TLQ Test", 1));
-            this.AddQuestion(new OWQModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2));
-            this.AddQuestion(new GAQModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 1, new String[] { "Grün", "Rot", "Gelb", "Blau" }));
-            //end of demo data
+            answeredQuestions = new List<QuestionModel>();
 
             this.PublicQuestions = Questions;
 
             this.IsPublicQuestionsEmpty = false;
-
         }
         #endregion
 
@@ -67,6 +72,10 @@ namespace SimpleQ.PageModels.Services
         private ObservableCollection<QuestionModel> publicQuestions;
 
         private Boolean isPublicQuestionsEmpty;
+
+        private String currentCategorie;
+
+        private ISimulationService simulationService;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -101,6 +110,8 @@ namespace SimpleQ.PageModels.Services
             get => isPublicQuestionsEmpty;
             set { isPublicQuestionsEmpty = value; OnPropertyChanged(); }
         }
+
+        public string CurrentCategorie { get => currentCategorie; set => currentCategorie = value; }
         #endregion
 
         #region Commands
@@ -111,12 +122,26 @@ namespace SimpleQ.PageModels.Services
         /// This method is called, after the user answered the question. The method calls a method in the questionService.
         /// </summary>
         /// <param name="question">The question.</param>
-        public void QuestionAnswered(QuestionModel question)
+        public async void QuestionAnswered(QuestionModel question)
         {
             Debug.WriteLine("Question Service with question from type: " + question.GetType(), "Info");
 
             MoveQuestion(question);
 
+            await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("Questions", this.questions.ToList<QuestionModel>());
+
+            simulationService.SetAnswerOfQuestion(question);
+        }
+
+        public async void RemoveQuestion(QuestionModel question)
+        {
+            Debug.WriteLine("Remove Question with the id: " + question.QuestionId, "Info");
+
+            this.Questions.Remove(question);
+
+            await BlobCache.LocalMachine.InsertObject<List<QuestionModel>>("Questions", this.questions.ToList<QuestionModel>());
+
+            simulationService.SetAnswerOfQuestion(question);
         }
 
         /// <summary>
@@ -125,10 +150,13 @@ namespace SimpleQ.PageModels.Services
         /// <param name="question">The question.</param>
         public void AddQuestion(QuestionModel question)
         {
-            this.questions.Add(question);
+
+            this.Questions.Add(question);
+
             if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.Categorie) > 0))
             {
                 //categorie does not exists
+                Debug.WriteLine("Add new categorie from QuestionService", "Info");
 
                 App.MainMasterPageModel.AddCategorie(question.Categorie);
             }
@@ -140,6 +168,7 @@ namespace SimpleQ.PageModels.Services
         /// <param name="categorie">The categorie.</param>
         public void SetCategorieFilter(String categorie)
         {
+            CurrentCategorie = categorie;
             if (categorie == AppResources.AllCategories)
             {
                 this.PublicQuestions = Questions;
@@ -165,36 +194,39 @@ namespace SimpleQ.PageModels.Services
             }
         }
 
-        public QuestionModel GetQuestionWithRightType(object question)
-        {
-            if (question.GetType() == typeof(YNQModel))
-            {
-                //YNQModel
-                return (YNQModel)question;
-            }
-            else if (question.GetType() == typeof(TLQModel))
-            {
-                return (TLQModel)question;
-            }
-            else if (question.GetType() == typeof(OWQModel))
-            {
-                return (OWQModel)question;
-            }
-            else if (question.GetType() == typeof(GAQModel))
-            {
-                return (GAQModel)question;
-            }
-            else
-            {
-                return null;
-            }
-        }
-
         private void PublicQuestions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             Debug.WriteLine("PubliQuestions Changed... Actual count of elements: " + PublicQuestions.Count, "Info");
             IsPublicQuestionsEmpty = PublicQuestions.Count <= 0;
         }
+
+        public void LoadData()
+        {
+            BlobCache.LocalMachine.GetAndFetchLatest<List<QuestionModel>>("Questions", async () => await simulationService.GetData(), null, null).Subscribe(qst=> {
+                if (qst != null)
+                {
+                    Device.BeginInvokeOnMainThread(() => { Questions.Clear(); });
+                    foreach (QuestionModel question in qst)
+                    {
+                        Device.BeginInvokeOnMainThread(() => { AddQuestion(question); });
+                    }
+                    this.SetCategorieFilter(this.currentCategorie);
+                }
+
+            });
+        }
+
+        public async Task RequestData()
+        {
+            List<QuestionModel> qst = await simulationService.GetData();
+            Questions.Clear();
+            foreach (QuestionModel question in qst)
+            {
+                Device.BeginInvokeOnMainThread(() => { AddQuestion(question); });
+            }
+            this.SetCategorieFilter(this.currentCategorie);
+        }
+
         #endregion
 
         #region INotifyPropertyChanged Implementation
