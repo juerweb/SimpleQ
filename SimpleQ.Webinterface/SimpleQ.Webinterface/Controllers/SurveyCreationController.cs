@@ -13,28 +13,17 @@ namespace SimpleQ.Webinterface.Controllers
 {
     public class SurveyCreationController : Controller
     {
-        [HttpGet]
-        public ActionResult Index()
-        {
-            var model = new SurveyCreationModel();
-            using (var db = new SimpleQDBEntities())
-            {
-                model.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
-                model.AnswerTypes = db.AnswerTypes.ToList();
-                model.Groups = db.Groups.Where(g => g.CustCode == CustCode).ToList();
-            }
-            return View(model: model);
-        }
-
         [HttpPost]
         public ActionResult New(SurveyCreationModel s)
         {
             using (var db = new SimpleQDBEntities())
             {
+                s.Survey.CustCode = CustCode;
+                s.Survey.EndDate = s.Survey.StartDate.AddDays(7);
                 db.Surveys.Add(s.Survey);
                 s.SelectedGroups.ForEach(g =>
                 {
-                    db.Askings.Add(new Asking { SvyId = s.Survey.SvyId, GroupId = g.GroupId, CustCode = CustCode });
+                    db.Askings.Add(new Asking { SvyId = s.Survey.SvyId, GroupId = g, CustCode = CustCode });
                 });
                 db.SaveChanges();
             }
@@ -45,11 +34,11 @@ namespace SimpleQ.Webinterface.Controllers
 
                 s.SelectedGroups.ForEach(g =>
                 {
-                    SimpleQHub.SendSurvey(g.GroupId, CustCode, s.Survey);
+                    SimpleQHub.SendSurvey(g, CustCode, s.Survey);
                 });
             });
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Home");
         }
 
 

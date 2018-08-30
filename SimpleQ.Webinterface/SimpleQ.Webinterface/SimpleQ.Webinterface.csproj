@@ -168,8 +168,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\GroupAdministrationController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\SurveyCreationController.cs" />
+    <Compile Include="Controllers\SurveyResultsController.cs" />
     <Compile Include="Extensions\Extensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -232,6 +236,7 @@
     <Compile Include="Models\SurveyCategory.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\ContainerViewModel.cs" />
     <Compile Include="Models\ViewModels\SurveyCreationModel.cs" />
     <Compile Include="Models\Vote.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
@@ -244,8 +249,17 @@
     <Compile Include="Mobile\Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\Images\Icons\createSurvey.png" />
+    <Content Include="Content\Images\Icons\groupAdministration.png" />
+    <Content Include="Content\Images\Icons\logout.png" />
+    <Content Include="Content\Images\Icons\settings.png" />
+    <Content Include="Content\Images\Icons\support.png" />
+    <Content Include="Content\Images\Icons\surveyResults.png" />
+    <Content Include="Content\Images\Logos\simpleQ.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -272,6 +286,12 @@
     <Content Include="Models\SimpleQModel.edmx.diagram">
       <DependentUpon>SimpleQModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -301,10 +321,14 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Settings\_Settings.cshtml" />
+    <Content Include="Views\Support\_Support.cshtml" />
+    <Content Include="Views\SurveyResults\_SurveyResults.cshtml" />
+    <Content Include="Views\GroupAdministration\_GroupAdministration.cshtml" />
+    <Content Include="Views\SurveyCreation\_SurveyCreation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SurveyCreation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
