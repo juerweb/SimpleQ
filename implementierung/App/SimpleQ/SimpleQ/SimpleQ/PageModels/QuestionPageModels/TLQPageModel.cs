@@ -42,7 +42,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.Question = (TLQModel)initData;
+            this.Question = (QuestionModel)initData;
             base.Init(initData);
         }
         #endregion
@@ -51,7 +51,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// The question
         /// </summary>
-        private TLQModel question;
+        private QuestionModel question;
         /// <summary>
         /// The question service
         /// </summary>
@@ -65,7 +65,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public TLQModel Question { get => question; set => question = value; }
+        public QuestionModel Question { get => question; set => question = value; }
         /// <summary>
         /// Gets or sets the question service.
         /// </summary>
@@ -101,7 +101,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.QuestionId, answer), "Info");
 
-            this.question.Answer = answer;
+            this.question.Answer = answer.ToString();
 
             this.questionService.QuestionAnswered(question);
 

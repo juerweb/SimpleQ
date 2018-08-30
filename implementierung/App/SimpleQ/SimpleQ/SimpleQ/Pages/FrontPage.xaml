@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
-             xmlns:ui="clr-namespace:Vapolia.Lib.Ui;assembly=XamarinFormsGesture"
              x:Class="SimpleQ.Pages.FrontPage"
              x:Name="FrontPage"
              Title="{ext:Translate Text=Abstract}">
@@ -11,6 +10,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
+            <Button Command="{Binding RefreshCommand}" Text="Debug: Neu Laden"></Button>
             <StackLayout VerticalOptions="FillAndExpand">
                 <ListView ItemsSource="{Binding QuestionService.PublicQuestions}" SeparatorVisibility="None" SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Converter={StaticResource InvertableBooleanConverter}, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
                     <ListView.ItemTemplate>

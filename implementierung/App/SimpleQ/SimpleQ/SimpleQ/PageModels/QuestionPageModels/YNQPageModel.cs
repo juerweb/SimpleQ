@@ -44,7 +44,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.question = (YNQModel)initData;
+            this.question = (QuestionModel)initData;
             base.Init(initData);
         }
         #endregion
@@ -53,7 +53,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// The actual question, with the answer and the question
         /// </summary>
-        private YNQModel question;
+        private QuestionModel question;
         /// <summary>
         /// The question service to set the answer of the actual question
         /// </summary>
@@ -67,7 +67,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public YNQModel Question { get => question; set => question = value; }
+        public QuestionModel Question { get => question; set => question = value; }
 
         /// <summary>
         /// Gets or sets the question service.
@@ -104,7 +104,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.QuestionId, answer), "Info");
 
-            this.question.Answer = answer;
+            this.question.Answer = answer.ToString();
 
             this.questionService.QuestionAnswered(this.question);
 

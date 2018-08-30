@@ -245,6 +245,9 @@
   <data name="StartScan" xml:space="preserve">
     <value>Scan starten 📷</value>
   </data>
+  <data name="UpdateInterval" xml:space="preserve">
+    <value>1</value>
+  </data>
   <data name="VisitUs" xml:space="preserve">
     <value>Besuchen Sie unsere Website</value>
   </data>
