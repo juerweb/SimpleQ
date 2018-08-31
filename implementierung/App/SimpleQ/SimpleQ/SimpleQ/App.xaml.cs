@@ -38,9 +38,9 @@ namespace SimpleQ
 
             SetupBlobCache();
 
-            SetupOneSignal();
-
             InitializeComponent();
+
+            SetupOneSignal();
 
             // To set MainPage for the Application  
             if (!Application.Current.Properties.Keys.Contains("IsValidCodeAvailable"))
@@ -62,6 +62,7 @@ namespace SimpleQ
                 Debug.WriteLine("Code is not valid now...", "Info");
                 NavigateToRegisterPageModel();
             }
+
         }
 
         private void NavigateToRegisterPageModel()
@@ -90,11 +91,11 @@ namespace SimpleQ
 
 
             //questionService.LoadDataFromCache();
-            if (LoadData)
+            /*if (LoadData)
             {
                 IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
                 questionService.LoadData();
-            }
+            }*/
 
 
 
@@ -151,7 +152,6 @@ namespace SimpleQ
             OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540")
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
                 .HandleNotificationOpened(HandleNotificationOpened)
-                .HandleNotificationReceived(HandleNotificationReceived)
                 .EndInit();
         }
 
@@ -160,13 +160,20 @@ namespace SimpleQ
         // Method must be static or this object should be marked as DontDestroyOnLoad
         private void HandleNotificationOpened(OSNotificationOpenedResult result)
         {
-            Debug.WriteLine("HandleNotificationOpened...", "Info");
-        }
+            Dictionary<String, object> additionalData = result.notification.payload.additionalData;
 
-        void HandleNotificationReceived(OSNotification result)
-        {
-            Debug.WriteLine("HandleNotificationReceived...", "Info");
-            BlobCache.LocalMachine.InsertObject<String>("Test1002", "Hoho");
+            IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+            Debug.WriteLine(additionalData["StartDate"].ToString());
+
+            foreach (object o in additionalData)
+            {
+                Debug.WriteLine(o);
+            }
+
+
+
+
+            questionService.AddQuestion(new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now));
         }
     }
 }

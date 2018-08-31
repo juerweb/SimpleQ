@@ -9,17 +9,17 @@ namespace SimpleQ.PageModels.Services
 {
     public interface IQuestionService
     {
-        ObservableCollection<QuestionModel> Questions { get; }
-        ObservableCollection<QuestionModel> PublicQuestions { get; set; }
+        ObservableCollection<SurveyModel> Questions { get; }
+        ObservableCollection<SurveyModel> PublicQuestions { get; set; }
         Boolean IsPublicQuestionsEmpty { get; set; }
 
-        void QuestionAnswered(QuestionModel question);
-        void AddQuestion(QuestionModel question);
+        void QuestionAnswered(SurveyModel question);
+        void AddQuestion(SurveyModel question);
         void SetCategorieFilter(String categorie);
-        void MoveQuestion(QuestionModel question);
+        void MoveQuestion(SurveyModel question);
         void LoadData();
         Task RequestData();
-        void RemoveQuestion(QuestionModel questionModel);
+        void RemoveQuestion(SurveyModel questionModel);
 
     }
 }

@@ -43,7 +43,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.question = (QuestionModel)initData;
+            this.question = (SurveyModel)initData;
             base.Init(initData);
         }
         #endregion
@@ -52,9 +52,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// The question
         /// </summary>
-        private QuestionModel question;
+        private SurveyModel question;
         /// <summary>
-        /// The selected answer
+        /// The selected ansDesc
         /// </summary>
         private String selectedAnswer;
         /// <summary>
@@ -75,12 +75,12 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public QuestionModel Question { get => question; set => question = value; }
+        public SurveyModel Question { get => question; set => question = value; }
         /// <summary>
-        /// Gets or sets the selected answer.
+        /// Gets or sets the selected ansDesc.
         /// </summary>
         /// <value>
-        /// The selected answer.
+        /// The selected ansDesc.
         /// </value>
         public string SelectedAnswer
         {
@@ -116,10 +116,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
 
         #region Commands
         /// <summary>
-        /// Gets the send answer command.
+        /// Gets the send ansDesc command.
         /// </summary>
         /// <value>
-        /// The send answer command.
+        /// The send ansDesc command.
         /// </value>
         public Command SendAnswerCommand { get; private set; }
         #endregion
@@ -130,9 +130,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private void QuestionAnswered()
         {
-            Debug.WriteLine(String.Format("User answered the question with the id {0} with the answer {1}...", Question.QuestionId, selectedAnswer), "Info");
+            Debug.WriteLine(String.Format("User answered the question with the id {0} with the ansDesc {1}...", Question.SurveyId, selectedAnswer), "Info");
 
-            this.question.Answer = selectedAnswer;
+            this.question.AnsDesc = selectedAnswer;
 
             this.questionService.QuestionAnswered(question);
 

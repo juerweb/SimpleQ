@@ -96,7 +96,7 @@ namespace SimpleQ.PageModels
             var navigationContainer = CreateContainerPage(page);
             /*if (this.MenuItems[0].Count == 0 && this.MenuItems[1].Count == 0)
             {
-                if (itemType == ItemType.Categorie)
+                if (itemType == ItemType.CatName)
                 {
                     Detail = _pages[AppResources.AllCategories];
                 }
@@ -148,7 +148,7 @@ namespace SimpleQ.PageModels
 
                 if (this.MenuItems[0].Contains(SelectedItem))
                 {
-                    //the selected item is a categorie
+                    //the selected item is a catName
                     IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
                     questionService.SetCategorieFilter(SelectedItem.Title);
 
@@ -167,7 +167,7 @@ namespace SimpleQ.PageModels
         {
             if (MenuItems[0].Count(mi => mi.Title == title) == 1)
             {
-                Debug.WriteLine("Set new categorie to: " + title, "Info");
+                Debug.WriteLine("Set new catName to: " + title, "Info");
 
                 this.SelectedItem = MenuItems[0].Where(mi => mi.Title == title).ToList()[0];
             }

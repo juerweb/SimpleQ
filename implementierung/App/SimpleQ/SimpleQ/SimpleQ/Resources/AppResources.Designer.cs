@@ -92,7 +92,7 @@ namespace SimpleQ.Resources {
         /// </summary>
         internal static string Answer {
             get {
-                return ResourceManager.GetString("Answer", resourceCulture);
+                return ResourceManager.GetString("AnsDesc", resourceCulture);
             }
         }
         

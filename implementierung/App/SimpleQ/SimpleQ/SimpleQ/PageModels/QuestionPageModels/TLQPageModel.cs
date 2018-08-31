@@ -42,7 +42,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.Question = (QuestionModel)initData;
+            this.Question = (SurveyModel)initData;
             base.Init(initData);
         }
         #endregion
@@ -51,7 +51,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// The question
         /// </summary>
-        private QuestionModel question;
+        private SurveyModel question;
         /// <summary>
         /// The question service
         /// </summary>
@@ -65,7 +65,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public QuestionModel Question { get => question; set => question = value; }
+        public SurveyModel Question { get => question; set => question = value; }
         /// <summary>
         /// Gets or sets the question service.
         /// </summary>
@@ -96,12 +96,12 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// This method is called, after the user answered the question. The method calls a method in the questionService.
         /// </summary>
-        /// <param name="answer">The answer.</param>
+        /// <param name="answer">The ansDesc.</param>
         private void QuestionAnswered(TLQAnswer answer)
         {
-            Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.QuestionId, answer), "Info");
+            Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.SurveyId, answer), "Info");
 
-            this.question.Answer = answer.ToString();
+            this.question.AnsDesc = answer.ToString();
 
             this.questionService.QuestionAnswered(question);
 

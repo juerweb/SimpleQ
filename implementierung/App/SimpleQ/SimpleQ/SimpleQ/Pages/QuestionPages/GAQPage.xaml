@@ -5,8 +5,8 @@
              x:Class="SimpleQ.Pages.QuestionPages.GAQPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Question.Categorie}" Style="{DynamicResource CaptionStyle}"></Label>
-            <Label Text="{Binding Question.QuestionDesc}" Style="{DynamicResource BodyStyle}"></Label>
+            <Label Text="{Binding Question.CatName}" Style="{DynamicResource CaptionStyle}"></Label>
+            <Label Text="{Binding Question.SurveyDesc}" Style="{DynamicResource BodyStyle}"></Label>
 
             <Picker ItemsSource="{Binding Question.GivenAnswers}" SelectedItem="{Binding SelectedAnswer, Mode=TwoWay}"></Picker>
             <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsQuestionAnswered}"></Button>

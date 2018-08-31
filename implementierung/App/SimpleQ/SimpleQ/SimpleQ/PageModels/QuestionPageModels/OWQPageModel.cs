@@ -42,7 +42,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.question = (QuestionModel)initData;
+            this.question = (SurveyModel)initData;
             base.Init(initData);
         }
         #endregion
@@ -51,9 +51,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// The question
         /// </summary>
-        private QuestionModel question;
+        private SurveyModel question;
         /// <summary>
-        /// The answer
+        /// The ansDesc
         /// </summary>
         private String answer;
         /// <summary>
@@ -70,12 +70,12 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public QuestionModel Question { get => question; set => question = value; }
+        public SurveyModel Question { get => question; set => question = value; }
         /// <summary>
-        /// Gets or sets the answer.
+        /// Gets or sets the ansDesc.
         /// </summary>
         /// <value>
-        /// The answer.
+        /// The ansDesc.
         /// </value>
         public String Answer
         {
@@ -97,10 +97,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
 
         #region Commands
         /// <summary>
-        /// Gets the send answer command.
+        /// Gets the send ansDesc command.
         /// </summary>
         /// <value>
-        /// The send answer command.
+        /// The send ansDesc command.
         /// </value>
         public Command SendAnswerCommand { get; private set; }
         #endregion
@@ -111,9 +111,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private void QuestionAnswered()
         {
-            Debug.WriteLine(String.Format("User answered the question with the id {0} with the answertext '{1}'...", Question.QuestionId, answer), "Info");
+            Debug.WriteLine(String.Format("User answered the question with the id {0} with the answertext '{1}'...", Question.SurveyId, answer), "Info");
 
-            this.question.Answer = answer;
+            this.question.AnsDesc = answer;
 
             this.questionService.QuestionAnswered(question);
 

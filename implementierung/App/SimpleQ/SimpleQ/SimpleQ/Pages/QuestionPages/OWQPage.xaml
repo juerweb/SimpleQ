@@ -5,8 +5,8 @@
              x:Class="SimpleQ.Pages.QuestionPages.OWQPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Question.Categorie}" Style="{DynamicResource CaptionStyle}"></Label>
-            <Label Text="{Binding Question.QuestionDesc}" Style="{DynamicResource BodyStyle}"></Label>
+            <Label Text="{Binding Question.CatName}" Style="{DynamicResource CaptionStyle}"></Label>
+            <Label Text="{Binding Question.SurveyDesc}" Style="{DynamicResource BodyStyle}"></Label>
 
             <Entry Placeholder="{ext:Translate Text=Answer}" Text="{Binding Answer}" BindingContext="{Binding}">
                 <Entry.Behaviors>
