@@ -61,11 +61,11 @@ namespace SimpleQ.PageModels
             }
 
             //Load Data
-            await questionService.RequestData();
+            await questionService.LoadData();
             Debug.WriteLine("Requested Data...", "Info");
 
             //Set MainPageModel as new Main Page
-            App.NavigateToMainPageModel(false);
+            App.NavigateToMainPageModel(null);
         }
         #endregion
 

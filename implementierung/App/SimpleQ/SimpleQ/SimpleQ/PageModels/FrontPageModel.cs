@@ -161,7 +161,7 @@ namespace SimpleQ.PageModels
         private async void RefreshCommandExecuted()
         {
             Debug.WriteLine("Refresh Command Executed...", "Info");
-            await this.questionService.RequestData();
+            await this.questionService.LoadDataFromCache();
             this.IsRefreshing = false;
         }
         #endregion

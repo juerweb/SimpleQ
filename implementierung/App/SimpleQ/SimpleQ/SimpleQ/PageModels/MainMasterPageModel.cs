@@ -113,11 +113,11 @@ namespace SimpleQ.PageModels
             this.MenuItems[1].Add(new MenuItemModel(title, pageModel, iconResourceName));
         }
 
-        public void AddCategorie(string title)
+        public FrontPageModel AddCategorie(string title)
         {
+            FrontPageModel pageModel = new FrontPageModel();
             if (title == AppResources.AllCategories)
             {
-                FrontPageModel pageModel = new FrontPageModel();
                 var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
                 page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
                 var navigationContainer = CreateContainerPage(page);
@@ -132,8 +132,9 @@ namespace SimpleQ.PageModels
             {
                 this.MenuItems[0].Add(new MenuItemModel(title, null, null));
             }
+            return pageModel;
 
-            
+
         }
 
         private void NavigateToNewPage()

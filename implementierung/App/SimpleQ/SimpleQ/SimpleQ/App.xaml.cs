@@ -22,14 +22,14 @@ using Akavache;
 using System.Reactive.Linq;
 using Com.OneSignal;
 using Com.OneSignal.Abstractions;
+using SimpleQ.PageModels.QuestionPageModels;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
 {
 	public partial class App : Application
 	{
-
-		public App ()
+        public App ()
 		{
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
@@ -40,8 +40,13 @@ namespace SimpleQ
 
             InitializeComponent();
 
-            SetupOneSignal();
+            //SetupOneSignal();
 
+            GoToRightPage();
+        }
+
+        private async void GoToRightPage()
+        {
             // To set MainPage for the Application  
             if (!Application.Current.Properties.Keys.Contains("IsValidCodeAvailable"))
             {
@@ -52,9 +57,17 @@ namespace SimpleQ
             }
             else if ((bool)Application.Current.Properties["IsValidCodeAvailable"])
             {
-                //Code is available => MainPage
                 Debug.WriteLine("Code is valid now...", "Info");
-                NavigateToMainPageModel(true);
+                try
+                {
+                    //SurveyModel WasQuestionOpened = await BlobCache.LocalMachine.GetObject<SurveyModel>("WasQuestionOpened");
+                    //NavigateToMainPageModel(WasQuestionOpened);
+                }
+                catch
+                {
+                    //NavigateToMainPageModel(null);
+                }
+
             }
             else
             {
@@ -62,7 +75,6 @@ namespace SimpleQ
                 Debug.WriteLine("Code is not valid now...", "Info");
                 NavigateToRegisterPageModel();
             }
-
         }
 
         private void NavigateToRegisterPageModel()
@@ -78,7 +90,7 @@ namespace SimpleQ
             MainPage = basicNavContainer;
         }
 
-        public static void NavigateToMainPageModel(Boolean LoadData)
+        public static async void NavigateToMainPageModel(SurveyModel WasNotificationOpened)
         {
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
@@ -89,7 +101,6 @@ namespace SimpleQ
             //Set new Navigation Container
             MainMasterPageModel = new MainMasterPageModel();
 
-
             //questionService.LoadDataFromCache();
             /*if (LoadData)
             {
@@ -97,15 +108,20 @@ namespace SimpleQ
                 questionService.LoadData();
             }*/
 
+            IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+            await questionService.LoadDataFromCache();
 
 
-            MainMasterPageModel.AddCategorie(AppResources.AllCategories);
+            FrontPageModel pageModel = MainMasterPageModel.AddCategorie(AppResources.AllCategories);
             MainMasterPageModel.AddPage(AppResources.Settings, new SettingsPageModel(), "ic_settings_black_18.png");
             MainMasterPageModel.AddPage(AppResources.Help, new HelpPageModel(), "ic_help_black_18.png");
             MainMasterPageModel.Init("Menu");
 
-
             Application.Current.MainPage = MainMasterPageModel;
+
+            Debug.WriteLine(pageModel);
+
+            //MainMasterPageModel.Detail = FreshPageModelResolver.ResolvePageModel<SettingsPageModel>();
         }
 
         private void SetupIOC()
@@ -158,7 +174,7 @@ namespace SimpleQ
         // Called when a notification is opened.
         // The name of the method can be anything as long as the signature matches.
         // Method must be static or this object should be marked as DontDestroyOnLoad
-        private void HandleNotificationOpened(OSNotificationOpenedResult result)
+        private async void HandleNotificationOpened(OSNotificationOpenedResult result)
         {
             Dictionary<String, object> additionalData = result.notification.payload.additionalData;
 
@@ -171,9 +187,23 @@ namespace SimpleQ
             }
 
 
+            SurveyModel newSurveryModel = new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now);
+            try
+            {
+                List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+                list.Add(newSurveryModel);
+
+                await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
+            }
+            catch
+            {
+                await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", new List<SurveyModel>(new SurveyModel[] { newSurveryModel }));
+            }
+
+            await BlobCache.LocalMachine.InsertObject<SurveyModel>("WasQuestionOpened", newSurveryModel);
 
 
-            questionService.AddQuestion(new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now));
+            //questionService.AddQuestion(new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now));
         }
     }
 }

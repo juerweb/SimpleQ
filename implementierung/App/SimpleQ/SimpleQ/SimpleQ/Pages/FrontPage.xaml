@@ -12,7 +12,7 @@
         <StackLayout>
             <Button Command="{Binding RefreshCommand}" Text="Debug: Neu Laden"></Button>
             <StackLayout VerticalOptions="FillAndExpand">
-                <ListView ItemsSource="{Binding QuestionService.PublicQuestions}" SeparatorVisibility="None" SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Converter={StaticResource InvertableBooleanConverter}, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}">
+                <ListView ItemsSource="{Binding QuestionService.PublicQuestions}" SeparatorVisibility="None" SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Converter={StaticResource InvertableBooleanConverter}, Mode=TwoWay}" IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

@@ -38,11 +38,8 @@ namespace SimpleQ.PageModels.Services
         public QuestionService()
         {
             Debug.WriteLine("Constructor of QuestionService...", "Info");
-            if (questions == null)
-            {
-                questions = new ObservableCollection<SurveyModel>();
-                this.PublicQuestions = Questions;
-            }
+            questions = new ObservableCollection<SurveyModel>();
+            this.PublicQuestions = Questions;
 
             currentCategorie = AppResources.AllCategories;
 
@@ -146,7 +143,7 @@ namespace SimpleQ.PageModels.Services
 
             await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", this.questions.ToList<SurveyModel>());
 
-            simulationService.SetAnswerOfQuestion(question);
+            //simulationService.SetAnswerOfQuestion(question);
         }
 
         /// <summary>
@@ -157,15 +154,7 @@ namespace SimpleQ.PageModels.Services
         {
             Debug.WriteLine("Add new Question...", "Info");
 
-            if (this.questions == null)
-            {
-                this.questions = new ObservableCollection<SurveyModel>();
-                this.Questions.Add(question);
-            }
-            else
-            {
-                this.Questions.Add(question);
-            }
+            this.Questions.Add(question);
             
 
             if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.CatName) > 0))
@@ -215,7 +204,7 @@ namespace SimpleQ.PageModels.Services
             IsPublicQuestionsEmpty = PublicQuestions.Count <= 0;
         }
 
-        public void LoadData()
+        public async Task LoadData()
         {
             BlobCache.LocalMachine.GetAndFetchLatest<List<SurveyModel>>("Questions", async () => await simulationService.GetData(), null, null).Subscribe(qst=> {
                 if (qst != null)
@@ -231,15 +220,19 @@ namespace SimpleQ.PageModels.Services
             });
         }
 
-        public async Task RequestData()
+        public async Task LoadDataFromCache()
         {
-            List<SurveyModel> qst = await simulationService.GetData();
-            Questions.Clear();
-            foreach (SurveyModel question in qst)
+            try
             {
-                Device.BeginInvokeOnMainThread(() => { AddQuestion(question); });
+                List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+
+                this.Questions = new ObservableCollection<SurveyModel>(list);
+                this.SetCategorieFilter(this.currentCategorie);
             }
-            this.SetCategorieFilter(this.currentCategorie);
+            catch
+            {
+
+            }
         }
 
         #endregion
