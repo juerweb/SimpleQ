@@ -72,7 +72,7 @@ namespace SimpleQ.PageModels.Services
                 CrossMultilingual.Current.CurrentCultureInfo = ci;
                 AppResources.Culture = CrossMultilingual.Current.CurrentCultureInfo;
 
-                App.NavigateToMainPageModel(null);
+                App.NavigateToMainPageModel();
             }
 
         }

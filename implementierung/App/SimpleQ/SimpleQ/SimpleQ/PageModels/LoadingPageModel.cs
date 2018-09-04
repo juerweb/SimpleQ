@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Akavache;
 using FreshMvvm;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
@@ -40,10 +41,11 @@ namespace SimpleQ.PageModels
             //Code Check
             CodeValidationModel codeValidationModel = await this.SimulationService.CheckCode((int)initData);
 
-            Application.Current.Properties["IsValidCodeAvailable"] = codeValidationModel.IsValid;
-            Application.Current.Properties["CompanyName"] = codeValidationModel.CompanyName;
-            Application.Current.Properties["DepartmentName"] = codeValidationModel.DepartmentName;
-            Application.Current.Properties["RegisterCode"] = codeValidationModel.Code;
+            BlobCache.UserAccount.InsertObject<Boolean>("IsValidCodeAvailable", codeValidationModel.IsValid);
+            BlobCache.UserAccount.InsertObject<String>("CompanyName", codeValidationModel.CompanyName);
+
+            BlobCache.UserAccount.InsertObject<String>("DepartmentName", codeValidationModel.DepartmentName);
+            BlobCache.UserAccount.InsertObject<int>("RegisterCode", codeValidationModel.Code);
 
             if (codeValidationModel.IsValid)
             {
@@ -65,7 +67,7 @@ namespace SimpleQ.PageModels
             Debug.WriteLine("Requested Data...", "Info");
 
             //Set MainPageModel as new Main Page
-            App.NavigateToMainPageModel(null);
+            App.NavigateToMainPageModel();
         }
         #endregion
 

@@ -73,7 +73,7 @@ namespace SimpleQ.PageModels
             }
         }
 
-        public Dictionary<string, Page> Pages { get => _pages;}
+        public new Dictionary<string, Page> Pages { get => _pages;}
         #endregion
 
         #region Commands
@@ -113,7 +113,7 @@ namespace SimpleQ.PageModels
             this.MenuItems[1].Add(new MenuItemModel(title, pageModel, iconResourceName));
         }
 
-        public FrontPageModel AddCategorie(string title)
+        public void AddCategorie(string title)
         {
             FrontPageModel pageModel = new FrontPageModel();
             if (title == AppResources.AllCategories)
@@ -132,9 +132,6 @@ namespace SimpleQ.PageModels
             {
                 this.MenuItems[0].Add(new MenuItemModel(title, null, null));
             }
-            return pageModel;
-
-
         }
 
         private void NavigateToNewPage()
