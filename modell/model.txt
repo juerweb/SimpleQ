@@ -3,8 +3,8 @@
 - Bill (BillId, BillAmount, BillDate, CustCode)  -- Rechnung, KUNDENABHÄNGIG
 
 - Department (DepId, CustCode)  -- Abteilung, KUNDENABHÄNGIG
-- Group (GroupId, CustCode, GroupDesc)  -- Befragtenruppe, KUNDENABHÄNGIG
-- Contains (GroupId, DepId, CustCode, Amount)  -- Information welche Gruppe wieviele Personen aus welchen Abteilungen beinhaltet, KUNDENABHÄNGIG
+- Group (GroupId, CustCode, GroupDesc)  -- Befragtenruppe, KUNDENABHÄNGIG OBSOLETE
+- Contains (GroupId, DepId, CustCode, Amount)  -- Information welche Gruppe wieviele Personen aus welchen Abteilungen beinhaltet, KUNDENABHÄNGIG OBSOLETE
 - AskedPerson (PersId, DepId, CustCode)  -- Befragte Person, KUNDENABHÄNGIG
 
 - AnswerType (TypeId, TypeDesc)  -- Beantwortungsart, NICHT KUNDENABHÄNGIG

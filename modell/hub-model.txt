@@ -1,10 +1,10 @@
 Vorhandene Hub-Methoden server-side:
-- public OperationStatus Register(string regCode)  // bei Registrierung => regCode ergibt sich aus <custCode>;<depId> (ist im QR-Code enthalten)
+- public OperationStatus Register(string regCode)  // bei Registrierung => regCode ergibt sich aus <custCode><depId> (ist im QR-Code enthalten)
 - public void Unregister(int persId, string custCode)  // (idealerweise) bei Deinstallation 
 - public OperationStatus Login(int persId, string custCode)  // nach jeder hergestellter Verbindung mit dem Server
 - public void Logout() // bei Logout
-- public Department[] LoadDepartments(string custCode) // zum Laden aller Abteilungen vor Abteilungsänderung
-- public OperationStatus ChangeDepartment(int persId, string custCode, int depId) // bei Abteilungsänderung
+- public Department[] LoadDepartments(string custCode) // zum Laden aller Abteilungen vor Abteilungsänderung OBSOLETE
+- public OperationStatus ChangeDepartment(int persId, string custCode, int depId) // bei Abteilungsänderung OBSOL
 - public Answer[] LoadAnswersOfType(int typeId) // zum Laden der Antwortmöglichkeiten nachdem eine Umfrage empfangen wurde
 - public SpecifiedTextAnswer[] LoadSpecifiedTextAnswers(int svyId, string custCode) // zum Laden der vorgegebenen Textantworten nachdem eine Umfrage (mit der entsprechenden Kategorie empfangen wurde)
 - public OperationStatus AnswerSurvey(Vote vote) // bei Umfragebeantwortung
