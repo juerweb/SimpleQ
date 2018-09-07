@@ -13,8 +13,8 @@ drop table Survey;
 drop table SurveyCategory;
 drop table AnswerType;
 drop table AskedPerson;
-drop table [Contains];
-drop table [Group];
+--drop table [Contains];
+--drop table [Group];
 drop table Department;
 drop table Bill;
 drop table Customer;
@@ -72,7 +72,7 @@ create table Department
 	primary key (DepId, CustCode)
 );
 go
-
+/*
 -- Befragtenruppe
 -- Kundenabhängig
 create table [Group] 
@@ -97,6 +97,7 @@ create table [Contains]
 	foreign key (GroupId, CustCode) references [Group]
 );
 go
+*/
 
 -- Befragte Person
 -- Kundenabhängig
@@ -151,11 +152,11 @@ go
 create table Asking
 (
 	SvyId int,
-	GroupId int,
+	DepId int,
 	CustCode char(6) collate Latin1_General_CS_AS,
-	primary key (SvyId, GroupId, CustCode),
+	primary key (SvyId, DepId, CustCode),
 	foreign key (SvyId, CustCode) references Survey,
-	foreign key (GroupId, CustCode) references [Group]
+	foreign key (DepId, CustCode) references Department
 );
 go
 
@@ -208,6 +209,7 @@ go
 
 
 
+/*
 -- Alle Gruppen mit ungültigen Gruppengrößen
 drop view vw_InvalidGroupSizes;
 go
@@ -219,7 +221,7 @@ cross join DsgvoConstraint d
 where d.ConstrName = 'MIN_GROUP_SIZE'
 group by g.GroupId, GroupDesc, ConstrValue
 having sum(Amount) < ConstrValue;
-go
+go*/
 
 
 

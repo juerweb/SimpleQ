@@ -9,6 +9,8 @@ using Microsoft.AspNet.SignalR;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Extensions;
 using System.Data.SqlClient;
+using System.Data.Entity.Infrastructure;
+using System.Configuration;
 
 namespace SimpleQ.Webinterface.Mobile
 {
@@ -18,55 +20,127 @@ namespace SimpleQ.Webinterface.Mobile
         private static IHubContext hubContext = GlobalHost.ConnectionManager.GetHubContext<SimpleQHub>();
 
         #region Invoked by app
-        public OperationStatus Register(AskedPerson person)
+        public OperationStatus Register(string regCode)
         {
+            string[] tmp = regCode.Split(';');
+            if (tmp.Length != 2) return new OperationStatus(StatusCode.REGISTRATION_FAILED_INVALID_CODE, "Invalid registration code");
+
             using (var db = new SimpleQDBEntities())
             {
                 try
                 {
+                    string custCode = tmp[0];
+                    int depId = int.Parse(tmp[1]);
+
+                    AskedPerson person = new AskedPerson { CustCode = custCode, DepId = depId };
                     db.AskedPersons.Add(person);
                     db.SaveChanges();
 
-                    return new OperationStatus(StatusCode.REGISTERED, "Registered");
+                    connectedPersons.Add(Context.ConnectionId, person);
+                    Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
+
+                    return new OperationStatus(StatusCode.REGISTERED, "Registered") { AssignedDepartment = dep, PersId = person.PersId };
                 }
-                catch (SqlException ex)
+                catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 2627 || (ex?.InnerException?.InnerException as SqlException)?.Number == 2601)
                 {
-                    string msg = ex.Number == 2627 || ex.Number == 2601 ? "Already registered"
-                        : ex.Number == 547 ? "No such company"
-                        : ex.Number == 8152 ? "Maximum input length exceeded"
-                        : "Unknown registration error";
-
-
-                    return new OperationStatus(StatusCode.REGISTRATION_FAILED, msg);
+                    return new OperationStatus(StatusCode.REGISTRATION_FAILED_ALREADY_REGISTERED, "Already registered");
                 }
+                catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 547)
+                {
+                    return new OperationStatus(StatusCode.REGISTRATION_FAILED_INVALID_CODE, "Invalid registration code");
+                }
+                catch (FormatException)
+                {
+                    return new OperationStatus(StatusCode.REGISTRATION_FAILED_INVALID_CODE, "Invalid registration code");
+                }
+
+
             }
         }
 
-        public OperationStatus Login(string persEmail, string persPwd, string custName)
+        public void Unregister(int persId, string custCode)
         {
-            if (LoggedIn(persEmail)) return new OperationStatus(StatusCode.LOGIN_FAILED, "Already logged in");
             using (var db = new SimpleQDBEntities())
             {
-                AskedPerson person = db.AskedPersons.Where(p => p.PersEmail == persEmail && p.PersPwdHash == persPwd.GetSHA512() && p.CustName == custName).FirstOrDefault();
+                connectedPersons.Remove(Context.ConnectionId);
+                db.AskedPersons.RemoveRange(db.AskedPersons.Where(p => p.PersId == persId && p.CustCode == custCode));
+                db.SaveChanges();
+            }
+        }
+
+        public OperationStatus Login(int persId, string custCode)
+        {
+            if (LoggedIn(persId, custCode)) return new OperationStatus(StatusCode.LOGGED_IN, "Already logged in");
+            using (var db = new SimpleQDBEntities())
+            {
+                AskedPerson person = db.AskedPersons.Where(p => p.PersId == persId && p.CustCode == custCode).FirstOrDefault();
                 if (person != null)
                 {
                     connectedPersons.Add(Context.ConnectionId, person);
                     return new OperationStatus(StatusCode.LOGGED_IN, "Logged in");
                 }
                 else
-                    return new OperationStatus(StatusCode.LOGIN_FAILED, "Invalid credentials");
+                    return new OperationStatus(StatusCode.LOGIN_FAILED_NOT_REGISTERED, $"No person registered with ID: {persId}, CustCode: {custCode}");
             }
-
         }
 
-        public void ChangeData(object data)
+        public void Logout()
         {
-
+            connectedPersons.Remove(Context.ConnectionId);
         }
 
-        public void AnswerSurvey(object answer)
+        public Department[] LoadAllDepartments(string custCode)
         {
+            using (var db = new SimpleQDBEntities())
+            {
+                return db.Departments.Where(d => d.CustCode == custCode).ToArray();
+            }
+        }
 
+        public OperationStatus ChangeDepartment(int persId, string custCode, int depId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                try
+                {
+                    db.AskedPersons.Where(p => p.PersId == persId && p.CustCode == custCode).First().DepId = depId;
+                    db.SaveChanges();
+
+                    Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
+
+                    return new OperationStatus(StatusCode.DEPARTMENT_CHANGED, "Department changed") { AssignedDepartment = dep };
+                }
+                catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 547)
+                {
+                    return new OperationStatus(StatusCode.DEPARTMENT_CHANGING_FAILED_INVALID_DEPARTMENT, "No such department");
+                }
+            }
+        }
+
+        public Answer[] LoadAnswersOfType(int typeId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                return db.Answers.Where(a => a.TypeId == typeId).ToArray();
+            }
+        }
+
+        public SpecifiedTextAnswer[] LoadSpecifiedTextAnswers(int svyId, string custCode)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                return db.SpecifiedTextAnswers.Where(s => s.SvyId == svyId && s.CustCode == custCode).ToArray();
+            }
+        }
+
+        public void AnswerSurvey(Vote vote)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                db.Votes.Add(vote);
+                db.Customers.Where(c => c.CustCode == vote.CustCode).First().CostBalance += decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
+                db.SaveChanges();
+            }
         }
 
         public override Task OnConnected()
@@ -83,25 +157,25 @@ namespace SimpleQ.Webinterface.Mobile
 
 
         #region Invoked by server
-        internal static void SendSurvey(int groupId, string custName, object svyData)
+        internal static void SendSurvey(int groupId, string custCode, Survey survey)
         {
-            using (var db = new SimpleQDBEntities())
-            {
-                List<string> connIDs = new List<string>();
-                db.Contains.Where(c => c.GroupId == groupId && c.CustName == custName).ToList().ForEach(c =>
-                {
-                    c.Department.AskedPersons.TakeRandom(c.Amount).ToList().ForEach(p => 
-                    {
-                        string connId = connectedPersons.Where(kv => kv.Value.PersEmail == p.PersEmail).Select(kv => kv.Key).FirstOrDefault();
-                        if (connId != null)
-                            connIDs.Add(connId);
-                    });
-                });
-                hubContext.Clients.Clients(connIDs).SendSurvey(svyData);
-            }
+            //using (var db = new SimpleQDBEntities())
+            //{
+            //    List<string> connIDs = new List<string>();
+            //    db.Contains.Where(c => c.GroupId == groupId && c.CustCode == custCode).ToList().ForEach(c =>
+            //    {
+            //        c.Department.AskedPersons.TakeRandom(c.Amount).ToList().ForEach(p =>
+            //        {
+            //            string connId = connectedPersons.Where(kv => kv.Value.PersId == p.PersId && kv.Value.CustCode == p.CustCode).Select(kv => kv.Key).FirstOrDefault();
+            //            if (connId != null)
+            //                connIDs.Add(connId);
+            //        });
+            //    });
+            //    hubContext.Clients.Clients(connIDs).SendSurvey(svyData);
+            //}
         }
 
-        internal static void ConfigChanged(object cfg)
+        internal static void AnonymityChanged(int configValue)
         {
 
         }
@@ -112,9 +186,9 @@ namespace SimpleQ.Webinterface.Mobile
             Clients.Client(client).ReceiveStatus(status);
         }
 
-        private bool LoggedIn(string email)
+        private bool LoggedIn(int persId, string custCode)
         {
-            return connectedPersons.Values.ToList().Exists(p => p.PersEmail.ToLower() == email.ToLower()) || connectedPersons.Keys.ToList().Exists(k => k == Context.ConnectionId);
+            return connectedPersons.Values.ToList().Exists(p => p.PersId == persId && p.CustCode == custCode) || connectedPersons.Keys.ToList().Exists(k => k == Context.ConnectionId);
         }
     }
 }

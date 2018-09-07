@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SimpleQ.Webinterface.Models;
+using SimpleQ.Webinterface.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,21 +12,28 @@ namespace SimpleQ.Webinterface.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            Session["custCode"] = "m4rku5";
+
+            var model = new ContainerViewModel
+            {
+                SurveyCreationModel = new SurveyCreationModel()
+            };
+
+            using (var db = new SimpleQDBEntities())
+            {
+                model.SurveyCreationModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
+                model.SurveyCreationModel.AnswerTypes = db.AnswerTypes.ToList();
+                model.SurveyCreationModel.Groups = db.Groups.Where(g => g.CustCode == CustCode).ToList();
+            }
+            return View(model: model);
         }
 
-        public ActionResult About()
+        private string CustCode
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            get
+            {
+                return Session["custCode"] as string;
+            }
         }
     }
 }
