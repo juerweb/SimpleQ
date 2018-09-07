@@ -88,10 +88,12 @@ namespace SimpleQ.PageModels
             set
             {
                 selectedQuestion = value;
+                Debug.WriteLine(selectedQuestion);
                 OnPropertyChanged();
 
                 if (selectedQuestion != null)
                 {
+                    Debug.WriteLine(selectedQuestion.QuestionDesc);
                     NavigateToQuestion();
                 }
             }
@@ -115,36 +117,36 @@ namespace SimpleQ.PageModels
         /// </summary>
         private void NavigateToQuestion()
         {
-            if (selectedQuestion.GetType() == typeof(YNQModel))
+            if (selectedQuestion.QuestionType == QuestionType.YNQ)
             {
                 CoreMethods.PushPageModel<YNQPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.GetType() == typeof(TLQModel))
+            else if (selectedQuestion.QuestionType == QuestionType.TLQ)
             {
                 CoreMethods.PushPageModel<TLQPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.GetType() == typeof(OWQModel))
+            else if (selectedQuestion.QuestionType == QuestionType.OWQ)
             {
                 CoreMethods.PushPageModel<OWQPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.GetType() == typeof(GAQModel))
+            else if (selectedQuestion.QuestionType == QuestionType.GAQ)
             {
                 CoreMethods.PushPageModel<GAQPageModel>(selectedQuestion);
             }
             
-            selectedQuestion = null;
+            SelectedQuestion = null;
         }
 
         private void DeleteCommandExecuted(object question)
         {
             Debug.WriteLine("Delete Command Executed with object: " + question, "Info");
-            questionService.MoveQuestion(questionService.GetQuestionWithRightType(question));
+            questionService.RemoveQuestion((QuestionModel)question);
         }
 
         private async void RefreshCommandExecuted()
         {
             Debug.WriteLine("Refresh Command Executed...", "Info");
-            await simulationService.GetData();
+            await this.questionService.RequestData();
             this.IsRefreshing = false;
         }
         #endregion

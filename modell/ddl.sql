@@ -8,6 +8,7 @@ drop table DsgvoConstraint;
 drop table Vote;
 drop table SpecifiedTextAnswer;
 drop table Answer;
+drop table Asking;
 drop table Survey;
 drop table SurveyCategory;
 drop table AnswerType;
@@ -43,7 +44,6 @@ create table Customer
 	Country varchar(max) not null,
 	LanguageCode char(3) not null,
 	DataStoragePeriod int not null, -- in Monaten
-	LastExceededCheck datetime null,
 	PaymentMethodId int not null references PaymentMethod,
 	CostBalance money not null
 );
@@ -146,6 +146,19 @@ create table Survey
 );
 go
 
+-- Mit Umfrage befragte Gruppen
+-- Kundenabhängig
+create table Asking
+(
+	SvyId int,
+	GroupId int,
+	CustCode char(6) collate Latin1_General_CS_AS,
+	primary key (SvyId, GroupId, CustCode),
+	foreign key (SvyId, CustCode) references Survey,
+	foreign key (GroupId, CustCode) references [Group]
+);
+go
+
 -- AntwortMÖGLICHKEIT
 -- Nicht kundenabhängig
 create table Answer
@@ -177,8 +190,8 @@ create table Vote
 	SvyId int not null,
 	CustCode char(6) collate Latin1_General_CS_AS,
 	AnsId int not null references Answer,
-	VoteText varchar(max) null, -- optional
-	SpecId int null,
+	VoteText varchar(max) null, -- optional, nur wenn Antworttyp 1-Wort-Antwort
+	SpecId int null, -- optional, nur wenn Antworttyp vorgegebene Textantwort
 	foreign key (SvyId, CustCode) references Survey,
 	foreign key (SpecId, SvyId, CustCode) references SpecifiedTextAnswer
 );
@@ -245,29 +258,32 @@ go
 create procedure sp_CheckExceededSurveyData
 as
 begin
-	declare @custCode char(6), @custCount int;
-	declare c cursor local for select CustCode from Customer where datediff(month, LastExceededCheck, getdate()) >= DataStoragePeriod;
+	declare @svyId int, @svyCount int;
+	declare c cursor local for select svyId from Survey s
+											join Customer c on s.CustCode = c.CustCode
+											where datediff(day, s.StartDate, getdate()) >= c.DataStoragePeriod * 30;
 	
 	open c;
-	fetch c into @custCode;
-	set @custCount = 0;
+	fetch c into @svyId;
+	
+	set @svyCount = 0;
 
 	while(@@FETCH_STATUS = 0)
 	begin
-		delete from Vote where CustCode = @custCode;
-		delete from SpecifiedTextAnswer where CustCode = @custCode;
-		delete from Survey where CustCode = @custCode;
-
-		update Customer set LastExceededCheck = getdate() where CustCode = @custCode;
-		set @custCount += 1;
+		delete from Vote where SvyId = @svyId;
+		delete from SpecifiedTextAnswer where SvyId = @svyId;
+		delete from Asking where SvyID = @svyId;
+		delete from Survey where SvyId = @svyId;
+		
+		set @svyCount += 1;
+		fetch c into @svyId;
 	end
 	close c;
 	deallocate c;
 
-	select @custCount as 'Num of Customers';
+	select @svyCount as 'Deleted surveys'
 end
 go
-
 
 -- Fixe inserts (für alle gleich!)
 begin transaction;
