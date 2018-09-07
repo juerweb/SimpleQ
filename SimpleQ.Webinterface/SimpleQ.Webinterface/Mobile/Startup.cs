@@ -4,15 +4,14 @@ using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(SimpleQ.Webinterface.Mobile.Startup))]
+[assembly: OwinStartup(typeof(SimpleQ.Webinterface.Models.Startup))]
 
-namespace SimpleQ.Webinterface.Mobile
+namespace SimpleQ.Webinterface.Models
 {
     public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
-            // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=316888
             app.MapSignalR();
             GlobalHost.Configuration.MaxIncomingWebSocketMessageSize = null;
             GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(10);
