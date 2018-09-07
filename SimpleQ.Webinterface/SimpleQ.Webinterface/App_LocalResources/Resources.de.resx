@@ -157,4 +157,7 @@
     <value>Typ</value>
     <comment>small written type</comment>
   </data>
+  <data name="groupAdministrationHeader" xml:space="preserve">
+    <value>Group Administration</value>
+  </data>
 </root>

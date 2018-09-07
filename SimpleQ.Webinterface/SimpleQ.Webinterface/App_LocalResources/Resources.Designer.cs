@@ -88,6 +88,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Gruppenverwaltung ähnelt.
+        /// </summary>
+        public static string groupAdministrationHeader {
+            get {
+                return ResourceManager.GetString("groupAdministrationHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die groups ähnelt.
         /// </summary>
         public static string groups {

@@ -126,6 +126,9 @@
   <data name="from" xml:space="preserve">
     <value>from</value>
   </data>
+  <data name="groupAdministrationHeader" xml:space="preserve">
+    <value>Gruppenverwaltung</value>
+  </data>
   <data name="groups" xml:space="preserve">
     <value>groups</value>
   </data>
