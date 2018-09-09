@@ -67,7 +67,17 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public SurveyModel Question { get => question; set => question = value; }
+        public SurveyModel Question
+        {
+            get => question;
+            set
+            {
+                question = value;
+
+                Debug.WriteLine("QuestionChanged: " + question, "Info");
+                OnPropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Gets or sets the question service.
@@ -106,7 +116,17 @@ namespace SimpleQ.PageModels.QuestionPageModels
 
             this.question.AnsDesc = answer.ToString();
 
-            this.questionService.QuestionAnswered(this.question);
+
+            Debug.WriteLine("QS: " + this.questionService);
+            if (this.questionService == null)
+            {
+                IQuestionService qs = FreshIOC.Container.Resolve<IQuestionService>();
+                qs.QuestionAnswered(this.Question);
+            }
+            else
+            {
+                this.questionService.QuestionAnswered(this.Question);
+            }
 
             CoreMethods.PopPageModel();
             if (this.questionService.PublicQuestions.Count <= 0)

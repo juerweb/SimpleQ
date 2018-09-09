@@ -222,17 +222,26 @@ namespace SimpleQ.PageModels.Services
 
         public async Task LoadDataFromCache()
         {
-            try
+            Device.BeginInvokeOnMainThread(async () =>
             {
-                List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+                try
+                {
+                    List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
 
-                this.Questions = new ObservableCollection<SurveyModel>(list);
-                this.SetCategorieFilter(this.currentCategorie);
-            }
-            catch
-            {
+                    this.Questions.Clear();
 
-            }
+                    foreach (SurveyModel sm in list)
+                    {
+                        this.AddQuestion(sm);
+                    }
+                    this.SetCategorieFilter(this.currentCategorie);
+                }
+                catch
+                {
+
+                }
+
+            });
         }
 
         #endregion

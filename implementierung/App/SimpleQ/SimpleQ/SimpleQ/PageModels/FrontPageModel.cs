@@ -41,20 +41,6 @@ namespace SimpleQ.PageModels
             RefreshCommand = new Command(RefreshCommandExecuted);
 
             IsRefreshing = false;
-
-            IDialogService dialogService = FreshIOC.Container.Resolve<IDialogService>();
-            try
-            {
-                BlobCache.LocalMachine.GetObject<String>("Test1002").Subscribe(test=> {
-                    dialogService.ShowDialog("Test", "Korrekt");
-                });
-
-
-            }
-            catch (Exception e)
-            {
-                dialogService.ShowDialog("Test", "Falsch");
-            }
         }
 
 

@@ -42,7 +42,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.Question = (SurveyModel)initData;
+            this.Question = (SurveyModel) initData;
+
             base.Init(initData);
         }
         #endregion
@@ -65,7 +66,17 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public SurveyModel Question { get => question; set => question = value; }
+        public SurveyModel Question
+        {
+            get => question;
+            set
+            {
+                question = value;
+
+                Debug.WriteLine("QuestionChanged: " + question, "Info");
+                OnPropertyChanged();
+            }
+        }
         /// <summary>
         /// Gets or sets the question service.
         /// </summary>

@@ -75,7 +75,17 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The question.
         /// </value>
-        public SurveyModel Question { get => question; set => question = value; }
+        public SurveyModel Question
+        {
+            get => question;
+            set
+            {
+                question = value;
+
+                Debug.WriteLine("QuestionChanged: " + question, "Info");
+                OnPropertyChanged();
+            }
+        }
         /// <summary>
         /// Gets or sets the selected ansDesc.
         /// </summary>

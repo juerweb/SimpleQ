@@ -24,6 +24,7 @@ using Com.OneSignal;
 using Com.OneSignal.Abstractions;
 using SimpleQ.PageModels.QuestionPageModels;
 using SimpleQ.Pages.QuestionPages;
+using Xamarin.Forms.Internals;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -32,7 +33,6 @@ namespace SimpleQ
 	{
         public App ()
 		{
-            Debug.WriteLine("TESTTTTTTT");
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
 
@@ -45,31 +45,32 @@ namespace SimpleQ
             SetupOneSignal();
 
             GoToRightPage();
+
         }
 
-        private async void GoToRightPage()
+        private void GoToRightPage()
         {
-            try
-            {
-                Boolean IsValidCodeAvailable = await BlobCache.UserAccount.GetObject<Boolean>("IsValidCodeAvailable");
-                if (IsValidCodeAvailable)
+                Debug.WriteLine("T1");
+                if (Application.Current.Properties.ContainsKey("IsValidCodeAvailable"))
                 {
-                    Debug.WriteLine("Code is valid now...", "Info");
-                    NavigateToMainPageModel();
+                    if ((bool)Application.Current.Properties["IsValidCodeAvailable"])
+                    {
+                        Debug.WriteLine("Code is valid now...", "Info");
+                        NavigateToMainPageModel();
+                    }
+                    else
+                    {
+                        //Code is not available => RegisterPage
+                        Debug.WriteLine("Code is not valid now...", "Info");
+                        NavigateToRegisterPageModel();
+                    }
                 }
                 else
                 {
                     //Code is not available => RegisterPage
-                    Debug.WriteLine("Code is not valid now...", "Info");
+                    Debug.WriteLine("Property 'CodeValidationModel' is not available...", "Info");
                     NavigateToRegisterPageModel();
                 }
-            }
-            catch (KeyNotFoundException ex)
-            {
-                //Code is not available => RegisterPage
-                Debug.WriteLine("Property 'CodeValidationModel' is not available...", "Info");
-                NavigateToRegisterPageModel();
-            }
         }
 
         private void NavigateToRegisterPageModel()
@@ -103,31 +104,65 @@ namespace SimpleQ
                 questionService.LoadData();
             }*/
 
-            IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
-            await questionService.LoadDataFromCache();
-
 
             MainMasterPageModel.AddCategorie(AppResources.AllCategories);
             MainMasterPageModel.AddPage(AppResources.Settings, new SettingsPageModel(), "ic_settings_black_18.png");
             MainMasterPageModel.AddPage(AppResources.Help, new HelpPageModel(), "ic_help_black_18.png");
             MainMasterPageModel.Init("Menu");
 
+            Console.WriteLine("1234: Load Data from Cache");
+            IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+            await questionService.LoadDataFromCache();
+
             Application.Current.MainPage = MainMasterPageModel;
 
-            /*try
+            try
             {
-                //SurveyModel WasQuestionOpened = await BlobCache.LocalMachine.GetObject<SurveyModel>("WasQuestionOpened");
+                SurveyModel WasQuestionOpened = await BlobCache.LocalMachine.GetObject<SurveyModel>("WasQuestionOpened");
+                await BlobCache.LocalMachine.InvalidateObject<SurveyModel>("WasQuestionOpened");
 
-                //Debug.WriteLine(WasQuestionOpened);
+                Console.WriteLine("1234: GoTo Question");
+                Debug.WriteLine("WasQuestionOpened: " + WasQuestionOpened.SurveyDesc, "Info");
 
                 IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
 
-                navService.PushPage(new GAQPage(), new GAQPageModel());
+                switch (WasQuestionOpened.TypeDesc)
+                {
+                    case SurveyType.YNQ:
+                        YNQPage ynqPage = new YNQPage();
+                        YNQPageModel ynqPageModel = new YNQPageModel();
+                        ynqPage.BindingContext = ynqPageModel;
+                        ynqPageModel.Question = WasQuestionOpened;
+                        navService.PushPage(ynqPage, ynqPageModel);
+                        break;
+                    case SurveyType.TLQ:
+                        TLQPage tlqPage = new TLQPage();
+                        TLQPageModel tlqPageModel = new TLQPageModel();
+                        tlqPage.BindingContext = tlqPageModel;
+                        tlqPageModel.Question = WasQuestionOpened;
+                        navService.PushPage(tlqPage, tlqPageModel);
+                        break;
+                    case SurveyType.OWQ:
+                        OWQPage owqPage = new OWQPage();
+                        OWQPageModel owqPageModel = new OWQPageModel();
+                        owqPage.BindingContext = owqPageModel;
+                        owqPageModel.Question = WasQuestionOpened;
+                        navService.PushPage(owqPage, owqPageModel);
+
+                        break;
+                    case SurveyType.GAQ:
+                        GAQPage gaqPage = new GAQPage();
+                        GAQPageModel gaqPageModel = new GAQPageModel();
+                        gaqPage.BindingContext = gaqPageModel;
+                        gaqPageModel.Question = WasQuestionOpened;
+                        navService.PushPage(gaqPage, gaqPageModel);
+                        break;
+                }
             }
             catch
             {
-
-            }*/
+                Console.WriteLine("1234: No Notification found...");
+            }
         }
 
         private void SetupIOC()
@@ -182,6 +217,8 @@ namespace SimpleQ
         // Method must be static or this object should be marked as DontDestroyOnLoad
         private async void HandleNotificationOpened(OSNotificationOpenedResult result)
         {
+            Console.WriteLine("1234: HandleNotificationOpened!23");
+
             Dictionary<String, object> additionalData = result.notification.payload.additionalData;
 
             IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
@@ -211,8 +248,7 @@ namespace SimpleQ
             }
 
             Debug.WriteLine("After try/catch");
-            //await BlobCache.LocalMachine.InsertObject<SurveyModel>("WasQuestionOpened", newSurveryModel);
-
+            await BlobCache.LocalMachine.InsertObject<SurveyModel>("WasQuestionOpened", newSurveryModel);
 
             //questionService.AddQuestion(new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now));
         }

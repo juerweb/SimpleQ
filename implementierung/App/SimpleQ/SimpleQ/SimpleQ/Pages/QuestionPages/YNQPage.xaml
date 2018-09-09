@@ -5,8 +5,8 @@
              x:Class="SimpleQ.Pages.QuestionPages.YNQPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Question.CatName}" Style="{DynamicResource CaptionStyle}"></Label>
-            <Label Text="{Binding Question.SurveyDesc}" Style="{DynamicResource BodyStyle}"></Label>
+            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
+            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
 
             <Grid>
                 <Grid.ColumnDefinitions>
