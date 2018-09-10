@@ -8,7 +8,7 @@
 - AnswerType (TypeId, TypeDesc)  -- Beantwortungsart, NICHT KUNDENABHÄNGIG
 - SurveyCategory (CatId, CustCode, CatName)  -- Umfragekategorie, KUNDENABHÄNGIG
 - Survey (SvyId, CustCode, SvyDesc, StartDate, EndDate, TypeId, CatId)  -- Umfrage, KUNDENABHÄNGIG
-- Asking (SvyId, GroupId, CustCode)  -- Mit Umfrage befragte Gruppen, KUNDENABHÄNGIG
+- Asking (SvyId, DepId, CustCode)  -- Mit Umfrage befragte Gruppen, KUNDENABHÄNGIG
 - Answer (AnsId, AnsDesc, TypeId)  -- Antwortmöglichkeit, NICHT KUNDENABHÄNGIG
 - SpecifiedTextAnswer (SpecId, SvyId, CustCode, SpecText)  -- Vorgegebene Textantwort (wird nur benötigt falls entsprechender Antworttyp für die Umfrage verwendet wird), KUNDENABHÄNGIG
 - Vote (VoteId, SvyId, CustCode, AnsId, VoteText, SpecId)  -- Antwort auf eine Umfrage, KUNDENABHÄNGIG
