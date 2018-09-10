@@ -67,7 +67,7 @@ namespace SimpleQ.PageModels
             Debug.WriteLine("Requested Data...", "Info");
 
             //Set MainPageModel as new Main Page
-            App.NavigateToMainPageModel();
+            App.GoToRightPage();
         }
         #endregion
 

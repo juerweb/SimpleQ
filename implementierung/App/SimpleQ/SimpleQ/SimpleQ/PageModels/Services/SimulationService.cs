@@ -45,5 +45,11 @@ namespace SimpleQ.PageModels.Services
                 }
             }
         }
+
+        public void Logout(int registerCode)
+        {
+            Debug.WriteLine(String.Format("User with the registerCode: {0} logged out...", registerCode), "Info");
+            return;
+        }
     }
 }

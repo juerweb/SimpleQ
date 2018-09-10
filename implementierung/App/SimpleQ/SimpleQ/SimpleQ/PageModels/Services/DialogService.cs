@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.Services
@@ -29,6 +30,18 @@ namespace SimpleQ.PageModels.Services
         public void ShowDialog(String title, String body)
         {
             this.dialogService.Alert(body, title);
+        }
+
+        public async Task<bool> ShowReallySureDialog()
+        {
+            ConfirmConfig cc = new ConfirmConfig();
+            cc = cc.UseYesNo();
+            cc.Message = AppResources.ReallySure;
+
+
+            var result = await this.dialogService.ConfirmAsync(cc);
+
+            return result;
         }
     }
 }

@@ -11,5 +11,6 @@ namespace SimpleQ.PageModels.Services
         Task<CodeValidationModel> CheckCode(int code);
         Task<List<SurveyModel>> GetData();
         void SetAnswerOfQuestion(SurveyModel question);
+        void Logout(int registerCode);
     }
 }

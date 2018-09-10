@@ -18,6 +18,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button Command="{Binding LogOutCommand}" Text="{ext:Translate Text=LogOut}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

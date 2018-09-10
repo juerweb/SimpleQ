@@ -92,7 +92,7 @@ namespace SimpleQ.Resources {
         /// </summary>
         internal static string Answer {
             get {
-                return ResourceManager.GetString("AnsDesc", resourceCulture);
+                return ResourceManager.GetString("Answer", resourceCulture);
             }
         }
         
@@ -295,6 +295,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Abmelden ähnelt.
+        /// </summary>
+        internal static string LogOut {
+            get {
+                return ResourceManager.GetString("LogOut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Ste [Rest der Zeichenfolge wurde abgeschnitten]&quot;; ähnelt.
         /// </summary>
         internal static string LoremIpsum {
@@ -354,6 +363,15 @@ namespace SimpleQ.Resources {
         internal static string PhoneUs {
             get {
                 return ResourceManager.GetString("PhoneUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sind Sie sich wirklich sicher? ähnelt.
+        /// </summary>
+        internal static string ReallySure {
+            get {
+                return ResourceManager.GetString("ReallySure", resourceCulture);
             }
         }
         

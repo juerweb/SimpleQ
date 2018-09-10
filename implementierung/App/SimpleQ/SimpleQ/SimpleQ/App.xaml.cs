@@ -48,7 +48,7 @@ namespace SimpleQ
 
         }
 
-        private void GoToRightPage()
+        public static void GoToRightPage()
         {
                 Debug.WriteLine("T1");
                 if (Application.Current.Properties.ContainsKey("IsValidCodeAvailable"))
@@ -73,7 +73,7 @@ namespace SimpleQ
                 }
         }
 
-        private void NavigateToRegisterPageModel()
+        private static void NavigateToRegisterPageModel()
         {
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
@@ -83,10 +83,10 @@ namespace SimpleQ
 
             var page = FreshPageModelResolver.ResolvePageModel<RegisterPageModel>();
             var basicNavContainer = new FreshNavigationContainer(page);
-            MainPage = basicNavContainer;
+            App.Current.MainPage = basicNavContainer;
         }
 
-        public static async void NavigateToMainPageModel()
+        private static async void NavigateToMainPageModel()
         {
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
