@@ -1,0 +1,13 @@
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Answer.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\AnswerType.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\AskedPerson.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Asking.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Bill.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Customer.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Department.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\DsgvoConstraint.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\PaymentMethod.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\SpecifiedTextAnswer.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Survey.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\SurveyCategory.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Vote.cs

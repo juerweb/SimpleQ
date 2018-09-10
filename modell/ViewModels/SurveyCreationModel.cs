@@ -11,12 +11,13 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         #region Controller to View
         public List<SurveyCategory> SurveyCategories { get; set; }
         public List<AnswerType> AnswerTypes { get; set; }
-        public List<Group> Groups { get; set; }
+        public List<Department> Departments { get; set; }
         #endregion
 
         #region View to Controller
         public Survey Survey { get; set; }
-        public List<int> SelectedGroups { get; set; }
+        public List<int> SelectedDepartments { get; set; }
+	public int Amount { get; set; }
         #endregion
     }
 }

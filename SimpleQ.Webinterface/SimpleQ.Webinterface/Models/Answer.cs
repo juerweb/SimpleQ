@@ -9,38 +9,25 @@
 
 namespace SimpleQ.Webinterface.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
-    public partial class Survey
+    public partial class Answer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Survey()
+        public Answer()
         {
-            this.SpecifiedTextAnswers = new HashSet<SpecifiedTextAnswer>();
             this.Votes = new HashSet<Vote>();
         }
     
-        public int SvyId { get; set; }
-        public string CustCode { get; set; }
-        public string SvyText { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
+        public int AnsId { get; set; }
+        public string AnsDesc { get; set; }
         public int TypeId { get; set; }
-        public int CatId { get; set; }
 
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual AnswerType AnswerType { get; set; }
-        [JsonIgnore]
-        public virtual Customer Customer { get; set; }
-        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SpecifiedTextAnswer> SpecifiedTextAnswers { get; set; }
-        [JsonIgnore]
-        public virtual SurveyCategory SurveyCategory { get; set; }
-        [JsonIgnore]
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Vote> Votes { get; set; }
     }
 }

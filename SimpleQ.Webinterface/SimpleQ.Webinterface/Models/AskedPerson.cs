@@ -12,11 +12,13 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_InvalidGroupSizes
+    public partial class AskedPerson
     {
-        public int GroupId { get; set; }
-        public string GroupDesc { get; set; }
-        public Nullable<int> Amount { get; set; }
-        public int MinSize { get; set; }
+        public int PersId { get; set; }
+        public int DepId { get; set; }
+        public string CustCode { get; set; }
+    
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual Department Department { get; set; }
     }
 }

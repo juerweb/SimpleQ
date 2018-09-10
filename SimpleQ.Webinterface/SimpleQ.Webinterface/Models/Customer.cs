@@ -19,7 +19,6 @@ namespace SimpleQ.Webinterface.Models
         {
             this.Bills = new HashSet<Bill>();
             this.Departments = new HashSet<Department>();
-            this.Groups = new HashSet<Group>();
             this.Surveys = new HashSet<Survey>();
             this.SurveyCategories = new HashSet<SurveyCategory>();
         }
@@ -35,20 +34,22 @@ namespace SimpleQ.Webinterface.Models
         public string Country { get; set; }
         public string LanguageCode { get; set; }
         public int DataStoragePeriod { get; set; }
-        public Nullable<System.DateTime> LastExceededCheck { get; set; }
         public int PaymentMethodId { get; set; }
         public decimal CostBalance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Bill> Bills { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
         public virtual PaymentMethod PaymentMethod { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Department> Departments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Group> Groups { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Survey> Surveys { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<SurveyCategory> SurveyCategories { get; set; }
     }
 }

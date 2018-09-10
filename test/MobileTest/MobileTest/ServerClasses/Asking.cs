@@ -12,23 +12,15 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SpecifiedTextAnswer
+    public partial class Asking
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SpecifiedTextAnswer()
-        {
-            this.Votes = new HashSet<Vote>();
-        }
-    
-        public int SpecId { get; set; }
         public int SvyId { get; set; }
+        public int DepId { get; set; }
         public string CustCode { get; set; }
-        public string SpecText { get; set; }
     
         [Newtonsoft.Json.JsonIgnore]
         public virtual Survey Survey { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Vote> Votes { get; set; }
+        public virtual Department Department { get; set; }
     }
 }

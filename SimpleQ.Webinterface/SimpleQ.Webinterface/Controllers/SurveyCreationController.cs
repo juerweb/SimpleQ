@@ -19,11 +19,11 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 s.Survey.CustCode = CustCode;
-                s.Survey.EndDate = s.Survey.StartDate.AddDays(7);
+                //s.Survey.EndDate = s.Survey.StartDate.AddDays(7);
                 db.Surveys.Add(s.Survey);
-                s.SelectedGroups.ForEach(g =>
+                s.SelectedDepartments.ForEach(d =>
                 {
-                    db.Askings.Add(new Asking { SvyId = s.Survey.SvyId, GroupId = g, CustCode = CustCode });
+                    db.Askings.Add(new Asking { SvyId = s.Survey.SvyId, DepId = d, CustCode = CustCode });
                 });
                 db.SaveChanges();
             }
@@ -32,10 +32,26 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 Thread.Sleep(s.Survey.StartDate - DateTime.Now);
 
-                s.SelectedGroups.ForEach(g =>
+                using (var db = new SimpleQDBEntities())
                 {
-                    SimpleQHub.SendSurvey(g, CustCode, s.Survey);
-                });
+                    // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
+                    int totalPersons = db.Departments
+                        .Where(d => s.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
+                        .Sum(d => d.AskedPersons.Count);
+
+                    s.SelectedDepartments.ForEach(d =>
+                    {
+                        // Anzahl an Personen in der aktuellen Abteilung (mit DepId = d)
+                        int currPersons = db.Departments
+                            .Where(dep => dep.DepId == d && dep.CustCode == CustCode)
+                            .Select(dep => dep.AskedPersons.Count).First();
+
+                        // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
+                        int toAsk = s.Amount * (int)Math.Round(currPersons / (double)totalPersons);
+
+                        SimpleQHub.SendSurvey(d, toAsk, CustCode, s.Survey);
+                    });
+                }
             });
 
             return RedirectToAction("Index", "Home");

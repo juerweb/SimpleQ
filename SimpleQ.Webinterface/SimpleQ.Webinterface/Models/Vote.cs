@@ -9,7 +9,6 @@
 
 namespace SimpleQ.Webinterface.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -22,11 +21,11 @@ namespace SimpleQ.Webinterface.Models
         public string VoteText { get; set; }
         public Nullable<int> SpecId { get; set; }
     
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Answer Answer { get; set; }
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual SpecifiedTextAnswer SpecifiedTextAnswer { get; set; }
-        [JsonIgnore]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Survey Survey { get; set; }
     }
 }

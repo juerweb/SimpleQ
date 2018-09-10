@@ -12,20 +12,19 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class SurveyCategory
+    public partial class PaymentMethod
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public SurveyCategory()
+        public PaymentMethod()
         {
-            this.Surveys = new HashSet<Survey>();
+            this.Customers = new HashSet<Customer>();
         }
     
-        public int CatId { get; set; }
-        public string CustCode { get; set; }
-        public string CatName { get; set; }
+        public int PaymentMethodId { get; set; }
+        public string PaymentMethodDesc { get; set; }
     
-        public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Survey> Surveys { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

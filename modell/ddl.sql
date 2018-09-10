@@ -13,8 +13,6 @@ drop table Survey;
 drop table SurveyCategory;
 drop table AnswerType;
 drop table AskedPerson;
---drop table [Contains];
---drop table [Group];
 drop table Department;
 drop table Bill;
 drop table Customer;
@@ -72,32 +70,6 @@ create table Department
 	primary key (DepId, CustCode)
 );
 go
-/*
--- Befragtenruppe
--- Kundenabhängig
-create table [Group] 
-(
-	GroupId int identity,
-	CustCode char(6) collate Latin1_General_CS_AS references Customer,
-	GroupDesc varchar(max) not null,
-	primary key (GroupId, CustCode)
-);
-go
-
--- Information welche Gruppe wieviele Personen aus welchen Abteilungen beinhaltet
--- Kundenabhängig
-create table [Contains]
-(
-	GroupId int,
-	DepId int,
-	CustCode char(6) collate Latin1_General_CS_AS, 
-	Amount int not null,
-	primary key (GroupId, DepId, CustCode),
-	foreign key (DepId, CustCode) references Department,
-	foreign key (GroupId, CustCode) references [Group]
-);
-go
-*/
 
 -- Befragte Person
 -- Kundenabhängig
@@ -139,7 +111,7 @@ create table Survey
 	CustCode char(6) collate Latin1_General_CS_AS references Customer,
 	SvyText varchar(max) not null,
 	StartDate datetime not null,
-	EndDate datetime not null,
+	EndDate datetime null,
 	TypeId int not null references AnswerType,
 	CatId int not null
 	primary key (SvyId, CustCode),
@@ -147,7 +119,7 @@ create table Survey
 );
 go
 
--- Mit Umfrage befragte Gruppen
+-- Mit Umfrage befragte Abteilungen
 -- Kundenabhängig
 create table Asking
 (
@@ -206,22 +178,6 @@ create table DsgvoConstraint
 	ConstrValue int not null,
 );
 go
-
-
-
-/*
--- Alle Gruppen mit ungültigen Gruppengrößen
-drop view vw_InvalidGroupSizes;
-go
-create view vw_InvalidGroupSizes as
-select g.GroupId, GroupDesc, sum(Amount) as Amount, ConstrValue as MinSize
-from [Group] g
-join [Contains] c on g.GroupId = c.GroupId
-cross join DsgvoConstraint d
-where d.ConstrName = 'MIN_GROUP_SIZE'
-group by g.GroupId, GroupDesc, ConstrValue
-having sum(Amount) < ConstrValue;
-go*/
 
 
 

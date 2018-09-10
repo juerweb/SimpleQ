@@ -12,20 +12,22 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Group
+    public partial class SurveyCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Group()
+        public SurveyCategory()
         {
-            this.Contains = new HashSet<Contain>();
+            this.Surveys = new HashSet<Survey>();
         }
     
-        public int GroupId { get; set; }
+        public int CatId { get; set; }
         public string CustCode { get; set; }
-        public string GroupDesc { get; set; }
+        public string CatName { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Contain> Contains { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Customer Customer { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual ICollection<Survey> Surveys { get; set; }
     }
 }

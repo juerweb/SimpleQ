@@ -9,7 +9,6 @@
 
 namespace SimpleQ.Webinterface.Models
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     
@@ -25,11 +24,11 @@ namespace SimpleQ.Webinterface.Models
         public int SvyId { get; set; }
         public string CustCode { get; set; }
         public string SpecText { get; set; }
-        
-        [JsonIgnore]
+    
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Survey Survey { get; set; }
-        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Vote> Votes { get; set; }
     }
 }

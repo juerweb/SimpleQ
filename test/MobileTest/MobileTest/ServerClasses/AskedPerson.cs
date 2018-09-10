@@ -12,14 +12,13 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Contain
+    public partial class AskedPerson
     {
-        public int GroupId { get; set; }
+        public int PersId { get; set; }
         public int DepId { get; set; }
         public string CustCode { get; set; }
-        public int Amount { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Department Department { get; set; }
-        public virtual Group Group { get; set; }
     }
 }

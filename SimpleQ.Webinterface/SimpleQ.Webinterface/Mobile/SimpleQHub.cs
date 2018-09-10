@@ -22,15 +22,12 @@ namespace SimpleQ.Webinterface.Mobile
         #region Invoked by app
         public OperationStatus Register(string regCode)
         {
-            string[] tmp = regCode.Split(';');
-            if (tmp.Length != 2) return new OperationStatus(StatusCode.REGISTRATION_FAILED_INVALID_CODE, "Invalid registration code");
-
             using (var db = new SimpleQDBEntities())
             {
                 try
                 {
-                    string custCode = tmp[0];
-                    int depId = int.Parse(tmp[1]);
+                    string custCode = regCode.Substring(0, 6);
+                    int depId = int.Parse(regCode.Substring(6));
 
                     AskedPerson person = new AskedPerson { CustCode = custCode, DepId = depId };
                     db.AskedPersons.Add(person);
@@ -89,34 +86,6 @@ namespace SimpleQ.Webinterface.Mobile
             connectedPersons.Remove(Context.ConnectionId);
         }
 
-        public Department[] LoadAllDepartments(string custCode)
-        {
-            using (var db = new SimpleQDBEntities())
-            {
-                return db.Departments.Where(d => d.CustCode == custCode).ToArray();
-            }
-        }
-
-        public OperationStatus ChangeDepartment(int persId, string custCode, int depId)
-        {
-            using (var db = new SimpleQDBEntities())
-            {
-                try
-                {
-                    db.AskedPersons.Where(p => p.PersId == persId && p.CustCode == custCode).First().DepId = depId;
-                    db.SaveChanges();
-
-                    Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
-
-                    return new OperationStatus(StatusCode.DEPARTMENT_CHANGED, "Department changed") { AssignedDepartment = dep };
-                }
-                catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 547)
-                {
-                    return new OperationStatus(StatusCode.DEPARTMENT_CHANGING_FAILED_INVALID_DEPARTMENT, "No such department");
-                }
-            }
-        }
-
         public Answer[] LoadAnswersOfType(int typeId)
         {
             using (var db = new SimpleQDBEntities())
@@ -157,22 +126,21 @@ namespace SimpleQ.Webinterface.Mobile
 
 
         #region Invoked by server
-        internal static void SendSurvey(int groupId, string custCode, Survey survey)
+        internal static void SendSurvey(int depId, int amount, string custCode, Survey survey)
         {
-            //using (var db = new SimpleQDBEntities())
-            //{
-            //    List<string> connIDs = new List<string>();
-            //    db.Contains.Where(c => c.GroupId == groupId && c.CustCode == custCode).ToList().ForEach(c =>
-            //    {
-            //        c.Department.AskedPersons.TakeRandom(c.Amount).ToList().ForEach(p =>
-            //        {
-            //            string connId = connectedPersons.Where(kv => kv.Value.PersId == p.PersId && kv.Value.CustCode == p.CustCode).Select(kv => kv.Key).FirstOrDefault();
-            //            if (connId != null)
-            //                connIDs.Add(connId);
-            //        });
-            //    });
-            //    hubContext.Clients.Clients(connIDs).SendSurvey(svyData);
-            //}
+            using (var db = new SimpleQDBEntities())
+            {
+                List<AskedPerson> list = db.Departments
+                    .Where(d => d.DepId == depId && d.CustCode == custCode)
+                    .SelectMany(d => d.AskedPersons)
+                    .TakeRandom(amount)
+                    .ToList();
+
+                hubContext.Clients.Clients(connectedPersons
+                    .Where(kvp => list.Exists(p => p.PersId == kvp.Value.PersId))
+                    .Select(kvp => kvp.Key)
+                    .ToList()).SendSurvey(survey);
+            }
         }
 
         internal static void AnonymityChanged(int configValue)

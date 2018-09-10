@@ -1,10 +1,10 @@
-﻿using System;
+﻿using SimpleQ.Webinterface.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace MobileTest
+namespace SimpleQ.Webinterface.Mobile
 {
     public class OperationStatus
     {
