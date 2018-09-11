@@ -4,5 +4,78 @@
     <h2>@Resources.groupAdministrationHeader</h2>
 </div>
 <div class="row mt-1">
-    
+    <div class="col-md-4">
+        div class="form-group mt-2">
+        <label for="groups">@Resources.groups</label>
+        <div class="border border-dark">
+            <ul class="list-group groups-ul pl-2" id="groups">
+                <li>
+                    <label class="form-check-label">
+                        <input type="checkbox"> Human Ressources
+                    </label>
+                </li>
+                <li>
+                    <label class="form-check-label">
+                        <input type="checkbox"> Production
+                    </label>
+                </li>
+                <li>
+                    <label class="form-check-label">
+                        <input type="checkbox"> IT
+                    </label>
+                </li>
+                <li>
+                    <label class="form-check-label">
+                        <input type="checkbox"> Other Department
+                    </label>
+                </li>
+                <li>
+                    <label class="form-check-label">
+                        <input type="checkbox"> Other Department
+                    </label>
+                </li>
+                <li>
+                    <label class="form-check-label">
+                        <input type="checkbox"> Other Department
+                    </label>
+                </li>
+                <li>
+                    <label class="form-check-label">
+                        <input type="checkbox"> Other Department
+                    </label>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary btn-block">Neue Gruppe erstellen</button>
+    <div class="modal" id="newGroupModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">New Group..</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <label for="NewGroupTB">Name of the group</label>
+                    <input id="NewGroupTB" type="text" class="form-control" />
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Abort</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+
+</div>
+<div class="col-md-4">
+
 </div>
