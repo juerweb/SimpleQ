@@ -8,7 +8,7 @@ namespace SimpleQ.Webinterface.Mobile
     public class NotificationContent
     {
         public int SvyId { get; set; }
-        public int SvyText { get; set; }
+        public string SvyText { get; set; }
         public DateTime EndDate { get; set; }
         public int TypeId { get; set; }
         public string CatName { get; set; }
