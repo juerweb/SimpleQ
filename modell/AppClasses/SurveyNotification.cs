@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SimpleQ.Webinterface.Mobile
 {
-    public class NotificationContent
+    public class SurveyNotification
     {
         public int SvyId { get; set; }
         public string SvyText { get; set; }

@@ -17,7 +17,7 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         #region View to Controller
         public Survey Survey { get; set; }
         public List<int> SelectedDepartments { get; set; }
-	public int Amount { get; set; }
+        public int Amount { get; set; }
         #endregion
     }
 }
