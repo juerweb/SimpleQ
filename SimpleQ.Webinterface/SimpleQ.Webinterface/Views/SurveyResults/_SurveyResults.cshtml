@@ -4,25 +4,58 @@
 <div class="row pl-5 mt-1">
     <h2>@Resources.surveyResultsHeader</h2>
 </div>
-<div class="row mt-1">
-    <div class="col-md-5 pl-5 pr-5">
 
-        <label for="SurveyCategoryCB">@Resources.surveyCategoryHeader</label>
-        @Html.DropDownList("SurveyCategoryCB",
-                            new SelectList(new List<string>()),
-                            new { @class = "form-control" })
-
-        @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"));
-
-        <div id="result">
-
+<div class="row">
+    <div class="col-lg-6 pl-5 pr-5">
+        <div class="row">
+            <div class="col-6 pr-0">
+                <button id="trendBtn" onclick="switchToMulti()" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
+            </div>
+            <div class="col-6 pl-0">
+                <button id="singleBtn" onclick="switchToSingle()" class="btn btn-secondary btn-block">Einzelumfrage</button>
+            </div>
         </div>
     </div>
 
-    <script>
-        function loadSingleResultAsync() {
-            //$("#result").load(@Url.Action() + "?svyId=" + selectedID);
-        }
-    </script>
 </div>
-        
+<div id="singleResultPartial">
+    @Html.Partial("~/Views/SurveyResults/_SingleResult.cshtml")
+</div>
+<div id="multiResultPartial">
+    @Html.Partial("~/Views/SurveyResults/_MultiResult.cshtml")
+</div>
+
+<div id="result">
+
+</div>
+<script>
+    //$(document).ready(function () {
+    //    switchToMulti();
+    //});
+
+    function loadSingleResultAsync() {
+        //$("#result").load(@Url.Action() + "?svyId=" + selectedID);
+    }
+
+        function switchToMulti() {
+            $("#trendBtn").removeClass("btn-primary").addClass("btn-secondary");
+            $("#singleBtn").removeClass("btn-secondary").addClass("btn-primary");
+            $("#trendBtn").attr("disabled", true);
+            $("#singleBtn").attr("disabled", false);
+            $("#singleResultPartial").hide();
+            $("#multiResultPartial").show();
+        }
+
+        function switchToSingle() {
+            $("#singleBtn").removeClass("btn-primary").addClass("btn-secondary");
+            $("#trendBtn").removeClass("btn-secondary").addClass("btn-primary");
+            $("#singleBtn").attr("disabled", true);
+            $("#trendBtn").attr("disabled", false);
+            $("#multiResultPartial").hide();
+            $("#singleResultPartial").show();
+        }
+
+</script>
+
+
+

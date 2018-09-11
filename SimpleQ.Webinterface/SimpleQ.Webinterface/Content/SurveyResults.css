@@ -1,0 +1,9 @@
+﻿#singleBtn {
+    border-bottom-left-radius: unset;
+    border-top-left-radius: unset;
+}
+
+#trendBtn {
+    border-bottom-right-radius: unset;
+    border-top-right-radius: unset;
+}
