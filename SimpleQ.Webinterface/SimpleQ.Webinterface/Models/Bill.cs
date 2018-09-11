@@ -20,6 +20,7 @@ namespace SimpleQ.Webinterface.Models
         public System.DateTime BillDate { get; set; }
         public bool Paid { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Customer Customer { get; set; }
     }
 }

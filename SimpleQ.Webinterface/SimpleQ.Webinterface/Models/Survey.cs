@@ -26,18 +26,24 @@ namespace SimpleQ.Webinterface.Models
         public string CustCode { get; set; }
         public string SvyText { get; set; }
         public System.DateTime StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public System.DateTime EndDate { get; set; }
         public int TypeId { get; set; }
         public int CatId { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
         public virtual AnswerType AnswerType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Asking> Askings { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<SpecifiedTextAnswer> SpecifiedTextAnswers { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
         public virtual SurveyCategory SurveyCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Vote> Votes { get; set; }
     }
 }

@@ -17,7 +17,9 @@ namespace SimpleQ.Webinterface.Models
         public int PersId { get; set; }
         public int DepId { get; set; }
         public string CustCode { get; set; }
+        public string DeviceId { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Department Department { get; set; }
     }
 }

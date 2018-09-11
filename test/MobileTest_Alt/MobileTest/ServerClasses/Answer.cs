@@ -12,20 +12,10 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Vote
+    public partial class Answer
     {
-        public int VoteId { get; set; }
-        public int SvyId { get; set; }
-        public string CustCode { get; set; }
         public int AnsId { get; set; }
-        public string VoteText { get; set; }
-        public Nullable<int> SpecId { get; set; }
-    
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual Answer Answer { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual SpecifiedTextAnswer SpecifiedTextAnswer { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual Survey Survey { get; set; }
+        public string AnsDesc { get; set; }
+        public int TypeId { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace SimpleQ.Webinterface.Controllers
                         // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
                         int toAsk = s.Amount * (int)Math.Round(currPersons / (double)totalPersons);
 
-                        SimpleQHub.SendSurvey(d, toAsk, CustCode, s.Survey);
+                        MobileController.SendSurvey(d, toAsk, CustCode, s.Survey);
                     });
                 }
             });

@@ -20,12 +20,5 @@ namespace SimpleQ.Webinterface.Models
         public int AnsId { get; set; }
         public string VoteText { get; set; }
         public Nullable<int> SpecId { get; set; }
-    
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual Answer Answer { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual SpecifiedTextAnswer SpecifiedTextAnswer { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual Survey Survey { get; set; }
     }
 }

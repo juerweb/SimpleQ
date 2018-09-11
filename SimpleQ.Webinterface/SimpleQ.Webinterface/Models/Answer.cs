@@ -24,8 +24,10 @@ namespace SimpleQ.Webinterface.Models
         public string AnsDesc { get; set; }
         public int TypeId { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
         public virtual AnswerType AnswerType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Vote> Votes { get; set; }
     }
 }

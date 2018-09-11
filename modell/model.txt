@@ -3,7 +3,7 @@
 - Bill (BillId, BillAmount, BillDate, CustCode)  -- Rechnung, KUNDENABHÄNGIG
 
 - Department (DepId, CustCode)  -- Abteilung, KUNDENABHÄNGIG
-- AskedPerson (PersId, DepId, CustCode)  -- Befragte Person, KUNDENABHÄNGIG
+- AskedPerson (PersId, DepId, CustCode, DeviceId)  -- Befragte Person, KUNDENABHÄNGIG
 
 - AnswerType (TypeId, TypeDesc)  -- Beantwortungsart, NICHT KUNDENABHÄNGIG
 - SurveyCategory (CatId, CustCode, CatName)  -- Umfragekategorie, KUNDENABHÄNGIG
