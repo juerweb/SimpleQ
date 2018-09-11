@@ -40,6 +40,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -49,13 +50,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ServerClasses\Answer.cs" />
-    <Compile Include="ServerClasses\Department.cs" />
-    <Compile Include="ServerClasses\OperationStatus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServerClasses\Answer.cs" />
+    <Compile Include="ServerClasses\AnswerType.cs" />
+    <Compile Include="ServerClasses\AskedPerson.cs" />
+    <Compile Include="ServerClasses\Asking.cs" />
+    <Compile Include="ServerClasses\Bill.cs" />
+    <Compile Include="ServerClasses\Customer.cs" />
+    <Compile Include="ServerClasses\Department.cs" />
+    <Compile Include="ServerClasses\DsgvoConstraint.cs" />
+    <Compile Include="ServerClasses\OperationStatus.cs" />
+    <Compile Include="ServerClasses\PaymentMethod.cs" />
     <Compile Include="ServerClasses\SpecifiedTextAnswer.cs" />
     <Compile Include="ServerClasses\Survey.cs" />
+    <Compile Include="ServerClasses\SurveyCategory.cs" />
     <Compile Include="ServerClasses\Vote.cs" />
   </ItemGroup>
   <ItemGroup>

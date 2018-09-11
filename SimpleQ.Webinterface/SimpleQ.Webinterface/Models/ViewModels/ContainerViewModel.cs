@@ -8,5 +8,6 @@ namespace SimpleQ.Webinterface.Models.ViewModels
     public class ContainerViewModel
     {
         public SurveyCreationModel SurveyCreationModel { get; set; }
+        public SurveyResultsModel SurveyResultsModel { get; set; }
     }
 }

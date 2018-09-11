@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="674a50339b21457fbf6c8feea923429b" Name="Diagram1">
+        <EntityTypeShape EntityType="SimpleQDBModel.Answer" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.AnswerType" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.AskedPerson" Width="1.5" PointX="5.25" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.Asking" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.Bill" Width="1.5" PointX="3" PointY="16.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.Customer" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.Department" Width="1.5" PointX="3" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.DsgvoConstraint" Width="1.5" PointX="7.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.PaymentMethod" Width="1.5" PointX="1.5" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.SpecifiedTextAnswer" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.Survey" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.SurveyCategory" Width="1.5" PointX="0.75" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="SimpleQDBModel.Vote" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Answer__TypeId__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Vote__AnsId__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Survey__TypeId__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__AskedPerson__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Asking__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Asking__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Bill__CustCode__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Customer__Paymen__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Departmen__CustC__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Survey__CustCode__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__SurveyCat__CustC__48CFD27E" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__SpecifiedTextAns__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Vote__5BE2A6F2" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Survey__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="SimpleQDBModel.FK__Vote__5AEE82B9" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

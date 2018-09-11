@@ -8,8 +8,6 @@ begin transaction;
 insert into Customer values ('m4rku5', 'musterreis gmbh.', 'm@rk.us', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 0);
 insert into Department values ('abteilung', 'm4rku5'); -- DepId 1
 insert into Department values ('abteilung2', 'm4rku5'); -- DepId 2
-insert into [Group] values ('m4rku5', 'Testgruppe'); -- GroupId 1
-insert into [Contains] values (1, 1, 'm4rku5', 3);
 insert into AskedPerson values (1, 'm4rku5'); -- PersId 1
 insert into AskedPerson values (1, 'm4rku5'); -- PersId 2
 insert into AskedPerson values (1, 'm4rku5'); -- PersId 3

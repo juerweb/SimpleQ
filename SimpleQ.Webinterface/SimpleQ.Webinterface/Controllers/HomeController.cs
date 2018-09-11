@@ -16,14 +16,18 @@ namespace SimpleQ.Webinterface.Controllers
 
             var model = new ContainerViewModel
             {
-                SurveyCreationModel = new SurveyCreationModel()
+                SurveyCreationModel = new SurveyCreationModel(),
+                SurveyResultsModel = new SurveyResultsModel()
             };
 
             using (var db = new SimpleQDBEntities())
             {
                 model.SurveyCreationModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
                 model.SurveyCreationModel.AnswerTypes = db.AnswerTypes.ToList();
-                model.SurveyCreationModel.Groups = db.Groups.Where(g => g.CustCode == CustCode).ToList();
+                model.SurveyCreationModel.Departments = db.Departments.Where(g => g.CustCode == CustCode).ToList();
+
+                model.SurveyResultsModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
+                model.SurveyResultsModel.Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList();
             }
             return View(model: model);
         }
