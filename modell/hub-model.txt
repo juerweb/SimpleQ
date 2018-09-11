@@ -21,6 +21,6 @@ Benötigte gespeicherte (aktuelle) Daten client-side (App):
 
 
 HOW TO - SignalR-Methods mit Return-Value aufrufen (am Beispiel "Register"):
-  Task<OperationStatus> t = hub.Invoke<OperationStatus>("Register", regCode);
+  Task<OperationStatus> t = hub.Invoke<OperationStatus>("Register", regCode, deviceId);
   t.Wait();
   OperationStatus op = t.Result;
