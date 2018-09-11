@@ -3,8 +3,6 @@ Vorhandene Hub-Methoden server-side:
 - public void Unregister(int persId, string custCode)  // (idealerweise) bei Deinstallation 
 - public OperationStatus Login(int persId, string custCode)  // nach jeder hergestellter Verbindung mit dem Server
 - public void Logout() // bei Logout
-- public Answer[] LoadAnswersOfType(int typeId) // zum Laden der Antwortmöglichkeiten nachdem eine Umfrage empfangen wurde
-- public SpecifiedTextAnswer[] LoadSpecifiedTextAnswers(int svyId, string custCode) // zum Laden der vorgegebenen Textantworten nachdem eine Umfrage (mit der entsprechenden Kategorie empfangen wurde)
 - public OperationStatus AnswerSurvey(Vote vote) // bei Umfragebeantwortung
 - internal static void SendSurvey(int depId, int amount, string custCode, Survey survey) // von Controller aufgerufen - bei Umfrageaussendung
 - internal static void AnonymityChanged(int configValue) // von Controller aufgerufen - bei geänderten Anonymitätseinstellungen
