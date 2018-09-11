@@ -1,5 +1,5 @@
 Vorhandene Hub-Methoden server-side:
-- public OperationStatus Register(string regCode)  // bei Registrierung => regCode ergibt sich aus <custCode><depId> (ist im QR-Code enthalten)
+- public OperationStatus Register(string regCode, string deviceId)  // bei Registrierung => regCode ergibt sich aus <custCode><depId> (ist im QR-Code enthalten)
 - public void Unregister(int persId, string custCode)  // (idealerweise) bei Deinstallation 
 - public OperationStatus Login(int persId, string custCode)  // nach jeder hergestellter Verbindung mit dem Server
 - public void Logout() // bei Logout
