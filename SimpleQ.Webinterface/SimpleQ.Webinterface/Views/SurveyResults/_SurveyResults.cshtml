@@ -1,4 +1,5 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
+@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
 
 <div class="row pl-5 mt-1">
     <h2>@Resources.surveyResultsHeader</h2>
@@ -10,87 +11,18 @@
         @Html.DropDownList("SurveyCategoryCB",
                             new SelectList(new List<string>()),
                             new { @class = "form-control" })
-        <div class="row mt-2">
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <label for="timeFrom">@Resources.from</label>
-                    <input type="time" class="form-control" id="timeFrom">
-                    <input type="date" class="form-control" id="dateFrom">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <label for="timeTwo">@Resources.to</label>
-                    <input type="time" class="form-control" id="timeTo">
-                    <input type="date" class="form-control" id="dateTo">
-                </div>
-            </div>
+
+        @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"));
+
+        <div id="result">
+
         </div>
     </div>
-    <div class="col-md-2">
-        <div class="form-group">
-            <label for="groups">@Resources.groups</label>
-            <div class="border border-dark">
-                <ul class="list-group groups-ul pl-2" id="groups">
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Human Ressources
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Production
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> IT
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Other Department
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Other Department
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Other Department
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Other Department
-                        </label>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-5 pl-5 pr-5">
-        <div class="form-group">
-            <label for="ChartType1CB">@Resources.diagram@Resources.typeSmall 1</label>
-            @Html.DropDownList("ChartType1CB",
-                            new SelectList(new List<string>()),
-                            new { @class = "form-control" })
-        </div>
-        <div class="form-group">
-            <label for="ChartType2CB">@Resources.diagram@Resources.typeSmall 2</label>
-            @Html.DropDownList("ChartType2CB",
-                            new SelectList(new List<string>()),
-                            new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="row pr-5 pl-5">
-        <div class="col-md-6">
-            <canvas id="chart1" width="800" height="500"></canvas>
-        </div>
-        <div class="col-md-6">
-            <canvas id="chart2" width="800" height="500"></canvas>
-        </div>
-    </div>
+
+    <script>
+        function loadSingleResultAsync() {
+            //$("#result").load(@Url.Action() + "?svyId=" + selectedID);
+        }
+    </script>
 </div>
+        
