@@ -70,11 +70,29 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die bar ähnelt.
+        /// </summary>
+        public static string bar {
+            get {
+                return ResourceManager.GetString("bar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die diagram ähnelt.
         /// </summary>
         public static string diagram {
             get {
                 return ResourceManager.GetString("diagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die doughnut ähnelt.
+        /// </summary>
+        public static string doughnut {
+            get {
+                return ResourceManager.GetString("doughnut", resourceCulture);
             }
         }
         
@@ -106,6 +124,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die line ähnelt.
+        /// </summary>
+        public static string line {
+            get {
+                return ResourceManager.GetString("line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ... ähnelt.
         /// </summary>
         public static string questionHeader {
@@ -129,6 +156,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static string questionTimeTimeHeader {
             get {
                 return ResourceManager.GetString("questionTimeTimeHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die radar ähnelt.
+        /// </summary>
+        public static string radar {
+            get {
+                return ResourceManager.GetString("radar", resourceCulture);
             }
         }
         

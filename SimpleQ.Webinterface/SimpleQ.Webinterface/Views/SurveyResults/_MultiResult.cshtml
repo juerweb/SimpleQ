@@ -48,16 +48,35 @@
     </div>
     <div class="col-md-5 pl-5 pr-5">
         <div class="form-group">
-            <label for="ChartType1CB">@Resources.diagram@Resources.typeSmall 1</label>
-            @Html.DropDownList("ChartType1CB",
-                            new SelectList(new List<string>()),
-                            new { @class = "form-control" })
+            @{ 
+                Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
+                dropBoxValues.Add("line", Resources.line);
+                dropBoxValues.Add("bar", Resources.bar);
+                dropBoxValues.Add("radar", Resources.radar);
+                dropBoxValues.Add("doughnut", Resources.doughnut);
+            }
+            <label for="chart1select">@Resources.diagram@Resources.typeSmall 1</label>
+            <select class="form-control" id="chart1select" onchange="changeChart1()">
+                @{
+                    foreach(KeyValuePair<string,string> elem in dropBoxValues)
+                    {
+                        <option value="@elem.Key">@elem.Value</option>
+                    }
+                }
+
+            </select>
         </div>
         <div class="form-group">
-            <label for="ChartType2CB">@Resources.diagram@Resources.typeSmall 2</label>
-            @Html.DropDownList("ChartType2CB",
-                            new SelectList(new List<string>()),
-                            new { @class = "form-control" })
+            <label for="chart2select">@Resources.diagram@Resources.typeSmall 2</label>
+            <select class="form-control" id="chart2select">
+                @{
+                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
+                    {
+                        <option value="@elem.Key">@elem.Value</option>
+                    }
+                }
+
+            </select>
         </div>
     </div>
 </div>
@@ -71,7 +90,48 @@
 </div>
 
 <script>
-
+    function changeChart1() {
+        var ctx = document.getElementById("chart1").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: document.getElementById("chart1select").value,
+            data: {
+                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [113, 192, 333, 45, 112, 23],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+        
+ 
+    
 
     var ctx = document.getElementById("chart1").getContext('2d');
     var myChart = new Chart(ctx, {

@@ -120,8 +120,14 @@
   <data name="answerTypeHeader" xml:space="preserve">
     <value>answer type</value>
   </data>
+  <data name="bar" xml:space="preserve">
+    <value>bar</value>
+  </data>
   <data name="diagram" xml:space="preserve">
     <value>diagram</value>
+  </data>
+  <data name="doughnut" xml:space="preserve">
+    <value>doughnut</value>
   </data>
   <data name="from" xml:space="preserve">
     <value>from</value>
@@ -132,6 +138,9 @@
   <data name="groups" xml:space="preserve">
     <value>groups</value>
   </data>
+  <data name="line" xml:space="preserve">
+    <value>line</value>
+  </data>
   <data name="questionHeader" xml:space="preserve">
     <value>...</value>
   </data>
@@ -140,6 +149,9 @@
   </data>
   <data name="questionTimeTimeHeader" xml:space="preserve">
     <value>...</value>
+  </data>
+  <data name="radar" xml:space="preserve">
+    <value>radar</value>
   </data>
   <data name="surveyCategoryHeader" xml:space="preserve">
     <value>...</value>

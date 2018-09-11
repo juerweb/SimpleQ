@@ -160,4 +160,16 @@
   <data name="groupAdministrationHeader" xml:space="preserve">
     <value>Group Administration</value>
   </data>
+  <data name="bar" xml:space="preserve">
+    <value>Säulendiagramm</value>
+  </data>
+  <data name="doughnut" xml:space="preserve">
+    <value>Kreisdiagramm</value>
+  </data>
+  <data name="line" xml:space="preserve">
+    <value>Liniendiagramm</value>
+  </data>
+  <data name="radar" xml:space="preserve">
+    <value>Radardiagramm</value>
+  </data>
 </root>
