@@ -6,22 +6,7 @@
     <div class="col-md-5 pl-5 pr-5">
         <label for="Surveys">Umfrage</label>
         @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "CatName"), new { @class = "form-control" })
-        <div class="row mt-2">
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <label for="timeFrom">@Resources.from</label>
-                    <input type="time" class="form-control" id="timeFrom">
-                    <input type="date" class="form-control" id="dateFrom">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <label for="timeTwo">@Resources.to</label>
-                    <input type="time" class="form-control" id="timeTo">
-                    <input type="date" class="form-control" id="dateTo">
-                </div>
-            </div>
-        </div>
+        
     </div>
 
 
@@ -30,41 +15,19 @@
             <label for="groups">Teilgenommene Gruppen</label>
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="groups">
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Human Ressources
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Production
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> IT
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Other Department
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Other Department
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Other Department
-                        </label>
-                    </li>
-                    <li>
-                        <label class="form-check-label">
-                            <input type="checkbox"> Other Department
-                        </label>
-                    </li>
+                    @{ List<string> l = new List<string>();
+                        l.Add("HR");
+                        l.Add("Produktion");
+                        l.Add("Einkauf");
+                        l.Add("department 4");
+
+                    }
+                    @for (var i = 0; i < l.Count; i++)
+                    {
+                        <li>
+                            @l[i]
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
@@ -79,7 +42,7 @@
                 dropBoxValues.Add("doughnut", Resources.doughnut);
             }
             <label for="chart1select">@Resources.diagram@Resources.typeSmall 1</label>
-            <select class="form-control" id="chart1select" onchange="changeChart1()">
+            <select class="form-control" id="chart1SelectSingle" onchange="changeChart1Single()">
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
@@ -90,8 +53,8 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="chart2select">@Resources.diagram@Resources.typeSmall 2</label>
-            <select class="form-control" id="chart2select" onchange="changeChart2()">
+            <label for="chart2SelectSingle">@Resources.diagram@Resources.typeSmall 2</label>
+            <select class="form-control" id="chart2SelectSingle" onchange="changeChart2Single()">
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
@@ -105,147 +68,13 @@
 </div>
 <div class="row pr-5 pl-5">
     <div class="col-md-6">
-        <canvas id="chart1" width="800" height="500"></canvas>
+        <canvas id="chart1Single" width="800" height="500"></canvas>
     </div>
     <div class="col-md-6">
-        <canvas id="chart2" width="800" height="500"></canvas>
+        <canvas id="chart2Single" width="800" height="500"></canvas>
     </div>
 </div>
 
 <script>
-    function changeChart1() {
-        var ctx = document.getElementById("chart1").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: document.getElementById("chart1select").value,
-            data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [113, 192, 333, 45, 112, 23],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    }
-    function changeChart2() {
-        var ctx2 = document.getElementById("chart2").getContext('2d');
-        var myChart2 = new Chart(ctx2, {
-            type: document.getElementById("chart2select").value,
-            data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            }
-        });
-    }
-    //var ctx = document.getElementById("chart1").getContext('2d');
-    //var myChart = new Chart(ctx, {
-    //    type: 'bar',
-    //    data: {
-    //        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    //        datasets: [{
-    //            label: '# of Votes',
-    //            data: [113, 192, 333, 45, 112, 23],
-    //            backgroundColor: [
-    //                'rgba(255, 99, 132, 0.2)',
-    //                'rgba(54, 162, 235, 0.2)',
-    //                'rgba(255, 206, 86, 0.2)',
-    //                'rgba(75, 192, 192, 0.2)',
-    //                'rgba(153, 102, 255, 0.2)',
-    //                'rgba(255, 159, 64, 0.2)'
-    //            ],
-    //            borderColor: [
-    //                'rgba(255,99,132,1)',
-    //                'rgba(54, 162, 235, 1)',
-    //                'rgba(255, 206, 86, 1)',
-    //                'rgba(75, 192, 192, 1)',
-    //                'rgba(153, 102, 255, 1)',
-    //                'rgba(255, 159, 64, 1)'
-    //            ],
-    //            borderWidth: 1
-    //        }]
-    //    },
-    //    options: {
-    //        scales: {
-    //            yAxes: [{
-    //                ticks: {
-    //                    beginAtZero: true
-    //                }
-    //            }]
-    //        }
-    //    }
-    //});
-
-    //var ctx2 = document.getElementById("chart2").getContext('2d');
-    //var myChart2 = new Chart(ctx2, {
-    //    type: 'doughnut',
-    //    data: {
-    //        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-    //        datasets: [{
-    //            label: '# of Votes',
-    //            data: [12, 19, 3, 5, 2, 3],
-    //            backgroundColor: [
-    //                'rgba(255, 99, 132, 0.2)',
-    //                'rgba(54, 162, 235, 0.2)',
-    //                'rgba(255, 206, 86, 0.2)',
-    //                'rgba(75, 192, 192, 0.2)',
-    //                'rgba(153, 102, 255, 0.2)',
-    //                'rgba(255, 159, 64, 0.2)'
-    //            ],
-    //            borderColor: [
-    //                'rgba(255,99,132,1)',
-    //                'rgba(54, 162, 235, 1)',
-    //                'rgba(255, 206, 86, 1)',
-    //                'rgba(75, 192, 192, 1)',
-    //                'rgba(153, 102, 255, 1)',
-    //                'rgba(255, 159, 64, 1)'
-    //            ],
-    //            borderWidth: 1
-    //        }]
-    //    }
-    //});
+    var e = $("option[name=”value”]");
 </script>

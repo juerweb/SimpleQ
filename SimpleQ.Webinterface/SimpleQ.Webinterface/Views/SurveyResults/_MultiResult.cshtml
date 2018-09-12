@@ -55,8 +55,8 @@
                 dropBoxValues.Add("radar", Resources.radar);
                 dropBoxValues.Add("doughnut", Resources.doughnut);
             }
-            <label for="chart1select">@Resources.diagram@Resources.typeSmall 1</label>
-            <select class="form-control" id="chart1select" onchange="changeChart1()">
+            <label for="chart1SelectMulti">@Resources.diagram@Resources.typeSmall 1</label>
+            <select class="form-control" id="chart1SelectMulti" onchange="changeChart1Multi()">
                 @{
                     foreach(KeyValuePair<string,string> elem in dropBoxValues)
                     {
@@ -67,8 +67,8 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="chart2select">@Resources.diagram@Resources.typeSmall 2</label>
-            <select class="form-control" id="chart2select">
+            <label for="chart2SelectMulti">@Resources.diagram@Resources.typeSmall 2</label>
+            <select class="form-control" id="chart2SelectMulti" onchange="changeChart2Multi()">
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
@@ -82,14 +82,14 @@
 </div>
 <div class="row pr-5 pl-5">
     <div class="col-md-6">
-        <canvas id="chart1" width="800" height="500"></canvas>
+        <canvas id="chart1Multi" width="800" height="500"></canvas>
     </div>
     <div class="col-md-6">
-        <canvas id="chart2" width="800" height="500"></canvas>
+        <canvas id="chart2Multi" width="800" height="500"></canvas>
     </div>
 </div>
 
-<script>
+@*<script>
     function changeChart1() {
         var ctx = document.getElementById("chart1").getContext('2d');
         var myChart = new Chart(ctx, {
@@ -199,4 +199,4 @@
             }]
         }
     });
-</script>
+</script>*@
