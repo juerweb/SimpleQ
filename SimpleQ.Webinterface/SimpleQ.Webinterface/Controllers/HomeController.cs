@@ -23,11 +23,12 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 model.SurveyCreationModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
-                model.SurveyCreationModel.AnswerTypes = db.AnswerTypes.ToList();
+                model.SurveyCreationModel.AnswerTypes = db.AnswerTypes.ToList(); // GLOBALIZATION!
                 model.SurveyCreationModel.Departments = db.Departments.Where(g => g.CustCode == CustCode).ToList();
 
                 model.SurveyResultsModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
                 model.SurveyResultsModel.Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList();
+                model.SurveyResultsModel.AnswerTypes = db.AnswerTypes.ToList(); // GLOBALIZATION!
             }
             return View(model: model);
         }
