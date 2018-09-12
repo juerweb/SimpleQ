@@ -24,7 +24,7 @@ namespace SimpleQ.PageModels.Services
             //Random random = new Random();
             //return random.Next(0, 2) == 0;
 
-            return new CodeValidationModel(code == 123456, "Tina's Factory", "Development", code);
+            return new CodeValidationModel(code == 1234567, "Tina's Factory", "Development", code);
         }
 
         public async Task<List<SurveyModel>> GetData()

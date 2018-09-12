@@ -58,7 +58,7 @@ namespace SimpleQ.PageModels
                 this.IsRunning = false;
 
                 this.dialogService.ShowErrorDialog(201);
-                await CoreMethods.PopPageModel();
+                await CoreMethods.PopToRoot(false);
                 return;
             }
 

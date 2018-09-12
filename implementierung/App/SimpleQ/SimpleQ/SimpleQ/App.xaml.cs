@@ -42,7 +42,10 @@ namespace SimpleQ
 
             InitializeComponent();
 
-            SetupOneSignal();
+            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+            {
+                SetupOneSignal();
+            }
 
             GoToRightPage();
 
