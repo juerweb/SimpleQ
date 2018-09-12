@@ -46,7 +46,14 @@
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
-                        <option value="@elem.Key">@elem.Value</option>
+                        if (elem.Key == "line")
+                        {
+                            <option value="@elem.Key" selected>@elem.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@elem.Key">@elem.Value</option>
+                        }
                     }
                 }
 
@@ -58,7 +65,14 @@
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
-                        <option value="@elem.Key">@elem.Value</option>
+                        if (elem.Key == "doughnut")
+                        {
+                            <option value="@elem.Key" selected>@elem.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@elem.Key">@elem.Value</option>
+                        }
                     }
                 }
 
@@ -67,14 +81,15 @@
     </div>
 </div>
 <div class="row pr-5 pl-5">
-    <div class="col-md-6">
+    <div class="col-md-6" id="chart1SingleCol">
         <canvas id="chart1Single" width="800" height="500"></canvas>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" id="chart2SingleCol">
         <canvas id="chart2Single" width="800" height="500"></canvas>
     </div>
 </div>
 
 <script>
-    var e = $("option[name=”value”]");
+    //$("#chart1SelectSingle").change();
+    //$("#chart2SelectSingle").change();
 </script>

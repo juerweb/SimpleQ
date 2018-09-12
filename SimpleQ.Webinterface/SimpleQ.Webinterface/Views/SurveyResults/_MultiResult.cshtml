@@ -58,9 +58,16 @@
             <label for="chart1SelectMulti">@Resources.diagram@Resources.typeSmall 1</label>
             <select class="form-control" id="chart1SelectMulti" onchange="changeChart1Multi()">
                 @{
-                    foreach(KeyValuePair<string,string> elem in dropBoxValues)
+                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
-                        <option value="@elem.Key">@elem.Value</option>
+                        if (elem.Key == "line")
+                        {
+                            <option value="@elem.Key" selected>@elem.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@elem.Key">@elem.Value</option>
+                        }
                     }
                 }
 
@@ -72,7 +79,14 @@
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
-                        <option value="@elem.Key">@elem.Value</option>
+                        if (elem.Key == "doughnut")
+                        {
+                            <option value="@elem.Key" selected>@elem.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@elem.Key">@elem.Value</option>
+                        }
                     }
                 }
 
@@ -89,114 +103,7 @@
     </div>
 </div>
 
-@*<script>
-    function changeChart1() {
-        var ctx = document.getElementById("chart1").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: document.getElementById("chart1select").value,
-            data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                datasets: [{
-                    label: '# of Votes',
-                    data: [113, 192, 333, 45, 112, 23],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255,99,132,1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
-    }
-        
- 
-    
-
-    var ctx = document.getElementById("chart1").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [113, 192, 333, 45, 112, 23],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        }
-    });
-
-    var ctx2 = document.getElementById("chart2").getContext('2d');
-    var myChart2 = new Chart(ctx2, {
-        type: 'doughnut',
-        data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
-        }
-    });
-</script>*@
+<script>
+    //$("#chart1SelectMulti").change();
+    //$("#chart2SelectMulti").change();
+</script>

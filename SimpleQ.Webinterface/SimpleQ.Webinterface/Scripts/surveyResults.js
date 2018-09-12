@@ -17,7 +17,10 @@ function switchToSingle() {
 }
 
 function changeChart1Multi() {
-    var ctx = document.getElementById("chart1Multi").getContext('2d');
+    var canvas = document.getElementById("chart1Multi");
+    $(canvas).removeClass('chartjs-render-monitor');
+    //canvas.removeClass("chartjs-render-monitor");
+    var ctx = canvas.getContext('2d');
     var myChart = new Chart(ctx, {
         type: document.getElementById("chart1SelectMulti").value,
         data: {
@@ -56,8 +59,10 @@ function changeChart1Multi() {
     });
 }
 function changeChart2Multi() {
-    var ctx2 = document.getElementById("chart2Multi").getContext('2d');
-    var myChart2 = new Chart(ctx2, {
+    var canvas = document.getElementById("chart2Multi");
+    canvas.removeClass("chartjs-render-monitor");
+    var ctx = canvas.getContext('2d');
+    var myChart2 = new Chart(ctx, {
         type: document.getElementById("chart2SelectMulti").value,
         data: {
             labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -87,7 +92,9 @@ function changeChart2Multi() {
 }
 
 function changeChart1Single() {
-    var ctx = document.getElementById("chart1Single").getContext('2d');
+    var canvas = document.getElementById("chart1Single");
+    canvas.removeClass("chartjs-render-monitor");
+    var ctx = canvas.getContext('2d');
     var myChart = new Chart(ctx, {
         type: document.getElementById("chart1SelectSingle").value,
         data: {
@@ -126,8 +133,10 @@ function changeChart1Single() {
     });
 }
 function changeChart2Single() {
-    var ctx2 = document.getElementById("chart2Single").getContext('2d');
-    var myChart2 = new Chart(ctx2, {
+    var canvas = document.getElementById("chart2Single");
+    canvas.removeClass("chartjs-render-monitor");
+    var ctx = canvas.getContext('2d');
+    var myChart2 = new Chart(ctx, {
         type: document.getElementById("chart2SelectSingle").value,
         data: {
             labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
