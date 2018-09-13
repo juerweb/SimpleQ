@@ -5,7 +5,7 @@
 <div class="row mt-1">
     <div class="col-md-5 pl-5 pr-5">
         <label for="Surveys">Umfrage</label>
-        @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "CatName"), new { @class = "form-control" })
+        @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control" })
         
     </div>
 

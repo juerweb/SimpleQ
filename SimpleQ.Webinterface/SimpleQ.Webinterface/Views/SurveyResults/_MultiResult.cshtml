@@ -5,48 +5,78 @@
 
     <div class="col-md-5 pl-5 pr-5">
         <label for="SurveyCategoryCB">@Resources.surveyCategoryHeader</label>
-        @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatName"), new { @class = "form-control" })
+        @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId","CatName"), new { @class = "form-control" })
         <div class="row mt-2">
             <div class="col-md-6">
                 <div class="form-group mb-0">
                     <label for="timeFrom">@Resources.from</label>
-                    <input type="time" class="form-control" id="timeFrom">
+                    @*<input type="time" class="form-control" id="timeFrom">*@
                     <input type="date" class="form-control" id="dateFrom">
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group mb-0">
                     <label for="timeTwo">@Resources.to</label>
-                    <input type="time" class="form-control" id="timeTo">
+                    @*<input type="time" class="form-control" id="timeTo">*@
                     <input type="date" class="form-control" id="dateTo">
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="col-md-2">
-        <div class="form-group">
-            <label for="groups">Teilgenommene Gruppen</label>
-            <div class="border border-dark">
-                <ul class="list-group groups-ul pl-2" id="groups">
-                    @{ List<string> l = new List<string>();
-                        l.Add("HR");
-                        l.Add("Produktion");
-                        l.Add("Einkauf");
-                        l.Add("department 4");
+    <div class="col-md-4">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label for="groups">Antwortmöglichkeiten</label>
+                    <div class="border border-dark">
+                        <ul class="list-group groups-ul pl-2" id="groups">
+                            @{ List<string> l = new List<string>();
+                                l.Add("HR");
+                                l.Add("Produktion");
+                                l.Add("Einkauf");
+                                l.Add("department 4");
 
-                        }
-                    @for (var i = 0; i < l.Count; i++)
-                    {
-                        <li>
-                               @l[i]
-                        </li>
-                    }                   
-                </ul>
+                            }
+                            @for (var i = 0; i < l.Count; i++)
+                            {
+                                <li>
+                                    <label class="form-check-label">
+                                        <input type="checkbox"> IT
+                                    </label>
+                                    @l[i]
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-4">
+                <div class="form-group">
+                    <label for="groups">Gruppen</label>
+                    <div class="border border-dark">
+                        <ul class="list-group groups-ul pl-2" id="groups">
+                            @{ List<string> answers = new List<string>();
+                                answers.Add("Ja");
+                                answers.Add("Nein");
+                                answers.Add("Villeicht");
+                                answers.Add("Kann sein");
+
+                            }
+                            @for (var i = 0; i < l.Count; i++)
+                            {
+                                <li>
+                                    @l[i]
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-md-5 pl-5 pr-5">
+ 
+    <div class="col-md-3 pl-5 pr-5">
         <div class="form-group">
             @{ 
                 Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
