@@ -17,9 +17,8 @@ function switchToSingle() {
 }
 
 function changeChart1Multi() {
+    document.getElementById("chart1MultiCol").innerHTML = '<canvas id="chart1Multi" width="800" height="500"></canvas>';
     var canvas = document.getElementById("chart1Multi");
-    $(canvas).removeClass('chartjs-render-monitor');
-    //canvas.removeClass("chartjs-render-monitor");
     var ctx = canvas.getContext('2d');
     var myChart = new Chart(ctx, {
         type: document.getElementById("chart1SelectMulti").value,
@@ -59,8 +58,8 @@ function changeChart1Multi() {
     });
 }
 function changeChart2Multi() {
+    document.getElementById("chart2MultiCol").innerHTML = '<canvas id="chart2Multi" width="800" height="500"></canvas>';
     var canvas = document.getElementById("chart2Multi");
-    canvas.removeClass("chartjs-render-monitor");
     var ctx = canvas.getContext('2d');
     var myChart2 = new Chart(ctx, {
         type: document.getElementById("chart2SelectMulti").value,
@@ -92,8 +91,8 @@ function changeChart2Multi() {
 }
 
 function changeChart1Single() {
+    document.getElementById("chart1SingleCol").innerHTML = '<canvas id="chart1Single" width="800" height="500"></canvas>';
     var canvas = document.getElementById("chart1Single");
-    canvas.removeClass("chartjs-render-monitor");
     var ctx = canvas.getContext('2d');
     var myChart = new Chart(ctx, {
         type: document.getElementById("chart1SelectSingle").value,
@@ -133,8 +132,8 @@ function changeChart1Single() {
     });
 }
 function changeChart2Single() {
+    document.getElementById("chart2SingleCol").innerHTML = '<canvas id="chart2Single" width="800" height="500"></canvas>';
     var canvas = document.getElementById("chart2Single");
-    canvas.removeClass("chartjs-render-monitor");
     var ctx = canvas.getContext('2d');
     var myChart2 = new Chart(ctx, {
         type: document.getElementById("chart2SelectSingle").value,
