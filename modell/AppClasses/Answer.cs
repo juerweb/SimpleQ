@@ -12,13 +12,10 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Asking
+    public partial class Answer
     {
-        public int SvyId { get; set; }
-        public int DepId { get; set; }
-        public string CustCode { get; set; }
-    
-        public virtual Survey Survey { get; set; }
-        public virtual Department Department { get; set; }
+        public int AnsId { get; set; }
+        public string AnsDesc { get; set; }
+        public int TypeId { get; set; }
     }
 }

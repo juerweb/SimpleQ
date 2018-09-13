@@ -78,6 +78,7 @@ create table AskedPerson
 	PersId int identity,
 	DepId int not null,
 	CustCode char(6) collate Latin1_General_CS_AS,
+    DeviceId varchar(max) null,
 	primary key (PersId, CustCode),
 	foreign key (DepId, CustCode) references Department
 );
@@ -111,7 +112,7 @@ create table Survey
 	CustCode char(6) collate Latin1_General_CS_AS references Customer,
 	SvyText varchar(max) not null,
 	StartDate datetime not null,
-	EndDate datetime null,
+	EndDate datetime not null,
 	TypeId int not null references AnswerType,
 	CatId int not null
 	primary key (SvyId, CustCode),
@@ -217,9 +218,10 @@ create procedure sp_CheckExceededSurveyData
 as
 begin
 	declare @svyId int, @svyCount int;
-	declare c cursor local for select svyId from Survey s
-											join Customer c on s.CustCode = c.CustCode
-											where datediff(day, s.StartDate, getdate()) >= c.DataStoragePeriod * 30;
+	declare c cursor local for select svyId 
+                               from Survey s
+							   join Customer c on s.CustCode = c.CustCode
+							   where datediff(day, s.StartDate, getdate()) >= c.DataStoragePeriod * 30;
 	
 	open c;
 	fetch c into @svyId;

@@ -12,13 +12,13 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Asking
+    public partial class Vote
     {
+        public int VoteId { get; set; }
         public int SvyId { get; set; }
-        public int DepId { get; set; }
         public string CustCode { get; set; }
-    
-        public virtual Survey Survey { get; set; }
-        public virtual Department Department { get; set; }
+        public int AnsId { get; set; }
+        public string VoteText { get; set; }
+        public Nullable<int> SpecId { get; set; }
     }
 }

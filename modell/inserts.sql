@@ -8,10 +8,10 @@ begin transaction;
 insert into Customer values ('m4rku5', 'musterreis gmbh.', 'm@rk.us', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 0);
 insert into Department values ('abteilung', 'm4rku5'); -- DepId 1
 insert into Department values ('abteilung2', 'm4rku5'); -- DepId 2
-insert into AskedPerson values (1, 'm4rku5'); -- PersId 1
-insert into AskedPerson values (1, 'm4rku5'); -- PersId 2
-insert into AskedPerson values (1, 'm4rku5'); -- PersId 3
-insert into AskedPerson values (1, 'm4rku5'); -- PersId 4
+insert into AskedPerson values (1, 'm4rku5', null); -- PersId 1
+insert into AskedPerson values (1, 'm4rku5', null); -- PersId 2
+insert into AskedPerson values (1, 'm4rku5', null); -- PersId 3
+insert into AskedPerson values (1, 'm4rku5', null); -- PersId 4
 insert into SurveyCategory values ('m4rku5', 'Testfrage');
 insert into Survey values ('m4rku5', 'Ist N.H. ein Nazi?', '2018-08-24', '2019-08-24', 1, 1) -- SvyId 1
 insert into Survey values ('m4rku5', 'Sind Sie ein Pajero?', '2018-08-24', '2019-08-24', 4, 1); -- SvyId 2
