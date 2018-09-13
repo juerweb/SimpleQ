@@ -1,139 +1,119 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
-@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
+@*@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel*@
 
-<div class="row mt-1">
 
-    <div class="col-md-5 pl-5 pr-5">
-        <label for="SurveyCategoryCB">@Resources.surveyCategoryHeader</label>
-        @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId","CatName"), new { @class = "form-control" })
-        <div class="row mt-2">
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <label for="timeFrom">@Resources.from</label>
-                    @*<input type="time" class="form-control" id="timeFrom">*@
-                    <input type="date" class="form-control" id="dateFrom">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group mb-0">
-                    <label for="timeTwo">@Resources.to</label>
-                    @*<input type="time" class="form-control" id="timeTo">*@
-                    <input type="date" class="form-control" id="dateTo">
+
+<div class="col-md-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="groups">Antwortmöglichkeiten</label>
+                <div class="border border-dark">
+                    <ul class="list-group groups-ul pl-2" id="groups">
+                        @{ List<string> l = new List<string>();
+                            l.Add("HR");
+                            l.Add("Produktion");
+                            l.Add("Einkauf");
+                            l.Add("department 4");
+
+                        }
+                        @for (var i = 0; i < l.Count; i++)
+                        {
+                            <li>
+                                <label class="form-check-label">
+                                    <input type="checkbox"> IT
+                                </label>
+                                @l[i]
+                            </li>
+                        }
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
+        <div class=" col-md-4">
+            <div class="form-group">
+                <label for="groups">Gruppen</label>
+                <div class="border border-dark">
+                    <ul class="list-group groups-ul pl-2" id="groups">
+                        @{ List<string> answers = new List<string>();
+                            answers.Add("Ja");
+                            answers.Add("Nein");
+                            answers.Add("Villeicht");
+                            answers.Add("Kann sein");
 
-    <div class="col-md-4">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label for="groups">Antwortmöglichkeiten</label>
-                    <div class="border border-dark">
-                        <ul class="list-group groups-ul pl-2" id="groups">
-                            @{ List<string> l = new List<string>();
-                                l.Add("HR");
-                                l.Add("Produktion");
-                                l.Add("Einkauf");
-                                l.Add("department 4");
 
-                            }
-                            @for (var i = 0; i < l.Count; i++)
-                            {
-                                <li>
-                                    <label class="form-check-label">
-                                        <input type="checkbox"> IT
-                                    </label>
-                                    @l[i]
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class=" col-md-4">
-                <div class="form-group">
-                    <label for="groups">Gruppen</label>
-                    <div class="border border-dark">
-                        <ul class="list-group groups-ul pl-2" id="groups">
-                            @{ List<string> answers = new List<string>();
-                                answers.Add("Ja");
-                                answers.Add("Nein");
-                                answers.Add("Villeicht");
-                                answers.Add("Kann sein");
-
-                            }
-                            @for (var i = 0; i < l.Count; i++)
+                            for (var i = 0; i < l.Count; i++)
                             {
                                 <li>
                                     @l[i]
                                 </li>
                             }
-                        </ul>
-                    </div>
+                        }
+                    </ul>
                 </div>
             </div>
-        </div>
-    </div>
- 
-    <div class="col-md-3 pl-5 pr-5">
-        <div class="form-group">
-            @{ 
-                Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
-                dropBoxValues.Add("line", Resources.line);
-                dropBoxValues.Add("bar", Resources.bar);
-                dropBoxValues.Add("radar", Resources.radar);
-                dropBoxValues.Add("doughnut", Resources.doughnut);
-            }
-            <label for="chart1SelectMulti">@Resources.diagram@Resources.typeSmall 1</label>
-            <select class="form-control" id="chart1SelectMulti" onchange="changeChart1Multi()">
-                @{
-                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
-                    {
-                        if (elem.Key == "line")
-                        {
-                            <option value="@elem.Key" selected>@elem.Value</option>
-                        }
-                        else
-                        {
-                            <option value="@elem.Key">@elem.Value</option>
-                        }
-                    }
-                }
-
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="chart2SelectMulti">@Resources.diagram@Resources.typeSmall 2</label>
-            <select class="form-control" id="chart2SelectMulti" onchange="changeChart2Multi()">
-                @{
-                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
-                    {
-                        if (elem.Key == "doughnut")
-                        {
-                            <option value="@elem.Key" selected>@elem.Value</option>
-                        }
-                        else
-                        {
-                            <option value="@elem.Key">@elem.Value</option>
-                        }
-                    }
-                }
-
-            </select>
         </div>
     </div>
 </div>
-<div class="row pr-5 pl-5">
+
+<div class="col-md-3 pl-5 pr-5">
+    <div class="form-group">
+        @{
+            Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
+            dropBoxValues.Add("line", Resources.line);
+            dropBoxValues.Add("bar", Resources.bar);
+            dropBoxValues.Add("radar", Resources.radar);
+            dropBoxValues.Add("doughnut", Resources.doughnut);
+        }
+        <label for="chart1SelectMulti">@Resources.diagram@Resources.typeSmall 1</label>
+        <select class="form-control" id="chart1SelectMulti" onchange="changeChart1Multi()">
+            @{
+                foreach (KeyValuePair<string, string> elem in dropBoxValues)
+                {
+                    if (elem.Key == "line")
+                    {
+                        <option value="@elem.Key" selected>@elem.Value</option>
+                    }
+                    else
+                    {
+                        <option value="@elem.Key">@elem.Value</option>
+                    }
+                }
+            }
+
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="chart2SelectMulti">@Resources.diagram@Resources.typeSmall 2</label>
+        <select class="form-control" id="chart2SelectMulti" onchange="changeChart2Multi()">
+            @{
+                foreach (KeyValuePair<string, string> elem in dropBoxValues)
+                {
+                    if (elem.Key == "doughnut")
+                    {
+                        <option value="@elem.Key" selected>@elem.Value</option>
+                    }
+                    else
+                    {
+                        <option value="@elem.Key">@elem.Value</option>
+                    }
+                }
+            }
+
+        </select>
+    </div>
+</div>
+
+@*<div class="row pr-5 pl-5">
     <div class="col-md-6" id="chart1MultiCol">
         <canvas id="chart1Multi" width="800" height="500"></canvas>
     </div>
     <div class="col-md-6" id="chart2MultiCol">
         <canvas id="chart2Multi" width="800" height="500"></canvas>
     </div>
-</div>
+</div>*@
 
 <script>
-    $("#chart1SelectMulti").change();
-    $("#chart2SelectMulti").change();
+    //$("#chart1SelectMulti").change();
+    //$("#chart2SelectMulti").change();
 </script>

@@ -1,16 +1,21 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
-@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
+@*@model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel*@
+@{
+
+    Dictionary<string, int> votes = new Dictionary<string, int>();
+    votes.Add("Ja", 12);
+    votes.Add("Nein", 8);
+    votes.Add("villeicht", 8);
+    votes.Add("Kann sein", 14);
+    votes.Add("Unter Umständen", 20);
+    votes.Add("Nö", 3);
+    votes.Add("Mama Mia", 2);
+}
+
+<div class="row">
 
 
-<div class="row mt-1">
-    <div class="col-md-5 pl-5 pr-5">
-        <label for="Surveys">Umfrage</label>
-        @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control" })
-        
-    </div>
-
-
-    <div class="col-md-2">
+    <div class="col-md-4">
         <div class="form-group">
             <label for="groups">Teilgenommene Gruppen</label>
             <div class="border border-dark">
@@ -32,11 +37,10 @@
             </div>
         </div>
     </div>
-    <div class="col-md-5 pl-5 pr-5">
+    <div class="col-md-8 pl-5 pr-5">
         <div class="form-group">
             @{
                 Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
-                dropBoxValues.Add("line", Resources.line);
                 dropBoxValues.Add("bar", Resources.bar);
                 dropBoxValues.Add("radar", Resources.radar);
                 dropBoxValues.Add("doughnut", Resources.doughnut);
@@ -46,7 +50,7 @@
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
-                        if (elem.Key == "line")
+                        if (elem.Key == "bar")
                         {
                             <option value="@elem.Key" selected>@elem.Value</option>
                         }
@@ -80,16 +84,27 @@
         </div>
     </div>
 </div>
-<div class="row pr-5 pl-5">
-    <div class="col-md-6" id="chart1SingleCol">
-        <canvas id="chart1Single" width="800" height="500"></canvas>
-    </div>
-    <div class="col-md-6" id="chart2SingleCol">
-        <canvas id="chart2Single" width="800" height="500"></canvas>
-    </div>
-</div>
 
 <script>
-    //$("#chart1SelectSingle").change();
-    //$("#chart2SelectSingle").change();
+
+    var dict = []; // create an empty array
+
+  
+        @foreach (KeyValuePair<string,int> kvp in votes)
+        {
+            @:dict.push({
+                @:key:"@kvp.Key" 
+            @:,
+                @:value: "@kvp.Value"
+            @:}); 
+        }
+
+
+    //dict.push({
+    //    key: "keyName",
+    //    value: "the value"
+    //});
+
+        $("#chart1SelectSingle").change();
+        $("#chart2SelectSingle").change();
 </script>

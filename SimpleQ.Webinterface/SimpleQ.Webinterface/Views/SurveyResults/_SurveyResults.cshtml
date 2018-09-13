@@ -18,42 +18,163 @@
     </div>
 
 </div>
-<div id="singleResultPartial">
-    @Html.Partial("~/Views/SurveyResults/_SingleResult.cshtml")
-</div>
-<div id="multiResultPartial">
-    @Html.Partial("~/Views/SurveyResults/_MultiResult.cshtml")
+<div class="row mt-1">
+    <div class="col-md-5 pl-5 pr-5">
+        <div id="singleResultOptions">
+            <label for="Surveys">Umfrage</label>
+            @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control" })
+        </div>
+        <div id="multiResultOptions">
+            <label for="SurveyCategoryCB">@Resources.surveyCategoryHeader</label>
+            @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control" })
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group mb-0">
+                        <label for="timeFrom">@Resources.from</label>
+                        @*<input type="time" class="form-control" id="timeFrom">*@
+                        <input type="date" class="form-control" id="dateFrom">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-0">
+                        <label for="timeTwo">@Resources.to</label>
+                        @*<input type="time" class="form-control" id="timeTo">*@
+                        <input type="date" class="form-control" id="dateTo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7" id="singleResultPartial">
+        @Html.Partial("~/Views/SurveyResults/_SingleResult.cshtml")
+    </div>
+    <div class="col-md-7" id="multiResultPartial">
+        @Html.Partial("~/Views/SurveyResults/_MultiResult.cshtml")
+    </div>
+    <div class="row pr-5 pl-5">
+        <div class="col-md-6" id="chart1Col">
+            <canvas id="chart1" width="800" height="500"></canvas>
+        </div>
+        <div class="col-md-6" id="chart2Col">
+            <canvas id="chart2" width="800" height="500"></canvas>
+        </div>
+
+    </div>
 </div>
 
-<div id="result">
-
-</div>
 <script>
-    //$(document).ready(function () {
-    //    switchToMulti();
-    //});
+
+    //all colors, repeat when there are many answer possibilities
+    var borderColors = [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+    ];
+    var bgColors = [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+    ];
 
     function loadSingleResultAsync() {
         //$("#result").load(@Url.Action() + "?svyId=" + selectedID);
     }
 
-        function switchToMulti() {
-            $("#trendBtn").removeClass("btn-primary").addClass("btn-secondary");
-            $("#singleBtn").removeClass("btn-secondary").addClass("btn-primary");
-            $("#trendBtn").attr("disabled", true);
-            $("#singleBtn").attr("disabled", false);
-            $("#singleResultPartial").hide();
-            $("#multiResultPartial").show();
+
+    function changeChart1Single() {
+        var keys = [];
+        var values = [];
+        for (i = 0; i < dict.length; i++) {
+            keys.push(dict[i].key);
+            values.push(dict[i].value);
         }
 
-        function switchToSingle() {
-            $("#singleBtn").removeClass("btn-primary").addClass("btn-secondary");
-            $("#trendBtn").removeClass("btn-secondary").addClass("btn-primary");
-            $("#singleBtn").attr("disabled", true);
-            $("#trendBtn").attr("disabled", false);
-            $("#multiResultPartial").hide();
-            $("#singleResultPartial").show();
+
+        while (dict.length > borderColors.length) { //ensures, that there are enough colors
+            borderColors = borderColors.concat([
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ]);
+            bgColors = bgColors.concat([
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ]);
         }
+        
+        document.getElementById("chart1Col").innerHTML = '<canvas id="chart1" width="800" height="500"></canvas>'; //you have to clean everything up, otherwise the chart is bugging around
+        var canvas = document.getElementById("chart1");
+        var ctx = canvas.getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: document.getElementById("chart1SelectSingle").value,
+            data: {
+                labels: keys,
+                datasets: [{
+                    label: '# of Votes',
+                    data: values,
+                    backgroundColor: bgColors,
+                    borderColor: borderColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+    }
+
+    function changeChart2Single() {
+        document.getElementById("chart2Col").innerHTML = '<canvas id="chart2" width="800" height="500"></canvas>';
+        var canvas = document.getElementById("chart2");
+        var ctx = canvas.getContext('2d');
+        var myChart2 = new Chart(ctx, {
+            type: document.getElementById("chart2SelectSingle").value,
+            data: {
+                labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            }
+        });
+    }
 
 </script>
 
