@@ -342,4 +342,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_folder_open_black_48%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_dashboard_black_18.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_dashboard_black_18%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_dashboard_black_18%403x.png" />
+  </ItemGroup>
 </Project>

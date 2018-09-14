@@ -185,15 +185,19 @@ namespace SimpleQ.PageModels.Services
 
         public void MoveQuestion(SurveyModel question)
         {
+            Debug.WriteLine("Test0");
             if (questions.Contains(question))
             {
+                Debug.WriteLine("Test1");
                 this.questions.Remove(question);
 
                 if (PublicQuestions.Contains(question))
                 {
+                    Debug.WriteLine("Test2");
                     PublicQuestions.Remove(question);
                 }
 
+                Debug.WriteLine("Test3");
                 this.answeredQuestions.Add(question);
             }
         }

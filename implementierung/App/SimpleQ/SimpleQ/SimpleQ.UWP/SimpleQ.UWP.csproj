@@ -132,6 +132,7 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="ic_business_black_48.png" />
+    <Content Include="ic_dashboard_black_18.png" />
     <Content Include="ic_email_black_18.png" />
     <Content Include="ic_extension_black_18.png" />
     <Content Include="ic_folder_open_black_48.png" />

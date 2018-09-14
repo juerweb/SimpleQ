@@ -113,6 +113,11 @@ namespace SimpleQ.PageModels
             this.MenuItems[1].Add(new MenuItemModel(title, pageModel, iconResourceName));
         }
 
+        public Page CreateContainerPagePublic(Page page)
+        {
+            return this.CreateContainerPage(page);
+        }
+
         public void AddCategorie(string title)
         {
             FrontPageModel pageModel = new FrontPageModel();

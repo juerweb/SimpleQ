@@ -260,4 +260,10 @@
   <data name="ReallySure" xml:space="preserve">
     <value>Sind Sie sich wirklich sicher?</value>
   </data>
+  <data name="GeneralSettings" xml:space="preserve">
+    <value>Allgemeine Einstellungen</value>
+  </data>
+  <data name="ShowFrontPageAfterNotification" xml:space="preserve">
+    <value>Soll die Startseite, nach dem Beantworten einer neuen Frage, angezeigt werden?</value>
+  </data>
 </root>

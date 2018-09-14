@@ -31,6 +31,7 @@ namespace SimpleQ
 {
 	public partial class App : Application
 	{
+        private static Boolean WasThereAlreadyANotification = false;
         public App ()
 		{
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
@@ -39,6 +40,8 @@ namespace SimpleQ
             SetupIOC();
 
             SetupBlobCache();
+
+
 
             InitializeComponent();
 
@@ -119,47 +122,69 @@ namespace SimpleQ
 
             Application.Current.MainPage = MainMasterPageModel;
 
+            OpenNotification();
+        }
+
+        private static async void OpenNotification()
+        {
             try
             {
+                IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+                IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
+
                 SurveyModel WasQuestionOpened = await BlobCache.LocalMachine.GetObject<SurveyModel>("WasQuestionOpened");
                 await BlobCache.LocalMachine.InvalidateObject<SurveyModel>("WasQuestionOpened");
 
                 Console.WriteLine("1234: GoTo Question");
                 Debug.WriteLine("WasQuestionOpened: " + WasQuestionOpened.SurveyDesc, "Info");
 
-                IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
+                questionService.AddQuestion(WasQuestionOpened);
 
                 switch (WasQuestionOpened.TypeDesc)
                 {
                     case SurveyType.YNQ:
-                        YNQPage ynqPage = new YNQPage();
-                        YNQPageModel ynqPageModel = new YNQPageModel();
-                        ynqPage.BindingContext = ynqPageModel;
+
+                        YNQPage ynqPage = (YNQPage)FreshPageModelResolver.ResolvePageModel<YNQPageModel>();
+                        YNQPageModel ynqPageModel = (YNQPageModel)ynqPage.BindingContext;
                         ynqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(ynqPage, ynqPageModel);
                         break;
                     case SurveyType.TLQ:
-                        TLQPage tlqPage = new TLQPage();
-                        TLQPageModel tlqPageModel = new TLQPageModel();
-                        tlqPage.BindingContext = tlqPageModel;
+                        TLQPage tlqPage = (TLQPage)FreshPageModelResolver.ResolvePageModel<TLQPageModel>();
+                        TLQPageModel tlqPageModel = (TLQPageModel)tlqPage.BindingContext;
                         tlqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(tlqPage, tlqPageModel);
                         break;
                     case SurveyType.OWQ:
-                        OWQPage owqPage = new OWQPage();
-                        OWQPageModel owqPageModel = new OWQPageModel();
-                        owqPage.BindingContext = owqPageModel;
+                        OWQPage owqPage = (OWQPage)FreshPageModelResolver.ResolvePageModel<OWQPageModel>();
+                        OWQPageModel owqPageModel = (OWQPageModel)owqPage.BindingContext;
                         owqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(owqPage, owqPageModel);
 
                         break;
                     case SurveyType.GAQ:
-                        GAQPage gaqPage = new GAQPage();
-                        GAQPageModel gaqPageModel = new GAQPageModel();
-                        gaqPage.BindingContext = gaqPageModel;
+                        GAQPage gaqPage = (GAQPage)FreshPageModelResolver.ResolvePageModel<GAQPageModel>();
+                        GAQPageModel gaqPageModel = (GAQPageModel)gaqPage.BindingContext;
                         gaqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(gaqPage, gaqPageModel);
                         break;
+                }
+
+                WasThereAlreadyANotification = true;
+
+                try
+                {
+                    Debug.WriteLine("start of try");
+                    List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+                    list.Add(WasQuestionOpened);
+
+                    await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
+                    Debug.WriteLine("end of try");
+                }
+                catch (KeyNotFoundException ex)
+                {
+                    Debug.WriteLine("in catch");
+                    await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", new List<SurveyModel>(new SurveyModel[] { WasQuestionOpened }));
                 }
             }
             catch
@@ -235,23 +260,15 @@ namespace SimpleQ
 
             SurveyModel newSurveryModel = new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now);
 
-            try
-            {
-                Debug.WriteLine("start of try");
-                List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
-                list.Add(newSurveryModel);
-
-                await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
-                Debug.WriteLine("end of try");
-            }
-            catch (KeyNotFoundException ex)
-            {
-                Debug.WriteLine("in catch");
-                await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", new List<SurveyModel>(new SurveyModel[] { newSurveryModel }));
-            }
-
             Debug.WriteLine("After try/catch");
             await BlobCache.LocalMachine.InsertObject<SurveyModel>("WasQuestionOpened", newSurveryModel);
+
+            if (WasThereAlreadyANotification)
+            {
+                Console.WriteLine("1234: There was already a notification");
+                OpenNotification();
+                WasThereAlreadyANotification = false;
+            }
 
             //questionService.AddQuestion(new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now));
         }

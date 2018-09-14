@@ -36,6 +36,7 @@ namespace SimpleQ.PageModels
         /// </summary>
         public SettingsPageModel(): base()
         {
+            MenuItems.Add(new MenuItemModel(AppResources.GeneralSettings, new LanguagePageModel(), "ic_dashboard_black_18.png"));
             MenuItems.Add(new MenuItemModel(AppResources.Language, new LanguagePageModel(), "ic_language_black_18.png"));
 
             LogOutCommand = new Command(LogOutCommandExecuted);

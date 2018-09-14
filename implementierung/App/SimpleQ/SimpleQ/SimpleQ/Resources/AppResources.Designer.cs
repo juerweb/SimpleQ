@@ -241,6 +241,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Allgemeine Einstellungen ähnelt.
+        /// </summary>
+        internal static string GeneralSettings {
+            get {
+                return ResourceManager.GetString("GeneralSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Hilfe ähnelt.
         /// </summary>
         internal static string Help {
@@ -426,6 +435,15 @@ namespace SimpleQ.Resources {
         internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Soll die Startseite, nach dem Beantworten einer neuen Frage, angezeigt werden? ähnelt.
+        /// </summary>
+        internal static string ShowFrontPageAfterNotification {
+            get {
+                return ResourceManager.GetString("ShowFrontPageAfterNotification", resourceCulture);
             }
         }
         
