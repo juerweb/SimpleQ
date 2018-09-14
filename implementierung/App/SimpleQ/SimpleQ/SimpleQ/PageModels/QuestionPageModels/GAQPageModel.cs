@@ -1,19 +1,22 @@
-﻿using FreshMvvm;
+﻿using Akavache;
+using FreshMvvm;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Resources;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
+using System.Reactive.Linq;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
     /// This is the GAQPageModel for the GAQPage.
     /// </summary>
-    public class GAQPageModel : FreshBasePageModel, INotifyPropertyChanged
+    public class GAQPageModel : BasicQuestionPageModel
     {
         #region Constructor(s)
         /// <summary>
@@ -21,9 +24,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public GAQPageModel(IQuestionService questionService) : this()
+        public GAQPageModel(IQuestionService questionService) : base(questionService)
         {
-            this.questionService = questionService;
+            SendAnswerCommand = new Command(QuestionAnswered);
+            IsQuestionAnswered = false;
         }
 
         /// <summary>
@@ -32,8 +36,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         public GAQPageModel()
         {
-            SendAnswerCommand = new Command(QuestionAnswered);
-            IsQuestionAnswered = false;
+
         }
 
 
@@ -43,16 +46,12 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.question = (SurveyModel)initData;
+            this.Question = (SurveyModel)initData;
             base.Init(initData);
         }
         #endregion
 
         #region Fields
-        /// <summary>
-        /// The question
-        /// </summary>
-        private SurveyModel question;
         /// <summary>
         /// The selected ansDesc
         /// </summary>
@@ -61,31 +60,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// The is question answered
         /// </summary>
         private Boolean isQuestionAnswered;
-        /// <summary>
-        /// The question service
-        /// </summary>
-        private IQuestionService questionService;
 
         #endregion
 
         #region Properties + Getter/Setter Methods
-        /// <summary>
-        /// Gets or sets the question.
-        /// </summary>
-        /// <value>
-        /// The question.
-        /// </value>
-        public SurveyModel Question
-        {
-            get => question;
-            set
-            {
-                question = value;
-
-                Debug.WriteLine("QuestionChanged: " + question, "Info");
-                OnPropertyChanged();
-            }
-        }
         /// <summary>
         /// Gets or sets the selected ansDesc.
         /// </summary>
@@ -102,14 +80,6 @@ namespace SimpleQ.PageModels.QuestionPageModels
                 OnPropertyChanged();
             }
         }
-
-        /// <summary>
-        /// Gets or sets the question service.
-        /// </summary>
-        /// <value>
-        /// The question service.
-        /// </value>
-        public IQuestionService QuestionService { get => questionService; set => questionService = value; }
 
         /// <summary>
         /// Gets or sets a value indicating whether this instance is question answered.
@@ -140,27 +110,11 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private void QuestionAnswered()
         {
-            Debug.WriteLine(String.Format("User answered the question with the id {0} with the ansDesc {1}...", Question.SurveyId, selectedAnswer), "Info");
-
-            this.question.AnsDesc = selectedAnswer;
-
-            this.questionService.QuestionAnswered(question);
-
-            CoreMethods.PopPageModel();
-            if (this.questionService.PublicQuestions.Count <= 0)
-            {
-                App.MainMasterPageModel.SetNewCategorie(AppResources.AllCategories);
-            }
+            base.QuestionAnswered(selectedAnswer);
         }
         #endregion
 
         #region INotifyPropertyChanged Implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         #endregion
     }
 }

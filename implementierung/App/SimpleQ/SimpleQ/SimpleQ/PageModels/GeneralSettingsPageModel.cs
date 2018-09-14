@@ -1,9 +1,14 @@
-﻿using FreshMvvm;
+﻿using Akavache;
+using FreshMvvm;
+using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
+using System.Reactive.Linq;
 
 namespace SimpleQ.PageModels
 {
@@ -20,7 +25,6 @@ namespace SimpleQ.PageModels
         /// <param name="param">The parameter.</param>
         public GeneralSettingsPageModel(object param): this()
         {
-
         }
 
         /// <summary>
@@ -29,7 +33,7 @@ namespace SimpleQ.PageModels
         /// </summary>
         public GeneralSettingsPageModel()
         {
-
+            SetValuesFromMemory();
         }
 
 
@@ -44,16 +48,42 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Fields
+        private Boolean closeAppAfterNotification;
+
 
         #endregion
 
         #region Properties + Getter/Setter Methods
+        public Boolean CloseAppAfterNotification
+        {
+            get => closeAppAfterNotification;
+            set
+            {
+                closeAppAfterNotification = value;
+                OnPropertyChanged();
+                BlobCache.UserAccount.InvalidateObject<Boolean>("CloseAppAfterNotification");
+                BlobCache.UserAccount.InsertObject<Boolean>("CloseAppAfterNotification", closeAppAfterNotification);
+                Debug.WriteLine("ShowFrontPageAfterNotification changed...", "Info");
+            } 
+        }
+
         #endregion
 
         #region Commands
         #endregion
 
         #region Methods
+        private void SetValuesFromMemory()
+        {
+            try
+            {
+                BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification").Subscribe(obj => { CloseAppAfterNotification = obj; });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Error: " + e.StackTrace, "Error");
+            }
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

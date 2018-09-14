@@ -124,6 +124,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Soll sich die App, nach dem Beantworten einer neuen Frage, wieder schließen? ähnelt.
+        /// </summary>
+        internal static string CloseAppAfterNotification {
+            get {
+                return ResourceManager.GetString("CloseAppAfterNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Kontakt ähnelt.
         /// </summary>
         internal static string Contact {
@@ -403,6 +412,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Registrierungscode ähnelt.
+        /// </summary>
+        internal static string RegisterCode {
+            get {
+                return ResourceManager.GetString("RegisterCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten haben. ähnelt.
         /// </summary>
         internal static string RegisterScanHelpText {
@@ -435,24 +453,6 @@ namespace SimpleQ.Resources {
         internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Soll die Startseite, nach dem Beantworten einer neuen Frage, angezeigt werden? ähnelt.
-        /// </summary>
-        internal static string ShowFrontPageAfterNotification {
-            get {
-                return ResourceManager.GetString("ShowFrontPageAfterNotification", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 6-stelliger Code ähnelt.
-        /// </summary>
-        internal static string SixDigitCode {
-            get {
-                return ResourceManager.GetString("SixDigitCode", resourceCulture);
             }
         }
         

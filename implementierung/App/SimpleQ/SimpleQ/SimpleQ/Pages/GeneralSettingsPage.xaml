@@ -7,8 +7,8 @@
         <StackLayout>
             <Frame BorderColor="Black">
                 <StackLayout>
-                    <Label Text="{ext:Translate Text=ShowFrontPageAfterNotification}"></Label>
-                    <Switch></Switch>
+                    <Label Text="{ext:Translate Text=CloseAppAfterNotification}"></Label>
+                    <Switch IsToggled="{Binding CloseAppAfterNotification}"></Switch>
                 </StackLayout>
             </Frame>
         </StackLayout>

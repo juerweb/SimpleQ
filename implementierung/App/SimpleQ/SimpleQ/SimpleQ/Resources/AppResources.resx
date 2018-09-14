@@ -242,8 +242,8 @@
   <data name="Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
-  <data name="SixDigitCode" xml:space="preserve">
-    <value>6-stelliger Code</value>
+  <data name="RegisterCode" xml:space="preserve">
+    <value>Registrierungscode</value>
   </data>
   <data name="StartScan" xml:space="preserve">
     <value>Scan starten 📷</value>
@@ -263,7 +263,7 @@
   <data name="GeneralSettings" xml:space="preserve">
     <value>Allgemeine Einstellungen</value>
   </data>
-  <data name="ShowFrontPageAfterNotification" xml:space="preserve">
-    <value>Soll die Startseite, nach dem Beantworten einer neuen Frage, angezeigt werden?</value>
+  <data name="CloseAppAfterNotification" xml:space="preserve">
+    <value>Soll sich die App, nach dem Beantworten einer neuen Frage, wieder schließen?</value>
   </data>
 </root>

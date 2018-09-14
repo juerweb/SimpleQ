@@ -16,7 +16,7 @@
             <Frame BorderColor="{StaticResource colorBorder}">
                 <StackLayout>
                     <Label Text="{resx:Translate Text=ManuelCodeEntry}" HorizontalTextAlignment="Center"></Label>
-                    <Entry Placeholder="{resx:Translate Text=SixDigitCode}" Text="{Binding Path=RegisterCode, StringFormat='{}{0:#}'}">
+                    <Entry Placeholder="{resx:Translate Text=RegisterCode}" Text="{Binding Path=RegisterCode, StringFormat='{}{0:#}'}">
                         <Entry.Behaviors>
                             <resx:SixDigitCodeBehavior x:Name="SixDigitCodeBehavior"></resx:SixDigitCodeBehavior>
                         </Entry.Behaviors>
