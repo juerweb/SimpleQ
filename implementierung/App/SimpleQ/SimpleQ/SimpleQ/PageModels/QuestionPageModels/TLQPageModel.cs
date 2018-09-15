@@ -45,8 +45,6 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.Question = (SurveyModel) initData;
-
             base.Init(initData);
         }
         #endregion

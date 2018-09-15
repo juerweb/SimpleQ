@@ -10,6 +10,8 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Reactive.Linq;
+using SimpleQ.Extensions;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -27,6 +29,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         public BasicQuestionPageModel(IQuestionService questionService) : this()
         {
             this.questionService = questionService;
+            isItAStartQuestion = false;
         }
 
         /// <summary>
@@ -45,6 +48,18 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
+            if (initData != null)
+            {
+                if (initData.GetType() == typeof(SurveyModel))
+                {
+                    this.Question = (SurveyModel)initData;
+                }
+                else if (initData.GetType() == typeof(Boolean))
+                {
+                    isItAStartQuestion = (Boolean)initData;
+                }
+            }
+
             base.Init(initData);
         }
         #endregion
@@ -58,6 +73,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// The question service to set the ansDesc of the actual question
         /// </summary>
         private IQuestionService questionService;
+
+        protected Boolean isItAStartQuestion;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -114,9 +131,12 @@ namespace SimpleQ.PageModels.QuestionPageModels
             try
             {
                 Boolean CloseAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
-                if (CloseAppAfterNotification)
+                if (CloseAppAfterNotification && isItAStartQuestion)
                 {
-                    App.Current.Quit();
+                    Debug.WriteLine("Before Closer...", "Info");
+                    ICloseApplication closer = DependencyService.Get<ICloseApplication>();
+                    Debug.WriteLine("Closer: " + closer, "Info");
+                    closer?.CloseApplication();
                 }
                 else
                 {

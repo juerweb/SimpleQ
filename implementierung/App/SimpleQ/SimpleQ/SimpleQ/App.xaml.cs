@@ -144,26 +144,26 @@ namespace SimpleQ
                 {
                     case SurveyType.YNQ:
 
-                        YNQPage ynqPage = (YNQPage)FreshPageModelResolver.ResolvePageModel<YNQPageModel>();
+                        YNQPage ynqPage = (YNQPage)FreshPageModelResolver.ResolvePageModel<YNQPageModel>(true);
                         YNQPageModel ynqPageModel = (YNQPageModel)ynqPage.BindingContext;
                         ynqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(ynqPage, ynqPageModel);
                         break;
                     case SurveyType.TLQ:
-                        TLQPage tlqPage = (TLQPage)FreshPageModelResolver.ResolvePageModel<TLQPageModel>();
+                        TLQPage tlqPage = (TLQPage)FreshPageModelResolver.ResolvePageModel<TLQPageModel>(true);
                         TLQPageModel tlqPageModel = (TLQPageModel)tlqPage.BindingContext;
                         tlqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(tlqPage, tlqPageModel);
                         break;
                     case SurveyType.OWQ:
-                        OWQPage owqPage = (OWQPage)FreshPageModelResolver.ResolvePageModel<OWQPageModel>();
+                        OWQPage owqPage = (OWQPage)FreshPageModelResolver.ResolvePageModel<OWQPageModel>(true);
                         OWQPageModel owqPageModel = (OWQPageModel)owqPage.BindingContext;
                         owqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(owqPage, owqPageModel);
 
                         break;
                     case SurveyType.GAQ:
-                        GAQPage gaqPage = (GAQPage)FreshPageModelResolver.ResolvePageModel<GAQPageModel>();
+                        GAQPage gaqPage = (GAQPage)FreshPageModelResolver.ResolvePageModel<GAQPageModel>(true);
                         GAQPageModel gaqPageModel = (GAQPageModel)gaqPage.BindingContext;
                         gaqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(gaqPage, gaqPageModel);

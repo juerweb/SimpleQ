@@ -9,6 +9,7 @@ using Android.OS;
 using Acr.UserDialogs;
 using Akavache;
 using Com.OneSignal;
+using Xamarin.Forms;
 
 namespace SimpleQ.Droid
 {

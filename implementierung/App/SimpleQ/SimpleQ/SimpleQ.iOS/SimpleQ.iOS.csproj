@@ -93,6 +93,7 @@
     <AppExtensionDebugBundleId />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="CloseApplication.cs" />
     <Compile Include="iOS.Localise.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
