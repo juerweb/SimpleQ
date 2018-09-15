@@ -1,0 +1,129 @@
+body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+header.masthead {
+    height: 100vh;
+    min-height: 775px;
+    padding-top: 0;
+    padding-bottom: 0;
+    background-image: url("../images/background.jpg");
+    background-position: center;
+}
+
+/*
+    //////////////////////////////////////////
+    ////////////////SECTIONS//////////////////
+    //////////////////////////////////////////
+*/
+section.mobile {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+section.funktionen {
+    position: relative;
+    padding: 80px 0;
+}
+
+    section.funktionen .feature-item {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        text-align: center;
+    }
+
+        section.funktionen .feature-item i {
+            font-size: 80px;
+            display: block;
+            margin-bottom: 15px;
+            background: -webkit-linear-gradient(to left,#7b4397,#dc2430);
+            background: linear-gradient(to left,#7b4397,#dc2430);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+section.showcase {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+section.preise {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    background-color: #F3F3F3;
+}
+
+section.about {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+section.konzept {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    position: relative;
+    background-color: #F3F3F3;
+    padding: 80px 0;
+}
+
+section.team-section{
+    background-color: #F3F3F3;
+    padding-top:50px;
+    padding-bottom:50px;
+}
+/*
+    //////////////////////////////////////////
+    /////////////BORDERS / PADDINGS///////////
+    //////////////////////////////////////////
+*/
+.smallimg {
+    height: auto;
+    width: 100%;
+}
+
+.topborder {
+    padding-top: 15px;
+}
+
+.topborderxl {
+    padding-top: 35px;
+}
+
+.botborder {
+    padding-bottom: 15px;
+}
+
+.abstand {
+    padding-top: 40px;
+}
+
+.pad {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.konzeptrowborder {
+    padding-top: 20px;
+}
+
+.rowbackground {
+    background-color: #F3F3F3;
+}
+
+/*
+    //////////////////////////////////////////
+    ////////////////FONT-STYLE////////////////
+    //////////////////////////////////////////
+*/
+
+.rand{
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold; 
+       -webkit-text-stroke: 1px black;
+   color: white;
+}
