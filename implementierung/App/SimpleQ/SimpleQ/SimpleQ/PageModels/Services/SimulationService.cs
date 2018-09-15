@@ -11,12 +11,12 @@ namespace SimpleQ.PageModels.Services
     {
         public SimulationService()
         {
-            questions.Add(new QuestionModel("Sind Sie männlich?", "YNQ Test", 0, QuestionType.YNQ));
-            questions.Add(new QuestionModel("Sind Sie anwesend?", "TLQ Test", 1, QuestionType.TLQ));
-            questions.Add(new QuestionModel("Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", 2, QuestionType.OWQ));
-            questions.Add(new QuestionModel("Was ist Ihre Lieblingsfarbe?", "GAQ Test", 3, QuestionType.GAQ, new List<String>(new String[] { "Grün", "Rot", "Gelb", "Blau" })));
+            questions.Add(new SurveyModel(0, "Sind Sie männlich?", "YNQ Test", SurveyType.YNQ, DateTime.Now, DateTime.Now));
+            questions.Add(new SurveyModel(1, "Sind Sie anwesend?", "TLQ Test", SurveyType.TLQ, DateTime.Now, DateTime.Now));
+            questions.Add(new SurveyModel(2, "Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", SurveyType.OWQ, DateTime.Now, DateTime.Now));
+            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "GAQ Test", SurveyType.GAQ, DateTime.Now, DateTime.Now, new List<String>(new String[] { "Grün", "Rot", "Gelb", "Blau" })));
         }
-        List<QuestionModel> questions = new List<QuestionModel>();
+        List<SurveyModel> questions = new List<SurveyModel>();
         public async Task<CodeValidationModel> CheckCode(int code)
         {
             await Task.Delay(TimeSpan.FromSeconds(3));
@@ -24,26 +24,32 @@ namespace SimpleQ.PageModels.Services
             //Random random = new Random();
             //return random.Next(0, 2) == 0;
 
-            return new CodeValidationModel(code == 123456, "Tina's Factory", "Development", code);
+            return new CodeValidationModel(code == 1234567, "Tina's Factory", "Development", code);
         }
 
-        public async Task<List<QuestionModel>> GetData()
+        public async Task<List<SurveyModel>> GetData()
         {
             await Task.Delay(TimeSpan.FromSeconds(5));
 
             return questions;
         }
 
-        public void SetAnswerOfQuestion(QuestionModel question)
+        public void SetAnswerOfQuestion(SurveyModel question)
         {
-            foreach (QuestionModel q in questions)
+            foreach (SurveyModel q in questions)
             {
-                if (q.QuestionId == question.QuestionId)
+                if (q.SurveyId == question.SurveyId)
                 {
                     questions.Remove(q);
                     return;
                 }
             }
+        }
+
+        public void Logout(int registerCode)
+        {
+            Debug.WriteLine(String.Format("User with the registerCode: {0} logged out...", registerCode), "Info");
+            return;
         }
     }
 }

@@ -7,22 +7,26 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
+using System.Reactive.Linq;
+using Akavache;
+using System.Collections.Generic;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
     /// This is the TLQPageModel for the Page TLQPage.
     /// </summary>
-    public class TLQPageModel : FreshBasePageModel, INotifyPropertyChanged
+    public class TLQPageModel : BasicQuestionPageModel
     {
         #region Constructor(s)
         /// <summary>
         /// Initializes a new instance of the <see cref="TLQPageModel"/> class.
         /// </summary>
         /// <param name="questionService">The question service.</param>
-        public TLQPageModel(IQuestionService questionService) : this()
+        public TLQPageModel(IQuestionService questionService) : base(questionService)
         {
-            this.questionService = questionService;
+            GreenCommand = new Command(() => QuestionAnswered(TLQAnswer.Green));
+            RedCommand = new Command(() => QuestionAnswered(TLQAnswer.Red));
         }
 
         /// <summary>
@@ -31,8 +35,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         public TLQPageModel()
         {
-            GreenCommand = new Command(() => QuestionAnswered(TLQAnswer.Green));
-            RedCommand = new Command(() => QuestionAnswered(TLQAnswer.Red));
+
         }
 
 
@@ -42,37 +45,14 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            this.Question = (QuestionModel)initData;
             base.Init(initData);
         }
         #endregion
 
         #region Fields
-        /// <summary>
-        /// The question
-        /// </summary>
-        private QuestionModel question;
-        /// <summary>
-        /// The question service
-        /// </summary>
-        private IQuestionService questionService;
         #endregion
 
         #region Properties + Getter/Setter Methods
-        /// <summary>
-        /// Gets or sets the question.
-        /// </summary>
-        /// <value>
-        /// The question.
-        /// </value>
-        public QuestionModel Question { get => question; set => question = value; }
-        /// <summary>
-        /// Gets or sets the question service.
-        /// </summary>
-        /// <value>
-        /// The question service.
-        /// </value>
-        public IQuestionService QuestionService { get => questionService; set => questionService = value; }
         #endregion
 
         #region Commands
@@ -96,20 +76,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// This method is called, after the user answered the question. The method calls a method in the questionService.
         /// </summary>
-        /// <param name="answer">The answer.</param>
+        /// <param name="answer">The ansDesc.</param>
         private void QuestionAnswered(TLQAnswer answer)
         {
-            Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.QuestionId, answer), "Info");
-
-            this.question.Answer = answer.ToString();
-
-            this.questionService.QuestionAnswered(question);
-
-            CoreMethods.PopPageModel();
-            if (this.questionService.PublicQuestions.Count <= 0)
-            {
-                App.MainMasterPageModel.SetNewCategorie(AppResources.AllCategories);
-            }
+            base.QuestionAnswered(answer.ToString());
         }
         #endregion
 

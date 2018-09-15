@@ -73,7 +73,7 @@ namespace SimpleQ.PageModels
             }
         }
 
-        public Dictionary<string, Page> Pages { get => _pages;}
+        public new Dictionary<string, Page> Pages { get => _pages;}
         #endregion
 
         #region Commands
@@ -96,7 +96,7 @@ namespace SimpleQ.PageModels
             var navigationContainer = CreateContainerPage(page);
             /*if (this.MenuItems[0].Count == 0 && this.MenuItems[1].Count == 0)
             {
-                if (itemType == ItemType.Categorie)
+                if (itemType == ItemType.CatName)
                 {
                     Detail = _pages[AppResources.AllCategories];
                 }
@@ -113,11 +113,16 @@ namespace SimpleQ.PageModels
             this.MenuItems[1].Add(new MenuItemModel(title, pageModel, iconResourceName));
         }
 
+        public Page CreateContainerPagePublic(Page page)
+        {
+            return this.CreateContainerPage(page);
+        }
+
         public void AddCategorie(string title)
         {
+            FrontPageModel pageModel = new FrontPageModel();
             if (title == AppResources.AllCategories)
             {
-                FrontPageModel pageModel = new FrontPageModel();
                 var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);
                 page.GetModel().CurrentNavigationServiceName = NavigationServiceName;
                 var navigationContainer = CreateContainerPage(page);
@@ -132,8 +137,6 @@ namespace SimpleQ.PageModels
             {
                 this.MenuItems[0].Add(new MenuItemModel(title, null, null));
             }
-
-            
         }
 
         private void NavigateToNewPage()
@@ -148,7 +151,7 @@ namespace SimpleQ.PageModels
 
                 if (this.MenuItems[0].Contains(SelectedItem))
                 {
-                    //the selected item is a categorie
+                    //the selected item is a catName
                     IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
                     questionService.SetCategorieFilter(SelectedItem.Title);
 
@@ -167,7 +170,7 @@ namespace SimpleQ.PageModels
         {
             if (MenuItems[0].Count(mi => mi.Title == title) == 1)
             {
-                Debug.WriteLine("Set new categorie to: " + title, "Info");
+                Debug.WriteLine("Set new catName to: " + title, "Info");
 
                 this.SelectedItem = MenuItems[0].Where(mi => mi.Title == title).ToList()[0];
             }

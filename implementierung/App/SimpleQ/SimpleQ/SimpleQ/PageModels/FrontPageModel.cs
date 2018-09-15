@@ -1,4 +1,5 @@
-﻿using FreshMvvm;
+﻿using Akavache;
+using FreshMvvm;
 using MvvmHelpers;
 using SimpleQ.Models;
 using SimpleQ.PageModels.QuestionPageModels;
@@ -61,7 +62,7 @@ namespace SimpleQ.PageModels
         /// <summary>
         /// The selected question
         /// </summary>
-        private QuestionModel selectedQuestion;
+        private SurveyModel selectedQuestion;
 
         private ISimulationService simulationService;
 
@@ -82,7 +83,7 @@ namespace SimpleQ.PageModels
         /// <value>
         /// The selected question.
         /// </value>
-        public QuestionModel SelectedQuestion
+        public SurveyModel SelectedQuestion
         {
             get => selectedQuestion;
             set
@@ -93,7 +94,7 @@ namespace SimpleQ.PageModels
 
                 if (selectedQuestion != null)
                 {
-                    Debug.WriteLine(selectedQuestion.QuestionDesc);
+                    Debug.WriteLine(selectedQuestion.SurveyDesc);
                     NavigateToQuestion();
                 }
             }
@@ -117,19 +118,19 @@ namespace SimpleQ.PageModels
         /// </summary>
         private void NavigateToQuestion()
         {
-            if (selectedQuestion.QuestionType == QuestionType.YNQ)
+            if (selectedQuestion.TypeDesc == SurveyType.YNQ)
             {
                 CoreMethods.PushPageModel<YNQPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.QuestionType == QuestionType.TLQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.TLQ)
             {
                 CoreMethods.PushPageModel<TLQPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.QuestionType == QuestionType.OWQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.OWQ)
             {
                 CoreMethods.PushPageModel<OWQPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.QuestionType == QuestionType.GAQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.GAQ)
             {
                 CoreMethods.PushPageModel<GAQPageModel>(selectedQuestion);
             }
@@ -140,13 +141,13 @@ namespace SimpleQ.PageModels
         private void DeleteCommandExecuted(object question)
         {
             Debug.WriteLine("Delete Command Executed with object: " + question, "Info");
-            questionService.RemoveQuestion((QuestionModel)question);
+            questionService.RemoveQuestion((SurveyModel)question);
         }
 
         private async void RefreshCommandExecuted()
         {
             Debug.WriteLine("Refresh Command Executed...", "Info");
-            await this.questionService.RequestData();
+            await this.questionService.LoadDataFromCache();
             this.IsRefreshing = false;
         }
         #endregion

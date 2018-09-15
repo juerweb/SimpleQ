@@ -9,7 +9,8 @@ namespace SimpleQ.PageModels.Services
     public interface ISimulationService
     {
         Task<CodeValidationModel> CheckCode(int code);
-        Task<List<QuestionModel>> GetData();
-        void SetAnswerOfQuestion(QuestionModel question);
+        Task<List<SurveyModel>> GetData();
+        void SetAnswerOfQuestion(SurveyModel question);
+        void Logout(int registerCode);
     }
 }

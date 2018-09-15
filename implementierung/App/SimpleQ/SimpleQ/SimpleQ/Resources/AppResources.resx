@@ -198,6 +198,9 @@
     <value>SimpleQ.Resources.Images.logo.png</value>
     <comment>NT</comment>
   </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Abmelden</value>
+  </data>
   <data name="LoremIpsum" xml:space="preserve">
     <value>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</value>
     <comment>NT</comment>
@@ -239,8 +242,8 @@
   <data name="Settings" xml:space="preserve">
     <value>Einstellungen</value>
   </data>
-  <data name="SixDigitCode" xml:space="preserve">
-    <value>6-stelliger Code</value>
+  <data name="RegisterCode" xml:space="preserve">
+    <value>Registrierungscode</value>
   </data>
   <data name="StartScan" xml:space="preserve">
     <value>Scan starten 📷</value>
@@ -253,5 +256,14 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
+  </data>
+  <data name="ReallySure" xml:space="preserve">
+    <value>Sind Sie sich wirklich sicher?</value>
+  </data>
+  <data name="GeneralSettings" xml:space="preserve">
+    <value>Allgemeine Einstellungen</value>
+  </data>
+  <data name="CloseAppAfterNotification" xml:space="preserve">
+    <value>Soll sich die App, nach dem Beantworten einer neuen Frage, wieder schließen?</value>
   </data>
 </root>

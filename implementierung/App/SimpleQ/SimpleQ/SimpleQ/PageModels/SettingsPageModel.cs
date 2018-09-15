@@ -9,6 +9,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.PageModels
 {
@@ -23,9 +24,10 @@ namespace SimpleQ.PageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public SettingsPageModel(object param): this()
+        public SettingsPageModel(ISimulationService simulationService, IDialogService dialogService): this()
         {
-
+            this.simulationService = simulationService;
+            this.dialogService = dialogService;
         }
 
         /// <summary>
@@ -34,7 +36,10 @@ namespace SimpleQ.PageModels
         /// </summary>
         public SettingsPageModel(): base()
         {
+            MenuItems.Add(new MenuItemModel(AppResources.GeneralSettings, new GeneralSettingsPageModel(), "ic_dashboard_black_18.png"));
             MenuItems.Add(new MenuItemModel(AppResources.Language, new LanguagePageModel(), "ic_language_black_18.png"));
+
+            LogOutCommand = new Command(LogOutCommandExecuted);
         }
 
 
@@ -49,15 +54,36 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Fields
+        private ISimulationService simulationService;
+        private IDialogService dialogService;
         #endregion
 
         #region Properties + Getter/Setter Methods
         #endregion
 
         #region Commands
+        public Command LogOutCommand
+        {
+            get;
+            private set;
+        }
         #endregion
 
         #region Methods
+        private async void LogOutCommandExecuted()
+        {
+            if (await dialogService.ShowReallySureDialog())
+            {
+                simulationService.Logout((int)Application.Current.Properties["RegisterCode"]);
+                Application.Current.Properties.Remove("IsValidCodeAvailable");
+                Application.Current.Properties.Remove("CompanyName");
+                Application.Current.Properties.Remove("DepartmentName");
+                Application.Current.Properties.Remove("RegisterCode");
+
+                App.GoToRightPage();
+            }
+
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

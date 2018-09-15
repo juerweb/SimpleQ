@@ -1,4 +1,5 @@
 ﻿using Acr.UserDialogs;
+using Akavache;
 using FreshMvvm;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
@@ -42,6 +43,7 @@ namespace SimpleQ.PageModels
 
             Application.Current.Properties["IsValidCodeAvailable"] = codeValidationModel.IsValid;
             Application.Current.Properties["CompanyName"] = codeValidationModel.CompanyName;
+
             Application.Current.Properties["DepartmentName"] = codeValidationModel.DepartmentName;
             Application.Current.Properties["RegisterCode"] = codeValidationModel.Code;
 
@@ -55,17 +57,17 @@ namespace SimpleQ.PageModels
                 Debug.WriteLine("Code is not valid...", "Info");
                 this.IsRunning = false;
 
-                this.dialogService.ShowDialog(DialogType.Error, 201);
-                await CoreMethods.PopPageModel();
+                this.dialogService.ShowErrorDialog(201);
+                await CoreMethods.PopToRoot(false);
                 return;
             }
 
             //Load Data
-            await questionService.RequestData();
+            await questionService.LoadData();
             Debug.WriteLine("Requested Data...", "Info");
 
             //Set MainPageModel as new Main Page
-            App.NavigateToMainPageModel(false);
+            App.GoToRightPage();
         }
         #endregion
 

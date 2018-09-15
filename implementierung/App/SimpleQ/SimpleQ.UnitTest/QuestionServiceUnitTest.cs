@@ -22,7 +22,7 @@ namespace SimpleQ.UnitTest
 
 
             //Act
-            QuestionModel testQuestion = new QuestionModel("Test", "ABC", 1);
+            SurveyModel testQuestion = new SurveyModel("Test", "ABC", 1);
             questionService.Questions.Add(testQuestion);
             questionService.PublicQuestions.Add(testQuestion);
 
@@ -41,7 +41,7 @@ namespace SimpleQ.UnitTest
 
 
             //Act
-            QuestionModel testQuestion = new QuestionModel("Test", "ABC", 1);
+            SurveyModel testQuestion = new SurveyModel("Test", "ABC", 1);
             questionService.Questions.Add(testQuestion);
             questionService.PublicQuestions.Add(testQuestion);
 
@@ -60,7 +60,7 @@ namespace SimpleQ.UnitTest
 
 
             //Act
-            QuestionModel testQuestion = new QuestionModel("Test", "ABC", 1);
+            SurveyModel testQuestion = new SurveyModel("Test", "ABC", 1);
             questionService.Questions.Add(testQuestion);
 
             //Assert
@@ -75,10 +75,10 @@ namespace SimpleQ.UnitTest
 
 
             //Act
-            QuestionModel testQuestion1 = new QuestionModel("Test", "ABC", 1);
-            QuestionModel testQuestion2 = new QuestionModel("Test", "CDF", 1);
-            QuestionModel testQuestion3 = new QuestionModel("Test", "ABC", 1);
-            QuestionModel testQuestion4 = new QuestionModel("Test", "", 1);
+            SurveyModel testQuestion1 = new SurveyModel("Test", "ABC", 1);
+            SurveyModel testQuestion2 = new SurveyModel("Test", "CDF", 1);
+            SurveyModel testQuestion3 = new SurveyModel("Test", "ABC", 1);
+            SurveyModel testQuestion4 = new SurveyModel("Test", "", 1);
 
             questionService.Questions.Add(testQuestion1);
             questionService.Questions.Add(testQuestion2);
@@ -109,16 +109,16 @@ namespace SimpleQ.UnitTest
             object testQuestion4 = new GAQModel("Test", "", 1, new String[] { "Test" });
 
             //Assert
-            QuestionModel question1 = questionService.GetQuestionWithRightType(testQuestion1);
+            SurveyModel question1 = questionService.GetQuestionWithRightType(testQuestion1);
             Assert.AreEqual(question1.GetType(), typeof(YNQModel));
 
-            QuestionModel question2 = questionService.GetQuestionWithRightType(testQuestion2);
+            SurveyModel question2 = questionService.GetQuestionWithRightType(testQuestion2);
             Assert.AreEqual(question2.GetType(), typeof(TLQModel));
 
-            QuestionModel question3 = questionService.GetQuestionWithRightType(testQuestion3);
+            SurveyModel question3 = questionService.GetQuestionWithRightType(testQuestion3);
             Assert.AreEqual(question3.GetType(), typeof(OWQModel));
 
-            QuestionModel question4 = questionService.GetQuestionWithRightType(testQuestion4);
+            SurveyModel question4 = questionService.GetQuestionWithRightType(testQuestion4);
             Assert.AreEqual(question4.GetType(), typeof(GAQModel));
         }
 
@@ -130,10 +130,10 @@ namespace SimpleQ.UnitTest
 
 
             //Act
-            QuestionModel testQuestion1 = new QuestionModel("Test", "ABC", 1);
-            QuestionModel testQuestion2 = new QuestionModel("Test", "CDF", 1);
-            QuestionModel testQuestion3 = new QuestionModel("Test", "ABC", 1);
-            QuestionModel testQuestion4 = new QuestionModel("Test", "", 1);
+            SurveyModel testQuestion1 = new SurveyModel("Test", "ABC", 1);
+            SurveyModel testQuestion2 = new SurveyModel("Test", "CDF", 1);
+            SurveyModel testQuestion3 = new SurveyModel("Test", "ABC", 1);
+            SurveyModel testQuestion4 = new SurveyModel("Test", "", 1);
 
             questionService.Questions.Add(testQuestion1);
             questionService.Questions.Add(testQuestion2);

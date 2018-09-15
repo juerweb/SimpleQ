@@ -55,7 +55,7 @@ namespace SimpleQ.PageModels.Commands
                     else
                     {
                         pageModel.DialogService.Alert("Test");
-                        //pageModel.DialogService.ShowDialog(Services.DialogType.Error, 101);
+                        //pageModel.DialogService.ShowErrorDialog(Services.DialogType.Error, 101);
                     }
                 });
             };

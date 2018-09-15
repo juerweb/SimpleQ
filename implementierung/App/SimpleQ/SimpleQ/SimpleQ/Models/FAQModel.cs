@@ -16,7 +16,7 @@ namespace SimpleQ.Models
         /// Initializes a new instance of the <see cref="FAQModel"/> class.
         /// </summary>
         /// <param name="question">The question.</param>
-        /// <param name="answer">The answer.</param>
+        /// <param name="answer">The ansDesc.</param>
         public FAQModel(string question, string answer): this()
         {
             this.question = question;
@@ -38,7 +38,7 @@ namespace SimpleQ.Models
         /// </summary>
         private String question;
         /// <summary>
-        /// The answer
+        /// The ansDesc
         /// </summary>
         private String answer;
         /// <summary>
@@ -57,10 +57,10 @@ namespace SimpleQ.Models
         /// </value>
         public string Question { get => question; set => question = value; }
         /// <summary>
-        /// Gets or sets the answer.
+        /// Gets or sets the ansDesc.
         /// </summary>
         /// <value>
-        /// The answer.
+        /// The ansDesc.
         /// </value>
         public string Answer { get => answer; set => answer = value; }
         /// <summary>

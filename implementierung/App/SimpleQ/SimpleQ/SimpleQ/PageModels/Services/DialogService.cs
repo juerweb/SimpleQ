@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace SimpleQ.PageModels.Services
@@ -18,22 +19,29 @@ namespace SimpleQ.PageModels.Services
             this.dialogService = FreshIOC.Container.Resolve<IUserDialogs>();
         }
 
-        public void ShowDialog(DialogType type, int errorCode)
+        public void ShowErrorDialog(int errorCode)
         {
-            switch (type)
-            {
-                case DialogType.Error:
-                    string textCode = "Error" + errorCode;
+            string textCode = "Error" + errorCode;
 
-                    this.dialogService.Alert(AppResources.ResourceManager.GetString(textCode) + "\n" + AppResources.DialogErrorCode + ": " + errorCode, AppResources.DialogErrorTitle);
-                    Debug.WriteLine("Error-Code: " + errorCode, "Error");
-                    break;
-            }
+            this.dialogService.Alert(AppResources.ResourceManager.GetString(textCode) + "\n" + AppResources.DialogErrorCode + ": " + errorCode, AppResources.DialogErrorTitle);
+            Debug.WriteLine("Error-Code: " + errorCode, "Error");
         }
-    }
 
-    public enum DialogType
-    {
-        Error = 0
+        public void ShowDialog(String title, String body)
+        {
+            this.dialogService.Alert(body, title);
+        }
+
+        public async Task<bool> ShowReallySureDialog()
+        {
+            ConfirmConfig cc = new ConfirmConfig();
+            cc = cc.UseYesNo();
+            cc.Message = AppResources.ReallySure;
+
+
+            var result = await this.dialogService.ConfirmAsync(cc);
+
+            return result;
+        }
     }
 }

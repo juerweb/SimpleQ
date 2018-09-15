@@ -124,6 +124,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Soll sich die App, nach dem Beantworten einer neuen Frage, wieder schließen? ähnelt.
+        /// </summary>
+        internal static string CloseAppAfterNotification {
+            get {
+                return ResourceManager.GetString("CloseAppAfterNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Kontakt ähnelt.
         /// </summary>
         internal static string Contact {
@@ -241,6 +250,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Allgemeine Einstellungen ähnelt.
+        /// </summary>
+        internal static string GeneralSettings {
+            get {
+                return ResourceManager.GetString("GeneralSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Hilfe ähnelt.
         /// </summary>
         internal static string Help {
@@ -291,6 +309,15 @@ namespace SimpleQ.Resources {
         internal static string LogoResourcename {
             get {
                 return ResourceManager.GetString("LogoResourcename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Abmelden ähnelt.
+        /// </summary>
+        internal static string LogOut {
+            get {
+                return ResourceManager.GetString("LogOut", resourceCulture);
             }
         }
         
@@ -358,6 +385,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sind Sie sich wirklich sicher? ähnelt.
+        /// </summary>
+        internal static string ReallySure {
+            get {
+                return ResourceManager.GetString("ReallySure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Daten abrufen ähnelt.
         /// </summary>
         internal static string RecallData {
@@ -372,6 +408,15 @@ namespace SimpleQ.Resources {
         internal static string Register {
             get {
                 return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Registrierungscode ähnelt.
+        /// </summary>
+        internal static string RegisterCode {
+            get {
+                return ResourceManager.GetString("RegisterCode", resourceCulture);
             }
         }
         
@@ -408,15 +453,6 @@ namespace SimpleQ.Resources {
         internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die 6-stelliger Code ähnelt.
-        /// </summary>
-        internal static string SixDigitCode {
-            get {
-                return ResourceManager.GetString("SixDigitCode", resourceCulture);
             }
         }
         

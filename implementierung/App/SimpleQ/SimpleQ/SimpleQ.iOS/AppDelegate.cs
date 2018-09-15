@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Acr.UserDialogs;
+using Com.OneSignal;
 using Foundation;
 using UIKit;
 
@@ -27,6 +28,8 @@ namespace SimpleQ.iOS
             ZXing.Net.Mobile.Forms.iOS.Platform.Init();
 
             LoadApplication(new App());
+
+            OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540").EndInit();
 
             return base.FinishedLaunching(app, options);
         }

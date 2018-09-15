@@ -72,7 +72,7 @@ namespace SimpleQ.PageModels
                 else
                 {
                     Debug.WriteLine("Live-Check: QR-Code is not valid.", "Info");
-                    DialogService.ShowDialog(Services.DialogType.Error, 101);
+                    DialogService.ShowErrorDialog(101);
                     await CoreMethods.PopPageModel();
                 }
             });
