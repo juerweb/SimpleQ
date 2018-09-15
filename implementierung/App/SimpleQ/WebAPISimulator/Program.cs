@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleQ.Shared;
+using System;
 using System.IO;
 using System.Net;
 using System.Threading;

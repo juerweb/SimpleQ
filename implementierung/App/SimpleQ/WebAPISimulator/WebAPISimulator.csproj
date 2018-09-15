@@ -5,4 +5,10 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="SharedClasses">
+      <HintPath>..\..\..\SharedClasses\SharedClasses\bin\Debug\netstandard2.0\SharedClasses.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
