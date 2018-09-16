@@ -17,33 +17,29 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Survey()
         {
-            this.Askings = new HashSet<Asking>();
-            this.SpecifiedTextAnswers = new HashSet<SpecifiedTextAnswer>();
-            this.Votes = new HashSet<Vote>();
+            this.AnswerOptions = new HashSet<AnswerOption>();
+            this.Departments = new HashSet<Department>();
         }
     
         public int SvyId { get; set; }
+        public int CatId { get; set; }
         public string CustCode { get; set; }
         public string SvyText { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public int TypeId { get; set; }
-        public int CatId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
         [Newtonsoft.Json.JsonIgnore]
         public virtual AnswerType AnswerType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Asking> Askings { get; set; }
         [Newtonsoft.Json.JsonIgnore]
         public virtual Customer Customer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<SpecifiedTextAnswer> SpecifiedTextAnswers { get; set; }
         [Newtonsoft.Json.JsonIgnore]
         public virtual SurveyCategory SurveyCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Vote> Votes { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace SimpleQ.Webinterface.Models
     {
         public int BillId { get; set; }
         public string CustCode { get; set; }
-        public decimal BillAmount { get; set; }
+        public decimal BillPrice { get; set; }
         public System.DateTime BillDate { get; set; }
         public bool Paid { get; set; }
     

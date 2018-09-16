@@ -27,16 +27,16 @@ namespace SimpleQ.Webinterface.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<AnswerOption> AnswerOptions { get; set; }
         public virtual DbSet<AnswerType> AnswerTypes { get; set; }
-        public virtual DbSet<AskedPerson> AskedPersons { get; set; }
-        public virtual DbSet<Asking> Askings { get; set; }
+        public virtual DbSet<BaseQuestionType> BaseQuestionTypes { get; set; }
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DsgvoConstraint> DsgvoConstraints { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
-        public virtual DbSet<SpecifiedTextAnswer> SpecifiedTextAnswers { get; set; }
+        public virtual DbSet<Person> People { get; set; }
+        public virtual DbSet<PredefinedAnswerOption> PredefinedAnswerOptions { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<SurveyCategory> SurveyCategories { get; set; }
         public virtual DbSet<Vote> Votes { get; set; }

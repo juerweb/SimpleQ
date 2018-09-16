@@ -5,8 +5,8 @@ using System.Threading;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
-using SimpleQ.Webinterface.Mobile;
 using SimpleQ.Webinterface.Models;
+using SimpleQ.Webinterface.Models.Mobile;
 using SimpleQ.Webinterface.Models.ViewModels;
 
 namespace SimpleQ.Webinterface.Controllers
@@ -21,9 +21,9 @@ namespace SimpleQ.Webinterface.Controllers
                 req.Survey.CustCode = CustCode;
                 //s.Survey.EndDate = s.Survey.StartDate.AddDays(7);
                 db.Surveys.Add(req.Survey);
-                req.SelectedDepartments.ForEach(d =>
+                req.SelectedDepartments.ForEach(depId =>
                 {
-                    db.Askings.Add(new Asking { SvyId = req.Survey.SvyId, DepId = d, CustCode = CustCode });
+                    db.Departments.Where(d => d.DepId == depId).First().Surveys.Add(req.Survey);
                 });
                 db.SaveChanges();
             }
@@ -37,14 +37,14 @@ namespace SimpleQ.Webinterface.Controllers
                     // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
                     int totalPersons = db.Departments
                         .Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
-                        .Sum(d => d.AskedPersons.Count);
+                        .Sum(d => d.People.Count);
 
                     req.SelectedDepartments.ForEach(d =>
                     {
                         // Anzahl an Personen in der aktuellen Abteilung (mit DepId = d)
                         int currPersons = db.Departments
                             .Where(dep => dep.DepId == d && dep.CustCode == CustCode)
-                            .Select(dep => dep.AskedPersons.Count).First();
+                            .Select(dep => dep.People.Count).First();
 
                         // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
                         int toAsk = req.Amount * (int)Math.Round(currPersons / (double)totalPersons);

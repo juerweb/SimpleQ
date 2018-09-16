@@ -17,16 +17,19 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AnswerType()
         {
-            this.Answers = new HashSet<Answer>();
+            this.PredefinedAnswerOptions = new HashSet<PredefinedAnswerOption>();
             this.Surveys = new HashSet<Survey>();
         }
     
         public int TypeId { get; set; }
         public string TypeDesc { get; set; }
+        public int BaseId { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual BaseQuestionType BaseQuestionType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Answer> Answers { get; set; }
+        public virtual ICollection<PredefinedAnswerOption> PredefinedAnswerOptions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Survey> Surveys { get; set; }

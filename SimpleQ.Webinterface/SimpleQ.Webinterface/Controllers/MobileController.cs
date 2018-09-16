@@ -1,6 +1,6 @@
 ﻿using SimpleQ.Webinterface.Extensions;
-using SimpleQ.Webinterface.Mobile;
 using SimpleQ.Webinterface.Models;
+using SimpleQ.Webinterface.Models.Mobile;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -25,8 +25,8 @@ namespace SimpleQ.Webinterface.Controllers
                     string custCode = regCode.Substring(0, 6);
                     int depId = int.Parse(regCode.Substring(6));
 
-                    AskedPerson person = new AskedPerson { CustCode = custCode, DepId = depId };
-                    db.AskedPersons.Add(person);
+                    Person person = new Person { DepId = depId, CustCode = custCode, DeviceId = deviceId};
+                    db.People.Add(person);
                     db.SaveChanges();
                     Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
 
@@ -52,19 +52,19 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.AskedPersons.RemoveRange(db.AskedPersons.Where(p => p.PersId == persId && p.CustCode == custCode));
+                db.People.RemoveRange(db.People.Where(p => p.PersId == persId && p.CustCode == custCode));
                 db.SaveChanges();
             }
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpPost]
-        public HttpResponseMessage AnswerSurvey([FromBody] Vote vote)
+        public HttpResponseMessage AnswerSurvey([FromBody] SurveyVote sv)
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.Votes.Add(vote);
-                db.Customers.Where(c => c.CustCode == vote.CustCode).First().CostBalance += decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
+                db.Votes.Add(new Vote { VoteText = sv.VoteText, AnswerOptions = sv.ChosenAnswerOptions });
+                db.Customers.Where(c => c.CustCode == sv.CustCode).First().CostBalance += decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
                 db.SaveChanges();
             }
             return Request.CreateResponse(HttpStatusCode.OK);
@@ -75,7 +75,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                SurveyNotification nc = new SurveyNotification
+                SurveyNotification sn = new SurveyNotification
                 {
                     SvyId = survey.SvyId,
                     SvyText = survey.SvyText,
@@ -85,19 +85,19 @@ namespace SimpleQ.Webinterface.Controllers
                         .Where(c => c.CatId == survey.CatId && c.CustCode == custCode)
                         .Select(c => c.CatName)
                         .First(),
-                    PossibleTextAnswers = db.SpecifiedTextAnswers
-                        .Where(s => s.SvyId == survey.SvyId && s.CustCode == custCode)
-                        .ToDictionary(s => s.SpecId, s => s.SpecText)
+                    AnswerOptions = db.AnswerOptions
+                        .Where(a => a.SvyId == survey.SvyId)
+                        .ToList()
                 };
 
                 db.Departments
                     .Where(d => d.DepId == depId && d.CustCode == custCode)
-                    .SelectMany(d => d.AskedPersons)
+                    .SelectMany(d => d.People)
                     .TakeRandom(amount)
                     .ToList()
                     .ForEach(p =>
                     {
-                        // SendNotification(p.DeviceId, nc);    
+                        // SendNotification(p.DeviceId, sn);    
                     });
 
             }

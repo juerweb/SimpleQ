@@ -13,6 +13,7 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public string TypeName { get; set; }
         public List<string> DepartmentNames { get; set; }
         public Dictionary<string, int> Votes { get; set; }
+        public List<string> FreeTextVotes { get; set; }
         #endregion
 
         #region View to Controller

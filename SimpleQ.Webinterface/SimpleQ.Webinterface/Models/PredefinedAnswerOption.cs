@@ -12,14 +12,13 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class AskedPerson
+    public partial class PredefinedAnswerOption
     {
-        public int PersId { get; set; }
-        public int DepId { get; set; }
-        public string CustCode { get; set; }
-        public string DeviceId { get; set; }
+        public int PreAnsId { get; set; }
+        public string PreAnsText { get; set; }
+        public int TypeId { get; set; }
     
         [Newtonsoft.Json.JsonIgnore]
-        public virtual Department Department { get; set; }
+        public virtual AnswerType AnswerType { get; set; }
     }
 }

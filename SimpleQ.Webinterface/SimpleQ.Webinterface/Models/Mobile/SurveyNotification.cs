@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SimpleQ.Webinterface.Mobile
+namespace SimpleQ.Webinterface.Models.Mobile
 {
     public class SurveyNotification
     {
@@ -12,6 +12,6 @@ namespace SimpleQ.Webinterface.Mobile
         public DateTime EndDate { get; set; }
         public int TypeId { get; set; }
         public string CatName { get; set; }
-        public Dictionary<int, string> PossibleTextAnswers { get; set; }
+        public List<AnswerOption> AnswerOptions { get; set; }
     }
 }

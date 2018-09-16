@@ -35,37 +35,25 @@ namespace SimpleQ.Webinterface.Controllers
                         .Select(a => a.TypeDesc) // GLOBALIZATION!
                         .FirstOrDefault(),
 
-                    DepartmentNames = db.Askings
-                        .Where(a => a.SvyId == survey.SvyId && a.CustCode == CustCode)
-                        .Select(a => a.Department.DepName)
+                    DepartmentNames = db.Surveys
+                        .Where(s => s.SvyId == survey.SvyId)
+                        .SelectMany(s => s.Departments.Select(d => d.DepName))
                         .ToList(),
 
-                    Votes = (survey.TypeId == 3) // EIN-WORT
-                        ? db.Votes
-                            .Where(v => v.SvyId == survey.SvyId && v.CustCode == CustCode)
-                            .GroupBy(v => v.VoteText)
-                            .Select(g => new { Key = g.Key, Value = g.Count() })
-                            .ToDictionary(x => x.Key, x => x.Value)
-                        : (survey.TypeId == 4) // VORGEGEBENE TEXTANTWORT
-                        ? db.Votes
-                            .Where(v => v.SvyId == survey.SvyId && v.CustCode == CustCode)
-                            .GroupBy(v => v.SpecId)
-                            .Select(g => new
-                            {
-                                Key = g.Where(v => v.SpecId == g.Key).Select(v => v.SpecifiedTextAnswer.SpecText).FirstOrDefault(),
-                                Value = g.Count()
-                            })
-                            .ToDictionary(x => x.Key, x => x.Value)
-                        : db.Votes
-                            .Where(v => v.SvyId == survey.SvyId && v.CustCode == CustCode)
-                            .GroupBy(v => v.AnsId)
-                            .Select(g => new
-                            {
-                                Key = g.Where(v => v.AnsId == g.Key).Select(v => v.Answer.AnsDesc).FirstOrDefault(),
-                                Value = g.Count()
-                            })
-                            .ToDictionary(x => x.Key, x => x.Value)
+                    Votes = (survey.TypeId != 4) ? db.Votes
+                        .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
+                        .SelectMany(v => v.AnswerOptions)
+                        .GroupBy(a => a.AnsId)
+                        .ToDictionary(g => g.Where(a => a.AnsId == g.Key).Select(a => a.AnsText).FirstOrDefault(), g => g.Count())
+                        .Concat(db.AnswerOptions.Where(a => a.SvyId == survey.SvyId && a.Votes.Count == 0).AsEnumerable().Select(a => new KeyValuePair<string, int>(a.AnsText, 0)))
+                        .ToDictionary(kv => kv.Key, kv => kv.Value)
+                        : null,
 
+                    FreeTextVotes = (survey.TypeId == 4) ? db.Votes
+                        .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
+                        .Select(v => v.VoteText)
+                        .ToList()
+                        : null
                 };
                 return PartialView(viewName: "_SingleResult", model: model);
             }
@@ -94,8 +82,8 @@ namespace SimpleQ.Webinterface.Controllers
                         .First(),
 
                     DepartmentNames = surveys
-                        .SelectMany(s => s.Askings)
-                        .Select(a => a.Department.DepName)
+                        .SelectMany(s => s.Departments)
+                        .Select(d => d.DepName)
                         .Distinct()
                         .ToList()
 
