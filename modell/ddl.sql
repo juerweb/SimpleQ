@@ -66,9 +66,10 @@ go
 -- KUNDENSPEZIFISCH
 create table Department
 (
-	DepId int identity primary key,
+	DepId int identity not null,
 	DepName varchar(max) not null,
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
+    primary key (DepId, CustCode)
 );
 go
 
@@ -77,8 +78,10 @@ go
 create table Person
 (
 	PersId int identity primary key,
-	DepId int not null references Department,
-    DeviceId varchar(max) null
+	DepId int not null,
+    CustCode char(6) collate Latin1_General_CS_AS not null,
+    DeviceId varchar(max) null,
+    foreign key (DepId, CustCode) references Department
 );
 go
 
@@ -140,8 +143,10 @@ go
 create table Asking
 (
 	SvyId int references Survey,
-	DepId int references Department,
-	primary key (SvyId, DepId),
+	DepId int not null,
+    CustCode char(6) collate Latin1_General_CS_AS not null,
+	primary key (SvyId, DepId, CustCode),
+    foreign key (DepId, CustCode) references Department
 );
 go
 
@@ -169,7 +174,7 @@ go
 create table Chooses
 (
     VoteId int references Vote on delete cascade,
-    AnsId int references AnswerOption,
+    AnsId int not null references AnswerOption
     primary key (VoteId, AnsId)
 );
 go
@@ -342,5 +347,6 @@ insert into PredefinedAnswerOption values (5, 'DontKnow', 2);
 insert into PredefinedAnswerOption values (6, 'Green', 3);
 insert into PredefinedAnswerOption values (7, 'Yellow', 3);
 insert into PredefinedAnswerOption values (8, 'Red', 3);
+insert into PredefinedAnswerOption values (9, 'FreeText', 4);
 commit;
 go
