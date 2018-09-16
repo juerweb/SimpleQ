@@ -172,4 +172,16 @@
   <data name="radar" xml:space="preserve">
     <value>Radardiagramm</value>
   </data>
+  <data name="listing" xml:space="preserve">
+    <value>Auflistung (absolut,%)</value>
+  </data>
+  <data name="answer" xml:space="preserve">
+    <value>Antwort</value>
+  </data>
+  <data name="count" xml:space="preserve">
+    <value>Anzahl</value>
+  </data>
+  <data name="percent" xml:space="preserve">
+    <value>Prozent</value>
+  </data>
 </root>

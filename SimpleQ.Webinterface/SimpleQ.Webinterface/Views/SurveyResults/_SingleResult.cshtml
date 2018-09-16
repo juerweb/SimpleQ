@@ -2,19 +2,23 @@
 @*@model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel*@
 @{
 
-    Dictionary<string, int> votes = new Dictionary<string, int>();
-    votes.Add("Ja", 12);
-    votes.Add("Nein", 8);
-    votes.Add("villeicht", 8);
-    votes.Add("Kann sein", 14);
-    votes.Add("Unter Umständen", 20);
-    votes.Add("Nö", 3);
-    votes.Add("Mama Mia", 2);
+    Dictionary<string, int> votes = new Dictionary<string, int>(); //temporary in place of ajax all
+    votes.Add("ORF1", 12);
+    votes.Add("ORF2", 8);
+    votes.Add("ATV", 8);
+    votes.Add("Puls 4", 7);
+    votes.Add("Pro 7", 9);
+    votes.Add("RTL", 3);
+    votes.Add("RTL II", 2);
+    votes.Add("ORF3", 4);
+    votes.Add("DMAX", 10);
+    votes.Add("Super RTL", 0);
+    votes.Add("Nickelodeon", 6);
+    votes.Add("ZDF", 15);
+    votes.Add("ARD", 2);
 }
 
 <div class="row">
-
-
     <div class="col-md-4">
         <div class="form-group">
             <label for="groups">Teilgenommene Gruppen</label>
@@ -44,6 +48,7 @@
                 dropBoxValues.Add("bar", Resources.bar);
                 dropBoxValues.Add("radar", Resources.radar);
                 dropBoxValues.Add("doughnut", Resources.doughnut);
+                dropBoxValues.Add("listing", Resources.listing);
             }
             <label for="chart1select">@Resources.diagram@Resources.typeSmall 1</label>
             <select class="form-control" id="chart1SelectSingle" onchange="changeChart1Single()">
@@ -89,7 +94,6 @@
 
     var dict = []; // create an empty array
 
-  
         @foreach (KeyValuePair<string,int> kvp in votes)
         {
             @:dict.push({
@@ -98,12 +102,6 @@
                 @:value: "@kvp.Value"
             @:}); 
         }
-
-
-    //dict.push({
-    //    key: "keyName",
-    //    value: "the value"
-    //});
 
         $("#chart1SelectSingle").change();
         $("#chart2SelectSingle").change();

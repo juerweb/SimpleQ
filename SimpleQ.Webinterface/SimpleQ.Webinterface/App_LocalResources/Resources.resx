@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="answer" xml:space="preserve">
+    <value>answer</value>
+  </data>
   <data name="answerTypeHeader" xml:space="preserve">
     <value>answer type</value>
   </data>
   <data name="bar" xml:space="preserve">
     <value>bar</value>
+  </data>
+  <data name="count" xml:space="preserve">
+    <value>count</value>
   </data>
   <data name="diagram" xml:space="preserve">
     <value>diagram</value>
@@ -140,6 +146,12 @@
   </data>
   <data name="line" xml:space="preserve">
     <value>line</value>
+  </data>
+  <data name="listing" xml:space="preserve">
+    <value>listing (absolute, %)</value>
+  </data>
+  <data name="percent" xml:space="preserve">
+    <value>percent</value>
   </data>
   <data name="questionHeader" xml:space="preserve">
     <value>...</value>

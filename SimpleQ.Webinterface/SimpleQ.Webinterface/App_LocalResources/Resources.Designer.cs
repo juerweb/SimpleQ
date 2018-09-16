@@ -61,6 +61,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die answer ähnelt.
+        /// </summary>
+        public static string answer {
+            get {
+                return ResourceManager.GetString("answer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die answer type ähnelt.
         /// </summary>
         public static string answerTypeHeader {
@@ -75,6 +84,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static string bar {
             get {
                 return ResourceManager.GetString("bar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die count ähnelt.
+        /// </summary>
+        public static string count {
+            get {
+                return ResourceManager.GetString("count", resourceCulture);
             }
         }
         
@@ -129,6 +147,24 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static string line {
             get {
                 return ResourceManager.GetString("line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die listing (absolute, %) ähnelt.
+        /// </summary>
+        public static string listing {
+            get {
+                return ResourceManager.GetString("listing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die percent ähnelt.
+        /// </summary>
+        public static string percent {
+            get {
+                return ResourceManager.GetString("percent", resourceCulture);
             }
         }
         
