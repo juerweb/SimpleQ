@@ -153,6 +153,9 @@
   <data name="percent" xml:space="preserve">
     <value>percent</value>
   </data>
+  <data name="polarArea" xml:space="preserve">
+    <value>radar-area</value>
+  </data>
   <data name="questionHeader" xml:space="preserve">
     <value>...</value>
   </data>

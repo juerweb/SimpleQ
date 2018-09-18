@@ -169,6 +169,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die radar-area ähnelt.
+        /// </summary>
+        public static string polarArea {
+            get {
+                return ResourceManager.GetString("polarArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ... ähnelt.
         /// </summary>
         public static string questionHeader {

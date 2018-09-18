@@ -55,7 +55,7 @@
     </div>
 </div>
 <hr />
-<div class="row pr-5 pl-5">
+<div class="row pr-2 pl-2">
     <div class="col-md-6 chartCol" id="chart1Col">
         <canvas id="chart1" width="800" height="500"></canvas>
     </div>
@@ -102,8 +102,19 @@
         'rgba(255, 159, 64, 0.2)'
     ];
 
+    function getRandomColor() {
+        var part1 = Math.floor(Math.random() * 256);
+        var part2 = Math.floor(Math.random() * 256);
+        var part3 = Math.floor(Math.random() * 256);
+        if (part1 > 200 && part2 > 200 && part3 > 200) {
+            getRandomColor();
+        } else if (part1 < 70 && part2 < 70 && part3 < 70) {
+            getRandomColor();
+        }
+        return ('rgba(' + part1 + ',' + part2 + ',' + part3);
+    }
 
-    function changeChartSingle(selector, chartCol,chart) {
+    function changeChartSingle(selector, chartCol, chart) {
         if ((document.getElementById(selector).value === "listing")) {
             createListing(chartCol);
             return;
@@ -117,49 +128,138 @@
 
 
         while (dict.length > borderColors.length) { //ensures, that there are enough colors
-            borderColors = borderColors.concat([
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ]);
-            bgColors = bgColors.concat([
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ]);
+            var firstPart = getRandomColor();
+            borderColors = borderColors.concat([(firstPart + ',1)')]);
+            bgColors = bgColors.concat([(firstPart + ',0.2)')]);
+            //borderColors = borderColors.concat([
+            //    'rgba(255, 99, 132, 1)',
+            //    'rgba(54, 162, 235, 1)',
+            //    'rgba(255, 206, 86, 1)',
+            //    'rgba(75, 192, 192, 1)',
+            //    'rgba(153, 102, 255, 1)',
+            //    'rgba(255, 159, 64, 1)'
+            //]);
+            //bgColors = bgColors.concat([
+            //    'rgba(255, 99, 132, 0.2)',
+            //    'rgba(54, 162, 235, 0.2)',
+            //    'rgba(255, 206, 86, 0.2)',
+            //    'rgba(75, 192, 192, 0.2)',
+            //    'rgba(153, 102, 255, 0.2)',
+            //    'rgba(255, 159, 64, 0.2)'
+            //]);
         }
 
-        document.getElementById(chartCol).innerHTML = '<canvas id="'+chart+'" width="800" height="500"></canvas>'; //you have to clean everything up, otherwise the chart is bugging around
+
+        var chartType = document.getElementById(selector).value;
+        document.getElementById(chartCol).innerHTML = '<canvas id="' + chart + '" width="800" height="500"></canvas>'; //you have to clean everything up, otherwise the chart is bugging around
         var canvas = document.getElementById(chart);
         var ctx = canvas.getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: document.getElementById(selector).value,
-            data: {
-                labels: keys,
-                datasets: [{
-                    label: '# of Votes',
-                    data: values,
-                    backgroundColor: bgColors,
-                    borderColor: borderColors,
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
+
+
+        var pluginFontSize = 15;
+        if (window.screen.width < 500) {
+            pluginFontSize = 10;
+        }
+
+
+        if (chartType === "radar") {
+            var myRadarChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: keys,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        backgroundColor: bgColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
                     }]
                 }
-            }
-        });
+            });
+        } else if (chartType === "doughnut" || chartType === "polarArea") {
+
+            var myPieChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: keys,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        backgroundColor: bgColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        labels: {
+                            // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+                            render: 'value',
+                            // precision for percentage, default is 0
+                            precision: 0,
+                            // identifies whether or not labels of value 0 are displayed, default is false
+                            showZero: true,
+                            // font size, default is defaultFontSize
+                            fontSize: pluginFontSize,
+                            // font color, can be color array for each data or function for dynamic color, default is defaultFontColor
+                            fontColor: '#000000',
+                            // font style, default is defaultFontStyle
+                            fontStyle: 'normal',
+                            // font family, default is defaultFontFamily
+                            fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                            // draw text shadows under labels, default is false
+                            textShadow: true,
+                            // text shadow intensity, default is 6
+                            shadowBlur: 10,
+                            // text shadow X offset, default is 3
+                            shadowOffsetX: -5,
+                            // text shadow Y offset, default is 3
+                            shadowOffsetY: 5,
+                            // text shadow color, default is 'rgba(0,0,0,0.3)'
+                            shadowColor: 'rgba(255,0,0,0.75)',
+                            // draw label in arc, default is false
+                            arc: true,
+                            // position to draw label, available value is 'default', 'border' and 'outside'
+                            // default is 'default'
+                            position: 'default',
+                            // draw label even it's overlap, default is true
+                            overlap: true,
+                            // show the real calculated percentages from the values and don't apply the additional logic to fit the percentages to 100 in total, default is false
+                            showActualPercentages: true,
+                            // add padding when position is `outside`
+                            // default is 2
+                            outsidePadding: 4,
+                            // add margin of text when position is `outside` or `border`
+                            // default is 2
+                            textMargin: 4
+                        }
+                    }
+                }
+            });
+        } else {
+            var myChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: keys,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        backgroundColor: bgColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
     }
 
     function createListing(chart) {
@@ -172,7 +272,7 @@
         var injection = "";
 
         for (i = 0; i < dict.length; i++) {
-            injection += ("<tr><td>" + dict[i].key + "</td><td>" + dict[i].value + "</td><td>" + ((dict[i].value / answerCount) * 100).toFixed(2) + "</td></tr>");
+            injection += ("<tr><td>" + dict[i].key + "</td><td>" + dict[i].value + "</td><td>" + ((dict[i].value / answerCount) * 100).toFixed(2) + "%</td></tr>");
         }
 
         $("#" + chart).append("<table class='table table-bordered'><thead><tr><th>@Resources.answer</th><th>@Resources.count</th><th>@Resources.percent</th></tr></thead><tbody>" + injection + "</tbody></table>");
@@ -201,6 +301,4 @@
     }
 
 </script>
-
-
 

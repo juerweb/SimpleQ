@@ -184,4 +184,7 @@
   <data name="percent" xml:space="preserve">
     <value>Prozent</value>
   </data>
+  <data name="polarArea" xml:space="preserve">
+    <value>Radardiagramm</value>
+  </data>
 </root>
