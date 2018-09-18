@@ -16,5 +16,6 @@ namespace SimpleQ.Shared
     {
         public int TypeId { get; set; }
         public string TypeDesc { get; set; }
+        public int BaseId { get; set; }
     }
 }
