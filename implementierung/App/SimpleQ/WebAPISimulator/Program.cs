@@ -98,7 +98,7 @@ namespace WebAPISimulator
                     break;
                 case "/AnswerSurvey":
                     StreamReader reader = new StreamReader(request.InputStream);
-                    Vote vote = JsonConvert.DeserializeObject<Vote>(reader.ReadToEnd());
+                    SurveyVote vote = JsonConvert.DeserializeObject<SurveyVote>(reader.ReadToEnd());
 
                     if (vote != null)
                     {

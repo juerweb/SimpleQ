@@ -266,4 +266,14 @@
   <data name="CloseAppAfterNotification" xml:space="preserve">
     <value>Soll sich die App, nach dem Beantworten einer neuen Frage, wieder schließen?</value>
   </data>
+  <data name="APIMainURL" xml:space="preserve">
+    <value>http://localhost:1899</value>
+    <comment>NT</comment>
+  </data>
+  <data name="APIRegisterPlusURL" xml:space="preserve">
+    <value>/Register</value>
+  </data>
+  <data name="APIUnregisterPlusAd" xml:space="preserve">
+    <value />
+  </data>
 </root>

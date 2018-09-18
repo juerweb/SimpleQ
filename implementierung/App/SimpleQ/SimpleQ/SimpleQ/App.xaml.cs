@@ -201,6 +201,7 @@ namespace SimpleQ
             FreshIOC.Container.Register<ILanguageService, LanguageService>();
             FreshIOC.Container.Register<IQuestionService, QuestionService>();
             FreshIOC.Container.Register<ISettingsService, SettingsService>();
+            FreshIOC.Container.Register<IWebAPIService, WebAPIService>();
         }
 
 		protected override async void OnStart ()

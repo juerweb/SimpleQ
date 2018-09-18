@@ -37,6 +37,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="SharedClasses">
+      <HintPath>..\..\..\..\SharedClasses\SharedClasses\bin\Debug\netstandard2.0\SharedClasses.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Pages\ExtendedHelpPage.xaml.cs">
       <DependentUpon>ExtendedHelpPage.xaml</DependentUpon>
     </Compile>

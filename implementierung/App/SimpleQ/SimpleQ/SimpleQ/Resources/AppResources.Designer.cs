@@ -97,6 +97,33 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die http://localhost:1899 ähnelt.
+        /// </summary>
+        internal static string APIMainURL {
+            get {
+                return ResourceManager.GetString("APIMainURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /Register ähnelt.
+        /// </summary>
+        internal static string APIRegisterPlusURL {
+            get {
+                return ResourceManager.GetString("APIRegisterPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        /// </summary>
+        internal static string APIUnregisterPlusAd {
+            get {
+                return ResourceManager.GetString("APIUnregisterPlusAd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die App Informationen ähnelt.
         /// </summary>
         internal static string AppInformation {
