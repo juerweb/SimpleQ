@@ -26,6 +26,7 @@
 
         $(document).ready(function () {
             showSurveyCreationWindow();
+            $("#showNavbarBtn").hide();
         });
 
         function hideAllSubWindows() {
@@ -59,6 +60,17 @@
             hideAllSubWindows();
             $("#supportWindow").show();
         }
+        function hideNavbar() {
+            $("#leftCol").hide();
+            $("#rightCol").removeClass("col-md-10").addClass("col-md-12");
+            $("#showNavbarBtn").show();
+        }
+        function showNavbar() {
+            $("#showNavbarBtn").hide();
+            $("#rightCol").removeClass("col-md-12").addClass("col-md-10");
+            $("#leftCol").show();
+        }
+
     </script>
 
 
@@ -83,71 +95,79 @@
         </div>
     </div>
     <div class="row m-0">
-        <div class="col-md-2 border-right border-dark p-0">
-            <ul class="list-group">
-                <li class="list-group-item p-0">
-                    <a class="btn btn-light btn-block" onclick="showSurveyCreationWindow()">
-                        <span class="row d-flex">
-                            <span class="col-8 align-self-center p-0">
-                                Umfrage erstellen
-                            </span>
-                            <span class="col-4">
-                                <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />
-                            </span>
-                        </span>
-                    </a>
-                </li>
-                <li class="list-group-item p-0">
-                    <a class="btn btn-light btn-block" onclick="showSurveyResultsWindow()">
-                        <span class="row d-flex">
-                            <span class="col-8 align-self-center p-0">
-                                Umfrageauswertung
-                            </span>
-                            <span class="col-4">
-                                <img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid navbar-img" />
-                            </span>
-                        </span>
-                    </a>
-                </li>
-                <li class="list-group-item p-0">
-                    <a class="btn btn-light btn-block" onclick="showGroupAdministrationWindow()">
-                        <span class="row d-flex">
-                            <span class="col-8 align-self-center p-0">
-                                Gruppenverwaltung
-                            </span>
-                            <span class="col-4">
-                                <img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid navbar-img" />
-                            </span>
-                        </span>
-                    </a>
-                </li>
-                <li class="list-group-item p-0">
-                    <a class="btn btn-light btn-block" onclick="showSettingsWindow()">
-                        <span class="row d-flex">
-                            <span class="col-8 align-self-center p-0">
-                                Einstellungen
-                            </span>
-                            <span class="col-4">
-                                <img src="../../Content/Images/Icons/settings.png" class="img-fluid navbar-img" />
-                            </span>
-                        </span>
-                    </a>
-                </li>
-                <li class="list-group-item p-0">
-                    <a class="btn btn-light btn-block" onclick="showSupportWindow()">
-                        <span class="row d-flex">
-                            <span class="col-8 align-self-center p-0">
-                                Support
-                            </span>
-                            <span class="col-4">
-                                <img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />
-                            </span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
+        <div class="col-md-2 border-right border-dark p-0" id="leftCol">
+            <div class="row m-0">
+                <div class="col-sm-11 p-0" id="navbar">
+                    <ul class="list-group">
+                        <li class="list-group-item p-0">
+                            <a class="btn btn-light btn-block" onclick="showSurveyCreationWindow()">
+                                <span class="row d-flex">
+                                    <span class="col-8 align-self-center p-0">
+                                        Umfrage erstellen
+                                    </span>
+                                    <span class="col-4">
+                                        <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-group-item p-0">
+                            <a class="btn btn-light btn-block" onclick="showSurveyResultsWindow()">
+                                <span class="row d-flex">
+                                    <span class="col-8 align-self-center p-0">
+                                        Umfrageauswertung
+                                    </span>
+                                    <span class="col-4">
+                                        <img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid navbar-img" />
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-group-item p-0">
+                            <a class="btn btn-light btn-block" onclick="showGroupAdministrationWindow()">
+                                <span class="row d-flex">
+                                    <span class="col-8 align-self-center p-0">
+                                        Gruppenverwaltung
+                                    </span>
+                                    <span class="col-4">
+                                        <img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid navbar-img" />
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-group-item p-0">
+                            <a class="btn btn-light btn-block" onclick="showSettingsWindow()">
+                                <span class="row d-flex">
+                                    <span class="col-8 align-self-center p-0">
+                                        Einstellungen
+                                    </span>
+                                    <span class="col-4">
+                                        <img src="../../Content/Images/Icons/settings.png" class="img-fluid navbar-img" />
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-group-item p-0">
+                            <a class="btn btn-light btn-block" onclick="showSupportWindow()">
+                                <span class="row d-flex">
+                                    <span class="col-8 align-self-center p-0">
+                                        Support
+                                    </span>
+                                    <span class="col-4">
+                                        <img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />
+                                    </span>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-1 p-0">
+                    <button class="btn btn-outline-secondary btn-block p-0" style="height:100%; border-radius:0;" id="hideNavbarBtn" onclick="hideNavbar()"><</button>
+                </div>
+            </div>            
         </div>
-        <div class="col-md-10">
+        <div class="col-md-10 p-0" id="rightCol">
+            <button class="btn btn-outline-secondary p-0" style="float:left; height:100%; border-radius:0;" id="showNavbarBtn" onclick="showNavbar()">></button>
             <div id="surveyCreationWindow">
                 @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
             </div>
