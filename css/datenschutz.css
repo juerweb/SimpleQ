@@ -1,0 +1,42 @@
+﻿/* Required for full background image */
+
+html,
+body,
+header,
+.view {
+  height: 100%;
+}
+
+@media (max-width: 740px) {
+  html,
+  body,
+  header,
+  .view {
+    height: 100vh;
+  }
+}
+
+h1 {
+  letter-spacing: 8px;
+}
+
+h5 {
+  letter-spacing: 3px;
+}
+
+.hr-light {
+  border-top: 3px solid #fff;
+  width: 80px;
+}
+
+.height{
+    margin-top: 85px;
+    height: 40vh !important;
+}
+.navnotTransparent{
+    color: black !important;
+}
+.paddings{
+    padding-top:50px;
+    padding-bottom:50px;
+}

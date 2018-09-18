@@ -54,7 +54,6 @@ section.preise {
     padding-top: 50px;
     padding-bottom: 50px;
     text-align: center;
-    background-color: #F3F3F3;
 }
 
 section.about {
@@ -67,14 +66,12 @@ section.konzept {
     padding-top: 50px;
     padding-bottom: 50px;
     position: relative;
-    background-color: #F3F3F3;
     padding: 80px 0;
 }
 
-section.team-section{
-    background-color: #F3F3F3;
-    padding-top:50px;
-    padding-bottom:50px;
+section.team-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
 }
 /*
     //////////////////////////////////////////
@@ -92,6 +89,10 @@ section.team-section{
 
 .topborderxl {
     padding-top: 35px;
+}
+
+.topborderxxl {
+    padding-top: 45px;
 }
 
 .botborder {
@@ -121,9 +122,35 @@ section.team-section{
     //////////////////////////////////////////
 */
 
-.rand{
+.rand {
     font-family: 'Roboto', sans-serif;
-    font-weight: bold; 
-       -webkit-text-stroke: 1px black;
-   color: white;
+    font-weight: bold;
+    -webkit-text-stroke: 1px black;
+    color: white;
+}
+
+/*
+    //////////////////////////////////////////
+    /////////////Background-Color/////////////
+    //////////////////////////////////////////
+*/
+
+.grayBack {
+    background-color: #F3F3F3;
+}
+
+@media only screen and (max-width: 500px) {
+    .paddingtop {
+        padding-top: 15px;
+    }
+}
+
+.androidbildschirm {
+    background-image: url("../images/androidmockup.jpeg");
+    background-size: contain;
+}
+
+.iosbildschirm {
+    background-image: url("../images/ios.jpg");
+    background-size: contain;
 }
