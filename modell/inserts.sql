@@ -6,8 +6,8 @@ go
 
 begin transaction;
 insert into Customer values ('m4rku5', 'musterreis gmbh.', 'm@rk.us', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 0);
-insert into Department values ('development', 'm4rku5'); -- DepId 1
-insert into Department values ('putzkleschn', 'm4rku5'); -- DepId 2
+insert into Department values (1, 'development', 'm4rku5');
+insert into Department values (2, 'putzkleschn', 'm4rku5');
 insert into Person values (1, 'm4rku5', null); -- PersId 1
 insert into Person values (1, 'm4rku5', null); -- PersId 2
 insert into Person values (1, 'm4rku5', null); -- PersId 3
@@ -24,13 +24,13 @@ insert into Survey values (2, 'm4rku5', 'Sind Sie ein Pajero?', '2018-08-24', '2
 insert into Survey values (3, 'm4rku5', 'Was halten Sie von Nico Srnka?', '2018-08-24', '2019-08-24', 7) -- SvyId 4
 insert into Survey values (3, 'm4rku5', 'Beschreiben Sie Nico Srnka in einem Wort', '2018-08-24', '2019-08-24', 4) -- SvyId 5
 
-insert into Asking values (1, 1, 'm4rku5');
-insert into Asking values (1, 2, 'm4rku5');
-insert into Asking values (2, 1, 'm4rku5');
-insert into Asking values (3, 1, 'm4rku5');
-insert into Asking values (3, 2, 'm4rku5');
-insert into Asking values (4, 2, 'm4rku5');
-insert into Asking values (5, 1, 'm4rku5');
+insert into Asking values (1, 1, 'm4rku5', 5);
+insert into Asking values (1, 2, 'm4rku5', 5);
+insert into Asking values (2, 1, 'm4rku5', 5);
+insert into Asking values (3, 1, 'm4rku5', 5);
+insert into Asking values (3, 2, 'm4rku5', 5);
+insert into Asking values (4, 2, 'm4rku5', 5);
+insert into Asking values (5, 1, 'm4rku5', 5);
 
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 1 nötig (YesNo) => AnsIds 1, 2
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 2 nötig (YesNo) => AnsIds 3, 4
