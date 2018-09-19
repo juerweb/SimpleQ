@@ -12,10 +12,15 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Answer
+    public partial class Bill
     {
-        public int AnsId { get; set; }
-        public string AnsDesc { get; set; }
-        public int TypeId { get; set; }
+        public int BillId { get; set; }
+        public string CustCode { get; set; }
+        public decimal BillPrice { get; set; }
+        public System.DateTime BillDate { get; set; }
+        public bool Paid { get; set; }
+    
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual Customer Customer { get; set; }
     }
 }

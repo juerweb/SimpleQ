@@ -183,6 +183,9 @@
     <Compile Include="Models\AnswerType.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Asking.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BaseQuestionType.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>

@@ -12,13 +12,9 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Vote
+    public partial class DsgvoConstraint
     {
-        public int VoteId { get; set; }
-        public int SvyId { get; set; }
-        public string CustCode { get; set; }
-        public int AnsId { get; set; }
-        public string VoteText { get; set; }
-        public Nullable<int> SpecId { get; set; }
+        public string ConstrName { get; set; }
+        public int ConstrValue { get; set; }
     }
 }

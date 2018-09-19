@@ -54,8 +54,35 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 db.People.RemoveRange(db.People.Where(p => p.PersId == persId && p.CustCode == custCode));
                 db.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetSurveyData(int svyId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                Survey svy = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault();
+
+                return (svy != null) ?
+                    Request.CreateResponse(HttpStatusCode.OK, new SurveyNotification
+                        {
+                            SvyId = svy.SvyId,
+                            SvyText = svy.SvyText,
+                            EndDate = svy.EndDate,
+                            TypeId = svy.TypeId,
+                            CatName = db.SurveyCategories
+                            .Where(c => c.CatId == svy.CatId)
+                            .Select(c => c.CatName)
+                            .First(),
+                            AnswerOptions = db.AnswerOptions
+                            .Where(a => a.SvyId == svy.SvyId)
+                            .ToList()
+                        })
+                    : Request.CreateResponse(HttpStatusCode.NotFound);
+            }
         }
 
         [HttpPost]
@@ -63,41 +90,36 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.Votes.Add(new Vote { VoteText = sv.VoteText, AnswerOptions = sv.ChosenAnswerOptions });
+                Vote vote = new Vote { VoteText = sv.VoteText };
+                db.Votes.Add(vote);
+                db.SaveChanges();
+
+                sv.ChosenAnswerOptions.Select(a => a.AnsId).ToList().ForEach(id =>
+                {
+                    vote.AnswerOptions.Add(db.AnswerOptions.Where(a => a.AnsId == id).First());
+                });
+
                 db.Customers.Where(c => c.CustCode == sv.CustCode).First().CostBalance += decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
                 db.SaveChanges();
+
+                return Request.CreateResponse(HttpStatusCode.OK);
             }
-            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
 
-        internal static void SendSurvey(int depId, int amount, string custCode, Survey survey)
+        internal static void SendSurveyNotification(int depId, int amount, int svyId)
         {
             using (var db = new SimpleQDBEntities())
             {
-                SurveyNotification sn = new SurveyNotification
-                {
-                    SvyId = survey.SvyId,
-                    SvyText = survey.SvyText,
-                    EndDate = survey.EndDate,
-                    TypeId = survey.TypeId,
-                    CatName = db.SurveyCategories
-                        .Where(c => c.CatId == survey.CatId && c.CustCode == custCode)
-                        .Select(c => c.CatName)
-                        .First(),
-                    AnswerOptions = db.AnswerOptions
-                        .Where(a => a.SvyId == survey.SvyId)
-                        .ToList()
-                };
 
                 db.Departments
-                    .Where(d => d.DepId == depId && d.CustCode == custCode)
+                    .Where(d => d.DepId == depId)
                     .SelectMany(d => d.People)
                     .TakeRandom(amount)
                     .ToList()
                     .ForEach(p =>
                     {
-                        // SendNotification(p.DeviceId, sn);    
+                        // SendNotification(p.DeviceId, svyId);    
                     });
 
             }

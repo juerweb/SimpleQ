@@ -12,34 +12,26 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Survey
+    public partial class AnswerType
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Survey()
+        public AnswerType()
         {
-            this.AnswerOptions = new HashSet<AnswerOption>();
-            this.Askings = new HashSet<Asking>();
+            this.PredefinedAnswerOptions = new HashSet<PredefinedAnswerOption>();
+            this.Surveys = new HashSet<Survey>();
         }
     
-        public int SvyId { get; set; }
-        public int CatId { get; set; }
-        public string CustCode { get; set; }
-        public string SvyText { get; set; }
-        public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
         public int TypeId { get; set; }
+        public string TypeDesc { get; set; }
+        public int BaseId { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual BaseQuestionType BaseQuestionType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual AnswerType AnswerType { get; set; }
+        public virtual ICollection<PredefinedAnswerOption> PredefinedAnswerOptions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Asking> Askings { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual Customer Customer { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual SurveyCategory SurveyCategory { get; set; }
+        public virtual ICollection<Survey> Surveys { get; set; }
     }
 }

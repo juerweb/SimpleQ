@@ -37,7 +37,8 @@ namespace SimpleQ.Webinterface.Controllers
 
                     DepartmentNames = db.Surveys
                         .Where(s => s.SvyId == survey.SvyId)
-                        .SelectMany(s => s.Departments.Select(d => d.DepName))
+                        .SelectMany(s => s.Askings)
+                        .Select(a => a.Department.DepName)
                         .ToList(),
 
                     Votes = (survey.TypeId != 4) ? db.Votes
@@ -82,8 +83,8 @@ namespace SimpleQ.Webinterface.Controllers
                         .First(),
 
                     DepartmentNames = surveys
-                        .SelectMany(s => s.Departments)
-                        .Select(d => d.DepName)
+                        .SelectMany(s => s.Askings)
+                        .Select(a => a.Department.DepName)
                         .Distinct()
                         .ToList()
 
@@ -98,7 +99,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             get
             {
-                return Session["custCode"] as string;
+                return "m4rku5";//Session["custCode"] as string;
             }
         }
     }

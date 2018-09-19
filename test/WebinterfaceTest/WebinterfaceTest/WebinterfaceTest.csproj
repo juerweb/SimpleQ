@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{DD5257C7-FC07-4020-8EB1-AAFFF34C3399}</ProjectGuid>
+    <ProjectGuid>{4589737C-0135-4FB4-84D1-FF2E95FCD289}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>MobileTest</RootNamespace>
-    <AssemblyName>MobileTest</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <RootNamespace>WebinterfaceTest</RootNamespace>
+    <AssemblyName>WebinterfaceTest</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
@@ -32,15 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.AspNet.SignalR.Client, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.AspNet.SignalR.Client.2.3.0\lib\net45\Microsoft.AspNet.SignalR.Client.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,13 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AnswerOption.cs" />
+    <Compile Include="Models\AnswerType.cs" />
+    <Compile Include="Models\BaseQuestionType.cs" />
+    <Compile Include="Models\Bill.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\DsgvoConstraint.cs" />
+    <Compile Include="Models\PaymentMethod.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\PredefinedAnswerOption.cs" />
+    <Compile Include="Models\Survey.cs" />
+    <Compile Include="Models\SurveyCategory.cs" />
+    <Compile Include="Models\ViewModels\ContainerViewModel.cs" />
+    <Compile Include="Models\ViewModels\MultiResultsModel.cs" />
+    <Compile Include="Models\ViewModels\SingleResultModel.cs" />
+    <Compile Include="Models\ViewModels\SurveyCreationModel.cs" />
+    <Compile Include="Models\ViewModels\SurveyResultsModel.cs" />
+    <Compile Include="Models\Vote.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServerClasses\Answer.cs" />
-    <Compile Include="ServerClasses\AnswerType.cs" />
-    <Compile Include="ServerClasses\NotificationContent.cs" />
-    <Compile Include="ServerClasses\OperationStatus.cs" />
-    <Compile Include="ServerClasses\Vote.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

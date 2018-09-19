@@ -20,8 +20,8 @@
     </div>
 
     <script>
-        function loadSingleResultAsync() {
-            $("#result").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + "5");
+        function loadSingleResultAsync(id) {
+            $("#result").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + id);
         }
     </script>
 </div>

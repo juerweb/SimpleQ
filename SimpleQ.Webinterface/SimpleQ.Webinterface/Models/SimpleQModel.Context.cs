@@ -29,6 +29,7 @@ namespace SimpleQ.Webinterface.Models
     
         public virtual DbSet<AnswerOption> AnswerOptions { get; set; }
         public virtual DbSet<AnswerType> AnswerTypes { get; set; }
+        public virtual DbSet<Asking> Askings { get; set; }
         public virtual DbSet<BaseQuestionType> BaseQuestionTypes { get; set; }
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }

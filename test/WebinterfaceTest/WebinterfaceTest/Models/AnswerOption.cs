@@ -12,26 +12,22 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Department
+    public partial class AnswerOption
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Department()
+        public AnswerOption()
         {
-            this.Askings = new HashSet<Asking>();
-            this.People = new HashSet<Person>();
+            this.Votes = new HashSet<Vote>();
         }
     
-        public int DepId { get; set; }
-        public string DepName { get; set; }
-        public string CustCode { get; set; }
+        public int AnsId { get; set; }
+        public int SvyId { get; set; }
+        public string AnsText { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual Survey Survey { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Asking> Askings { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual Customer Customer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Person> People { get; set; }
+        public virtual ICollection<Vote> Votes { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace SimpleQ.Webinterface.Models
         public Survey()
         {
             this.AnswerOptions = new HashSet<AnswerOption>();
-            this.Askings = new HashSet<Asking>();
+            this.Departments = new HashSet<Department>();
         }
     
         public int SvyId { get; set; }
@@ -34,12 +34,12 @@ namespace SimpleQ.Webinterface.Models
         public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
         [Newtonsoft.Json.JsonIgnore]
         public virtual AnswerType AnswerType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Asking> Askings { get; set; }
         [Newtonsoft.Json.JsonIgnore]
         public virtual Customer Customer { get; set; }
         [Newtonsoft.Json.JsonIgnore]
         public virtual SurveyCategory SurveyCategory { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }

@@ -12,26 +12,19 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Department
+    public partial class PaymentMethod
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Department()
+        public PaymentMethod()
         {
-            this.Askings = new HashSet<Asking>();
-            this.People = new HashSet<Person>();
+            this.Customers = new HashSet<Customer>();
         }
     
-        public int DepId { get; set; }
-        public string DepName { get; set; }
-        public string CustCode { get; set; }
+        public int PaymentMethodId { get; set; }
+        public string PaymentMethodDesc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Asking> Askings { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual Customer Customer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Person> People { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

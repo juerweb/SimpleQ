@@ -14,11 +14,17 @@ namespace SimpleQ.Webinterface.Models
     
     public partial class Vote
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Vote()
+        {
+            this.AnswerOptions = new HashSet<AnswerOption>();
+        }
+    
         public int VoteId { get; set; }
-        public int SvyId { get; set; }
-        public string CustCode { get; set; }
-        public int AnsId { get; set; }
         public string VoteText { get; set; }
-        public Nullable<int> SpecId { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
+        public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
     }
 }

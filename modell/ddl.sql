@@ -66,7 +66,7 @@ go
 -- KUNDENSPEZIFISCH
 create table Department
 (
-	DepId int identity not null,
+	DepId int not null,
 	DepName varchar(max) not null,
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
     primary key (DepId, CustCode)
@@ -145,6 +145,7 @@ create table Asking
 	SvyId int references Survey,
 	DepId int not null,
     CustCode char(6) collate Latin1_General_CS_AS not null,
+    Amount int not null
 	primary key (SvyId, DepId, CustCode),
     foreign key (DepId, CustCode) references Department
 );

@@ -19,18 +19,21 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 req.Survey.CustCode = CustCode;
-                //s.Survey.EndDate = s.Survey.StartDate.AddDays(7);
                 db.Surveys.Add(req.Survey);
+                db.SaveChanges();
+
                 req.SelectedDepartments.ForEach(depId =>
                 {
-                    db.Departments.Where(d => d.DepId == depId).First().Surveys.Add(req.Survey);
+                    db.Askings.Add(new Asking { SvyId = req.Survey.SvyId, DepId = depId, CustCode = CustCode, Amount = req.Amount });
                 });
                 db.SaveChanges();
             }
 
             HostingEnvironment.QueueBackgroundWorkItem(ct =>
             {
-                Thread.Sleep(req.Survey.StartDate - DateTime.Now);
+                TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
+                if (timeout.Milliseconds > 0)
+                    Thread.Sleep(req.Survey.StartDate - DateTime.Now);
 
                 using (var db = new SimpleQDBEntities())
                 {
@@ -49,7 +52,7 @@ namespace SimpleQ.Webinterface.Controllers
                         // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
                         int toAsk = req.Amount * (int)Math.Round(currPersons / (double)totalPersons);
 
-                        MobileController.SendSurvey(d, toAsk, CustCode, req.Survey);
+                        MobileController.SendSurveyNotification(d, toAsk, req.Survey.SvyId);
                     });
                 }
             });
@@ -62,7 +65,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             get
             {
-                return Session["custCode"] as string;
+                return "m4rku5";//Session["custCode"] as string;
             }
         }
     }
