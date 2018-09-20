@@ -1,13 +1,13 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
 
-<div class="row pl-5 mt-1">
+<div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>@Resources.surveyResultsHeader</h2>
 </div>
 
-<div class="row">
+<div class="row m-0 p-0 mr-0 ml-0">
     @* Switch betwenn result of single survey of result of multiple ones *@
-    <div class="col-lg-6 pl-5 pr-5">
+    <div class="col-lg-6 pl-4 pr-4">
         <div class="row">
             <div class="col-6 pr-0">
                 <button id="trendBtn" onclick="switchToMulti()" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
@@ -19,8 +19,8 @@
     </div>
 
 </div>
-<div class="row mt-1">
-    <div class="col-md-5 pl-5 pr-5">
+<div class="row mt-1 ml-0 mr-0">
+    <div class="col-md-5 pl-4 pr-4">
         <div id="singleResultOptions">
             <label for="Surveys">Umfrage</label>
             @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control" })
@@ -55,13 +55,7 @@
     </div>
 </div>
 <hr />
-<div class="row pr-2 pl-2">
-    @*<div class="col-md-6 chartCol" id="chart1Col">
-            <canvas id="chart1" width="800" height="500"></canvas>
-        </div>
-        <div class="col-md-6 chartCol" id="chart2Col">
-            <canvas id="chart2" width="800" height="500"></canvas>
-        </div>*@
+<div class="row pr-2 pl-2 ml-0 mr-0">
     <div class="col-md-6 chartCol" id="chart1Col">
         <canvas id="chart1"></canvas>
     </div>
@@ -112,7 +106,7 @@
         var part1 = Math.floor(Math.random() * 256);
         var part2 = Math.floor(Math.random() * 256);
         var part3 = Math.floor(Math.random() * 256);
-        if (part1 > 200 && part2 > 200 && part3 > 200) {
+        if (part1 > 140 && part2 > 140 && part3 > 140) {
             getRandomColor();
         } else if (part1 < 70 && part2 < 70 && part3 < 70) {
             getRandomColor();
