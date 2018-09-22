@@ -99,7 +99,7 @@ namespace SimpleQ.Webinterface.Controllers
                     vote.AnswerOptions.Add(db.AnswerOptions.Where(a => a.AnsId == id).First());
                 });
 
-                db.Customers.Where(c => c.CustCode == sv.CustCode).First().CostBalance += decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
+                db.Customers.Where(c => c.CustCode == sv.CustCode).First().CostBalance += db.Customers.Where(c => c.CustCode == sv.CustCode).First().PricePerClick; //decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
                 db.SaveChanges();
 
                 return Request.CreateResponse(HttpStatusCode.OK);
@@ -111,17 +111,20 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-
+                Random rnd = new Random();
+                //int i = 0;
                 db.Departments
                     .Where(d => d.DepId == depId)
                     .SelectMany(d => d.People)
-                    .TakeRandom(amount)
+                    .ToList()
+                    .OrderBy(p => rnd.Next())
+                    .Take(amount)
                     .ToList()
                     .ForEach(p =>
                     {
-                        // SendNotification(p.DeviceId, svyId);    
+                        //i++;  
                     });
-
+                //System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {amount}");
             }
         }
     }

@@ -37,18 +37,11 @@ namespace SimpleQ.Webinterface.Controllers
 
                     DepartmentNames = db.Surveys
                         .Where(s => s.SvyId == survey.SvyId)
-                        .SelectMany(s => s.Askings)
-                        .Select(a => a.Department.DepName)
+                        .SelectMany(s => s.Departments)
+                        .Select(d => d.DepName)
                         .ToList(),
 
-                    Votes = (survey.TypeId != 4) ? db.Votes
-                        .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
-                        .SelectMany(v => v.AnswerOptions)
-                        .GroupBy(a => a.AnsId)
-                        .ToDictionary(g => g.Where(a => a.AnsId == g.Key).Select(a => a.AnsText).FirstOrDefault(), g => g.Count())
-                        .Concat(db.AnswerOptions.Where(a => a.SvyId == survey.SvyId && a.Votes.Count == 0).AsEnumerable().Select(a => new KeyValuePair<string, int>(a.AnsText, 0)))
-                        .ToDictionary(kv => kv.Key, kv => kv.Value)
-                        : null,
+                    Votes = (survey.TypeId != 4) ? SelectVotesFromSurvey(db, survey) : null,
 
                     FreeTextVotes = (survey.TypeId == 4) ? db.Votes
                         .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
@@ -63,36 +56,60 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpPost]
         public ActionResult LoadMultiResult(MultiResultsModel req)
         {
+            //// SAMPLE DATA
+            //req = new MultiResultsModel
+            //{
+            //    CatId = 4,
+            //    TypeId = 1,
+            //    StartDate = DateTime.Now.AddYears(-1),
+            //    EndDate = DateTime.Now,
+            //};
+
             using (var db = new SimpleQDBEntities())
             {
-                IQueryable<Survey> surveys = db.Surveys
+                var selectedSurveys = db.Surveys
                     .Where(s => s.CatId == req.CatId && s.TypeId == req.TypeId
-                            && s.StartDate >= req.StartDate && s.EndDate <= req.EndDate
-                            && s.CustCode == CustCode);
+                     && s.StartDate >= req.StartDate && s.EndDate <= req.EndDate);
 
                 var model = new MultiResultsModel
                 {
                     CatName = db.SurveyCategories
                         .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
                         .Select(c => c.CatName)
-                        .First(),
+                        .FirstOrDefault(),
 
                     TypeName = db.AnswerTypes
                         .Where(a => a.TypeId == req.TypeId)
                         .Select(a => a.TypeDesc) // GLOBALIZATION!
-                        .First(),
+                        .FirstOrDefault(),
 
-                    DepartmentNames = surveys
-                        .SelectMany(s => s.Askings)
-                        .Select(a => a.Department.DepName)
+                    AvgAmount = (selectedSurveys.Sum(s => s.Amount) / (double)selectedSurveys.Count()),
+
+                    DepartmentNames = selectedSurveys
+                        .SelectMany(s => s.Departments)
+                        .Select(d => d.DepName)
                         .Distinct()
-                        .ToList()
+                        .ToList(),
 
-                    //Votes = ...
+                    Votes = selectedSurveys
+                        .ToList()
+                        .Select(s => SelectVotesFromSurvey(db, s))
+                        .ToList()
                 };
 
-                return PartialView(viewName: "_MultiResult", model: null);
+                return PartialView(viewName: "_MultiResult", model: model);
             }
+        }
+
+        private Dictionary<string, int> SelectVotesFromSurvey(SimpleQDBEntities db, Survey survey)
+        {
+            return db.Votes
+                .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
+                .SelectMany(v => v.AnswerOptions)
+                .GroupBy(a => a.AnsId)
+                .ToDictionary(g => g.Where(a => a.AnsId == g.Key).Select(a => a.AnsText).FirstOrDefault(), g => g.Count())
+                .Concat(db.AnswerOptions.Where(a => a.SvyId == survey.SvyId && a.Votes.Count == 0).AsEnumerable().Select(a => new KeyValuePair<string, int>(a.AnsText, 0)))
+                .ToDictionary(kv => kv.Key, kv => kv.Value);
         }
 
         private string CustCode

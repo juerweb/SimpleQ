@@ -23,6 +23,10 @@
         function loadSingleResultAsync(id) {
             $("#result").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + id);
         }
+
+        function loadSampleMultiResult() {
+            $.post("@Url.Action("LoadMultiResult", "SurveyResults")");
+        }
     </script>
 </div>
         

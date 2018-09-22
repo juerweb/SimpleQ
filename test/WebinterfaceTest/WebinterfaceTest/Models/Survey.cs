@@ -27,6 +27,7 @@ namespace SimpleQ.Webinterface.Models
         public string SvyText { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
+        public int Amount { get; set; }
         public int TypeId { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

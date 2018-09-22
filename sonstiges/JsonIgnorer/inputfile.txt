@@ -1,6 +1,5 @@
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\AnswerOption.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\AnswerType.cs
-..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Asking.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\BaseQuestionType.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Bill.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Customer.cs

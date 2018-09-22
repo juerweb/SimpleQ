@@ -46,6 +46,7 @@ create table Customer
 	LanguageCode char(3) not null,
 	DataStoragePeriod int not null, -- in Monaten
 	PaymentMethodId int not null references PaymentMethod,
+    PricePerClick money not null,
 	CostBalance money not null
 );
 go
@@ -134,6 +135,7 @@ create table Survey
 	SvyText varchar(max) not null,
 	StartDate datetime not null,
 	EndDate datetime not null,
+    Amount int not null,
 	TypeId int not null references AnswerType
 );
 go
@@ -144,8 +146,7 @@ create table Asking
 (
 	SvyId int references Survey,
 	DepId int not null,
-    CustCode char(6) collate Latin1_General_CS_AS not null,
-    Amount int not null
+    CustCode char(6) collate Latin1_General_CS_AS not null
 	primary key (SvyId, DepId, CustCode),
     foreign key (DepId, CustCode) references Department
 );

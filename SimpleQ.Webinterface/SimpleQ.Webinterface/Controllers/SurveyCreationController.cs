@@ -19,12 +19,17 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 req.Survey.CustCode = CustCode;
+
+                int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId)).SelectMany(d => d.People).Count();
+                if (req.Survey.Amount > totalPeople)
+                    req.Survey.Amount = totalPeople;
+
                 db.Surveys.Add(req.Survey);
                 db.SaveChanges();
 
                 req.SelectedDepartments.ForEach(depId =>
                 {
-                    db.Askings.Add(new Asking { SvyId = req.Survey.SvyId, DepId = depId, CustCode = CustCode, Amount = req.Amount });
+                    db.Surveys.Where(s => s.SvyId == req.Survey.SvyId).First().Departments.Add(db.Departments.Where(d => d.DepId == depId).First());
                 });
                 db.SaveChanges();
             }
@@ -38,19 +43,19 @@ namespace SimpleQ.Webinterface.Controllers
                 using (var db = new SimpleQDBEntities())
                 {
                     // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
-                    int totalPersons = db.Departments
+                    int totalPeople = db.Departments
                         .Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
                         .Sum(d => d.People.Count);
 
                     req.SelectedDepartments.ForEach(d =>
                     {
                         // Anzahl an Personen in der aktuellen Abteilung (mit DepId = d)
-                        int currPersons = db.Departments
+                        int currPeople = db.Departments
                             .Where(dep => dep.DepId == d && dep.CustCode == CustCode)
                             .Select(dep => dep.People.Count).First();
 
                         // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
-                        int toAsk = req.Amount * (int)Math.Round(currPersons / (double)totalPersons);
+                        int toAsk = (int)Math.Round(req.Survey.Amount * (currPeople / (double)totalPeople));
 
                         MobileController.SendSurveyNotification(d, toAsk, req.Survey.SvyId);
                     });

@@ -77,10 +77,10 @@ namespace SimpleQ.Tests.WebinterfaceTest
                         SvyText = "Wie groß sind die Ohren von S.K.?",
                         StartDate = DateTime.Now.AddSeconds(15),
                         EndDate = DateTime.Now.AddDays(7),
+                        Amount = 10,
                         TypeId = 6
                     },
-                    SelectedDepartments = new List<int> { 1, 2 },
-                    Amount = 5
+                    SelectedDepartments = new List<int> { 1, 2 }
                 };
 
                 using (HttpClient client = new HttpClient())
