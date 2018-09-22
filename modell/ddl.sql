@@ -46,6 +46,7 @@ create table Customer
 	LanguageCode char(3) not null,
 	DataStoragePeriod int not null, -- in Monaten
 	PaymentMethodId int not null references PaymentMethod,
+    PricePerClick money not null,
 	CostBalance money not null
 );
 go
