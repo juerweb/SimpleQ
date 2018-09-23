@@ -20,7 +20,7 @@
 
 </div>
 <div class="row mt-1 ml-0 mr-0">
-    <div class="col-md-5 pl-4 pr-4">
+    <div class="col-md-4 pl-4 pr-4">
         <div id="singleResultOptions">
             <label for="Surveys">Umfrage</label>
             @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control" })
@@ -47,10 +47,10 @@
         </div>
     </div>
 
-    <div class="col-md-7" id="singleResultPartial">
+    <div class="col-md-8" id="singleResultPartial">
         @Html.Partial("~/Views/SurveyResults/_SingleResult.cshtml")
     </div>
-    <div class="col-md-7" id="multiResultPartial">
+    <div class="col-md-8" id="multiResultPartial">
         @Html.Partial("~/Views/SurveyResults/_MultiResult.cshtml")
     </div>
 </div>
