@@ -58,13 +58,12 @@
         <div class="form-group">
             @{
                 Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
-                dropBoxValues.Add("line", Resources.line);
-                dropBoxValues.Add("bar", Resources.bar);
-                dropBoxValues.Add("radar", Resources.radar);
-                dropBoxValues.Add("doughnut", Resources.doughnut);
+                dropBoxValues.Add("line", Resources.bar);
+                dropBoxValues.Add("bar", Resources.radar);
+                dropBoxValues.Add("listing", Resources.listing);
             }
             <label for="chart1SelectMulti">@Resources.diagram@Resources.typeSmall 1</label>
-            <select class="form-control" id="chart1SelectMulti" onchange="changeChart1Multi()">
+            <select class="form-control" id="chart1SelectMulti" onchange="changeChartMulti('chart1SelectMulti','chart1Col','chart1')">
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
@@ -83,11 +82,11 @@
         </div>
         <div class="form-group">
             <label for="chart2SelectMulti">@Resources.diagram@Resources.typeSmall 2</label>
-            <select class="form-control" id="chart2SelectMulti" onchange="changeChart2Multi()">
+            <select class="form-control" id="chart2SelectMulti" onchange="changeChartMulti('chart2SelectMulti','chart2Col','chart2')">
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
-                        if (elem.Key == "doughnut")
+                        if (elem.Key == "bar")
                         {
                             <option value="@elem.Key" selected>@elem.Value</option>
                         }

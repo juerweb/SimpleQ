@@ -69,11 +69,11 @@
 
     <!-- Modal content -->
     <div class="myModal-content">
-        <button class="btn btn-danger btn-block mt-2" onclick="closeZommModal()">Close</button>
+        <button class="btn btn-danger btn-block mt-2" onclick="closeZoomModal()">Close</button>
         <div id="zoomModalContent">
             <canvas id="chart1" width="800" height="500"></canvas>
         </div>
-        <button class="btn btn-danger btn-block mt-2" onclick="closeZommModal()">Close</button>
+        <button class="btn btn-danger btn-block mt-2" onclick="closeZoomModal()">Close</button>
     </div>
 
 </div>
@@ -114,6 +114,10 @@
         return ('rgba(' + part1 + ',' + part2 + ',' + part3);
     }
 
+    //single chart things
+    //   |    Everything down here
+    //   v
+
     function changeChartSingle(selector, chartCol, chart) {
         if ((document.getElementById(selector).value === "listing")) {
             createListing(chartCol);
@@ -131,22 +135,6 @@
             var firstPart = getRandomColor();
             borderColors = borderColors.concat([(firstPart + ',1)')]);
             bgColors = bgColors.concat([(firstPart + ',0.2)')]);
-            //borderColors = borderColors.concat([
-            //    'rgba(255, 99, 132, 1)',
-            //    'rgba(54, 162, 235, 1)',
-            //    'rgba(255, 206, 86, 1)',
-            //    'rgba(75, 192, 192, 1)',
-            //    'rgba(153, 102, 255, 1)',
-            //    'rgba(255, 159, 64, 1)'
-            //]);
-            //bgColors = bgColors.concat([
-            //    'rgba(255, 99, 132, 0.2)',
-            //    'rgba(54, 162, 235, 0.2)',
-            //    'rgba(255, 206, 86, 0.2)',
-            //    'rgba(75, 192, 192, 0.2)',
-            //    'rgba(153, 102, 255, 0.2)',
-            //    'rgba(255, 159, 64, 0.2)'
-            //]);
         }
 
 
@@ -263,7 +251,6 @@
     }
 
     function createListing(chart) {
-        //alert();
         var answerCount = 0;
         for (i = 0; i < dict.length; i++) {
             answerCount += parseInt(dict[i].value);
@@ -274,14 +261,12 @@
         for (i = 0; i < dict.length; i++) {
             injection += ("<tr><td>" + dict[i].key + "</td><td>" + dict[i].value + "</td><td>" + ((dict[i].value / answerCount) * 100).toFixed(2) + "%</td></tr>");
         }
-
         $("#" + chart).append("<table class='table table-bordered'><thead><tr><th>@Resources.answer</th><th>@Resources.count</th><th>@Resources.percent</th></tr></thead><tbody>" + injection + "</tbody></table>");
     }
 
     //modal things
     //   |    Everything down here
     //   v
-
 
     $(document).ready(function () {
         $(".chartCol").click(function (event) {
@@ -295,9 +280,78 @@
         });
     });
 
-    function closeZommModal() {
+    function closeZoomModal() {
         var modal = document.getElementById('zoomModal');
         modal.style.display = "none";
+    }
+
+    //multi chart things
+    //   |    Everything down here
+    //   v
+
+    function changeChartMulti(selector, chartCol, chart) {
+        if ((document.getElementById(selector).value === "listing")) {
+            createMultiListing(chartCol);
+            return;
+        }
+        var keys = [];
+        var values = [];
+        for (i = 0; i < dict.length; i++) {
+            keys.push(dict[i].key);
+            values.push(dict[i].value);
+        }
+
+        while (dict.length > borderColors.length) { //ensures, that there are enough colors
+            var firstPart = getRandomColor();
+            borderColors = borderColors.concat([(firstPart + ',1)')]);
+            bgColors = bgColors.concat([(firstPart + ',0.2)')]);
+        }
+
+        var chartType = document.getElementById(selector).value;
+        document.getElementById(chartCol).innerHTML = '<canvas id="' + chart + '" width="800" height="500"></canvas>'; //you have to clean everything up, otherwise the chart is bugging around
+        var canvas = document.getElementById(chart);
+        var ctx = canvas.getContext('2d');
+
+        if (chartType === "bar") {
+            var stackedBar = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: ["test"],
+                    datasets: 
+                        [{
+                            label: '# of Votes',
+                            data: values,
+                            backgroundColor: bgColors,
+                            borderColor: borderColors,
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'tests',
+                            data: values,
+                            backgroundColor: bgColors,
+                            borderColor: borderColors,
+                            borderWidth: 1
+                        }]
+                    
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
+                    }
+                }
+            });
+        }
+
+        
+    }
+
+    function createMultiListing(chartCol) {
+
     }
 
 </script>

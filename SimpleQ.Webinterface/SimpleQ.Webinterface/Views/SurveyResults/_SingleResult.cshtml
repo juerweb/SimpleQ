@@ -54,7 +54,7 @@
                 dropBoxValues.Add("polarArea", Resources.polarArea);
             }
             <label for="chart1select">@Resources.diagram@Resources.typeSmall 1</label>
-            <select class="form-control" id="chart1SelectSingle" onchange="changeChartSingle('chart1SelectSingle','chart1Col','chart1')">
+            <select class="form-control" id="chart1SelectSingle" onchange="changeChartSingle('chart1SelectSingle', 'chart1Col', 'chart1'); updateSelect1(this);">
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
                     {
@@ -106,6 +106,12 @@
             @:}); 
         }
 
-        $("#chart1SelectSingle").change();
-        $("#chart2SelectSingle").change();
+        //$("#chart1SelectSingle").change();
+        //$("#chart2SelectSingle").change();
+
+    function updateSelect1(elem) {
+        alert(elem.value);
+        $("#chart1Select option[selected='true']").hide();
+    }
+
 </script>
