@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SimpleQ.Webinterface.Models.ViewModels
 {
-    public class MultiResultsModel
+    public class MultiResultModel
     {
         #region Controller to View
         public string CatName { get; set; }

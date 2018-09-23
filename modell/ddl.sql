@@ -251,6 +251,8 @@ end
 go
 
 
+
+
 -- Fügt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortmöglichkeit ein
 create trigger tr_SurveyIns
 on Survey
@@ -276,6 +278,35 @@ begin
 end
 go
 
+-- Fügt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortmöglichkeit ein
+create trigger tr_SurveyUpd
+on Survey
+after update as
+begin
+    if(update(TypeId))
+        begin
+        declare @svyId int, @typeId int;
+        declare c cursor local for select SvyId, TypeId from inserted;
+
+        open c;
+        fetch c into @svyId, @typeId;
+
+        delete from AnswerOption where SvyId = @svyId;
+
+        while(@@FETCH_STATUS = 0)
+        begin
+            insert into AnswerOption (SvyId, AnsText) select @svyId, PreAnsText
+                                                      from PredefinedAnswerOption
+                                                      where TypeId = @typeId;
+
+            fetch c into @svyId, @typeId;
+        end
+    
+        close c;
+        deallocate c;
+    end
+end
+go
 
 
 -- Zum Löschen der abgelaufenen Umfragedaten
