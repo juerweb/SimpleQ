@@ -54,7 +54,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoadMultiResult(MultiResultsModel req)
+        public ActionResult LoadMultiResult(MultiResultModel req)
         {
             //// SAMPLE DATA
             //req = new MultiResultsModel
@@ -71,7 +71,7 @@ namespace SimpleQ.Webinterface.Controllers
                     .Where(s => s.CatId == req.CatId && s.TypeId == req.TypeId
                      && s.StartDate >= req.StartDate && s.EndDate <= req.EndDate);
 
-                var model = new MultiResultsModel
+                var model = new MultiResultModel
                 {
                     CatName = db.SurveyCategories
                         .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)

@@ -32,6 +32,12 @@ namespace SimpleQ.Webinterface.Controllers
                     db.Surveys.Where(s => s.SvyId == req.Survey.SvyId).First().Departments.Add(db.Departments.Where(d => d.DepId == depId).First());
                 });
                 db.SaveChanges();
+
+                req.TextAnswerOptions?.ForEach(text =>
+                {
+                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = text });
+                });
+                db.SaveChanges();
             }
 
             HostingEnvironment.QueueBackgroundWorkItem(ct =>
@@ -57,12 +63,34 @@ namespace SimpleQ.Webinterface.Controllers
                         // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
                         int toAsk = (int)Math.Round(req.Survey.Amount * (currPeople / (double)totalPeople));
 
-                        MobileController.SendSurveyNotification(d, toAsk, req.Survey.SvyId);
+                        SendSurveyNotification(d, toAsk, req.Survey.SvyId);
                     });
                 }
             });
 
             return RedirectToAction("Index", "Home");
+        }
+
+
+        private void SendSurveyNotification(int depId, int amount, int svyId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                Random rnd = new Random();
+                //int i = 0;
+                db.Departments
+                    .Where(d => d.DepId == depId)
+                    .SelectMany(d => d.People)
+                    .ToList()
+                    .OrderBy(p => rnd.Next())
+                    .Take(amount)
+                    .ToList()
+                    .ForEach(p =>
+                    {
+                        //i++;
+                    });
+                //System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {amount}");
+            }
         }
 
 

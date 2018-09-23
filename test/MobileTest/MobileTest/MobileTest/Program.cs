@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Specialized;
+using System.Security.Cryptography.X509Certificates;
+using System.Net.Http.Headers;
 
 namespace SimpleQ.Tests.MobileTest
 {
@@ -38,7 +40,7 @@ namespace SimpleQ.Tests.MobileTest
         static int depId;
         static string depName;
 
-        const string SERVER = "localhost:55445";
+        const string SERVER = "https://localhost:44338";
         const int YESNO_ID = 1;
         const int SPEC_ID = 4;
         const int FREE_ID = 5;
@@ -47,7 +49,6 @@ namespace SimpleQ.Tests.MobileTest
         {
             try
             {
-
                 string input;
                 WriteLine("Type 'help' for further information.");
 
@@ -115,7 +116,8 @@ namespace SimpleQ.Tests.MobileTest
 
                 using (HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync($"http://{SERVER}/api/mobile/register?regCode={Uri.EscapeDataString(regCode)}&deviceId=null");
+                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/register?regCode={Uri.EscapeDataString(regCode)}&deviceId=null");
                     string json = await response.Content.ReadAsStringAsync();
                     if (!response.IsSuccessStatusCode)
                     {
@@ -140,7 +142,8 @@ namespace SimpleQ.Tests.MobileTest
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    WriteLine((await client.GetAsync($"http://{SERVER}/api/mobile/unregister?persId={persId}&custCode={Uri.EscapeDataString(custCode)}")).StatusCode);
+                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    WriteLine((await client.GetAsync($"{SERVER}/api/mobile/unregister?persId={persId}&custCode={Uri.EscapeDataString(custCode)}")).StatusCode);
 
                     persId = 0;
                     custCode = null;
@@ -160,7 +163,8 @@ namespace SimpleQ.Tests.MobileTest
 
                 using (HttpClient client = new HttpClient())
                 {
-                    response = await client.GetAsync($"http://{SERVER}/api/mobile/getSurveyData?svyId={YESNO_ID}");
+                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={YESNO_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
                     if (!response.IsSuccessStatusCode)
@@ -188,7 +192,7 @@ namespace SimpleQ.Tests.MobileTest
 
                     SurveyVote sv = new SurveyVote { VoteText = null, CustCode = custCode, ChosenAnswerOptions = new List<AnswerOption> { ansOpt } };
 
-                    response = await client.PostAsync($"http://{SERVER}/api/mobile/answerSurvey", new StringContent(JsonConvert.SerializeObject(sv), Encoding.UTF8, "application/json"));
+                    response = await client.PostAsync($"{SERVER}/api/mobile/answerSurvey", new StringContent(JsonConvert.SerializeObject(sv), Encoding.UTF8, "application/json"));
                     WriteLine(response.StatusCode);
                 }
             }).Wait();
@@ -204,7 +208,8 @@ namespace SimpleQ.Tests.MobileTest
 
                 using (HttpClient client = new HttpClient())
                 {
-                    response = await client.GetAsync($"http://{SERVER}/api/mobile/getSurveyData?svyId={SPEC_ID}");
+                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={SPEC_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
                     if (!response.IsSuccessStatusCode)
@@ -239,7 +244,7 @@ namespace SimpleQ.Tests.MobileTest
 
                     SurveyVote sv = new SurveyVote { VoteText = null, CustCode = custCode, ChosenAnswerOptions = ansOpts };
 
-                    response = await client.PostAsync($"http://{SERVER}/api/mobile/answerSurvey", new StringContent(JsonConvert.SerializeObject(sv), Encoding.UTF8, "application/json"));
+                    response = await client.PostAsync($"{SERVER}/api/mobile/answerSurvey", new StringContent(JsonConvert.SerializeObject(sv), Encoding.UTF8, "application/json"));
                     WriteLine(response.StatusCode);
                 }
             }).Wait();
@@ -255,7 +260,8 @@ namespace SimpleQ.Tests.MobileTest
 
                 using (HttpClient client = new HttpClient())
                 {
-                    response = await client.GetAsync($"http://{SERVER}/api/mobile/getSurveyData?svyId={FREE_ID}");
+                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={FREE_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
                     if (!response.IsSuccessStatusCode)
@@ -273,7 +279,7 @@ namespace SimpleQ.Tests.MobileTest
 
                     SurveyVote sv = new SurveyVote { VoteText = answer, CustCode = custCode, ChosenAnswerOptions = new List<AnswerOption> { survey.AnswerOptions.FirstOrDefault() } };
 
-                    response = await client.PostAsync($"http://{SERVER}/api/mobile/answerSurvey", new StringContent(JsonConvert.SerializeObject(sv), Encoding.UTF8, "application/json"));
+                    response = await client.PostAsync($"{SERVER}/api/mobile/answerSurvey", new StringContent(JsonConvert.SerializeObject(sv), Encoding.UTF8, "application/json"));
                     WriteLine(response.StatusCode);
                 }
             }).Wait();

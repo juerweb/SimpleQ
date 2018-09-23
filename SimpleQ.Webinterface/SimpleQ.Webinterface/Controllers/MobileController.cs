@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Http;
 
 namespace SimpleQ.Webinterface.Controllers
@@ -16,8 +19,11 @@ namespace SimpleQ.Webinterface.Controllers
     public class MobileController : ApiController
     {
         [HttpGet]
-        public HttpResponseMessage Register(string regCode, string deviceId)
+        public IHttpActionResult Register(string regCode, string deviceId)
         {
+            if (!IsAuth(Request))
+                return Unauthorized();
+
             using (var db = new SimpleQDBEntities())
             {
                 try
@@ -30,66 +36,79 @@ namespace SimpleQ.Webinterface.Controllers
                     db.SaveChanges();
                     Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
 
-                    return Request.CreateResponse(HttpStatusCode.OK, new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName });
+                    return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName });
                 }
                 catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 2627 || (ex?.InnerException?.InnerException as SqlException)?.Number == 2601)
                 {
-                    return Request.CreateResponse(HttpStatusCode.MethodNotAllowed, "Already registered");
+                    return Conflict();
                 }
                 catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 547)
                 {
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                    return NotFound();
                 }
                 catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException)
                 {
-                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                    return NotFound();
                 }
             }
         }
 
         [HttpGet]
-        public HttpResponseMessage Unregister(int persId, string custCode)
+        public IHttpActionResult Unregister(int persId, string custCode)
         {
+            if (!IsAuth(Request))
+                return Unauthorized();
+
             using (var db = new SimpleQDBEntities())
             {
                 db.People.RemoveRange(db.People.Where(p => p.PersId == persId && p.CustCode == custCode));
                 db.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Ok();
             }
         }
 
         [HttpGet]
-        public HttpResponseMessage GetSurveyData(int svyId)
+        public IHttpActionResult GetSurveyData(int svyId)
         {
+            if (!IsAuth(Request))
+                return Unauthorized();
+
             using (var db = new SimpleQDBEntities())
             {
                 Survey svy = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault();
 
-                return (svy != null) ?
-                    Request.CreateResponse(HttpStatusCode.OK, new SurveyNotification
-                        {
-                            SvyId = svy.SvyId,
-                            SvyText = svy.SvyText,
-                            EndDate = svy.EndDate,
-                            TypeId = svy.TypeId,
-                            CatName = db.SurveyCategories
+                if (svy != null)
+                    return Ok(new SurveyNotification
+                    {
+                        SvyId = svy.SvyId,
+                        SvyText = svy.SvyText,
+                        EndDate = svy.EndDate,
+                        TypeId = svy.TypeId,
+                        CatName = db.SurveyCategories
                             .Where(c => c.CatId == svy.CatId)
                             .Select(c => c.CatName)
                             .First(),
-                            AnswerOptions = db.AnswerOptions
+                        AnswerOptions = db.AnswerOptions
                             .Where(a => a.SvyId == svy.SvyId)
                             .ToList()
-                        })
-                    : Request.CreateResponse(HttpStatusCode.NotFound);
+                    });
+                else
+                    return NotFound();
             }
         }
 
         [HttpPost]
-        public HttpResponseMessage AnswerSurvey([FromBody] SurveyVote sv)
+        public IHttpActionResult AnswerSurvey([FromBody] SurveyVote sv)
         {
+            if (!IsAuth(Request))
+                return Unauthorized();
+
             using (var db = new SimpleQDBEntities())
             {
+                if (!db.Customers.Any(c => c.CustCode == sv.CustCode))
+                    return NotFound();
+
                 Vote vote = new Vote { VoteText = sv.VoteText };
                 db.Votes.Add(vote);
                 db.SaveChanges();
@@ -102,30 +121,16 @@ namespace SimpleQ.Webinterface.Controllers
                 db.Customers.Where(c => c.CustCode == sv.CustCode).First().CostBalance += db.Customers.Where(c => c.CustCode == sv.CustCode).First().PricePerClick; //decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
                 db.SaveChanges();
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Ok();
             }
         }
 
-
-        internal static void SendSurveyNotification(int depId, int amount, int svyId)
+        private bool IsAuth(HttpRequestMessage request)
         {
-            using (var db = new SimpleQDBEntities())
-            {
-                Random rnd = new Random();
-                //int i = 0;
-                db.Departments
-                    .Where(d => d.DepId == depId)
-                    .SelectMany(d => d.People)
-                    .ToList()
-                    .OrderBy(p => rnd.Next())
-                    .Take(amount)
-                    .ToList()
-                    .ForEach(p =>
-                    {
-                        //i++;  
-                    });
-                //System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {amount}");
-            }
+            string privateKey = File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath(@"~\private.key"));
+            bool headerExists = request.Headers.TryGetValues("auth-key", out IEnumerable<string> values);
+
+            return headerExists && values?.FirstOrDefault() as string == privateKey;
         }
     }
 }

@@ -18,8 +18,8 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress />
-    <IISExpressSSLPort />
+    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -232,7 +232,7 @@
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\ContainerViewModel.cs" />
-    <Compile Include="Models\ViewModels\MultiResultsModel.cs" />
+    <Compile Include="Models\ViewModels\MultiResultModel.cs" />
     <Compile Include="Models\ViewModels\SingleResultModel.cs" />
     <Compile Include="Models\ViewModels\SurveyCreationModel.cs" />
     <Compile Include="Models\ViewModels\SurveyResultsModel.cs" />
@@ -281,6 +281,7 @@
     <Content Include="Models\SimpleQModel.edmx.diagram">
       <DependentUpon>SimpleQModel.edmx</DependentUpon>
     </Content>
+    <Content Include="private.key" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
     <Content Include="Scripts\jquery.min.js" />
@@ -345,7 +346,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55445</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:55445/</IISUrl>
+          <IISUrl>https://localhost:44338/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

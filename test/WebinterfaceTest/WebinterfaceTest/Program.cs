@@ -13,7 +13,7 @@ namespace SimpleQ.Tests.WebinterfaceTest
 {
     class Program
     {
-        const string SERVER = "localhost:55445";
+        const string SERVER = "https://localhost:44338";
 
         static JsonSerializer ser = new JsonSerializer();
 
@@ -29,9 +29,13 @@ namespace SimpleQ.Tests.WebinterfaceTest
 
                     try
                     {
-                        if (input == "newsurvey")
+                        if (input == "newspecsurvey")
                         {
-                            NewSurvey();
+                            NewSpecSurvey();
+                        }
+                        else if (input == "newyesnosurvey")
+                        {
+                            NewYesNoSurvey();
                         }
                         else if (input == "loadsingleresult")
                         {
@@ -64,7 +68,7 @@ namespace SimpleQ.Tests.WebinterfaceTest
             Console.ReadKey();
         }
 
-        static void NewSurvey()
+        static void NewSpecSurvey()
         {
             Task.Run(async () =>
             {
@@ -77,15 +81,43 @@ namespace SimpleQ.Tests.WebinterfaceTest
                         SvyText = "Wie groß sind die Ohren von S.K.?",
                         StartDate = DateTime.Now.AddSeconds(15),
                         EndDate = DateTime.Now.AddDays(7),
-                        Amount = 10,
+                        Amount = 4,
                         TypeId = 6
                     },
-                    SelectedDepartments = new List<int> { 1, 2 }
+                    SelectedDepartments = new List<int> { 1, 2 },
+                    TextAnswerOptions = new List<string> { "sehr groß", "gigantisch", "brobdingnagisch", "sooo huge", "muy grande" }
                 };
 
                 using (HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.PostAsync($"http://{SERVER}/surveyCreation/new/", new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json"));
+                    HttpResponseMessage response = await client.PostAsync($"{SERVER}/surveyCreation/new/", new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json"));
+                    WriteLine(response.StatusCode);
+                }
+            }).Wait();
+        }
+
+        static void NewYesNoSurvey()
+        {
+            Task.Run(async () =>
+            {
+                SurveyCreationModel model = new SurveyCreationModel
+                {
+                    Survey = new Survey
+                    {
+                        CatId = 2,
+                        CustCode = "m4rku5",
+                        SvyText = "Rauchen Sie gerne Marihuana?",
+                        StartDate = DateTime.Now.AddSeconds(15),
+                        EndDate = DateTime.Now.AddDays(7),
+                        Amount = 5,
+                        TypeId = 1
+                    },
+                    SelectedDepartments = new List<int> { 1 }
+                };
+
+                using (HttpClient client = new HttpClient())
+                {
+                    HttpResponseMessage response = await client.PostAsync($"{SERVER}/surveyCreation/new/", new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json"));
                     WriteLine(response.StatusCode);
                 }
             }).Wait();
@@ -100,7 +132,7 @@ namespace SimpleQ.Tests.WebinterfaceTest
 
                 using(HttpClient client = new HttpClient())
                 {
-                    HttpResponseMessage response = await client.GetAsync($"http://{SERVER}/surveyResults/loadSingleResult?svyId={svyId}");
+                    HttpResponseMessage response = await client.GetAsync($"{SERVER}/surveyResults/loadSingleResult?svyId={svyId}");
                     WriteLine(response.StatusCode);
                 }
             }).Wait();
@@ -113,7 +145,8 @@ namespace SimpleQ.Tests.WebinterfaceTest
 
         static void Help()
         {
-            WriteLine("Type 'newsurvey' to create a new survey with sample data,");
+            WriteLine("Type 'newyesnosurvey' to create a new yes/no-survey with sample data,");
+            WriteLine("'newspecsurvey' to create a new survey with specified text answers with sample data,");
             WriteLine("'cls' to clear the screen or 'exit' to close program.");
         }
 

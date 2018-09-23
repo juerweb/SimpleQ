@@ -12,7 +12,6 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public string CatName { get; set; }
         public string TypeName { get; set; }
         public List<string> DepartmentNames { get; set; }
-        public int Amount { get; set; }
         public Dictionary<string, int> Votes { get; set; }
         public List<string> FreeTextVotes { get; set; }
         #endregion

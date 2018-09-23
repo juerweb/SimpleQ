@@ -5,11 +5,12 @@ using System.Web;
 
 namespace SimpleQ.Webinterface.Models.ViewModels
 {
-    public class MultiResultsModel
+    public class MultiResultModel
     {
         #region Controller to View
         public string CatName { get; set; }
         public string TypeName { get; set; }
+        public double AvgAmount { get; set; }
         public List<string> DepartmentNames { get; set; }
         public List<Dictionary<string, int>> Votes { get; set; }
         #endregion
