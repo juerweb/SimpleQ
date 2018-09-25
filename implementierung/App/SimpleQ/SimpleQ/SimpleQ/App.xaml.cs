@@ -128,8 +128,8 @@ namespace SimpleQ
 
             IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
 
-            webAPIService.AnswerSurvey(new Shared.SurveyVote() { VoteText = "Test"});
-            //webAPIService.Unregister("1234", "123");
+            //webAPIService.Register("1234", "1234");
+            webAPIService.Unregister("1234", "123");
 
             OpenNotification();
         }

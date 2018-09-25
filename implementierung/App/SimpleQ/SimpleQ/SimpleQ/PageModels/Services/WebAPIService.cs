@@ -19,11 +19,8 @@ namespace SimpleQ.PageModels.Services
 
         public async Task<Boolean> AnswerSurvey(SurveyVote surveyVote)
         {
-            Debug.WriteLine("Hallo! " + App.Key);
 
-            httpClient.DefaultRequestHeaders.Add("auth-key", App.Key);
-
-            Debug.WriteLine("Hallo!");
+            //httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("auth-key", App.Key);
 
 
             StringContent content = new StringContent(JsonConvert.SerializeObject(surveyVote), Encoding.UTF8, "application/json");
@@ -39,7 +36,7 @@ namespace SimpleQ.PageModels.Services
 
         public async Task<SurveyModel> GetSurveyData(int surveyID)
         {
-            httpClient.DefaultRequestHeaders.Add("auth-key", App.Key);
+            //httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("auth-key", App.Key);
 
             HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIAnswerSurveyPlusURL + "?svyId=" + surveyID);
 
@@ -61,7 +58,7 @@ namespace SimpleQ.PageModels.Services
 
         public async Task<RegistrationData> Register(string regCode, string deviceId)
         {
-            httpClient.DefaultRequestHeaders.Add("auth-key", App.Key);
+            //httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("auth-key", App.Key);
 
             HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIRegisterPlusURL + "?regCode=" + regCode + "&deviceId=" + deviceId);
 
@@ -82,7 +79,16 @@ namespace SimpleQ.PageModels.Services
 
         public async Task<bool> Unregister(string persId, string custCode)
         {
-            httpClient.DefaultRequestHeaders.Add("auth-key", App.Key);
+            Debug.WriteLine("Test");
+
+            String test = App.Key;
+
+            Debug.WriteLine("Test: " + test);
+
+            httpClient.DefaultRequestHeaders.Add("auth", test);
+            //httpClient.DefaultRequestHeaders.Add("Authorization", App.Key);
+
+            Debug.WriteLine("Test");
 
             Debug.WriteLine(AppResources.APIMainURL + AppResources.APIUnregisterPlusURL);
 
