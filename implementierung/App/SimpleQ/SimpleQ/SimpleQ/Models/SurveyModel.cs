@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleQ.Shared;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -12,25 +13,33 @@ namespace SimpleQ.Models
     public class SurveyModel : INotifyPropertyChanged
     {
         #region Constructor(s)
-        public SurveyModel(int surveyId, string surveyDesc, string catName, SurveyType surveyType, DateTime startDate, DateTime endDate, List<string> givenAnswers = null) : this()
+        public SurveyModel(int surveyId, string surveyDesc, string catName, SurveyType surveyType, DateTime startDate, DateTime endDate, List<AnswerOption> givenAnswers = null) : this()
         {
             this.surveyId = surveyId;
             this.surveyDesc = surveyDesc;
             this.catName = catName;
             this.typeDesc = surveyType;
             this.givenAnswers = givenAnswers;
-            this.startDate = startDate;
             this.endDate = endDate;
         }
-        public SurveyModel(int surveyId, string surveyDesc, string catName, int typeId, DateTime startDate, DateTime endDate, List<string> givenAnswers = null) : this()
+        public SurveyModel(int surveyId, string surveyDesc, string catName, int typeId, DateTime startDate, DateTime endDate, List<AnswerOption> givenAnswers = null) : this()
         {
             this.surveyId = surveyId;
             this.surveyDesc = surveyDesc;
             this.catName = catName;
             this.typeDesc = (SurveyType)typeId;
             this.givenAnswers = givenAnswers;
-            this.startDate = startDate;
             this.endDate = endDate;
+        }
+
+        public SurveyModel(SurveyNotification sn)
+        {
+            this.surveyId = sn.SvyId;
+            this.surveyDesc = sn.SvyText;
+            this.catName = sn.CatName;
+            this.typeDesc = (SurveyType)sn.TypeId;
+            this.givenAnswers = sn.AnswerOptions;
+            this.endDate = sn.EndDate;
         }
 
         public SurveyModel()
@@ -49,8 +58,7 @@ namespace SimpleQ.Models
         private SurveyType typeDesc;
         private String ansDesc;
         private Boolean isAnswerAllowed;
-        private List<string> givenAnswers;
-        private DateTime startDate;
+        private List<AnswerOption> givenAnswers;
         private DateTime endDate;
         #endregion
 
@@ -93,8 +101,7 @@ namespace SimpleQ.Models
             } 
         }
 
-        public List<string> GivenAnswers { get => givenAnswers; set => givenAnswers = value; }
-        public DateTime StartDate { get => startDate; set => startDate = value; }
+        public List<AnswerOption> GivenAnswers { get => givenAnswers; set => givenAnswers = value; }
         public DateTime EndDate { get => endDate; set => endDate = value; }
 
         //public List<string> GivenAnswers { get => givenAnswers; set => givenAnswers = value; }

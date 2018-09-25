@@ -25,6 +25,7 @@ using Com.OneSignal.Abstractions;
 using SimpleQ.PageModels.QuestionPageModels;
 using SimpleQ.Pages.QuestionPages;
 using Xamarin.Forms.Internals;
+using System.IO;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -32,6 +33,7 @@ namespace SimpleQ
 	public partial class App : Application
 	{
         private static Boolean WasThereAlreadyANotification = false;
+        public static String Key = "";
         public App ()
 		{
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
@@ -40,6 +42,8 @@ namespace SimpleQ
             SetupIOC();
 
             SetupBlobCache();
+
+            GetKeyFromFile();
 
 
 
@@ -121,6 +125,11 @@ namespace SimpleQ
             await questionService.LoadDataFromCache();
 
             Application.Current.MainPage = MainMasterPageModel;
+
+            IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
+
+            webAPIService.AnswerSurvey(new Shared.SurveyVote() { VoteText = "Test"});
+            //webAPIService.Unregister("1234", "123");
 
             OpenNotification();
         }
@@ -240,6 +249,16 @@ namespace SimpleQ
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
                 .HandleNotificationOpened(HandleNotificationOpened)
                 .EndInit();
+        }
+
+        private void GetKeyFromFile()
+        {
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(WebAPIService)).Assembly;
+            Stream stream = assembly.GetManifestResourceStream("SimpleQ.Resources.private.key");
+
+            StreamReader streamReader = new StreamReader(stream);
+
+            Key = streamReader.ReadToEnd();
         }
 
         // Called when a notification is opened.

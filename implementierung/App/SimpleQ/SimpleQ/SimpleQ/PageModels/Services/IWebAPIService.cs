@@ -1,4 +1,5 @@
-﻿using SimpleQ.Shared;
+﻿using SimpleQ.Models;
+using SimpleQ.Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +9,9 @@ namespace SimpleQ.PageModels.Services
 {
     public interface IWebAPIService
     {
-        Task<Boolean> Register(String regCode, String deviceId);
-        Task Unregister(String persId, String custCode);
-        Task AnswerSurvey(SurveyVote surveyVote);
+        Task<RegistrationData> Register(String regCode, String deviceId);
+        Task<Boolean> Unregister(String persId, String custCode);
+        Task<Boolean> AnswerSurvey(SurveyVote surveyVote);
+        Task<SurveyModel> GetSurveyData(int surveyID);
     }
 }

@@ -97,7 +97,25 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die http://localhost:1899 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /answerSurvey ähnelt.
+        /// </summary>
+        internal static string APIAnswerSurveyPlusURL {
+            get {
+                return ResourceManager.GetString("APIAnswerSurveyPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /getSurveyData ähnelt.
+        /// </summary>
+        internal static string APIGetDataPlusURL {
+            get {
+                return ResourceManager.GetString("APIGetDataPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die http://localhost:1899/api/mobile ähnelt.
         /// </summary>
         internal static string APIMainURL {
             get {
@@ -106,7 +124,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /Register ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /register ähnelt.
         /// </summary>
         internal static string APIRegisterPlusURL {
             get {
@@ -115,11 +133,11 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die  ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /unregister ähnelt.
         /// </summary>
-        internal static string APIUnregisterPlusAd {
+        internal static string APIUnregisterPlusURL {
             get {
-                return ResourceManager.GetString("APIUnregisterPlusAd", resourceCulture);
+                return ResourceManager.GetString("APIUnregisterPlusURL", resourceCulture);
             }
         }
         
@@ -291,6 +309,15 @@ namespace SimpleQ.Resources {
         internal static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ.Resources.private.key ähnelt.
+        /// </summary>
+        internal static string KeyResourcename {
+            get {
+                return ResourceManager.GetString("KeyResourcename", resourceCulture);
             }
         }
         

@@ -16,9 +16,10 @@ namespace WebAPISimulator
 
             HttpListener httpListener = new HttpListener();
 
-            httpListener.Prefixes.Add("http://localhost:1899/Register/");
-            httpListener.Prefixes.Add("http://localhost:1899/Unregister/");
-            httpListener.Prefixes.Add("http://localhost:1899/AnswerSurvey/");
+            httpListener.Prefixes.Add("http://localhost:1899/api/mobile/register/");
+            httpListener.Prefixes.Add("http://localhost:1899/api/mobile/unregister/");
+            httpListener.Prefixes.Add("http://localhost:1899/api/mobile/answerSurvey/");
+            httpListener.Prefixes.Add("http://localhost:1899/api/mobile/getSurveyData/");
 
             httpListener.Start();
 
@@ -53,7 +54,7 @@ namespace WebAPISimulator
             Console.WriteLine(link.AbsolutePath);
             switch (link.AbsolutePath)
             {
-                case "/Register":
+                case "/api/mobile/register":
                     NameValueCollection parameters = request.QueryString;
                     Console.WriteLine(parameters.Get("Test") == null);
                     if (parameters.Count == 2)
@@ -91,14 +92,17 @@ namespace WebAPISimulator
                     }
 
                     break;
-                case "/Unregister":
+                case "/api/mobile/unregister":
                     response.ContentType = "text/json";
                     response.StatusCode = 200;
                     response.StatusDescription = "OK";
                     break;
-                case "/AnswerSurvey":
+                case "/api/mobile/answerSurvey":
+                    Console.WriteLine("api/mobile/AnswerSurvey");
                     StreamReader reader = new StreamReader(request.InputStream);
                     SurveyVote vote = JsonConvert.DeserializeObject<SurveyVote>(reader.ReadToEnd());
+
+                    Console.WriteLine(reader.ReadToEnd());
 
                     if (vote != null)
                     {
@@ -112,6 +116,8 @@ namespace WebAPISimulator
                         response.StatusCode = 901;
                         response.StatusDescription = "Not enough or wrong paramter";
                     }
+                    break;
+                case "/api/mobile/getSurveyData":
                     break;
             }
             response.Close();
