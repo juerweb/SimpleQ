@@ -2,18 +2,37 @@
 @*@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel*@
 
 @{
-    Random rnd = new Random();
-    Dictionary<DateTime, Dictionary<string, int>> votes = new Dictionary<DateTime, Dictionary<string, int>>();
-    for (int i = 1; i <= 10; i++)
-    {
-        string[] temp = { "ORF1", "ORF2", "ORF3", "ATV", "Puls4", "ZDF", "ARD", "ORF Sport +", "SRF", "Arte" };
-        Dictionary<string, int> d = new Dictionary<string, int>();
-        for (int j = 0; j < 10; j++)
-        {
-            d.Add(temp[j], rnd.Next(1, 20));
-        }
-        votes.Add(new DateTime(2018, 1, i), d);
-    }
+    //Random rnd = new Random();
+    //Dictionary<DateTime, Dictionary<string, int>> votes = new Dictionary<DateTime, Dictionary<string, int>>();
+    //for (int i = 1; i <= 10; i++)
+    //{
+    //    string[] temp = { "ORF1", "ORF2", "ORF3", "ATV", "Puls4", "ZDF", "ARD", "ORF Sport +", "SRF", "Arte" };
+    //    Dictionary<string, int> d = new Dictionary<string, int>();
+    //    for (int j = 0; j < 10; j++)
+    //    {
+    //        d.Add(temp[j], rnd.Next(1, 20));
+    //    }
+    //    votes.Add(new DateTime(2018, 1, i), d);
+    //}
+    List<DateTime> dates = new List<DateTime>();
+    dates.Add(new DateTime(2018,1,1));
+    dates.Add(new DateTime(2018, 1, 2));
+    dates.Add(new DateTime(2018, 1, 3));
+    dates.Add(new DateTime(2018, 1, 4));
+    dates.Add(new DateTime(2018, 1, 5));
+    dates.Add(new DateTime(2018, 1, 6));
+    dates.Add(new DateTime(2018, 1, 7));
+    dates.Add(new DateTime(2018, 1, 8));
+
+    Dictionary<string, List<int>> multiDict = new Dictionary<string, List<int>>();
+    multiDict.Add("ORF1", new List<int> { 4, 5, 7, 2, 3, 6, 7, 2 });
+    multiDict.Add("ORF2", new List<int> { 3, 6, 1, 3, 4, 6, 8, 9 });
+    multiDict.Add("ORF3", new List<int> { 3, 5, 7, 9, 2, 5, 7, 1 });
+    multiDict.Add("ATV", new List<int> { 5, 7, 3, 4, 3, 5, 6, 3 });
+    multiDict.Add("ARD", new List<int> { 4, 5, 7, 2, 3, 6, 8, 2 });
+    multiDict.Add("BKF", new List<int> { 3, 4, 2, 1, 8, 3, 2, 8 });
+    multiDict.Add("Arte", new List<int> { 3, 5, 7, 9, 3, 5, 2, 9 });
+    multiDict.Add("N24", new List<int> { 5, 7, 3, 4, 2, 5, 9, 6 });
 }
 <div class="row">
     <div class="col-md-3">
@@ -21,24 +40,11 @@
             <label for="groups">Antwortmöglichkeiten</label>
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="answers">
-                    @{ List<string> answers = new List<string>();
-                        answers.Add("ORF1");
-                        answers.Add("ORF2");
-                        answers.Add("ORF3");
-                        answers.Add("ATV");
-                        answers.Add("Puls4");
-                        answers.Add("ZDF");
-                        answers.Add("ATV");
-                        answers.Add("ARD");
-                        answers.Add("ORF Sport +");
-                        answers.Add("SRF");
-                        answers.Add("Arte");
-
-
-                        for (var i = 0; i < answers.Count; i++)
+                    @{ 
+                        foreach (string key in multiDict.Keys)
                         {
                             <li>
-                                <input type="checkbox" onclick="answerChecked()"><span>@answers[i]</span>
+                                <input type="checkbox" checked="checked" onclick="answerChecked()"><span>@key</span>
                             </li>
                         }
                     }
@@ -74,8 +80,8 @@
         <div class="form-group">
             @{
                 Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
-                dropBoxValues.Add("line", Resources.bar);
-                dropBoxValues.Add("bar", Resources.radar);
+                dropBoxValues.Add("line", Resources.line);
+                dropBoxValues.Add("bar", Resources.bar);
                 dropBoxValues.Add("listing", Resources.listing);
             }
             <label for="chart1SelectMulti">@Resources.diagram@Resources.typeSmall 1</label>
@@ -119,6 +125,11 @@
 </div>
 
 <script>
+
+    $(function () {
+        answerChecked();
+    });
+
     var checkedAnswers = [];
     function answerChecked() {
         checkedAnswers = [];
@@ -129,20 +140,31 @@
             }
 
         }
+        changeChartMulti('chart1SelectMulti', 'chart1Col', 'chart1');
+        changeChartMulti('chart2SelectMulti', 'chart2Col', 'chart2');
     }
 
     let multiDict = []; // create an empty array
     let multiLabels = [];
-    @foreach(KeyValuePair<DateTime,Dictionary<string,int>> kvp in votes)
+    let temp = [];
+    @foreach (KeyValuePair<string, List<int>> kvp in multiDict)
     {
-        @:multiLabels.push("@kvp.Key.ToString()");
-        foreach(KeyValuePair<string,int> kvp1 in kvp.Value){
-            @:dict.push({
-                @:key:"@kvp1.Key"
-            @:,
-                @:value: "@kvp.Value"
-            @:});
+        @:temp = [];
+        foreach(int i in kvp.Value)
+        {
+            @:temp.push(@i);
         }
+
+         @:multiDict.push({
+                @:key:"@kvp.Key"
+            @:,
+                @:value: temp
+            @:});
+    }
+
+    @foreach(DateTime d in dates)
+    {
+        @:multiLabels.push("@d.ToString()");
     }
 
 </script>

@@ -80,9 +80,13 @@
 
 <script>
 
-    function loadSingleResultAsync() {
-        //$("#result").load(@Url.Action() + "?svyId=" + selectedID);
+    function loadSingleResultAsync(selectedID) {
+        $("#singleResultPartial").load(@Url.Action("LoadSingleResult", "SurveyResults") + "?svyId=" + selectedID);
     }
+
+    @*function loadMultiResultAsync() {
+        $.post(@Url.Action("LoadSingleResult", "SurveyResults"), function
+    }*@
 
     //all colors, repeat when there are many answer possibilities
     var borderColors = [
@@ -111,11 +115,9 @@
         } else if (part1 < 70 && part2 < 70 && part3 < 70) {
             getRandomColor();
         }
-        return ('rgba(' + part1 + ',' + part2 + ',' + part3);
     }
 
     //single chart things
-    //   |    Everything down here
     //   v
 
     function changeChartSingle(selector, chartCol, chart) {
@@ -290,6 +292,7 @@
     //   v
 
     function changeChartMulti(selector, chartCol, chart) {
+
         if ((document.getElementById(selector).value === "listing")) {
             createMultiListing(chartCol);
             return;
@@ -306,32 +309,24 @@
             borderColors = borderColors.concat([(firstPart + ',1)')]);
             bgColors = bgColors.concat([(firstPart + ',0.2)')]);
         }
+       
 
         var chartType = document.getElementById(selector).value;
         document.getElementById(chartCol).innerHTML = '<canvas id="' + chart + '" width="800" height="500"></canvas>'; //you have to clean everything up, otherwise the chart is bugging around
         var canvas = document.getElementById(chart);
         var ctx = canvas.getContext('2d');
 
+        let datasets = [];
+
         if (chartType === "bar") {
+
+            datasets = createDatasets(true);
+
             var stackedBar = new Chart(ctx, {
                 type: chartType,
                 data: {
-                    labels: ["test"],
-                    datasets:
-                        [{
-                            label: '# of Votes',
-                            data: values,
-                            backgroundColor: bgColors,
-                            borderColor: borderColors,
-                            borderWidth: 1
-                        },
-                        {
-                            label: 'tests',
-                            data: values,
-                            backgroundColor: bgColors,
-                            borderColor: borderColors,
-                            borderWidth: 1
-                            }]
+                    labels: multiLabels,
+                    datasets: datasets
                 },
                 options: {
                     scales: {
@@ -344,9 +339,53 @@
                     }
                 }
             });
+        } else if (chartType === "line") {
+
+             datasets = createDatasets(false);
+
+            var myMultiLineChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: multiLabels,
+                    datasets: datasets
+                },
+                options: {
+                  
+                }
+            });
         }
 
 
+    }
+
+    function createDatasets(withBackground) {
+        var datasets = [];
+        if (withBackground) {
+            for (i = 0; i < multiDict.length; i++) {
+                if (checkedAnswers.includes(multiDict[i].key)) {
+                    datasets.push({
+                        label: multiDict[i].key,
+                        data: multiDict[i].value,
+                        borderColor: borderColors[i],
+                        backgroundColor: bgColors[i],
+                        borderWidth: 1
+                    });
+                }
+            }
+        } else {
+            for (i = 0; i < multiDict.length; i++) {
+                if (checkedAnswers.includes(multiDict[i].key)) {
+                    datasets.push({
+                        label: multiDict[i].key,
+                        data: multiDict[i].value,
+                        borderColor: borderColors[i],
+                        backgroundColor: 'rgba(255,0,0,0)',
+                        borderWidth: 1
+                    });
+                }
+            }
+        }
+        return datasets;
     }
 
     function createMultiListing(chartCol) {
