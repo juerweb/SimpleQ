@@ -80,13 +80,47 @@
 
 <script>
 
-    function loadSingleResultAsync(selectedID) {
+    @*function loadSingleResultAsync(selectedID) {
         $("#singleResultPartial").load(@Url.Action("LoadSingleResult", "SurveyResults") + "?svyId=" + selectedID);
-    }
+    }*@
 
     @*function loadMultiResultAsync() {
         $.post(@Url.Action("LoadSingleResult", "SurveyResults"), function
     }*@
+
+    function switchToMulti() {
+        $("#trendBtn").removeClass("btn-primary").addClass("btn-secondary");
+        $("#singleBtn").removeClass("btn-secondary").addClass("btn-primary");
+        $("#trendBtn").attr("disabled", true);
+        $("#singleBtn").attr("disabled", false);
+        $("#singleResultOptions").hide();
+        $("#multiResultOptions").show();
+        $("#singleResultPartial").hide();
+        $("#multiResultPartial").show();
+        showMultiCharts();
+    }
+
+    function switchToSingle() {
+        $("#singleBtn").removeClass("btn-primary").addClass("btn-secondary");
+        $("#trendBtn").removeClass("btn-secondary").addClass("btn-primary");
+        $("#singleBtn").attr("disabled", true);
+        $("#trendBtn").attr("disabled", false);
+        $("#multiResultOptions").hide();
+        $("#singleResultOptions").show();
+        $("#multiResultPartial").hide();
+        $("#singleResultPartial").show();
+        showSingleCharts();
+    }
+
+    function showMultiCharts() {
+        changeChartMulti('chart1SelectMulti', 'chart1Col', 'chart1');
+        changeChartMulti('chart2SelectMulti', 'chart2Col', 'chart2');
+    }
+
+    function showSingleCharts() {
+        changeChartSingle('chart1SelectSingle', 'chart1Col', 'chart1');
+        changeChartSingle('chart2SelectSingle', 'chart2Col', 'chart2');
+    }
 
     //all colors, repeat when there are many answer possibilities
     var borderColors = [
@@ -115,6 +149,7 @@
         } else if (part1 < 70 && part2 < 70 && part3 < 70) {
             getRandomColor();
         }
+        return 'rgba(' + part1 + ', ' + part2 + ', ' + part3;
     }
 
     //single chart things
@@ -122,7 +157,7 @@
 
     function changeChartSingle(selector, chartCol, chart) {
         if ((document.getElementById(selector).value === "listing")) {
-            createListing(chartCol);
+            createSingleListing(chartCol);
             return;
         }
         var keys = [];
@@ -134,9 +169,11 @@
 
 
         while (dict.length > borderColors.length) { //ensures, that there are enough colors
+            //alert("drinn");
             var firstPart = getRandomColor();
             borderColors = borderColors.concat([(firstPart + ',1)')]);
             bgColors = bgColors.concat([(firstPart + ',0.2)')]);
+            //alert(firstPart + ',1)');
         }
 
 
@@ -252,7 +289,7 @@
         }
     }
 
-    function createListing(chart) {
+    function createSingleListing(chart) {
         var answerCount = 0;
         for (i = 0; i < dict.length; i++) {
             answerCount += parseInt(dict[i].value);
@@ -297,19 +334,13 @@
             createMultiListing(chartCol);
             return;
         }
-        var keys = [];
-        var values = [];
-        for (i = 0; i < dict.length; i++) {
-            keys.push(dict[i].key);
-            values.push(dict[i].value);
-        }
 
-        while (dict.length > borderColors.length) { //ensures, that there are enough colors
+        //alert(multiDict.length + " " + borderColors.length);
+        while (multiDict.length > borderColors.length) { //ensures, that there are enough colors
             var firstPart = getRandomColor();
             borderColors = borderColors.concat([(firstPart + ',1)')]);
             bgColors = bgColors.concat([(firstPart + ',0.2)')]);
         }
-       
 
         var chartType = document.getElementById(selector).value;
         document.getElementById(chartCol).innerHTML = '<canvas id="' + chart + '" width="800" height="500"></canvas>'; //you have to clean everything up, otherwise the chart is bugging around
@@ -388,9 +419,31 @@
         return datasets;
     }
 
-    function createMultiListing(chartCol) {
+    function createMultiListing(chartCol, date) {
+        var answerCount = 0;
+        for (i = 0; i < dict.length; i++) {
+            answerCount += parseInt(dict[i].value);
+        }
+        document.getElementById(chartCol).innerHTML = "";
+        var injection = "";
 
+        injection += '<div class="row"> <div class="col-3"><button id="dateLeftBtn" class="btn btn-primary btn-block"> < </button></div> <div class="col-6"><h3 class="text-center">24.12.1999</h3></div> <div class="col-3"><button id="dateRightBtn" class="btn btn-primary  btn-block"> > </button></div> </div>';
+
+        //injection += '<button class="btn btn-primary" style="float:left;"> < </button>';
+
+        for (i = 0; i < dict.length; i++) {
+            injection += ("<tr><td>" + dict[i].key + "</td><td>" + dict[i].value + "</td><td>" + ((dict[i].value / answerCount) * 100).toFixed(2) + "%</td></tr>");
+        }
+        $("#" + chartCol).append("<table class='table table-bordered'><thead><tr><th>@Resources.answer</th><th>@Resources.count</th><th>@Resources.percent</th></tr></thead><tbody>" + injection + "</tbody></table>");
     }
+
+    $(function () {
+        $("#dateLeftBtn").click(function () {
+            alert("asd");
+            //createMultiListing(this.parentElement.parentElement)
+            alert(this.parentElement.parentElemen);
+        });
+    });
 
 </script>
 
