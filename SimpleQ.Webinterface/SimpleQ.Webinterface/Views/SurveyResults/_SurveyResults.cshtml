@@ -313,23 +313,23 @@
     var dateIndex = 0;
     $(document).ready(function () {
         $("#zoomModalContent").click(function () {
-            if (event.target.id === "dateRightBtn") { //for multiResult listing (to be able to switch dates)
+            if (event.target.id === "dateRightModalBtn") { //for multiResult listing (to be able to switch dates)
                 dateIndex += 1;
-                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex);
-                $("#dateLeftBtn").prop("disabled", false);
+                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex, "dateLeftModalBtn", "dateRightModalBtn");
+                $("#dateLeftModalBtn").prop("disabled", false);
                 if (dateIndex === multiLabels.length - 1) {
-                    $("#dateRightBtn").prop("disabled", true);
+                    $("#dateRightModalBtn").prop("disabled", true);
                 }
                 return;
             }
-            if (event.target.id === "dateLeftBtn") { //for multiResult listing (to be able to switch dates)
+            if (event.target.id === "dateLeftModalBtn") { //for multiResult listing (to be able to switch dates)
                 dateIndex -= 1;
-                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex);
-                $("#dateRightBtn").prop("disabled", false);
+                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex, "dateLeftModalBtn", "dateRightModalBtn");
+                $("#dateRightModalBtn").prop("disabled", false);
                 if (dateIndex === 0) {
-                    $("#dateLeftBtn").prop("disabled", true);
+                    $("#dateLeftModalBtn").prop("disabled", true);
                 } else {
-                    $("#dateLeftBtn").prop("disabled", false);
+                    $("#dateLeftModalBtn").prop("disabled", false);
                 }
                 return;
             }
@@ -337,7 +337,7 @@
         $(".chartCol").click(function (event) {
             if (event.target.id === "dateRightBtn") { //for multiResult listing (to be able to switch dates)
                 dateIndex += 1;
-                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex);
+                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex, "dateLeftBtn", "dateRightBtn");
                 $("#dateLeftBtn").prop("disabled", false);
                 if (dateIndex === multiLabels.length - 1) {
                     $("#dateRightBtn").prop("disabled", true);
@@ -346,7 +346,7 @@
             }
             if (event.target.id === "dateLeftBtn") { //for multiResult listing (to be able to switch dates)
                 dateIndex -= 1;
-                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex);
+                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex, "dateLeftBtn", "dateRightBtn");
                 $("#dateRightBtn").prop("disabled", false);
                 if (dateIndex === 0) {
                     $("#dateLeftBtn").prop("disabled", true);
@@ -393,9 +393,9 @@
 
         if ((document.getElementById(selector).value === "listing")) {
             if (chartCol === "zoomModalContent") {
-                createMultiListing(chartCol, dateIndex);
+                createMultiListing(chartCol, dateIndex, "dateLeftModalBtn", "dateRightModalBtn");
             } else {
-                createMultiListing(chartCol, 0);
+                createMultiListing(chartCol, 0, "dateLeftBtn", "dateRightBtn");
             }
             return;
         }
@@ -484,7 +484,7 @@
         return datasets;
     }
 
-    function createMultiListing(chartCol, dateIndex) {
+    function createMultiListing(chartCol, dateIndex, buttonLeftId, buttonRightId) {
         var answerCount = 0;
         //alert(multiDict.length + " " + dateIndex);
         for (i = 0; i < multiDict.length; i++) {
@@ -493,7 +493,7 @@
         document.getElementById(chartCol).innerHTML = "";
         var injection = "";
 
-        injection += '<div class="row"> <div class="col-3"><button id="dateLeftBtn" class="btn btn-primary btn-block"> < </button></div> <div class="col-6"><h3 class="text-center">'+multiLabels[dateIndex]+'</h3></div> <div class="col-3"><button id="dateRightBtn" class="btn btn-primary  btn-block"> > </button></div> </div>';
+        injection += '<div class="row"> <div class="col-3"><button id="' + buttonLeftId + '" class="btn btn-primary btn-block"> < </button></div> <div class="col-6"><h3 class="text-center">' + multiLabels[dateIndex] + '</h3></div> <div class="col-3"><button id="' + buttonRightId + '" class="btn btn-primary  btn-block"> > </button></div> </div>';
 
         //injection += '<button class="btn btn-primary" style="float:left;"> < </button>';
 
@@ -502,7 +502,11 @@
         }
         $("#" + chartCol).append("<table class='table table-bordered'><thead><tr><th>@Resources.answer</th><th>@Resources.count</th><th>@Resources.percent</th></tr></thead><tbody>" + injection + "</tbody></table>");
 
-        $("#dateLeftBtn").prop("disabled", true);
+        if (dateIndex === 0) {
+            $("#" + buttonLeftId).prop("disabled", true);
+        } else if (dateIndex === multiLabels.length - 1) {
+            $("#" + buttonRightId).prop("disabled", true);
+        }
     }
 
 </script>
