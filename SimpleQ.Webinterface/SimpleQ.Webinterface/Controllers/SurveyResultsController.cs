@@ -56,14 +56,14 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpPost]
         public ActionResult LoadMultiResult(MultiResultModel req)
         {
-            //// SAMPLE DATA
-            //req = new MultiResultsModel
-            //{
-            //    CatId = 4,
-            //    TypeId = 1,
-            //    StartDate = DateTime.Now.AddYears(-1),
-            //    EndDate = DateTime.Now,
-            //};
+            // SAMPLE DATA
+            req = new MultiResultModel
+            {
+                CatId = 4,
+                TypeId = 1,
+                StartDate = DateTime.Now.AddYears(-1),
+                EndDate = DateTime.Now,
+            };
 
             using (var db = new SimpleQDBEntities())
             {
@@ -91,10 +91,9 @@ namespace SimpleQ.Webinterface.Controllers
                         .Distinct()
                         .ToList(),
 
-                    Votes = selectedSurveys
-                        .ToList()
-                        .Select(s => SelectVotesFromSurvey(db, s))
-                        .ToList()
+                    SurveyDates = selectedSurveys.Select(s => s.StartDate).ToList(),
+
+                    Votes = SelectVotesFromSurveyGrouped(db, selectedSurveys)
                 };
 
                 return PartialView(viewName: "_MultiResult", model: model);
@@ -110,6 +109,31 @@ namespace SimpleQ.Webinterface.Controllers
                 .ToDictionary(g => g.Where(a => a.AnsId == g.Key).Select(a => a.AnsText).FirstOrDefault(), g => g.Count())
                 .Concat(db.AnswerOptions.Where(a => a.SvyId == survey.SvyId && a.Votes.Count == 0).AsEnumerable().Select(a => new KeyValuePair<string, int>(a.AnsText, 0)))
                 .ToDictionary(kv => kv.Key, kv => kv.Value);
+        }
+
+        private Dictionary<string, List<int>> SelectVotesFromSurveyGrouped(SimpleQDBEntities db, IQueryable<Survey> selectedSurveys)
+        {
+            Dictionary<string, List<int>> dict = new Dictionary<string, List<int>>();
+
+            selectedSurveys
+                .SelectMany(s => s.AnswerOptions)
+                .Select(a => a.AnsText)
+                .Distinct()
+                .ToList()
+                .ForEach(t => dict.Add(t, new List<int>()));
+
+            selectedSurveys.ToList()
+                .ForEach(s => 
+                {
+                    s.AnswerOptions
+                        .ToList()
+                        .ForEach(a =>
+                        {
+                            dict[a.AnsText].Add(a.Votes.Count());
+                        });
+                });
+
+            return dict;
         }
 
         private string CustCode
