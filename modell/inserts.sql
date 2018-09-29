@@ -14,9 +14,9 @@ insert into Person values (1, 'm4rku5', null); -- PersId 3
 insert into Person values (2, 'm4rku5', null); -- PersId 4
 insert into Person values (2, 'm4rku5', null); -- PersId 5
 
-insert into SurveyCategory values ('m4rku5', 'Politische Fragen'); -- CatId 1
-insert into SurveyCategory values ('m4rku5', 'Persönliche Fragen'); -- CatId 2
-insert into SurveyCategory values ('m4rku5', 'Unnötige Fragen'); -- CatId 3
+insert into SurveyCategory values (1, 'm4rku5', 'Politische Fragen');
+insert into SurveyCategory values (2, 'm4rku5', 'Persönliche Fragen');
+insert into SurveyCategory values (3, 'm4rku5', 'Unnötige Fragen');
 
 insert into Survey values (1, 'm4rku5', 'Ist N.H. ein Nazi?', '2018-08-24', '2019-08-24', 5, 1) -- SvyId 1
 insert into Survey values (2, 'm4rku5', 'Sind sie foisch?', '2018-08-24', '2019-08-24', 5, 1) -- SvyId 2
@@ -109,7 +109,7 @@ commit;
 go
 
 -- ++++++++ TRENDANALYSE-TESTDATEN ++++++++
-insert into SurveyCategory values ('m4rku5', 'Chef-Beliebtheitsfragen'); -- CatId 4
+insert into SurveyCategory values (4, 'm4rku5', 'Chef-Beliebtheitsfragen');
 
 insert into Survey values (4, 'm4rku5', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-01', '2018-07-15', 5, 1); -- SvyId 6
 insert into Asking values (6, 1, 'm4rku5');

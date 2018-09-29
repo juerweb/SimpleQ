@@ -119,9 +119,10 @@ go
 -- KUNDENSPEZIFISCH
 create table SurveyCategory
 (
-	CatId int identity primary key,
+	CatId int not null,
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer, 
-	CatName varchar(max) not null
+	CatName varchar(max) not null,
+    primary key (CatId, CustCode),
 );
 go
 
@@ -130,13 +131,14 @@ go
 create table Survey
 (
 	SvyId int identity primary key,
-	CatId int not null references SurveyCategory,
-	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
+	CatId int not null,
+	CustCode char(6) collate Latin1_General_CS_AS not null,
 	SvyText varchar(max) not null,
 	StartDate datetime not null,
 	EndDate datetime not null,
     Amount int not null,
-	TypeId int not null references AnswerType
+	TypeId int not null references AnswerType,
+    foreign key (CatId, CustCode) references SurveyCategory
 );
 go
 
