@@ -57,44 +57,72 @@ namespace SimpleQ.Webinterface.Controllers
         public ActionResult LoadMultiResult(MultiResultModel req)
         {
             // SAMPLE DATA
-            req = new MultiResultModel
-            {
-                CatId = 4,
-                TypeId = 1,
-                StartDate = DateTime.Now.AddYears(-1),
-                EndDate = DateTime.Now,
-            };
+            //req = new MultiResultModel
+            //{
+            //    CatId = 4,
+            //    TypeId = 1,
+            //    StartDate = DateTime.Now.AddYears(-1),
+            //    EndDate = DateTime.Now,
+            //};
 
             using (var db = new SimpleQDBEntities())
             {
                 var selectedSurveys = db.Surveys
                     .Where(s => s.CatId == req.CatId && s.TypeId == req.TypeId
-                     && s.StartDate >= req.StartDate && s.EndDate <= req.EndDate);
+                     && s.StartDate >= req.StartDate && s.StartDate <= req.EndDate);
 
-                var model = new MultiResultModel
+                MultiResultModel model;
+                if (selectedSurveys.Count() == 0)
                 {
-                    CatName = db.SurveyCategories
-                        .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
-                        .Select(c => c.CatName)
-                        .FirstOrDefault(),
+                    model = new MultiResultModel
+                    {
+                        CatName = db.SurveyCategories
+                            .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
+                            .Select(c => c.CatName)
+                            .FirstOrDefault(),
 
-                    TypeName = db.AnswerTypes
-                        .Where(a => a.TypeId == req.TypeId)
-                        .Select(a => a.TypeDesc) // GLOBALIZATION!
-                        .FirstOrDefault(),
+                        TypeName = db.AnswerTypes
+                            .Where(a => a.TypeId == req.TypeId)
+                            .Select(a => a.TypeDesc) // GLOBALIZATION!
+                            .FirstOrDefault(),
 
-                    AvgAmount = (selectedSurveys.Sum(s => s.Amount) / (double)selectedSurveys.Count()),
+                        AvgAmount = 0,
 
-                    DepartmentNames = selectedSurveys
-                        .SelectMany(s => s.Departments)
-                        .Select(d => d.DepName)
-                        .Distinct()
-                        .ToList(),
+                        DepartmentNames = new List<string>(),
 
-                    SurveyDates = selectedSurveys.Select(s => s.StartDate).ToList(),
+                        SurveyDates = new List<DateTime>(),
 
-                    Votes = SelectVotesFromSurveyGrouped(db, selectedSurveys)
-                };
+                        Votes = new Dictionary<string, List<int>>()
+                    };
+                }
+                else
+                {
+
+                    model = new MultiResultModel
+                    {
+                        CatName = db.SurveyCategories
+                            .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
+                            .Select(c => c.CatName)
+                            .FirstOrDefault(),
+
+                        TypeName = db.AnswerTypes
+                            .Where(a => a.TypeId == req.TypeId)
+                            .Select(a => a.TypeDesc) // GLOBALIZATION!
+                            .FirstOrDefault(),
+
+                        AvgAmount = (selectedSurveys.Sum(s => s.Amount) / (double)selectedSurveys.Count()),
+
+                        DepartmentNames = selectedSurveys
+                            .SelectMany(s => s.Departments)
+                            .Select(d => d.DepName)
+                            .Distinct()
+                            .ToList(),
+
+                        SurveyDates = selectedSurveys.Select(s => s.StartDate).ToList(),
+
+                        Votes = SelectVotesFromSurveyGrouped(db, selectedSurveys)
+                    };
+                }
 
                 return PartialView(viewName: "_MultiResult", model: model);
             }
@@ -123,7 +151,7 @@ namespace SimpleQ.Webinterface.Controllers
                 .ForEach(t => dict.Add(t, new List<int>()));
 
             selectedSurveys.ToList()
-                .ForEach(s => 
+                .ForEach(s =>
                 {
                     s.AnswerOptions
                         .ToList()
