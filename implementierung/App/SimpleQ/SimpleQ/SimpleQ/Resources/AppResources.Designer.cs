@@ -97,6 +97,51 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /AnswerSurvey ähnelt.
+        /// </summary>
+        internal static string APIAnswerSurveyPlusURL {
+            get {
+                return ResourceManager.GetString("APIAnswerSurveyPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /GetSurveyData ähnelt.
+        /// </summary>
+        internal static string APIGetDataPlusURL {
+            get {
+                return ResourceManager.GetString("APIGetDataPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die http://localhost:1899/api/mobile ähnelt.
+        /// </summary>
+        internal static string APIMainURL {
+            get {
+                return ResourceManager.GetString("APIMainURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /Register ähnelt.
+        /// </summary>
+        internal static string APIRegisterPlusURL {
+            get {
+                return ResourceManager.GetString("APIRegisterPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /Unregister ähnelt.
+        /// </summary>
+        internal static string APIUnregisterPlusURL {
+            get {
+                return ResourceManager.GetString("APIUnregisterPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die App Informationen ähnelt.
         /// </summary>
         internal static string AppInformation {
@@ -264,6 +309,15 @@ namespace SimpleQ.Resources {
         internal static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ.Resources.private.key ähnelt.
+        /// </summary>
+        internal static string KeyResourcename {
+            get {
+                return ResourceManager.GetString("KeyResourcename", resourceCulture);
             }
         }
         

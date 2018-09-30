@@ -1,4 +1,5 @@
 ﻿using SimpleQ.Models;
+using SimpleQ.Shared;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +15,13 @@ namespace SimpleQ.PageModels.Services
             questions.Add(new SurveyModel(0, "Sind Sie männlich?", "YNQ Test", SurveyType.YNQ, DateTime.Now, DateTime.Now));
             questions.Add(new SurveyModel(1, "Sind Sie anwesend?", "TLQ Test", SurveyType.TLQ, DateTime.Now, DateTime.Now));
             questions.Add(new SurveyModel(2, "Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", SurveyType.OWQ, DateTime.Now, DateTime.Now));
-            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "GAQ Test", SurveyType.GAQ, DateTime.Now, DateTime.Now, new List<String>(new String[] { "Grün", "Rot", "Gelb", "Blau" })));
+            List<AnswerOption> answerTypes = new List<AnswerOption>();
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Grün", SvyId = 0 });
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Rot", SvyId = 1 });
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Gelb", SvyId = 2 });
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Blau", SvyId = 3 });
+
+            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "GAQ Test", SurveyType.GAQ, DateTime.Now, DateTime.Now, answerTypes));
         }
         List<SurveyModel> questions = new List<SurveyModel>();
         public async Task<CodeValidationModel> CheckCode(int code)
