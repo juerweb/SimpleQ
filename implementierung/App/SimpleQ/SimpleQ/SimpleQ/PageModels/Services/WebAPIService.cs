@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -16,13 +15,23 @@ namespace SimpleQ.PageModels.Services
     public class WebAPIService : IWebAPIService
     {
         HttpClient httpClient = new HttpClient();
+        public WebAPIService()
+        {
+            Debug.WriteLine("Constructor of WebAPIService...", "Info");
+            var assembly = IntrospectionExtensions.GetTypeInfo(typeof(WebAPIService)).Assembly;
+            Stream stream = assembly.GetManifestResourceStream("SimpleQ.Resources.private.key");
+
+            StreamReader streamReader = new StreamReader(stream);
+
+            String key = streamReader.ReadToEnd();
+
+            httpClient.DefaultRequestHeaders.Add("auth-key", key);
+        }
+
+        
 
         public async Task<Boolean> AnswerSurvey(SurveyVote surveyVote)
         {
-
-            //httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("auth-key", App.Key);
-
-
             StringContent content = new StringContent(JsonConvert.SerializeObject(surveyVote), Encoding.UTF8, "application/json");
 
             Debug.WriteLine(AppResources.APIMainURL + AppResources.APIAnswerSurveyPlusURL);
@@ -36,8 +45,6 @@ namespace SimpleQ.PageModels.Services
 
         public async Task<SurveyModel> GetSurveyData(int surveyID)
         {
-            //httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("auth-key", App.Key);
-
             HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIAnswerSurveyPlusURL + "?svyId=" + surveyID);
 
             Debug.WriteLine(responseMessage.StatusCode);
@@ -58,8 +65,6 @@ namespace SimpleQ.PageModels.Services
 
         public async Task<RegistrationData> Register(string regCode, string deviceId)
         {
-            //httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("auth-key", App.Key);
-
             HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIRegisterPlusURL + "?regCode=" + regCode + "&deviceId=" + deviceId);
 
             String content = await responseMessage.Content.ReadAsStringAsync();
@@ -79,16 +84,6 @@ namespace SimpleQ.PageModels.Services
 
         public async Task<bool> Unregister(string persId, string custCode)
         {
-            Debug.WriteLine("Test");
-
-            String test = App.Key;
-
-            Debug.WriteLine("Test: " + test);
-
-            httpClient.DefaultRequestHeaders.Add("auth", test);
-            //httpClient.DefaultRequestHeaders.Add("Authorization", App.Key);
-
-            Debug.WriteLine("Test");
 
             Debug.WriteLine(AppResources.APIMainURL + AppResources.APIUnregisterPlusURL);
 

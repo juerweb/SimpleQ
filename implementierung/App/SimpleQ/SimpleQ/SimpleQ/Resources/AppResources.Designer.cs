@@ -97,7 +97,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /answerSurvey ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /AnswerSurvey ähnelt.
         /// </summary>
         internal static string APIAnswerSurveyPlusURL {
             get {
@@ -106,7 +106,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /getSurveyData ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /GetSurveyData ähnelt.
         /// </summary>
         internal static string APIGetDataPlusURL {
             get {
@@ -124,7 +124,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /register ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /Register ähnelt.
         /// </summary>
         internal static string APIRegisterPlusURL {
             get {
@@ -133,7 +133,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /unregister ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /Unregister ähnelt.
         /// </summary>
         internal static string APIUnregisterPlusURL {
             get {

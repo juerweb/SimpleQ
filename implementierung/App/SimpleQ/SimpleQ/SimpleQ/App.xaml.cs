@@ -43,7 +43,7 @@ namespace SimpleQ
 
             SetupBlobCache();
 
-            GetKeyFromFile();
+            //GetKeyFromFile();
 
 
 
@@ -128,7 +128,7 @@ namespace SimpleQ
 
             IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
 
-            //webAPIService.Register("1234", "1234");
+            webAPIService.Register("1234", "1234");
             webAPIService.Unregister("1234", "123");
 
             OpenNotification();

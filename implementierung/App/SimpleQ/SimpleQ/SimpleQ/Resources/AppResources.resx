@@ -271,16 +271,16 @@
     <comment>NT</comment>
   </data>
   <data name="APIRegisterPlusURL" xml:space="preserve">
-    <value>/register</value>
+    <value>/Register</value>
   </data>
   <data name="APIAnswerSurveyPlusURL" xml:space="preserve">
-    <value>/answerSurvey</value>
+    <value>/AnswerSurvey</value>
   </data>
   <data name="APIUnregisterPlusURL" xml:space="preserve">
-    <value>/unregister</value>
+    <value>/Unregister</value>
   </data>
   <data name="APIGetDataPlusURL" xml:space="preserve">
-    <value>/getSurveyData</value>
+    <value>/GetSurveyData</value>
   </data>
   <data name="KeyResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.private.key</value>
