@@ -1,18 +1,44 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
 @using SimpleQ.Webinterface.Models;
+@using System.Resources;
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyCreationModel
 
 <div class="row mt-1 ml-0 mr-0">
     <div class="col-md-7 pl-4">
         <h2>@Resources.surveyCreationHeader</h2>
 
-        <label for="SurveyCategoryCB">@Resources.surveyCategoryHeader</label>
-        @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control" })
+        <label>@Resources.surveyCategoryHeader</label>
+        <div class="row mr-0 ml-0">
+            <div class="col-11 p-0">
+                @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control dropBoxRightNotRounded rightNotRounded" })
+            </div>
+            <div class="col-1 p-0">
+                <button class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded"><i class="material-icons">&#xe145;</i></button>
+            </div>
+        </div>
 
-        <label for="AnswerTypeCB" class="mt-2">@Resources.answerTypeHeader</label>
-        @Html.DropDownListFor(model => model.AnswerTypes, new SelectList(Model.AnswerTypes, "TypeId", "TypeDesc"), new { @class = "form-control" })
+        <div class="form-group mt-2">
+            <label for="AnswerTypeCB">Antwortart</label>
+            <select class="form-control" id="AnswerTypeCB">
+                @{
+                    ResourceManager rm = Resources.ResourceManager;
+                    foreach (AnswerType at in Model.AnswerTypes)
+                    {
+                        if (at.TypeId == 1)
+                        {
+                            <option value="@at.TypeId" selected>@rm.GetString(at.TypeDesc)</option>
+                        }
+                        else
+                        {
+                            <option value="@at.TypeId">@rm.GetString(at.TypeDesc)</option>
+                        }
+                    }
+                }
 
-        <button type="button" class="btn btn-primary btn-block mt-2" data-toggle="collapse" data-target="#answerBox"><span class="d-flex justify-content-between"><span >Answers</span><i class="material-icons">&#xe876;</i></span></button>
+            </select>
+        </div>
+
+        <button type="button" class="btn btn-primary btn-block mt-2" data-toggle="collapse" data-target="#answerBox"><span class="d-flex justify-content-between"><span>Answers</span><i class="material-icons">&#xe876;</i></span></button>
         <div id="answerBox" class="collapse border border-dark mt-2">
             <div class="row mt-1 mr-0 ml-0">
                 <div class="col-7 pl-2 pr-1"><input id="answerInput" class="form-control" type="text" /></div>
@@ -27,7 +53,7 @@
                 </li>
                 <li class="list-group-item">
                     <span class="d-flex justify-content-between">
-                        <span><input type="text" class="" value="hallo"/><button class="btn btn-info ml-2 p-0"><i class="material-icons">	&#xe5ca;</i></button></span>
+                        <span><input type="text" class="" value="hallo" /><button class="btn btn-info ml-2 p-0"><i class="material-icons">	&#xe5ca;</i></button></span>
                         <button class="btn btn-danger ml-2"><i class="material-icons">&#xe5cd;</i></button>
                     </span>
                 </li>

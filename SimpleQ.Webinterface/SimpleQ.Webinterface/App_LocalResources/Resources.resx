@@ -132,6 +132,9 @@
   <data name="diagram" xml:space="preserve">
     <value>diagram</value>
   </data>
+  <data name="Dichotomous" xml:space="preserve">
+    <value>Dichotomous</value>
+  </data>
   <data name="doughnut" xml:space="preserve">
     <value>doughnut</value>
   </data>
@@ -144,17 +147,53 @@
   <data name="groups" xml:space="preserve">
     <value>groups</value>
   </data>
+  <data name="LikertSkale3" xml:space="preserve">
+    <value>Likert-skale 3</value>
+  </data>
+  <data name="LikertSkale4" xml:space="preserve">
+    <value>Likert-skale 4</value>
+  </data>
+  <data name="LikertSkale5" xml:space="preserve">
+    <value>Likert-skale 5</value>
+  </data>
+  <data name="LikertSkale6" xml:space="preserve">
+    <value>Likert-skale 6</value>
+  </data>
+  <data name="LikertSkale7" xml:space="preserve">
+    <value>Likert-skale 7</value>
+  </data>
+  <data name="LikertSkale8" xml:space="preserve">
+    <value>Likert-skale 8</value>
+  </data>
+  <data name="LikertSkale9" xml:space="preserve">
+    <value>Likert-skale 9</value>
+  </data>
   <data name="line" xml:space="preserve">
     <value>line</value>
   </data>
   <data name="listing" xml:space="preserve">
     <value>listing (absolute, %)</value>
   </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open text-answer</value>
+  </data>
   <data name="percent" xml:space="preserve">
     <value>percent</value>
   </data>
   <data name="polarArea" xml:space="preserve">
     <value>polar-area</value>
+  </data>
+  <data name="PolytomousOrderedMultiple" xml:space="preserve">
+    <value>Many answers, many to choose (ordered)</value>
+  </data>
+  <data name="PolytomousOrderedSingle" xml:space="preserve">
+    <value>Many answers, one to choose (ordered)</value>
+  </data>
+  <data name="PolytomousUnorderedMultiple" xml:space="preserve">
+    <value>Many answers, many to choose (unordered)</value>
+  </data>
+  <data name="PolytomousUnorderedSingle" xml:space="preserve">
+    <value>Many answers, one to choose (unordered)</value>
   </data>
   <data name="questionHeader" xml:space="preserve">
     <value>...</value>
@@ -183,8 +222,17 @@
   <data name="to" xml:space="preserve">
     <value>to</value>
   </data>
+  <data name="TrafficLight" xml:space="preserve">
+    <value>Traffic-lights (red,yellow,green)</value>
+  </data>
   <data name="typeSmall" xml:space="preserve">
     <value>type</value>
     <comment>small written type</comment>
+  </data>
+  <data name="YesNo" xml:space="preserve">
+    <value>Yes-no</value>
+  </data>
+  <data name="YesNoDontKnow" xml:space="preserve">
+    <value>Yes-no-dont know</value>
   </data>
 </root>
