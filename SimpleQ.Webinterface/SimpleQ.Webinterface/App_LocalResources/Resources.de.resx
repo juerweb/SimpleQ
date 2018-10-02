@@ -235,4 +235,13 @@
   <data name="YesNoDontKnow" xml:space="preserve">
     <value>Ja/Nein/Weis nicht</value>
   </data>
+  <data name="add" xml:space="preserve">
+    <value>hinzufügen</value>
+  </data>
+  <data name="addNewCategory" xml:space="preserve">
+    <value>Kategorie hinzufügen</value>
+  </data>
+  <data name="newCategoryName" xml:space="preserve">
+    <value>Kategoriebezeichnung ...</value>
+  </data>
 </root>

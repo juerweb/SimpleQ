@@ -61,6 +61,24 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die add ähnelt.
+        /// </summary>
+        public static string add {
+            get {
+                return ResourceManager.GetString("add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die add new category ähnelt.
+        /// </summary>
+        public static string addNewCategory {
+            get {
+                return ResourceManager.GetString("addNewCategory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die answer ähnelt.
         /// </summary>
         public static string answer {
@@ -228,6 +246,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static string listing {
             get {
                 return ResourceManager.GetString("listing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die new category name ... ähnelt.
+        /// </summary>
+        public static string newCategoryName {
+            get {
+                return ResourceManager.GetString("newCategoryName", resourceCulture);
             }
         }
         
