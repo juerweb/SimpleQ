@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using System.Reactive.Linq;
+using SimpleQ.Shared;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -54,7 +55,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// The selected ansDesc
         /// </summary>
-        private String selectedAnswer;
+        private AnswerOption selectedAnswer;
         /// <summary>
         /// The is question answered
         /// </summary>
@@ -69,7 +70,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The selected ansDesc.
         /// </value>
-        public string SelectedAnswer
+        public AnswerOption SelectedAnswer
         {
             get => selectedAnswer;
             set

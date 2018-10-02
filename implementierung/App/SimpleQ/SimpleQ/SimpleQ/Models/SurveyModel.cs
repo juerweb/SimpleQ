@@ -13,7 +13,7 @@ namespace SimpleQ.Models
     public class SurveyModel : INotifyPropertyChanged
     {
         #region Constructor(s)
-        public SurveyModel(int surveyId, string surveyDesc, string catName, SurveyType surveyType, DateTime startDate, DateTime endDate, List<AnswerOption> givenAnswers = null) : this()
+        public SurveyModel(int surveyId, string surveyDesc, string catName, SurveyType surveyType, DateTime endDate, List<AnswerOption> givenAnswers = null) : this()
         {
             this.surveyId = surveyId;
             this.surveyDesc = surveyDesc;
@@ -22,7 +22,8 @@ namespace SimpleQ.Models
             this.givenAnswers = givenAnswers;
             this.endDate = endDate;
         }
-        public SurveyModel(int surveyId, string surveyDesc, string catName, int typeId, DateTime startDate, DateTime endDate, List<AnswerOption> givenAnswers = null) : this()
+
+        public SurveyModel(int surveyId, string surveyDesc, string catName, int typeId, DateTime endDate, List<AnswerOption> givenAnswers = null) : this()
         {
             this.surveyId = surveyId;
             this.surveyDesc = surveyDesc;
@@ -32,7 +33,7 @@ namespace SimpleQ.Models
             this.endDate = endDate;
         }
 
-        public SurveyModel(SurveyNotification sn)
+        public SurveyModel(SurveyNotification sn): this()
         {
             this.surveyId = sn.SvyId;
             this.surveyDesc = sn.SvyText;
@@ -44,8 +45,8 @@ namespace SimpleQ.Models
 
         public SurveyModel()
         {
-            this.ansDesc = "";
             IsAnswerAllowed = false;
+            this.choosenAnswers = new List<AnswerOption>();
         }
 
 
@@ -56,9 +57,9 @@ namespace SimpleQ.Models
         private String surveyDesc;
         private String catName;
         private SurveyType typeDesc;
-        private String ansDesc;
         private Boolean isAnswerAllowed;
         private List<AnswerOption> givenAnswers;
+        private List<AnswerOption> choosenAnswers;
         private DateTime endDate;
         #endregion
 
@@ -88,23 +89,9 @@ namespace SimpleQ.Models
 
         public SurveyType TypeDesc { get => typeDesc; set => typeDesc = value; }
 
-        public string AnsDesc
-        {
-            get => ansDesc;
-            set
-            {
-                ansDesc = value;
-                if (typeDesc == SurveyType.GAQ)
-                {
-                    CheckIfAnswerIsAllowed();
-                }
-            } 
-        }
-
         public List<AnswerOption> GivenAnswers { get => givenAnswers; set => givenAnswers = value; }
         public DateTime EndDate { get => endDate; set => endDate = value; }
-
-        //public List<string> GivenAnswers { get => givenAnswers; set => givenAnswers = value; }
+        public List<AnswerOption> ChoosenAnswers { get => choosenAnswers; set => choosenAnswers = value; }
         #endregion
 
         #region Methods
@@ -126,29 +113,44 @@ namespace SimpleQ.Models
 
     public enum SurveyType
     {
-        YNQ = 0,
-        TLQ = 1,
-        OWQ = 2,
-        GAQ = 3
+        YesNoQuestion = 1,
+        YesNoDontKnowQuestion = 2,
+        TrafficLightQuestion = 3,
+        OpenQuestion = 4,
+        DichotomousQuestion = 5,
+        PolytomousUSQuestion = 6,
+        PolytomousUMQuestion = 7,
+        PolytomousOSQuestion = 8,
+        PolytomousOMQuestion = 9,
+        LikertScale3Question = 10,
+        LikertScale4Question = 11,
+        LikertScale5Question = 12,
+        LikertScale6Question = 13,
+        LikertScale7Question = 14,
+        LikertScale8Question = 15,
+        LikertScale9Question = 16,
+        //GAQ is only tmp Type
+        GAQ = 17,
+
     }
 
     public enum YNQAnswer
     {
-        Yes = 0,
-        No = 1
+        Yes = 1,
+        No = 2
     }
 
     public enum YNDKQAnswer
     {
-        Yes = 0,
-        No = 1,
-        DontKnow = 2
+        Yes = 1,
+        No = 2,
+        DontKnow = 3
     }
 
     public enum TLQAnswer
     {
-        Green = 0,
-        Yellow = 1,
-        Red = 2
+        Green = 1,
+        Yellow = 2,
+        Red = 3
     }
 }

@@ -91,7 +91,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private void QuestionAnswered()
         {
-            base.QuestionAnswered(answer);
+            base.QuestionAnswered(1, answer);
         }
         #endregion
 

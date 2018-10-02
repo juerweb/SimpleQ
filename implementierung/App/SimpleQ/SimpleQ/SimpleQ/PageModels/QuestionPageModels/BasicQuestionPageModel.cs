@@ -12,6 +12,7 @@ using System.Text;
 using System.Reactive.Linq;
 using SimpleQ.Extensions;
 using Xamarin.Forms;
+using SimpleQ.Shared;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -109,12 +110,27 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Methods
-        protected async void QuestionAnswered(String answer)
+        public void QuestionAnswered(int ansId, string answerText)
         {
-            Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.SurveyId, answer), "Info");
+            this.question.GivenAnswers.Add(new AnswerOption() { AnsId = ansId, AnsText = answerText, SvyId = this.question.SurveyId });
+            QuestionAnswered();
+        }
 
-            this.question.AnsDesc = answer;
+        public void QuestionAnswered(AnswerOption answer)
+        {
+            this.question.GivenAnswers.Add(answer);
+            QuestionAnswered();
+        }
 
+        public void QuestionAnswered(List<AnswerOption> answers)
+        {
+            this.question.GivenAnswers = answers;
+            QuestionAnswered();
+        }
+
+        protected async void QuestionAnswered()
+        {
+            Debug.WriteLine(String.Format("User answered the question with the id {0}...", Question.SurveyId), "Info");
 
             Debug.WriteLine("QS: " + this.questionService);
             if (this.questionService == null)

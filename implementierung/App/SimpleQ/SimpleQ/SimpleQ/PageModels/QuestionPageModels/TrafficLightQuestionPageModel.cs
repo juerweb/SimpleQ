@@ -82,7 +82,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="answer">The ansDesc.</param>
         private void QuestionAnswered(TLQAnswer answer)
         {
-            base.QuestionAnswered(answer.ToString());
+            //base.QuestionAnswered(Enum.GetName(typeof(TLQAnswer), answer));
         }
         #endregion
 

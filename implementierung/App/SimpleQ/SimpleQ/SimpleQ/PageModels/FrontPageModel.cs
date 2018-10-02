@@ -118,15 +118,19 @@ namespace SimpleQ.PageModels
         /// </summary>
         private void NavigateToQuestion()
         {
-            if (selectedQuestion.TypeDesc == SurveyType.YNQ)
+            if (selectedQuestion.TypeDesc == SurveyType.YesNoQuestion)
             {
                 CoreMethods.PushPageModel<YesNoQuestionPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.TypeDesc == SurveyType.TLQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.YesNoDontKnowQuestion)
+            {
+                CoreMethods.PushPageModel<YesNoDontKnowQuestionPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.TrafficLightQuestion)
             {
                 CoreMethods.PushPageModel<TrafficLightQuestionPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.TypeDesc == SurveyType.OWQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.OpenQuestion)
             {
                 CoreMethods.PushPageModel<OpenQuestionPageModel>(selectedQuestion);
             }

@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
-             x:Class="SimpleQ.Pages.QuestionPages.YesNoDontKnowQuestionPage">
+             x:Class="SimpleQ.Pages.QuestionPages.DichotomousQuestionPage">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
@@ -10,13 +10,11 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Button Text="{ext:Translate Text=Yes}" Grid.Column="0" Command="{Binding YesCommand}"></Button>
                 <Button Text="{ext:Translate Text=No}" Grid.Column="1" Command="{Binding NoCommand}"></Button>
-                <Button Text="{ext:Translate Text=DontKnow}" Grid.Column="2" Command="{Binding DontKnowCommand}"></Button>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

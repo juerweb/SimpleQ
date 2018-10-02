@@ -151,21 +151,27 @@ namespace SimpleQ
 
                 switch (WasQuestionOpened.TypeDesc)
                 {
-                    case SurveyType.YNQ:
+                    case SurveyType.YesNoQuestion:
 
-                        YNQPage ynqPage = (YNQPage)FreshPageModelResolver.ResolvePageModel<YesNoQuestionPageModel>(true);
+                        YesNoQuestionPage ynqPage = (YesNoQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoQuestionPageModel>(true);
                         YesNoQuestionPageModel ynqPageModel = (YesNoQuestionPageModel)ynqPage.BindingContext;
                         ynqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(ynqPage, ynqPageModel);
                         break;
-                    case SurveyType.TLQ:
-                        TLQPage tlqPage = (TLQPage)FreshPageModelResolver.ResolvePageModel<TrafficLightQuestionPageModel>(true);
+                    case SurveyType.YesNoDontKnowQuestion:
+                        YesNoDontKnowQuestionPage yndkqPage = (YesNoDontKnowQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoDontKnowQuestionPageModel>(true);
+                        YesNoQuestionPageModel yndkqPageModel = (YesNoQuestionPageModel)yndkqPage.BindingContext;
+                        yndkqPageModel.Question = WasQuestionOpened;
+                        navService.PushPage(yndkqPage, yndkqPageModel);
+                        break;
+                    case SurveyType.TrafficLightQuestion:
+                        TrafficLightQuestionPage tlqPage = (TrafficLightQuestionPage)FreshPageModelResolver.ResolvePageModel<TrafficLightQuestionPageModel>(true);
                         TrafficLightQuestionPageModel tlqPageModel = (TrafficLightQuestionPageModel)tlqPage.BindingContext;
                         tlqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(tlqPage, tlqPageModel);
                         break;
-                    case SurveyType.OWQ:
-                        OWQPage owqPage = (OWQPage)FreshPageModelResolver.ResolvePageModel<OpenQuestionPageModel>(true);
+                    case SurveyType.OpenQuestion:
+                        OpenQuestionPage owqPage = (OpenQuestionPage)FreshPageModelResolver.ResolvePageModel<OpenQuestionPageModel>(true);
                         OpenQuestionPageModel owqPageModel = (OpenQuestionPageModel)owqPage.BindingContext;
                         owqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(owqPage, owqPageModel);

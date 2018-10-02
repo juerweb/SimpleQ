@@ -12,9 +12,10 @@ namespace SimpleQ.PageModels.Services
     {
         public SimulationService()
         {
-            questions.Add(new SurveyModel(0, "Sind Sie männlich?", "YNQ Test", SurveyType.YNQ, DateTime.Now, DateTime.Now));
-            questions.Add(new SurveyModel(1, "Sind Sie anwesend?", "TLQ Test", SurveyType.TLQ, DateTime.Now, DateTime.Now));
-            questions.Add(new SurveyModel(2, "Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OWQ Test", SurveyType.OWQ, DateTime.Now, DateTime.Now));
+            questions.Add(new SurveyModel(0, "Sind Sie männlich?", "YesNoQuestion Test", SurveyType.YesNoQuestion, DateTime.Now, DateTime.Now));
+            questions.Add(new SurveyModel(3, "Sind Sie männlich?", "YesNoDontKnowQuestion Test", SurveyType.YesNoDontKnowQuestion, DateTime.Now, DateTime.Now));
+            questions.Add(new SurveyModel(1, "Sind Sie anwesend?", "TrafficLightQuestion Test", SurveyType.TrafficLightQuestion, DateTime.Now, DateTime.Now));
+            questions.Add(new SurveyModel(2, "Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OpenQuestion Test", SurveyType.OpenQuestion, DateTime.Now, DateTime.Now));
             List<AnswerOption> answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Grün", SvyId = 0 });
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Rot", SvyId = 1 });

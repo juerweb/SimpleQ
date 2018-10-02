@@ -48,11 +48,17 @@
     <Compile Update="Pages\ExtendedHelpPage.xaml.cs">
       <DependentUpon>ExtendedHelpPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Pages\QuestionPages\OpenQuestionPage.xaml.cs">
+      <DependentUpon>OpenQuestionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Pages\QuestionPages\TrafficLightQuestionPage.xaml.cs">
       <DependentUpon>TrafficLightQuestionPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Pages\QuestionPages\YesNoDontKnowQuestionPage.xaml.cs">
       <DependentUpon>YesNoDontKnowQuestionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\QuestionPages\DichotomousQuestionPage.xaml.cs">
+      <DependentUpon>DichotomousQuestionPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Pages\QuestionPages\YesNoQuestionPage.xaml.cs">
       <DependentUpon>YesNoQuestionPage.xaml</DependentUpon>
@@ -95,7 +101,7 @@
     <EmbeddedResource Update="Pages\QuestionPages\GAQPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\QuestionPages\OWQPage.xaml">
+    <EmbeddedResource Update="Pages\QuestionPages\OpenQuestionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\QuestionPages\TrafficLightQuestionPage.xaml">
