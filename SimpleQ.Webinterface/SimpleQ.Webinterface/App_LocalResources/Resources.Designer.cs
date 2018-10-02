@@ -70,6 +70,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die add answer ähnelt.
+        /// </summary>
+        public static string addAnswer {
+            get {
+                return ResourceManager.GetString("addAnswer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die add new category ähnelt.
         /// </summary>
         public static string addNewCategory {
@@ -165,6 +174,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static string groups {
             get {
                 return ResourceManager.GetString("groups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die invalid input! ähnelt.
+        /// </summary>
+        public static string invalidInput {
+            get {
+                return ResourceManager.GetString("invalidInput", resourceCulture);
             }
         }
         

@@ -244,4 +244,10 @@
   <data name="newCategoryName" xml:space="preserve">
     <value>Kategoriebezeichnung ...</value>
   </data>
+  <data name="addAnswer" xml:space="preserve">
+    <value>Antwort hinzufügen..</value>
+  </data>
+  <data name="invalidInput" xml:space="preserve">
+    <value>Ungültige Eingabe!</value>
+  </data>
 </root>
