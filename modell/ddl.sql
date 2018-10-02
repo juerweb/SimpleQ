@@ -46,6 +46,7 @@ create table Customer
 	LanguageCode char(3) not null,
 	DataStoragePeriod int not null, -- in Monaten
 	PaymentMethodId int not null references PaymentMethod,
+    PricePerClick money not null,
 	CostBalance money not null
 );
 go
@@ -66,7 +67,7 @@ go
 -- KUNDENSPEZIFISCH
 create table Department
 (
-	DepId int identity not null,
+	DepId int not null,
 	DepName varchar(max) not null,
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
     primary key (DepId, CustCode)
@@ -118,9 +119,10 @@ go
 -- KUNDENSPEZIFISCH
 create table SurveyCategory
 (
-	CatId int identity primary key,
+	CatId int not null,
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer, 
-	CatName varchar(max) not null
+	CatName varchar(max) not null,
+    primary key (CatId, CustCode),
 );
 go
 
@@ -129,12 +131,14 @@ go
 create table Survey
 (
 	SvyId int identity primary key,
-	CatId int not null references SurveyCategory,
-	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
+	CatId int not null,
+	CustCode char(6) collate Latin1_General_CS_AS not null,
 	SvyText varchar(max) not null,
 	StartDate datetime not null,
 	EndDate datetime not null,
-	TypeId int not null references AnswerType
+    Amount int not null,
+	TypeId int not null references AnswerType,
+    foreign key (CatId, CustCode) references SurveyCategory
 );
 go
 
@@ -144,7 +148,7 @@ create table Asking
 (
 	SvyId int references Survey,
 	DepId int not null,
-    CustCode char(6) collate Latin1_General_CS_AS not null,
+    CustCode char(6) collate Latin1_General_CS_AS not null
 	primary key (SvyId, DepId, CustCode),
     foreign key (DepId, CustCode) references Department
 );
@@ -249,6 +253,8 @@ end
 go
 
 
+
+
 -- Fügt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortmöglichkeit ein
 create trigger tr_SurveyIns
 on Survey
@@ -274,6 +280,35 @@ begin
 end
 go
 
+-- Fügt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortmöglichkeit ein
+create trigger tr_SurveyUpd
+on Survey
+after update as
+begin
+    if(update(TypeId))
+        begin
+        declare @svyId int, @typeId int;
+        declare c cursor local for select SvyId, TypeId from inserted;
+
+        open c;
+        fetch c into @svyId, @typeId;
+
+        delete from AnswerOption where SvyId = @svyId;
+
+        while(@@FETCH_STATUS = 0)
+        begin
+            insert into AnswerOption (SvyId, AnsText) select @svyId, PreAnsText
+                                                      from PredefinedAnswerOption
+                                                      where TypeId = @typeId;
+
+            fetch c into @svyId, @typeId;
+        end
+    
+        close c;
+        deallocate c;
+    end
+end
+go
 
 
 -- Zum Löschen der abgelaufenen Umfragedaten

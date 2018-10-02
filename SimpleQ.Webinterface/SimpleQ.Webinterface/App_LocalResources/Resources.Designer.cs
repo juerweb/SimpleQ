@@ -61,6 +61,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die answer ähnelt.
+        /// </summary>
+        public static string answer {
+            get {
+                return ResourceManager.GetString("answer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die answer type ähnelt.
         /// </summary>
         public static string answerTypeHeader {
@@ -70,11 +79,47 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die bar ähnelt.
+        /// </summary>
+        public static string bar {
+            get {
+                return ResourceManager.GetString("bar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die count ähnelt.
+        /// </summary>
+        public static string count {
+            get {
+                return ResourceManager.GetString("count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die diagram ähnelt.
         /// </summary>
         public static string diagram {
             get {
                 return ResourceManager.GetString("diagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dichotomous ähnelt.
+        /// </summary>
+        public static string Dichotomous {
+            get {
+                return ResourceManager.GetString("Dichotomous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die doughnut ähnelt.
+        /// </summary>
+        public static string doughnut {
+            get {
+                return ResourceManager.GetString("doughnut", resourceCulture);
             }
         }
         
@@ -106,6 +151,150 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Likert-skale 3 ähnelt.
+        /// </summary>
+        public static string LikertSkale3 {
+            get {
+                return ResourceManager.GetString("LikertSkale3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Likert-skale 4 ähnelt.
+        /// </summary>
+        public static string LikertSkale4 {
+            get {
+                return ResourceManager.GetString("LikertSkale4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Likert-skale 5 ähnelt.
+        /// </summary>
+        public static string LikertSkale5 {
+            get {
+                return ResourceManager.GetString("LikertSkale5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Likert-skale 6 ähnelt.
+        /// </summary>
+        public static string LikertSkale6 {
+            get {
+                return ResourceManager.GetString("LikertSkale6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Likert-skale 7 ähnelt.
+        /// </summary>
+        public static string LikertSkale7 {
+            get {
+                return ResourceManager.GetString("LikertSkale7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Likert-skale 8 ähnelt.
+        /// </summary>
+        public static string LikertSkale8 {
+            get {
+                return ResourceManager.GetString("LikertSkale8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Likert-skale 9 ähnelt.
+        /// </summary>
+        public static string LikertSkale9 {
+            get {
+                return ResourceManager.GetString("LikertSkale9", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die line ähnelt.
+        /// </summary>
+        public static string line {
+            get {
+                return ResourceManager.GetString("line", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die listing (absolute, %) ähnelt.
+        /// </summary>
+        public static string listing {
+            get {
+                return ResourceManager.GetString("listing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open text-answer ähnelt.
+        /// </summary>
+        public static string Open {
+            get {
+                return ResourceManager.GetString("Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die percent ähnelt.
+        /// </summary>
+        public static string percent {
+            get {
+                return ResourceManager.GetString("percent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die polar-area ähnelt.
+        /// </summary>
+        public static string polarArea {
+            get {
+                return ResourceManager.GetString("polarArea", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Many answers, many to choose (ordered) ähnelt.
+        /// </summary>
+        public static string PolytomousOrderedMultiple {
+            get {
+                return ResourceManager.GetString("PolytomousOrderedMultiple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Many answers, one to choose (ordered) ähnelt.
+        /// </summary>
+        public static string PolytomousOrderedSingle {
+            get {
+                return ResourceManager.GetString("PolytomousOrderedSingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Many answers, many to choose (unordered) ähnelt.
+        /// </summary>
+        public static string PolytomousUnorderedMultiple {
+            get {
+                return ResourceManager.GetString("PolytomousUnorderedMultiple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Many answers, one to choose (unordered) ähnelt.
+        /// </summary>
+        public static string PolytomousUnorderedSingle {
+            get {
+                return ResourceManager.GetString("PolytomousUnorderedSingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ... ähnelt.
         /// </summary>
         public static string questionHeader {
@@ -129,6 +318,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static string questionTimeTimeHeader {
             get {
                 return ResourceManager.GetString("questionTimeTimeHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die radar ähnelt.
+        /// </summary>
+        public static string radar {
+            get {
+                return ResourceManager.GetString("radar", resourceCulture);
             }
         }
         
@@ -178,11 +376,38 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Traffic-lights (red,yellow,green) ähnelt.
+        /// </summary>
+        public static string TrafficLight {
+            get {
+                return ResourceManager.GetString("TrafficLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die type ähnelt.
         /// </summary>
         public static string typeSmall {
             get {
                 return ResourceManager.GetString("typeSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Yes-no ähnelt.
+        /// </summary>
+        public static string YesNo {
+            get {
+                return ResourceManager.GetString("YesNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Yes-no-dont know ähnelt.
+        /// </summary>
+        public static string YesNoDontKnow {
+            get {
+                return ResourceManager.GetString("YesNoDontKnow", resourceCulture);
             }
         }
     }

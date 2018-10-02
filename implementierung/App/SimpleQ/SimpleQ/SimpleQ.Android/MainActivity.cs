@@ -23,6 +23,8 @@ namespace SimpleQ.Droid
 
             base.OnCreate(bundle);
 
+            PowerSaverManager.StartPowerSaverIntent(this);
+
             OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540").EndInit();
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();

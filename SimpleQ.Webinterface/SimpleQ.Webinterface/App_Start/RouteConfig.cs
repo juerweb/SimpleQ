@@ -18,6 +18,12 @@ namespace SimpleQ.Webinterface
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "DefaultNoId",
+                url: "{controller}/{action}",
+                defaults: new { controller = "Home", action = "Index" }
+            );
         }
     }
 }

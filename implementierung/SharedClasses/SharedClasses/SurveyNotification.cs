@@ -12,6 +12,6 @@ namespace SimpleQ.Shared
         public DateTime EndDate { get; set; }
         public int TypeId { get; set; }
         public string CatName { get; set; }
-        public Dictionary<int, string> PossibleTextAnswers { get; set; }
+        public List<AnswerOption> AnswerOptions { get; set; }
     }
 }

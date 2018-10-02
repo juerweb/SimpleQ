@@ -123,6 +123,7 @@
     <Compile Include="Android.Localise.cs" />
     <Compile Include="CloseApplication.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="PowerSaverManager.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VersionAndBuild_Android.cs" />

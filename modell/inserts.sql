@@ -5,24 +5,24 @@ go
 
 
 begin transaction;
-insert into Customer values ('m4rku5', 'musterreis gmbh.', 'm@rk.us', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 0);
-insert into Department values ('development', 'm4rku5'); -- DepId 1
-insert into Department values ('putzkleschn', 'm4rku5'); -- DepId 2
+insert into Customer values ('m4rku5', 'musterreis gmbh.', 'm@rk.us', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 0.30, 0);
+insert into Department values (1, 'development', 'm4rku5');
+insert into Department values (2, 'putzkleschn', 'm4rku5');
 insert into Person values (1, 'm4rku5', null); -- PersId 1
 insert into Person values (1, 'm4rku5', null); -- PersId 2
 insert into Person values (1, 'm4rku5', null); -- PersId 3
 insert into Person values (2, 'm4rku5', null); -- PersId 4
 insert into Person values (2, 'm4rku5', null); -- PersId 5
 
-insert into SurveyCategory values ('m4rku5', 'Politische Fragen'); -- CatId 1
-insert into SurveyCategory values ('m4rku5', 'Persönliche Fragen'); -- CatId 2
-insert into SurveyCategory values ('m4rku5', 'Unnötige Fragen'); -- CatId 3
+insert into SurveyCategory values (1, 'm4rku5', 'Politische Fragen');
+insert into SurveyCategory values (2, 'm4rku5', 'Persönliche Fragen');
+insert into SurveyCategory values (3, 'm4rku5', 'Unnötige Fragen');
 
-insert into Survey values (1, 'm4rku5', 'Ist N.H. ein Nazi?', '2018-08-24', '2019-08-24', 1) -- SvyId 1
-insert into Survey values (2, 'm4rku5', 'Sind sie foisch?', '2018-08-24', '2019-08-24', 1) -- SvyId 2
-insert into Survey values (2, 'm4rku5', 'Sind Sie ein Pajero?', '2018-08-24', '2019-08-24', 2); -- SvyId 3
-insert into Survey values (3, 'm4rku5', 'Was halten Sie von Nico Srnka?', '2018-08-24', '2019-08-24', 7) -- SvyId 4
-insert into Survey values (3, 'm4rku5', 'Beschreiben Sie Nico Srnka in einem Wort', '2018-08-24', '2019-08-24', 4) -- SvyId 5
+insert into Survey values (1, 'm4rku5', 'Ist N.H. ein Nazi?', '2018-08-24', '2019-08-24', 5, 1) -- SvyId 1
+insert into Survey values (2, 'm4rku5', 'Sind sie foisch?', '2018-08-24', '2019-08-24', 5, 1) -- SvyId 2
+insert into Survey values (2, 'm4rku5', 'Sind Sie ein Pajero?', '2018-08-24', '2019-08-24', 5, 2); -- SvyId 3
+insert into Survey values (3, 'm4rku5', 'Was halten Sie von Nico Srnka?', '2018-08-24', '2019-08-24', 5, 7) -- SvyId 4
+insert into Survey values (3, 'm4rku5', 'Beschreiben Sie Nico Srnka in einem Wort', '2018-08-24', '2019-08-24', 5, 4) -- SvyId 5
 
 insert into Asking values (1, 1, 'm4rku5');
 insert into Asking values (1, 2, 'm4rku5');
@@ -108,6 +108,53 @@ insert into Chooses values (20, 8);
 commit;
 go
 
+-- ++++++++ TRENDANALYSE-TESTDATEN ++++++++
+insert into SurveyCategory values (4, 'm4rku5', 'Chef-Beliebtheitsfragen');
+
+insert into Survey values (4, 'm4rku5', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-01', '2018-07-15', 5, 1); -- SvyId 6
+insert into Asking values (6, 1, 'm4rku5');
+insert into Asking values (6, 2, 'm4rku5');
+-- Wegen Trigger kein insert into AnswerOptions(...) für Svy 6 nötig (YesNo) => AnsIds 15, 16
+insert into Vote values (null) -- VoteId 21;
+insert into Chooses values (21, 15);
+insert into Vote values (null) -- VoteId 22;
+insert into Chooses values (22, 15);
+insert into Vote values (null) -- VoteId 23;
+insert into Chooses values (23, 15);
+insert into Vote values (null) -- VoteId 24;
+insert into Chooses values (24, 16);
+
+insert into Survey values (4, 'm4rku5', 'Finden Sie jetzt der Chef ist ein Arschloch?', '2018-07-06', '2018-07-31', 5, 1); -- SvyId 7
+insert into Asking values (7, 1, 'm4rku5');
+insert into Asking values (7, 2, 'm4rku5');
+-- Wegen Trigger kein insert into AnswerOptions(...) für Svy 7 nötig (YesNo) => AnsIds 17, 18
+insert into Vote values (null) -- VoteId 25;
+insert into Chooses values (25, 17);
+insert into Vote values (null) -- VoteId 26;
+insert into Chooses values (26, 18);
+insert into Vote values (null) -- VoteId 27;
+insert into Chooses values (27, 18);
+insert into Vote values (null) -- VoteId 28;
+insert into Chooses values (28, 17);
+
+insert into Survey values (4, 'm4rku5', 'Und wie schauts jetzt aus mit Chef=Arschloch?', '2018-08-01', '2018-08-15', 5, 1); -- SvyId 8
+insert into Asking values (8, 1, 'm4rku5');
+insert into Asking values (8, 2, 'm4rku5');
+-- Wegen Trigger kein insert into AnswerOptions(...) für Svy 8 nötig (YesNo) => AnsIds 19, 20
+insert into Vote values (null) -- VoteId 29;
+insert into Chooses values (29, 19);
+insert into Vote values (null) -- VoteId 30;
+insert into Chooses values (30, 19);
+insert into Vote values (null) -- VoteId 31;
+insert into Chooses values (31, 20);
+insert into Vote values (null) -- VoteId 32;
+insert into Chooses values (32, 19);
+insert into Vote values (null) -- VoteId 33;
+insert into Chooses values (33, 19);
+insert into Vote values (null) -- VoteId 34;
+insert into Chooses values (34, 19);
+
+
 select * from Person;
 select * from Customer;
 select * from AnswerOption;
@@ -122,3 +169,4 @@ select * from AnswerOption;
 --select * from Chooses;
 --select * from Vote;
 --rollback;
+
