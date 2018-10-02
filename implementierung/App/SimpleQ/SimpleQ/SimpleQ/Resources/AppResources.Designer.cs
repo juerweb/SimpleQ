@@ -232,6 +232,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Weiß nicht ähnelt.
+        /// </summary>
+        internal static string DontKnow {
+            get {
+                return ResourceManager.GetString("DontKnow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die admin@juerweb.com ähnelt.
         /// </summary>
         internal static string EmailAdress {

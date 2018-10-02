@@ -285,4 +285,7 @@
   <data name="KeyResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.private.key</value>
   </data>
+  <data name="DontKnow" xml:space="preserve">
+    <value>Weiß nicht</value>
+  </data>
 </root>

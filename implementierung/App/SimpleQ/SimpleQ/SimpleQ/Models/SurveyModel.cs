@@ -138,9 +138,17 @@ namespace SimpleQ.Models
         No = 1
     }
 
+    public enum YNDKQAnswer
+    {
+        Yes = 0,
+        No = 1,
+        DontKnow = 2
+    }
+
     public enum TLQAnswer
     {
         Green = 0,
-        Red = 1
+        Yellow = 1,
+        Red = 2
     }
 }

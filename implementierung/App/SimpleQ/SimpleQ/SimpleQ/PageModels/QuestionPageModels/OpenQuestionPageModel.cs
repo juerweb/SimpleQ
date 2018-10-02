@@ -1,39 +1,39 @@
-﻿using FreshMvvm;
+﻿using Akavache;
+using FreshMvvm;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Resources;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using System.Reactive.Linq;
-using Akavache;
-using System.Collections.Generic;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
-    /// This is the TLQPageModel for the Page TLQPage.
+    /// This is the OWQPageModel for the OWQPage.
     /// </summary>
-    public class TLQPageModel : BasicQuestionPageModel
+    public class OpenQuestionPageModel : BasicQuestionPageModel
     {
         #region Constructor(s)
         /// <summary>
-        /// Initializes a new instance of the <see cref="TLQPageModel"/> class.
+        /// Initializes a new instance of the <see cref="OpenQuestionPageModel"/> class.
         /// </summary>
         /// <param name="questionService">The question service.</param>
-        public TLQPageModel(IQuestionService questionService) : base(questionService)
+        public OpenQuestionPageModel(IQuestionService questionService) : base(questionService)
         {
-            GreenCommand = new Command(() => QuestionAnswered(TLQAnswer.Green));
-            RedCommand = new Command(() => QuestionAnswered(TLQAnswer.Red));
+            SendAnswerCommand = new Command(QuestionAnswered);
+            this.Answer = "";
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TLQPageModel"/> class.
+        /// Initializes a new instance of the <see cref="OpenQuestionPageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public TLQPageModel()
+        public OpenQuestionPageModel()
         {
 
         }
@@ -50,36 +50,48 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Fields
+        /// <summary>
+        /// The ansDesc
+        /// </summary>
+        private String answer;
+
         #endregion
 
         #region Properties + Getter/Setter Methods
+        /// <summary>
+        /// Gets or sets the ansDesc.
+        /// </summary>
+        /// <value>
+        /// The ansDesc.
+        /// </value>
+        public String Answer
+        {
+            get => answer;
+            set
+            {
+                answer = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Commands
         /// <summary>
-        /// Gets the red command.
+        /// Gets the send ansDesc command.
         /// </summary>
         /// <value>
-        /// The red command.
+        /// The send ansDesc command.
         /// </value>
-        public Command RedCommand { get; private set; }
-        /// <summary>
-        /// Gets the green command.
-        /// </summary>
-        /// <value>
-        /// The green command.
-        /// </value>
-        public Command GreenCommand { get; private set; }
+        public Command SendAnswerCommand { get; private set; }
         #endregion
 
         #region Methods
         /// <summary>
         /// This method is called, after the user answered the question. The method calls a method in the questionService.
         /// </summary>
-        /// <param name="answer">The ansDesc.</param>
-        private void QuestionAnswered(TLQAnswer answer)
+        private void QuestionAnswered()
         {
-            base.QuestionAnswered(answer.ToString());
+            base.QuestionAnswered(answer);
         }
         #endregion
 

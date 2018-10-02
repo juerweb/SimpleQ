@@ -153,20 +153,20 @@ namespace SimpleQ
                 {
                     case SurveyType.YNQ:
 
-                        YNQPage ynqPage = (YNQPage)FreshPageModelResolver.ResolvePageModel<YNQPageModel>(true);
-                        YNQPageModel ynqPageModel = (YNQPageModel)ynqPage.BindingContext;
+                        YNQPage ynqPage = (YNQPage)FreshPageModelResolver.ResolvePageModel<YesNoQuestionPageModel>(true);
+                        YesNoQuestionPageModel ynqPageModel = (YesNoQuestionPageModel)ynqPage.BindingContext;
                         ynqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(ynqPage, ynqPageModel);
                         break;
                     case SurveyType.TLQ:
-                        TLQPage tlqPage = (TLQPage)FreshPageModelResolver.ResolvePageModel<TLQPageModel>(true);
-                        TLQPageModel tlqPageModel = (TLQPageModel)tlqPage.BindingContext;
+                        TLQPage tlqPage = (TLQPage)FreshPageModelResolver.ResolvePageModel<TrafficLightQuestionPageModel>(true);
+                        TrafficLightQuestionPageModel tlqPageModel = (TrafficLightQuestionPageModel)tlqPage.BindingContext;
                         tlqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(tlqPage, tlqPageModel);
                         break;
                     case SurveyType.OWQ:
-                        OWQPage owqPage = (OWQPage)FreshPageModelResolver.ResolvePageModel<OWQPageModel>(true);
-                        OWQPageModel owqPageModel = (OWQPageModel)owqPage.BindingContext;
+                        OWQPage owqPage = (OWQPage)FreshPageModelResolver.ResolvePageModel<OpenQuestionPageModel>(true);
+                        OpenQuestionPageModel owqPageModel = (OpenQuestionPageModel)owqPage.BindingContext;
                         owqPageModel.Question = WasQuestionOpened;
                         navService.PushPage(owqPage, owqPageModel);
 

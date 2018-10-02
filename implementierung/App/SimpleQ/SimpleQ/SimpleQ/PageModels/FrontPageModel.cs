@@ -120,15 +120,15 @@ namespace SimpleQ.PageModels
         {
             if (selectedQuestion.TypeDesc == SurveyType.YNQ)
             {
-                CoreMethods.PushPageModel<YNQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<YesNoQuestionPageModel>(selectedQuestion);
             }
             else if (selectedQuestion.TypeDesc == SurveyType.TLQ)
             {
-                CoreMethods.PushPageModel<TLQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<TrafficLightQuestionPageModel>(selectedQuestion);
             }
             else if (selectedQuestion.TypeDesc == SurveyType.OWQ)
             {
-                CoreMethods.PushPageModel<OWQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<OpenQuestionPageModel>(selectedQuestion);
             }
             else if (selectedQuestion.TypeDesc == SurveyType.GAQ)
             {
