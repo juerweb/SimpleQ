@@ -138,6 +138,7 @@ create table Survey
 	EndDate datetime not null,
     Amount int not null,
 	TypeId int not null references AnswerType,
+	Template bit not null,
     foreign key (CatId, CustCode) references SurveyCategory
 );
 go
