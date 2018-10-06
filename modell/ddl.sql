@@ -322,7 +322,8 @@ begin
 	declare c cursor local for select svyId 
                                from Survey s
 							   join Customer c on s.CustCode = c.CustCode
-							   where datediff(day, s.StartDate, getdate()) >= c.DataStoragePeriod * 30;
+							   where datediff(day, s.StartDate, getdate()) >= c.DataStoragePeriod * 30
+							   and Template = 0;
 	
 	open c;
 	fetch c into @svyId;
