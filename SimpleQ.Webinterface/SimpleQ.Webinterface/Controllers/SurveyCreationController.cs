@@ -19,6 +19,8 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 req.Survey.CustCode = CustCode;
+                req.Survey.StartDate = req.StartDate.Date.Add(req.StartTime);
+                req.Survey.EndDate = req.EndDate.Date.Add(req.EndTime);
 
                 int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId)).SelectMany(d => d.People).Count();
                 if (req.Survey.Amount > totalPeople)
@@ -69,6 +71,16 @@ namespace SimpleQ.Webinterface.Controllers
             });
 
             return RedirectToAction("Index", "Home");
+        }
+
+
+        [HttpGet]
+        public Survey LoadTemplate(int svyId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                return db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault();
+            }
         }
 
 

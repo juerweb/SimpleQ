@@ -18,6 +18,7 @@ namespace SimpleQ.Webinterface.Models
         public string PreAnsText { get; set; }
         public int TypeId { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
         public virtual AnswerType AnswerType { get; set; }
     }
 }

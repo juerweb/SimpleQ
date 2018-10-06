@@ -25,6 +25,7 @@ namespace SimpleQ.Webinterface.Controllers
                 model.SurveyCreationModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
                 model.SurveyCreationModel.AnswerTypes = db.AnswerTypes.ToList(); // GLOBALIZATION!
                 model.SurveyCreationModel.Departments = db.Departments.Where(g => g.CustCode == CustCode).ToList();
+                model.SurveyCreationModel.SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList();
 
                 model.SurveyResultsModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
                 model.SurveyResultsModel.Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList();

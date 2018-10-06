@@ -19,6 +19,7 @@ namespace SimpleQ.Webinterface.Models
         public string CustCode { get; set; }
         public string DeviceId { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Department Department { get; set; }
     }
 }
