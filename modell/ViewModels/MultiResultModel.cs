@@ -12,7 +12,8 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public string TypeName { get; set; }
         public double AvgAmount { get; set; }
         public List<string> DepartmentNames { get; set; }
-        public List<Dictionary<string, int>> Votes { get; set; }
+        public List<DateTime> SurveyDates { get; set; }
+        public Dictionary<string, List<int>> Votes { get; set; }
         #endregion
 
         #region View to Controller
