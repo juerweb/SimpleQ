@@ -13,7 +13,10 @@
         <div class="col-md-7 pl-4">
             <h2>@Resources.surveyCreationHeader</h2>
 
-            <label>@Resources.surveyCategoryHeader</label>
+            <label class="mt-2">@Resources.surveyTemplateHeader</label>
+            @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control rightNotRounded" })
+
+            <label class="mt-2">@Resources.surveyCategoryHeader</label>
             <div class="row mr-0 ml-0">
                 <div class="col-11 p-0">
                     @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control rightNotRounded" })
@@ -58,9 +61,7 @@
                     <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>
                     <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>
                 </div>
-                <ul class="list-group" id="answerUL" name="TextAnswerOptions">
-
-                </ul>
+                <ul class="list-group" id="answerUL" name="TextAnswerOptions"></ul>
             </div>
 
             <div class="form-group mt-2">

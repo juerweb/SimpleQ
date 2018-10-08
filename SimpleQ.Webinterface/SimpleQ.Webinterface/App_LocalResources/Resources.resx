@@ -250,4 +250,7 @@
   <data name="invalidInput" xml:space="preserve">
     <value>invalid input!</value>
   </data>
+  <data name="surveyTemplateHeader" xml:space="preserve">
+    <value>choose template (by last surveys)</value>
+  </data>
 </root>

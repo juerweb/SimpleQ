@@ -252,6 +252,8 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Icons\favicon.ico" />
+    <Content Include="Content\Images\Icons\favicon.png" />
     <Content Include="Content\Images\Icons\groupAdministration.png" />
     <Content Include="Content\Images\Icons\logout.png" />
     <Content Include="Content\Images\Icons\settings.png" />

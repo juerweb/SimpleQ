@@ -412,6 +412,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die choose template (by last surveys) ähnelt.
+        /// </summary>
+        public static string surveyTemplateHeader {
+            get {
+                return ResourceManager.GetString("surveyTemplateHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die to ähnelt.
         /// </summary>
         public static string to {
