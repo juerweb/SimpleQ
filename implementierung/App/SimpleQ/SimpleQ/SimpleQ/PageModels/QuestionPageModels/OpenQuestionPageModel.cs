@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using System.Reactive.Linq;
+using SimpleQ.Shared;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -91,7 +92,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private void QuestionAnswered()
         {
-            base.QuestionAnswered(1, answer);
+            AnswerOption option = this.Question.GivenAnswers[0];
+            this.Question.ChoosenAnswers.Add(this.Question.GivenAnswers[0]);
+            //base.QuestionAnswered(1, answer);
         }
         #endregion
 

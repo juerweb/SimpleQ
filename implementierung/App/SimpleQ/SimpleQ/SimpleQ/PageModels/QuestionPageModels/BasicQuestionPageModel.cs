@@ -110,7 +110,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Methods
-        public void QuestionAnswered(int ansId, string answerText)
+        public void QuestionAnswered(AnswerOption answer, string answerText)
         {
             this.question.GivenAnswers.Add(new AnswerOption() { AnsId = ansId, AnsText = answerText, SvyId = this.question.SurveyId });
             QuestionAnswered();
