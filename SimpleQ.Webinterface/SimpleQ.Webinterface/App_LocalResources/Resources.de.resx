@@ -235,4 +235,22 @@
   <data name="YesNoDontKnow" xml:space="preserve">
     <value>Ja/Nein/Weis nicht</value>
   </data>
+  <data name="AccountSettings" xml:space="preserve">
+    <value>Kontoeinstellungen</value>
+  </data>
+  <data name="ActivatedModes" xml:space="preserve">
+    <value>Aktivierte Modi</value>
+  </data>
+  <data name="Adress" xml:space="preserve">
+    <value>Adresse</value>
+  </data>
+  <data name="ApplicationSettings" xml:space="preserve">
+    <value>Anwendungseinstellungen</value>
+  </data>
+  <data name="DataProtectionSettings" xml:space="preserve">
+    <value>Datenschutzeinstellungen</value>
+  </data>
+  <data name="MinimumGroupSize" xml:space="preserve">
+    <value>Minimale Gruppengröße</value>
+  </data>
 </root>

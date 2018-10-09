@@ -1,1 +1,79 @@
-﻿<h2>Einstellungen</h2>
+﻿@using System.Resources;
+@using SimpleQ.Webinterface.App_LocalResources;
+
+<div class="row pl-4 mt-1 ml-0 mr-0">
+    <h2>Einstellungen</h2>
+</div>
+<div class="row mt-1 ml-0 mr-0">
+    <div class="col-md-4">
+        <h4 class="text-center">@Resources.MinimumGroupSize</h4>
+        <div class="form-group mt-2">
+            <label for="minimumGroupSize">Minimale Gruppengröße</label>
+            <input type="text" class="form-control mr-0" id="minimumGroupSize" value="30">
+            <p>Anzahl Umfragen akt. Monat: 10</p>
+            <p>Beantwortete Umfragen akt. Monat: 8</p>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h4 class="text-center">@Resources.ApplicationSettings</h4>
+        <div class="form-group mt-2 mb-1">
+            <label for="groups">Aktivierte Modi</label>
+            <div class="border border-dark">
+                <ul class="list-group groups-ul pl-2" id="modes">
+                    @{ List<string> t = new List<string>();
+                        t.Add("Ampelsystem");
+                        t.Add("Ja/Nein Umfrage");
+                        t.Add("Ein Wort Antwort");
+                        t.Add("Test");
+                        t.Add("Test");
+                        t.Add("Test");
+                        t.Add("Test");
+                    }
+                    @for (var i = 0; i < t.Count; i++)
+                    {
+                        <li>
+                            <input type="checkbox" name="checkboxcheck" onclick="answerChecked()">
+                            <span>@t[i]</span>
+
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-block mt-3" disabled id="save">Speichern</button>
+    </div>
+    <div class="col-md-4">
+        <h4 class="text-center">@Resources.AccountSettings</h4>
+        <div class="form-group mt-2">
+            <label for="name">Name</label>
+            <input type="text" class="form-control mr-0" id="name" value="Peter Meininger">
+            <label for="adresse">@Resources.Adress</label>
+            <input type="text" class="form-control mr-0" id="adresse" value="Meinungsredestraße 26 7033 Kaffberg">
+            <label for="kontostand">Kontostand</label>
+            <input type="text" class="form-control mr-0" id="kontostand" value="0">
+            <button class="btn btn-primary btn-block mt-3">Zur Rechnungsübersicht</button>
+            <button class="btn btn-primary btn-block mt-3">Abo kündigen</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    var changed = false;
+    var checkedAnswers = [];
+    function answerChecked() {
+        checkedAnswers = [];
+        var listItems = document.getElementById('modes').getElementsByTagName('li');
+        for (i = 0; i < listItems.length; i++) {
+            if (listItems[i].getElementsByTagName('input')[0].checked) {
+                $("#save").prop('disabled', false);
+                checkedAnswers.push(listItems[i].getElementsByTagName('span')[0].textContent);
+                console.log(listItems[i].getElementsByTagName('span')[0].textContent);
+            }
+
+        }
+    }
+
+    function saveSubmit() {
+
+    }
+</script>
