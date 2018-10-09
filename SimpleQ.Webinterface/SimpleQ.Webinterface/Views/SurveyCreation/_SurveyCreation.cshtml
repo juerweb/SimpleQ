@@ -169,6 +169,7 @@
 
     function deleteAnswer(button) {
         let text = button.parentElement.parentElement.children[0].innerHTML;
+        Console.log(text);
         for (i = 0; i < answers.length; i++) {
             if (answers[i] === text) {
                 answers.splice(i, 1);
