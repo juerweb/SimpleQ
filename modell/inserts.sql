@@ -18,11 +18,11 @@ insert into SurveyCategory values (1, 'm4rku5', 'Politische Fragen');
 insert into SurveyCategory values (2, 'm4rku5', 'Persönliche Fragen');
 insert into SurveyCategory values (3, 'm4rku5', 'Unnötige Fragen');
 
-insert into Survey values (1, 'm4rku5', 'Ist N.H. ein Nazi?', '2018-08-24', '2019-08-24', 5, 1) -- SvyId 1
-insert into Survey values (2, 'm4rku5', 'Sind sie foisch?', '2018-08-24', '2019-08-24', 5, 1) -- SvyId 2
-insert into Survey values (2, 'm4rku5', 'Sind Sie ein Pajero?', '2018-08-24', '2019-08-24', 5, 2); -- SvyId 3
-insert into Survey values (3, 'm4rku5', 'Was halten Sie von Nico Srnka?', '2018-08-24', '2019-08-24', 5, 7) -- SvyId 4
-insert into Survey values (3, 'm4rku5', 'Beschreiben Sie Nico Srnka in einem Wort', '2018-08-24', '2019-08-24', 5, 4) -- SvyId 5
+insert into Survey values (1, 'm4rku5', 'Ist N.H. ein Nazi?', '2018-08-24', '2019-08-24', 5, 1, 0) -- SvyId 1
+insert into Survey values (2, 'm4rku5', 'Sind sie foisch?', '2018-08-24', '2019-08-24', 5, 1, 0) -- SvyId 2
+insert into Survey values (2, 'm4rku5', 'Sind Sie ein Pajero?', '2018-08-24', '2019-08-24', 5, 2, 0); -- SvyId 3
+insert into Survey values (3, 'm4rku5', 'Was halten Sie von Nico Srnka?', '2018-08-24', '2019-08-24', 5, 7, 0) -- SvyId 4
+insert into Survey values (3, 'm4rku5', 'Beschreiben Sie Nico Srnka in einem Wort', '2018-08-24', '2019-08-24', 5, 4, 0) -- SvyId 5
 
 insert into Asking values (1, 1, 'm4rku5');
 insert into Asking values (1, 2, 'm4rku5');
@@ -111,7 +111,7 @@ go
 -- ++++++++ TRENDANALYSE-TESTDATEN ++++++++
 insert into SurveyCategory values (4, 'm4rku5', 'Chef-Beliebtheitsfragen');
 
-insert into Survey values (4, 'm4rku5', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-01', '2018-07-15', 5, 1); -- SvyId 6
+insert into Survey values (4, 'm4rku5', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-01', '2018-07-15', 5, 1, 0); -- SvyId 6
 insert into Asking values (6, 1, 'm4rku5');
 insert into Asking values (6, 2, 'm4rku5');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 6 nötig (YesNo) => AnsIds 15, 16
@@ -124,7 +124,7 @@ insert into Chooses values (23, 15);
 insert into Vote values (null) -- VoteId 24;
 insert into Chooses values (24, 16);
 
-insert into Survey values (4, 'm4rku5', 'Finden Sie jetzt der Chef ist ein Arschloch?', '2018-07-06', '2018-07-31', 5, 1); -- SvyId 7
+insert into Survey values (4, 'm4rku5', 'Finden Sie jetzt der Chef ist ein Arschloch?', '2018-07-06', '2018-07-31', 5, 1, 0); -- SvyId 7
 insert into Asking values (7, 1, 'm4rku5');
 insert into Asking values (7, 2, 'm4rku5');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 7 nötig (YesNo) => AnsIds 17, 18
@@ -137,7 +137,7 @@ insert into Chooses values (27, 18);
 insert into Vote values (null) -- VoteId 28;
 insert into Chooses values (28, 17);
 
-insert into Survey values (4, 'm4rku5', 'Und wie schauts jetzt aus mit Chef=Arschloch?', '2018-08-01', '2018-08-15', 5, 1); -- SvyId 8
+insert into Survey values (4, 'm4rku5', 'Und wie schauts jetzt aus mit Chef=Arschloch?', '2018-08-01', '2018-08-15', 5, 1, 0); -- SvyId 8
 insert into Asking values (8, 1, 'm4rku5');
 insert into Asking values (8, 2, 'm4rku5');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 8 nötig (YesNo) => AnsIds 19, 20
