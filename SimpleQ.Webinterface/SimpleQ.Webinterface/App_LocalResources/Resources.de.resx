@@ -187,4 +187,70 @@
   <data name="polarArea" xml:space="preserve">
     <value>Polarkreisdiagramm</value>
   </data>
+  <data name="Dichotomous" xml:space="preserve">
+    <value>Dichotom</value>
+  </data>
+  <data name="LikertSkale3" xml:space="preserve">
+    <value>Likertskala 3</value>
+  </data>
+  <data name="LikertSkale4" xml:space="preserve">
+    <value>Likertskala 4</value>
+  </data>
+  <data name="LikertSkale5" xml:space="preserve">
+    <value>Likertskala 5</value>
+  </data>
+  <data name="LikertSkale6" xml:space="preserve">
+    <value>Likertskala 6</value>
+  </data>
+  <data name="LikertSkale7" xml:space="preserve">
+    <value>Likertskala 7</value>
+  </data>
+  <data name="LikertSkale8" xml:space="preserve">
+    <value>Likertskala 8</value>
+  </data>
+  <data name="LikertSkale9" xml:space="preserve">
+    <value>Likertskala 9</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Offene Antwort (Textantwort)</value>
+  </data>
+  <data name="PolytomousOrderedMultiple" xml:space="preserve">
+    <value>Viele Antwortmöglichkeiten, Mehrfachauswahl (geordnet)</value>
+  </data>
+  <data name="PolytomousOrderedSingle" xml:space="preserve">
+    <value>Viele Antwortmöglichkeiten, eine Auswahl (geordnet)</value>
+  </data>
+  <data name="PolytomousUnorderedMultiple" xml:space="preserve">
+    <value>Viele Antwortmöglichkeiten, Mehrfachauswahl (ungeordnet)</value>
+  </data>
+  <data name="PolytomousUnorderedSingle" xml:space="preserve">
+    <value>Viele Antwortmöglichkeiten, eine Auswahl (ungeordnet)</value>
+  </data>
+  <data name="TrafficLight" xml:space="preserve">
+    <value>Ampelsystem(rot,gelb,grün)</value>
+  </data>
+  <data name="YesNo" xml:space="preserve">
+    <value>Ja/Nein</value>
+  </data>
+  <data name="YesNoDontKnow" xml:space="preserve">
+    <value>Ja/Nein/Weis nicht</value>
+  </data>
+  <data name="add" xml:space="preserve">
+    <value>hinzufügen</value>
+  </data>
+  <data name="addNewCategory" xml:space="preserve">
+    <value>Kategorie hinzufügen</value>
+  </data>
+  <data name="newCategoryName" xml:space="preserve">
+    <value>Kategoriebezeichnung ...</value>
+  </data>
+  <data name="addAnswer" xml:space="preserve">
+    <value>Antwort hinzufügen..</value>
+  </data>
+  <data name="invalidInput" xml:space="preserve">
+    <value>Ungültige Eingabe!</value>
+  </data>
+  <data name="surveyTemplateHeader" xml:space="preserve">
+    <value>Umfragetemplate (bisherige Umfragen)</value>
+  </data>
 </root>
