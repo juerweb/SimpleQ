@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SimpleQ.Shared
 {
-    public class SurveyNotification
+    public class SurveyData
     {
         public int SvyId { get; set; }
         public string SvyText { get; set; }
