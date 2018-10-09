@@ -12,12 +12,9 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PredefinedAnswerOption
+    public partial class DsgvoConstraint
     {
-        public int PreAnsId { get; set; }
-        public string PreAnsText { get; set; }
-        public int TypeId { get; set; }
-    
-        public virtual AnswerType AnswerType { get; set; }
+        public string ConstrName { get; set; }
+        public int ConstrValue { get; set; }
     }
 }

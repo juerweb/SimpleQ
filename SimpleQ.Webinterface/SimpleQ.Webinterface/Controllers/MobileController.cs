@@ -79,7 +79,7 @@ namespace SimpleQ.Webinterface.Controllers
                 Survey svy = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault();
 
                 if (svy != null)
-                    return Ok(new SurveyNotification
+                    return Ok(new SurveyData
                     {
                         SvyId = svy.SvyId,
                         SvyText = svy.SvyText,

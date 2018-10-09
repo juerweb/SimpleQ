@@ -179,14 +179,68 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnswerOption.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AnswerType.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaseQuestionType.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bill.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DsgvoConstraint.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Mobile\RegistrationData.cs" />
-    <Compile Include="Models\Mobile\SurveyNotification.cs" />
+    <Compile Include="Models\Mobile\SurveyData.cs" />
     <Compile Include="Models\Mobile\SurveyVote.cs" />
+    <Compile Include="Models\PaymentMethod.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Person.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PredefinedAnswerOption.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SimpleQModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleQModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SimpleQModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SimpleQModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleQModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Survey.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SurveyCategory.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ViewModels\ContainerViewModel.cs" />
     <Compile Include="Models\ViewModels\MultiResultModel.cs" />
     <Compile Include="Models\ViewModels\SingleResultModel.cs" />
     <Compile Include="Models\ViewModels\SurveyCreationModel.cs" />
     <Compile Include="Models\ViewModels\SurveyResultsModel.cs" />
+    <Compile Include="Models\Vote.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +270,16 @@
       <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Content Include="Models\SimpleQModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SimpleQModel.edmx</DependentUpon>
+      <LastGenOutput>SimpleQModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SimpleQModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SimpleQModel.edmx</DependentUpon>
+      <LastGenOutput>SimpleQModel.cs</LastGenOutput>
+    </Content>
     <Content Include="private.key" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
@@ -223,6 +287,13 @@
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <EntityDeploy Include="Models\SimpleQModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SimpleQModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SimpleQModel.edmx.diagram">
+      <DependentUpon>SimpleQModel.edmx</DependentUpon>
+    </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />

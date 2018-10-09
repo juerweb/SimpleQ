@@ -12,12 +12,14 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PredefinedAnswerOption
+    public partial class Bill
     {
-        public int PreAnsId { get; set; }
-        public string PreAnsText { get; set; }
-        public int TypeId { get; set; }
+        public int BillId { get; set; }
+        public string CustCode { get; set; }
+        public decimal BillPrice { get; set; }
+        public System.DateTime BillDate { get; set; }
+        public bool Paid { get; set; }
     
-        public virtual AnswerType AnswerType { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }
