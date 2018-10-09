@@ -12,10 +12,12 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public List<SurveyCategory> SurveyCategories { get; set; }
         public List<AnswerType> AnswerTypes { get; set; }
         public List<Department> Departments { get; set; }
+        public List<Survey> RecentSurveys { get; set; }
         #endregion
 
         #region View to Controller
         public Survey Survey { get; set; }
+        public string CatName { get; set; }
         public List<int> SelectedDepartments { get; set; }
         public List<string> TextAnswerOptions { get; set; }
         #endregion
