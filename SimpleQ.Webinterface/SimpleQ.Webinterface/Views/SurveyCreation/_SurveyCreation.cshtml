@@ -55,7 +55,8 @@
                 </select>
             </div>
 
-            <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Answers</span><i class="material-icons">&#xe876;</i></span></button>
+            @*<button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Answers</span><i class="material-icons">&#xe876;</i></span></button>*@
+            <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Answers</span><i class="material-icons">&#xe5cd;</i><i class="material-icons">&#xe313;</i></span></button>
             <div id="answerBox" class="border border-dark mt-2">
                 <div class="row mt-1 mb-1 mr-0 ml-0">
                     <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>
@@ -83,19 +84,22 @@
                         <label for="QuestionFromDatePicker">@Resources.questionTimeDateHeader @Resources.from</label>
                         <input id="QuestionFromDatePicker" type="date" class="form-control" name="StartDate" />
                         <label for="QuestionToDatePicker">@Resources.questionTimeDateHeader @Resources.to</label>
-                        <input id="QuestionToDatePicker" type="date" class="form-control" name="EndDate"/>
+                        <input id="QuestionToDatePicker" type="date" class="form-control" name="EndDate" />
                     </span>
                     <span class="col-md">
                         <label for="QuestionFromTimePicker">@Resources.questionTimeTimeHeader @Resources.from</label>
-                        <input id="QuestionFromTimePicker" type="time" class="form-control" name="StartTime"/>
+                        <input id="QuestionFromTimePicker" type="time" class="form-control" name="StartTime" />
                         <label for="QuestionToTimePicker">@Resources.questionTimeTimeHeader @Resources.to</label>
-                        <input id="QuestimeToTimePicker" type="time" class="form-control" name="EndTime"/>
+                        <input id="QuestimeToTimePicker" type="time" class="form-control" name="EndTime" />
                     </span>
                 </span>
             </div>
-            <div class="form-group mt-2">
+            <div class="mt-2">
                 <label for="question">@Resources.questionHeader</label>
                 <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText">
+            </div>
+            <div class="mt-2">
+                <input type="checkbox" checked="checked" onclick="" name=""><span>Als template speichern</span>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Umfrage absenden</button>
         </div>
@@ -160,6 +164,7 @@
             '   </span>' +
             '</li>';
         ul.innerHTML += normal;
+        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
     }
 
     function deleteAnswer(button) {
@@ -167,10 +172,14 @@
         for (i = 0; i < answers.length; i++) {
             if (answers[i] === text) {
                 answers.splice(i, 1);
+                alert(answers.length);
                 break;
             }
         }
         button.parentElement.parentElement.parentElement.remove();
+        if (answers.length === 0) {
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+        }
     }
 
     function editAnswer(button) {
