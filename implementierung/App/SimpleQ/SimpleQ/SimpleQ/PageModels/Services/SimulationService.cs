@@ -12,18 +12,35 @@ namespace SimpleQ.PageModels.Services
     {
         public SimulationService()
         {
-            questions.Add(new SurveyModel(0, "Sind Sie männlich?", "YesNoQuestion Test", SurveyType.YesNoQuestion, DateTime.Now, DateTime.Now));
-            questions.Add(new SurveyModel(3, "Sind Sie männlich?", "YesNoDontKnowQuestion Test", SurveyType.YesNoDontKnowQuestion, DateTime.Now, DateTime.Now));
-            questions.Add(new SurveyModel(1, "Sind Sie anwesend?", "TrafficLightQuestion Test", SurveyType.TrafficLightQuestion, DateTime.Now, DateTime.Now));
-            questions.Add(new SurveyModel(2, "Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OpenQuestion Test", SurveyType.OpenQuestion, DateTime.Now, DateTime.Now));
             List<AnswerOption> answerTypes = new List<AnswerOption>();
+
+            answerTypes.Add(new AnswerOption() { AnsId = 0, SvyId = 0, AnsText = "Yes" });
+            answerTypes.Add(new AnswerOption() { AnsId = 1, SvyId = 0, AnsText = "No" });
+            questions.Add(new SurveyModel(0, "Sind Sie männlich?", "YesNoQuestion Test", SurveyType.YesNoQuestion, DateTime.Now, answerTypes));
+
+            answerTypes = new List<AnswerOption>();
+            answerTypes.Add(new AnswerOption() { AnsId = 0, SvyId = 1, AnsText = "Yes" });
+            answerTypes.Add(new AnswerOption() { AnsId = 1, SvyId = 1, AnsText = "No" });
+            answerTypes.Add(new AnswerOption() { AnsId = 2, SvyId = 1, AnsText = "DontKnow" });
+            questions.Add(new SurveyModel(3, "Sind Sie männlich?", "YesNoDontKnowQuestion Test", SurveyType.YesNoDontKnowQuestion, DateTime.Now, answerTypes));
+
+            answerTypes = new List<AnswerOption>();
+            answerTypes.Add(new AnswerOption() { AnsId = 0, SvyId = 2, AnsText = "Green" });
+            answerTypes.Add(new AnswerOption() { AnsId = 1, SvyId = 2, AnsText = "Yellow" });
+            answerTypes.Add(new AnswerOption() { AnsId = 2, SvyId = 2, AnsText = "Red" });
+            questions.Add(new SurveyModel(1, "Sind Sie anwesend?", "TrafficLightQuestion Test", SurveyType.TrafficLightQuestion, DateTime.Now, answerTypes));
+
+            questions.Add(new SurveyModel(2, "Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OpenQuestion Test", SurveyType.OpenQuestion, DateTime.Now, new List<AnswerOption>()));
+
+            answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Grün", SvyId = 0 });
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Rot", SvyId = 1 });
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Gelb", SvyId = 2 });
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Blau", SvyId = 3 });
 
-            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "GAQ Test", SurveyType.GAQ, DateTime.Now, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "GAQ Test", SurveyType.GAQ, DateTime.Now, answerTypes));
         }
+
         List<SurveyModel> questions = new List<SurveyModel>();
         public async Task<CodeValidationModel> CheckCode(int code)
         {

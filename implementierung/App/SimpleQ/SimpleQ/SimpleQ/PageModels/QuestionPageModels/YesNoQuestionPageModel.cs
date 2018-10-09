@@ -11,6 +11,8 @@ using System.Text;
 using Xamarin.Forms;
 using System.Reactive.Linq;
 using Akavache;
+using System.Linq;
+using SimpleQ.Shared;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -82,7 +84,14 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="answer">The ansDesc.</param>
         private void QuestionAnswered(YNQAnswer answer)
         {
-            base.QuestionAnswered(answer.ToString());
+            if (answer == YNQAnswer.Yes)
+            {
+                base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "Yes").ToList()[0]);
+            }
+            else
+            {
+                base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "No").ToList()[0]);
+            }
         }
         #endregion
 

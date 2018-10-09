@@ -10,6 +10,7 @@ using Xamarin.Forms;
 using System.Reactive.Linq;
 using Akavache;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -82,7 +83,18 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="answer">The ansDesc.</param>
         private void QuestionAnswered(TLQAnswer answer)
         {
-            //base.QuestionAnswered(Enum.GetName(typeof(TLQAnswer), answer));
+            switch (answer)
+            {
+                case TLQAnswer.Green:
+                    base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "Green").ToList()[0]);
+                    break;
+                case TLQAnswer.Yellow:
+                    base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "Yellow").ToList()[0]);
+                    break;
+                case TLQAnswer.Red:
+                    base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "Red").ToList()[0]);
+                    break;
+            }
         }
         #endregion
 

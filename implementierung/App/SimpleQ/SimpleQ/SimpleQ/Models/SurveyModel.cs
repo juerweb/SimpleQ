@@ -13,7 +13,7 @@ namespace SimpleQ.Models
     public class SurveyModel : INotifyPropertyChanged
     {
         #region Constructor(s)
-        public SurveyModel(int surveyId, string surveyDesc, string catName, SurveyType surveyType, DateTime endDate, List<AnswerOption> givenAnswers = null) : this()
+        public SurveyModel(int surveyId, string surveyDesc, string catName, SurveyType surveyType, DateTime endDate, List<AnswerOption> givenAnswers) : this()
         {
             this.surveyId = surveyId;
             this.surveyDesc = surveyDesc;
@@ -23,7 +23,7 @@ namespace SimpleQ.Models
             this.endDate = endDate;
         }
 
-        public SurveyModel(int surveyId, string surveyDesc, string catName, int typeId, DateTime endDate, List<AnswerOption> givenAnswers = null) : this()
+        public SurveyModel(int surveyId, string surveyDesc, string catName, int typeId, DateTime endDate, List<AnswerOption> givenAnswers) : this()
         {
             this.surveyId = surveyId;
             this.surveyDesc = surveyDesc;

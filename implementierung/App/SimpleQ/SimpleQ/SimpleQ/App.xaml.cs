@@ -285,7 +285,7 @@ namespace SimpleQ
             }
 
 
-            SurveyModel newSurveryModel = new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now);
+            SurveyModel newSurveryModel = new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, new List<Shared.AnswerOption>());
 
             Debug.WriteLine("After try/catch");
             await BlobCache.LocalMachine.InsertObject<SurveyModel>("WasQuestionOpened", newSurveryModel);

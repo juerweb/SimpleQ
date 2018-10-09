@@ -142,8 +142,6 @@ namespace SimpleQ.PageModels.QuestionPageModels
             {
                 this.questionService.QuestionAnswered(this.Question);
             }
-
-
             try
             {
                 Boolean CloseAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
