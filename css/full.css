@@ -123,10 +123,14 @@ section.team-section {
 */
 
 .rand {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+
     font-weight: bold;
-    -webkit-text-stroke: 1px black;
-    color: white;
+     background: inherit;
+      color: yellow;   
+}
+.changeColor{
+    color: orange;
 }
 
 /*
@@ -153,4 +157,11 @@ section.team-section {
 .iosbildschirm {
     background-image: url("../images/ios.jpg");
     background-size: contain;
+}
+
+p{
+    font-family: 'Montserrat', sans-serif;
+}
+.card-text{
+    color: black !important;
 }
