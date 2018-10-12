@@ -1,5 +1,5 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
-@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
+@model SimpleQ.Webinterface.Models.ViewModels.MultiResultModel
 
 @*@{
     //Random rnd = new Random();
@@ -58,7 +58,7 @@
             <label for="groups">Gruppen</label>
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="groups">
-                    @{ List<string> l = new List<string>();
+                    @*@{ List<string> l = new List<string>();
                         l.Add("HR");
                         l.Add("Produktion");
                         l.Add("Einkauf");
@@ -69,6 +69,12 @@
                     {
                         <li>
                             @l[i]
+                        </li>
+                    }*@
+                    @for (var i = 0; i < Model.DepartmentNames.Count; i++)
+                    {
+                        <li>
+                            @Model.DepartmentNames[i]
                         </li>
                     }
                 </ul>
@@ -147,7 +153,7 @@
     let multiDict = []; // create an empty array
     let multiLabels = [];
     let temp = [];
-    @foreach (KeyValuePair<string, List<int>> kvp in multiDict)
+    @foreach (KeyValuePair<string, List<int>> kvp in Model.Votes)
     {
         @:temp = [];
         foreach(int i in kvp.Value)
@@ -162,7 +168,7 @@
             @:});
     }
 
-    @foreach(DateTime d in dates)
+    @foreach(DateTime d in Model.SurveyDates)
     {
         @:multiLabels.push("@d.ToString()");
     }
