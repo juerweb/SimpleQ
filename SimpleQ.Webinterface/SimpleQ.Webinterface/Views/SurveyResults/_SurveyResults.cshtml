@@ -48,10 +48,10 @@
     </div>
 
     <div class="col-md-8" id="singleResultPartial">
-        @Html.Partial("~/Views/SurveyResults/_SingleResult.cshtml")
+        @*@Html.Partial("~/Views/SurveyResults/_SingleResult.cshtml")*@
     </div>
     <div class="col-md-8" id="multiResultPartial">
-        @Html.Partial("~/Views/SurveyResults/_MultiResult.cshtml")
+        @*@Html.Partial("~/Views/SurveyResults/_MultiResult.cshtml")*@
     </div>
 </div>
 <hr />
@@ -80,15 +80,24 @@
 
 <script>
 
-    @*function loadSingleResultAsync(selectedID) {
-        $("#singleResultPartial").load(@Url.Action("LoadSingleResult", "SurveyResults") + "?svyId=" + selectedID);
-    }*@
+   function loadSingleResultAsync() {
+        $("#singleResultPartial").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + $("#Surveys").val());
+    }
 
-    @*function loadMultiResultAsync() {
-        $.post(@Url.Action("LoadSingleResult", "SurveyResults"), function
-    }*@
+    function loadMultiResultAsync() {
+        $.post("@Url.Action("LoadMultiResult", "SurveyResults")",
+            {
+                CatId: $("#SurveyCategories").val(),
+                TypeId: $("#AnswerTypes").val(),
+                StartDate: $("#dateFrom").val(),
+                EndDate: $("#dateTo").val()
+            },
+            function (data) {
+                $("#multiResultPartial").html(data);
+            });
+    }
 
-    var resultType = "mulit";
+    var resultType = "multi";
 
     function switchToMulti() {
         resultType = "multi";

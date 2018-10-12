@@ -1,7 +1,7 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
-@*@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel*@
+@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
 
-@{
+@*@{
     //Random rnd = new Random();
     //Dictionary<DateTime, Dictionary<string, int>> votes = new Dictionary<DateTime, Dictionary<string, int>>();
     //for (int i = 1; i <= 10; i++)
@@ -33,7 +33,7 @@
     multiDict.Add("BKF", new List<int> { 3, 4, 2, 1, 8, 3, 2, 8 });
     multiDict.Add("Arte", new List<int> { 3, 5, 7, 9, 3, 5, 2, 9 });
     multiDict.Add("N24", new List<int> { 5, 7, 3, 4, 2, 5, 9, 6 });
-}
+}*@
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
@@ -41,7 +41,7 @@
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="answers">
                     @{ 
-                        foreach (string key in multiDict.Keys)
+                        foreach (string key in Model.Votes.Keys)
                         {
                             <li>
                                 <input type="checkbox" checked="checked" onclick="answerChecked()"><span>@key</span>
