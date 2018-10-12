@@ -1,7 +1,7 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
-@model SimpleQ.Webinterface.Models.ViewModels.MultiResultModel
+@*@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel*@
 
-@*@{
+@{
     //Random rnd = new Random();
     //Dictionary<DateTime, Dictionary<string, int>> votes = new Dictionary<DateTime, Dictionary<string, int>>();
     //for (int i = 1; i <= 10; i++)
@@ -33,7 +33,7 @@
     multiDict.Add("BKF", new List<int> { 3, 4, 2, 1, 8, 3, 2, 8 });
     multiDict.Add("Arte", new List<int> { 3, 5, 7, 9, 3, 5, 2, 9 });
     multiDict.Add("N24", new List<int> { 5, 7, 3, 4, 2, 5, 9, 6 });
-}*@
+}
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">
@@ -41,7 +41,7 @@
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="answers">
                     @{ 
-                        foreach (string key in Model.Votes.Keys)
+                        foreach (string key in multiDict.Keys)
                         {
                             <li>
                                 <input type="checkbox" checked="checked" onclick="answerChecked()"><span>@key</span>
@@ -58,17 +58,17 @@
             <label for="groups">Gruppen</label>
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="groups">
-                    @*@{ List<string> l = new List<string>();
+                    @{ List<string> l = new List<string>();
                         l.Add("HR");
                         l.Add("Produktion");
                         l.Add("Einkauf");
                         l.Add("department 4");
 
-                    }*@
-                    @for (var i = 0; i < Model.DepartmentNames.Count; i++)
+                    }
+                    @for (var i = 0; i < l.Count; i++)
                     {
                         <li>
-                            @Model.DepartmentNames[i]
+                            @l[i]
                         </li>
                     }
                 </ul>
@@ -144,10 +144,10 @@
         changeChartMulti('chart2SelectMulti', 'chart2Col', 'chart2');
     }
 
-    var multiDict = []; // create an empty array
-    var multiLabels = [];
-    var temp = [];
-    @foreach (KeyValuePair<string, List<int>> kvp in Model.Votes)
+    let multiDict = []; // create an empty array
+    let multiLabels = [];
+    let temp = [];
+    @foreach (KeyValuePair<string, List<int>> kvp in multiDict)
     {
         @:temp = [];
         foreach(int i in kvp.Value)
@@ -162,9 +162,9 @@
             @:});
     }
 
-    @foreach(DateTime d in Model.SurveyDates)
+    @foreach(DateTime d in dates)
     {
-        @:multiLabels.push("@d.ToString("dd.MM.yyyy")");
+        @:multiLabels.push("@d.ToString()");
     }
 
 </script>
