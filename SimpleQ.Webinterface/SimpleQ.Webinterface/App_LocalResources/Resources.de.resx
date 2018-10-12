@@ -241,8 +241,8 @@
   <data name="ActivatedModes" xml:space="preserve">
     <value>Aktivierte Modi</value>
   </data>
-  <data name="Adress" xml:space="preserve">
-    <value>Adresse</value>
+  <data name="Street" xml:space="preserve">
+    <value>Straße</value>
   </data>
   <data name="ApplicationSettings" xml:space="preserve">
     <value>Anwendungseinstellungen</value>
@@ -252,5 +252,23 @@
   </data>
   <data name="MinimumGroupSize" xml:space="preserve">
     <value>Minimale Gruppengröße</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Stadt</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email </value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Telefonnummer</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>PLZ</value>
   </data>
 </root>
