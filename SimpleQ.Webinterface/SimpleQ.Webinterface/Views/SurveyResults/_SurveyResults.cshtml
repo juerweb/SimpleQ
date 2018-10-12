@@ -23,24 +23,26 @@
     <div class="col-md-4 pl-4 pr-4">
         <div id="singleResultOptions">
             <label for="Surveys">Umfrage</label>
-            @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control", onchange = "loadSingleResultAsync()" })
         </div>
         <div id="multiResultOptions">
             <label for="SurveyCategoryCB">@Resources.surveyCategoryHeader</label>
-            @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control" })
+            @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
+            <label for="AnswerTypes">@Resources.surveyCategoryHeader</label>
+            @Html.DropDownListFor(model => model.AnswerTypes, new SelectList(Model.AnswerTypes, "TypeId", "TypeDesc"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
             <div class="row mt-2">
                 <div class="col-md-6">
                     <div class="form-group mb-0">
                         <label for="timeFrom">@Resources.from</label>
-                        @*<input type="time" class="form-control" id="timeFrom">*@
-                        <input type="date" class="form-control" id="dateFrom">
+                        @*<input type="date" class="form-control" id="dateFrom">*@
+                        <input type="date" class="form-control" id="dateFrom" value="@DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd")" onchange="loadMultiResultAsync()">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group mb-0">
                         <label for="timeTwo">@Resources.to</label>
-                        @*<input type="time" class="form-control" id="timeTo">*@
-                        <input type="date" class="form-control" id="dateTo">
+                        @*<input type="date" class="form-control" id="dateTo">*@
+                        <input type="date" class="form-control" id="dateTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="loadMulitResultAsync()">
                     </div>
                 </div>
             </div>
@@ -109,7 +111,8 @@
         $("#multiResultOptions").show();
         $("#singleResultPartial").hide();
         $("#multiResultPartial").show();
-        showMultiCharts();
+        loadMultiResultAsync();
+        //showMultiCharts();
     }
 
     function switchToSingle() {
@@ -122,7 +125,8 @@
         $("#singleResultOptions").show();
         $("#multiResultPartial").hide();
         $("#singleResultPartial").show();
-        showSingleCharts();
+        loadSingleResultAsync();
+        //showSingleCharts();
     }
 
     function showMultiCharts() {

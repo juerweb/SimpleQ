@@ -104,7 +104,7 @@
 
     var dict = []; // create an empty array
 
-        @foreach (KeyValuePair<string,int> kvp in votes)
+        @foreach (KeyValuePair<string,int> kvp in Model.Votes)
         {
             @:dict.push({
                 @:key:"@kvp.Key" 
