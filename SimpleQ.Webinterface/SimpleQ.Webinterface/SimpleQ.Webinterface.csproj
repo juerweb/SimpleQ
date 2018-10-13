@@ -362,10 +362,10 @@
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
-    <Content Include="Web.config" />
     <Content Include="Views\SurveyResults\_MultiResult.cshtml" />
     <Content Include="Views\SurveyResults\_SingleResult.cshtml" />
     <Content Include="Views\SurveyResults\_SurveyResults.cshtml" />
+    <Content Include="Web.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
