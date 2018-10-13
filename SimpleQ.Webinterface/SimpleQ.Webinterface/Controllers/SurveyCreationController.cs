@@ -46,7 +46,7 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
                 if (timeout.Milliseconds > 0)
-                    Thread.Sleep(req.Survey.StartDate - DateTime.Now);
+                    Thread.Sleep(timeout.Milliseconds);
 
                 using (var db = new SimpleQDBEntities())
                 {
