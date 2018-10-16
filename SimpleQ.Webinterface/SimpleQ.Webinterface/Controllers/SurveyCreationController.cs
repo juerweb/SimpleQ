@@ -22,7 +22,7 @@ namespace SimpleQ.Webinterface.Controllers
                 req.Survey.StartDate = req.StartDate.Date.Add(req.StartTime);
                 req.Survey.EndDate = req.EndDate.Date.Add(req.EndTime);
 
-                int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId)).SelectMany(d => d.People).Count();
+                int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId)).SelectMany(d => d.People).Distinct().Count();
                 if (req.Survey.Amount > totalPeople)
                     req.Survey.Amount = totalPeople;
 
@@ -51,16 +51,15 @@ namespace SimpleQ.Webinterface.Controllers
                 using (var db = new SimpleQDBEntities())
                 {
                     // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
-                    int totalPeople = db.Departments
-                        .Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
-                        .Sum(d => d.People.Count);
+                    int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
+                        .SelectMany(d => d.People).Distinct().Count();
 
                     req.SelectedDepartments.ForEach(d =>
                     {
                         // Anzahl an Personen in der aktuellen Abteilung (mit DepId = d)
                         int currPeople = db.Departments
                             .Where(dep => dep.DepId == d && dep.CustCode == CustCode)
-                            .Select(dep => dep.People.Count).First();
+                            .SelectMany(dep => dep.People).Distinct().Count();
 
                         // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
                         int toAsk = (int)Math.Round(req.Survey.Amount * (currPeople / (double)totalPeople));

@@ -69,7 +69,7 @@
                 <label for="groups">@Resources.groups</label>
                 <div class="border border-dark">
                     <ul class="list-group groups-ul pl-2" id="groups">
-                        @foreach (Department group in Model.Departments)
+                        @foreach (Department group in Model.Departments.Keys)
                         {
                             <li>
                                 <input type="checkbox" checked="checked" onclick="" name="SelectedDepartments" value="@group.DepId"><span>@group.DepName</span>

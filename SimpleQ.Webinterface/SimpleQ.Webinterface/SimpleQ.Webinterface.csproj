@@ -259,7 +259,6 @@
     <Content Include="Content\Images\Logos\simpleQ.png" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\SurveyResults.css" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="ApplicationInsights.config">

@@ -31,8 +31,10 @@ namespace SimpleQ.Webinterface.Controllers
                     string custCode = regCode.Substring(0, 6);
                     int depId = int.Parse(regCode.Substring(6));
 
-                    Person person = new Person { DepId = depId, CustCode = custCode, DeviceId = deviceId};
+                    Person person = new Person { DeviceId = deviceId };
                     db.People.Add(person);
+                    db.SaveChanges();
+                    db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First().People.Add(person);
                     db.SaveChanges();
                     Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
 
@@ -61,7 +63,7 @@ namespace SimpleQ.Webinterface.Controllers
 
             using (var db = new SimpleQDBEntities())
             {
-                db.People.RemoveRange(db.People.Where(p => p.PersId == persId && p.CustCode == custCode));
+                db.People.RemoveRange(db.People.Where(p => p.PersId == persId));
                 db.SaveChanges();
 
                 return Ok();

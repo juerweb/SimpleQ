@@ -14,6 +14,7 @@ drop table SurveyCategory;
 drop table PredefinedAnswerOption;
 drop table AnswerType;
 drop table BaseQuestionType;
+drop table Employs;
 drop table Person;
 drop table Department;
 drop table Bill;
@@ -79,9 +80,18 @@ go
 create table Person
 (
 	PersId int identity primary key,
-	DepId int not null,
-    CustCode char(6) collate Latin1_General_CS_AS not null,
-    DeviceId varchar(max) null,
+    DeviceId varchar(max) null
+);
+go
+
+-- In Abteilung angestellte Personen
+-- KUNDENSPEZIFISCH
+create table Employs
+(
+    DepId int,
+    CustCode char(6) collate Latin1_General_CS_AS,
+    PersId int references Person,
+    primary key (DepId, CustCode, PersId),
     foreign key (DepId, CustCode) references Department
 );
 go

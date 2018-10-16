@@ -8,11 +8,17 @@ begin transaction;
 insert into Customer values ('m4rku5', 'tschaenzl gmbh.', 'g@b.i', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 0.30, 0);
 insert into Department values (1, 'development', 'm4rku5');
 insert into Department values (2, 'putzkleschn', 'm4rku5');
-insert into Person values (1, 'm4rku5', null); -- PersId 1
-insert into Person values (1, 'm4rku5', null); -- PersId 2
-insert into Person values (1, 'm4rku5', null); -- PersId 3
-insert into Person values (2, 'm4rku5', null); -- PersId 4
-insert into Person values (2, 'm4rku5', null); -- PersId 5
+insert into Person values (null); -- PersId 1
+insert into Person values (null); -- PersId 2
+insert into Person values (null); -- PersId 3
+insert into Person values (null); -- PersId 4
+insert into Person values (null); -- PersId 5
+insert into Employs values (1, 'm4rku5', 1);
+insert into Employs values (1, 'm4rku5', 2);
+insert into Employs values (1, 'm4rku5', 3);
+insert into Employs values (2, 'm4rku5', 3);
+insert into Employs values (2, 'm4rku5', 4);
+insert into Employs values (2, 'm4rku5', 5);
 
 insert into SurveyCategory values (1, 'm4rku5', 'Politische Fragen');
 insert into SurveyCategory values (2, 'm4rku5', 'Persönliche Fragen');
@@ -171,7 +177,7 @@ insert into Chooses values (39, 25);
 insert into Vote values (null) -- VoteId 40;
 insert into Chooses values (40, 26);
 
-insert into Survey values (4, 'm4rku5', 'Jefe=culo?', '2018-08-16', '2018-08-31', 5, 2, 0); -- SvyId 10
+insert into Survey values (4, 'm4rku5', 'Jefe=culo?', '2018-09-01', '2018-09-15', 5, 2, 0); -- SvyId 10
 insert into Asking values (10, 1, 'm4rku5');
 insert into Asking values (10, 2, 'm4rku5');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 10 nötig (YesNoDontKnow) => AnsIds 27, 28, 29
