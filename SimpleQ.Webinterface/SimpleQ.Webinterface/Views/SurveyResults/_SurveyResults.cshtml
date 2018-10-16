@@ -26,7 +26,7 @@
             @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control", onchange = "loadSingleResultAsync()" })
         </div>
         <div id="multiResultOptions">
-            <label for="SurveyCategoryCB">@Resources.surveyCategoryHeader</label>
+            <label for="SurveyCategories">@Resources.surveyCategoryHeader</label>
             @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
             <label for="AnswerTypes">@Resources.surveyCategoryHeader</label>
             @Html.DropDownListFor(model => model.AnswerTypes, new SelectList(Model.AnswerTypes, "TypeId", "TypeDesc"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })

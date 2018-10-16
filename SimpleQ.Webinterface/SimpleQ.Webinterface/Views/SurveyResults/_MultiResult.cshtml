@@ -170,7 +170,7 @@
 
     @foreach(DateTime d in Model.SurveyDates)
     {
-        @:multiLabels.push("@d.ToString()");
+        @:multiLabels.push("@d.ToString("dd.MM.yyyy")");
     }
 
 </script>

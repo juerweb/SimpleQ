@@ -106,6 +106,24 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die asked people (count) ähnelt.
+        /// </summary>
+        public static string askedPeopleCount {
+            get {
+                return ResourceManager.GetString("askedPeopleCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die small group, to get good results create a bigger one ähnelt.
+        /// </summary>
+        public static string badAskGroupCount {
+            get {
+                return ResourceManager.GetString("badAskGroupCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die bar ähnelt.
         /// </summary>
         public static string bar {
@@ -156,6 +174,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static string from {
             get {
                 return ResourceManager.GetString("from", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die good size for good results ähnelt.
+        /// </summary>
+        public static string goodAskGroupCount {
+            get {
+                return ResourceManager.GetString("goodAskGroupCount", resourceCulture);
             }
         }
         
@@ -268,6 +295,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die size of the group is ok, could be better for more generic results ähnelt.
+        /// </summary>
+        public static string middleAskGroupCount {
+            get {
+                return ResourceManager.GetString("middleAskGroupCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die new category name ... ähnelt.
         /// </summary>
         public static string newCategoryName {
@@ -372,6 +408,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static string radar {
             get {
                 return ResourceManager.GetString("radar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die save as template ähnelt.
+        /// </summary>
+        public static string SaveAsTemplate {
+            get {
+                return ResourceManager.GetString("SaveAsTemplate", resourceCulture);
             }
         }
         

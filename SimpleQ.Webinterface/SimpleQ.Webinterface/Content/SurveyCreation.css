@@ -17,3 +17,18 @@
     border-bottom-left-radius: 0px;
 }
 
+.colorSpan{
+    height:10px;
+}
+
+.colorSpanRed{
+    background-color:red;
+}
+
+.colorSpanOrange {
+    background-color: orange;
+}
+
+.colorSpanGreen {
+    background-color: green;
+}
