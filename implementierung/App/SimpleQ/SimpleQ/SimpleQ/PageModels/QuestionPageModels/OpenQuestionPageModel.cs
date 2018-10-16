@@ -92,9 +92,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private void QuestionAnswered()
         {
-            AnswerOption option = this.Question.GivenAnswers[0];
-            this.Question.ChoosenAnswers.Add(this.Question.GivenAnswers[0]);
-            //base.QuestionAnswered(1, answer);
+            base.QuestionAnswered(answer);
         }
         #endregion
 

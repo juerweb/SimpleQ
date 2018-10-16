@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace SimpleQ.Pages.QuestionPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class GAQPage : ContentPage
+	public partial class PolytomousUSQuestionPage : ContentPage
 	{
-		public GAQPage ()
+		public PolytomousUSQuestionPage()
 		{
 			InitializeComponent ();
 		}

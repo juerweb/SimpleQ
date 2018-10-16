@@ -177,11 +177,17 @@ namespace SimpleQ
                         navService.PushPage(owqPage, owqPageModel);
 
                         break;
-                    case SurveyType.GAQ:
-                        GAQPage gaqPage = (GAQPage)FreshPageModelResolver.ResolvePageModel<GAQPageModel>(true);
-                        GAQPageModel gaqPageModel = (GAQPageModel)gaqPage.BindingContext;
-                        gaqPageModel.Question = WasQuestionOpened;
-                        navService.PushPage(gaqPage, gaqPageModel);
+                    case SurveyType.PolytomousUSQuestion:
+                        PolytomousUSQuestionPage polytomousUSPage = (PolytomousUSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUSQuestionPageModel>(true);
+                        PolytomousUSQuestionPageModel polytomousUSPageModel = (PolytomousUSQuestionPageModel)polytomousUSPage.BindingContext;
+                        polytomousUSPageModel.Question = WasQuestionOpened;
+                        navService.PushPage(polytomousUSPage, polytomousUSPageModel);
+                        break;
+                    case SurveyType.DichotomousQuestion:
+                        DichotomousQuestionPage dichotomousQuestionPage = (DichotomousQuestionPage)FreshPageModelResolver.ResolvePageModel<DichotomousQuestionPageModel>(true);
+                        DichotomousQuestionPageModel dichotomousQuestionPageModel = (DichotomousQuestionPageModel)dichotomousQuestionPage.BindingContext;
+                        dichotomousQuestionPageModel.Question = WasQuestionOpened;
+                        navService.PushPage(dichotomousQuestionPage, dichotomousQuestionPageModel);
                         break;
                 }
 

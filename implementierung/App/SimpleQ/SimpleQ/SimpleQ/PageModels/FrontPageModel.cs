@@ -134,9 +134,13 @@ namespace SimpleQ.PageModels
             {
                 CoreMethods.PushPageModel<OpenQuestionPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.TypeDesc == SurveyType.GAQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousUSQuestion)
             {
-                CoreMethods.PushPageModel<GAQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<PolytomousUSQuestionPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.DichotomousQuestion)
+            {
+                CoreMethods.PushPageModel<DichotomousQuestionPageModel>(selectedQuestion);
             }
             
             SelectedQuestion = null;

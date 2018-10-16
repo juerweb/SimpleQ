@@ -110,25 +110,26 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Methods
-        public void QuestionAnswered(AnswerOption answer, string answerText)
+        public void QuestionAnswered(string answerText)
         {
-            this.question.GivenAnswers.Add(new AnswerOption() { AnsId = ansId, AnsText = answerText, SvyId = this.question.SurveyId });
+            this.question.SurveyVote.ChosenAnswerOptions = this.question.GivenAnswers;
+            this.question.SurveyVote.VoteText = answerText;
             QuestionAnswered();
         }
 
         public void QuestionAnswered(AnswerOption answer)
         {
-            this.question.GivenAnswers.Add(answer);
+            this.question.SurveyVote.ChosenAnswerOptions.Add(answer);
             QuestionAnswered();
         }
 
         public void QuestionAnswered(List<AnswerOption> answers)
         {
-            this.question.GivenAnswers = answers;
+            this.question.SurveyVote.ChosenAnswerOptions = answers;
             QuestionAnswered();
         }
 
-        protected async void QuestionAnswered()
+        private async void QuestionAnswered()
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0}...", Question.SurveyId), "Info");
 

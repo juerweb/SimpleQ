@@ -33,12 +33,18 @@ namespace SimpleQ.PageModels.Services
             questions.Add(new SurveyModel(2, "Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OpenQuestion Test", SurveyType.OpenQuestion, DateTime.Now, new List<AnswerOption>()));
 
             answerTypes = new List<AnswerOption>();
-            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Grün", SvyId = 0 });
-            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Rot", SvyId = 1 });
-            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Gelb", SvyId = 2 });
-            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Blau", SvyId = 3 });
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Grün", SvyId = 3 });
+            answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Rot", SvyId = 3 });
+            answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Gelb", SvyId = 3 });
+            answerTypes.Add(new AnswerOption() { AnsId = 3, AnsText = "Blau", SvyId = 3 });
 
-            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "GAQ Test", SurveyType.GAQ, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "GAQ Test", SurveyType.PolytomousUSQuestion, DateTime.Now, answerTypes));
+
+            answerTypes = new List<AnswerOption>();
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Männlich", SvyId = 4 });
+            answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Weiblich", SvyId = 4 });
+
+            questions.Add(new SurveyModel(4, "Wählen Sie aus!", "Dichotomous Test", SurveyType.DichotomousQuestion, DateTime.Now, answerTypes));
         }
 
         List<SurveyModel> questions = new List<SurveyModel>();

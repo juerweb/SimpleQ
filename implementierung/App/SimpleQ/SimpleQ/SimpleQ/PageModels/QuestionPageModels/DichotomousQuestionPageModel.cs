@@ -28,8 +28,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="questionService">The question service.</param>
         public DichotomousQuestionPageModel(IQuestionService questionService) : base(questionService)
         {
-            Option1Command = new Command(() => QuestionAnswered(YNQAnswer.Yes));
-            Option2Command = new Command(() => QuestionAnswered(YNQAnswer.No));
+            Option1Command = new Command(() => QuestionAnswered(DichotomousAnswer.Option1));
+            Option2Command = new Command(() => QuestionAnswered(DichotomousAnswer.Option2));
         }
 
         /// <summary>
@@ -82,9 +82,19 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// This method is called, after the question was answered.
         /// </summary>
         /// <param name="answer">The ansDesc.</param>
-        private void QuestionAnswered(YNQAnswer answer)
+        private void QuestionAnswered(DichotomousAnswer answer)
         {
-            //base.QuestionAnswered(answer.ToString());
+            switch (answer)
+            {
+                case DichotomousAnswer.Option1:
+                    Debug.WriteLine(this.Question.GivenAnswers[0]);
+                    base.QuestionAnswered(this.Question.GivenAnswers[0]);
+                    break;
+                case DichotomousAnswer.Option2:
+                    base.QuestionAnswered(this.Question.GivenAnswers[1]);
+                    break;
+            }
+
         }
         #endregion
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -46,7 +47,8 @@ namespace SimpleQ.Models
         public SurveyModel()
         {
             IsAnswerAllowed = false;
-            this.choosenAnswers = new List<AnswerOption>();
+            surveyVote = new SurveyVote();
+            surveyVote.ChosenAnswerOptions = new List<AnswerOption>();
         }
 
 
@@ -59,8 +61,8 @@ namespace SimpleQ.Models
         private SurveyType typeDesc;
         private Boolean isAnswerAllowed;
         private List<AnswerOption> givenAnswers;
-        private List<AnswerOption> choosenAnswers;
         private DateTime endDate;
+        private SurveyVote surveyVote;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -91,7 +93,11 @@ namespace SimpleQ.Models
 
         public List<AnswerOption> GivenAnswers { get => givenAnswers; set => givenAnswers = value; }
         public DateTime EndDate { get => endDate; set => endDate = value; }
-        public List<AnswerOption> ChoosenAnswers { get => choosenAnswers; set => choosenAnswers = value; }
+        public SurveyVote SurveyVote
+        {
+            get => surveyVote;
+            set => surveyVote = value;
+        }
         #endregion
 
         #region Methods
@@ -128,9 +134,7 @@ namespace SimpleQ.Models
         LikertScale6Question = 13,
         LikertScale7Question = 14,
         LikertScale8Question = 15,
-        LikertScale9Question = 16,
-        //GAQ is only tmp Type
-        GAQ = 17,
+        LikertScale9Question = 16
 
     }
 
@@ -152,5 +156,11 @@ namespace SimpleQ.Models
         Green = 1,
         Yellow = 2,
         Red = 3
+    }
+
+    public enum DichotomousAnswer
+    {
+        Option1 = 1,
+        Option2 = 2
     }
 }

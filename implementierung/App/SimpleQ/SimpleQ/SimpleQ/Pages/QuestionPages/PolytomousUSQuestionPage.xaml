@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
-             x:Class="SimpleQ.Pages.QuestionPages.GAQPage">
+             x:Class="SimpleQ.Pages.QuestionPages.PolytomousUSQuestionPage">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>

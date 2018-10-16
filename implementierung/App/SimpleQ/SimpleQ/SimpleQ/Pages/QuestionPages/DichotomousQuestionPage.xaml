@@ -13,8 +13,8 @@
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Text="{ext:Translate Text=Yes}" Grid.Column="0" Command="{Binding YesCommand}"></Button>
-                <Button Text="{ext:Translate Text=No}" Grid.Column="1" Command="{Binding NoCommand}"></Button>
+                <Button Text="{Binding Path=Question.GivenAnswers[0].AnsText}" Grid.Column="0" Command="{Binding Option1Command}"></Button>
+                <Button Text="{Binding Path=Question.GivenAnswers[1].AnsText}" Grid.Column="1" Command="{Binding Option2Command}"></Button>
             </Grid>
         </StackLayout>
     </ContentPage.Content>
