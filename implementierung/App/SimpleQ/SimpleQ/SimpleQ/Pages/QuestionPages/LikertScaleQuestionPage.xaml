@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.QuestionPages.LikertScaleQuestionPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
+            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Slider Value="{Binding CurrentValue}" Minimum="0" Maximum="{Binding Gradation}"></Slider>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

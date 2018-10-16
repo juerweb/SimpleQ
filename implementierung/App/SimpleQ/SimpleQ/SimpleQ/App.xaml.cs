@@ -189,6 +189,12 @@ namespace SimpleQ
                         dichotomousQuestionPageModel.Question = WasQuestionOpened;
                         navService.PushPage(dichotomousQuestionPage, dichotomousQuestionPageModel);
                         break;
+                    case SurveyType.PolytomousOMQuestion:
+                        PolytomousOMQuestionPage polytomousOMQuestionPage = (PolytomousOMQuestionPage)FreshPageModelResolver.ResolvePageModel<DichotomousQuestionPageModel>(true);
+                        DichotomousQuestionPageModel polytomousOMQuestionPageModel = (DichotomousQuestionPageModel)polytomousOMQuestionPage.BindingContext;
+                        polytomousOMQuestionPageModel.Question = WasQuestionOpened;
+                        navService.PushPage(polytomousOMQuestionPage, polytomousOMQuestionPageModel);
+                        break;
                 }
 
                 WasThereAlreadyANotification = true;

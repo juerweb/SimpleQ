@@ -52,7 +52,9 @@ namespace SimpleQ.PageModels.Services
             answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Gelb", SvyId = 5 });
             answerTypes.Add(new AnswerOption() { AnsId = 3, AnsText = "Blau", SvyId = 5 });
 
-            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "Polytomous OS Test", SurveyType.PolytomousOSQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(5, "Was ist Ihre Lieblingsfarbe?", "Polytomous OS Test", SurveyType.PolytomousOSQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(6, "Was ist Ihre Lieblingsfarbe?", "Polytomous OM Test", SurveyType.PolytomousOMQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(7, "Was ist Ihre Lieblingsfarbe?", "Polytomous OM Test", SurveyType.PolytomousUMQuestion, DateTime.Now, answerTypes));
         }
 
         List<SurveyModel> questions = new List<SurveyModel>();

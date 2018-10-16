@@ -146,6 +146,20 @@ namespace SimpleQ.PageModels
             {
                 CoreMethods.PushPageModel<PolytomousOSQuestionPageModel>(selectedQuestion);
             }
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousOMQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousOMQuestionPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.LikertScale3Question 
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale4Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale5Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale6Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale7Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale8Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale9Question)
+            {
+                CoreMethods.PushPageModel<LikertScaleQuestionPageModel>(selectedQuestion);
+            }
 
             SelectedQuestion = null;
         }
