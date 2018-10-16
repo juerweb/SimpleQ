@@ -48,6 +48,9 @@
     <Compile Update="Pages\ExtendedHelpPage.xaml.cs">
       <DependentUpon>ExtendedHelpPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Pages\QuestionPages\PolytomousOSQuestionPage.xaml.cs">
+      <DependentUpon>PolytomousOSQuestionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Pages\QuestionPages\PolytomousUSQuestionPage.xaml.cs">
       <DependentUpon>PolytomousUSQuestionPage.xaml</DependentUpon>
     </Compile>

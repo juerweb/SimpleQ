@@ -13,6 +13,7 @@ using System.Reactive.Linq;
 using SimpleQ.Extensions;
 using Xamarin.Forms;
 using SimpleQ.Shared;
+using System.Linq;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -54,6 +55,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
                 if (initData.GetType() == typeof(SurveyModel))
                 {
                     this.Question = (SurveyModel)initData;
+                    if (this.Question.TypeDesc == SurveyType.PolytomousOMQuestion || this.Question.TypeDesc == SurveyType.PolytomousOSQuestion)
+                    {
+                        this.Question.GivenAnswers = this.Question.GivenAnswers.OrderBy(ga => ga.AnsText).ToList();
+                    }
                 }
                 else if (initData.GetType() == typeof(Boolean))
                 {

@@ -142,7 +142,11 @@ namespace SimpleQ.PageModels
             {
                 CoreMethods.PushPageModel<DichotomousQuestionPageModel>(selectedQuestion);
             }
-            
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousOSQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousOSQuestionPageModel>(selectedQuestion);
+            }
+
             SelectedQuestion = null;
         }
 

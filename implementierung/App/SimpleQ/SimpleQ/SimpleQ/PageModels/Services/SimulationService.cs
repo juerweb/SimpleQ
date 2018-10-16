@@ -38,13 +38,21 @@ namespace SimpleQ.PageModels.Services
             answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Gelb", SvyId = 3 });
             answerTypes.Add(new AnswerOption() { AnsId = 3, AnsText = "Blau", SvyId = 3 });
 
-            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "GAQ Test", SurveyType.PolytomousUSQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "Polytomous US Test", SurveyType.PolytomousUSQuestion, DateTime.Now, answerTypes));
 
             answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Männlich", SvyId = 4 });
             answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Weiblich", SvyId = 4 });
 
             questions.Add(new SurveyModel(4, "Wählen Sie aus!", "Dichotomous Test", SurveyType.DichotomousQuestion, DateTime.Now, answerTypes));
+
+            answerTypes = new List<AnswerOption>();
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Grün", SvyId = 5 });
+            answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Rot", SvyId = 5 });
+            answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Gelb", SvyId = 5 });
+            answerTypes.Add(new AnswerOption() { AnsId = 3, AnsText = "Blau", SvyId = 5 });
+
+            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "Polytomous OS Test", SurveyType.PolytomousOSQuestion, DateTime.Now, answerTypes));
         }
 
         List<SurveyModel> questions = new List<SurveyModel>();
