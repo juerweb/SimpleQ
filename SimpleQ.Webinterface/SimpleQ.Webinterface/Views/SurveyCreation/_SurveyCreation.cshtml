@@ -69,34 +69,41 @@
                         @foreach (Department group in Model.Departments)
                         {
                             <li>
-                                <input type="checkbox" checked="checked" onclick="" name="SelectedDepartments" value="@group.DepId"><span>@group.DepName</span>
+                                <input type="checkbox" checked="checked" onclick="" name="SelectedDepartments" value="@group.DepId"><span>@group.DepName</span>@*<span>@group.People.Count</span>*@
                             </li>
                         }
                     </ul>
                 </div>
             </div>
-            <div class="form-group mt-2">
-                <span class="row">
-                    <span class="col-md">
-                        <label for="QuestionFromDatePicker">@Resources.questionTimeDateHeader @Resources.from</label>
-                        <input id="QuestionFromDatePicker" type="date" class="form-control" name="StartDate" />
-                        <label for="QuestionToDatePicker">@Resources.questionTimeDateHeader @Resources.to</label>
-                        <input id="QuestionToDatePicker" type="date" class="form-control" name="EndDate" />
-                    </span>
-                    <span class="col-md">
-                        <label for="QuestionFromTimePicker">@Resources.questionTimeTimeHeader @Resources.from</label>
-                        <input id="QuestionFromTimePicker" type="time" class="form-control" name="StartTime" />
-                        <label for="QuestionToTimePicker">@Resources.questionTimeTimeHeader @Resources.to</label>
-                        <input id="QuestimeToTimePicker" type="time" class="form-control" name="EndTime" />
-                    </span>
+
+            <label class="mt-2">@Resources.askedPeopleCount</label>
+            <input id="countInput" class="form-control" type="number" value="0" oninput="changeSpanColor()"/>
+            <span class="row colorSpan pl-4 pr-4 mt-2">
+                <span id="colorSpan1" class="col-4"></span>
+                <span id="colorSpan2" class="col-4"></span>
+                <span id="colorSpan3" class="col-4"></span>
+            </span>
+            <span class="mt-1 pl-2 pr-2" id="countTextLabel" style="font-size:medium"></span>
+
+            <span class="row mt-3">
+                <span class="col-md">
+                    <label for="QuestionFromDatePicker">@Resources.questionTimeDateHeader @Resources.from</label>
+                    <input id="QuestionFromDatePicker" type="date" class="form-control" name="StartDate" />
+                    <label for="QuestionToDatePicker" class="mt-2">@Resources.questionTimeDateHeader @Resources.to</label>
+                    <input id="QuestionToDatePicker" type="date" class="form-control" name="EndDate" />
                 </span>
-            </div>
+                <span class="col-md">
+                    <label for="QuestionFromTimePicker">@Resources.questionTimeTimeHeader @Resources.from</label>
+                    <input id="QuestionFromTimePicker" type="time" class="form-control" name="StartTime" />
+                    <label for="QuestionToTimePicker" class="mt-2">@Resources.questionTimeTimeHeader @Resources.to</label>
+                    <input id="QuestimeToTimePicker" type="time" class="form-control" name="EndTime" />
+                </span>
+            </span>
+            <label class="mt-2" for="question">@Resources.questionHeader</label>
+            <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText">
+
             <div class="mt-2">
-                <label for="question">@Resources.questionHeader</label>
-                <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText">
-            </div>
-            <div class="mt-2">
-                <input type="checkbox" checked="checked" onclick="" name="Survey.Template"><span>Als template speichern</span>
+                <input type="checkbox" checked="checked" onclick="" name="Survey.Template"><span>@Resources.SaveAsTemplate</span>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Umfrage absenden</button>
         </div>
@@ -138,7 +145,6 @@
                 document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe313;";
             }
         });
-
     });
 
     function answerTypeSelectionChanged() {
@@ -146,7 +152,7 @@
         var answerType = document.getElementById("AnswerTypeCB");
         var value = answerType.value;
         if (value > 4) {
-            $("#openAddAnswer").show();           
+            $("#openAddAnswer").show();
         } else {
             $("#openAddAnswer").hide();
         }
@@ -291,6 +297,28 @@
         button.parentElement.parentElement.innerHTML = edited;
     }
 
+    function changeSpanColor() {
+        let input = document.getElementById("countInput");
+        if (input.value < 20) {
+            $("#colorSpan1").removeClass(["colorSpanGreen","colorSpanOrange"]).addClass("colorSpanRed");
+            $("#colorSpan2").removeClass(["colorSpanOrange","colorSpanGreen"]);
+            $("#colorSpan3").removeClass("colorSpanGreen");
+            document.getElementById("countTextLabel").innerHTML = "@Resources.badAskGroupCount";
+            //$("#countTextLabel").innerHTML = "Sehr kleine Gruppe .. ungenaue Auswertung..";
+        } else if (input.value < 50) {
+            $("#colorSpan1").removeClass(["colorSpanRed", "colorSpanGreen"]).addClass("colorSpanOrange");
+            $("#colorSpan2").removeClass("colorSpanGreen").addClass("colorSpanOrange");
+            $("#colorSpan3").removeClass("colorSpanGreen");
+            document.getElementById("countTextLabel").innerHTML = "@Resources.middleAskGroupCount";
+            //$("#countTextLabel").innerHTML = "Mittlere Gruppe .. gute Auswertung möglich..";
+        } else {
+            $("#colorSpan1").removeClass(["colorSpanRed", "colorSpanOrange"]).addClass("colorSpanGreen");
+            $("#colorSpan2").removeClass("colorSpanOrange").addClass("colorSpanGreen");
+            $("#colorSpan3").addClass("colorSpanGreen");
+            document.getElementById("countTextLabel").innerHTML = "@Resources.goodAskGroupCount";
+            //$("#countTextLabel").innerHTML = "Große Gruppe .. sehr genaue Auswertung möglich..";
+        }
+    }
 
 </script>
 

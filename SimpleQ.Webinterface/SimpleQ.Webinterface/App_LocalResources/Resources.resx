@@ -253,4 +253,19 @@
   <data name="surveyTemplateHeader" xml:space="preserve">
     <value>choose template (by last surveys)</value>
   </data>
+  <data name="askedPeopleCount" xml:space="preserve">
+    <value>asked people (count)</value>
+  </data>
+  <data name="badAskGroupCount" xml:space="preserve">
+    <value>small group, to get good results create a bigger one</value>
+  </data>
+  <data name="goodAskGroupCount" xml:space="preserve">
+    <value>good size for good results</value>
+  </data>
+  <data name="middleAskGroupCount" xml:space="preserve">
+    <value>size of the group is ok, could be better for more generic results</value>
+  </data>
+  <data name="SaveAsTemplate" xml:space="preserve">
+    <value>save as template</value>
+  </data>
 </root>
