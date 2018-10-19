@@ -12,7 +12,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Slider Value="{Binding CurrentValue}" Minimum="0" Maximum="{Binding Gradation}"></Slider>
+                <Slider Value="{Binding CurrentValue}" Minimum="0" Maximum="{Binding Gradation}" ></Slider>
             </Grid>
         </StackLayout>
     </ContentPage.Content>

@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace SimpleQ.Pages.QuestionPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class LikertScale3QuestionPage : ContentPage
+	public partial class LikertScaleQuestionPage : ContentPage
 	{
-		public LikertScale3QuestionPage()
+		public LikertScaleQuestionPage()
 		{
 			InitializeComponent ();
 		}
