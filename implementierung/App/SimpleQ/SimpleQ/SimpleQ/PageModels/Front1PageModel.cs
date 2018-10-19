@@ -16,26 +16,26 @@ using Xamarin.Forms;
 namespace SimpleQ.PageModels
 {
     /// <summary>
-    /// This is the FrontPageModel for the FrontPage.
+    /// This is the Front1PageModel for the Front1Page.
     /// </summary>
-    public class FrontPageModel : FreshBasePageModel, INotifyPropertyChanged
+    public class Front1PageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
         /// <summary>
-        /// Initializes a new instance of the <see cref="FrontPageModel"/> class.
+        /// Initializes a new instance of the <see cref="Front1PageModel"/> class.
         /// </summary>
         /// <param name="questionService">The question service.</param>
-        public FrontPageModel(IQuestionService questionService, ISimulationService simulationService): this()
+        public Front1PageModel(IQuestionService questionService, ISimulationService simulationService): this()
         {
             this.questionService = questionService;
             this.simulationService = simulationService;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FrontPageModel"/> class.
+        /// Initializes a new instance of the <see cref="Front1PageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public FrontPageModel()
+        public Front1PageModel()
         {
             DeleteCommand = new Command(DeleteCommandExecuted);
             RefreshCommand = new Command(RefreshCommandExecuted);

@@ -55,6 +55,13 @@ namespace SimpleQ.PageModels.Services
             questions.Add(new SurveyModel(5, "Was ist Ihre Lieblingsfarbe?", "Polytomous OS Test", SurveyType.PolytomousOSQuestion, DateTime.Now, answerTypes));
             questions.Add(new SurveyModel(6, "Was ist Ihre Lieblingsfarbe?", "Polytomous OM Test", SurveyType.PolytomousOMQuestion, DateTime.Now, answerTypes));
             questions.Add(new SurveyModel(7, "Was ist Ihre Lieblingsfarbe?", "Polytomous OM Test", SurveyType.PolytomousUMQuestion, DateTime.Now, answerTypes));
+
+            answerTypes = new List<AnswerOption>();
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Gut", SvyId = 8 });
+            answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Mittel", SvyId = 8 });
+            answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Schlecht", SvyId = 8 });
+
+            questions.Add(new SurveyModel(7, "Wie fühlen Sie sich?", "Likert Scale 3 Test", SurveyType.LikertScale3Question, DateTime.Now, answerTypes));
         }
 
         List<SurveyModel> questions = new List<SurveyModel>();

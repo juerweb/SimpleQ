@@ -33,7 +33,7 @@
     <PackageReference Include="Refractored.MvvmHelpers" Version="1.3.0" />
     <PackageReference Include="Splat" Version="5.0.2" />
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="1.1.11" />
-    <PackageReference Include="Xamarin.Forms" Version="3.0.0.561731" />
+    <PackageReference Include="Xamarin.Forms" Version="3.3.0.912540" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
   </ItemGroup>
@@ -47,6 +47,9 @@
   <ItemGroup>
     <Compile Update="Pages\ExtendedHelpPage.xaml.cs">
       <DependentUpon>ExtendedHelpPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\Front1Page.xaml.cs">
+      <DependentUpon>Front1Page.xaml</DependentUpon>
     </Compile>
     <Compile Update="Pages\QuestionPages\PolytomousOMQuestionPage.xaml.cs">
       <DependentUpon>PolytomousOMQuestionPage.xaml</DependentUpon>
@@ -92,7 +95,7 @@
     <EmbeddedResource Update="Pages\FAQPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\FrontPage.xaml">
+    <EmbeddedResource Update="Pages\Front1Page.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\GeneralSettingsPage.xaml">
