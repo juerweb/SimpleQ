@@ -170,7 +170,7 @@
     <value>Liniendiagramm</value>
   </data>
   <data name="radar" xml:space="preserve">
-    <value>Radardiagramm</value>
+    <value>Spinnennetzdiagramm</value>
   </data>
   <data name="listing" xml:space="preserve">
     <value>Auflistung (absolut,%)</value>
@@ -185,7 +185,7 @@
     <value>Prozent</value>
   </data>
   <data name="polarArea" xml:space="preserve">
-    <value>Polarkreisdiagramm</value>
+    <value>Polar-Area-Diagramm</value>
   </data>
   <data name="Dichotomous" xml:space="preserve">
     <value>Dichotom</value>
