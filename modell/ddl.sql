@@ -149,6 +149,7 @@ create table Survey
     Amount int not null,
 	TypeId int not null references AnswerType,
 	Template bit not null,
+	[Sent] bit not null,
     foreign key (CatId, CustCode) references SurveyCategory
 );
 go
@@ -333,7 +334,8 @@ begin
                                from Survey s
 							   join Customer c on s.CustCode = c.CustCode
 							   where datediff(day, s.StartDate, getdate()) >= c.DataStoragePeriod * 30
-							   and Template = 0;
+							   and Template = 0
+							   and [Sent] = 1;
 	
 	open c;
 	fetch c into @svyId;
