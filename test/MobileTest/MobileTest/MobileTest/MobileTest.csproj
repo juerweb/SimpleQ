@@ -36,7 +36,7 @@
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="SharedClasses">
-      <HintPath>.\SharedClasses.dll</HintPath>
+      <HintPath>..\..\..\..\implementierung\SharedClasses\SharedClasses\bin\Debug\netstandard2.0\SharedClasses.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

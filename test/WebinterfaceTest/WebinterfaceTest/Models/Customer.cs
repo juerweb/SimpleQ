@@ -19,7 +19,6 @@ namespace SimpleQ.Webinterface.Models
         {
             this.Bills = new HashSet<Bill>();
             this.Departments = new HashSet<Department>();
-            this.Surveys = new HashSet<Survey>();
             this.SurveyCategories = new HashSet<SurveyCategory>();
         }
     
@@ -46,9 +45,6 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Department> Departments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Survey> Surveys { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<SurveyCategory> SurveyCategories { get; set; }

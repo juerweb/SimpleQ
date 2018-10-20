@@ -13,6 +13,8 @@ namespace SimpleQ.Webinterface.Controllers
 {
     public class SurveyCreationController : Controller
     {
+        private static HashSet<int> queuedSurveys = new HashSet<int>();
+
         [HttpPost]
         public ActionResult New(SurveyCreationModel req)
         {
@@ -22,7 +24,8 @@ namespace SimpleQ.Webinterface.Controllers
                 req.Survey.StartDate = req.StartDate.Date.Add(req.StartTime);
                 req.Survey.EndDate = req.EndDate.Date.Add(req.EndTime);
 
-                int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId)).SelectMany(d => d.People).Distinct().Count();
+                int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
+                    .SelectMany(d => d.People).Distinct().Count();
                 if (req.Survey.Amount > totalPeople)
                     req.Survey.Amount = totalPeople;
 
@@ -42,32 +45,11 @@ namespace SimpleQ.Webinterface.Controllers
                 db.SaveChanges();
             }
 
-            HostingEnvironment.QueueBackgroundWorkItem(ct =>
-            {
-                TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
-                if (timeout.Milliseconds > 0)
-                    Thread.Sleep(req.Survey.StartDate - DateTime.Now);
+            TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
 
-                using (var db = new SimpleQDBEntities())
-                {
-                    // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
-                    int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
-                        .SelectMany(d => d.People).Distinct().Count();
-
-                    req.SelectedDepartments.ForEach(d =>
-                    {
-                        // Anzahl an Personen in der aktuellen Abteilung (mit DepId = d)
-                        int currPeople = db.Departments
-                            .Where(dep => dep.DepId == d && dep.CustCode == CustCode)
-                            .SelectMany(dep => dep.People).Distinct().Count();
-
-                        // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
-                        int toAsk = (int)Math.Round(req.Survey.Amount * (currPeople / (double)totalPeople));
-
-                        SendSurveyNotification(d, toAsk, req.Survey.SvyId);
-                    });
-                }
-            });
+            // Umfrage nur schedulen wenn sie bis zur nächsten Mitternacht (+1h Toleranz) startet
+            if (timeout < Extensions.NextMidnight.Add(TimeSpan.FromHours(1)))
+                ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);
 
             return RedirectToAction("Index", "Home");
         }
@@ -83,25 +65,76 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
 
-        private void SendSurveyNotification(int depId, int amount, int svyId)
+        internal static void ScheduleSurvey(int svyId, TimeSpan timeout, string custCode)
         {
-            using (var db = new SimpleQDBEntities())
+            if (!queuedSurveys.Add(svyId)) return;
+
+            HostingEnvironment.QueueBackgroundWorkItem(ct =>
             {
-                Random rnd = new Random();
-                //int i = 0;
-                db.Departments
-                    .Where(d => d.DepId == depId)
-                    .SelectMany(d => d.People)
-                    .ToList()
-                    .OrderBy(p => rnd.Next())
-                    .Take(amount)
-                    .ToList()
-                    .ForEach(p =>
+                if (timeout.TotalMilliseconds > 0)
+                    Thread.Sleep((int)timeout.TotalMilliseconds);
+
+                using (var db = new SimpleQDBEntities())
+                {
+                    Random rnd = new Random();
+
+                    // Anzahl an zu befragenden Personen
+                    int amount = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Amount;
+
+                    // Bereits befragte Personen (zwecks Verhinderung v. Mehrfachbefragungen)
+                    HashSet<int> alreadyAsked = new HashSet<int>();
+
+                    // DepIDs mit den errechneten Anzahlen v. zu befragenden Personen
+                    Dictionary<int, int> depAmounts = new Dictionary<int, int>();
+
+                    // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
+                    int totalPeople = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Departments.SelectMany(d => d.People).Distinct().Count();
+
+                    db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Departments.ToList().ForEach(dep =>
                     {
-                        //i++;
+                        // Anzahl an Personen in der aktuellen Abteilung (mit DepId = id)
+                        int currPeople = dep.People.Distinct().Count();
+
+                        // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
+                        int toAsk = (int)Math.Round(amount * (currPeople / (double)totalPeople));
+
+                        depAmounts.Add(dep.DepId, toAsk);
                     });
-                //System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {amount}");
-            }
+
+
+                    // Solange Gesamtanzahl der zu Befragenden zu klein, die Anzahl einer zufälligen Abteilung erhöhen
+                    while (depAmounts.Values.Sum() < amount)
+                        depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]++;
+
+                    // Solange Gesamtanzahl der zu Befragenden zu groß, die Anzahl einer zufälligen Abteilung verringern
+                    while (depAmounts.Values.Sum() > amount)
+                        depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]--;
+
+
+                    foreach (var kv in depAmounts)
+                    {
+                        int i = 0;
+                        db.Departments
+                            .Where(d => d.DepId == kv.Key && d.CustCode == custCode)
+                            .SelectMany(d => d.People)
+                            .ToList()
+                            .Where(p => !alreadyAsked.Contains(p.PersId))
+                            .OrderBy(p => rnd.Next())
+                            .Take(kv.Value)
+                            .ToList()
+                            .ForEach(p =>
+                            {
+                                alreadyAsked.Add(p.PersId);
+                                i++;
+                            });
+                        System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {kv.Value}");
+                    }
+                    System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) TOTAL SENT: {alreadyAsked.Count} == {svyId}");
+
+                    db.Surveys.Where(s => s.SvyId == svyId).First().Sent = true;
+                    db.SaveChanges();
+                }
+            });
         }
 
 

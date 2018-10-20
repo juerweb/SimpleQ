@@ -37,10 +37,6 @@ namespace SimpleQ.Tests.WebinterfaceTest
                         {
                             NewYesNoSurvey();
                         }
-                        else if (input == "loadsingleresult")
-                        {
-                            LoadSingleResult();
-                        }
                         else if (input == "cls")
                         {
                             Cls();
@@ -79,11 +75,13 @@ namespace SimpleQ.Tests.WebinterfaceTest
                         CatId = 1,
                         CustCode = "m4rku5",
                         SvyText = "Wie groß sind die Ohren von S.K.?",
-                        StartDate = DateTime.Now.AddSeconds(15),
-                        EndDate = DateTime.Now.AddDays(7),
-                        Amount = 4,
+                        Amount = 5,
                         TypeId = 6
                     },
+                    StartDate = DateTime.Now.Date,
+                    StartTime = DateTime.Now.AddSeconds(15) - DateTime.Now.Date,
+                    EndDate = DateTime.Now.Date.AddDays(7),
+                    EndTime = DateTime.Now - DateTime.Now.Date,
                     SelectedDepartments = new List<int> { 1, 2 },
                     TextAnswerOptions = new List<string> { "sehr groß", "gigantisch", "brobdingnagisch", "sooo huge", "muy grande" }
                 };
@@ -107,32 +105,19 @@ namespace SimpleQ.Tests.WebinterfaceTest
                         CatId = 2,
                         CustCode = "m4rku5",
                         SvyText = "Rauchen Sie gerne Marihuana?",
-                        StartDate = DateTime.Now.AddSeconds(15),
-                        EndDate = DateTime.Now.AddDays(7),
                         Amount = 5,
                         TypeId = 1
                     },
+                    StartDate = DateTime.Now.Date,
+                    StartTime = DateTime.Now.AddSeconds(120) - DateTime.Now.Date,
+                    EndDate = DateTime.Now.Date.AddDays(7),
+                    EndTime = DateTime.Now - DateTime.Now.Date,
                     SelectedDepartments = new List<int> { 1 }
                 };
 
                 using (HttpClient client = new HttpClient())
                 {
                     HttpResponseMessage response = await client.PostAsync($"{SERVER}/surveyCreation/new/", new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json"));
-                    WriteLine(response.StatusCode);
-                }
-            }).Wait();
-        }
-
-        static void LoadSingleResult()
-        {
-            Task.Run(async () =>
-            {
-                WriteLine("SvyId:");
-                if (!int.TryParse(ReadLine(), out int svyId)) return;
-
-                using(HttpClient client = new HttpClient())
-                {
-                    HttpResponseMessage response = await client.GetAsync($"{SERVER}/surveyResults/loadSingleResult?svyId={svyId}");
                     WriteLine(response.StatusCode);
                 }
             }).Wait();

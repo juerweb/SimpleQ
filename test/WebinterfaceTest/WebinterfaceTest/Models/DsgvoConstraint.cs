@@ -12,15 +12,9 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Bill
+    public partial class DsgvoConstraint
     {
-        public int BillId { get; set; }
-        public string CustCode { get; set; }
-        public decimal BillPrice { get; set; }
-        public System.DateTime BillDate { get; set; }
-        public bool Paid { get; set; }
-    
-        [Newtonsoft.Json.JsonIgnore]
-        public virtual Customer Customer { get; set; }
+        public string ConstrName { get; set; }
+        public int ConstrValue { get; set; }
     }
 }

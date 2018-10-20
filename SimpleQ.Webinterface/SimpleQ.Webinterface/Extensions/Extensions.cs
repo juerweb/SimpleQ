@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace SimpleQ.Webinterface.Extensions
+namespace SimpleQ.Webinterface
 {
     public static class Extensions
     {
@@ -15,6 +15,11 @@ namespace SimpleQ.Webinterface.Extensions
             {
                 return alg.ComputeHash(Encoding.UTF8.GetBytes(str));
             }
+        }
+
+        public static TimeSpan NextMidnight
+        {
+            get => DateTime.Now.AddDays(1).Date - DateTime.Now;
         }
     }
 }
