@@ -120,7 +120,7 @@ namespace SimpleQ.PageModels
 
         public void AddCategorie(string title)
         {
-            Front1PageModel pageModel = new Front1PageModel();
+            FrontPageModel pageModel = new FrontPageModel();
             if (title == AppResources.AllCategories)
             {
                 var page = FreshPageModelResolver.ResolvePageModel(pageModel.GetType(), null);

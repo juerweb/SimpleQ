@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace SimpleQ.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class Front1Page : ContentPage
+	public partial class FrontPage : ContentPage
 	{
-		public Front1Page ()
+		public FrontPage ()
 		{
 			InitializeComponent ();
 		}

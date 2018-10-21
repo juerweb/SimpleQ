@@ -63,7 +63,7 @@ namespace SimpleQ.PageModels
                 OnPropertyChanged();
                 BlobCache.UserAccount.InvalidateObject<Boolean>("CloseAppAfterNotification");
                 BlobCache.UserAccount.InsertObject<Boolean>("CloseAppAfterNotification", closeAppAfterNotification);
-                Debug.WriteLine("ShowFront1PageAfterNotification changed...", "Info");
+                Debug.WriteLine("ShowFrontPageAfterNotification changed...", "Info");
             } 
         }
 
