@@ -194,6 +194,9 @@
       <Version>1.1.11</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.3.0.912540" />
+    <PackageReference Include="Xamarin.Forms.InputKit">
+      <Version>2.3.4</Version>
+    </PackageReference>
     <PackageReference Include="ZXing.Net.Mobile">
       <Version>2.4.1</Version>
     </PackageReference>

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              x:Class="SimpleQ.Pages.QuestionPages.LikertScaleQuestionPage">
     <ContentPage.Content>
         <StackLayout>
@@ -12,8 +13,12 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Slider Value="{Binding CurrentValue}" Minimum="0" Maximum="{Binding Gradation}" ></Slider>
+                <input:FormView IsValidated="{Binding IsValidated}">
+                    <input:AdvancedSlider StepValue="1" MaxValue="4" MinValue="0" DisplayMinMaxValue="False" x:Name="slider"></input:AdvancedSlider>
+                </input:FormView>
+
             </Grid>
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

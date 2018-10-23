@@ -84,7 +84,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// The ansDesc
         /// </summary>
         private int currentValue;
-        private int gradation;
+        private double gradation;
 
         #endregion
 
@@ -105,7 +105,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
             }
         }
 
-        public int Gradation
+        public double Gradation
         {
             get => gradation;
             set
