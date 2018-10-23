@@ -8,6 +8,9 @@ using System.Web.Mvc;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Mobile;
 using SimpleQ.Webinterface.Models.ViewModels;
+using OneSignal.CSharp.SDK;
+using OneSignal.CSharp.SDK.Resources.Devices;
+using OneSignal.CSharp.SDK.Resources.Notifications;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -125,6 +128,16 @@ namespace SimpleQ.Webinterface.Controllers
                             .ForEach(p =>
                             {
                                 alreadyAsked.Add(p.PersId);
+
+                                //var client = new OneSignalClient("ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                                //var options = new NotificationCreateOptions
+                                //{
+                                //    AppId = new Guid("68b8996a-f664-4130-9854-9ed7f70d5540"),
+                                //    IncludePlayerIds = {p.DeviceId}
+                                //};
+                                //options.Contents.Add("SvyId", $"{svyId}");
+                                //client.Notifications.Create(options);
+
                                 i++;
                             });
                         System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {kv.Value}");
