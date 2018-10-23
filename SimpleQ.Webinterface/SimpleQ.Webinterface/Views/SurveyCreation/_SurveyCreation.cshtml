@@ -5,7 +5,7 @@
 
 @{
     Survey survey = new Survey();
-
+    int maxCount = 0;
 }
 @using (Html.BeginForm("New", "SurveyCreation"))
 {
@@ -66,20 +66,24 @@
                 <label for="groups">@Resources.groups</label>
                 <div class="border border-dark">
                     <ul class="list-group groups-ul pl-2" id="groups">
-                        @foreach (Department group in Model.Departments)
-                        {
+                        @{
+
+                            foreach (KeyValuePair<Department, int> kvp in Model.Departments)
+                            {
+                                maxCount += kvp.Value;
                             <li>
-                                <input type="checkbox" checked="checked" onclick="" name="SelectedDepartments" value="@group.DepId"><span>@group.DepName</span>@*<span>@group.People.Count</span>*@
+                                <input type="checkbox" checked="checked" onclick="" name="SelectedDepartments" value="@kvp.Key.DepId"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
                             </li>
+                            }
                         }
                     </ul>
                 </div>
             </div>
 
             <label class="mt-2">@Resources.askedPeopleCount</label>
-            <input id="countInput" class="form-control" type="number" value="0" oninput="changeSpanColor()"/>
+            <input id="countInput" class="form-control" type="number" value="0" name="Survey.Amount" oninput="changeSpanColor();checkCount()"/>
             <span class="row colorSpan pl-4 pr-4 mt-2">
-                <span id="colorSpan1" class="col-4"></span>
+                <span id="colorSpan1" class="col-4"></span> 
                 <span id="colorSpan2" class="col-4"></span>
                 <span id="colorSpan3" class="col-4"></span>
             </span>
@@ -103,7 +107,9 @@
             <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText">
 
             <div class="mt-2">
-                <input type="checkbox" checked="checked" onclick="" name="Survey.Template"><span>@Resources.SaveAsTemplate</span>
+                @Html.CheckBox("Survey.Template")
+                @*<input type="checkbox" checked="checked" onclick="" name="Survey.Template">*@
+                <span>@Resources.SaveAsTemplate</span>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Umfrage absenden</button>
         </div>
@@ -295,6 +301,14 @@
             '       </span>';
         tempText = "";
         button.parentElement.parentElement.innerHTML = edited;
+    }
+
+    function checkCount() {
+        let input = document.getElementById("countInput");
+        if (input.value > @maxCount) {
+            alert("You can not ask more people than the selected groups have!");
+            input.value = 0;
+        }
     }
 
     function changeSpanColor() {

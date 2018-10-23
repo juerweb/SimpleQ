@@ -1,39 +1,7 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
 @model SimpleQ.Webinterface.Models.ViewModels.MultiResultModel
 
-@*@{
-    //Random rnd = new Random();
-    //Dictionary<DateTime, Dictionary<string, int>> votes = new Dictionary<DateTime, Dictionary<string, int>>();
-    //for (int i = 1; i <= 10; i++)
-    //{
-    //    string[] temp = { "ORF1", "ORF2", "ORF3", "ATV", "Puls4", "ZDF", "ARD", "ORF Sport +", "SRF", "Arte" };
-    //    Dictionary<string, int> d = new Dictionary<string, int>();
-    //    for (int j = 0; j < 10; j++)
-    //    {
-    //        d.Add(temp[j], rnd.Next(1, 20));
-    //    }
-    //    votes.Add(new DateTime(2018, 1, i), d);
-    //}
-    List<DateTime> dates = new List<DateTime>();
-    dates.Add(new DateTime(2018,1,1));
-    dates.Add(new DateTime(2018, 1, 2));
-    dates.Add(new DateTime(2018, 1, 3));
-    dates.Add(new DateTime(2018, 1, 4));
-    dates.Add(new DateTime(2018, 1, 5));
-    dates.Add(new DateTime(2018, 1, 6));
-    dates.Add(new DateTime(2018, 1, 7));
-    dates.Add(new DateTime(2018, 1, 8));
 
-    Dictionary<string, List<int>> multiDict = new Dictionary<string, List<int>>();
-    multiDict.Add("ORF1", new List<int> { 4, 5, 7, 2, 3, 6, 7, 2 });
-    multiDict.Add("ORF2", new List<int> { 3, 6, 1, 3, 4, 6, 8, 9 });
-    multiDict.Add("ORF3", new List<int> { 3, 5, 7, 9, 2, 5, 7, 1 });
-    multiDict.Add("ATV", new List<int> { 5, 7, 3, 4, 3, 5, 6, 3 });
-    multiDict.Add("ARD", new List<int> { 4, 5, 7, 2, 3, 6, 8, 2 });
-    multiDict.Add("BKF", new List<int> { 3, 4, 2, 1, 8, 3, 2, 8 });
-    multiDict.Add("Arte", new List<int> { 3, 5, 7, 9, 3, 5, 2, 9 });
-    multiDict.Add("N24", new List<int> { 5, 7, 3, 4, 2, 5, 9, 6 });
-}*@
 <div class="row">
     <div class="col-md-3">
         <div class="form-group">

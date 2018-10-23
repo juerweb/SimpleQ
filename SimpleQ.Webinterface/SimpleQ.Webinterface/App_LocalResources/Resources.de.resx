@@ -268,4 +268,7 @@
   <data name="SaveAsTemplate" xml:space="preserve">
     <value>als Template speichern</value>
   </data>
+  <data name="Members" xml:space="preserve">
+    <value>Mitglieder</value>
+  </data>
 </root>

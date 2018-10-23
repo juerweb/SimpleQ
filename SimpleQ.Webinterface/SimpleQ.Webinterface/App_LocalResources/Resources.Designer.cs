@@ -295,6 +295,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die members ähnelt.
+        /// </summary>
+        public static string Members {
+            get {
+                return ResourceManager.GetString("Members", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die size of the group is ok, could be better for more generic results ähnelt.
         /// </summary>
         public static string middleAskGroupCount {
