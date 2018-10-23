@@ -11,14 +11,16 @@
 
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="8*"></ColumnDefinition>
+                    <ColumnDefinition Width="2*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <input:FormView IsValidated="{Binding IsValidated}">
-                    <input:AdvancedSlider StepValue="1" MaxValue="4" MinValue="0" DisplayMinMaxValue="False" x:Name="slider"></input:AdvancedSlider>
-                </input:FormView>
-
+                <Label Text="{Binding Question.GivenAnswers[0].AnsText}" Grid.Column="0"></Label>
             </Grid>
-            
+            <input:FormView IsValidated="{Binding IsValidated}">
+                <input:AdvancedSlider StepValue="1" MaxValue="1" MinValue="0" DisplayMinMaxValue="False" x:Name="slider" ValuePrefix="" ValueSuffix=""></input:AdvancedSlider>
+            </input:FormView>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

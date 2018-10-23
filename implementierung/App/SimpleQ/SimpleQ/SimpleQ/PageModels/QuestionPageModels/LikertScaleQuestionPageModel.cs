@@ -76,6 +76,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
             }
             base.Init(initData);
 
+            Debug.WriteLine("1.: " + this.Question.GivenAnswers[0].AnsText + " 2.: " + this.Question.GivenAnswers[this.Question.GivenAnswers.Count - 1].AnsText);
+
         }
         #endregion
 
