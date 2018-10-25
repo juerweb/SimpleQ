@@ -9,7 +9,7 @@
         <div class="form-group mt-2 mb-1">
             <label for="groups">@Resources.groups</label>
             <div class="border border-dark">
-                <ul class="list-group groups-ul pl-2" id="groups">
+                <ul class="list-group ga-groups-ul pl-2" id="groups">
                     @{ List<string> l = new List<string>();
                         l.Add("HR");
                         l.Add("Produktion");
@@ -36,11 +36,23 @@
     </div>
     <div class="col-md-4">
         <h4 class="text-center">Aktionen</h4>
-        <div class="form-group">
+        @*<div class="form-group">
             <label for="QuestionTimeTimePicker">Name</label>
-            <input id="QuestimeTimeTimePicker" type="date" class="form-control" />
+            <span class="row mr-0 ml-0">
+                <span class="col-11 p-0"><input id="QuestimeTimeTimePicker" type="text" class="form-control" /></span>
+                <span class="col-1 p-0"><button type="button" class="btn btn-info pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button></span>
+            </span>
+        </div>*@
+        <label>Name</label>
+        <div class="row mr-0 ml-0 mt-1" id="newCategoryDiv">
+            <div class="col-10 p-0">
+                <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text" value="IT Produktion" />
+            </div>
+            <div class="col-2 p-0">
+                <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName()" data-toggle="tooltip" title="@Resources.edit"><i class="material-icons">&#xe150;</i></button>
+            </div>
         </div>
-        <button class="btn btn-primary btn-block">Mitglied hinzufügen</button>
+        <button class="btn btn-primary btn-block mt-2">Mitglied hinzufügen</button>
 
     </div>
     <div class="col-md-4">
@@ -71,3 +83,12 @@
         </div>
     </div>
 </div>
+
+<script>
+
+    function editGroupName() {
+        //let input = document.getElementById("groupNameInput");
+        $("#groupNameInput").removeClass("withoutBorder").removeAttr("readonly");
+    }
+
+</script>

@@ -271,4 +271,7 @@
   <data name="Members" xml:space="preserve">
     <value>Mitglieder</value>
   </data>
+  <data name="edit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
 </root>

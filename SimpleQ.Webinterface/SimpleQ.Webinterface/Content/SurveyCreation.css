@@ -1,6 +1,7 @@
 ﻿.withoutBorder{
     border-color:none;
     border: none;
+    background-color: #fff!important;
 }
 
 .inputNotUsable{
