@@ -17,7 +17,19 @@ namespace SimpleQ.Pages.QuestionPages
 		public LikertScaleQuestionPage()
 		{
 			InitializeComponent ();
+            BindingContextChanged += LikertScaleQuestionPage_BindingContextChanged;
 		}
+
+        private void LikertScaleQuestionPage_BindingContextChanged(object sender, EventArgs e)
+        {
+            if (this.BindingContext != null)
+            {
+                LikertScaleQuestionPageModel pageModel = (LikertScaleQuestionPageModel)this.BindingContext;
+                this.Slider.Maximum = pageModel.Gradation;
+                this.Slider.Minimum = 1;
+            }
+
+        }
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {

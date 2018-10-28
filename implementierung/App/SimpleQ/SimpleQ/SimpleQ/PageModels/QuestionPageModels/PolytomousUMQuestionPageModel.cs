@@ -17,7 +17,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
     /// <summary>
     /// This is the GAQPageModel for the GAQPage.
     /// </summary>
-    public class PolytomousOMQuestionPageModel : BasicQuestionPageModel
+    public class PolytomousUMQuestionPageModel : BasicQuestionPageModel
     {
         #region Constructor(s)
         /// <summary>
@@ -25,7 +25,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public PolytomousOMQuestionPageModel(IQuestionService questionService) : base(questionService)
+        public PolytomousUMQuestionPageModel(IQuestionService questionService) : base(questionService)
         {
             SendAnswerCommand = new Command(QuestionAnswered);
             IsQuestionAnswered = false;
@@ -36,7 +36,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// Initializes a new instance of the <see cref="GAQPageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public PolytomousOMQuestionPageModel()
+        public PolytomousUMQuestionPageModel()
         {
         }
 

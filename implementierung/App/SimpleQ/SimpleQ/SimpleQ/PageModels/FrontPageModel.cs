@@ -150,6 +150,10 @@ namespace SimpleQ.PageModels
             {
                 CoreMethods.PushPageModel<PolytomousOMQuestionPageModel>(selectedQuestion);
             }
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousUMQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousUMQuestionPageModel>(selectedQuestion);
+            }
             else if (selectedQuestion.TypeDesc == SurveyType.LikertScale3Question 
                 || selectedQuestion.TypeDesc == SurveyType.LikertScale4Question
                 || selectedQuestion.TypeDesc == SurveyType.LikertScale5Question

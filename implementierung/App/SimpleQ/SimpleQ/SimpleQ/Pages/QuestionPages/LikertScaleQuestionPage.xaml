@@ -11,17 +11,15 @@
         <StackLayout>
             <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
             <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
-            
-            <Slider ValueChanged="Slider_ValueChanged" Minimum="0" Maximum="{Binding Gradation}"></Slider>
+
+            <Slider ValueChanged="Slider_ValueChanged" x:Name="Slider"></Slider>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
-                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Text="{Binding Question.GivenAnswers[0].AnsText}" Grid.Column="0"></Label>
-                <Label HorizontalTextAlignment="Center" Text="{Binding CurrentValue, Mode=TwoWay}" Grid.Column="1"></Label>
-                <Label Text="{Binding Path=Question.GivenAnswers, Converter={StaticResource LastItemConverter}}" Grid.Column="2" HorizontalOptions="EndAndExpand"></Label>
+                <Label Text="{Binding Path=Question.GivenAnswers, Converter={StaticResource LastItemConverter}}" Grid.Column="1" HorizontalOptions="EndAndExpand"></Label>
             </Grid>
 
         </StackLayout>

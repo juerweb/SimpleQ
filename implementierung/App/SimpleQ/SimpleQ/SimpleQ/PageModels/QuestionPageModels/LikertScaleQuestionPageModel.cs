@@ -27,7 +27,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         public LikertScaleQuestionPageModel(IQuestionService questionService) : base(questionService)
         {
             SendAnswerCommand = new Command(QuestionAnswered);
-            this.CurrentValue = 0;
+            this.CurrentValue = 1;
         }
 
         /// <summary>
@@ -75,9 +75,6 @@ namespace SimpleQ.PageModels.QuestionPageModels
                 }
             }
             base.Init(initData);
-
-            Debug.WriteLine("1.: " + this.Question.GivenAnswers[0].AnsText + " 2.: " + this.Question.GivenAnswers[this.Question.GivenAnswers.Count - 1].AnsText);
-
         }
         #endregion
 

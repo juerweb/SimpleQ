@@ -54,14 +54,24 @@ namespace SimpleQ.PageModels.Services
 
             questions.Add(new SurveyModel(5, "Was ist Ihre Lieblingsfarbe?", "Polytomous OS Test", SurveyType.PolytomousOSQuestion, DateTime.Now, answerTypes));
             questions.Add(new SurveyModel(6, "Was ist Ihre Lieblingsfarbe?", "Polytomous OM Test", SurveyType.PolytomousOMQuestion, DateTime.Now, answerTypes));
-            questions.Add(new SurveyModel(7, "Was ist Ihre Lieblingsfarbe?", "Polytomous OM Test", SurveyType.PolytomousUMQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(7, "Was ist Ihre Lieblingsfarbe?", "Polytomous UM Test", SurveyType.PolytomousUMQuestion, DateTime.Now, answerTypes));
 
             answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Gut", SvyId = 8 });
             answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Mittel", SvyId = 8 });
             answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Schlecht", SvyId = 8 });
 
-            questions.Add(new SurveyModel(7, "Wie fühlen Sie sich?", "Likert Scale 3 Test", SurveyType.LikertScale3Question, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(8, "Wie fühlen Sie sich?", "Likert Scale 3 Test", SurveyType.LikertScale3Question, DateTime.Now, answerTypes));
+
+            answerTypes = new List<AnswerOption>();
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Sehr Gut", SvyId = 9 });
+            answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Gut", SvyId = 9 });
+            answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Ausreichend", SvyId = 9 });
+            answerTypes.Add(new AnswerOption() { AnsId = 3, AnsText = "Schlecht", SvyId = 9 });
+            answerTypes.Add(new AnswerOption() { AnsId = 4, AnsText = "Sehr Schlecht", SvyId = 9 });
+            answerTypes.Add(new AnswerOption() { AnsId = 5, AnsText = "Sehr Sehr Schlecht", SvyId = 9 });
+
+            questions.Add(new SurveyModel(9, "Wie fühlen Sie sich?", "Likert Scale 6 Test", SurveyType.LikertScale6Question, DateTime.Now, answerTypes));
         }
 
         List<SurveyModel> questions = new List<SurveyModel>();

@@ -14,9 +14,9 @@ using Xamarin.Forms.Xaml;
 namespace SimpleQ.Pages.QuestionPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PolytomousOMQuestionPage : ContentPage
+	public partial class PolytomousUMQuestionPage : ContentPage
 	{
-		public PolytomousOMQuestionPage()
+		public PolytomousUMQuestionPage()
 		{
 			InitializeComponent ();
 		}
