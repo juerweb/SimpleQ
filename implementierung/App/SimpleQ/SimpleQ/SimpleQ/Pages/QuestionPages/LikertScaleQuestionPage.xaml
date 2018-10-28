@@ -4,22 +4,25 @@
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              x:Class="SimpleQ.Pages.QuestionPages.LikertScaleQuestionPage">
+    <ContentPage.Resources>
+        <ext:LastItemConverter x:Key="LastItemConverter"></ext:LastItemConverter>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
             <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
-
+            
+            <Slider ValueChanged="Slider_ValueChanged" Minimum="0" Maximum="{Binding Gradation}"></Slider>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
-                    <ColumnDefinition Width="8*"></ColumnDefinition>
-                    <ColumnDefinition Width="2*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Label Text="{Binding Question.GivenAnswers[0].AnsText}" Grid.Column="0"></Label>
+                <Label HorizontalTextAlignment="Center" Text="{Binding CurrentValue, Mode=TwoWay}" Grid.Column="1"></Label>
+                <Label Text="{Binding Path=Question.GivenAnswers, Converter={StaticResource LastItemConverter}}" Grid.Column="2" HorizontalOptions="EndAndExpand"></Label>
             </Grid>
-            <input:FormView IsValidated="{Binding IsValidated}">
-                <input:AdvancedSlider StepValue="1" MaxValue="1" MinValue="0" DisplayMinMaxValue="False" x:Name="slider" ValuePrefix="" ValueSuffix=""></input:AdvancedSlider>
-            </input:FormView>
 
         </StackLayout>
     </ContentPage.Content>

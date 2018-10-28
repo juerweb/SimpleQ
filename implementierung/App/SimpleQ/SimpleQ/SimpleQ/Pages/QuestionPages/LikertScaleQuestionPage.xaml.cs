@@ -17,13 +17,14 @@ namespace SimpleQ.Pages.QuestionPages
 		public LikertScaleQuestionPage()
 		{
 			InitializeComponent ();
-            this.BindingContextChanged += LikertScaleQuestionPage_BindingContextChanged;
-
 		}
 
-        private void LikertScaleQuestionPage_BindingContextChanged(object sender, EventArgs e)
+        private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            this.slider.MaxValue = (this.BindingContext as LikertScaleQuestionPageModel).Gradation;
+            Slider slider = (Slider)sender;
+            double roundValue = Math.Round(slider.Value);
+            slider.Value = roundValue;
+            ((LikertScaleQuestionPageModel)this.BindingContext).CurrentValue = (int)roundValue;
         }
     }
 }
