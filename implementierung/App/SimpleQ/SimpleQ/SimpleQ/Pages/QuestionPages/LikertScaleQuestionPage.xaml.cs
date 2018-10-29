@@ -24,7 +24,7 @@ namespace SimpleQ.Pages.QuestionPages
         {
             if (this.BindingContext != null)
             {
-                LikertScaleQuestionPageModel pageModel = (LikertScaleQuestionPageModel)this.BindingContext;
+                LikertScaleQuestionPageModel pageModel = (LikertScaleQuestionPageModel)(this.BindingContext);
                 this.Slider.Maximum = pageModel.Gradation;
                 this.Slider.Minimum = 1;
             }
@@ -36,7 +36,7 @@ namespace SimpleQ.Pages.QuestionPages
             Slider slider = (Slider)sender;
             double roundValue = Math.Round(slider.Value);
             slider.Value = roundValue;
-            ((LikertScaleQuestionPageModel)this.BindingContext).CurrentValue = (int)roundValue;
+            ((LikertScaleQuestionPageModel)(this.BindingContext)).CurrentValue = (int)roundValue;
         }
     }
 }

@@ -288,4 +288,7 @@
   <data name="DontKnow" xml:space="preserve">
     <value>Weiß nicht</value>
   </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menü</value>
+  </data>
 </root>

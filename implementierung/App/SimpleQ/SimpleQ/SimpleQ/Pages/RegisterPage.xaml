@@ -6,7 +6,7 @@
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout>
-            <Image x:Name="logoImage"></Image>
+            <Image x:Name="logoImage" Margin="0,30,0,0"></Image>
             <Frame BorderColor="{StaticResource colorBorder}">
                 <StackLayout>
                     <Label Text="{resx:Translate Text=RegisterScanHelpText}" HorizontalTextAlignment="Center"></Label>

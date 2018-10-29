@@ -24,9 +24,9 @@ namespace SimpleQ.Pages.QuestionPages
         private void Checkbox_IsCheckedChanged(object sender, TappedEventArgs e)
         {
             Checkbox box = (Checkbox)sender;
-            AnswerOption option = (AnswerOption)box.BindingContext;
+            AnswerOption option = (AnswerOption)(box.BindingContext);
 
-            PolytomousOMQuestionPageModel pageModel = (PolytomousOMQuestionPageModel)this.BindingContext;
+            PolytomousOMQuestionPageModel pageModel = (PolytomousOMQuestionPageModel)(this.BindingContext);
             pageModel.IsChecked[option] = box.IsChecked;
 
             if (box.IsChecked)
