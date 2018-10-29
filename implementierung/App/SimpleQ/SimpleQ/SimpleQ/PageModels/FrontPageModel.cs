@@ -118,23 +118,53 @@ namespace SimpleQ.PageModels
         /// </summary>
         private void NavigateToQuestion()
         {
-            if (selectedQuestion.TypeDesc == SurveyType.YNQ)
+            if (selectedQuestion.TypeDesc == SurveyType.YesNoQuestion)
             {
-                CoreMethods.PushPageModel<YNQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<YesNoQuestionPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.TypeDesc == SurveyType.TLQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.YesNoDontKnowQuestion)
             {
-                CoreMethods.PushPageModel<TLQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<YesNoDontKnowQuestionPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.TypeDesc == SurveyType.OWQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.TrafficLightQuestion)
             {
-                CoreMethods.PushPageModel<OWQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<TrafficLightQuestionPageModel>(selectedQuestion);
             }
-            else if (selectedQuestion.TypeDesc == SurveyType.GAQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.OpenQuestion)
             {
-                CoreMethods.PushPageModel<GAQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<OpenQuestionPageModel>(selectedQuestion);
             }
-            
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousUSQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousUSQuestionPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.DichotomousQuestion)
+            {
+                CoreMethods.PushPageModel<DichotomousQuestionPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousOSQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousOSQuestionPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousOMQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousOMQuestionPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousUMQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousUMQuestionPageModel>(selectedQuestion);
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.LikertScale3Question 
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale4Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale5Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale6Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale7Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale8Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale9Question)
+            {
+                CoreMethods.PushPageModel<LikertScaleQuestionPageModel>(selectedQuestion);
+            }
+
             SelectedQuestion = null;
         }
 

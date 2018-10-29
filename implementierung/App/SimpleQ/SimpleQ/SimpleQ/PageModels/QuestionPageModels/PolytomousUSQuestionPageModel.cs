@@ -10,13 +10,14 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using System.Reactive.Linq;
+using SimpleQ.Shared;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
     /// This is the GAQPageModel for the GAQPage.
     /// </summary>
-    public class GAQPageModel : BasicQuestionPageModel
+    public class PolytomousUSQuestionPageModel : BasicQuestionPageModel
     {
         #region Constructor(s)
         /// <summary>
@@ -24,7 +25,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public GAQPageModel(IQuestionService questionService) : base(questionService)
+        public PolytomousUSQuestionPageModel(IQuestionService questionService) : base(questionService)
         {
             SendAnswerCommand = new Command(QuestionAnswered);
             IsQuestionAnswered = false;
@@ -34,7 +35,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// Initializes a new instance of the <see cref="GAQPageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public GAQPageModel()
+        public PolytomousUSQuestionPageModel()
         {
 
         }
@@ -54,7 +55,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <summary>
         /// The selected ansDesc
         /// </summary>
-        private String selectedAnswer;
+        private AnswerOption selectedAnswer;
         /// <summary>
         /// The is question answered
         /// </summary>
@@ -69,7 +70,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <value>
         /// The selected ansDesc.
         /// </value>
-        public string SelectedAnswer
+        public AnswerOption SelectedAnswer
         {
             get => selectedAnswer;
             set

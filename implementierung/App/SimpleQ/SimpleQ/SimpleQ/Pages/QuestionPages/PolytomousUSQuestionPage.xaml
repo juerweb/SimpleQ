@@ -2,13 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
-             x:Class="SimpleQ.Pages.QuestionPages.GAQPage">
+             x:Class="SimpleQ.Pages.QuestionPages.PolytomousUSQuestionPage">
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
             <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
 
-            <Picker ItemsSource="{Binding Question.GivenAnswers}" SelectedItem="{Binding SelectedAnswer, Mode=TwoWay}"></Picker>
+            <Picker ItemsSource="{Binding Question.GivenAnswers}" SelectedItem="{Binding SelectedAnswer, Mode=TwoWay}" ItemDisplayBinding="{Binding AnsText}"></Picker>
             <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsQuestionAnswered}"></Button>
         </StackLayout>
     </ContentPage.Content>

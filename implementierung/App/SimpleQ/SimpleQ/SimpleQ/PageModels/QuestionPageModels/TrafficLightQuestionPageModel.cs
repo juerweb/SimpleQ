@@ -10,30 +10,32 @@ using Xamarin.Forms;
 using System.Reactive.Linq;
 using Akavache;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
     /// This is the TLQPageModel for the Page TLQPage.
     /// </summary>
-    public class TLQPageModel : BasicQuestionPageModel
+    public class TrafficLightQuestionPageModel : BasicQuestionPageModel
     {
         #region Constructor(s)
         /// <summary>
-        /// Initializes a new instance of the <see cref="TLQPageModel"/> class.
+        /// Initializes a new instance of the <see cref="TrafficLightQuestionPageModel"/> class.
         /// </summary>
         /// <param name="questionService">The question service.</param>
-        public TLQPageModel(IQuestionService questionService) : base(questionService)
+        public TrafficLightQuestionPageModel(IQuestionService questionService) : base(questionService)
         {
             GreenCommand = new Command(() => QuestionAnswered(TLQAnswer.Green));
             RedCommand = new Command(() => QuestionAnswered(TLQAnswer.Red));
+            YellowCommand = new Command(() => QuestionAnswered(TLQAnswer.Yellow));
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="TLQPageModel"/> class.
+        /// Initializes a new instance of the <see cref="TrafficLightQuestionPageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public TLQPageModel()
+        public TrafficLightQuestionPageModel()
         {
 
         }
@@ -70,6 +72,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// The green command.
         /// </value>
         public Command GreenCommand { get; private set; }
+
+        public Command YellowCommand { get; private set; }
         #endregion
 
         #region Methods
@@ -79,7 +83,18 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="answer">The ansDesc.</param>
         private void QuestionAnswered(TLQAnswer answer)
         {
-            base.QuestionAnswered(answer.ToString());
+            switch (answer)
+            {
+                case TLQAnswer.Green:
+                    base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "Green").ToList()[0]);
+                    break;
+                case TLQAnswer.Yellow:
+                    base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "Yellow").ToList()[0]);
+                    break;
+                case TLQAnswer.Red:
+                    base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "Red").ToList()[0]);
+                    break;
+            }
         }
         #endregion
 

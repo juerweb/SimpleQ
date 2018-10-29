@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace SimpleQ.Pages.QuestionPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TLQPage : ContentPage
+	public partial class OpenQuestionPage : ContentPage
 	{
-		public TLQPage ()
+		public OpenQuestionPage()
 		{
 			InitializeComponent ();
 		}

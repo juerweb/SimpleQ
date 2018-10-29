@@ -11,30 +11,32 @@ using System.Text;
 using Xamarin.Forms;
 using System.Reactive.Linq;
 using Akavache;
+using System.Linq;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
     /// This is the YNQPageModel for the Page YNQPage.
     /// </summary>
-    public class YNQPageModel : BasicQuestionPageModel
+    public class YesNoDontKnowQuestionPageModel : BasicQuestionPageModel
     {
         #region Constructor(s)
         /// <summary>
-        /// Initializes a new instance of the <see cref="YNQPageModel" /> class.
+        /// Initializes a new instance of the <see cref="YesNoQuestionPageModel" /> class.
         /// </summary>
         /// <param name="questionService">The question service.</param>
-        public YNQPageModel(IQuestionService questionService) : base(questionService)
+        public YesNoDontKnowQuestionPageModel(IQuestionService questionService) : base(questionService)
         {
-            YesCommand = new Command(() => QuestionAnswered(YNQAnswer.Yes));
-            NoCommand = new Command(() => QuestionAnswered(YNQAnswer.No));
+            YesCommand = new Command(() => QuestionAnswered(YNDKQAnswer.Yes));
+            NoCommand = new Command(() => QuestionAnswered(YNDKQAnswer.No));
+            DontKnowCommand = new Command(() => QuestionAnswered(YNDKQAnswer.DontKnow));
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="YNQPageModel"/> class.
+        /// Initializes a new instance of the <see cref="YesNoQuestionPageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public YNQPageModel()
+        public YesNoDontKnowQuestionPageModel()
         {
 
         }
@@ -73,6 +75,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// The no command.
         /// </value>
         public Command NoCommand { get; private set; }
+        public Command DontKnowCommand { get; private set; }
         #endregion
 
         #region Methods
@@ -80,9 +83,20 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// This method is called, after the question was answered.
         /// </summary>
         /// <param name="answer">The ansDesc.</param>
-        private void QuestionAnswered(YNQAnswer answer)
+        private void QuestionAnswered(YNDKQAnswer answer)
         {
-            base.QuestionAnswered(answer.ToString());
+            switch (answer)
+            {
+                case YNDKQAnswer.Yes:
+                    base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "Yes").ToList()[0]);
+                    break;
+                case YNDKQAnswer.No:
+                    base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "No").ToList()[0]);
+                    break;
+                case YNDKQAnswer.DontKnow:
+                    base.QuestionAnswered(this.Question.GivenAnswers.Where(ga => ga.AnsText == "DontKnow").ToList()[0]);
+                    break;
+            }
         }
         #endregion
 

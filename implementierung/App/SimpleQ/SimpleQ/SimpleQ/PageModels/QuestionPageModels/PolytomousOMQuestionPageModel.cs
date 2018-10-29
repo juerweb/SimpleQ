@@ -10,32 +10,34 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using System.Reactive.Linq;
+using SimpleQ.Shared;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
     /// <summary>
-    /// This is the OWQPageModel for the OWQPage.
+    /// This is the GAQPageModel for the GAQPage.
     /// </summary>
-    public class OWQPageModel : BasicQuestionPageModel
+    public class PolytomousOMQuestionPageModel : BasicQuestionPageModel
     {
         #region Constructor(s)
         /// <summary>
-        /// Initializes a new instance of the <see cref="OWQPageModel"/> class.
+        /// Initializes a new instance of the <see cref="GAQPageModel"/> class.
+        /// With Parameter like Services
         /// </summary>
-        /// <param name="questionService">The question service.</param>
-        public OWQPageModel(IQuestionService questionService) : base(questionService)
+        /// <param name="param">The parameter.</param>
+        public PolytomousOMQuestionPageModel(IQuestionService questionService) : base(questionService)
         {
             SendAnswerCommand = new Command(QuestionAnswered);
-            this.Answer = "";
+            IsQuestionAnswered = false;
+            IsChecked = new Dictionary<AnswerOption, bool>();
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OWQPageModel"/> class.
+        /// Initializes a new instance of the <see cref="GAQPageModel"/> class.
         /// Without Parameter
         /// </summary>
-        public OWQPageModel()
+        public PolytomousOMQuestionPageModel()
         {
-
         }
 
 
@@ -46,30 +48,43 @@ namespace SimpleQ.PageModels.QuestionPageModels
         public override void Init(object initData)
         {
             base.Init(initData);
+            foreach (AnswerOption option in this.Question.GivenAnswers)
+            {
+                this.isChecked.Add(option, false);
+            }
         }
         #endregion
 
         #region Fields
         /// <summary>
-        /// The ansDesc
+        /// The is question answered
         /// </summary>
-        private String answer;
+        private Boolean isQuestionAnswered;
+
+        private Dictionary<AnswerOption, Boolean> isChecked;
 
         #endregion
 
         #region Properties + Getter/Setter Methods
+
         /// <summary>
-        /// Gets or sets the ansDesc.
+        /// Gets or sets a value indicating whether this instance is question answered.
         /// </summary>
         /// <value>
-        /// The ansDesc.
+        ///   <c>true</c> if this instance is question answered; otherwise, <c>false</c>.
         /// </value>
-        public String Answer
+        public bool IsQuestionAnswered
         {
-            get => answer;
+            get => isQuestionAnswered;
+            set { isQuestionAnswered = value; OnPropertyChanged(); }
+        }
+
+        public Dictionary<AnswerOption, Boolean> IsChecked
+        {
+            get => isChecked;
             set
             {
-                answer = value;
+                isChecked = value;
                 OnPropertyChanged();
             }
         }
@@ -91,17 +106,20 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private void QuestionAnswered()
         {
-            base.QuestionAnswered(answer);
+            List<AnswerOption> result = new List<AnswerOption>();
+            foreach (AnswerOption option in this.IsChecked.Keys)
+            {
+                if (this.IsChecked[option])
+                {
+                    result.Add(option);
+                }
+            }
+
+            base.QuestionAnswered(result);
         }
         #endregion
 
         #region INotifyPropertyChanged Implementation
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         #endregion
     }
 }

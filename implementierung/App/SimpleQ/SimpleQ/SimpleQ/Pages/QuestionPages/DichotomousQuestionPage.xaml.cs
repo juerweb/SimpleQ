@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace SimpleQ.Pages.QuestionPages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class YNQPage : ContentPage
+	public partial class DichotomousQuestionPage : ContentPage
 	{
-		public YNQPage ()
+		public DichotomousQuestionPage()
 		{
 			InitializeComponent ();
 		}

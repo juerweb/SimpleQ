@@ -12,6 +12,8 @@ using System.Text;
 using System.Reactive.Linq;
 using SimpleQ.Extensions;
 using Xamarin.Forms;
+using SimpleQ.Shared;
+using System.Linq;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -53,6 +55,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
                 if (initData.GetType() == typeof(SurveyModel))
                 {
                     this.Question = (SurveyModel)initData;
+                    if (this.Question.TypeDesc == SurveyType.PolytomousOMQuestion || this.Question.TypeDesc == SurveyType.PolytomousOSQuestion)
+                    {
+                        this.Question.GivenAnswers = this.Question.GivenAnswers.OrderBy(ga => ga.AnsText).ToList();
+                    }
                 }
                 else if (initData.GetType() == typeof(Boolean))
                 {
@@ -109,12 +115,28 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Methods
-        protected async void QuestionAnswered(String answer)
+        public void QuestionAnswered(string answerText)
         {
-            Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.SurveyId, answer), "Info");
+            this.question.SurveyVote.ChosenAnswerOptions = this.question.GivenAnswers;
+            this.question.SurveyVote.VoteText = answerText;
+            QuestionAnswered();
+        }
 
-            this.question.AnsDesc = answer;
+        public void QuestionAnswered(AnswerOption answer)
+        {
+            this.question.SurveyVote.ChosenAnswerOptions.Add(answer);
+            QuestionAnswered();
+        }
 
+        public void QuestionAnswered(List<AnswerOption> answers)
+        {
+            this.question.SurveyVote.ChosenAnswerOptions = answers;
+            QuestionAnswered();
+        }
+
+        private async void QuestionAnswered()
+        {
+            Debug.WriteLine(String.Format("User answered the question with the id {0}...", Question.SurveyId), "Info");
 
             Debug.WriteLine("QS: " + this.questionService);
             if (this.questionService == null)
@@ -126,8 +148,6 @@ namespace SimpleQ.PageModels.QuestionPageModels
             {
                 this.questionService.QuestionAnswered(this.Question);
             }
-
-
             try
             {
                 Boolean CloseAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");

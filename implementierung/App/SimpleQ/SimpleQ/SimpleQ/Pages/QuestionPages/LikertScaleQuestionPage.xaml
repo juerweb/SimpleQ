@@ -2,20 +2,25 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
-             x:Class="SimpleQ.Pages.QuestionPages.YNQPage">
+             x:Class="SimpleQ.Pages.QuestionPages.LikertScaleQuestionPage">
+    <ContentPage.Resources>
+        <ext:LastItemConverter x:Key="LastItemConverter"></ext:LastItemConverter>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
             <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
 
+            <Slider ValueChanged="Slider_ValueChanged" x:Name="Slider"></Slider>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Text="{ext:Translate Text=Yes}" Grid.Column="0" Command="{Binding YesCommand}"></Button>
-                <Button Text="{ext:Translate Text=No}" Grid.Column="1" Command="{Binding NoCommand}"></Button>
+                <Label Text="{Binding Question.GivenAnswers[0].AnsText}" Grid.Column="0"></Label>
+                <Label Text="{Binding Path=Question.GivenAnswers, Converter={StaticResource LastItemConverter}}" Grid.Column="1" HorizontalOptions="EndAndExpand"></Label>
             </Grid>
+            <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

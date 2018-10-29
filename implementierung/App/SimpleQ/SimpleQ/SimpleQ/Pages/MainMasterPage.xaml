@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:extensions="clr-namespace:SimpleQ.Extensions"
              x:Class="SimpleQ.Pages.MainMasterPage"
-             Title="MasterPageXY">
+             Title="{extensions:Translate Text=Menu}">
     <ContentPage.Resources>
         <DataTemplate x:Key="navigationDataTemplate">
             <ViewCell>
