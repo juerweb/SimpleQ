@@ -26,6 +26,7 @@ using SimpleQ.PageModels.QuestionPageModels;
 using SimpleQ.Pages.QuestionPages;
 using Xamarin.Forms.Internals;
 using System.IO;
+using SimpleQ.Shared;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -128,8 +129,20 @@ namespace SimpleQ
 
             IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
 
-            webAPIService.Register("1234", "1234");
-            webAPIService.Unregister("1234", "123");
+            //RegistrationData data = await webAPIService.Register("1234", "1234");
+            //Debug.WriteLine("RegistrationData: " + data);
+            //webAPIService.Unregister("1234", "123");
+
+            SurveyModel sm = await webAPIService.GetSurveyData(1);
+            Debug.WriteLine("New Survey: " + sm.SurveyDesc);
+
+            SurveyVote vote = new SurveyVote();
+            vote.CustCode = "17ad34fbcf43bd6";
+            vote.ChosenAnswerOptions = new List<AnswerOption>();
+            vote.ChosenAnswerOptions.Add(sm.GivenAnswers[0]);
+
+            Boolean b = await webAPIService.AnswerSurvey(vote);
+            Debug.WriteLine("Erfolgreich?: " + b);
 
             OpenNotification();
         }
@@ -267,6 +280,14 @@ namespace SimpleQ
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
                 .HandleNotificationOpened(HandleNotificationOpened)
                 .EndInit();
+
+            OneSignal.Current.IdsAvailable(IdsAvailable);
+        }
+
+        private void IdsAvailable(string userID, string pushToken)
+        {
+            Debug.WriteLine("Ids of OneSignal available...", "Info");
+            Application.Current.Properties["userID"] = userID;
         }
 
         private void GetKeyFromFile()

@@ -267,20 +267,20 @@
     <value>Soll sich die App, nach dem Beantworten einer neuen Frage, wieder schließen?</value>
   </data>
   <data name="APIMainURL" xml:space="preserve">
-    <value>http://localhost:1899/api/mobile</value>
+    <value>http://simpleq.at/api/mobile</value>
     <comment>NT</comment>
   </data>
   <data name="APIRegisterPlusURL" xml:space="preserve">
-    <value>/Register</value>
+    <value>/register</value>
   </data>
   <data name="APIAnswerSurveyPlusURL" xml:space="preserve">
-    <value>/AnswerSurvey</value>
+    <value>/answerSurvey</value>
   </data>
   <data name="APIUnregisterPlusURL" xml:space="preserve">
-    <value>/Unregister</value>
+    <value>/unregister</value>
   </data>
   <data name="APIGetDataPlusURL" xml:space="preserve">
-    <value>/GetSurveyData</value>
+    <value>/getSurveyData</value>
   </data>
   <data name="KeyResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.private.key</value>
@@ -290,5 +290,11 @@
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menü</value>
+  </data>
+  <data name="APIJoinDepartmentPlusURL" xml:space="preserve">
+    <value>/joinDepartment</value>
+  </data>
+  <data name="APILeaveDepartmentPlusURL" xml:space="preserve">
+    <value>/leaveDepartment</value>
   </data>
 </root>

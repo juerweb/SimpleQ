@@ -34,7 +34,7 @@ namespace SimpleQ.Models
             this.endDate = endDate;
         }
 
-        public SurveyModel(SurveyNotification sn): this()
+        public SurveyModel(SurveyData sn): this()
         {
             this.surveyId = sn.SvyId;
             this.surveyDesc = sn.SvyText;

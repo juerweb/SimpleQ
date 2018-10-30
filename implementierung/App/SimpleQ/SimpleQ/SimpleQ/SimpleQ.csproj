@@ -9,6 +9,10 @@
     <GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
   </PropertyGroup>
 
+<PropertyGroup>
+    <UseShortFileNames>True</UseShortFileNames>
+</PropertyGroup>
+
   <ItemGroup>
     <None Remove="Resources\Images\logo.png" />
     <None Remove="Resources\private.key" />

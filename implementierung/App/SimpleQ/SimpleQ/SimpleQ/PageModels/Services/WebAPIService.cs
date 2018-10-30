@@ -36,6 +36,8 @@ namespace SimpleQ.PageModels.Services
 
             Debug.WriteLine(AppResources.APIMainURL + AppResources.APIAnswerSurveyPlusURL);
 
+            Debug.WriteLine(JsonConvert.SerializeObject(surveyVote));
+
             HttpResponseMessage responseMessage = await httpClient.PostAsync(AppResources.APIMainURL + AppResources.APIAnswerSurveyPlusURL, content);
 
             Debug.WriteLine(responseMessage.StatusCode);
@@ -53,7 +55,7 @@ namespace SimpleQ.PageModels.Services
 
             if (responseMessage.IsSuccessStatusCode)
             {
-                SurveyNotification notification = JsonConvert.DeserializeObject<SurveyNotification>(content);
+                SurveyData notification = JsonConvert.DeserializeObject<SurveyData>(content);
 
                 return new SurveyModel(notification);
             }

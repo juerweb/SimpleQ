@@ -97,7 +97,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /AnswerSurvey ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /answerSurvey ähnelt.
         /// </summary>
         internal static string APIAnswerSurveyPlusURL {
             get {
@@ -106,7 +106,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /GetSurveyData ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /getSurveyData ähnelt.
         /// </summary>
         internal static string APIGetDataPlusURL {
             get {
@@ -115,7 +115,25 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die http://localhost:1899/api/mobile ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /joinDepartment ähnelt.
+        /// </summary>
+        internal static string APIJoinDepartmentPlusURL {
+            get {
+                return ResourceManager.GetString("APIJoinDepartmentPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /leaveDepartment ähnelt.
+        /// </summary>
+        internal static string APILeaveDepartmentPlusURL {
+            get {
+                return ResourceManager.GetString("APILeaveDepartmentPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die http://simpleq.at/api/mobile ähnelt.
         /// </summary>
         internal static string APIMainURL {
             get {
@@ -124,7 +142,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /Register ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /register ähnelt.
         /// </summary>
         internal static string APIRegisterPlusURL {
             get {
@@ -133,7 +151,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /Unregister ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /unregister ähnelt.
         /// </summary>
         internal static string APIUnregisterPlusURL {
             get {

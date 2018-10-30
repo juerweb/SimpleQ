@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using Akavache;
+using Com.OneSignal;
 using FreshMvvm;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
@@ -19,11 +20,12 @@ namespace SimpleQ.PageModels
     public class LoadingPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
-        public LoadingPageModel(ISimulationService simulationService, IDialogService dialogService, IQuestionService questionService) : this()
+        public LoadingPageModel(ISimulationService simulationService, IDialogService dialogService, IQuestionService questionService, IWebAPIService webAPIService) : this()
         {
             this.simulationService = simulationService;
             this.dialogService = dialogService;
             this.questionService = questionService;
+            this.webAPIService = webAPIService;
         }
         public LoadingPageModel()
         {
@@ -40,6 +42,15 @@ namespace SimpleQ.PageModels
 
             //Code Check
             CodeValidationModel codeValidationModel = await this.SimulationService.CheckCode((int)initData);
+            /*if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+            {
+            }
+            else
+            {
+                this.webAPIService.Register(OneSignal.Current.)
+            }*/
+            Debug.WriteLine("ID: " + Application.Current.Properties["userID"]);
+            
 
             Application.Current.Properties["IsValidCodeAvailable"] = codeValidationModel.IsValid;
             Application.Current.Properties["CompanyName"] = codeValidationModel.CompanyName;
@@ -78,6 +89,7 @@ namespace SimpleQ.PageModels
         private ISimulationService simulationService;
         private IDialogService dialogService;
         private IQuestionService questionService;
+        private IWebAPIService webAPIService;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -113,6 +125,7 @@ namespace SimpleQ.PageModels
 
         public ISimulationService SimulationService { get => simulationService; }
         public IDialogService DialogService { get => dialogService; }
+        public IWebAPIService WebAPIService { get => webAPIService; set => webAPIService = value; }
         #endregion
 
         #region Commands
