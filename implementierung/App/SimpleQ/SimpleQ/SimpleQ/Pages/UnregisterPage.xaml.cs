@@ -1,9 +1,8 @@
 ﻿using IntelliAbb.Xamarin.Controls;
-using SimpleQ.PageModels.QuestionPageModels;
+using SimpleQ.PageModels;
 using SimpleQ.Shared;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,12 +10,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SimpleQ.Pages.QuestionPages
+namespace SimpleQ.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PolytomousUMQuestionPage : ContentPage
+	public partial class UnregisterPage : ContentPage
 	{
-		public PolytomousUMQuestionPage()
+		public UnregisterPage ()
 		{
 			InitializeComponent ();
 		}
@@ -24,14 +23,14 @@ namespace SimpleQ.Pages.QuestionPages
         private void Checkbox_IsCheckedChanged(object sender, TappedEventArgs e)
         {
             Checkbox box = (Checkbox)sender;
-            AnswerOption option = (AnswerOption)(box.BindingContext);
+            RegistrationData option = (RegistrationData)(box.BindingContext);
 
-            PolytomousUMQuestionPageModel pageModel = (PolytomousUMQuestionPageModel)(this.BindingContext);
+            UnregisterPageModel pageModel = (UnregisterPageModel)(this.BindingContext);
             pageModel.IsChecked[option] = box.IsChecked;
 
             if (box.IsChecked)
             {
-                pageModel.IsQuestionAnswered = true;
+                pageModel.IsOneChecked = true;
             }
             else
             {
@@ -39,13 +38,12 @@ namespace SimpleQ.Pages.QuestionPages
                 {
                     if (b)
                     {
-                        pageModel.IsQuestionAnswered = true;
+                        pageModel.IsOneChecked = true;
                         return;
                     }
                 }
-                pageModel.IsQuestionAnswered = false;
+                pageModel.IsOneChecked = false;
             }
-
         }
     }
 }

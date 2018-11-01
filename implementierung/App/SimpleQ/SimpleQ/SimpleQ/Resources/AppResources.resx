@@ -306,4 +306,7 @@
   <data name="JoinDepartment" xml:space="preserve">
     <value>Neuer Gruppe beitreten</value>
   </data>
+  <data name="SelectUnregisterGroups" xml:space="preserve">
+    <value>Wählen Sie bitte alle Gruppen aus, aus welchen Sie austreten möchten.</value>
+  </data>
 </root>

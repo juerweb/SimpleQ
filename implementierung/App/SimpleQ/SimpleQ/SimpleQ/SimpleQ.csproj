@@ -139,6 +139,9 @@
     <EmbeddedResource Update="Pages\Test1Page.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Pages\UnregisterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Resources\AppResources.en.resx">
       <Generator></Generator>
     </EmbeddedResource>

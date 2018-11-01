@@ -9,7 +9,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Image x:Name="logoImage"></Image>
+            <Image x:Name="logoImage" Margin="0,30,0,0"></Image>
             <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
             <Grid>
                 <Grid.RowDefinitions>

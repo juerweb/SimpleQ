@@ -59,7 +59,7 @@ namespace SimpleQ.PageModels
                         }
                         else
                         {
-                            List<RegistrationData> tmp = (List<RegistrationData>)Application.Current.Properties["registrations"];
+                            List<RegistrationData> tmp = JsonConvert.DeserializeObject<List<RegistrationData>>(Application.Current.Properties["registrations"].ToString());
                             data = await this.webAPIService.JoinDepartment("m4rku51", tmp[0].PersId);
                         }
                     }

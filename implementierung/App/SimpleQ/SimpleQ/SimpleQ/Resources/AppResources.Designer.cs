@@ -556,6 +556,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wählen Sie bitte alle Gruppen aus, aus welchen Sie austreten möchten. ähnelt.
+        /// </summary>
+        internal static string SelectUnregisterGroups {
+            get {
+                return ResourceManager.GetString("SelectUnregisterGroups", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Antwort senden ähnelt.
         /// </summary>
         internal static string SendAnswer {
