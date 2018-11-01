@@ -303,4 +303,7 @@
   <data name="Error203" xml:space="preserve">
     <value>Es ist ein Fehler bei der Aufhebung der Registrierung aufgetreten. Bitte versuchen Sie es erneut!</value>
   </data>
+  <data name="JoinDepartment" xml:space="preserve">
+    <value>Neuer Gruppe beitreten</value>
+  </data>
 </root>

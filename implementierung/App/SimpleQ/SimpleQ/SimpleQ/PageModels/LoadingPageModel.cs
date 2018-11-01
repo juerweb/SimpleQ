@@ -2,6 +2,7 @@
 using Akavache;
 using Com.OneSignal;
 using FreshMvvm;
+using Newtonsoft.Json;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Shared;
@@ -42,7 +43,8 @@ namespace SimpleQ.PageModels
             this.IsRunning = true;
 
             //Code Check
-            int code = (int)initData;
+            List<object> objects = (List<object>)initData;
+            int code = (int)objects[0];
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
                 Debug.WriteLine("RuntimePlatform is in (iOS, Android)...", "Info");
@@ -51,7 +53,15 @@ namespace SimpleQ.PageModels
                     RegistrationData data = null;
                     try
                     {
-                        data = await this.webAPIService.Register("m4rku51", Application.Current.Properties["userID"].ToString());
+                        if ((Boolean)objects[1])
+                        {
+                            data = await this.webAPIService.Register("m4rku51", Application.Current.Properties["userID"].ToString());
+                        }
+                        else
+                        {
+                            List<RegistrationData> tmp = (List<RegistrationData>)Application.Current.Properties["registrations"];
+                            data = await this.webAPIService.JoinDepartment("m4rku51", tmp[0].PersId);
+                        }
                     }
                     catch (System.Net.Http.HttpRequestException e)
                     {
@@ -65,18 +75,22 @@ namespace SimpleQ.PageModels
                     }
                     if (data != null)
                     {
-                        Application.Current.Properties["CompanyName"] = "";
-                        Application.Current.Properties["DepartmentName"] = data.DepName;
-                        Application.Current.Properties["PersId"] = data.PersId;
-                        Application.Current.Properties["CustCode"] = data.CustCode;
-                        Application.Current.Properties["RegisterCode"] = code;
-                        Application.Current.Properties["IsValidCodeAvailable"] = true;
+                        if (Application.Current.Properties.ContainsKey("registrations"))
+                        {
+                            
+                            List<RegistrationData> tmp = JsonConvert.DeserializeObject<List<RegistrationData>>(Application.Current.Properties["registrations"].ToString());
+                            tmp.Add(data);
+                            Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(tmp);
+                        }
+                        else
+                        {
+                            Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(new List <RegistrationData> { data });
+                        }
                         Debug.WriteLine("Code is valid...", "Info");
                         this.IsFirstStepTicked = true;
                     }
                     else
                     {
-                        Application.Current.Properties["IsValidCodeAvailable"] = false;
                         Debug.WriteLine("Code is not valid...", "Info");
                         this.IsRunning = false;
 
@@ -90,18 +104,25 @@ namespace SimpleQ.PageModels
             else
             {
                 //Code Check
-                CodeValidationModel codeValidationModel = await this.SimulationService.CheckCode((int)initData);
-
-                Application.Current.Properties["IsValidCodeAvailable"] = codeValidationModel.IsValid;
-                Application.Current.Properties["CompanyName"] = codeValidationModel.CompanyName;
-
-                Application.Current.Properties["DepartmentName"] = codeValidationModel.DepartmentName;
-                Application.Current.Properties["RegisterCode"] = codeValidationModel.Code;
+                CodeValidationModel codeValidationModel = await this.SimulationService.CheckCode(code);
 
                 if (codeValidationModel.IsValid)
                 {
                     Debug.WriteLine("Code is valid...", "Info");
                     this.IsFirstStepTicked = true;
+
+                    RegistrationData data = new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Tina Company", PersId = 1 };
+                    //Code Check
+                    if (Application.Current.Properties.ContainsKey("registrations"))
+                    {
+                        List<RegistrationData> tmp = JsonConvert.DeserializeObject<List<RegistrationData>>(Application.Current.Properties["registrations"].ToString());
+                        tmp.Add(data);
+                        Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(tmp);
+                    }
+                    else
+                    {
+                        Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(new List<RegistrationData> { data });
+                    }
                 }
                 else
                 {
@@ -113,11 +134,17 @@ namespace SimpleQ.PageModels
                     return;
                 }
             }
+
+            await Application.Current.SavePropertiesAsync();
+
             //Debug.WriteLine("ID: " + Application.Current.Properties["userID"]);
 
             //Load Data
-            await questionService.LoadData();
-            Debug.WriteLine("Requested Data...", "Info");
+            if ((Boolean)objects[1])
+            {
+                await questionService.LoadData();
+                Debug.WriteLine("Requested Data...", "Info");
+            }
 
             //Set MainPageModel as new Main Page
             App.GoToRightPage();

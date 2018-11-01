@@ -41,6 +41,7 @@ namespace SimpleQ.PageModels
             MenuItems.Add(new MenuItemModel(AppResources.Language, new LanguagePageModel(), "ic_language_black_18.png"));
 
             LogOutCommand = new Command(LogOutCommandExecuted);
+            JoinDepartmentCommand = new Command(JoinDepartmentCommandExecuted);
         }
 
 
@@ -65,6 +66,11 @@ namespace SimpleQ.PageModels
 
         #region Commands
         public Command LogOutCommand
+        {
+            get;
+            private set;
+        }
+        public Command JoinDepartmentCommand
         {
             get;
             private set;
@@ -117,6 +123,10 @@ namespace SimpleQ.PageModels
                 App.GoToRightPage();
             }
 
+        }
+        private void JoinDepartmentCommandExecuted()
+        {
+            CoreMethods.PushPageModel<RegisterPageModel>(false);
         }
         #endregion
 

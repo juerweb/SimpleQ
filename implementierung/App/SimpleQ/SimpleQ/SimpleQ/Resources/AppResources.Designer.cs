@@ -358,6 +358,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Neuer Gruppe beitreten ähnelt.
+        /// </summary>
+        internal static string JoinDepartment {
+            get {
+                return ResourceManager.GetString("JoinDepartment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die SimpleQ.Resources.private.key ähnelt.
         /// </summary>
         internal static string KeyResourcename {

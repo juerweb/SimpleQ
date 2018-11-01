@@ -31,9 +31,18 @@ namespace SimpleQ.PageModels
 
         public RegisterPageModel()
         {
+            Debug.WriteLine("Constructor of RegisterPageModel...", "Info");
             OpenScannerCommand = new Command(OnOpenScanner);
             ManualCodeEntryCommand = new Command(OnManualCodeEntry);
             this.Behavior = new SixDigitCodeBehavior();
+        }
+
+        public override async void Init(object initData)
+        {
+            if (initData != null)
+            {
+                this.isRegistration = (Boolean)initData;
+            }
         }
         #endregion
 
@@ -52,6 +61,8 @@ namespace SimpleQ.PageModels
         /// The dialog service
         /// </summary>
         private IUserDialogs dialogService;
+
+        private Boolean isRegistration;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -89,6 +100,9 @@ namespace SimpleQ.PageModels
         /// The dialog service.
         /// </value>
         public IUserDialogs DialogService { get => dialogService; }
+
+        public bool IsRegistration { get => isRegistration; set => isRegistration = value; }
+
         #endregion
 
         #region Commands
@@ -110,13 +124,13 @@ namespace SimpleQ.PageModels
             Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
             int code = this.RegisterCode;
             this.RegisterCode = 0;
-            CoreMethods.PushPageModel<LoadingPageModel>(code);
+            CoreMethods.PushPageModel<LoadingPageModel>(new List<object> { code, this.isRegistration });
         }
 
         public void OnOpenScanner()
         {
             Debug.WriteLine("OpenScannerCommand executed", "Info");
-            CoreMethods.PushPageModel<QRCodeScannerPageModel>();
+            CoreMethods.PushPageModel<QRCodeScannerPageModel>(this.isRegistration);
         }
         #endregion
 

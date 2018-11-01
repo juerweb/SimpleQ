@@ -61,27 +61,17 @@ namespace SimpleQ
 
         public static void GoToRightPage()
         {
-                Debug.WriteLine("T1");
-                if (Application.Current.Properties.ContainsKey("IsValidCodeAvailable"))
-                {
-                    if ((bool)Application.Current.Properties["IsValidCodeAvailable"])
-                    {
-                        Debug.WriteLine("Code is valid now...", "Info");
-                        NavigateToMainPageModel();
-                    }
-                    else
-                    {
-                        //Code is not available => RegisterPage
-                        Debug.WriteLine("Code is not valid now...", "Info");
-                        NavigateToRegisterPageModel();
-                    }
-                }
-                else
-                {
-                    //Code is not available => RegisterPage
-                    Debug.WriteLine("Property 'CodeValidationModel' is not available...", "Info");
-                    NavigateToRegisterPageModel();
-                }
+            if (Application.Current.Properties.ContainsKey("registrations"))
+            {
+                Debug.WriteLine("Code is valid now...", "Info");
+                NavigateToMainPageModel();
+            }
+            else
+            {
+                //Code is not available => RegisterPage
+                Debug.WriteLine("Property 'CodeValidationModel' is not available...", "Info");
+                NavigateToRegisterPageModel();
+            }
         }
 
         private static void NavigateToRegisterPageModel()
@@ -92,7 +82,7 @@ namespace SimpleQ
             languageService.SetCurrentLanguage();
             Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
 
-            var page = FreshPageModelResolver.ResolvePageModel<RegisterPageModel>();
+            var page = FreshPageModelResolver.ResolvePageModel<RegisterPageModel>(true);
             var basicNavContainer = new FreshNavigationContainer(page);
             App.Current.MainPage = basicNavContainer;
         }
@@ -284,10 +274,11 @@ namespace SimpleQ
             OneSignal.Current.IdsAvailable(IdsAvailable);
         }
 
-        private void IdsAvailable(string userID, string pushToken)
+        private async void IdsAvailable(string userID, string pushToken)
         {
             Debug.WriteLine("Ids of OneSignal available...", "Info");
             Application.Current.Properties["userID"] = userID;
+            await Application.Current.SavePropertiesAsync();
         }
 
         private void GetKeyFromFile()

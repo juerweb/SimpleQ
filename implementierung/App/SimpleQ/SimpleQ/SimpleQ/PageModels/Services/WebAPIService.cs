@@ -65,6 +65,35 @@ namespace SimpleQ.PageModels.Services
             }
         }
 
+        public async Task<RegistrationData> JoinDepartment(string regCode, int persId)
+        {
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIJoinDepartmentPlusURL + "?regCode=" + regCode + "&persId=" + persId);
+
+            String content = await responseMessage.Content.ReadAsStringAsync();
+
+            Debug.WriteLine("Content of HttpResponse: " + content);
+            Debug.WriteLine("Statuscode of HttpResponse: " + responseMessage.StatusCode);
+
+            if (responseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<RegistrationData>(content);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<bool> LeaveDepartment(int persId, int depId, string custCode)
+        {
+            Debug.WriteLine(AppResources.APIMainURL + AppResources.APILeaveDepartmentPlusURL);
+
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APILeaveDepartmentPlusURL + "?persId=" + persId + "&depId=" + depId + "&custCode=" + custCode);
+
+            Debug.WriteLine("StatusCode of ResponseMessage: " + responseMessage.StatusCode);
+            return responseMessage.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
         public async Task<RegistrationData> Register(string regCode, string deviceId)
         {
             HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIRegisterPlusURL + "?regCode=" + regCode + "&deviceId=" + deviceId);
