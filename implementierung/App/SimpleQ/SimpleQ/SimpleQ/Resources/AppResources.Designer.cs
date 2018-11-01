@@ -295,6 +295,24 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es konnte keine Verbindung zum Server hergestellt werden. Bitte überprüfen Sie ihre Internetverbindung! ähnelt.
+        /// </summary>
+        internal static string Error202 {
+            get {
+                return ResourceManager.GetString("Error202", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es ist ein Fehler bei der Aufhebung der Registrierung aufgetreten. Bitte versuchen Sie es erneut! ähnelt.
+        /// </summary>
+        internal static string Error203 {
+            get {
+                return ResourceManager.GetString("Error203", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe ähnelt.
         /// </summary>
         internal static string ExtendedHelp {

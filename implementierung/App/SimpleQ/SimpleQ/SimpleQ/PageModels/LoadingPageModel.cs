@@ -4,6 +4,7 @@ using Com.OneSignal;
 using FreshMvvm;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
+using SimpleQ.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,37 +42,78 @@ namespace SimpleQ.PageModels
             this.IsRunning = true;
 
             //Code Check
-            CodeValidationModel codeValidationModel = await this.SimulationService.CheckCode((int)initData);
-            /*if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+            int code = (int)initData;
+            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
+                Debug.WriteLine("RuntimePlatform is in (iOS, Android)...", "Info");
+                if (Application.Current.Properties["userID"] != null)
+                {
+                    RegistrationData data = null;
+                    try
+                    {
+                        data = await this.webAPIService.Register("m4rku51", Application.Current.Properties["userID"].ToString());
+                    }
+                    catch (System.Net.Http.HttpRequestException e)
+                    {
+                        Application.Current.Properties["IsValidCodeAvailable"] = false;
+                        Debug.WriteLine("WebException during the Validation", "Error");
+                        this.IsRunning = false;
+
+                        this.dialogService.ShowErrorDialog(202);
+                        await CoreMethods.PopToRoot(false);
+                        return;
+                    }
+                    if (data != null)
+                    {
+                        Application.Current.Properties["CompanyName"] = "";
+                        Application.Current.Properties["DepartmentName"] = data.DepName;
+                        Application.Current.Properties["PersId"] = data.PersId;
+                        Application.Current.Properties["CustCode"] = data.CustCode;
+                        Application.Current.Properties["RegisterCode"] = code;
+                        Application.Current.Properties["IsValidCodeAvailable"] = true;
+                        Debug.WriteLine("Code is valid...", "Info");
+                        this.IsFirstStepTicked = true;
+                    }
+                    else
+                    {
+                        Application.Current.Properties["IsValidCodeAvailable"] = false;
+                        Debug.WriteLine("Code is not valid...", "Info");
+                        this.IsRunning = false;
+
+                        this.dialogService.ShowErrorDialog(201);
+                        await CoreMethods.PopToRoot(false);
+                        return;
+                    }
+                }
+                
             }
             else
             {
-                this.webAPIService.Register(OneSignal.Current.)
-            }*/
-            Debug.WriteLine("ID: " + Application.Current.Properties["userID"]);
-            
+                //Code Check
+                CodeValidationModel codeValidationModel = await this.SimulationService.CheckCode((int)initData);
 
-            Application.Current.Properties["IsValidCodeAvailable"] = codeValidationModel.IsValid;
-            Application.Current.Properties["CompanyName"] = codeValidationModel.CompanyName;
+                Application.Current.Properties["IsValidCodeAvailable"] = codeValidationModel.IsValid;
+                Application.Current.Properties["CompanyName"] = codeValidationModel.CompanyName;
 
-            Application.Current.Properties["DepartmentName"] = codeValidationModel.DepartmentName;
-            Application.Current.Properties["RegisterCode"] = codeValidationModel.Code;
+                Application.Current.Properties["DepartmentName"] = codeValidationModel.DepartmentName;
+                Application.Current.Properties["RegisterCode"] = codeValidationModel.Code;
 
-            if (codeValidationModel.IsValid)
-            {
-                Debug.WriteLine("Code is valid...", "Info");
-                this.IsFirstStepTicked = true;
+                if (codeValidationModel.IsValid)
+                {
+                    Debug.WriteLine("Code is valid...", "Info");
+                    this.IsFirstStepTicked = true;
+                }
+                else
+                {
+                    Debug.WriteLine("Code is not valid...", "Info");
+                    this.IsRunning = false;
+
+                    this.dialogService.ShowErrorDialog(201);
+                    await CoreMethods.PopToRoot(false);
+                    return;
+                }
             }
-            else
-            {
-                Debug.WriteLine("Code is not valid...", "Info");
-                this.IsRunning = false;
-
-                this.dialogService.ShowErrorDialog(201);
-                await CoreMethods.PopToRoot(false);
-                return;
-            }
+            //Debug.WriteLine("ID: " + Application.Current.Properties["userID"]);
 
             //Load Data
             await questionService.LoadData();

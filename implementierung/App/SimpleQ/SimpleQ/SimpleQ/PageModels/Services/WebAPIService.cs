@@ -89,7 +89,7 @@ namespace SimpleQ.PageModels.Services
 
             Debug.WriteLine(AppResources.APIMainURL + AppResources.APIUnregisterPlusURL);
 
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIUnregisterPlusURL + "?persId=" + persId + "&custCode" + custCode);
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIUnregisterPlusURL + "?persId=" + persId + "&custCode=" + custCode);
 
             Debug.WriteLine("StatusCode of ResponseMessage: " + responseMessage.StatusCode);
             return responseMessage.StatusCode == System.Net.HttpStatusCode.OK;

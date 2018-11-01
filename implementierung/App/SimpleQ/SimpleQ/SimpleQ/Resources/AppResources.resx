@@ -297,4 +297,10 @@
   <data name="APILeaveDepartmentPlusURL" xml:space="preserve">
     <value>/leaveDepartment</value>
   </data>
+  <data name="Error202" xml:space="preserve">
+    <value>Es konnte keine Verbindung zum Server hergestellt werden. Bitte überprüfen Sie ihre Internetverbindung!</value>
+  </data>
+  <data name="Error203" xml:space="preserve">
+    <value>Es ist ein Fehler bei der Aufhebung der Registrierung aufgetreten. Bitte versuchen Sie es erneut!</value>
+  </data>
 </root>
