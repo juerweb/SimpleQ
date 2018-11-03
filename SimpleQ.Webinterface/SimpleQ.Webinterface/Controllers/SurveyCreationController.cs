@@ -67,6 +67,48 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
+        [HttpGet]
+        public void CreateCategory(string catName)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                db.SurveyCategories.Add(new SurveyCategory { CatName = catName, CustCode = CustCode });
+            }
+        }
+
+        [HttpGet]
+        public void CancelSurvey(int svyId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                var survey = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault();
+                if (survey.Sent)
+                {
+                    survey.Departments.ToList().ForEach(dep =>
+                    {
+                        dep.People.ToList().ForEach(p =>
+                        {
+                            // CANCEL SURVEY
+                            //var client = new OneSignalClient("ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                            //var options = new NotificationCreateOptions
+                            //{
+                            //    AppId = new Guid("68b8996a-f664-4130-9854-9ed7f70d5540"),
+                            //    IncludePlayerIds = {p.DeviceId}
+                            //};
+                            //options.Contents.Add("SvyId", $"{svyId}");
+                            //client.Notifications.Create(options);
+                        });
+                    });
+                }
+                else
+                {
+                    queuedSurveys.Remove(svyId);
+                }
+                db.Surveys.Remove(survey);
+                db.SaveChanges();
+            }
+        }
+
 
         internal static void ScheduleSurvey(int svyId, TimeSpan timeout, string custCode)
         {
@@ -76,6 +118,8 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 if (timeout.TotalMilliseconds > 0)
                     Thread.Sleep((int)timeout.TotalMilliseconds);
+
+                if (!queuedSurveys.Contains(svyId)) return;
 
                 using (var db = new SimpleQDBEntities())
                 {
@@ -129,6 +173,7 @@ namespace SimpleQ.Webinterface.Controllers
                             {
                                 alreadyAsked.Add(p.PersId);
 
+                                // SEND SURVEY
                                 //var client = new OneSignalClient("ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
                                 //var options = new NotificationCreateOptions
                                 //{
