@@ -326,6 +326,7 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\qrious.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -368,6 +369,7 @@
     <Content Include="Views\SurveyResults\_SingleResult.cshtml" />
     <Content Include="Views\SurveyResults\_SurveyResults.cshtml" />
     <Content Include="Web.config" />
+    <Content Include="Scripts\qrious.js.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
