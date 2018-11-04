@@ -1,4 +1,5 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
+@using SimpleQ.Webinterface.Models;
 
 <div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>@Resources.groupAdministrationHeader</h2>
@@ -9,7 +10,7 @@
         <div class="form-group mt-2 mb-1">
             <label for="groups">@Resources.groups</label>
             <div class="border border-dark">
-                <ul class="list-group ga-groups-ul pl-2" id="groups">
+                <ul class="list-group ga-groups-ul pl-2" id="gaGroups">
                     @{ List<string> l = new List<string>();
                         l.Add("HR");
                         l.Add("Produktion");
@@ -22,34 +23,32 @@
                     @for (var i = 0; i < l.Count; i++)
                     {
                         <li>
-                            <label class="form-check-label">
-                                <input type="checkbox"> IT
-                            </label>
-                        @l[i]
+                            <input name="groups" type="radio" value="@l[i]">
+                            @l[i]
                         </li>
                     }
                 </ul>
             </div>
         </div>
-        <span>Gewählte Gruppe <b>IT Produktion</b></span>
-        <button type="submit" class="btn btn-primary btn-block mt-3">Neue Gruppe erstellen</button>
+        <span>Gewählte Gruppe: <b id="chosenGroup"></b></span>
+        <button type="button" class="btn btn-primary btn-block mt-3" id="showNewGroupModalBtn">Neue Gruppe erstellen</button>
     </div>
     <div class="col-md-4">
         <h4 class="text-center">Aktionen</h4>
         @*<div class="form-group">
-            <label for="QuestionTimeTimePicker">Name</label>
-            <span class="row mr-0 ml-0">
-                <span class="col-11 p-0"><input id="QuestimeTimeTimePicker" type="text" class="form-control" /></span>
-                <span class="col-1 p-0"><button type="button" class="btn btn-info pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button></span>
-            </span>
-        </div>*@
+                <label for="QuestionTimeTimePicker">Name</label>
+                <span class="row mr-0 ml-0">
+                    <span class="col-11 p-0"><input id="QuestimeTimeTimePicker" type="text" class="form-control" /></span>
+                    <span class="col-1 p-0"><button type="button" class="btn btn-info pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button></span>
+                </span>
+            </div>*@
         <label>Name</label>
-        <div class="row mr-0 ml-0 mt-1" id="newCategoryDiv">
+        <div class="row mr-0 ml-0" id="newCategoryDiv">
             <div class="col-10 p-0">
                 <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text" value="IT Produktion" />
             </div>
             <div class="col-2 p-0">
-                <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName()" data-toggle="tooltip" title="@Resources.edit"><i class="material-icons">&#xe150;</i></button>
+                <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>
             </div>
         </div>
         <button class="btn btn-primary btn-block mt-2">Mitglied hinzufügen</button>
@@ -76,8 +75,8 @@
 
             <!-- Modal footer -->
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Abort</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addNewGroup()">Create</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abort</button>
             </div>
 
         </div>
@@ -85,10 +84,101 @@
 </div>
 
 <script>
+    let groups = [];
+    $(function () {
+        @{
+            foreach(string s in l)
+            {
+                @:groups.push('@s');
+            }
+        }
 
-    function editGroupName() {
+        //choose first group automatically
+        let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
+        radioBtnElem.setAttribute("checked", "checked");
+        document.getElementById("chosenGroup").innerHTML = radioBtnElem.value;
+
+        $("input[type=radio]").change(function () {
+            let text = this.value;
+            document.getElementById("chosenGroup").innerHTML = text;
+        });
+
+        $("#showNewGroupModalBtn").click(function () {
+            $("#newGroupModal").modal("show");
+        });
+    });
+
+
+    function addNewGroup() {
+        let groupName = document.getElementById("NewGroupTB").value;
+        let groupsUl = document.getElementById("gaGroups");
+        groupsUl.innerHTML +=
+            '<li>' +
+                '<input name="groups" type="radio" value="' + groupName + '">' +
+                groupName +
+            '</li>';
+         
+        $("input[type=radio][value=" + groupName + "]").setAttribute("checked", "checked");
+        //Hier weitermachen tschucksl
+    }
+
+
+    function updateGroups() {
+        @{
+            foreach(string s in l)
+            {
+                @:groups.push('@s');
+            }
+        }
+    }
+
+    let tempTextGroups;
+    function editGroupName(button) {
         //let input = document.getElementById("groupNameInput");
         $("#groupNameInput").removeClass("withoutBorder").removeAttr("readonly");
+        let text = button.parentElement.parentElement.children[0].children[0].value;
+        tempTextGroups = text;
+        button.parentElement.parentElement.children[0].classList.remove("col-10");
+        button.parentElement.parentElement.children[0].classList.add("col-8");
+        button.parentElement.parentElement.children[1].classList.remove("col-2");
+        button.parentElement.parentElement.children[1].classList.add("col-4");
+        let edit =
+            '       <span class="row ml-0 mr-0">' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-success btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="saveAnswer(this,false,\'' + text + '\')"><i class="material-icons">&#xe5ca;</i></button>' +
+            '           </span>' +
+            '           <span class="col-6 p-0">'  +
+            '               <button type="button" class="btn btn-secondary btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="saveAnswer(this,true,\'' + text + '\')"><i class="material-icons">&#xe5cd;</i></button>' +
+            '           </span>' +
+            '       </span>';
+        button.parentElement.innerHTML = edit;
+    }
+
+    function saveAnswer(button, canceled, tempText) {
+        let text;
+        if (canceled) {
+            text = tempTextGroups;
+        } else {
+            text = button.parentElement.parentElement.children[0].value;
+            if (groups.includes(text)) {
+                alert('@Resources.invalidInput');
+                return;
+            }
+            //luki action aufrufen
+            // danach updateGroups() aufrufen!!
+        }
+        $("#groupNameInput").attr("readonly", true);
+        $("#groupNameInput").addClass("withoutBorder");
+
+        button.parentElement.parentElement.parentElement.parentElement.children[0].classList.remove("col-8");
+        button.parentElement.parentElement.parentElement.parentElement.children[0].classList.add("col-10");
+        button.parentElement.parentElement.parentElement.parentElement.children[1].classList.remove("col-4");
+        button.parentElement.parentElement.parentElement.parentElement.children[1].classList.add("col-2");
+
+        let edited = '<button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>';
+        tempTextGroups = "";
+        button.parentElement.parentElement.parentElement.parentElement.children[1].innerHTML = edited;
+
     }
 
 </script>
