@@ -116,6 +116,12 @@ section.team-section {
     background-color: #F3F3F3;
 }
 
+@media only screen and (max-width: 500px) {
+    .paddingtop {
+        padding-top: 15px;
+    }
+}
+
 /*
     //////////////////////////////////////////
     ////////////////FONT-STYLE////////////////
@@ -124,13 +130,24 @@ section.team-section {
 
 .rand {
     font-family: 'Montserrat', sans-serif;
-
+    font-size: 5rem;
     font-weight: bold;
-     background: inherit;
-      color: yellow;   
+    color: white;
+    text-shadow: 0 3px 0 black;
 }
-.changeColor{
-    color: orange;
+
+@media screen and (max-width: 400px) {
+    .rand {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 0 3px 0 black;
+    }
+}
+
+.changeColor {
+    color: black;
 }
 
 /*
@@ -143,11 +160,6 @@ section.team-section {
     background-color: #F3F3F3;
 }
 
-@media only screen and (max-width: 500px) {
-    .paddingtop {
-        padding-top: 15px;
-    }
-}
 
 .androidbildschirm {
     background-image: url("../images/androidmockup.jpeg");
@@ -159,9 +171,238 @@ section.team-section {
     background-size: contain;
 }
 
-p{
+p {
     font-family: 'Montserrat', sans-serif;
 }
-.card-text{
+
+.card-text {
     color: black !important;
+}
+/*
+    //////////////////////////////////////////
+    ////////////////Android///////////////////
+    //////////////////////////////////////////
+*/
+
+.aStart {
+    background-image: url(../images/deviceImages/start.PNG);
+    background-size: cover;
+}
+
+.aFrage1 {
+    background-image: url(../images/deviceImages/frage.PNG);
+    background-size: cover;
+}
+
+.aFrage2 {
+    background-image: url(../images/deviceImages/frage.PNG);
+    background-size: cover;
+}
+
+.aFrage3 {
+    background-image: url(../images/deviceImages/ampel.PNG);
+    background-size: cover;
+}
+
+.aFrage5 {
+    background-image: url(../images/deviceImages/textfrage.PNG);
+    background-size: cover;
+}
+
+.aFrage51 {
+    background-image: url(../images/deviceImages/mehrfachantwort.PNG);
+    background-size: cover;
+}
+
+.aSurvey {
+    background-image: url();
+}
+
+.a.Nav {
+    background-image: url();
+}
+
+#aHomeFrage1 {
+    position: absolute;
+    top: 70px;
+    left: 9px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+}
+
+#aHomeFrage2 {
+    position: absolute;
+    top: 122px;
+    left: 9px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+}
+
+#aHomeFrage3 {
+    position: absolute;
+    top: 184px;
+    left: 9px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+}
+
+#aHomeFrage4 {
+    position: absolute;
+    top: 227px;
+    left: 9px;
+    width: 200px;
+    height: 85px;
+    cursor: pointer;
+}
+
+#aHomeFrage5 {
+    position: absolute;
+    top: 316px;
+    left: 9px;
+    width: 200px;
+    height: 53px;
+    cursor: pointer;
+}
+
+#aFrage1Ja {
+    display: none;
+    position: absolute;
+    top: 110px;
+    left: 2px;
+    width: 170px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage1Nein {
+    display: none;
+    position: absolute;
+    top: 110px;
+    left: 180px;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage3Ja {
+    display: none;
+    position: absolute;
+    top: 110px;
+    left: 1px;
+    width: 115px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage3Nein {
+    display: none;
+    position: absolute;
+    top: 110px;
+    left: 115px;
+    width: 115px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage3Ka {
+    display: none;
+    position: absolute;
+    top: 110px;
+    left: 231px;
+    width: 115px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage5T {
+    display: none;
+    position: absolute;
+    top: 105px;
+    left: 2px;
+    width: 315px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage5A {
+    display: none;
+    position: absolute;
+    top: 195px;
+    left: 20px;
+    width: 350px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage5B {
+    display: none;
+    position: absolute;
+    top: 245px;
+    left: 20px;
+    width: 350px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage5C {
+    display: none;
+    position: absolute;
+    top: 280px;
+    left: 20px;
+    width: 350px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage5D {
+    display: none;
+    position: absolute;
+    top: 320px;
+    left: 20px;
+    width: 350px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage5S {
+    display: none;
+    position: absolute;
+    top: 155px;
+    left: 1px;
+    width: 315px;
+    height: 46px;
+    cursor: pointer;
+}
+
+#aReturn {
+    display: none;
+    position: absolute;
+    top: 25px;
+    left: 3px;
+    width: 46px;
+    height: 46px;
+    cursor: pointer;
+}
+
+
+
+/*
+    //////////////////////////////////////////
+    ////////////////IOs///////////////////
+    //////////////////////////////////////////
+*/
+
+.iStart {
+    background-image: url();
+}
+
+.iSurvey {
+    background-image: url();
+}
+
+.i.Nav {
+    background-image: url();
 }
