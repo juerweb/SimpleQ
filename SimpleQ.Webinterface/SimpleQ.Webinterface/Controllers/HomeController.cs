@@ -17,7 +17,8 @@ namespace SimpleQ.Webinterface.Controllers
             var model = new ContainerViewModel
             {
                 SurveyCreationModel = new SurveyCreationModel(),
-                SurveyResultsModel = new SurveyResultsModel()
+                SurveyResultsModel = new SurveyResultsModel(),
+                GroupAdministrationModel = new GroupAdministrationModel()
             };
 
             using (var db = new SimpleQDBEntities())
