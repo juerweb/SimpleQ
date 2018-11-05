@@ -158,16 +158,16 @@
         let edit =
             '       <span class="row ml-0 mr-0">' +
             '           <span class="col-6 p-0">' +
-            '               <button type="button" class="btn btn-success btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="saveAnswer(this,false,\'' + text + '\')"><i class="material-icons">&#xe5ca;</i></button>' +
+            '               <button type="button" class="btn btn-success btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="saveGroup(this,false,\'' + text + '\')"><i class="material-icons">&#xe5ca;</i></button>' +
             '           </span>' +
             '           <span class="col-6 p-0">'  +
-            '               <button type="button" class="btn btn-secondary btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="saveAnswer(this,true,\'' + text + '\')"><i class="material-icons">&#xe5cd;</i></button>' +
+            '               <button type="button" class="btn btn-secondary btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="saveGroup(this,true,\'' + text + '\')"><i class="material-icons">&#xe5cd;</i></button>' +
             '           </span>' +
             '       </span>';
         button.parentElement.innerHTML = edit;
     }
 
-    function saveAnswer(button, canceled, tempText) {
+    function saveGroup(button, canceled, tempText) {
         let text;
         if (canceled) {
             text = tempTextGroups;
