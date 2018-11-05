@@ -35,8 +35,15 @@ namespace SimpleQ
 	{
         private static Boolean WasThereAlreadyANotification = false;
         public static String Key = "";
+
+        public App(OSNotificationOpenedResult result): this()
+        {
+            HandleNotificationOpened(result);
+        }
+
         public App ()
 		{
+            Debug.WriteLine("NO: App started...", "Info");
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
 
@@ -294,9 +301,13 @@ namespace SimpleQ
         // Called when a notification is opened.
         // The name of the method can be anything as long as the signature matches.
         // Method must be static or this object should be marked as DontDestroyOnLoad
-        private async void HandleNotificationOpened(OSNotificationOpenedResult result)
+        private static async void HandleNotificationOpened(OSNotificationOpenedResult result)
         {
-            Console.WriteLine("1234: HandleNotificationOpened!23");
+            Debug.WriteLine("NO: Notification Opened in App.xaml.cs ...", "Info");
+            Dictionary<String, object> additionalData = result.notification.payload.additionalData;
+            Debug.WriteLine(additionalData["svyId"]); 
+
+            /*Console.WriteLine("1234: HandleNotificationOpened!23");
 
             Dictionary<String, object> additionalData = result.notification.payload.additionalData;
 
@@ -322,6 +333,7 @@ namespace SimpleQ
             }
 
             //questionService.AddQuestion(new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now));
+        */
         }
     }
 }

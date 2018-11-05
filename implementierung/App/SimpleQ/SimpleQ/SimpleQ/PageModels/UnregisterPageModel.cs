@@ -113,12 +113,7 @@ namespace SimpleQ.PageModels
                         Boolean success = await this.webAPIService.Unregister(Application.Current.Properties["PersId"].ToString(), Application.Current.Properties["CustCode"].ToString());
                         if (success)
                         {
-                            Application.Current.Properties.Remove("IsValidCodeAvailable");
-                            Application.Current.Properties.Remove("CompanyName");
-                            Application.Current.Properties.Remove("DepartmentName");
-                            Application.Current.Properties.Remove("RegisterCode");
-                            Application.Current.Properties.Remove("PersId");
-                            Application.Current.Properties.Remove("CustCode");
+                            Application.Current.Properties.Remove("registrations");
                         }
                         else
                         {
@@ -130,10 +125,7 @@ namespace SimpleQ.PageModels
                     {
                         //UWP App
                         Debug.WriteLine("Unregister Command executed on UWP", "Info");
-                        Application.Current.Properties.Remove("IsValidCodeAvailable");
-                        Application.Current.Properties.Remove("CompanyName");
-                        Application.Current.Properties.Remove("DepartmentName");
-                        Application.Current.Properties.Remove("RegisterCode");
+                        Application.Current.Properties.Remove("registrations");
                     }
                 }
                 catch (System.Net.Http.HttpRequestException e)
