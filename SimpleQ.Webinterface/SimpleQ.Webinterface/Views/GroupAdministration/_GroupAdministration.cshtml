@@ -12,15 +12,6 @@
             <label for="groups">@Resources.groups</label>
             <div class="border border-dark">
                 <ul class="list-group ga-groups-ul pl-2" id="gaGroups">
-                    @*@{ List<string> l = new List<string>();
-                            l.Add("HR");
-                            l.Add("Produktion");
-                            l.Add("Einkauf");
-                            l.Add("department 4");
-                            l.Add("testdep4");
-                            l.Add("alddaaa");
-                            l.Add("neu");
-                        }*@
                     @foreach (Department d in Model.Departments)
                     {
                         <li>
@@ -28,14 +19,6 @@
                             @d.DepName
                         </li>
                     }
-
-                    @*@for (var i = 0; i < l.Count; i++)
-                        {
-                            <li>
-                                <input name="groups" type="radio" value="@l[i]">
-                                @l[i]
-                            </li>
-                        }*@
                 </ul>
             </div>
         </div>
@@ -120,6 +103,7 @@
 
         $("input[type=radio]").change(function () {
             let text = this.value;
+            updateGroupNameInput(text);
             document.getElementById("chosenGroup").innerHTML = text;
         });
 
@@ -131,6 +115,17 @@
 
     function addNewGroup() {
         let groupName = document.getElementById("NewGroupTB").value;
+
+        if (groupName == "") {
+            alert("@Resources.invalidInput");
+            return;
+        }
+
+        if (groups.includes(groupName)) {
+            alert("@Resources.groupAlreadyExists");
+            return;
+        }
+
         let groupsUl = document.getElementById("gaGroups");
         groupsUl.innerHTML +=
             '<li>' +
@@ -138,10 +133,21 @@
                 groupName +
             '</li>';
 
-        $("input[type=radio][value=" + groupName + "]").setAttribute("checked", "checked");
-        //Hier weitermachen tschucksl
+        $("input[type=radio][value=" + groupName + "]").prop("checked", true);
+
+        updateGroupNameInput(groupName);
+
+        let url = '@Url.Action("Create", "GroupAdministration", new { depName = "temp"})'.replace("temp", groupName);
+
+        $.ajax({
+            url: url,
+            type: 'GET'
+        }); 
     }
 
+    function updateGroupNameInput(groupName) {
+        document.getElementById("groupNameInput").value = groupName;
+    }
 
     function updateGroups() {
         @{

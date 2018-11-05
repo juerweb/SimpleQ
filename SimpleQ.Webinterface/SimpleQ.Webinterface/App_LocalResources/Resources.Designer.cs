@@ -214,6 +214,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die There is already a group with this name! ähnelt.
+        /// </summary>
+        public static string groupAlreadyExists {
+            get {
+                return ResourceManager.GetString("groupAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die groups ähnelt.
         /// </summary>
         public static string groups {

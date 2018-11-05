@@ -31,6 +31,8 @@ namespace SimpleQ.Webinterface.Controllers
                 model.SurveyResultsModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
                 model.SurveyResultsModel.Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList();
                 model.SurveyResultsModel.AnswerTypes = db.AnswerTypes.ToList(); // GLOBALIZATION!
+
+                model.GroupAdministrationModel.Departments = db.Departments.Where(s => s.CustCode == CustCode).ToList();// GLOBALIZATION!
             }
             return View(model: model);
         }
