@@ -133,6 +133,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die There is already an category with this name  ähnelt.
+        /// </summary>
+        public static string categoryAlreadyExists {
+            get {
+                return ResourceManager.GetString("categoryAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die count ähnelt.
         /// </summary>
         public static string count {

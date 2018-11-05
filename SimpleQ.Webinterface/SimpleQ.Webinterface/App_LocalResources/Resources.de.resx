@@ -274,4 +274,7 @@
   <data name="edit" xml:space="preserve">
     <value>Bearbeiten</value>
   </data>
+  <data name="categoryAlreadyExists" xml:space="preserve">
+    <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
+  </data>
 </root>

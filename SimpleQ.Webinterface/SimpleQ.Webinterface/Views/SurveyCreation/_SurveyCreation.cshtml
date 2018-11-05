@@ -32,7 +32,7 @@
                     <input class="form-control border border-success rightNotRounded" id="newCategoryTB" type="text" placeholder="@Resources.newCategoryName" />
                 </div>
                 <div class="col-1 p-0">
-                    <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" id="addCategoryBtn" data-toggle="tooltip" title="@Resources.add"><i class="material-icons">&#xe148;</i></button>
+                    <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" id="addCategoryBtn" onclick="addCategory()" data-toggle="tooltip" title="@Resources.add"><i class="material-icons">&#xe148;</i></button>
                 </div>
             </div>
 
@@ -71,9 +71,9 @@
                             foreach (KeyValuePair<Department, int> kvp in Model.Departments)
                             {
                                 maxCount += kvp.Value;
-                            <li>
-                                <input type="checkbox" checked="checked" onclick="" name="SelectedDepartments" value="@kvp.Key.DepId"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
-                            </li>
+                                <li>
+                                    <input type="checkbox" checked="checked" onclick="" name="SelectedDepartments" value="@kvp.Key.DepId"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
+                                </li>
                             }
                         }
                     </ul>
@@ -81,9 +81,9 @@
             </div>
 
             <label class="mt-2">@Resources.askedPeopleCount</label>
-            <input id="countInput" class="form-control" type="number" value="0" name="Survey.Amount" oninput="changeSpanColor();checkCount()"/>
+            <input id="countInput" class="form-control" type="number" value="0" name="Survey.Amount" oninput="changeSpanColor();checkCount()" />
             <span class="row colorSpan pl-4 pr-4 mt-2">
-                <span id="colorSpan1" class="col-4"></span> 
+                <span id="colorSpan1" class="col-4"></span>
                 <span id="colorSpan2" class="col-4"></span>
                 <span id="colorSpan3" class="col-4"></span>
             </span>
@@ -332,6 +332,33 @@
             document.getElementById("countTextLabel").innerHTML = "@Resources.goodAskGroupCount";
             //$("#countTextLabel").innerHTML = "Große Gruppe .. sehr genaue Auswertung möglich..";
         }
+    }
+
+    function addCategory() {
+        let input = document.getElementById("newCategoryTB").value;
+        if (input == "") {
+            alert("@Resources.invalidInput");
+            return;
+        }
+        let categories = [];
+        @{
+            foreach(SurveyCategory sc in Model.SurveyCategories)
+            {
+                @:categories.push("@sc.CatName");
+            }
+        }
+
+        if (categories.includes(input)) {
+            alert("@Resources.categoryAlreadyExists");
+            return;
+        }
+
+        let url = '@Url.Action("CreateCategory", "SurveyCreation", new { catName = "temp"})'.replace("temp", input);
+
+        $.ajax({
+            url: url,
+            type: 'GET'
+        });
     }
 
 </script>

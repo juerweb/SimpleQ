@@ -70,7 +70,9 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 db.SurveyCategories.Add(new SurveyCategory { CatName = catName, CustCode = CustCode });
+                db.SaveChanges();
             }
+            
         }
 
         [HttpGet]
