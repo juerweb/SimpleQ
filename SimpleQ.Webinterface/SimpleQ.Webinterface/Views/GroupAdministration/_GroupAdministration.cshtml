@@ -1,5 +1,6 @@
 ﻿@using SimpleQ.Webinterface.App_LocalResources
 @using SimpleQ.Webinterface.Models;
+@model SimpleQ.Webinterface.Models.ViewModels.GroupAdministrationModel
 
 <div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>@Resources.groupAdministrationHeader</h2>
@@ -11,22 +12,30 @@
             <label for="groups">@Resources.groups</label>
             <div class="border border-dark">
                 <ul class="list-group ga-groups-ul pl-2" id="gaGroups">
-                    @{ List<string> l = new List<string>();
-                        l.Add("HR");
-                        l.Add("Produktion");
-                        l.Add("Einkauf");
-                        l.Add("department 4");
-                        l.Add("testdep4");
-                        l.Add("alddaaa");
-                        l.Add("neu");
-                    }
-                    @for (var i = 0; i < l.Count; i++)
+                    @*@{ List<string> l = new List<string>();
+                            l.Add("HR");
+                            l.Add("Produktion");
+                            l.Add("Einkauf");
+                            l.Add("department 4");
+                            l.Add("testdep4");
+                            l.Add("alddaaa");
+                            l.Add("neu");
+                        }*@
+                    @foreach (Department d in Model.Departments)
                     {
                         <li>
-                            <input name="groups" type="radio" value="@l[i]">
-                            @l[i]
+                            <input name="groups" type="radio" value="@d.DepName">
+                            @d.DepName
                         </li>
                     }
+
+                    @*@for (var i = 0; i < l.Count; i++)
+                        {
+                            <li>
+                                <input name="groups" type="radio" value="@l[i]">
+                                @l[i]
+                            </li>
+                        }*@
                 </ul>
             </div>
         </div>
@@ -45,9 +54,7 @@
             </div>
         </div>
 
-        <canvas style="width: 100%; height: auto;" id="qrCodeDiv">
-
-        </canvas>
+        <canvas style="width: 100%; height: auto;" id="qrCodeDiv"></canvas>
 
         <button class="btn btn-primary btn-block mt-2">Mitglied hinzufügen</button>
 
@@ -92,9 +99,9 @@
 
         //fill groups array
         @{
-            foreach(string s in l)
+            foreach(Department d in Model.Departments)
             {
-                @:groups.push('@s');
+                @:groups.push('@d.DepName');
             }
         }
 
@@ -130,7 +137,7 @@
                 '<input name="groups" type="radio" value="' + groupName + '">' +
                 groupName +
             '</li>';
-         
+
         $("input[type=radio][value=" + groupName + "]").setAttribute("checked", "checked");
         //Hier weitermachen tschucksl
     }
@@ -138,9 +145,9 @@
 
     function updateGroups() {
         @{
-            foreach(string s in l)
+            foreach(Department d in Model.Departments)
             {
-                @:groups.push('@s');
+                @:groups.push('@d.DepName');
             }
         }
     }
