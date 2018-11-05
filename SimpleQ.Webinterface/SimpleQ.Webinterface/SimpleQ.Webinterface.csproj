@@ -235,6 +235,7 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\ContainerViewModel.cs" />
+    <Compile Include="Models\ViewModels\GroupAdministrationModel.cs" />
     <Compile Include="Models\ViewModels\MultiResultModel.cs" />
     <Compile Include="Models\ViewModels\SingleResultModel.cs" />
     <Compile Include="Models\ViewModels\SurveyCreationModel.cs" />

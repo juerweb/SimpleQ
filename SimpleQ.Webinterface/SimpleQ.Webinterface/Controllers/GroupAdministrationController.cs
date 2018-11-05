@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SimpleQ.Webinterface.Models;
+using SimpleQ.Webinterface.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +10,60 @@ namespace SimpleQ.Webinterface.Controllers
 {
     public class GroupAdministrationController : Controller
     {
-        // GET: GroupAdministration
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult List()
         {
-            return View();
+            using (var db = new SimpleQDBEntities())
+            {
+                var model = new GroupAdministrationModel
+                {
+                    Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList()
+                };
+
+                return PartialView(viewName: "_GroupAdministration", model: model);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Create(string depName)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                db.Departments.Add(new Department { DepName = depName, CustCode = CustCode });
+                db.SaveChanges();
+            }
+            return List();
+        }
+
+        [HttpGet]
+        public ActionResult Modify(int depId, string depName)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                db.Departments.Where(d => d.DepId == depId).FirstOrDefault().DepName = depName;
+                db.SaveChanges();
+            }
+            return List();
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int depId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                db.Departments.RemoveRange(db.Departments.Where(d => d.DepId == depId));
+                db.SaveChanges();
+            }
+            return List();
+        }
+
+
+        private string CustCode
+        {
+            get
+            {
+                return "m4rku5";//Session["custCode"] as string;
+            }
         }
     }
 }
