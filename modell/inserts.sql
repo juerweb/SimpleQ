@@ -5,7 +5,7 @@ go
 
 
 begin transaction;
-insert into Customer values ('m4rku5', 'tschaenzl gmbh.', 'g@b.i', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 0.30, 0);
+insert into Customer values ('m4rku5', 'tschaenzl gmbh.', 'g@b.i', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 5, 0.30, 0);
 insert into Department values (1, 'development', 'm4rku5');
 insert into Department values (2, 'putzkleschn', 'm4rku5');
 insert into Person values (null); -- PersId 1

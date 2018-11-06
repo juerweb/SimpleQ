@@ -47,6 +47,7 @@ create table Customer
 	LanguageCode char(3) not null,
 	DataStoragePeriod int not null, -- in Monaten
 	PaymentMethodId int not null references PaymentMethod,
+    MinGroupSize int not null,
     PricePerClick money not null,
 	CostBalance money not null
 );
@@ -111,7 +112,8 @@ create table AnswerType
 (
 	TypeId int primary key,
 	TypeDesc varchar(max) not null,
-    BaseId int not null references BaseQuestionType
+    BaseId int not null references BaseQuestionType,
+    Inactive bit not null
 );
 go
 
@@ -371,22 +373,22 @@ insert into BaseQuestionType values (1, 'OpenQuestion');
 insert into BaseQuestionType values (2, 'DichotomousQuestion');
 insert into BaseQuestionType values (3, 'PolytomousQuestion');
 
-insert into AnswerType values (1, 'YesNo', 2);
-insert into AnswerType values (2, 'YesNoDontKnow', 3);
-insert into AnswerType values (3, 'TrafficLight', 3);
-insert into AnswerType values (4, 'Open', 1);
-insert into AnswerType values (5, 'Dichotomous', 2);
-insert into AnswerType values (6, 'PolytomousUnorderedSingle', 3);
-insert into AnswerType values (7, 'PolytomousUnorderedMultiple', 3);
-insert into AnswerType values (8, 'PolytomousOrderedSingle', 3);
-insert into AnswerType values (9, 'PolytomousOrderedMultiple', 3);
-insert into AnswerType values (10, 'LikertSkale3', 3);
-insert into AnswerType values (11, 'LikertSkale4', 3);
-insert into AnswerType values (12, 'LikertSkale5', 3);
-insert into AnswerType values (13, 'LikertSkale6', 3);
-insert into AnswerType values (14, 'LikertSkale7', 3);
-insert into AnswerType values (15, 'LikertSkale8', 3);
-insert into AnswerType values (16, 'LikertSkale9', 3);
+insert into AnswerType values (1, 'YesNo', 2, 0);
+insert into AnswerType values (2, 'YesNoDontKnow', 3, 0);
+insert into AnswerType values (3, 'TrafficLight', 3, 0);
+insert into AnswerType values (4, 'Open', 1, 0);
+insert into AnswerType values (5, 'Dichotomous', 2, 0);
+insert into AnswerType values (6, 'PolytomousUnorderedSingle', 3, 0);
+insert into AnswerType values (7, 'PolytomousUnorderedMultiple', 3, 0);
+insert into AnswerType values (8, 'PolytomousOrderedSingle', 3, 0);
+insert into AnswerType values (9, 'PolytomousOrderedMultiple', 3, 0);
+insert into AnswerType values (10, 'LikertSkale3', 3, 0);
+insert into AnswerType values (11, 'LikertSkale4', 3, 0);
+insert into AnswerType values (12, 'LikertSkale5', 3, 0);
+insert into AnswerType values (13, 'LikertSkale6', 3, 0);
+insert into AnswerType values (14, 'LikertSkale7', 3, 0);
+insert into AnswerType values (15, 'LikertSkale8', 3, 0);
+insert into AnswerType values (16, 'LikertSkale9', 3, 0);
 
 insert into PredefinedAnswerOption values (1, 'Yes', 1);
 insert into PredefinedAnswerOption values (2, 'No', 1);
