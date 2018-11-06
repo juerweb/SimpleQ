@@ -14,7 +14,7 @@
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
                                 <controls:Checkbox IsCheckedChanged="Checkbox_IsCheckedChanged"></controls:Checkbox>
-                                <Label Text="{Binding DepName}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
+                                <Label Text="{Binding RegistrationData.DepName}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

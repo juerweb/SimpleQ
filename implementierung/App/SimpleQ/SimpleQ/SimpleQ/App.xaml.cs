@@ -305,7 +305,13 @@ namespace SimpleQ
         {
             Debug.WriteLine("NO: Notification Opened in App.xaml.cs ...", "Info");
             Dictionary<String, object> additionalData = result.notification.payload.additionalData;
-            Debug.WriteLine(additionalData["svyId"]); 
+            Debug.WriteLine(additionalData["svyId"]);
+
+            IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
+            SurveyModel surveyModel = await webAPIService.GetSurveyData((int)additionalData["svyId"]);
+
+            IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+            questionService.AddQuestion(surveyModel);
 
             /*Console.WriteLine("1234: HandleNotificationOpened!23");
 

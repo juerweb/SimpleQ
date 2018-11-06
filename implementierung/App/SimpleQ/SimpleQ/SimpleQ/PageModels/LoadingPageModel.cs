@@ -42,25 +42,30 @@ namespace SimpleQ.PageModels
 
             this.IsRunning = true;
 
+            //isRegister and not joinDepartment
+            Boolean isRegister;
+
             //Code Check
             List<object> objects = (List<object>)initData;
-            int code = (int)objects[0];
+            string code = objects[0].ToString();
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
                 Debug.WriteLine("RuntimePlatform is in (iOS, Android)...", "Info");
                 if (Application.Current.Properties["userID"] != null)
                 {
-                    RegistrationData data = null;
+                    RegistrationDataModel data = new RegistrationDataModel();
                     try
                     {
                         if ((Boolean)objects[1])
                         {
-                            data = await this.webAPIService.Register("m4rku51", Application.Current.Properties["userID"].ToString());
+                            data.RegistrationData = await this.webAPIService.Register(code, Application.Current.Properties["userID"].ToString());
+                            data.IsRegister = true;
                         }
                         else
                         {
-                            List<RegistrationData> tmp = JsonConvert.DeserializeObject<List<RegistrationData>>(Application.Current.Properties["registrations"].ToString());
-                            data = await this.webAPIService.JoinDepartment("m4rku51", tmp[0].PersId);
+                            List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
+                            data.RegistrationData = await this.webAPIService.JoinDepartment(code, tmp[0].RegistrationData.PersId);
+                            data.IsRegister = false;
                         }
                     }
                     catch (System.Net.Http.HttpRequestException e)
@@ -77,14 +82,13 @@ namespace SimpleQ.PageModels
                     {
                         if (Application.Current.Properties.ContainsKey("registrations"))
                         {
-                            
-                            List<RegistrationData> tmp = JsonConvert.DeserializeObject<List<RegistrationData>>(Application.Current.Properties["registrations"].ToString());
+                            List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
                             tmp.Add(data);
                             Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(tmp);
                         }
                         else
                         {
-                            Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(new List <RegistrationData> { data });
+                            Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(new List <RegistrationDataModel> { data });
                         }
                         Debug.WriteLine("Code is valid...", "Info");
                         this.IsFirstStepTicked = true;
@@ -111,17 +115,17 @@ namespace SimpleQ.PageModels
                     Debug.WriteLine("Code is valid...", "Info");
                     this.IsFirstStepTicked = true;
 
-                    RegistrationData data = new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Tina Company", PersId = 1 };
+                    RegistrationDataModel data = new RegistrationDataModel() { RegistrationData=new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Tina Company", PersId = 1 } };
                     //Code Check
                     if (Application.Current.Properties.ContainsKey("registrations"))
                     {
-                        List<RegistrationData> tmp = JsonConvert.DeserializeObject<List<RegistrationData>>(Application.Current.Properties["registrations"].ToString());
+                        List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
                         tmp.Add(data);
                         Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(tmp);
                     }
                     else
                     {
-                        Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(new List<RegistrationData> { data });
+                        Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(new List<RegistrationDataModel> { data });
                     }
                 }
                 else

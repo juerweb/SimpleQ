@@ -150,12 +150,17 @@ namespace SimpleQ.PageModels.Services
         /// This method add a new question and checks if the catName of the question already exists.
         /// </summary>
         /// <param name="question">The question.</param>
-        public void AddQuestion(SurveyModel question)
+        public async void AddQuestion(SurveyModel question)
         {
             Debug.WriteLine("Add new Question...", "Info");
+            List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+            if (!list.Contains(question))
+            {
+                list.Add(question);
+                await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Question", list);
+            }
 
             this.Questions.Add(question);
-            
 
             if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.CatName) > 0))
             {

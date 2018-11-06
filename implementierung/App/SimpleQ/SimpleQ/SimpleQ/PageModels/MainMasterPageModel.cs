@@ -32,21 +32,21 @@ namespace SimpleQ.PageModels
             this.MenuItems.Add(new MenuItemListModel(ItemType.Navigation.ToString()));
 
             //Generate CodeValidationModel from Application Properties
-            List<RegistrationData> tmp = JsonConvert.DeserializeObject<List<RegistrationData>>(Application.Current.Properties["registrations"].ToString());
+            List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
 
             this.RegistrationData = tmp[0];
         }
         #endregion
 
         #region Fields
-        private RegistrationData registrationData;
+        private RegistrationDataModel registrationData;
         private MenuItemModel selectedItem;
 
         private Dictionary<String, Page> _pages = new Dictionary<string, Page>();
         #endregion
 
         #region Properties + Getter/Setter Methods
-        public RegistrationData RegistrationData
+        public RegistrationDataModel RegistrationData
         {
             get => registrationData;
             set

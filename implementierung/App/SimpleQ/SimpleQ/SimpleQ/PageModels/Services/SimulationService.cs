@@ -75,14 +75,14 @@ namespace SimpleQ.PageModels.Services
         }
 
         List<SurveyModel> questions = new List<SurveyModel>();
-        public async Task<CodeValidationModel> CheckCode(int code)
+        public async Task<CodeValidationModel> CheckCode(string code)
         {
             await Task.Delay(TimeSpan.FromSeconds(3));
 
             //Random random = new Random();
             //return random.Next(0, 2) == 0;
 
-            return new CodeValidationModel(code == 1234567, "Tina's Factory", "Development", code);
+            return new CodeValidationModel(code == "1234567", "Tina's Factory", "Development", code);
         }
 
         public async Task<List<SurveyModel>> GetData()

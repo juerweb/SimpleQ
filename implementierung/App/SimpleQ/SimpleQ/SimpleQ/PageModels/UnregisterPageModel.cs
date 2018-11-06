@@ -1,5 +1,6 @@
 ﻿using FreshMvvm;
 using Newtonsoft.Json;
+using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Shared;
 using System;
@@ -38,9 +39,9 @@ namespace SimpleQ.PageModels
         public UnregisterPageModel()
         {
             UnregisterCommand = new Command(UnregisterCommandExecuted);
-            registrations = new ObservableCollection<RegistrationData>(JsonConvert.DeserializeObject<List<RegistrationData>>(Application.Current.Properties["registrations"].ToString()));
-            isChecked = new Dictionary<RegistrationData, bool>();
-            foreach (RegistrationData data in registrations)
+            registrations = new ObservableCollection<RegistrationDataModel>(JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString()));
+            isChecked = new Dictionary<RegistrationDataModel, bool>();
+            foreach (RegistrationDataModel data in registrations)
             {
                 isChecked.Add(data, false);
             }
@@ -58,8 +59,8 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Fields
-        private ObservableCollection<RegistrationData> registrations;
-        private Dictionary<RegistrationData, bool> isChecked;
+        private ObservableCollection<RegistrationDataModel> registrations;
+        private Dictionary<RegistrationDataModel, bool> isChecked;
         private ISimulationService simulationService;
         private IDialogService dialogService;
         private IWebAPIService webAPIService;
@@ -68,7 +69,7 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Properties + Getter/Setter Methods
-        public ObservableCollection<RegistrationData> Registrations
+        public ObservableCollection<RegistrationDataModel> Registrations
         {
             get => registrations;
             set
@@ -78,7 +79,7 @@ namespace SimpleQ.PageModels
             }
         }
 
-        public Dictionary<RegistrationData, bool> IsChecked { get => isChecked; set => isChecked = value; }
+        public Dictionary<RegistrationDataModel, bool> IsChecked { get => isChecked; set => isChecked = value; }
 
         public bool IsOneChecked
         {
@@ -91,7 +92,7 @@ namespace SimpleQ.PageModels
         }
         #endregion
 
-            #region Commands
+        #region Commands
         public Command UnregisterCommand
         {
             get;
@@ -105,34 +106,66 @@ namespace SimpleQ.PageModels
             Debug.WriteLine("Unregister Command Executed...", "Info");
             if (await dialogService.ShowReallySureDialog())
             {
-                try
-                {
-                    if (Application.Current.Properties.ContainsKey("PersId") && Application.Current.Properties.ContainsKey("CustCode"))
+                foreach (RegistrationDataModel registrationDataModel in IsChecked.Keys){
+                    if (IsChecked[registrationDataModel])
                     {
-                        Debug.WriteLine("Unregister Command executed on iOS or Android with PersId: " + Application.Current.Properties["PersId"] + " and CustCode: " + Application.Current.Properties["CustCode"], "Info");
-                        Boolean success = await this.webAPIService.Unregister(Application.Current.Properties["PersId"].ToString(), Application.Current.Properties["CustCode"].ToString());
-                        if (success)
+                        try
                         {
-                            Application.Current.Properties.Remove("registrations");
+                            if (Application.Current.Properties.ContainsKey("PersId") && Application.Current.Properties.ContainsKey("CustCode"))
+                            {
+                                //Android or iOS App
+                                Debug.WriteLine("Unregister Command executed on iOS or Android with PersId: " + Application.Current.Properties["PersId"] + " and CustCode: " + Application.Current.Properties["CustCode"], "Info");
+                                Boolean success;
+                                if (registrationDataModel.IsRegister)
+                                {
+                                    success = await this.webAPIService.Unregister(registrationDataModel.RegistrationData.PersId.ToString(), registrationDataModel.RegistrationData.CustCode);
+                                }
+                                else
+                                {
+                                   success = await this.webAPIService.LeaveDepartment(registrationDataModel.RegistrationData.PersId, registrationDataModel.RegistrationData.DepId, registrationDataModel.RegistrationData.CustCode);
+                                }
+
+                                if (success)
+                                {
+                                    Registrations.Remove(registrationDataModel);
+                                    if (registrations.Count == 0)
+                                    {
+                                        Application.Current.Properties.Remove("registrations");
+                                    }
+                                    else
+                                    {
+                                        Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(registrations);
+                                    }
+                                }
+                                else
+                                {
+                                    Debug.WriteLine("Problem during the Unregister", "Error");
+                                    this.dialogService.ShowErrorDialog(203);
+                                }
+                            }
+                            else
+                            {
+                                //UWP App
+                                Debug.WriteLine("Unregister Command executed on UWP", "Info");
+                                Registrations.Remove(registrationDataModel);
+                                if (registrations.Count == 0)
+                                {
+                                    Application.Current.Properties.Remove("registrations");
+                                }
+                                else
+                                {
+                                    Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(registrations);
+                                }
+                            }
                         }
-                        else
+                        catch (System.Net.Http.HttpRequestException e)
                         {
-                            Debug.WriteLine("Problem during the Unregister", "Error");
-                            this.dialogService.ShowErrorDialog(203);
+                            Debug.WriteLine("WebException during the Unregister", "Error");
+                            this.dialogService.ShowErrorDialog(202);
+                            return;
                         }
+                        await Application.Current.SavePropertiesAsync();
                     }
-                    else
-                    {
-                        //UWP App
-                        Debug.WriteLine("Unregister Command executed on UWP", "Info");
-                        Application.Current.Properties.Remove("registrations");
-                    }
-                }
-                catch (System.Net.Http.HttpRequestException e)
-                {
-                    Debug.WriteLine("WebException during the Unregister", "Error");
-                    this.dialogService.ShowErrorDialog(202);
-                    return;
                 }
                 App.GoToRightPage();
             }

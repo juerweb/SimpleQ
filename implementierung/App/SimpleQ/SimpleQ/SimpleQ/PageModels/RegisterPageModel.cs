@@ -50,7 +50,7 @@ namespace SimpleQ.PageModels
         /// <summary>
         /// The model field variable
         /// </summary>
-        private int registerCode;
+        private string registerCode;
 
         /// <summary>
         /// The behavior
@@ -72,7 +72,7 @@ namespace SimpleQ.PageModels
         /// <value>
         /// The model.
         /// </value>
-        public int RegisterCode
+        public string RegisterCode
         {
             get
             {
@@ -122,8 +122,8 @@ namespace SimpleQ.PageModels
         public void OnManualCodeEntry()
         {
             Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
-            int code = this.RegisterCode;
-            this.RegisterCode = 0;
+            string code = this.RegisterCode;
+            this.RegisterCode = "";
             CoreMethods.PushPageModel<LoadingPageModel>(new List<object> { code, this.isRegistration });
         }
 
