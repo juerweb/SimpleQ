@@ -72,7 +72,10 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.SurveyCategories.Add(new SurveyCategory { CatName = catName, CustCode = CustCode });
+                db.SurveyCategories.Add(new SurveyCategory {
+                    CatId = db.SurveyCategories.Where(c => c.CustCode == CustCode).Max(c => c.CatId) + 1,
+                    CatName = catName, CustCode = CustCode });
+                db.SaveChanges();
             }
         }
 
