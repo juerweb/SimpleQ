@@ -76,7 +76,7 @@
 </div>
 
 <script>
-    let groups = [];
+    let groups = {}; // key = department name, value = depId
 
     $(function () { // <-- Things to do at startup
 
@@ -84,7 +84,7 @@
         @{
             foreach(Department d in Model.Departments)
             {
-                @:groups.push('@d.DepName');
+                @:groups['@d.DepName'] = '@d.DepId';
             }
         }
 
@@ -99,6 +99,7 @@
         //choose first group automatically
         let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
         radioBtnElem.setAttribute("checked", "checked");
+        updateGroupNameInput(radioBtnElem.value); //fill into Textbox
         document.getElementById("chosenGroup").innerHTML = radioBtnElem.value;
 
         $("input[type=radio]").change(function () {
@@ -121,8 +122,9 @@
             return;
         }
 
-        if (groups.includes(groupName)) {
-            alert("@Resources.groupAlreadyExists");
+        let keys = Object.keys(groups);
+        if (keys.includes(groupName)) {
+            alert('@Resources.groupAlreadyExists');
             return;
         }
 
@@ -142,7 +144,7 @@
         $.ajax({
             url: url,
             type: 'GET'
-        }); 
+        });
     }
 
     function updateGroupNameInput(groupName) {
@@ -153,7 +155,7 @@
         @{
             foreach(Department d in Model.Departments)
             {
-                @:groups.push('@d.DepName');
+                @:groups['@d.DepName'] = '@d.DepId';
             }
         }
     }
@@ -185,12 +187,24 @@
         if (canceled) {
             text = tempTextGroups;
         } else {
-            text = button.parentElement.parentElement.children[0].value;
-            if (groups.includes(text)) {
-                alert('@Resources.invalidInput');
+            text = document.getElementById("groupNameInput").value;
+
+            let keys = Object.keys(groups);
+            if (keys.includes(text)) {
+                alert('@Resources.groupAlreadyExists');
                 return;
             }
-            //luki action aufrufen
+
+
+            let url = '@Url.Action("Modify", "GroupAdministration", new {depId = "temp1", depName = "temp2"})'.replace("temp1", groups[tempTextGroups]).replace("temp2", text);
+            alert(url);
+            $.ajax({
+                url: url,
+                type: 'GET'
+            });
+
+            updateGroups();
+
             // danach updateGroups() aufrufen!!
         }
         $("#groupNameInput").attr("readonly", true);
