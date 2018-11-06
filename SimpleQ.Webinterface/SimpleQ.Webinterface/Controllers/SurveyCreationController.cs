@@ -59,11 +59,11 @@ namespace SimpleQ.Webinterface.Controllers
 
 
         [HttpGet]
-        public Survey LoadTemplate(int svyId)
+        public JsonResult LoadTemplate(int svyId)
         {
             using (var db = new SimpleQDBEntities())
             {
-                return db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault();
+                return Json(db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault());
             }
         }
 

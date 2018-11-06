@@ -18,7 +18,8 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 SurveyCreationModel = new SurveyCreationModel(),
                 SurveyResultsModel = new SurveyResultsModel(),
-                GroupAdministrationModel = new GroupAdministrationModel()
+                GroupAdministrationModel = new GroupAdministrationModel(),
+                SettingsModel = new SettingsModel()
             };
 
             using (var db = new SimpleQDBEntities())
@@ -33,6 +34,12 @@ namespace SimpleQ.Webinterface.Controllers
                 model.SurveyResultsModel.AnswerTypes = db.AnswerTypes.ToList(); // GLOBALIZATION!
 
                 model.GroupAdministrationModel.Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList();
+
+                var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                model.SettingsModel.MinGroupSize = cust.MinGroupSize;
+                model.SettingsModel.Categories = cust.SurveyCategories.ToList();
+                model.SettingsModel.AnswerTypes = db.AnswerTypes.Where(a => !a.Inactive).ToList();
+                model.SettingsModel.PaymentMethods = db.PaymentMethods.ToList();
             }
             return View(model: model);
         }

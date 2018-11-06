@@ -34,6 +34,7 @@ namespace SimpleQ.Webinterface.Models
         public string LanguageCode { get; set; }
         public int DataStoragePeriod { get; set; }
         public int PaymentMethodId { get; set; }
+        public int MinGroupSize { get; set; }
         public decimal PricePerClick { get; set; }
         public decimal CostBalance { get; set; }
     

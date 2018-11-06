@@ -24,6 +24,7 @@ namespace SimpleQ.Webinterface.Models
         public int TypeId { get; set; }
         public string TypeDesc { get; set; }
         public int BaseId { get; set; }
+        public bool Inactive { get; set; }
     
         [Newtonsoft.Json.JsonIgnore]
         public virtual BaseQuestionType BaseQuestionType { get; set; }

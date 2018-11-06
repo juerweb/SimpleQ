@@ -9,9 +9,10 @@ namespace SimpleQ.Webinterface.Controllers
     public class SettingsController : Controller
     {
         // GET: Settings
-        public ActionResult Index()
+        [HttpGet]
+        public ActionResult ChangeMinGroup(int size)
         {
-            return View();
+            return PartialView(viewName: "_Settings", model: null);
         }
     }
 }
