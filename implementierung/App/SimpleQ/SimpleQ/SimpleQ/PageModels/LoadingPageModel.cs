@@ -78,7 +78,7 @@ namespace SimpleQ.PageModels
                         await CoreMethods.PopToRoot(false);
                         return;
                     }
-                    if (data != null)
+                    if (data.RegistrationData != null)
                     {
                         if (Application.Current.Properties.ContainsKey("registrations"))
                         {

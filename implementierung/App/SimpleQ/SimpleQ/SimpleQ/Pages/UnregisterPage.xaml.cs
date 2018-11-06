@@ -1,4 +1,5 @@
 ﻿using IntelliAbb.Xamarin.Controls;
+using SimpleQ.Models;
 using SimpleQ.PageModels;
 using SimpleQ.Shared;
 using System;
@@ -23,7 +24,7 @@ namespace SimpleQ.Pages
         private void Checkbox_IsCheckedChanged(object sender, TappedEventArgs e)
         {
             Checkbox box = (Checkbox)sender;
-            RegistrationData option = (RegistrationData)(box.BindingContext);
+            RegistrationDataModel option = (RegistrationDataModel)(box.BindingContext);
 
             UnregisterPageModel pageModel = (UnregisterPageModel)(this.BindingContext);
             pageModel.IsChecked[option] = box.IsChecked;
