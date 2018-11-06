@@ -8,6 +8,9 @@ using System.Web.Mvc;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Mobile;
 using SimpleQ.Webinterface.Models.ViewModels;
+//using OneSignal.CSharp.SDK;
+//using OneSignal.CSharp.SDK.Resources.Devices;
+//using OneSignal.CSharp.SDK.Resources.Notifications;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -48,19 +51,19 @@ namespace SimpleQ.Webinterface.Controllers
             TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
 
             // Umfrage nur schedulen wenn sie bis zur nächsten Mitternacht (+1h Toleranz) startet
-            //if (timeout < Extensions.NextMidnight.Add(TimeSpan.FromHours(1)))
-            //    ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);
+            if (timeout < Extensions.NextMidnight.Add(TimeSpan.FromHours(1)))
+                ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);
 
             return RedirectToAction("Index", "Home");
         }
 
 
         [HttpGet]
-        public Survey LoadTemplate(int svyId)
+        public JsonResult LoadTemplate(int svyId)
         {
             using (var db = new SimpleQDBEntities())
             {
-                return db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault();
+                return Json(db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault());
             }
         }
 
@@ -69,10 +72,11 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.SurveyCategories.Add(new SurveyCategory { CatName = catName, CustCode = CustCode });
+                db.SurveyCategories.Add(new SurveyCategory {
+                    CatId = db.SurveyCategories.Where(c => c.CustCode == CustCode).Max(c => c.CatId) + 1,
+                    CatName = catName, CustCode = CustCode });
                 db.SaveChanges();
             }
-            
         }
 
         [HttpGet]

@@ -14,8 +14,19 @@
             <h2>@Resources.surveyCreationHeader</h2>
 
             <label class="mt-2">@Resources.surveyTemplateHeader</label>
+            <select class="form-control" id="surveyTemplateCB" onchange="surveyTemplateSelectionChanged()">
+                @{                   
+                    <option value="-1">No template</option> //-1 = no template
+                    foreach (Survey svy in Model.SurveyTemplates)
+                    {
+                        <option value="@svy.SvyId">@svy.SvyText @svy.StartDate</option>
+                    }
+                }
+
+            </select>
+
             @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", ("SvyText " + "StartDate")), new { @class = "form-control" })*@
-            @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", "SvyText"), new { @class = "form-control" })
+            @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", "SvyText"), " ", new { @class = "form-control" })*@
 
 
             <label class="mt-2">@Resources.surveyCategoryHeader</label>
@@ -153,10 +164,28 @@
         });
     });
 
+    function surveyTemplateSelectionChanged() {
+        let surveyTemplateCB = document.getElementById("surveyTemplateCB");
+        let value = surveyTemplateCB.value;
+        let url = '@Url.Action("LoadTemplate", "SurveyCreation", new { svyId = "temp"})'.replace("temp", value);
+
+        let survey;
+        $.get(url, function (data) {
+            survey = JSON.parse(data);
+            alert(survey.AnswerOptions);
+
+
+        });
+
+
+
+
+    }
+
     function answerTypeSelectionChanged() {
-        var answerBox = document.getElementById("answerBox");
-        var answerType = document.getElementById("AnswerTypeCB");
-        var value = answerType.value;
+        let answerBox = document.getElementById("answerBox");
+        let answerType = document.getElementById("AnswerTypeCB");
+        let value = answerType.value;
         if (value > 4) {
             $("#openAddAnswer").show();
         } else {
