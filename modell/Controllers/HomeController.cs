@@ -17,7 +17,8 @@ namespace SimpleQ.Webinterface.Controllers
             var model = new ContainerViewModel
             {
                 SurveyCreationModel = new SurveyCreationModel(),
-                SurveyResultsModel = new SurveyResultsModel()
+                SurveyResultsModel = new SurveyResultsModel(),
+                GroupAdministrationModel = new GroupAdministrationModel()
             };
 
             using (var db = new SimpleQDBEntities())
@@ -30,6 +31,8 @@ namespace SimpleQ.Webinterface.Controllers
                 model.SurveyResultsModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
                 model.SurveyResultsModel.Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList();
                 model.SurveyResultsModel.AnswerTypes = db.AnswerTypes.ToList(); // GLOBALIZATION!
+
+                model.GroupAdministrationModel.Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList();
             }
             return View(model: model);
         }
