@@ -150,49 +150,68 @@ namespace SimpleQ
             switch (surveyModel.TypeDesc)
             {
                 case SurveyType.YesNoQuestion:
-
-                    YesNoQuestionPage ynqPage = (YesNoQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoQuestionPageModel>(true);
+                    YesNoQuestionPage ynqPage = (YesNoQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoQuestionPageModel>(surveyModel);
                     YesNoQuestionPageModel ynqPageModel = (YesNoQuestionPageModel)ynqPage.BindingContext;
-                    ynqPageModel.Question = surveyModel;
+                    //ynqPageModel.Question = surveyModel;
                     navService.PushPage(ynqPage, ynqPageModel);
-                    break;
+                    return;
                 case SurveyType.YesNoDontKnowQuestion:
-                    YesNoDontKnowQuestionPage yndkqPage = (YesNoDontKnowQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoDontKnowQuestionPageModel>(true);
-                    YesNoQuestionPageModel yndkqPageModel = (YesNoQuestionPageModel)yndkqPage.BindingContext;
-                    yndkqPageModel.Question = surveyModel;
+                    YesNoDontKnowQuestionPage yndkqPage = (YesNoDontKnowQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoDontKnowQuestionPageModel>(surveyModel);
+                    YesNoDontKnowQuestionPageModel yndkqPageModel = (YesNoDontKnowQuestionPageModel)yndkqPage.BindingContext;
+                    //yndkqPageModel.Question = surveyModel;
                     navService.PushPage(yndkqPage, yndkqPageModel);
-                    break;
+                    return;
                 case SurveyType.TrafficLightQuestion:
-                    TrafficLightQuestionPage tlqPage = (TrafficLightQuestionPage)FreshPageModelResolver.ResolvePageModel<TrafficLightQuestionPageModel>(true);
+                    TrafficLightQuestionPage tlqPage = (TrafficLightQuestionPage)FreshPageModelResolver.ResolvePageModel<TrafficLightQuestionPageModel>(surveyModel);
                     TrafficLightQuestionPageModel tlqPageModel = (TrafficLightQuestionPageModel)tlqPage.BindingContext;
-                    tlqPageModel.Question = surveyModel;
+                    //tlqPageModel.Question = surveyModel;
                     navService.PushPage(tlqPage, tlqPageModel);
-                    break;
+                    return;
                 case SurveyType.OpenQuestion:
-                    OpenQuestionPage owqPage = (OpenQuestionPage)FreshPageModelResolver.ResolvePageModel<OpenQuestionPageModel>(true);
+                    OpenQuestionPage owqPage = (OpenQuestionPage)FreshPageModelResolver.ResolvePageModel<OpenQuestionPageModel>(surveyModel);
                     OpenQuestionPageModel owqPageModel = (OpenQuestionPageModel)owqPage.BindingContext;
-                    owqPageModel.Question = surveyModel;
+                    //owqPageModel.Question = surveyModel;
                     navService.PushPage(owqPage, owqPageModel);
-
-                    break;
+                    return;
                 case SurveyType.PolytomousUSQuestion:
-                    PolytomousUSQuestionPage polytomousUSPage = (PolytomousUSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUSQuestionPageModel>(true);
+                    PolytomousUSQuestionPage polytomousUSPage = (PolytomousUSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUSQuestionPageModel>(surveyModel);
                     PolytomousUSQuestionPageModel polytomousUSPageModel = (PolytomousUSQuestionPageModel)polytomousUSPage.BindingContext;
-                    polytomousUSPageModel.Question = surveyModel;
+                    //polytomousUSPageModel.Question = surveyModel;
                     navService.PushPage(polytomousUSPage, polytomousUSPageModel);
-                    break;
+                    return;
+                case SurveyType.PolytomousOSQuestion:
+                    PolytomousOSQuestionPage polytomousOSPage = (PolytomousOSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousOSQuestionPageModel>(surveyModel);
+                    PolytomousUSQuestionPageModel polytomousOSPageModel = (PolytomousUSQuestionPageModel)polytomousOSPage.BindingContext;
+                    //polytomousOSPageModel.Question = surveyModel;
+                    navService.PushPage(polytomousOSPage, polytomousOSPageModel);
+                    return;
                 case SurveyType.DichotomousQuestion:
-                    DichotomousQuestionPage dichotomousQuestionPage = (DichotomousQuestionPage)FreshPageModelResolver.ResolvePageModel<DichotomousQuestionPageModel>(true);
+                    DichotomousQuestionPage dichotomousQuestionPage = (DichotomousQuestionPage)FreshPageModelResolver.ResolvePageModel<DichotomousQuestionPageModel>(surveyModel);
                     DichotomousQuestionPageModel dichotomousQuestionPageModel = (DichotomousQuestionPageModel)dichotomousQuestionPage.BindingContext;
-                    dichotomousQuestionPageModel.Question = surveyModel;
+                    //dichotomousQuestionPageModel.Question = surveyModel;
                     navService.PushPage(dichotomousQuestionPage, dichotomousQuestionPageModel);
-                    break;
+                    return;
                 case SurveyType.PolytomousOMQuestion:
-                    PolytomousOMQuestionPage polytomousOMQuestionPage = (PolytomousOMQuestionPage)FreshPageModelResolver.ResolvePageModel<DichotomousQuestionPageModel>(true);
-                    DichotomousQuestionPageModel polytomousOMQuestionPageModel = (DichotomousQuestionPageModel)polytomousOMQuestionPage.BindingContext;
-                    polytomousOMQuestionPageModel.Question = surveyModel;
+                    PolytomousOMQuestionPage polytomousOMQuestionPage = (PolytomousOMQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousOMQuestionPageModel>(surveyModel);
+                    PolytomousOMQuestionPageModel polytomousOMQuestionPageModel = (PolytomousOMQuestionPageModel)polytomousOMQuestionPage.BindingContext;
+                    //polytomousOMQuestionPageModel.Question = surveyModel;
                     navService.PushPage(polytomousOMQuestionPage, polytomousOMQuestionPageModel);
-                    break;
+                    return;
+                case SurveyType.PolytomousUMQuestion:
+                    PolytomousUMQuestionPage polytomousUMQuestionPage = (PolytomousUMQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUMQuestionPageModel>(surveyModel);
+                    PolytomousUMQuestionPageModel polytomousUMQuestionPageModel = (PolytomousUMQuestionPageModel)polytomousUMQuestionPage.BindingContext;
+                    //polytomousUMQuestionPageModel.Question = surveyModel;
+                    navService.PushPage(polytomousUMQuestionPage, polytomousUMQuestionPageModel);
+                    return;
+            }
+
+            List<SurveyType> types = new List<SurveyType>(new SurveyType[]{ SurveyType.LikertScale3Question, SurveyType.LikertScale4Question, SurveyType.LikertScale5Question , SurveyType.LikertScale6Question, SurveyType.LikertScale7Question, SurveyType.LikertScale8Question, SurveyType.LikertScale9Question });
+            if (types.Contains(surveyModel.TypeDesc))
+            {
+                LikertScaleQuestionPage likertScaleQuestionPage = (LikertScaleQuestionPage)FreshPageModelResolver.ResolvePageModel<LikertScaleQuestionPageModel>(surveyModel);
+                LikertScaleQuestionPageModel likertScaleQuestionPageModel = (LikertScaleQuestionPageModel)likertScaleQuestionPage.BindingContext;
+                //likertScaleQuestionPageModel.Question = surveyModel;
+                navService.PushPage(likertScaleQuestionPage, likertScaleQuestionPageModel);
             }
         }
 
