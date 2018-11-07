@@ -8,13 +8,13 @@
         <StackLayout>
             <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
             <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
-            <ListView ItemsSource="{Binding Question.GivenAnswers}" SelectionMode="None">
+            <ListView ItemsSource="{Binding IsChecked}" SelectionMode="Single" ItemSelected="ListView_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <ia:Checkbox Shape="Rectangle" IsCheckedChanged="Checkbox_IsCheckedChanged"/>
-                                <Label Text="{Binding AnsText}" VerticalTextAlignment="Center"/>
+                                <ia:Checkbox Shape="Rectangle" IsChecked="{Binding Value}" IsCheckedChanged="Checkbox_IsCheckedChanged"/>
+                                <Label Text="{Binding Key.AnsText}" VerticalTextAlignment="Center"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

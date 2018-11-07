@@ -131,7 +131,7 @@ namespace SimpleQ
             //Debug.WriteLine("RegistrationData: " + data);
             //webAPIService.Unregister("1234", "123");
 
-            SurveyModel sm = await webAPIService.GetSurveyData(1);
+            /*SurveyModel sm = await webAPIService.GetSurveyData(1);
             Debug.WriteLine("New Survey: " + sm.SurveyDesc);
 
             SurveyVote vote = new SurveyVote();
@@ -140,7 +140,7 @@ namespace SimpleQ
             vote.ChosenAnswerOptions.Add(sm.GivenAnswers[0]);
 
             Boolean b = await webAPIService.AnswerSurvey(vote);
-            Debug.WriteLine("Erfolgreich?: " + b);
+            Debug.WriteLine("Erfolgreich?: " + b);*/
         }
 
         private static async void OpenQuestionPage(SurveyModel surveyModel)

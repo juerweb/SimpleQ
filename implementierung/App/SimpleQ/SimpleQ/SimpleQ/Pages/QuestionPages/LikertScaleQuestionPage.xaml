@@ -11,8 +11,8 @@
             <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
             <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
 
-            <Slider ValueChanged="Slider_ValueChanged" x:Name="Slider"></Slider>
-            <Grid>
+            <Slider ValueChanged="Slider_ValueChanged" x:Name="Slider" Margin="10,0,10,0"></Slider>
+            <Grid Margin="10,0,10,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                     <ColumnDefinition Width="6*"></ColumnDefinition>
