@@ -142,11 +142,11 @@ namespace SimpleQ.PageModels.QuestionPageModels
             if (this.questionService == null)
             {
                 IQuestionService qs = FreshIOC.Container.Resolve<IQuestionService>();
-                qs.QuestionAnswered(this.Question);
+                Boolean success = await qs.QuestionAnswered(this.Question);
             }
             else
             {
-                this.questionService.QuestionAnswered(this.Question);
+                Boolean success = await this.questionService.QuestionAnswered(this.Question);
             }
             try
             {

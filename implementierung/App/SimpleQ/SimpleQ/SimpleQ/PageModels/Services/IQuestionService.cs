@@ -13,7 +13,7 @@ namespace SimpleQ.PageModels.Services
         ObservableCollection<SurveyModel> PublicQuestions { get; set; }
         Boolean IsPublicQuestionsEmpty { get; set; }
 
-        void QuestionAnswered(SurveyModel question);
+        Task<Boolean> QuestionAnswered(SurveyModel question);
         void AddQuestion(SurveyModel question);
         void SetCategorieFilter(String categorie);
         void MoveQuestion(SurveyModel question);

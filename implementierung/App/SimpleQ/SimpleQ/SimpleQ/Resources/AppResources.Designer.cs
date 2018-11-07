@@ -313,6 +313,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es ist ein Fehler beim Beantworten der Frage aufgetreten! ähnelt.
+        /// </summary>
+        internal static string Error204 {
+            get {
+                return ResourceManager.GetString("Error204", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe ähnelt.
         /// </summary>
         internal static string ExtendedHelp {

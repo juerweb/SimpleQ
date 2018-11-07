@@ -309,4 +309,7 @@
   <data name="SelectUnregisterGroups" xml:space="preserve">
     <value>Wählen Sie bitte alle Gruppen aus, aus welchen Sie austreten möchten.</value>
   </data>
+  <data name="Error204" xml:space="preserve">
+    <value>Es ist ein Fehler beim Beantworten der Frage aufgetreten!</value>
+  </data>
 </root>
