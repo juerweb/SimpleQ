@@ -14,16 +14,20 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public List<PaymentMethod> PaymentMethods { get; set; }
         #endregion
 
-        #region View to Controller
+        #region Any direction
         public string Name { get; set; }
         public string Email { get; set; }
-        public string Password { get; set; }
+        public string Street { get; set; }
         public string Plz { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public string LanguageCode { get; set; }
-        public string DataStoragePeriod { get; set; }
+        public int DataStoragePeriod { get; set; }
         public int PaymentMethodId { get; set; }
+        #endregion
+
+        #region View to Controller
+        public string Password { get; set; }
         #endregion
     }
 }
