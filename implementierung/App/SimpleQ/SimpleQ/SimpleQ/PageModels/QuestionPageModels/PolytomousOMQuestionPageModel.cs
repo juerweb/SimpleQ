@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using System.Reactive.Linq;
 using SimpleQ.Shared;
+using System.Collections.ObjectModel;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -29,7 +30,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         {
             SendAnswerCommand = new Command(QuestionAnswered);
             IsQuestionAnswered = false;
-            IsChecked = new Dictionary<AnswerOption, bool>();
+            IsChecked = new ObservableCollection<IsCheckedModel>();
         }
 
         /// <summary>
@@ -50,7 +51,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
             base.Init(initData);
             foreach (AnswerOption option in this.Question.GivenAnswers)
             {
-                this.isChecked.Add(option, false);
+                this.isChecked.Add(new IsCheckedModel(option));
             }
         }
         #endregion
@@ -61,7 +62,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private Boolean isQuestionAnswered;
 
-        private Dictionary<AnswerOption, Boolean> isChecked;
+        private ObservableCollection<IsCheckedModel> isChecked;
 
         #endregion
 
@@ -79,7 +80,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
             set { isQuestionAnswered = value; OnPropertyChanged(); }
         }
 
-        public Dictionary<AnswerOption, Boolean> IsChecked
+        public ObservableCollection<IsCheckedModel> IsChecked
         {
             get => isChecked;
             set
@@ -107,11 +108,11 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private void QuestionAnswered()
         {
             List<AnswerOption> result = new List<AnswerOption>();
-            foreach (AnswerOption option in this.IsChecked.Keys)
+            foreach (IsCheckedModel model in this.IsChecked)
             {
-                if (this.IsChecked[option])
+                if (model.IsChecked)
                 {
-                    result.Add(option);
+                    result.Add(model.AnswerOption);
                 }
             }
 

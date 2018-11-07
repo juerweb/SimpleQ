@@ -1,4 +1,5 @@
 ﻿using IntelliAbb.Xamarin.Controls;
+using SimpleQ.Models;
 using SimpleQ.PageModels.QuestionPageModels;
 using SimpleQ.Shared;
 using System;
@@ -23,29 +24,28 @@ namespace SimpleQ.Pages.QuestionPages
 
         private void Checkbox_IsCheckedChanged(object sender, TappedEventArgs e)
         {
-            Checkbox box = (Checkbox)sender;
-            AnswerOption option = (AnswerOption)(box.BindingContext);
-
             PolytomousUMQuestionPageModel pageModel = (PolytomousUMQuestionPageModel)(this.BindingContext);
-            pageModel.IsChecked[option] = box.IsChecked;
-
-            if (box.IsChecked)
+            foreach (IsCheckedModel model in pageModel.IsChecked)
             {
-                pageModel.IsQuestionAnswered = true;
-            }
-            else
-            {
-                foreach (Boolean b in pageModel.IsChecked.Values)
+                if (model.IsChecked)
                 {
-                    if (b)
-                    {
-                        pageModel.IsQuestionAnswered = true;
-                        return;
-                    }
+                    pageModel.IsQuestionAnswered = true;
+                    return;
                 }
-                pageModel.IsQuestionAnswered = false;
             }
+            pageModel.IsQuestionAnswered = false;
+        }
 
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            ListView listView = (ListView)sender;
+            if (listView.SelectedItem != null)
+            {
+                IsCheckedModel model = (IsCheckedModel)e.SelectedItem;
+                PolytomousUMQuestionPageModel pageModel = (PolytomousUMQuestionPageModel)(this.BindingContext);
+                model.IsChecked = !model.IsChecked;
+                listView.SelectedItem = null;
+            }
         }
     }
 }
