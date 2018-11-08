@@ -1,4 +1,4 @@
-﻿@using SimpleQ.Webinterface.App_LocalResources;
+﻿@using SimpleQ.Webinterface.Resources;
 @using SimpleQ.Webinterface.Models;
 @model SimpleQ.Webinterface.Models.ViewModels.GroupAdministrationModel
 
@@ -37,7 +37,9 @@
             </div>
         </div>
 
-        <canvas style="width: 100%; height: auto;" id="qrCodeDiv"></canvas>
+        <label>Gruppencode</label>
+
+        @*<canvas style="width: 100%; height: auto;" id="qrCodeDiv"></canvas>*@
 
         <button class="btn btn-primary btn-block mt-2">Mitglied hinzufügen</button>
 
@@ -89,12 +91,12 @@
         }
 
         //draw QR Code
-        let QRC = new QRious({
-            element: document.getElementById("qrCodeDiv"),
-            value: '123456',
-            level: 'H',
-            size: 1000
-        });
+        //let QRC = new QRious({
+        //    element: document.getElementById("qrCodeDiv"),
+        //    value: '123456',
+        //    level: 'H',
+        //    size: 1000
+        //});
 
         //choose first group automatically
         let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
