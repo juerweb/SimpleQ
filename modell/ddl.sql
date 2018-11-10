@@ -379,7 +379,8 @@ go
 begin transaction;
 insert into DsgvoConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 insert into PaymentMethod values (1, 'SEPA'); -- Nur Testwert
-insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque tú eres un culo muy grande.')
+insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.'); -- Nur Testwert
+insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque tú eres un culo muy grande.'); -- Nur Testwert
 
 insert into BaseQuestionType values (1, 'OpenQuestion');
 insert into BaseQuestionType values (2, 'DichotomousQuestion');
