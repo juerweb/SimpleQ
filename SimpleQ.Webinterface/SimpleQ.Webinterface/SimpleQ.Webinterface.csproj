@@ -209,6 +209,9 @@
     <Compile Include="Models\DsgvoConstraint.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FaqEntry.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Mobile\RegistrationData.cs" />
     <Compile Include="Models\Mobile\SurveyData.cs" />
     <Compile Include="Models\Mobile\SurveyVote.cs" />
@@ -247,6 +250,7 @@
     <Compile Include="Models\ViewModels\MultiResultModel.cs" />
     <Compile Include="Models\ViewModels\SettingsModel.cs" />
     <Compile Include="Models\ViewModels\SingleResultModel.cs" />
+    <Compile Include="Models\ViewModels\SupportModel.cs" />
     <Compile Include="Models\ViewModels\SurveyCreationModel.cs" />
     <Compile Include="Models\ViewModels\SurveyResultsModel.cs" />
     <Compile Include="Models\Vote.cs">

@@ -40,6 +40,7 @@ namespace SimpleQ.Webinterface.Models
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<SurveyCategory> SurveyCategories { get; set; }
         public virtual DbSet<Vote> Votes { get; set; }
+        public virtual DbSet<FaqEntry> FaqEntries { get; set; }
     
         public virtual ObjectResult<Nullable<int>> sp_CheckExceededSurveyData()
         {

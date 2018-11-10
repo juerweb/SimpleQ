@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SimpleQDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SimpleQDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnswerOption">
           <Key>
             <PropertyRef Name="AnsId" />
@@ -102,6 +102,13 @@
           <Property Name="DepId" Type="int" Nullable="false" />
           <Property Name="CustCode" Type="char" MaxLength="6" Nullable="false" />
           <Property Name="PersId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FaqEntry">
+          <Key>
+            <PropertyRef Name="FaqTitle" />
+          </Key>
+          <Property Name="FaqTitle" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="FaqContent" Type="varchar(max)" Nullable="false" />
         </EntityType>
         <EntityType Name="PaymentMethod">
           <Key>
@@ -356,6 +363,7 @@
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DsgvoConstraint" EntityType="Self.DsgvoConstraint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employs" EntityType="Self.Employs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FaqEntry" EntityType="Self.FaqEntry" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PredefinedAnswerOption" EntityType="Self.PredefinedAnswerOption" Schema="dbo" store:Type="Tables" />
@@ -423,8 +431,7 @@
             <End Role="SurveyCategory" EntitySet="SurveyCategory" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="SimpleQDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -760,7 +767,15 @@
             <End Role="Person" EntitySet="People" />
           </AssociationSet>
           <FunctionImport Name="sp_CheckExceededSurveyData" ReturnType="Collection(Int32)" />
+          <EntitySet Name="FaqEntries" EntityType="SimpleQDBModel.FaqEntry" />
         </EntityContainer>
+        <EntityType Name="FaqEntry">
+          <Key>
+            <PropertyRef Name="FaqTitle" />
+          </Key>
+          <Property Name="FaqTitle" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="FaqContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -928,6 +943,14 @@
             </EndProperty>
           </AssociationSetMapping>
           <FunctionImportMapping FunctionImportName="sp_CheckExceededSurveyData" FunctionName="SimpleQDBModel.Store.sp_CheckExceededSurveyData" />
+          <EntitySetMapping Name="FaqEntries">
+            <EntityTypeMapping TypeName="SimpleQDBModel.FaqEntry">
+              <MappingFragment StoreEntitySet="FaqEntry">
+                <ScalarProperty Name="FaqContent" ColumnName="FaqContent" />
+                <ScalarProperty Name="FaqTitle" ColumnName="FaqTitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

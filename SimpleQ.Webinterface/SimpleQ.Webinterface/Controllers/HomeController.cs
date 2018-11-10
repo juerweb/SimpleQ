@@ -14,43 +14,56 @@ namespace SimpleQ.Webinterface.Controllers
         {
             Session["custCode"] = "m4rku5";
 
-            var model = new ContainerViewModel
-            {
-                SurveyCreationModel = new SurveyCreationModel(),
-                SurveyResultsModel = new SurveyResultsModel(),
-                GroupAdministrationModel = new GroupAdministrationModel(),
-                SettingsModel = new SettingsModel()
-            };
-
             using (var db = new SimpleQDBEntities())
             {
-                model.SurveyCreationModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
-                model.SurveyCreationModel.AnswerTypes = db.AnswerTypes.ToList(); // GLOBALIZATION!
-                model.SurveyCreationModel.Departments = db.Departments.Where(d => d.CustCode == CustCode).Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount);
-                model.SurveyCreationModel.SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList();
-
-                model.SurveyResultsModel.SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList();
-                model.SurveyResultsModel.Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList();
-                model.SurveyResultsModel.AnswerTypes = db.AnswerTypes.ToList(); // GLOBALIZATION!
-
-                model.GroupAdministrationModel.Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList();
-
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
-                model.SettingsModel.MinGroupSize = cust.MinGroupSize;
-                model.SettingsModel.Categories = cust.SurveyCategories.ToList();
-                model.SettingsModel.AnswerTypes = db.AnswerTypes.Where(a => !a.Inactive).ToList();
-                model.SettingsModel.PaymentMethods = db.PaymentMethods.ToList();
-                model.SettingsModel.Name = cust.CustName;
-                model.SettingsModel.Email = cust.CustEmail;
-                model.SettingsModel.Street = cust.Street;
-                model.SettingsModel.Plz = cust.Plz;
-                model.SettingsModel.City = cust.City;
-                model.SettingsModel.Country = cust.Country;
-                model.SettingsModel.LanguageCode = cust.LanguageCode;
-                model.SettingsModel.DataStoragePeriod = cust.DataStoragePeriod;
-                model.SettingsModel.PaymentMethodId = cust.PaymentMethodId;
+
+                var model = new ContainerViewModel
+                {
+                    SurveyCreationModel = new SurveyCreationModel
+                    {
+                        SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList(),
+                        AnswerTypes = db.AnswerTypes.ToList(), // GLOBALIZATION!
+                        Departments = db.Departments.Where(d => d.CustCode == CustCode).Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount),
+                        SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
+                    },
+
+                    SurveyResultsModel = new SurveyResultsModel
+                    {
+                        SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList(),
+                        Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList(),
+                        AnswerTypes = db.AnswerTypes.ToList() // GLOBALIZATION!
+                    },
+
+                    GroupAdministrationModel = new GroupAdministrationModel
+                    {
+                        Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList()
+                    },
+
+                    SettingsModel = new SettingsModel
+                    {
+                        MinGroupSize = cust.MinGroupSize,
+                        Categories = cust.SurveyCategories.ToList(),
+                        AnswerTypes = db.AnswerTypes.Where(a => !a.Inactive).ToList(),
+                        PaymentMethods = db.PaymentMethods.ToList(),
+                        Name = cust.CustName,
+                        Email = cust.CustEmail,
+                        Street = cust.Street,
+                        Plz = cust.Plz,
+                        City = cust.City,
+                        Country = cust.Country,
+                        LanguageCode = cust.LanguageCode,
+                        DataStoragePeriod = cust.DataStoragePeriod,
+                        PaymentMethodId = cust.PaymentMethodId
+                    },
+
+                    SupportModel = new SupportModel
+                    {
+                        FaqEntries = db.FaqEntries.ToList()
+                    }
+                };
+                return View(model: model);
             }
-            return View(model: model);
         }
 
         private string CustCode

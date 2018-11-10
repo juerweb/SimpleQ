@@ -11,5 +11,6 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public SurveyResultsModel SurveyResultsModel { get; set; }
         public GroupAdministrationModel GroupAdministrationModel { get; set; }
         public SettingsModel SettingsModel { get; set; }
+        public SupportModel SupportModel { get; set; }
     }
 }
