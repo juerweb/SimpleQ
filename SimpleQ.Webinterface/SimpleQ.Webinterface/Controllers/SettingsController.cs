@@ -37,18 +37,22 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult ChangeMinGroup(int size)
+        public string ChangeMinGroup(int size)
         {
             using (var db = new SimpleQDBEntities())
             {
+                int minAllowed = db.DsgvoConstraints.Where(d => d.ConstrName == "MIN_GROUP_SIZE").FirstOrDefault().ConstrValue;
+                if (size < minAllowed)
+                    return $"Die Gruppengröße darf nicht kleiner als {minAllowed} sein.";
+
                 db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().MinGroupSize = size;
                 db.SaveChanges();
+                return "";
             }
-            return LoadSettings();
         }
 
         [HttpGet]
-        public ActionResult AddCategory(string catName)
+        public string AddCategory(string catName)
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -59,30 +63,48 @@ namespace SimpleQ.Webinterface.Controllers
                     CustCode = CustCode
                 });
                 db.SaveChanges();
+                return "";
             }
-            return LoadSettings();
         }
 
         [HttpGet]
-        public ActionResult ModifyCategory(int catId, string catName)
+        public string ModifyCategory(int catId, string catName)
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode).FirstOrDefault().CatName = catName;
-                db.SaveChanges();
+                try
+                {
+                    db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode).FirstOrDefault().CatName = catName;
+                    db.SaveChanges();
+                    return "";
+                }
+                catch (NullReferenceException)
+                {
+                    return $"Gewählte Kategorie existiert nicht mehr.";
+                }
             }
-            return LoadSettings();
         }
 
         [HttpGet]
-        public ActionResult DeleteCategory(int catId)
+        public string DeleteCategory(int catId)
         {
             using (var db = new SimpleQDBEntities())
             {
                 db.SurveyCategories.RemoveRange(db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode));
-                db.SaveChanges();
+                int rows = db.SaveChanges();
+                return (rows == 0) ? "Gewählte Kategorie existiert nicht mehr." : "";
             }
-            return LoadSettings();
+        }
+
+        [HttpPost]
+        public string ChangePassword(string password)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().CustPwdTmp = password;
+                db.SaveChanges();
+                return "";
+            }
         }
 
         [HttpPost]
@@ -92,7 +114,6 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().CustName = req.Name;
                 db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().CustEmail = req.Email;
-                db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().CustPwdTmp = req.Password;
                 db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().Street = req.Street;
                 db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().Plz = req.Plz;
                 db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().City = req.City;
