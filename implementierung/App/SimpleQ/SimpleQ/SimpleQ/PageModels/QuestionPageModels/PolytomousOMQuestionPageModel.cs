@@ -30,7 +30,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         {
             SendAnswerCommand = new Command(QuestionAnswered);
             IsQuestionAnswered = false;
-            IsChecked = new ObservableCollection<IsCheckedModel>();
+            IsChecked = new ObservableCollection<IsCheckedModel<AnswerOption>>();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
             base.Init(initData);
             foreach (AnswerOption option in this.Question.GivenAnswers)
             {
-                this.isChecked.Add(new IsCheckedModel(option));
+                this.isChecked.Add(new IsCheckedModel<AnswerOption>(option));
             }
         }
         #endregion
@@ -62,7 +62,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private Boolean isQuestionAnswered;
 
-        private ObservableCollection<IsCheckedModel> isChecked;
+        private ObservableCollection<IsCheckedModel<AnswerOption>> isChecked;
 
         #endregion
 
@@ -80,7 +80,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
             set { isQuestionAnswered = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<IsCheckedModel> IsChecked
+        public ObservableCollection<IsCheckedModel<AnswerOption>> IsChecked
         {
             get => isChecked;
             set
@@ -108,7 +108,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private void QuestionAnswered()
         {
             List<AnswerOption> result = new List<AnswerOption>();
-            foreach (IsCheckedModel model in this.IsChecked)
+            foreach (IsCheckedModel<AnswerOption> model in this.IsChecked)
             {
                 if (model.IsChecked)
                 {

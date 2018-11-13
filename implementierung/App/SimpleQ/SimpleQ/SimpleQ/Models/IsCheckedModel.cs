@@ -7,10 +7,10 @@ using System.Text;
 
 namespace SimpleQ.Models
 {
-    public class IsCheckedModel : INotifyPropertyChanged
+    public class IsCheckedModel<T> : INotifyPropertyChanged
     {
         #region Constructor(s)
-        public IsCheckedModel(AnswerOption option) : this()
+        public IsCheckedModel(T option) : this()
         {
             this.answerOption = option;
         }
@@ -22,7 +22,7 @@ namespace SimpleQ.Models
 
         #region Fields
         private bool isChecked;
-        private AnswerOption answerOption;
+        private T answerOption;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -35,7 +35,7 @@ namespace SimpleQ.Models
                 OnPropertyChanged();
             }
         }
-        public AnswerOption AnswerOption { get => answerOption; set => answerOption = value; }
+        public T AnswerOption { get => answerOption; set => answerOption = value; }
         #endregion
 
         #region Methods

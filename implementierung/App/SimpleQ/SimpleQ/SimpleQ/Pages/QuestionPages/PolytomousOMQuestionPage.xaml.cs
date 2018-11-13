@@ -25,7 +25,7 @@ namespace SimpleQ.Pages.QuestionPages
         private void Checkbox_IsCheckedChanged(object sender, TappedEventArgs e)
         {
             PolytomousOMQuestionPageModel pageModel = (PolytomousOMQuestionPageModel)(this.BindingContext);
-            foreach (IsCheckedModel model in pageModel.IsChecked)
+            foreach (IsCheckedModel<AnswerOption> model in pageModel.IsChecked)
             {
                 if (model.IsChecked)
                 {
@@ -41,7 +41,7 @@ namespace SimpleQ.Pages.QuestionPages
             ListView listView = (ListView)sender;
             if (listView.SelectedItem != null)
             {
-                IsCheckedModel model = (IsCheckedModel)e.SelectedItem;
+                IsCheckedModel<AnswerOption> model = (IsCheckedModel<AnswerOption>)e.SelectedItem;
                 PolytomousOMQuestionPageModel pageModel = (PolytomousOMQuestionPageModel)(this.BindingContext);
                 model.IsChecked = !model.IsChecked;
                 listView.SelectedItem = null;

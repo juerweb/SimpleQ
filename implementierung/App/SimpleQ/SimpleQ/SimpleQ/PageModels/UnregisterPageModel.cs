@@ -39,11 +39,11 @@ namespace SimpleQ.PageModels
         public UnregisterPageModel()
         {
             UnregisterCommand = new Command(UnregisterCommandExecuted);
-            registrations = new ObservableCollection<RegistrationDataModel>(JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString()));
-            isChecked = new Dictionary<RegistrationDataModel, bool>();
+            List<RegistrationDataModel> registrations = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
+            isChecked = new ObservableCollection<IsCheckedModel<RegistrationDataModel>>();
             foreach (RegistrationDataModel data in registrations)
             {
-                isChecked.Add(data, false);
+                isChecked.Add(new IsCheckedModel<RegistrationDataModel>(data));
             }
         }
 
@@ -59,8 +59,7 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Fields
-        private ObservableCollection<RegistrationDataModel> registrations;
-        private Dictionary<RegistrationDataModel, bool> isChecked;
+        private ObservableCollection<IsCheckedModel<RegistrationDataModel>> isChecked;
         private ISimulationService simulationService;
         private IDialogService dialogService;
         private IWebAPIService webAPIService;
@@ -69,17 +68,8 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Properties + Getter/Setter Methods
-        public ObservableCollection<RegistrationDataModel> Registrations
-        {
-            get => registrations;
-            set
-            {
-                registrations = value;
-                OnPropertyChanged();
-            }
-        }
 
-        public Dictionary<RegistrationDataModel, bool> IsChecked { get => isChecked; set => isChecked = value; }
+        public ObservableCollection<IsCheckedModel<RegistrationDataModel>> IsChecked { get => isChecked; set => isChecked = value; }
 
         public bool IsOneChecked
         {
@@ -106,8 +96,8 @@ namespace SimpleQ.PageModels
             Debug.WriteLine("Unregister Command Executed...", "Info");
             if (await dialogService.ShowReallySureDialog())
             {
-                foreach (RegistrationDataModel registrationDataModel in IsChecked.Keys){
-                    if (IsChecked[registrationDataModel])
+                foreach (IsCheckedModel<RegistrationDataModel> isCheckedModel in IsChecked){
+                    if (isCheckedModel.IsChecked)
                     {
                         try
                         {
@@ -116,25 +106,30 @@ namespace SimpleQ.PageModels
                                 //Android or iOS App
                                 Debug.WriteLine("Unregister Command executed on iOS or Android with PersId: " + Application.Current.Properties["PersId"] + " and CustCode: " + Application.Current.Properties["CustCode"], "Info");
                                 Boolean success;
-                                if (registrationDataModel.IsRegister)
+                                if (isCheckedModel.AnswerOption.IsRegister)
                                 {
-                                    success = await this.webAPIService.Unregister(registrationDataModel.RegistrationData.PersId.ToString(), registrationDataModel.RegistrationData.CustCode);
+                                    success = await this.webAPIService.Unregister(isCheckedModel.AnswerOption.RegistrationData.PersId.ToString(), isCheckedModel.AnswerOption.RegistrationData.CustCode);
                                 }
                                 else
                                 {
-                                   success = await this.webAPIService.LeaveDepartment(registrationDataModel.RegistrationData.PersId, registrationDataModel.RegistrationData.DepId, registrationDataModel.RegistrationData.CustCode);
+                                   success = await this.webAPIService.LeaveDepartment(isCheckedModel.AnswerOption.RegistrationData.PersId, isCheckedModel.AnswerOption.RegistrationData.DepId, isCheckedModel.AnswerOption.RegistrationData.CustCode);
                                 }
 
                                 if (success)
                                 {
-                                    Registrations.Remove(registrationDataModel);
-                                    if (registrations.Count == 0)
+                                    IsChecked.Remove(isCheckedModel);
+                                    if (IsChecked.Count == 0)
                                     {
                                         Application.Current.Properties.Remove("registrations");
                                     }
                                     else
                                     {
-                                        Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(registrations);
+                                        List<RegistrationDataModel> tmpList = new List<RegistrationDataModel>();
+                                        foreach (IsCheckedModel<RegistrationDataModel> tmp in IsChecked)
+                                        {
+                                            tmpList.Add(tmp.AnswerOption);
+                                        }
+                                        Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(tmpList);
                                     }
                                 }
                                 else
@@ -147,14 +142,19 @@ namespace SimpleQ.PageModels
                             {
                                 //UWP App
                                 Debug.WriteLine("Unregister Command executed on UWP", "Info");
-                                Registrations.Remove(registrationDataModel);
-                                if (registrations.Count == 0)
+                                IsChecked.Remove(isCheckedModel);
+                                if (IsChecked.Count == 0)
                                 {
                                     Application.Current.Properties.Remove("registrations");
                                 }
                                 else
                                 {
-                                    Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(registrations);
+                                    List<RegistrationDataModel> tmpList = new List<RegistrationDataModel>();
+                                    foreach (IsCheckedModel<RegistrationDataModel> tmp in IsChecked)
+                                    {
+                                        tmpList.Add(tmp.AnswerOption);
+                                    }
+                                    Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(tmpList);
                                 }
                             }
                         }
@@ -167,6 +167,7 @@ namespace SimpleQ.PageModels
                         await Application.Current.SavePropertiesAsync();
                     }
                 }
+                Debug.WriteLine("Go to right Page in UnregisterPageModel...", "Info");
                 App.GoToRightPage();
             }
         }

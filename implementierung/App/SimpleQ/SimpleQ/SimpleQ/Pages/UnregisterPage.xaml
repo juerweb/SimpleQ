@@ -8,13 +8,13 @@
         
         <StackLayout>
             <Label Text="{ext:Translate Text=SelectUnregisterGroups}"></Label>
-            <ListView ItemsSource="{Binding Registrations}" SelectionMode="None">
+            <ListView ItemsSource="{Binding IsChecked}" SelectionMode="Single" ItemSelected="ListView_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <controls:Checkbox IsCheckedChanged="Checkbox_IsCheckedChanged"></controls:Checkbox>
-                                <Label Text="{Binding RegistrationData.DepName}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
+                                <controls:Checkbox IsCheckedChanged="Checkbox_IsCheckedChanged" IsChecked="{Binding IsChecked, Mode=TwoWay}"></controls:Checkbox>
+                                <Label Text="{Binding AnswerOption.RegistrationData.DepName}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
