@@ -6,7 +6,7 @@
     <h2>@Resources.groupAdministrationHeader</h2>
 </div>
 <div class="row mt-1 pl-3 ml-0 mr-0">
-    <div class="col-md-4">
+    <div class="col-md-4 pr-0 border-right">
         <h4 class="text-center">Gruppenauswahl</h4>
         <div class="form-group mt-2 mb-1">
             <label for="groups">@Resources.groups</label>
@@ -25,27 +25,53 @@
         <span>Gewählte Gruppe: <b id="chosenGroup"></b></span>
         <button type="button" class="btn btn-primary btn-block mt-3" id="showNewGroupModalBtn">Neue Gruppe erstellen</button>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
         <h4 class="text-center">Aktionen</h4>
         <label>Name</label>
         <div class="row mr-0 ml-0" id="newCategoryDiv">
             <div class="col-10 p-0">
-                <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text" value="IT Produktion" />
+                <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text"/>
             </div>
             <div class="col-2 p-0">
                 <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>
             </div>
         </div>
 
-        <label>Gruppencode</label>
 
-        @*<canvas style="width: 100%; height: auto;" id="qrCodeDiv"></canvas>*@
-
-        <button class="btn btn-primary btn-block mt-2">Mitglied hinzufügen</button>
+        <button class="btn btn-primary btn-block mt-2"><span class="d-flex justify-content-between"><span>Mitglieder hinzufügen</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe0d0;</i></span></button>
+        <button class="btn btn-danger btn-block mt-2"><span class="d-flex justify-content-between"><span>Gruppe löschen</span><i id="openAddAnswerUpDownIcon" class="material-icons">	&#xe92b;</i></span></button>
 
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5 pl-0 pr-0 border-left">
         <h4 class="text-center">Infos</h4>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>Name</td>
+                    <td>Testdeppen</td>
+                </tr>
+                <tr>
+                    <td>Beschreibung</td>
+                    <td>Die Deppen von Dienst</td>
+                </tr>
+                <tr>
+                    <td>Teilnahmequote</td>
+                    <td>84%</td>
+                </tr>
+                <tr>
+                    <td>Erstellungsdatum</td>
+                    <td id="countGroupMembers">24.12.1999</td>
+                </tr>
+                <tr>
+                    <td>Mitglieder</td>
+                    <td id="countGroupMembers">12</td>
+                </tr>
+                <tr>
+                    <td>Teilnahmequote</td>
+                    <td>84%</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -78,28 +104,29 @@
 </div>
 
 <script>
-    let groups = {}; // key = department name, value = depId
+    if (groups === 'undefined') {//because of ajax reload
+        let groups = {}; // key = department name, value = depId
+    } else {
+        groups = {};
+    }
+
+    if (typeof chosen === 'undefined') {
+        let chosen;
+    }
 
     $(function () { // <-- Things to do at startup
-
+        let chosenDepId = 0;
         //fill groups array
         @{
             foreach(Department d in Model.Departments)
             {
                 @:groups['@d.DepName'] = '@d.DepId';
+                @:if (chosen === '@d.DepName') { chosenDepId = '@d.DepId' };
             }
         }
 
-        //draw QR Code
-        //let QRC = new QRious({
-        //    element: document.getElementById("qrCodeDiv"),
-        //    value: '123456',
-        //    level: 'H',
-        //    size: 1000
-        //});
-
         //choose first group automatically
-        let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
+        let radioBtnElem = document.getElementById("gaGroups").children[0].children[chosenDepId];
         radioBtnElem.setAttribute("checked", "checked");
         updateGroupNameInput(radioBtnElem.value); //fill into Textbox
         document.getElementById("chosenGroup").innerHTML = radioBtnElem.value;
@@ -115,6 +142,7 @@
         });
     }); // <-- Things to to at startup END
 
+    
 
     function addNewGroup() {
         let groupName = document.getElementById("NewGroupTB").value;
@@ -153,16 +181,10 @@
         document.getElementById("groupNameInput").value = groupName;
     }
 
-    function updateGroups() {
-        @{
-            foreach(Department d in Model.Departments)
-            {
-                @:groups['@d.DepName'] = '@d.DepId';
-            }
-        }
+    if (typeof tempTextGroups === 'undefined') {
+        let tempTextGroups;
     }
 
-    let tempTextGroups;
     function editGroupName(button) {
         //let input = document.getElementById("groupNameInput");
         $("#groupNameInput").removeClass("withoutBorder").removeAttr("readonly");
@@ -187,10 +209,10 @@
     function saveGroup(button, canceled, tempText) {
         let text;
         if (canceled) {
-            text = tempTextGroups;
+            //text = tempTextGroups;
+            document.getElementById("groupNameInput").value=tempTextGroups;
         } else {
             text = document.getElementById("groupNameInput").value;
-
             let keys = Object.keys(groups);
             if (keys.includes(text)) {
                 alert('@Resources.groupAlreadyExists');
@@ -198,16 +220,13 @@
             }
 
 
-            let url = '@Url.Action("Modify", "GroupAdministration", new {depId = "temp1", depName = "temp2"})'.replace("temp1", groups[tempTextGroups]).replace("temp2", text);
-            alert(url);
-            $.ajax({
-                url: url,
-                type: 'GET'
+            let url = '@Url.Action("Modify", "GroupAdministration")'//, new {depId = "temp1", depName = "temp2"})'.replace("temp1", groups[tempTextGroups]).replace("temp2", text);
+            url += '?depId=' + groups[tempTextGroups] + '&depName=' + text;
+            $("#groupAdministrationWindow").load(url, function () {
+                chosen = text;
             });
 
-            updateGroups();
-
-            // danach updateGroups() aufrufen!!
+            //updateGroups();
         }
         $("#groupNameInput").attr("readonly", true);
         $("#groupNameInput").addClass("withoutBorder");

@@ -15,7 +15,7 @@
 
             <label class="mt-2">@Resources.surveyTemplateHeader</label>
             <select class="form-control" id="surveyTemplateCB" onchange="surveyTemplateSelectionChanged()">
-                @{                   
+                @{
                     <option value="-1">No template</option> //-1 = no template
                     foreach (Survey svy in Model.SurveyTemplates)
                     {
@@ -24,6 +24,9 @@
                 }
 
             </select>
+
+            <label class="mt-2" for="question">@Resources.questionHeader</label>
+            <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText">
 
             @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", ("SvyText " + "StartDate")), new { @class = "form-control" })*@
             @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", "SvyText"), " ", new { @class = "form-control" })*@
@@ -114,13 +117,11 @@
                     <input id="QuestimeToTimePicker" type="time" class="form-control" name="EndTime" />
                 </span>
             </span>
-            <label class="mt-2" for="question">@Resources.questionHeader</label>
-            <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText">
 
             <div class="mt-2">
                 @Html.CheckBox("Survey.Template")
                 @*<input type="checkbox" checked="checked" onclick="" name="Survey.Template">*@
-                <span>@Resources.SaveAsTemplate</span>
+                <span data-toggle="tooltip" title="@Resources.TemplateDescription">@Resources.SaveAsTemplate</span>
             </div>
             <button type="submit" class="btn btn-primary btn-block mb-5">Umfrage absenden</button>
         </div>

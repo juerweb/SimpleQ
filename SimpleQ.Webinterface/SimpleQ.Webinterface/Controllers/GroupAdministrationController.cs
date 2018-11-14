@@ -29,7 +29,11 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.Departments.Add(new Department { DepName = depName, CustCode = CustCode });
+                db.Departments.Add(new Department {
+                    DepId = db.Departments.Where(d => d.CustCode == CustCode).Max(d => d.DepId) + 1,
+                    DepName = depName,
+                    CustCode = CustCode
+                });
                 db.SaveChanges();
             }
             return List();
@@ -40,7 +44,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.Departments.Where(d => d.DepId == depId).FirstOrDefault().DepName = depName;
+                db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault().DepName = depName;
                 db.SaveChanges();
             }
             return List();
@@ -51,7 +55,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.Departments.RemoveRange(db.Departments.Where(d => d.DepId == depId));
+                db.Departments.RemoveRange(db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode));
                 db.SaveChanges();
             }
             return List();

@@ -280,4 +280,7 @@
   <data name="groupAlreadyExists" xml:space="preserve">
     <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
   </data>
+  <data name="TemplateDescription" xml:space="preserve">
+    <value>Beim Anhaken, wird die Umfrage als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
+  </data>
 </root>

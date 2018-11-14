@@ -502,6 +502,15 @@ namespace SimpleQ.Webinterface.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die if you do the same question later, you dont have to write everything again ähnelt.
+        /// </summary>
+        public static string TemplateDescription {
+            get {
+                return ResourceManager.GetString("TemplateDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die to ähnelt.
         /// </summary>
         public static string to {

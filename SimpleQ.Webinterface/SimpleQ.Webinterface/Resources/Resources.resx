@@ -280,4 +280,7 @@
   <data name="groupAlreadyExists" xml:space="preserve">
     <value>There is already a group with this name!</value>
   </data>
+  <data name="TemplateDescription" xml:space="preserve">
+    <value>if you do the same question later, you dont have to write everything again</value>
+  </data>
 </root>
