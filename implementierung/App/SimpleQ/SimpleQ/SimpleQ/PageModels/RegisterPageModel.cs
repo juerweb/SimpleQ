@@ -63,6 +63,8 @@ namespace SimpleQ.PageModels
         private IUserDialogs dialogService;
 
         private Boolean isRegistration;
+
+        private Boolean debugMode;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -103,6 +105,8 @@ namespace SimpleQ.PageModels
 
         public bool IsRegistration { get => isRegistration; set => isRegistration = value; }
 
+        public bool DebugMode { get => debugMode; set => debugMode = value; }
+
         #endregion
 
         #region Commands
@@ -124,7 +128,7 @@ namespace SimpleQ.PageModels
             Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
             string code = this.RegisterCode;
             this.RegisterCode = "";
-            CoreMethods.PushPageModel<LoadingPageModel>(new List<object> { code, this.isRegistration });
+            CoreMethods.PushPageModel<LoadingPageModel>(new List<object> { code, this.isRegistration, this.DebugMode });
         }
 
         public void OnOpenScanner()

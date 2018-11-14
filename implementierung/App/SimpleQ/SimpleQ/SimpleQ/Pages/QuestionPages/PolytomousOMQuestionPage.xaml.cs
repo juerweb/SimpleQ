@@ -24,16 +24,20 @@ namespace SimpleQ.Pages.QuestionPages
 
         private void Checkbox_IsCheckedChanged(object sender, TappedEventArgs e)
         {
-            PolytomousOMQuestionPageModel pageModel = (PolytomousOMQuestionPageModel)(this.BindingContext);
-            foreach (IsCheckedModel<AnswerOption> model in pageModel.IsChecked)
+            if (this.BindingContext != null)
             {
-                if (model.IsChecked)
+                PolytomousOMQuestionPageModel pageModel = (PolytomousOMQuestionPageModel)(this.BindingContext);
+                foreach (IsCheckedModel<AnswerOption> model in pageModel.IsChecked)
                 {
-                    pageModel.IsQuestionAnswered = true;
-                    return;
+                    if (model.IsChecked)
+                    {
+                        pageModel.IsQuestionAnswered = true;
+                        return;
+                    }
                 }
+                pageModel.IsQuestionAnswered = false;
             }
-            pageModel.IsQuestionAnswered = false;
+
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:resx="clr-namespace:SimpleQ.Extensions"
+             xmlns:controls="clr-namespace:IntelliAbb.Xamarin.Controls;assembly=IntelliAbb.Xamarin.Controls"
              x:Class="SimpleQ.Pages.RegisterPage"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
@@ -21,6 +22,11 @@
                             <resx:SixDigitCodeBehavior x:Name="SixDigitCodeBehavior"></resx:SixDigitCodeBehavior>
                         </Entry.Behaviors>
                     </Entry>
+                    <StackLayout Orientation="Horizontal">
+                        <controls:Checkbox VerticalOptions="Center" IsChecked="{Binding DebugMode}"></controls:Checkbox>
+                        <Label Text="{resx:Translate Text=DebugMode}"></Label>
+                    </StackLayout>
+
                     <Button Command="{Binding ManualCodeEntryCommand}" CommandParameter="{Binding}" Text="{resx:Translate Text=Register}" IsEnabled="{Binding Source={x:Reference SixDigitCodeBehavior}, Path=IsValid}"></Button>
                 </StackLayout>
             </Frame>

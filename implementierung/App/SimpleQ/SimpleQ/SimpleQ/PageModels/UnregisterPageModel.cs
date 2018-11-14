@@ -96,7 +96,9 @@ namespace SimpleQ.PageModels
             Debug.WriteLine("Unregister Command Executed...", "Info");
             if (await dialogService.ShowReallySureDialog())
             {
-                foreach (IsCheckedModel<RegistrationDataModel> isCheckedModel in IsChecked){
+                ObservableCollection<IsCheckedModel<RegistrationDataModel>> saveCollection = new ObservableCollection<IsCheckedModel<RegistrationDataModel>>(IsChecked);
+                foreach (IsCheckedModel<RegistrationDataModel> isCheckedModel in saveCollection)
+                {
                     if (isCheckedModel.IsChecked)
                     {
                         try

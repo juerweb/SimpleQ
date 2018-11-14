@@ -312,4 +312,7 @@
   <data name="Error204" xml:space="preserve">
     <value>Es ist ein Fehler beim Beantworten der Frage aufgetreten!</value>
   </data>
+  <data name="DebugMode" xml:space="preserve">
+    <value>Debug-Modus?</value>
+  </data>
 </root>

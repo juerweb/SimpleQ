@@ -27,6 +27,7 @@ using SimpleQ.Pages.QuestionPages;
 using Xamarin.Forms.Internals;
 using System.IO;
 using SimpleQ.Shared;
+using System.Net.Http;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -48,14 +49,14 @@ namespace SimpleQ
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
 
+
             SetupIOC();
 
             SetupBlobCache();
 
+            SetDefaultProperties();
+
             //GetKeyFromFile();
-
-
-
             InitializeComponent();
 
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
@@ -65,6 +66,20 @@ namespace SimpleQ
 
             GoToRightPage();
 
+        }
+
+        private async void SetDefaultProperties()
+        {
+            try
+            {
+                Boolean closeAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
+                Debug.WriteLine("CloseAppAfterNotification is set to " + closeAppAfterNotification, "Info");
+            }
+            catch (KeyNotFoundException e)
+            {
+                Debug.WriteLine("CloseAppAfterNotification is not set... ", "Info");
+                BlobCache.UserAccount.InsertObject<Boolean>("CloseAppAfterNotification", true);
+            }
         }
 
         public static void GoToRightPage()
@@ -150,55 +165,55 @@ namespace SimpleQ
             switch (surveyModel.TypeDesc)
             {
                 case SurveyType.YesNoQuestion:
-                    YesNoQuestionPage ynqPage = (YesNoQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoQuestionPageModel>(surveyModel);
+                    YesNoQuestionPage ynqPage = (YesNoQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoQuestionPageModel>(new List<object> { surveyModel, true });
                     YesNoQuestionPageModel ynqPageModel = (YesNoQuestionPageModel)ynqPage.BindingContext;
                     //ynqPageModel.Question = surveyModel;
                     navService.PushPage(ynqPage, ynqPageModel);
                     return;
                 case SurveyType.YesNoDontKnowQuestion:
-                    YesNoDontKnowQuestionPage yndkqPage = (YesNoDontKnowQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoDontKnowQuestionPageModel>(surveyModel);
+                    YesNoDontKnowQuestionPage yndkqPage = (YesNoDontKnowQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoDontKnowQuestionPageModel>(new List<object> { surveyModel, true });
                     YesNoDontKnowQuestionPageModel yndkqPageModel = (YesNoDontKnowQuestionPageModel)yndkqPage.BindingContext;
                     //yndkqPageModel.Question = surveyModel;
                     navService.PushPage(yndkqPage, yndkqPageModel);
                     return;
                 case SurveyType.TrafficLightQuestion:
-                    TrafficLightQuestionPage tlqPage = (TrafficLightQuestionPage)FreshPageModelResolver.ResolvePageModel<TrafficLightQuestionPageModel>(surveyModel);
+                    TrafficLightQuestionPage tlqPage = (TrafficLightQuestionPage)FreshPageModelResolver.ResolvePageModel<TrafficLightQuestionPageModel>(new List<object> { surveyModel, true });
                     TrafficLightQuestionPageModel tlqPageModel = (TrafficLightQuestionPageModel)tlqPage.BindingContext;
                     //tlqPageModel.Question = surveyModel;
                     navService.PushPage(tlqPage, tlqPageModel);
                     return;
                 case SurveyType.OpenQuestion:
-                    OpenQuestionPage owqPage = (OpenQuestionPage)FreshPageModelResolver.ResolvePageModel<OpenQuestionPageModel>(surveyModel);
+                    OpenQuestionPage owqPage = (OpenQuestionPage)FreshPageModelResolver.ResolvePageModel<OpenQuestionPageModel>(new List<object> { surveyModel, true });
                     OpenQuestionPageModel owqPageModel = (OpenQuestionPageModel)owqPage.BindingContext;
                     //owqPageModel.Question = surveyModel;
                     navService.PushPage(owqPage, owqPageModel);
                     return;
                 case SurveyType.PolytomousUSQuestion:
-                    PolytomousUSQuestionPage polytomousUSPage = (PolytomousUSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUSQuestionPageModel>(surveyModel);
+                    PolytomousUSQuestionPage polytomousUSPage = (PolytomousUSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUSQuestionPageModel>(new List<object> { surveyModel, true });
                     PolytomousUSQuestionPageModel polytomousUSPageModel = (PolytomousUSQuestionPageModel)polytomousUSPage.BindingContext;
                     //polytomousUSPageModel.Question = surveyModel;
                     navService.PushPage(polytomousUSPage, polytomousUSPageModel);
                     return;
                 case SurveyType.PolytomousOSQuestion:
-                    PolytomousOSQuestionPage polytomousOSPage = (PolytomousOSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousOSQuestionPageModel>(surveyModel);
+                    PolytomousOSQuestionPage polytomousOSPage = (PolytomousOSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousOSQuestionPageModel>(new List<object> { surveyModel, true });
                     PolytomousUSQuestionPageModel polytomousOSPageModel = (PolytomousUSQuestionPageModel)polytomousOSPage.BindingContext;
                     //polytomousOSPageModel.Question = surveyModel;
                     navService.PushPage(polytomousOSPage, polytomousOSPageModel);
                     return;
                 case SurveyType.DichotomousQuestion:
-                    DichotomousQuestionPage dichotomousQuestionPage = (DichotomousQuestionPage)FreshPageModelResolver.ResolvePageModel<DichotomousQuestionPageModel>(surveyModel);
+                    DichotomousQuestionPage dichotomousQuestionPage = (DichotomousQuestionPage)FreshPageModelResolver.ResolvePageModel<DichotomousQuestionPageModel>(new List<object> { surveyModel, true });
                     DichotomousQuestionPageModel dichotomousQuestionPageModel = (DichotomousQuestionPageModel)dichotomousQuestionPage.BindingContext;
                     //dichotomousQuestionPageModel.Question = surveyModel;
                     navService.PushPage(dichotomousQuestionPage, dichotomousQuestionPageModel);
                     return;
                 case SurveyType.PolytomousOMQuestion:
-                    PolytomousOMQuestionPage polytomousOMQuestionPage = (PolytomousOMQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousOMQuestionPageModel>(surveyModel);
+                    PolytomousOMQuestionPage polytomousOMQuestionPage = (PolytomousOMQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousOMQuestionPageModel>(new List<object> { surveyModel, true });
                     PolytomousOMQuestionPageModel polytomousOMQuestionPageModel = (PolytomousOMQuestionPageModel)polytomousOMQuestionPage.BindingContext;
                     //polytomousOMQuestionPageModel.Question = surveyModel;
                     navService.PushPage(polytomousOMQuestionPage, polytomousOMQuestionPageModel);
                     return;
                 case SurveyType.PolytomousUMQuestion:
-                    PolytomousUMQuestionPage polytomousUMQuestionPage = (PolytomousUMQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUMQuestionPageModel>(surveyModel);
+                    PolytomousUMQuestionPage polytomousUMQuestionPage = (PolytomousUMQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUMQuestionPageModel>(new List<object> { surveyModel, true });
                     PolytomousUMQuestionPageModel polytomousUMQuestionPageModel = (PolytomousUMQuestionPageModel)polytomousUMQuestionPage.BindingContext;
                     //polytomousUMQuestionPageModel.Question = surveyModel;
                     navService.PushPage(polytomousUMQuestionPage, polytomousUMQuestionPageModel);
@@ -208,7 +223,7 @@ namespace SimpleQ
             List<SurveyType> types = new List<SurveyType>(new SurveyType[]{ SurveyType.LikertScale3Question, SurveyType.LikertScale4Question, SurveyType.LikertScale5Question , SurveyType.LikertScale6Question, SurveyType.LikertScale7Question, SurveyType.LikertScale8Question, SurveyType.LikertScale9Question });
             if (types.Contains(surveyModel.TypeDesc))
             {
-                LikertScaleQuestionPage likertScaleQuestionPage = (LikertScaleQuestionPage)FreshPageModelResolver.ResolvePageModel<LikertScaleQuestionPageModel>(surveyModel);
+                LikertScaleQuestionPage likertScaleQuestionPage = (LikertScaleQuestionPage)FreshPageModelResolver.ResolvePageModel<LikertScaleQuestionPageModel>(new List<object> { surveyModel, true });
                 LikertScaleQuestionPageModel likertScaleQuestionPageModel = (LikertScaleQuestionPageModel)likertScaleQuestionPage.BindingContext;
                 //likertScaleQuestionPageModel.Question = surveyModel;
                 navService.PushPage(likertScaleQuestionPage, likertScaleQuestionPageModel);
@@ -294,13 +309,25 @@ namespace SimpleQ
 
             IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
             Debug.WriteLine(webAPIService);
-            SurveyModel surveyModel = await webAPIService.GetSurveyData(int.Parse(additionalData["svyId"].ToString()));  
+            try
+            {
+                SurveyModel surveyModel = await webAPIService.GetSurveyData(int.Parse(additionalData["svyId"].ToString()));
 
-            IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
-            Debug.WriteLine("T5");
-            questionService.AddQuestion(surveyModel);
+                IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+                Debug.WriteLine("T5");
+                questionService.AddQuestion(surveyModel);
 
-            OpenQuestionPage(surveyModel);
+                OpenQuestionPage(surveyModel);
+            }
+            catch (HttpRequestException e)
+            {
+                Debug.WriteLine("WebException during the GetSurveyData", "Error");
+                IDialogService dialogService = FreshIOC.Container.Resolve<IDialogService>();
+
+                dialogService.ShowErrorDialog(202);
+            }
+
+
 
             /*Console.WriteLine("1234: HandleNotificationOpened!23");
 

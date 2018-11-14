@@ -46,35 +46,32 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
-            if (initData.GetType() == typeof(SurveyModel))
-            {
-                SurveyModel tmp = (SurveyModel)initData;
-                switch (tmp.TypeDesc)
-                {
-                    case SurveyType.LikertScale3Question:
-                        this.Gradation = 3;
-                        break;
-                    case SurveyType.LikertScale4Question:
-                        this.Gradation = 4;
-                        break;
-                    case SurveyType.LikertScale5Question:
-                        this.Gradation = 5;
-                        break;
-                    case SurveyType.LikertScale6Question:
-                        this.Gradation = 6;
-                        break;
-                    case SurveyType.LikertScale7Question:
-                        this.Gradation = 7;
-                        break;
-                    case SurveyType.LikertScale8Question:
-                        this.Gradation = 8;
-                        break;
-                    case SurveyType.LikertScale9Question:
-                        this.Gradation = 9;
-                        break;
-                }
-            }
             base.Init(initData);
+            switch (this.Question.TypeDesc)
+            {
+                case SurveyType.LikertScale3Question:
+                    this.Gradation = 3;
+                    break;
+                case SurveyType.LikertScale4Question:
+                    this.Gradation = 4;
+                    break;
+                case SurveyType.LikertScale5Question:
+                    this.Gradation = 5;
+                    break;
+                case SurveyType.LikertScale6Question:
+                    this.Gradation = 6;
+                    break;
+                case SurveyType.LikertScale7Question:
+                    this.Gradation = 7;
+                    break;
+                case SurveyType.LikertScale8Question:
+                    this.Gradation = 8;
+                    break;
+                case SurveyType.LikertScale9Question:
+                    this.Gradation = 9;
+                    break;
+            }
+
         }
         #endregion
 

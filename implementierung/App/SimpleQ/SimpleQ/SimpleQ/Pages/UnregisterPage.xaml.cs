@@ -23,16 +23,20 @@ namespace SimpleQ.Pages
 
         private void Checkbox_IsCheckedChanged(object sender, TappedEventArgs e)
         {
-            UnregisterPageModel pageModel = (UnregisterPageModel)(this.BindingContext);
-            foreach (IsCheckedModel<RegistrationDataModel> model in pageModel.IsChecked)
+            if (this.BindingContext != null)
             {
-                if (model.IsChecked)
+                UnregisterPageModel pageModel = (UnregisterPageModel)(this.BindingContext);
+                foreach (IsCheckedModel<RegistrationDataModel> model in pageModel.IsChecked)
                 {
-                    pageModel.IsOneChecked = true;
-                    return;
+                    if (model.IsChecked)
+                    {
+                        pageModel.IsOneChecked = true;
+                        return;
+                    }
                 }
+                pageModel.IsOneChecked = false;
             }
-            pageModel.IsOneChecked = false;
+
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

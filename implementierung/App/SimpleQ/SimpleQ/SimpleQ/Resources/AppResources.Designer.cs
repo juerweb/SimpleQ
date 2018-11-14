@@ -223,6 +223,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Debug-Modus? ähnelt.
+        /// </summary>
+        internal static string DebugMode {
+            get {
+                return ResourceManager.GetString("DebugMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Löschen ähnelt.
         /// </summary>
         internal static string Delete {

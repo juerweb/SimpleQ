@@ -146,8 +146,15 @@ namespace SimpleQ.PageModels
             //Load Data
             if ((Boolean)objects[1])
             {
-                await questionService.LoadData();
-                Debug.WriteLine("Requested Data...", "Info");
+                if (objects.Count > 2 && (Boolean)objects[2])
+                {
+                    await questionService.LoadData();
+                    Debug.WriteLine("Requested Data in Debug Mode...", "Info");
+                }
+                else
+                {
+                    Debug.WriteLine("No Data Request because not in Debug Mode...", "Info");
+                }
             }
 
             //Set MainPageModel as new Main Page

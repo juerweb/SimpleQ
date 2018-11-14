@@ -196,11 +196,20 @@ namespace SimpleQ.PageModels.Services
         public async void AddQuestion(SurveyModel question)
         {
             Debug.WriteLine("Add new Question...", "Info");
-            List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+            List<SurveyModel> list;
+            try
+            {
+                list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+            }
+            catch (KeyNotFoundException e)
+            {
+                list = new List<SurveyModel>();
+            }
+            
             if (!list.Contains(question))
             {
                 list.Add(question);
-                await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Question", list);
+                await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
             }
 
             this.Questions.Add(question);
