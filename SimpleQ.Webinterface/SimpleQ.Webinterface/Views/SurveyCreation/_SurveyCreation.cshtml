@@ -35,7 +35,7 @@
             <label class="mt-2">@Resources.surveyCategoryHeader</label>
             <div class="row mr-0 ml-0">
                 <div class="col-11 p-0">
-                    @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control rightNotRounded" })
+                    @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @id = "categoryDropdown", @class = "form-control rightNotRounded" })
                 </div>
                 <div class="col-1 p-0">
                     <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" id="openAddCategoryBtn"><i class="material-icons">&#xe145;</i></button>
@@ -155,32 +155,82 @@
         });
 
         $("#openAddAnswer").click(function () {
-            document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe5ce;";
-            if ($("#answerBox").is(":hidden")) {
-                openAddAnswerBox();
-            } else if ($("#answerBox").is(":visible")) {
-                $("#answerBox").hide();
-                document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe313;";
-            }
+            openHideAnswerBox();
         });
     });
+
+    function openHideAnswerBox() {
+        document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe5ce;";
+        if ($("#answerBox").is(":hidden")) {
+            openAddAnswerBox();
+        } else if ($("#answerBox").is(":visible")) {
+            $("#answerBox").hide();
+            document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe313;";
+        }
+    }
 
     function surveyTemplateSelectionChanged() {
         let surveyTemplateCB = document.getElementById("surveyTemplateCB");
         let value = surveyTemplateCB.value;
+
+        if (value == -1) {
+            clearAll();
+            return;
+        }
         let url = '@Url.Action("LoadTemplate", "SurveyCreation", new { svyId = "temp"})'.replace("temp", value);
 
         let survey;
-        $.get(url, function (data) {
-            survey = JSON.parse(data);
-            alert(survey.AnswerOptions);
+        $.get(url, function (survey) {
 
+            document.getElementById("question").value = survey.SvyText; //Fill Question input
+
+            let ddl = document.getElementById('categoryDropdown'); //change to Surveycategory from Template
+            let opts = ddl.options.length;
+            for (let i = 0; i < opts; i++) {
+                if (ddl.options[i].value == survey.CatId) {
+                    ddl.options[i].selected = true;
+                    break;
+                }
+            }
+
+            ddl = document.getElementById('AnswerTypeCB'); //change AnswerType from Template
+            opts = ddl.options.length;
+            for (i = 0; i < opts; i++) {
+                if (ddl.options[i].value == survey.TypeId) {
+                    ddl.options[i].selected = true;
+                    answerTypeSelectionChanged();
+                    break;
+                }
+            }
+
+            if (survey.TypeId > 4) { //fill answers if necessary
+                if (survey.TypeId >= 6 && survey.TypeId <= 9) {
+                    openHideAnswerBox(); //open Box to create answerUL
+                    openHideAnswerBox(); // close it in the next possible moment
+                    let ul = document.getElementById("answerUL");
+                    alert(survey.AnswerOptions);
+                    console.log(survey.AnswerOptions);
+                    for (i = 0; i < survey.AnswerOptions.length; i++) {
+                        console.log(survey.AnswerOptions[i].AnsText);
+                    }
+                    ul.innerHTML += '<li class="list-group-item">' +
+                        '   <span class="d-flex justify-content-between">' +
+                        '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + answers[i] + '" />' +
+                        '       <span>' +
+                        '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+                        '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+                        '       </span>' +
+                        '   </span>' +
+                        '</li>';
+                }
+            }
 
         });
 
+    }
 
-
-
+    function clearAll() {
+        document.getElementById("question").value = "";
     }
 
     function answerTypeSelectionChanged() {
