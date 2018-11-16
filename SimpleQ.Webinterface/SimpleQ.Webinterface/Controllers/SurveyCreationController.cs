@@ -8,9 +8,9 @@ using System.Web.Mvc;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Mobile;
 using SimpleQ.Webinterface.Models.ViewModels;
-using OneSignal.CSharp.SDK;
-using OneSignal.CSharp.SDK.Resources.Devices;
-using OneSignal.CSharp.SDK.Resources.Notifications;
+//using OneSignal.CSharp.SDK;
+//using OneSignal.CSharp.SDK.Resources.Devices;
+//using OneSignal.CSharp.SDK.Resources.Notifications;
 
 namespace SimpleQ.Webinterface.Controllers
 {
