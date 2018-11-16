@@ -66,7 +66,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             get
             {
-                return "m4rku5";//Session["custCode"] as string;
+                return Session["custCode"] as string;
             }
         }
     }

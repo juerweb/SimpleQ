@@ -20,9 +20,9 @@ insert into Employs values (2, '420420', 3);
 insert into Employs values (2, '420420', 4);
 insert into Employs values (2, '420420', 5);
 
-insert into SurveyCategory values (1, '420420', 'Politische Fragen');
-insert into SurveyCategory values (2, '420420', 'Persönliche Fragen');
-insert into SurveyCategory values (3, '420420', 'Unnötige Fragen');
+insert into SurveyCategory values (1, '420420', 'Politische Fragen', 0);
+insert into SurveyCategory values (2, '420420', 'Persönliche Fragen', 0);
+insert into SurveyCategory values (3, '420420', 'Unnötige Fragen', 0);
 
 insert into Survey values (1, '420420', 'Sind Sie politisch interessiert?', '2018-08-24', '2019-08-24', 5, 1, 0, 0) -- SvyId 1
 insert into Survey values (2, '420420', 'Sind Sie foisch?', '2018-08-24', '2019-08-24', 5, 1, 0, 0) -- SvyId 2
@@ -115,7 +115,7 @@ commit;
 go
 
 -- ++++++++ TRENDANALYSE-TESTDATEN ++++++++
-insert into SurveyCategory values (4, '420420', 'Ist der Chef unbeliebt?');
+insert into SurveyCategory values (4, '420420', 'Ist der Chef unbeliebt?', 0);
 
 insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-01', '2018-07-15', 5, 2, 0, 0); -- SvyId 6
 insert into Asking values (6, 1, '420420');

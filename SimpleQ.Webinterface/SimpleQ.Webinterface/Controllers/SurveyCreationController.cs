@@ -59,7 +59,7 @@ namespace SimpleQ.Webinterface.Controllers
 
 
         [HttpGet]
-        public JsonResult LoadTemplate(int svyId)
+        public ActionResult LoadTemplate(int svyId)
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -73,15 +73,9 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public void CreateCategory(string catName)
+        public ActionResult CreateCategory(string catName)
         {
-            using (var db = new SimpleQDBEntities())
-            {
-                db.SurveyCategories.Add(new SurveyCategory {
-                    CatId = db.SurveyCategories.Where(c => c.CustCode == CustCode).Max(c => c.CatId) + 1,
-                    CatName = catName, CustCode = CustCode });
-                db.SaveChanges();
-            }
+            return RedirectToAction("AddCategory", "Settings", new { catName });
         }
 
         [HttpGet]
@@ -208,7 +202,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             get
             {
-                return "m4rku5";//Session["custCode"] as string;
+                return Session["custCode"] as string;
             }
         }
     }

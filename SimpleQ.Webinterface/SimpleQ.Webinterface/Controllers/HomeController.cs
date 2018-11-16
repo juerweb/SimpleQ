@@ -12,7 +12,7 @@ namespace SimpleQ.Webinterface.Controllers
     {
         public ActionResult Index()
         {
-            Session["custCode"] = "m4rku5";
+            Session["custCode"] = "420420";
 
             using (var db = new SimpleQDBEntities())
             {
@@ -22,7 +22,7 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     SurveyCreationModel = new SurveyCreationModel
                     {
-                        SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList(),
+                        SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode && !s.Deactivated).ToList(),
                         AnswerTypes = db.AnswerTypes.ToList(), // GLOBALIZATION!
                         Departments = db.Departments.Where(d => d.CustCode == CustCode).Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount),
                         SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
@@ -30,7 +30,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     SurveyResultsModel = new SurveyResultsModel
                     {
-                        SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode).ToList(),
+                        SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode && !s.Deactivated).ToList(),
                         Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList(),
                         AnswerTypes = db.AnswerTypes.ToList() // GLOBALIZATION!
                     },
@@ -44,7 +44,8 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         MinGroupSize = cust.MinGroupSize,
                         Categories = cust.SurveyCategories.ToList(),
-                        AnswerTypes = cust.AnswerTypes.ToList(),
+                        ActivatedAnswerTypes = cust.AnswerTypes.ToList(),
+                        DeactivatedAnswerTypes = db.AnswerTypes.ToList().Except(cust.AnswerTypes.ToList()).ToList(),
                         PaymentMethods = db.PaymentMethods.ToList(),
                         Name = cust.CustName,
                         Email = cust.CustEmail,

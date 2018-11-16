@@ -47,7 +47,7 @@ create table Customer
 	City varchar(max) not null,
 	Country varchar(max) not null,
 	LanguageCode char(3) not null,
-	DataStoragePeriod int not null, -- in Monaten
+	DataStoragePeriod int not null check(DataStoragePeriod > 0), -- in Monaten
 	PaymentMethodId int not null references PaymentMethod,
     MinGroupSize int not null,
     PricePerClick money not null,
@@ -145,6 +145,7 @@ create table SurveyCategory
 	CatId int not null,
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer, 
 	CatName varchar(max) not null,
+	Deactivated bit not null default 0,
     primary key (CatId, CustCode),
 );
 go
@@ -163,7 +164,8 @@ create table Survey
 	TypeId int not null references AnswerType,
 	Template bit not null default 0,
 	[Sent] bit not null default 0,
-    foreign key (CatId, CustCode) references SurveyCategory
+    foreign key (CatId, CustCode) references SurveyCategory,
+	check (StartDate < EndDate)
 );
 go
 
@@ -324,7 +326,7 @@ on Survey
 after update as
 begin
     if(update(TypeId))
-        begin
+    begin
         declare @svyId int, @typeId int;
         declare c cursor local for select SvyId, TypeId from inserted;
 
@@ -347,6 +349,34 @@ begin
     end
 end
 go
+
+
+-- Löscht ggf. Umfragekategorien falls diese als deaktiviert gekennzeichnet wurden und nicht mehr verwendet werden
+create trigger tr_SurveyDel
+on Survey
+after delete as
+begin
+	declare @catId int;
+	declare c cursor local for select distinct d.CatId
+									  from deleted d
+									  join SurveyCategory c on d.CatId = c.CatId
+									  where Deactivated = 1;
+
+	open c;
+	fetch c into @catId;
+	while(@@FETCH_STATUS = 0)
+	begin
+		if (not exists(select * from Survey where CatId = @catId))
+		begin
+			delete from SurveyCategory where CatId = @catId;
+		end
+		fetch c into @catId;
+	end
+	close c;
+	deallocate c;
+end
+go
+
 
 -- Zum Löschen der abgelaufenen Umfragedaten
 drop procedure sp_CheckExceededSurveyData;
