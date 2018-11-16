@@ -219,4 +219,3 @@ select * from Survey;
 --select * from Chooses;
 --select * from Vote;
 --rollback;
-
