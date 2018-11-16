@@ -4,7 +4,7 @@ go
 set nocount on;
 go
 
-drop table FaqEntry
+drop table FaqEntry;
 drop table DsgvoConstraint;
 drop table Chooses;
 drop table Vote;
@@ -13,6 +13,7 @@ drop table Asking;
 drop table Survey;
 drop table SurveyCategory;
 drop table PredefinedAnswerOption;
+drop table Uses;
 drop table AnswerType;
 drop table BaseQuestionType;
 drop table Employs;
@@ -113,8 +114,18 @@ create table AnswerType
 (
 	TypeId int primary key,
 	TypeDesc varchar(max) not null,
-    BaseId int not null references BaseQuestionType,
-    Inactive bit not null
+    BaseId int not null references BaseQuestionType
+);
+go
+
+-- Vom Kunden verwendete Beantwortungsarten
+-- KUNDENSPEZIFISCH
+create table Uses
+(
+	CustCode char(6) collate Latin1_General_CS_AS references Customer,
+	TypeId int references AnswerType,
+	Inactive bit default 0,
+	primary key (CustCode, TypeId)
 );
 go
 
@@ -151,8 +162,8 @@ create table Survey
 	EndDate datetime not null,
     Amount int not null,
 	TypeId int not null references AnswerType,
-	Template bit not null,
-	[Sent] bit not null,
+	Template bit not null default 0,
+	[Sent] bit not null default 0,
     foreign key (CatId, CustCode) references SurveyCategory
 );
 go
@@ -220,7 +231,7 @@ go
 
 
 
--- Hasht das Passwort und setzt das im Klartext Eingegebene NULL
+-- Hasht das Passwort und setzt das im Klartext Eingegebene NULL, fügt alle AnwerTypes in die Uses-Tabelle mit dem neuen Customer ein
 create trigger tr_CustomerIns
 on Customer
 after insert as
@@ -238,6 +249,9 @@ begin
 			update Customer set CustPwdHash = @hash, CustPwdTmp = null
 			where CustCode = @CustCode
 		end
+
+		insert into Uses (CustCode, TypeId, Inactive) select @CustCode, TypeId, 0
+													  from AnswerType;
 		
 		fetch c into @CustCode, @hash
 	end
@@ -335,7 +349,6 @@ begin
 end
 go
 
-
 -- Zum Löschen der abgelaufenen Umfragedaten
 drop procedure sp_CheckExceededSurveyData;
 go
@@ -386,22 +399,22 @@ insert into BaseQuestionType values (1, 'OpenQuestion');
 insert into BaseQuestionType values (2, 'DichotomousQuestion');
 insert into BaseQuestionType values (3, 'PolytomousQuestion');
 
-insert into AnswerType values (1, 'YesNo', 2, 0);
-insert into AnswerType values (2, 'YesNoDontKnow', 3, 0);
-insert into AnswerType values (3, 'TrafficLight', 3, 0);
-insert into AnswerType values (4, 'Open', 1, 0);
-insert into AnswerType values (5, 'Dichotomous', 2, 0);
-insert into AnswerType values (6, 'PolytomousUnorderedSingle', 3, 0);
-insert into AnswerType values (7, 'PolytomousUnorderedMultiple', 3, 0);
-insert into AnswerType values (8, 'PolytomousOrderedSingle', 3, 0);
-insert into AnswerType values (9, 'PolytomousOrderedMultiple', 3, 0);
-insert into AnswerType values (10, 'LikertSkale3', 3, 0);
-insert into AnswerType values (11, 'LikertSkale4', 3, 0);
-insert into AnswerType values (12, 'LikertSkale5', 3, 0);
-insert into AnswerType values (13, 'LikertSkale6', 3, 0);
-insert into AnswerType values (14, 'LikertSkale7', 3, 0);
-insert into AnswerType values (15, 'LikertSkale8', 3, 0);
-insert into AnswerType values (16, 'LikertSkale9', 3, 0);
+insert into AnswerType values (1, 'YesNo', 2);
+insert into AnswerType values (2, 'YesNoDontKnow', 3);
+insert into AnswerType values (3, 'TrafficLight', 3);
+insert into AnswerType values (4, 'Open', 1);
+insert into AnswerType values (5, 'Dichotomous', 2);
+insert into AnswerType values (6, 'PolytomousUnorderedSingle', 3);
+insert into AnswerType values (7, 'PolytomousUnorderedMultiple', 3);
+insert into AnswerType values (8, 'PolytomousOrderedSingle', 3);
+insert into AnswerType values (9, 'PolytomousOrderedMultiple', 3);
+insert into AnswerType values (10, 'LikertSkale3', 3);
+insert into AnswerType values (11, 'LikertSkale4', 3);
+insert into AnswerType values (12, 'LikertSkale5', 3);
+insert into AnswerType values (13, 'LikertSkale6', 3);
+insert into AnswerType values (14, 'LikertSkale7', 3);
+insert into AnswerType values (15, 'LikertSkale8', 3);
+insert into AnswerType values (16, 'LikertSkale9', 3);
 
 insert into PredefinedAnswerOption values (1, 'Yes', 1);
 insert into PredefinedAnswerOption values (2, 'No', 1);
