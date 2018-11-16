@@ -10,8 +10,9 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         #region Controller to View
         public int MinGroupSize { get; set; }
         public List<SurveyCategory> Categories { get; set; }
-        public List<AnswerType> AnswerTypes { get; set; }
         public List<PaymentMethod> PaymentMethods { get; set; }
+        public List<AnswerType> ActivatedAnswerTypes { get; set; }
+        public List<AnswerType> DeactivatedAnswerTypes { get; set; }
         #endregion
 
         #region Any direction
@@ -28,6 +29,8 @@ namespace SimpleQ.Webinterface.Models.ViewModels
 
         #region View to Controller
         public string Password { get; set; }
+        public List<int> CheckedAnswerTypes { get; set; }
+        public List<int> UncheckedAnswerTypes { get; set; }
         #endregion
     }
 }
