@@ -86,7 +86,7 @@
                             {
                                 maxCount += kvp.Value;
                                 <li>
-                                    <input type="checkbox" checked="checked" onclick="" name="SelectedDepartments" value="@kvp.Key.DepId"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
+                                    <input type="checkbox" checked="checked" name="SelectedDepartments" value="@kvp.Key.DepId"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
                                 </li>
                             }
                         }
@@ -179,9 +179,13 @@
         }
         let url = '@Url.Action("LoadTemplate", "SurveyCreation", new { svyId = "temp"})'.replace("temp", value);
 
-        let survey;
-        $.get(url, function (survey) {
+        console.log(url);
 
+        let survey;
+        $.get(
+            url,
+            function (survey) {
+            
             document.getElementById("question").value = survey.SvyText; //Fill Question input
 
             let ddl = document.getElementById('categoryDropdown'); //change to Surveycategory from Template
@@ -208,20 +212,29 @@
                     openHideAnswerBox(); //open Box to create answerUL
                     openHideAnswerBox(); // close it in the next possible moment
                     let ul = document.getElementById("answerUL");
-                    alert(survey.AnswerOptions);
                     console.log(survey.AnswerOptions);
+
+                    answers = [];
+
                     for (i = 0; i < survey.AnswerOptions.length; i++) {
+                        answers.push(survey.AnswerOptions[i].AnsText);
                         console.log(survey.AnswerOptions[i].AnsText);
                     }
-                    ul.innerHTML += '<li class="list-group-item">' +
-                        '   <span class="d-flex justify-content-between">' +
-                        '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + answers[i] + '" />' +
-                        '       <span>' +
-                        '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-                        '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
-                        '       </span>' +
-                        '   </span>' +
-                        '</li>';
+                    insertAnswers();
+                }
+            }
+
+            let depIds = [];
+            console.log(survey.Departments.length);
+            for (i = 0; i < survey.Departments.length; i++) {
+                depIds.push(survey.Departments[i].DepId);
+            }
+
+            let groupsUl = document.getElementById("groups");
+            let items = groupsUl.getElementsByTagName("li");
+            for (i = 0; i < items.length; ++i) {
+                if (depIds.includes(items[i].children[0].value)) {
+                    items[i].children[0].setAttribute("checked", "checked");
                 }
             }
 
@@ -260,20 +273,7 @@
                 '        <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions"></ul>' +
                 '</div >';
             if (answers.length > 0) {
-                let ul = document.getElementById("answerUL");
-                for (i = 0; i < answers.length; i++) {
-                    let normal =
-                        '<li class="list-group-item">' +
-                        '   <span class="d-flex justify-content-between">' +
-                        '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + answers[i] + '" />' +
-                        '       <span>' +
-                        '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-                        '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
-                        '       </span>' +
-                        '   </span>' +
-                        '</li>';
-                    ul.innerHTML += normal;
-                }
+                insertAnswers();
             }
         } else {
             if (firstAnswer !== "" && secondAnswer !== "") {
@@ -293,6 +293,23 @@
         $("#answerBox").show();
     }
 
+    function insertAnswers() {
+        let ul = document.getElementById("answerUL");
+        for (i = 0; i < answers.length; i++) {
+            let normal =
+                '<li class="list-group-item">' +
+                '   <span class="d-flex justify-content-between">' +
+                '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + answers[i] + '" />' +
+                '       <span>' +
+                '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+                '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+                '       </span>' +
+                '   </span>' +
+                '</li>';
+            ul.innerHTML += normal;
+        }
+    }
+
     function dichotomAnswerChanged(inputId) {
         firstAnswer = document.getElementById("dichotomAnswer1").value;
         secondAnswer = document.getElementById("dichotomAnswer2").value;
@@ -305,7 +322,8 @@
 
     function addAnswer() {
         let ul = document.getElementById("answerUL");
-        let input = document.getElementById("answerInput").value;
+        let inputElem = document.getElementById("answerInput")
+        let input = inputElem.value;
 
         if (input === "") {
             alert('@Resources.invalidInput');
@@ -327,6 +345,8 @@
             '   </span>' +
             '</li>';
         ul.innerHTML += normal;
+
+        inputElem.value = "";
         $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
     }
 
