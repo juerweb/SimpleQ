@@ -8,9 +8,9 @@ using System.Web.Mvc;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Mobile;
 using SimpleQ.Webinterface.Models.ViewModels;
-//using OneSignal.CSharp.SDK;
-//using OneSignal.CSharp.SDK.Resources.Devices;
-//using OneSignal.CSharp.SDK.Resources.Notifications;
+using OneSignal.CSharp.SDK;
+using OneSignal.CSharp.SDK.Resources.Devices;
+using OneSignal.CSharp.SDK.Resources.Notifications;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -63,16 +63,12 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.Configuration.LazyLoadingEnabled = false;
-                //List<Department> d = new List<Department>();
-                //d.AddRange(db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault().Departments);
-                var json = Json(null);
-                json.RecursionLimit = 3;
-                json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
-                json.Data = db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault();
-                //json.Data = Json(db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault(), JsonRequestBehavior.AllowGet);
-                return json;
-                //return Json(d, JsonRequestBehavior.AllowGet);
+                var survey = db.Surveys
+                    .Include("Departments")
+                    .Include("AnswerOptions")
+                    .Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template)
+                    .FirstOrDefault();
+                return Json(survey, JsonRequestBehavior.AllowGet);
             }
         }
 
