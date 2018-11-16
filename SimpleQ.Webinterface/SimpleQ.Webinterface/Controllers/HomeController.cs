@@ -44,7 +44,7 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         MinGroupSize = cust.MinGroupSize,
                         Categories = cust.SurveyCategories.ToList(),
-                        AnswerTypes = db.AnswerTypes.Where(a => !a.Inactive).ToList(),
+                        AnswerTypes = cust.AnswerTypes.ToList(),
                         PaymentMethods = db.PaymentMethods.ToList(),
                         Name = cust.CustName,
                         Email = cust.CustEmail,

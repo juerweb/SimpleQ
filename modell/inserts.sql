@@ -5,38 +5,38 @@ go
 
 
 begin transaction;
-insert into Customer values ('m4rku5', 'tschaenzl gmbh.', 'g@b.i', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 5, 0.30, 0);
-insert into Department values (1, 'development', 'm4rku5');
-insert into Department values (2, 'putzkleschn', 'm4rku5');
+insert into Customer values ('420420', 'inge gmbh.', 'g@b.i', 'asdfjklö', null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 6, 1, 5, 0.30, 0);
+insert into Department values (1, 'development', '420420');
+insert into Department values (2, 'putzkleschn', '420420');
 insert into Person values (null); -- PersId 1
 insert into Person values (null); -- PersId 2
 insert into Person values (null); -- PersId 3
 insert into Person values (null); -- PersId 4
 insert into Person values (null); -- PersId 5
-insert into Employs values (1, 'm4rku5', 1);
-insert into Employs values (1, 'm4rku5', 2);
-insert into Employs values (1, 'm4rku5', 3);
-insert into Employs values (2, 'm4rku5', 3);
-insert into Employs values (2, 'm4rku5', 4);
-insert into Employs values (2, 'm4rku5', 5);
+insert into Employs values (1, '420420', 1);
+insert into Employs values (1, '420420', 2);
+insert into Employs values (1, '420420', 3);
+insert into Employs values (2, '420420', 3);
+insert into Employs values (2, '420420', 4);
+insert into Employs values (2, '420420', 5);
 
-insert into SurveyCategory values (1, 'm4rku5', 'Politische Fragen');
-insert into SurveyCategory values (2, 'm4rku5', 'Persönliche Fragen');
-insert into SurveyCategory values (3, 'm4rku5', 'Unnötige Fragen');
+insert into SurveyCategory values (1, '420420', 'Politische Fragen');
+insert into SurveyCategory values (2, '420420', 'Persönliche Fragen');
+insert into SurveyCategory values (3, '420420', 'Unnötige Fragen');
 
-insert into Survey values (1, 'm4rku5', 'Sind Sie politisch interessiert?', '2018-08-24', '2019-08-24', 5, 1, 0, 0) -- SvyId 1
-insert into Survey values (2, 'm4rku5', 'Sind Sie foisch?', '2018-08-24', '2019-08-24', 5, 1, 0, 0) -- SvyId 2
-insert into Survey values (2, 'm4rku5', 'Le gusta café?', '2018-08-24', '2019-08-24', 5, 2, 0, 0); -- SvyId 3
-insert into Survey values (3, 'm4rku5', 'Was halten Sie von Nico Srnka?', '2018-08-24', '2019-08-24', 5, 7, 0, 0) -- SvyId 4
-insert into Survey values (3, 'm4rku5', 'Beschreiben Sie Nico Srnka in einem Wort', '2018-08-24', '2019-08-24', 5, 4, 0, 0) -- SvyId 5
+insert into Survey values (1, '420420', 'Sind Sie politisch interessiert?', '2018-08-24', '2019-08-24', 5, 1, 0, 0) -- SvyId 1
+insert into Survey values (2, '420420', 'Sind Sie foisch?', '2018-08-24', '2019-08-24', 5, 1, 0, 0) -- SvyId 2
+insert into Survey values (2, '420420', 'Le gusta café?', '2018-08-24', '2019-08-24', 5, 2, 0, 0); -- SvyId 3
+insert into Survey values (3, '420420', 'Was halten Sie von Nico Srnka?', '2018-08-24', '2019-08-24', 5, 7, 0, 0) -- SvyId 4
+insert into Survey values (3, '420420', 'Beschreiben Sie Nico Srnka in einem Wort', '2018-08-24', '2019-08-24', 5, 4, 0, 0) -- SvyId 5
 
-insert into Asking values (1, 1, 'm4rku5');
-insert into Asking values (1, 2, 'm4rku5');
-insert into Asking values (2, 1, 'm4rku5');
-insert into Asking values (3, 1, 'm4rku5');
-insert into Asking values (3, 2, 'm4rku5');
-insert into Asking values (4, 2, 'm4rku5');
-insert into Asking values (5, 1, 'm4rku5');
+insert into Asking values (1, 1, '420420');
+insert into Asking values (1, 2, '420420');
+insert into Asking values (2, 1, '420420');
+insert into Asking values (3, 1, '420420');
+insert into Asking values (3, 2, '420420');
+insert into Asking values (4, 2, '420420');
+insert into Asking values (5, 1, '420420');
 
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 1 nötig (YesNo) => AnsIds 1, 2
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 2 nötig (YesNo) => AnsIds 3, 4
@@ -115,11 +115,11 @@ commit;
 go
 
 -- ++++++++ TRENDANALYSE-TESTDATEN ++++++++
-insert into SurveyCategory values (4, 'm4rku5', 'Ist der Chef unbeliebt?');
+insert into SurveyCategory values (4, '420420', 'Ist der Chef unbeliebt?');
 
-insert into Survey values (4, 'm4rku5', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-01', '2018-07-15', 5, 2, 0, 0); -- SvyId 6
-insert into Asking values (6, 1, 'm4rku5');
-insert into Asking values (6, 2, 'm4rku5');
+insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-01', '2018-07-15', 5, 2, 0, 0); -- SvyId 6
+insert into Asking values (6, 1, '420420');
+insert into Asking values (6, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 6 nötig (YesNoDontKnow) => AnsIds 15, 16, 17
 insert into Vote values (null) -- VoteId 21;
 insert into Chooses values (21, 15);
@@ -130,9 +130,9 @@ insert into Chooses values (23, 16);
 insert into Vote values (null) -- VoteId 24;
 insert into Chooses values (24, 17);
 
-insert into Survey values (4, 'm4rku5', 'Finden Sie jetzt der Chef ist ein Arschloch?', '2018-07-16', '2018-07-31', 5, 2, 0, 0); -- SvyId 7
-insert into Asking values (7, 1, 'm4rku5');
-insert into Asking values (7, 2, 'm4rku5');
+insert into Survey values (4, '420420', 'Finden Sie jetzt der Chef ist ein Arschloch?', '2018-07-16', '2018-07-31', 5, 2, 0, 0); -- SvyId 7
+insert into Asking values (7, 1, '420420');
+insert into Asking values (7, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 7 nötig (YesNoDontKnow) => AnsIds 18, 19, 20
 insert into Vote values (null) -- VoteId 25;
 insert into Chooses values (25, 18);
@@ -143,9 +143,9 @@ insert into Chooses values (27, 19);
 insert into Vote values (null) -- VoteId 28;
 insert into Chooses values (28, 20);
 
-insert into Survey values (4, 'm4rku5', 'Und wie schauts jetzt aus mit Chef=Arschloch?', '2018-08-01', '2018-08-15', 5, 2, 0, 0); -- SvyId 8
-insert into Asking values (8, 1, 'm4rku5');
-insert into Asking values (8, 2, 'm4rku5');
+insert into Survey values (4, '420420', 'Und wie schauts jetzt aus mit Chef=Arschloch?', '2018-08-01', '2018-08-15', 5, 2, 0, 0); -- SvyId 8
+insert into Asking values (8, 1, '420420');
+insert into Asking values (8, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 8 nötig (YesNoDontKnow) => AnsIds 21, 22, 23
 insert into Vote values (null) -- VoteId 29;
 insert into Chooses values (29, 21);
@@ -160,9 +160,9 @@ insert into Chooses values (33, 23);
 insert into Vote values (null) -- VoteId 34;
 insert into Chooses values (34, 23);
 
-insert into Survey values (4, 'm4rku5', 'Es jefe igual a culo?', '2018-08-16', '2018-08-31', 5, 2, 0, 0); -- SvyId 9
-insert into Asking values (9, 1, 'm4rku5');
-insert into Asking values (9, 2, 'm4rku5');
+insert into Survey values (4, '420420', 'Es jefe igual a culo?', '2018-08-16', '2018-08-31', 5, 2, 0, 0); -- SvyId 9
+insert into Asking values (9, 1, '420420');
+insert into Asking values (9, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 9 nötig (YesNoDontKnow) => AnsIds 24, 25, 26
 insert into Vote values (null) -- VoteId 35;
 insert into Chooses values (35, 24);
@@ -177,9 +177,9 @@ insert into Chooses values (39, 25);
 insert into Vote values (null) -- VoteId 40;
 insert into Chooses values (40, 26);
 
-insert into Survey values (4, 'm4rku5', 'Jefe=culo?', '2018-09-01', '2018-09-15', 5, 2, 0, 0); -- SvyId 10
-insert into Asking values (10, 1, 'm4rku5');
-insert into Asking values (10, 2, 'm4rku5');
+insert into Survey values (4, '420420', 'Jefe=culo?', '2018-09-01', '2018-09-15', 5, 2, 0, 0); -- SvyId 10
+insert into Asking values (10, 1, '420420');
+insert into Asking values (10, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 10 nötig (YesNoDontKnow) => AnsIds 27, 28, 29
 insert into Vote values (null) -- VoteId 41;
 insert into Chooses values (41, 27);
@@ -205,9 +205,9 @@ select * from Survey;
 -- Test survey creation
 --delete from Employs where persId = 3 and depid = 2;
 --insert into person values(null);
---insert into employs values (2, 'm4rku5', 6);
---insert into employs values (2, 'm4rku5', 1)
---insert into employs values (2, 'm4rku5', 2);
+--insert into employs values (2, '420420', 6);
+--insert into employs values (2, '420420', 1)
+--insert into employs values (2, '420420', 2);
 
 -- Test stored procedure
 --begin transaction;

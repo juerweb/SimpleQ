@@ -13,7 +13,7 @@ drop table Asking;
 drop table Survey;
 drop table SurveyCategory;
 drop table PredefinedAnswerOption;
-drop table Uses;
+drop table Activates;
 drop table AnswerType;
 drop table BaseQuestionType;
 drop table Employs;
@@ -118,13 +118,12 @@ create table AnswerType
 );
 go
 
--- Vom Kunden verwendete Beantwortungsarten
+-- Vom Kunden aktivierte Beantwortungsarten (standardmäßig alle)
 -- KUNDENSPEZIFISCH
-create table Uses
+create table Activates
 (
 	CustCode char(6) collate Latin1_General_CS_AS references Customer,
 	TypeId int references AnswerType,
-	Inactive bit default 0,
 	primary key (CustCode, TypeId)
 );
 go
@@ -231,7 +230,7 @@ go
 
 
 
--- Hasht das Passwort und setzt das im Klartext Eingegebene NULL, fügt alle AnwerTypes in die Uses-Tabelle mit dem neuen Customer ein
+-- Hasht das Passwort und setzt das im Klartext Eingegebene NULL, aktiviert standardmäßig alle AnswerTypes für den neuen Kunden
 create trigger tr_CustomerIns
 on Customer
 after insert as
@@ -250,8 +249,8 @@ begin
 			where CustCode = @CustCode
 		end
 
-		insert into Uses (CustCode, TypeId, Inactive) select @CustCode, TypeId, 0
-													  from AnswerType;
+		insert into Activates (CustCode, TypeId) select @CustCode, TypeId
+												 from AnswerType;
 		
 		fetch c into @CustCode, @hash
 	end
