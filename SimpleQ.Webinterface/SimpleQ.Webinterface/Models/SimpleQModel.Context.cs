@@ -34,13 +34,13 @@ namespace SimpleQ.Webinterface.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DsgvoConstraint> DsgvoConstraints { get; set; }
+        public virtual DbSet<FaqEntry> FaqEntries { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PredefinedAnswerOption> PredefinedAnswerOptions { get; set; }
         public virtual DbSet<Survey> Surveys { get; set; }
         public virtual DbSet<SurveyCategory> SurveyCategories { get; set; }
         public virtual DbSet<Vote> Votes { get; set; }
-        public virtual DbSet<FaqEntry> FaqEntries { get; set; }
     
         public virtual ObjectResult<Nullable<int>> sp_CheckExceededSurveyData()
         {

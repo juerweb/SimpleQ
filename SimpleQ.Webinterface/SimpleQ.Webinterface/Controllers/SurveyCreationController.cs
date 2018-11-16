@@ -63,8 +63,12 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.Configuration.LazyLoadingEnabled = false;
-                return Json(db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault(), JsonRequestBehavior.AllowGet);
+                var survey = db.Surveys
+                    .Include("Departments")
+                    .Include("AnswerOptions")
+                    .Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template)
+                    .FirstOrDefault();
+                return Json(survey, JsonRequestBehavior.AllowGet);
             }
         }
 
