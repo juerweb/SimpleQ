@@ -11,6 +11,7 @@ using SimpleQ.Webinterface.Models.ViewModels;
 using OneSignal.CSharp.SDK;
 using OneSignal.CSharp.SDK.Resources.Devices;
 using OneSignal.CSharp.SDK.Resources.Notifications;
+using SimpleQ.Webinterface.Extensions;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -51,7 +52,7 @@ namespace SimpleQ.Webinterface.Controllers
             TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
 
             // Umfrage nur schedulen wenn sie bis zur nächsten Mitternacht (+1h Toleranz) startet
-            if (timeout < Extensions.NextMidnight.Add(TimeSpan.FromHours(1)))
+            if (timeout < Literal.NextMidnight.Add(TimeSpan.FromHours(1)))
                 ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);
 
             return RedirectToAction("Index", "Home");

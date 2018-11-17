@@ -1,4 +1,5 @@
-﻿using SimpleQ.Webinterface.Models;
+﻿using SimpleQ.Webinterface.Extensions;
+using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -28,26 +29,42 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpPost]
         public ActionResult AskQuestion(SupportModel req)
         {
-            //SupportModel req = new SupportModel();
+            //req = new SupportModel();
             //req.Email = "test@kontaktfunktion.gabi";
             //req.QuestionCatgeory = "Lelelele";
             //req.QuestionText = "Es letzte vom letzn san de hawara vo da gis.";
 
-            MailMessage msg = new MailMessage(req.Email, "support@simpleq.at")
-            {
-                Subject = "SIMPLEQ SUPPORT: " + req.QuestionCatgeory,
-                Body = req.QuestionText
-            };
-            SmtpClient client = new SmtpClient
-            {
-                Port = 25,
-                DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = false,
-                Host = "smtp.1und1.de"
-            };
-            client.Send(msg);
+            if (req == null)
+                throw ANex("Model object");
 
-            return LoadFaqEntries();
+            try
+            {
+                MailMessage msg = new MailMessage(req.Email ?? throw ANex("Email"), "support@simpleq.at")
+                {
+                    Subject = "SIMPLEQ SUPPORT: " + req.QuestionCatgeory ?? throw ANex("QuestionCategory"),
+                    Body = req.QuestionText ?? throw ANex("QuestionText")
+                };
+                SmtpClient client = new SmtpClient
+                {
+                    Port = 25,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Host = "smtp.1und1.de"
+                };
+                client.Send(msg);
+
+                return LoadFaqEntries();
+            }
+            catch (ArgumentNullException ex)
+            {
+                return Http.BadRequest($"{ex.ParamName} must not be null.");
+            }
+            catch (Exception ex) when (ex is SmtpException || ex is SmtpFailedRecipientsException)
+            {
+                return Http.InternalServerError("Sending failed due to internal error(s).");
+            }
         }
+
+        private ArgumentNullException ANex(string paramName) => new ArgumentNullException(paramName);
     }
 }

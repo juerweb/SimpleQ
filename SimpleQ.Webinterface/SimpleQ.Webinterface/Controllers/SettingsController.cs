@@ -1,4 +1,5 @@
-﻿using SimpleQ.Webinterface.Models;
+﻿using SimpleQ.Webinterface.Extensions;
+using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                 if (cust == null)
-                    return HttpNotFound("Customer not found.");
+                    return Http.NotFound("Customer not found.");
 
 
                 var model = new SettingsModel
@@ -49,59 +50,59 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 int minAllowed = db.DsgvoConstraints.Where(d => d.ConstrName == "MIN_GROUP_SIZE").FirstOrDefault().ConstrValue;
                 if (size < minAllowed)
-                    return new HttpStatusCodeResult(HttpStatusCode.Conflict, $"Size less than allowed ({minAllowed}).");
+                    return Http.Conflict($"Size less than allowed ({minAllowed}).");
 
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                 if (cust == null)
-                    return HttpNotFound("Customer not found.");
+                    return Http.NotFound("Customer not found.");
 
 
                 cust.MinGroupSize = size;
                 db.SaveChanges();
-                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+                return Http.Ok();
             }
         }
 
         [HttpGet]
         public ActionResult AddCategory(string catName)
         {
-            if (catName == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Category name must not be null.");
+            if (string.IsNullOrEmpty(catName))
+                return Http.BadRequest("Category name must not be empty.");
 
             using (var db = new SimpleQDBEntities())
             {
-                var cust = db.SurveyCategories.Where(c => c.CustCode == CustCode);
-                if (cust.Count() == 0)
-                    return HttpNotFound("Customer not found.");
+                if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
+                    return Http.NotFound("Customer not found.");
 
+                var query = db.SurveyCategories.Where(c => c.CustCode == CustCode);
 
                 db.SurveyCategories.Add(new SurveyCategory
                 {
-                    CatId = cust.Max(c => c.CatId) + 1,
+                    CatId = query.Max(c => c.CatId) + 1,
                     CatName = catName,
                     CustCode = CustCode
                 });
                 db.SaveChanges();
-                return new HttpStatusCodeResult(HttpStatusCode.Created);
+                return Http.Ok();
             }
         }
 
         [HttpGet]
         public ActionResult ModifyCategory(int catId, string catName)
         {
-            if (catName == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Category name must not be null.");
+            if (string.IsNullOrEmpty(catName))
+                return Http.BadRequest("Category name must not be empty.");
 
             using (var db = new SimpleQDBEntities())
             {
                 var cat = db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode).FirstOrDefault();
                 if (cat == null)
-                    return HttpNotFound("Category not found.");
+                    return Http.NotFound("Category not found.");
 
 
                 cat.CatName = catName;
                 db.SaveChanges();
-                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+                return Http.Ok();
             }
         }
 
@@ -110,36 +111,36 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                var query = db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode);
-                if (query.Count() == 0)
-                    return HttpNotFound("Category not found.");
+                var cat = db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode).FirstOrDefault();
+                if (cat == null)
+                    return Http.NotFound("Category not found.");
 
                 if (db.Surveys.Where(s => s.CatId == catId && s.CustCode == CustCode).Count() != 0)
-                    query.FirstOrDefault().Deactivated = true;
+                    cat.Deactivated = true;
                 else
-                    db.SurveyCategories.RemoveRange(query);
+                    db.SurveyCategories.Remove(cat);
 
                 db.SaveChanges();
-                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+                return Http.Ok();
             }
         }
 
         [HttpPost]
         public ActionResult ChangePassword(string password)
         {
-            if (password == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Password must not be null.");
+            if (string.IsNullOrEmpty(password))
+                return Http.BadRequest("Password must not be null.");
 
             using (var db = new SimpleQDBEntities())
             {
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                 if (cust == null)
-                    return HttpNotFound("Customer not found.");
+                    return Http.NotFound("Customer not found.");
 
 
                 cust.CustPwdTmp = password;
                 db.SaveChanges();
-                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+                return Http.Ok();
             }
         }
 
@@ -147,24 +148,24 @@ namespace SimpleQ.Webinterface.Controllers
         public ActionResult ChangeAnswerTypes(SettingsModel req)
         {
             if (req == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Model object must not be null.");
+                return Http.BadRequest("Model object must not be null.");
 
             using (var db = new SimpleQDBEntities())
             {
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                 if (cust == null)
-                    return HttpNotFound("Customer not found.");
+                    return Http.NotFound("Customer not found.");
 
                 if (req.CheckedAnswerTypes == null)
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "CheckedAnswerTypes must not be null.");
+                    return Http.BadRequest("CheckedAnswerTypes must not be null.");
 
                 if (req.UncheckedAnswerTypes == null)
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "UncheckedAnswerTypes must not be null.");
+                    return Http.BadRequest("UncheckedAnswerTypes must not be null.");
 
                 foreach (var typeId in req.CheckedAnswerTypes.Concat(req.UncheckedAnswerTypes).Distinct())
                 {
                     if (db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault() == null)
-                        return new HttpStatusCodeResult(HttpStatusCode.Conflict, "AnswerType does not exist.");
+                        return Http.Conflict("AnswerType does not exist.");
                 }
 
 
@@ -188,21 +189,21 @@ namespace SimpleQ.Webinterface.Controllers
         public ActionResult UpdateCustomer(SettingsModel req)
         {
             if (req == null)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Model object must not be null.");
+                throw ANEx("Model object");
 
             using (var db = new SimpleQDBEntities())
             {
                 try
                 {
                     if (db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).Count() == 0)
-                        return new HttpStatusCodeResult(HttpStatusCode.Conflict, "PaymentMethod does not exist.");
+                        return Http.Conflict("PaymentMethod does not exist.");
 
                     if (req.DataStoragePeriod <= 0)
-                        return new HttpStatusCodeResult(HttpStatusCode.Conflict, "DataStoragePeriod must be greater than 0");
+                        return Http.Conflict("DataStoragePeriod must be greater than 0");
 
                     var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                     if (cust == null)
-                        return new HttpNotFoundResult("Customer not found.");
+                        return Http.NotFound("Customer not found.");
 
 
                     cust.CustName = req.Name ?? throw ANEx("CustName");
@@ -220,7 +221,7 @@ namespace SimpleQ.Webinterface.Controllers
                 }
                 catch (ArgumentNullException ex)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, $"{ex.ParamName} must not be null.");
+                    return Http.BadRequest($"{ex.ParamName} must not be null.");
                 }
             }
         }

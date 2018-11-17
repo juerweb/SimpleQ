@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SimpleQ.Webinterface.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -39,7 +40,7 @@ namespace SimpleQ.Webinterface
                 while (true)
                 {
                     // Sleep bis zur nächsten Mitternacht
-                    Thread.Sleep((int)Extensions.NextMidnight.TotalMilliseconds);
+                    Thread.Sleep((int)Literal.NextMidnight.TotalMilliseconds);
                     using(var db = new Models.SimpleQDBEntities())
                     {
                         // Alle heutigen Umfragen schedulen
@@ -58,7 +59,7 @@ namespace SimpleQ.Webinterface
             {
                 // Alle Umfragen welche bis zur nächsten Mitternacht (+ 1h Toleranz) starten schedulen
                 db.Surveys.Where(s => !s.Sent).ToList()
-                    .Where(s => s.StartDate - DateTime.Now < Extensions.NextMidnight.Add(TimeSpan.FromHours(1)))
+                    .Where(s => s.StartDate - DateTime.Now < Literal.NextMidnight.Add(TimeSpan.FromHours(1)))
                     .ToList().ForEach(s =>
                 {
                     Controllers.SurveyCreationController.ScheduleSurvey(s.SvyId, s.StartDate - DateTime.Now, s.CustCode);

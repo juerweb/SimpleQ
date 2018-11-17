@@ -1,4 +1,5 @@
-﻿using SimpleQ.Webinterface.Models;
+﻿using SimpleQ.Webinterface.Extensions;
+using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,9 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
+                if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
+                    return Http.NotFound("Customer not found");
+
                 var model = new GroupAdministrationModel
                 {
                     Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList()
@@ -27,8 +31,14 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpGet]
         public ActionResult Create(string depName)
         {
+            if (string.IsNullOrEmpty(depName))
+                return Http.BadRequest("Department name must not be empty.");
+
             using (var db = new SimpleQDBEntities())
             {
+                if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
+                    return Http.NotFound("Customer not found.");
+
                 db.Departments.Add(new Department {
                     DepId = db.Departments.Where(d => d.CustCode == CustCode).Max(d => d.DepId) + 1,
                     DepName = depName,
@@ -36,18 +46,25 @@ namespace SimpleQ.Webinterface.Controllers
                 });
                 db.SaveChanges();
             }
-            return List();
+            return Http.Ok();
         }
 
         [HttpGet]
         public ActionResult Modify(int depId, string depName)
         {
+            if (string.IsNullOrEmpty(depName))
+                return Http.BadRequest("Department name must not be empty.");
+
             using (var db = new SimpleQDBEntities())
             {
-                db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault().DepName = depName;
+                var dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault();
+                if (dep == null)
+                    return Http.NotFound("Department not found.");
+
+                dep.DepName = depName;
                 db.SaveChanges();
             }
-            return List();
+            return Http.Ok();
         }
 
         [HttpGet]
@@ -55,10 +72,14 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.Departments.RemoveRange(db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode));
+                var dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault();
+                if (dep == null)
+                    return Http.NotFound("Department not found.");
+
+                db.Departments.Remove(dep);
                 db.SaveChanges();
             }
-            return List();
+            return Http.Ok();
         }
 
 

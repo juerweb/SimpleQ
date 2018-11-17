@@ -23,6 +23,9 @@ namespace SimpleQ.Webinterface.Controllers
             if (!IsAuth(Request))
                 return Unauthorized();
 
+            if (string.IsNullOrEmpty(regCode))
+                return BadRequest();
+
             using (var db = new SimpleQDBEntities())
             {
                 try
@@ -30,30 +33,25 @@ namespace SimpleQ.Webinterface.Controllers
                     string custCode = regCode.Substring(0, 6);
                     int depId = int.Parse(regCode.Substring(6));
 
-                    Person person = new Person { DeviceId = deviceId };
+                    var cust = db.Customers.Where(c => c.CustCode == custCode).FirstOrDefault();
+                    if (cust == null)
+                        return NotFound();
+
+                    var dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).FirstOrDefault();
+                    if (dep == null)
+                        return NotFound();
+
+                    var person = new Person { DeviceId = deviceId };
                     db.People.Add(person);
                     db.SaveChanges();
-                    db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First().People.Add(person);
+                    dep.People.Add(person);
                     db.SaveChanges();
-                    Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
 
-                    return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName });
-                }
-                catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 2627 || (ex?.InnerException?.InnerException as SqlException)?.Number == 2601)
-                {
-                    return Conflict();
-                }
-                catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 547)
-                {
-                    return NotFound();
+                    return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName, CustName = cust.CustName });
                 }
                 catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException)
                 {
-                    return NotFound();
-                }
-                catch (InvalidOperationException)
-                {
-                    return NotFound();
+                    return BadRequest();
                 }
             }
         }
@@ -64,6 +62,9 @@ namespace SimpleQ.Webinterface.Controllers
             if (!IsAuth(Request))
                 return Unauthorized();
 
+            if (string.IsNullOrEmpty(regCode))
+                return BadRequest();
+
             using (var db = new SimpleQDBEntities())
             {
                 try
@@ -71,25 +72,27 @@ namespace SimpleQ.Webinterface.Controllers
                     string custCode = regCode.Substring(0, 6);
                     int depId = int.Parse(regCode.Substring(6));
 
-                    Person person = db.People.Where(p => p.PersId == persId).First();
-                    db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First().People.Add(person);
+                    var cust = db.Customers.Where(c => c.CustCode == custCode).FirstOrDefault();
+                    if (cust == null)
+                        return NotFound();
+
+                    var dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).FirstOrDefault();
+                    if (dep == null)
+                        return NotFound();
+
+                    var person = db.People.Where(p => p.PersId == persId).FirstOrDefault();
+                    if (person == null)
+                        return NotFound();
+
+                    dep.People.Add(person);
                     db.SaveChanges();
-                    Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
 
-                    return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName });
+                    return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName, CustName = cust.CustName });
 
-                }
-                catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 547)
-                {
-                    return NotFound();
                 }
                 catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException)
                 {
-                    return NotFound();
-                }
-                catch (InvalidOperationException)
-                {
-                    return NotFound();
+                    return BadRequest();
                 }
             }
         }
@@ -100,20 +103,24 @@ namespace SimpleQ.Webinterface.Controllers
             if (!IsAuth(Request))
                 return Unauthorized();
 
+            if (string.IsNullOrEmpty(custCode))
+                return BadRequest();
+
             using (var db = new SimpleQDBEntities())
             {
-                try
-                {
-                    db.Departments.Where(d => d.CustCode == custCode && d.DepId == depId)
-                        .First().People.Remove(db.People.Where(p => p.PersId == persId).First());
 
-                    db.SaveChanges();
-                    return Ok();
-                }
-                catch (InvalidOperationException)
-                {
+                var dep = db.Departments.Where(d => d.CustCode == custCode && d.DepId == depId).FirstOrDefault();
+                if (dep == null)
                     return NotFound();
-                }
+
+                var pers = db.People.Where(p => p.PersId == persId).FirstOrDefault();
+                if (pers == null)
+                    return NotFound();
+
+                dep.People.Remove(pers);
+
+                db.SaveChanges();
+                return Ok();
             }
         }
 
@@ -123,24 +130,27 @@ namespace SimpleQ.Webinterface.Controllers
             if (!IsAuth(Request))
                 return Unauthorized();
 
+            if (string.IsNullOrEmpty(custCode))
+                return BadRequest();
+
             using (var db = new SimpleQDBEntities())
             {
-                try
-                {
-                    db.Departments.Where(d => d.CustCode == custCode).ToList()
-                        .ForEach(d =>
-                        {
-                            d.People.Remove(db.People.Where(p => p.PersId == persId).First());
-                        });
-                    db.People.RemoveRange(db.People.Where(p => p.PersId == persId));
-                    db.SaveChanges();
-
-                    return Ok();
-                }
-                catch (InvalidOperationException)
-                {
+                var query = db.Departments.Where(d => d.CustCode == custCode);
+                if (query.Count() == 0)
                     return NotFound();
-                }
+
+                var pers = db.People.Where(p => p.PersId == persId).FirstOrDefault();
+                if (pers == null)
+                    return NotFound();
+
+                query.ToList().ForEach(d =>
+                {
+                    d.People.Remove(pers);
+                });
+                db.People.Remove(pers);
+                db.SaveChanges();
+
+                return Ok();
             }
         }
 
@@ -153,24 +163,23 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 Survey svy = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault();
-
-                if (svy != null)
-                    return Ok(new SurveyData
-                    {
-                        SvyId = svy.SvyId,
-                        SvyText = svy.SvyText,
-                        EndDate = svy.EndDate,
-                        TypeId = svy.TypeId,
-                        CatName = db.SurveyCategories
-                            .Where(c => c.CatId == svy.CatId)
-                            .Select(c => c.CatName)
-                            .First(),
-                        AnswerOptions = db.AnswerOptions
-                            .Where(a => a.SvyId == svy.SvyId)
-                            .ToList()
-                    });
-                else
+                if (svy == null)
                     return NotFound();
+
+                return Ok(new SurveyData
+                {
+                    SvyId = svy.SvyId,
+                    SvyText = svy.SvyText,
+                    EndDate = svy.EndDate,
+                    TypeId = svy.TypeId,
+                    CatName = db.SurveyCategories
+                        .Where(c => c.CatId == svy.CatId)
+                        .Select(c => c.CatName)
+                        .First(),
+                    AnswerOptions = db.AnswerOptions
+                        .Where(a => a.SvyId == svy.SvyId)
+                        .ToList()
+                });
             }
         }
 
@@ -180,21 +189,31 @@ namespace SimpleQ.Webinterface.Controllers
             if (!IsAuth(Request))
                 return Unauthorized();
 
+            if (sv == null)
+                return BadRequest();
+
             using (var db = new SimpleQDBEntities())
             {
-                if (!db.Customers.Any(c => c.CustCode == sv.CustCode))
+                var cust = db.Customers.Where(c => c.CustCode == sv.CustCode).FirstOrDefault();
+                if (cust == null)
                     return NotFound();
 
                 Vote vote = new Vote { VoteText = sv.VoteText };
                 db.Votes.Add(vote);
                 db.SaveChanges();
 
+                foreach (int ansId in sv.ChosenAnswerOptions.Select(a => a.AnsId))
+                {
+                    if (db.AnswerOptions.Where(a => a.AnsId == ansId).FirstOrDefault() == null)
+                        return Conflict();
+                }
+
                 sv.ChosenAnswerOptions.Select(a => a.AnsId).ToList().ForEach(id =>
                 {
-                    vote.AnswerOptions.Add(db.AnswerOptions.Where(a => a.AnsId == id).First());
+                    vote.AnswerOptions.Add(db.AnswerOptions.Where(a => a.AnsId == id).FirstOrDefault());
                 });
 
-                db.Customers.Where(c => c.CustCode == sv.CustCode).First().CostBalance += db.Customers.Where(c => c.CustCode == sv.CustCode).First().PricePerClick; //decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
+                cust.CostBalance += cust.PricePerClick; //decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
                 db.SaveChanges();
 
                 return Ok();

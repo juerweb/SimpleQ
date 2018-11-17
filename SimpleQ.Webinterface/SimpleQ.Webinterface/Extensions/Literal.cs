@@ -5,9 +5,9 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace SimpleQ.Webinterface
+namespace SimpleQ.Webinterface.Extensions
 {
-    public static class Extensions
+    public static class Literal
     {
         public static byte[] GetSHA512(this string str)
         {
