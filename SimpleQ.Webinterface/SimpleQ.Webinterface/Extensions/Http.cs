@@ -19,7 +19,7 @@ namespace SimpleQ.Webinterface.Extensions
 
         public static HttpStatusCodeResult Conflict(string desc = null) => new HttpStatusCodeResult(409, desc);
 
-        public static HttpStatusCodeResult InternalServerError(string desc = null) => new HttpStatusCodeResult(500, desc);
+        public static HttpStatusCodeResult ServiceUnavailable(string desc = null) => new HttpStatusCodeResult(503, desc);
 
 
 

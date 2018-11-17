@@ -35,7 +35,7 @@ namespace SimpleQ.Webinterface.Controllers
             //req.QuestionText = "Es letzte vom letzn san de hawara vo da gis.";
 
             if (req == null)
-                throw ANex("Model object");
+                return Http.BadRequest("Model object must not be null.");
 
             try
             {
@@ -61,7 +61,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex) when (ex is SmtpException || ex is SmtpFailedRecipientsException)
             {
-                return Http.InternalServerError("Sending failed due to internal error(s).");
+                return Http.ServiceUnavailable("Sending failed due to internal error(s).");
             }
         }
 

@@ -202,10 +202,13 @@ namespace SimpleQ.Webinterface.Controllers
                 db.Votes.Add(vote);
                 db.SaveChanges();
 
+                if (sv.ChosenAnswerOptions.Select(a => a.SvyId).Distinct().Count() != 1)
+                    return Conflict();
+
                 foreach (int ansId in sv.ChosenAnswerOptions.Select(a => a.AnsId))
                 {
                     if (db.AnswerOptions.Where(a => a.AnsId == ansId).FirstOrDefault() == null)
-                        return Conflict();
+                        return NotFound();
                 }
 
                 sv.ChosenAnswerOptions.Select(a => a.AnsId).ToList().ForEach(id =>

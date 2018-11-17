@@ -189,7 +189,7 @@ namespace SimpleQ.Webinterface.Controllers
         public ActionResult UpdateCustomer(SettingsModel req)
         {
             if (req == null)
-                throw ANEx("Model object");
+                return Http.BadRequest("Model object must not be null.");
 
             using (var db = new SimpleQDBEntities())
             {

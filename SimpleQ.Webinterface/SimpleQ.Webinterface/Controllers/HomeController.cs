@@ -25,22 +25,22 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     SurveyCreationModel = new SurveyCreationModel
                     {
-                        SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode && !s.Deactivated).ToList(),
+                        SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
                         AnswerTypes = db.AnswerTypes.ToList(), // GLOBALIZATION!
-                        Departments = db.Departments.Where(d => d.CustCode == CustCode).Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount),
+                        Departments = cust.Departments.Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount),
                         SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
                     },
 
                     SurveyResultsModel = new SurveyResultsModel
                     {
-                        SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode && !s.Deactivated).ToList(),
+                        SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
                         Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList(),
                         AnswerTypes = db.AnswerTypes.ToList() // GLOBALIZATION!
                     },
 
                     GroupAdministrationModel = new GroupAdministrationModel
                     {
-                        Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList()
+                        Departments = cust.Departments.ToList()
                     },
 
                     SettingsModel = new SettingsModel
