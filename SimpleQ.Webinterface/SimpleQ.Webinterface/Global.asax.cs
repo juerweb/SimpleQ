@@ -14,7 +14,11 @@ namespace SimpleQ.Webinterface
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static bool schedulerStarted = false;
+        private static bool surveySchedulerStarted = false;
+        private static readonly object lck1 = new object();
+
+        private static bool exceededSurveySchedulerStarted = false;
+        private static readonly object lck2 = new object();
 
         protected void Application_Start()
         {
@@ -28,12 +32,16 @@ namespace SimpleQ.Webinterface
 
             StartSurveyScheduler();
             RestoreQueuedSurveys();
+            StartExceededSurveyScheduler();
         }
 
         private void StartSurveyScheduler()
         {
-            if (schedulerStarted) return;
-            schedulerStarted = true;
+            lock (lck1)
+            {
+                if (surveySchedulerStarted) return;
+                surveySchedulerStarted = true;
+            }
 
             HostingEnvironment.QueueBackgroundWorkItem(ct =>
             {
@@ -65,6 +73,25 @@ namespace SimpleQ.Webinterface
                     Controllers.SurveyCreationController.ScheduleSurvey(s.SvyId, s.StartDate - DateTime.Now, s.CustCode);
                 });
             }
+        }
+
+        private void StartExceededSurveyScheduler()
+        {
+            lock (lck2)
+            {
+                if (exceededSurveySchedulerStarted) return;
+                exceededSurveySchedulerStarted = true;
+            }
+
+            HostingEnvironment.QueueBackgroundWorkItem(ct =>
+            {
+                // Sleep bis um 03:00 AM
+                Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
+                using (var db = new Models.SimpleQDBEntities())
+                {
+                    db.sp_CheckExceededSurveyData();
+                }
+            });
         }
     }
 }
