@@ -116,6 +116,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 var survey = db.Surveys
                     .Include("Departments")
                     .Include("AnswerOptions")
