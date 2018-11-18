@@ -407,34 +407,51 @@ begin
 	
 	if(@err = 1)
 		rollback;
-
-
-	
-	declare @custCode char(6), @pricePerClick money;
-	declare c2 cursor local for select c.CustCode, PricePerClick
-								from inserted i
-								join AnswerOption a on i.AnsId = a.AnsId
-								join Survey s on a.SvyId = s.SvyId
-								join Customer c on s.CustCode = c.CustCode
-								where i.VoteId not in (select VoteId from (select * from Chooses
-																		   except
-																		   select * from inserted) Chooses_before); -- nur für neue VoteIds
-
-	
-	open c2;
-	fetch c2 into @custCode, @pricePerClick;
-
-	while(@@FETCH_STATUS = 0)
+	else
 	begin
-		update Customer
-		set CostBalance += @pricePerClick
-		where CustCode = @custCode;
+		declare @custCode char(6), @pricePerClick money;
+		declare c2 cursor local for select c.CustCode, PricePerClick
+									from inserted i
+									join AnswerOption a on i.AnsId = a.AnsId
+									join Survey s on a.SvyId = s.SvyId
+									join Customer c on s.CustCode = c.CustCode
+									where i.VoteId not in (select VoteId from (select * from Chooses
+																			   except
+																			   select * from inserted) Chooses_before); -- nur für neue VoteIds
 
+	
+		open c2;
 		fetch c2 into @custCode, @pricePerClick;
-	end
 
-	close c2;
-	deallocate c2;
+		while(@@FETCH_STATUS = 0)
+		begin
+			update Customer
+			set CostBalance += @pricePerClick
+			where CustCode = @custCode;
+
+			fetch c2 into @custCode, @pricePerClick;
+		end
+
+		close c2;
+		deallocate c2;
+	end
+end
+go
+
+
+-- Zum Löschen einer bestimmten Umfrage und allen zugehörigen Daten
+drop procedure sp_DeleteSurvey;
+go
+create procedure sp_DeleteSurvey(@svyId int)
+as
+begin
+	delete from Vote where VoteId in (select VoteId
+                                      from Chooses c 
+                                      join AnswerOption a on c.AnsId = a.AnsId
+                                      where a.SvyId = @svyId);
+    delete from AnswerOption where SvyId = @svyId;
+	delete from Asking where SvyId = @svyId;
+	delete from Survey where SvyId = @svyId;
 end
 go
 
@@ -449,7 +466,7 @@ begin
 	declare c cursor local for select svyId 
                                from Survey s
 							   join Customer c on s.CustCode = c.CustCode
-							   where datediff(day, s.StartDate, getdate()) >= c.DataStoragePeriod * 30
+							   where datediff(day, s.EndDate, getdate()) >= c.DataStoragePeriod * 30
 							   and Template = 0
 							   and [Sent] = 1;
 	
@@ -460,13 +477,7 @@ begin
 
 	while(@@FETCH_STATUS = 0)
 	begin
-		delete from Vote where VoteId in (select VoteId
-                                          from Chooses c 
-                                          join AnswerOption a on c.AnsId = a.AnsId
-                                          where a.SvyId = @svyId);
-        delete from AnswerOption where SvyId = @svyId;
-		delete from Asking where SvyId = @svyId;
-		delete from Survey where SvyId = @svyId;
+		exec sp_DeleteSurvey @svyId;
 		
 		set @svyCount += 1;
 		fetch c into @svyId;
