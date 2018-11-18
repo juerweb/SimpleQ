@@ -5,9 +5,9 @@
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Customer.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Department.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\DsgvoConstraint.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\FaqEntry.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\PaymentMethod.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Person.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\PredefinedAnswerOption.cs
-..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Survey.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\SurveyCategory.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Vote.cs
