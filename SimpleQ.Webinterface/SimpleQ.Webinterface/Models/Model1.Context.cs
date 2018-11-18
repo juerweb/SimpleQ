@@ -34,6 +34,7 @@ namespace SimpleQ.Webinterface.Models
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DsgvoConstraint> DsgvoConstraints { get; set; }
+        public virtual DbSet<FaqEntry> FaqEntries { get; set; }
         public virtual DbSet<PaymentMethod> PaymentMethods { get; set; }
         public virtual DbSet<Person> People { get; set; }
         public virtual DbSet<PredefinedAnswerOption> PredefinedAnswerOptions { get; set; }
@@ -44,6 +45,11 @@ namespace SimpleQ.Webinterface.Models
         public virtual ObjectResult<Nullable<int>> sp_CheckExceededSurveyData()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_CheckExceededSurveyData");
+        }
+    
+        public virtual int sp_CreateBills()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CreateBills");
         }
     }
 }
