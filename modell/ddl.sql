@@ -377,6 +377,38 @@ begin
 end
 go
 
+-- Zum Überprüfen, ob je Vote nur für AnswerOptions einer einzigen Survey gestimmt werden
+create trigger tr_ChoosesIns
+on Chooses
+after insert as
+begin
+	declare @voteId int, @svyId int, @err bit = 0;
+	declare c cursor local for select VoteId, SvyId 
+							   from inserted i
+							   join AnswerOption a
+							   on i.AnsId = a.AnsId;
+
+	open c;
+	fetch c into @voteId, @svyId;
+
+	while(@@FETCH_STATUS = 0)
+	begin
+		if (exists(select * from Chooses c join AnswerOption a on c.AnsId = a.AnsId where VoteId = @voteId and SvyId <> @svyId))
+		begin
+			raiserror('A Vote cannot include AnswerOptions of multiple Surveys! VoteId: %d, SvyId: %d', 16, 1, @voteId, @svyId);
+			set @err = 1;
+		end
+		fetch c into @voteId, @svyId;
+	end
+
+	close c;
+	deallocate c;
+	
+	if(@err = 1)
+		rollback;
+end
+go
+
 
 -- Zum Löschen der abgelaufenen Umfragedaten
 drop procedure sp_CheckExceededSurveyData;
