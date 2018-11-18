@@ -1,4 +1,5 @@
-﻿using SimpleQ.Webinterface.Models;
+﻿using SimpleQ.Webinterface.Extensions;
+using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Mobile;
 using System;
 using System.Collections.Generic;
@@ -30,10 +31,8 @@ namespace SimpleQ.Webinterface.Controllers
                     string custCode = regCode.Substring(0, 6);
                     int depId = int.Parse(regCode.Substring(6));
 
-                    Person person = new Person { DeviceId = deviceId };
+                    Person person = new Person { DepId = depId, CustCode = custCode, DeviceId = deviceId};
                     db.People.Add(person);
-                    db.SaveChanges();
-                    db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First().People.Add(person);
                     db.SaveChanges();
                     Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
 
@@ -51,69 +50,6 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     return NotFound();
                 }
-                catch (InvalidOperationException)
-                {
-                    return NotFound();
-                }
-            }
-        }
-
-        [HttpGet]
-        public IHttpActionResult JoinDepartment(string regCode, int persId)
-        {
-            if (!IsAuth(Request))
-                return Unauthorized();
-
-            using (var db = new SimpleQDBEntities())
-            {
-                try
-                {
-                    string custCode = regCode.Substring(0, 6);
-                    int depId = int.Parse(regCode.Substring(6));
-
-                    Person person = db.People.Where(p => p.PersId == persId).First();
-                    db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First().People.Add(person);
-                    db.SaveChanges();
-                    Department dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).First();
-
-                    return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName });
-
-                }
-                catch (DbUpdateException ex) when ((ex?.InnerException?.InnerException as SqlException)?.Number == 547)
-                {
-                    return NotFound();
-                }
-                catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException)
-                {
-                    return NotFound();
-                }
-                catch (InvalidOperationException)
-                {
-                    return NotFound();
-                }
-            }
-        }
-
-        [HttpGet]
-        public IHttpActionResult LeaveDepartment(int persId, int depId, string custCode)
-        {
-            if (!IsAuth(Request))
-                return Unauthorized();
-
-            using (var db = new SimpleQDBEntities())
-            {
-                try
-                {
-                    db.Departments.Where(d => d.CustCode == custCode && d.DepId == depId)
-                        .First().People.Remove(db.People.Where(p => p.PersId == persId).First());
-
-                    db.SaveChanges();
-                    return Ok();
-                }
-                catch (InvalidOperationException)
-                {
-                    return NotFound();
-                }
             }
         }
 
@@ -125,22 +61,10 @@ namespace SimpleQ.Webinterface.Controllers
 
             using (var db = new SimpleQDBEntities())
             {
-                try
-                {
-                    db.Departments.Where(d => d.CustCode == custCode).ToList()
-                        .ForEach(d =>
-                        {
-                            d.People.Remove(db.People.Where(p => p.PersId == persId).First());
-                        });
-                    db.People.RemoveRange(db.People.Where(p => p.PersId == persId));
-                    db.SaveChanges();
+                db.People.RemoveRange(db.People.Where(p => p.PersId == persId && p.CustCode == custCode));
+                db.SaveChanges();
 
-                    return Ok();
-                }
-                catch (InvalidOperationException)
-                {
-                    return NotFound();
-                }
+                return Ok();
             }
         }
 
@@ -155,7 +79,7 @@ namespace SimpleQ.Webinterface.Controllers
                 Survey svy = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault();
 
                 if (svy != null)
-                    return Ok(new SurveyData
+                    return Ok(new SurveyNotification
                     {
                         SvyId = svy.SvyId,
                         SvyText = svy.SvyText,
