@@ -39,10 +39,9 @@ namespace JsonIgnorer
 
                 indexes.OrderByDescending(i => i).ToList().ForEach(i =>
                 {
-                    if (!lines[i - 1].Contains("Ignore]"))
+                    if (!lines[i - 1].Contains("JsonIgnore"))
                     {
                         lines.Insert(i, "        [Newtonsoft.Json.JsonIgnore]");
-                        lines.Insert(i, "        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]");
                         count++;
                     }
                 });
