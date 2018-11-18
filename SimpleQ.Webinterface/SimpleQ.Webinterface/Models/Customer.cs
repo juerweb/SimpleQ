@@ -40,13 +40,18 @@ namespace SimpleQ.Webinterface.Models
         public decimal CostBalance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Bill> Bills { get; set; }
+        [Newtonsoft.Json.JsonIgnore]
         public virtual PaymentMethod PaymentMethod { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Department> Departments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<SurveyCategory> SurveyCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<AnswerType> AnswerTypes { get; set; }
     }
 }

@@ -25,8 +25,10 @@ namespace SimpleQ.Webinterface.Models
         public string CatName { get; set; }
         public bool Deactivated { get; set; }
     
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Survey> Surveys { get; set; }
     }
 }

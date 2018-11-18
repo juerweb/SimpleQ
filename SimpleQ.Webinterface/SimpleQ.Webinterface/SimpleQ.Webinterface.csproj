@@ -155,6 +155,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Extensions\Http.cs" />
     <Compile Include="Extensions\Literal.cs" />
     <Compile Include="Models\AnswerOption.cs">
