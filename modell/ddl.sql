@@ -57,7 +57,7 @@ go
 
 -- Rechnung
 -- KUNDENSPEZIFISCH
-create table Bill
+create table Bill --Clinton
 (
 	BillId int identity primary key,
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
@@ -377,7 +377,9 @@ begin
 end
 go
 
+
 -- Zum Überprüfen, ob je Vote nur für AnswerOptions einer einzigen Survey gestimmt werden
+-- sowie zum Aufbuchen der Per-Click-Kosten des Kunden
 create trigger tr_ChoosesIns
 on Chooses
 after insert as
@@ -385,8 +387,7 @@ begin
 	declare @voteId int, @svyId int, @err bit = 0;
 	declare c cursor local for select VoteId, SvyId 
 							   from inserted i
-							   join AnswerOption a
-							   on i.AnsId = a.AnsId;
+							   join AnswerOption a on i.AnsId = a.AnsId;
 
 	open c;
 	fetch c into @voteId, @svyId;
@@ -406,6 +407,51 @@ begin
 	
 	if(@err = 1)
 		rollback;
+	else
+	begin
+		declare @custCode char(6), @pricePerClick money;
+		declare c2 cursor local for select c.CustCode, PricePerClick
+									from inserted i
+									join AnswerOption a on i.AnsId = a.AnsId
+									join Survey s on a.SvyId = s.SvyId
+									join Customer c on s.CustCode = c.CustCode
+									where i.VoteId not in (select VoteId from (select * from Chooses
+																			   except
+																			   select * from inserted) Chooses_before); -- nur für neue VoteIds
+
+	
+		open c2;
+		fetch c2 into @custCode, @pricePerClick;
+
+		while(@@FETCH_STATUS = 0)
+		begin
+			update Customer
+			set CostBalance += @pricePerClick
+			where CustCode = @custCode;
+
+			fetch c2 into @custCode, @pricePerClick;
+		end
+
+		close c2;
+		deallocate c2;
+	end
+end
+go
+
+
+-- Zum Löschen einer bestimmten Umfrage und allen zugehörigen Daten
+drop procedure sp_DeleteSurvey;
+go
+create procedure sp_DeleteSurvey(@svyId int)
+as
+begin
+	delete from Vote where VoteId in (select VoteId
+                                      from Chooses c 
+                                      join AnswerOption a on c.AnsId = a.AnsId
+                                      where a.SvyId = @svyId);
+    delete from AnswerOption where SvyId = @svyId;
+	delete from Asking where SvyId = @svyId;
+	delete from Survey where SvyId = @svyId;
 end
 go
 
@@ -420,7 +466,7 @@ begin
 	declare c cursor local for select svyId 
                                from Survey s
 							   join Customer c on s.CustCode = c.CustCode
-							   where datediff(day, s.StartDate, getdate()) >= c.DataStoragePeriod * 30
+							   where datediff(day, s.EndDate, getdate()) >= c.DataStoragePeriod * 30
 							   and Template = 0
 							   and [Sent] = 1;
 	
@@ -431,13 +477,7 @@ begin
 
 	while(@@FETCH_STATUS = 0)
 	begin
-		delete from Vote where VoteId in (select VoteId
-                                          from Chooses c 
-                                          join AnswerOption a on c.AnsId = a.AnsId
-                                          where a.SvyId = @svyId);
-        delete from AnswerOption where SvyId = @svyId;
-		delete from Asking where SvyId = @svyId;
-		delete from Survey where SvyId = @svyId;
+		exec sp_DeleteSurvey @svyId;
 		
 		set @svyCount += 1;
 		fetch c into @svyId;
@@ -446,6 +486,40 @@ begin
 	deallocate c;
 
 	select @svyCount as 'Deleted surveys'
+end
+go
+
+
+-- Zum Erstellen von Rechnungen aller Kunden
+drop procedure sp_CreateBills;
+go
+create procedure sp_CreateBills
+as
+begin
+	declare @custCode char(6), @costBalance money;
+	declare c cursor local for select CustCode, CostBalance
+							   from Customer
+							   for update;
+
+	open c;
+	fetch c into @custCode, @costBalance;
+
+	while(@@FETCH_STATUS = 0)
+	begin
+		if(@costBalance > 0)
+		begin
+			insert into Bill values (@custCode, @costBalance, getdate(), 0);
+
+			update Customer
+			set CostBalance = 0
+			where current of c;
+		end
+
+		fetch c into @custCode, @costBalance;
+	end
+
+	close c;
+	deallocate c;
 end
 go
 

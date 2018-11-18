@@ -25,7 +25,7 @@ namespace SimpleQ.Webinterface.Controllers
                 var model = new SettingsModel
                 {
                     MinGroupSize = cust.MinGroupSize,
-                    Categories = cust.SurveyCategories.ToList(),
+                    Categories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
                     ActivatedAnswerTypes = cust.AnswerTypes.ToList(),
                     DeactivatedAnswerTypes = db.AnswerTypes.ToList().Except(cust.AnswerTypes.ToList()).ToList(),
                     PaymentMethods = db.PaymentMethods.ToList(),
@@ -78,7 +78,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 db.SurveyCategories.Add(new SurveyCategory
                 {
-                    CatId = query.Max(c => c.CatId) + 1,
+                    CatId = (query.Count() == 0) ? 1 : query.Max(c => c.CatId) + 1,
                     CatName = catName,
                     CustCode = CustCode
                 });
@@ -195,16 +195,9 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 try
                 {
-                    if (db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).Count() == 0)
-                        return Http.Conflict("PaymentMethod does not exist.");
-
-                    if (req.DataStoragePeriod <= 0)
-                        return Http.Conflict("DataStoragePeriod must be greater than 0");
-
                     var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                     if (cust == null)
                         return Http.NotFound("Customer not found.");
-
 
                     cust.CustName = req.Name ?? throw ANEx("CustName");
                     cust.CustEmail = req.Email ?? throw ANEx("CustEmail");
@@ -213,8 +206,16 @@ namespace SimpleQ.Webinterface.Controllers
                     cust.City = req.City ?? throw ANEx("City");
                     cust.Country = req.Country ?? throw ANEx("Country");
                     cust.LanguageCode = req.LanguageCode ?? throw ANEx("LanguageCode");
+
+                    if (db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).Count() == 0)
+                        return Http.Conflict("PaymentMethod does not exist.");
+
+                    if (req.DataStoragePeriod <= 0)
+                        return Http.Conflict("DataStoragePeriod must be greater than 0");
+
                     cust.DataStoragePeriod = req.DataStoragePeriod;
                     cust.PaymentMethodId = req.PaymentMethodId;
+
                     db.SaveChanges();
 
                     return LoadSettings();

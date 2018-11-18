@@ -61,11 +61,11 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpPost]
         public ActionResult LoadMultiResult(MultiResultModel req)
         {
-            // SAMPLE DATA
+            //SAMPLE DATA
             //req = new MultiResultModel
             //{
             //    CatId = 4,
-            //    TypeId = 1,
+            //    TypeId = 2,
             //    StartDate = DateTime.Now.AddYears(-1),
             //    EndDate = DateTime.Now,
             //};
