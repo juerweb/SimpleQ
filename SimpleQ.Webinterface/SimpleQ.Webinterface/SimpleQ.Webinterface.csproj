@@ -209,6 +209,8 @@
     <Compile Include="Models\SurveyCategory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\SettingsModel.cs" />
+    <Compile Include="Models\ViewModels\SupportModel.cs" />
     <Compile Include="Models\Vote.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
