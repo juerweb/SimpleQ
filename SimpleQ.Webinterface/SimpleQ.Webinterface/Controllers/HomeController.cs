@@ -26,7 +26,7 @@ namespace SimpleQ.Webinterface.Controllers
                     SurveyCreationModel = new SurveyCreationModel
                     {
                         SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
-                        AnswerTypes = db.AnswerTypes.ToList(), // GLOBALIZATION!
+                        AnswerTypes = cust.AnswerTypes.ToList(),
                         Departments = cust.Departments.Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount),
                         SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
                     },
@@ -35,7 +35,7 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
                         Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList(),
-                        AnswerTypes = db.AnswerTypes.ToList() // GLOBALIZATION!
+                        AnswerTypes = cust.AnswerTypes.ToList()
                     },
 
                     GroupAdministrationModel = new GroupAdministrationModel
@@ -46,7 +46,7 @@ namespace SimpleQ.Webinterface.Controllers
                     SettingsModel = new SettingsModel
                     {
                         MinGroupSize = cust.MinGroupSize,
-                        Categories = cust.SurveyCategories.ToList(),
+                        Categories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
                         ActivatedAnswerTypes = cust.AnswerTypes.ToList(),
                         DeactivatedAnswerTypes = db.AnswerTypes.ToList().Except(cust.AnswerTypes.ToList()).ToList(),
                         PaymentMethods = db.PaymentMethods.ToList(),

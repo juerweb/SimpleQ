@@ -24,14 +24,15 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
+                var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                if (cust == null)
                     return Http.NotFound("Customer not found.");
 
                 var model = new SurveyCreationModel
                 {
-                    SurveyCategories = db.SurveyCategories.Where(s => s.CustCode == CustCode && !s.Deactivated).ToList(),
-                    AnswerTypes = db.AnswerTypes.ToList(),
-                    Departments = db.Departments.Where(d => d.CustCode == CustCode).Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount),
+                    SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
+                    AnswerTypes = cust.AnswerTypes.ToList(),
+                    Departments = cust.Departments.Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount),
                     SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
                 };
 
@@ -116,6 +117,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 var survey = db.Surveys
                     .Include("Departments")
                     .Include("AnswerOptions")
@@ -169,7 +171,7 @@ namespace SimpleQ.Webinterface.Controllers
                         queuedSurveys.Remove(svyId);
                     }
                 }
-                db.Surveys.Remove(survey);
+                db.sp_DeleteSurvey(svyId);
                 db.SaveChanges();
 
                 return Http.Ok();

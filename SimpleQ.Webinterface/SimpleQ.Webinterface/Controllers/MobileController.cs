@@ -202,7 +202,9 @@ namespace SimpleQ.Webinterface.Controllers
                 db.Votes.Add(vote);
                 db.SaveChanges();
 
-                if (sv.ChosenAnswerOptions.Select(a => a.SvyId).Distinct().Count() != 1)
+
+                var ansIds = sv.ChosenAnswerOptions.Select(a => a.AnsId).ToList();
+                if (db.AnswerOptions.Where(a => ansIds.Contains(a.AnsId)).Select(a => a.SvyId).Distinct().Count() != 1)
                     return Conflict();
 
                 foreach (int ansId in sv.ChosenAnswerOptions.Select(a => a.AnsId))
@@ -215,8 +217,6 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     vote.AnswerOptions.Add(db.AnswerOptions.Where(a => a.AnsId == id).FirstOrDefault());
                 });
-
-                cust.CostBalance += cust.PricePerClick; //decimal.Parse(ConfigurationManager.AppSettings["SurveyCost"], System.Globalization.CultureInfo.InvariantCulture);
                 db.SaveChanges();
 
                 return Ok();

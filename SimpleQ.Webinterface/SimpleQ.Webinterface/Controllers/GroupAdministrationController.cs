@@ -39,8 +39,10 @@ namespace SimpleQ.Webinterface.Controllers
                 if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
                     return Http.NotFound("Customer not found.");
 
+                var query = db.Departments.Where(d => d.CustCode == CustCode);
+
                 db.Departments.Add(new Department {
-                    DepId = db.Departments.Where(d => d.CustCode == CustCode).Max(d => d.DepId) + 1,
+                    DepId = (query.Count() == 0) ? 1 : query.Max(d => d.DepId) + 1,
                     DepName = depName,
                     CustCode = CustCode
                 });

@@ -37,6 +37,7 @@ namespace SimpleQ.Tests.MobileTest
 
         static int persId;
         static string custCode;
+        static string custName;
         static Dictionary<int, string> deps = new Dictionary<int, string>();
 
         const string SERVER = "https://localhost:44338";
@@ -136,6 +137,7 @@ namespace SimpleQ.Tests.MobileTest
 
                     persId = reg.PersId;
                     custCode = reg.CustCode;
+                    custName = reg.CustName;
                     deps = new Dictionary<int, string>
                     {
                         { reg.DepId, reg.DepName }
@@ -167,6 +169,7 @@ namespace SimpleQ.Tests.MobileTest
 
                     persId = reg.PersId;
                     custCode = reg.CustCode;
+                    custName = reg.CustName;
                     deps.Add(reg.DepId, reg.DepName);
                 }
                 Props();
@@ -204,6 +207,7 @@ namespace SimpleQ.Tests.MobileTest
 
                     persId = 0;
                     custCode = null;
+                    custName = null;
                     deps = new Dictionary<int, string>();
                 }
             }).Wait();
@@ -343,7 +347,7 @@ namespace SimpleQ.Tests.MobileTest
 
         static void Props()
         {
-            WriteLine($"PersId: {persId}, CustCode: {custCode}");
+            WriteLine($"PersId: {persId}, CustCode: {custCode}, CustName: {custName}");
             WriteLine("Departments:");
             foreach (KeyValuePair<int, string> kv in deps)
                 WriteLine($"   {kv.Key} {kv.Value}");

@@ -20,6 +20,9 @@ namespace SimpleQ.Webinterface
         private static bool exceededSurveySchedulerStarted = false;
         private static readonly object lck2 = new object();
 
+        private static bool createBillsSchedulerStarted = false;
+        private static readonly object lck3 = new object();
+
         protected void Application_Start()
         {
             GlobalFilters.Filters.Add(new RequireHttpsAttribute());
@@ -33,6 +36,7 @@ namespace SimpleQ.Webinterface
             StartSurveyScheduler();
             RestoreQueuedSurveys();
             StartExceededSurveyScheduler();
+            StartCreateBillsScheduler();
         }
 
         private void StartSurveyScheduler()
@@ -90,6 +94,25 @@ namespace SimpleQ.Webinterface
                 using (var db = new Models.SimpleQDBEntities())
                 {
                     db.sp_CheckExceededSurveyData();
+                }
+            });
+        }
+
+        private void StartCreateBillsScheduler()
+        {
+            lock (lck3)
+            {
+                if (createBillsSchedulerStarted) return;
+                createBillsSchedulerStarted = true;
+            }
+
+            HostingEnvironment.QueueBackgroundWorkItem(ct =>
+            {
+                TimeSpan untilDayOne = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1) - DateTime.Now;
+                Thread.Sleep(untilDayOne);
+                using (var db = new Models.SimpleQDBEntities())
+                {
+                    db.sp_CreateBills();
                 }
             });
         }

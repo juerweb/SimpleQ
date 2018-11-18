@@ -32,24 +32,35 @@ namespace SimpleQ.Webinterface.Controllers
             //req = new SupportModel();
             //req.Email = "test@kontaktfunktion.gabi";
             //req.QuestionCatgeory = "Lelelele";
-            //req.QuestionText = "Es letzte vom letzn san de hawara vo da gis.";
+            //req.QuestionText = "Sads ma BITTE NED BES";
+
 
             if (req == null)
                 return Http.BadRequest("Model object must not be null.");
 
+            if (string.IsNullOrEmpty(req.Email))
+                return Http.BadRequest("Email must not be null.");
+
+            if (string.IsNullOrEmpty(req.QuestionText))
+                return Http.BadRequest("QuestionText must not be null.");
+
+            if (string.IsNullOrEmpty(req.QuestionCatgeory))
+                return Http.BadRequest("QuestionCategory must not be null.");
+
+
+            req.QuestionText = $"FROM: {req.Email}{Environment.NewLine}{req.QuestionText}";
+
             try
             {
-                MailMessage msg = new MailMessage(req.Email ?? throw ANex("Email"), "support@simpleq.at")
+                MailMessage msg = new MailMessage("contactform@simpleq.at", "support@simpleq.at")
                 {
-                    Subject = "SIMPLEQ SUPPORT: " + req.QuestionCatgeory ?? throw ANex("QuestionCategory"),
-                    Body = req.QuestionText ?? throw ANex("QuestionText")
+                    Subject = "SIMPLEQ SUPPORT: " + req.QuestionCatgeory,
+                    Body = req.QuestionText
                 };
-                SmtpClient client = new SmtpClient
+                SmtpClient client = new SmtpClient("smtp.1und1.de", 587)
                 {
-                    Port = 25,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Host = "smtp.1und1.de"
+                    Credentials = new System.Net.NetworkCredential("contactform@simpleq.at", "123SimpleQ..."),
+                    EnableSsl = true
                 };
                 client.Send(msg);
 
@@ -64,7 +75,5 @@ namespace SimpleQ.Webinterface.Controllers
                 return Http.ServiceUnavailable("Sending failed due to internal error(s).");
             }
         }
-
-        private ArgumentNullException ANex(string paramName) => new ArgumentNullException(paramName);
     }
 }
