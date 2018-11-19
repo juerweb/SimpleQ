@@ -206,7 +206,7 @@ namespace SimpleQ.PageModels.Services
                 list = new List<SurveyModel>();
             }
             
-            if (!list.Contains(question))
+            if (list.Count(sm => sm.SurveyId == question.SurveyId) == 0)
             {
                 list.Add(question);
                 await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
@@ -221,6 +221,8 @@ namespace SimpleQ.PageModels.Services
 
                 App.MainMasterPageModel.AddCategorie(question.CatName);
             }
+
+            await BlobCache.LocalMachine.Flush();
         }
 
         /// <summary>
@@ -289,7 +291,8 @@ namespace SimpleQ.PageModels.Services
                 {
                     List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
 
-                    this.Questions.Clear();
+                    this.Questions = new ObservableCollection<SurveyModel>();
+                    this.PublicQuestions = this.Questions;
 
                     foreach (SurveyModel sm in list)
                     {
@@ -305,6 +308,11 @@ namespace SimpleQ.PageModels.Services
             });
         }
 
+        public void RemoveQuestions()
+        {
+            this.Questions = new ObservableCollection<SurveyModel>();
+            this.PublicQuestions = this.Questions;
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

@@ -13,7 +13,7 @@
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal">
-                                <controls:Checkbox IsCheckedChanged="Checkbox_IsCheckedChanged" IsChecked="{Binding IsChecked, Mode=TwoWay}"></controls:Checkbox>
+                                <controls:Checkbox IsCheckedChanged="Checkbox_IsCheckedChanged" IsChecked="{Binding IsChecked, Mode=TwoWay}" Margin="10,0,0,0"></controls:Checkbox>
                                 <Label Text="{Binding AnswerOption.RegistrationData.DepName}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
                             </StackLayout>
                         </ViewCell>

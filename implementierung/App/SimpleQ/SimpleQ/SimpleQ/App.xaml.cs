@@ -308,7 +308,7 @@ namespace SimpleQ
             Debug.WriteLine(additionalData["svyId"]);
 
             IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
-            Debug.WriteLine(webAPIService);
+            Debug.WriteLine(int.Parse(additionalData["svyId"].ToString()));
             try
             {
                 SurveyModel surveyModel = await webAPIService.GetSurveyData(int.Parse(additionalData["svyId"].ToString()));

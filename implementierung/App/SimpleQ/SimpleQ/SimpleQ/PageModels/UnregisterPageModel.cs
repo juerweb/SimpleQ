@@ -1,4 +1,5 @@
-﻿using FreshMvvm;
+﻿using Akavache;
+using FreshMvvm;
 using Newtonsoft.Json;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
@@ -11,6 +12,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
+using System.Reactive.Linq;
 
 namespace SimpleQ.PageModels
 {
@@ -25,11 +27,12 @@ namespace SimpleQ.PageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public UnregisterPageModel(ISimulationService simulationService, IDialogService dialogService, IWebAPIService webAPIService) : this()
+        public UnregisterPageModel(ISimulationService simulationService, IDialogService dialogService, IWebAPIService webAPIService, IQuestionService questionService) : this()
         {
             this.simulationService = simulationService;
             this.dialogService = dialogService;
             this.webAPIService = webAPIService;
+            this.questionService = questionService;
         }
 
         /// <summary>
@@ -63,6 +66,7 @@ namespace SimpleQ.PageModels
         private ISimulationService simulationService;
         private IDialogService dialogService;
         private IWebAPIService webAPIService;
+        private IQuestionService questionService;
         private Boolean isOneChecked;
 
         #endregion
@@ -103,10 +107,10 @@ namespace SimpleQ.PageModels
                     {
                         try
                         {
-                            if (Application.Current.Properties.ContainsKey("PersId") && Application.Current.Properties.ContainsKey("CustCode"))
+                            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
                             {
                                 //Android or iOS App
-                                Debug.WriteLine("Unregister Command executed on iOS or Android with PersId: " + Application.Current.Properties["PersId"] + " and CustCode: " + Application.Current.Properties["CustCode"], "Info");
+                                Debug.WriteLine("Unregister Command executed on iOS or Android...", "Info");
                                 Boolean success;
                                 if (isCheckedModel.AnswerOption.IsRegister)
                                 {
@@ -123,6 +127,16 @@ namespace SimpleQ.PageModels
                                     if (IsChecked.Count == 0)
                                     {
                                         Application.Current.Properties.Remove("registrations");
+                                        try
+                                        {
+                                            await BlobCache.LocalMachine.InvalidateObject<List<SurveyModel>>("Questions");
+                                            await BlobCache.LocalMachine.Flush();
+                                            this.questionService.RemoveQuestions();
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            Debug.WriteLine("Exception was occured: " + e.InnerException, "Exception");
+                                        }
                                     }
                                     else
                                     {
