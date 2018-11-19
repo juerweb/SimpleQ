@@ -1,10 +1,9 @@
 ﻿using IntelliAbb.Xamarin.Controls;
 using SimpleQ.Models;
-using SimpleQ.PageModels.QuestionPageModels;
+using SimpleQ.PageModels;
 using SimpleQ.Shared;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,12 +11,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace SimpleQ.Pages.QuestionPages
+namespace SimpleQ.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class PolytomousOMQuestionPage : ContentPage
+	public partial class UnregisterPage : ContentPage
 	{
-		public PolytomousOMQuestionPage()
+		public UnregisterPage ()
 		{
 			InitializeComponent ();
 		}
@@ -26,16 +25,16 @@ namespace SimpleQ.Pages.QuestionPages
         {
             if (this.BindingContext != null)
             {
-                PolytomousOMQuestionPageModel pageModel = (PolytomousOMQuestionPageModel)(this.BindingContext);
-                foreach (IsCheckedModel<AnswerOption> model in pageModel.IsChecked)
+                UnregisterPageModel pageModel = (UnregisterPageModel)(this.BindingContext);
+                foreach (IsCheckedModel<RegistrationDataModel> model in pageModel.IsChecked)
                 {
                     if (model.IsChecked)
                     {
-                        pageModel.IsQuestionAnswered = true;
+                        pageModel.IsOneChecked = true;
                         return;
                     }
                 }
-                pageModel.IsQuestionAnswered = false;
+                pageModel.IsOneChecked = false;
             }
 
         }
@@ -45,8 +44,8 @@ namespace SimpleQ.Pages.QuestionPages
             ListView listView = (ListView)sender;
             if (listView.SelectedItem != null)
             {
-                IsCheckedModel<AnswerOption> model = (IsCheckedModel<AnswerOption>)e.SelectedItem;
-                PolytomousOMQuestionPageModel pageModel = (PolytomousOMQuestionPageModel)(this.BindingContext);
+                IsCheckedModel<RegistrationDataModel> model = (IsCheckedModel<RegistrationDataModel>)e.SelectedItem;
+                UnregisterPageModel pageModel = (UnregisterPageModel)(this.BindingContext);
                 model.IsChecked = !model.IsChecked;
                 listView.SelectedItem = null;
             }

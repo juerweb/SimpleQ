@@ -120,39 +120,39 @@ namespace SimpleQ.PageModels
         {
             if (selectedQuestion.TypeDesc == SurveyType.YesNoQuestion)
             {
-                CoreMethods.PushPageModel<YesNoQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<YesNoQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
             else if (selectedQuestion.TypeDesc == SurveyType.YesNoDontKnowQuestion)
             {
-                CoreMethods.PushPageModel<YesNoDontKnowQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<YesNoDontKnowQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
             else if (selectedQuestion.TypeDesc == SurveyType.TrafficLightQuestion)
             {
-                CoreMethods.PushPageModel<TrafficLightQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<TrafficLightQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
             else if (selectedQuestion.TypeDesc == SurveyType.OpenQuestion)
             {
-                CoreMethods.PushPageModel<OpenQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<OpenQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
             else if (selectedQuestion.TypeDesc == SurveyType.PolytomousUSQuestion)
             {
-                CoreMethods.PushPageModel<PolytomousUSQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<PolytomousUSQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
             else if (selectedQuestion.TypeDesc == SurveyType.DichotomousQuestion)
             {
-                CoreMethods.PushPageModel<DichotomousQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<DichotomousQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
             else if (selectedQuestion.TypeDesc == SurveyType.PolytomousOSQuestion)
             {
-                CoreMethods.PushPageModel<PolytomousOSQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<PolytomousOSQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
             else if (selectedQuestion.TypeDesc == SurveyType.PolytomousOMQuestion)
             {
-                CoreMethods.PushPageModel<PolytomousOMQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<PolytomousOMQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
             else if (selectedQuestion.TypeDesc == SurveyType.PolytomousUMQuestion)
             {
-                CoreMethods.PushPageModel<PolytomousUMQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<PolytomousUMQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
             else if (selectedQuestion.TypeDesc == SurveyType.LikertScale3Question 
                 || selectedQuestion.TypeDesc == SurveyType.LikertScale4Question
@@ -162,7 +162,7 @@ namespace SimpleQ.PageModels
                 || selectedQuestion.TypeDesc == SurveyType.LikertScale8Question
                 || selectedQuestion.TypeDesc == SurveyType.LikertScale9Question)
             {
-                CoreMethods.PushPageModel<LikertScaleQuestionPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<LikertScaleQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
 
             SelectedQuestion = null;

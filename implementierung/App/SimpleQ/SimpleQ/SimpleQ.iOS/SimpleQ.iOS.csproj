@@ -356,4 +356,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_dashboard_black_18%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_pan_tool_black_18.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_pan_tool_black_18%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_pan_tool_black_18%403x.png" />
+  </ItemGroup>
 </Project>

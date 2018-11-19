@@ -97,7 +97,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /AnswerSurvey ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /answerSurvey ähnelt.
         /// </summary>
         internal static string APIAnswerSurveyPlusURL {
             get {
@@ -106,7 +106,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /GetSurveyData ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /getSurveyData ähnelt.
         /// </summary>
         internal static string APIGetDataPlusURL {
             get {
@@ -115,7 +115,25 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die http://localhost:1899/api/mobile ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /joinDepartment ähnelt.
+        /// </summary>
+        internal static string APIJoinDepartmentPlusURL {
+            get {
+                return ResourceManager.GetString("APIJoinDepartmentPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /leaveDepartment ähnelt.
+        /// </summary>
+        internal static string APILeaveDepartmentPlusURL {
+            get {
+                return ResourceManager.GetString("APILeaveDepartmentPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die http://simpleq.at/api/mobile ähnelt.
         /// </summary>
         internal static string APIMainURL {
             get {
@@ -124,7 +142,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /Register ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /register ähnelt.
         /// </summary>
         internal static string APIRegisterPlusURL {
             get {
@@ -133,7 +151,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die /Unregister ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die /unregister ähnelt.
         /// </summary>
         internal static string APIUnregisterPlusURL {
             get {
@@ -201,6 +219,15 @@ namespace SimpleQ.Resources {
         internal static string Copyright {
             get {
                 return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Debug-Modus? ähnelt.
+        /// </summary>
+        internal static string DebugMode {
+            get {
+                return ResourceManager.GetString("DebugMode", resourceCulture);
             }
         }
         
@@ -277,6 +304,33 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es konnte keine Verbindung zum Server hergestellt werden. Bitte überprüfen Sie ihre Internetverbindung! ähnelt.
+        /// </summary>
+        internal static string Error202 {
+            get {
+                return ResourceManager.GetString("Error202", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es ist ein Fehler bei der Aufhebung der Registrierung aufgetreten. Bitte versuchen Sie es erneut! ähnelt.
+        /// </summary>
+        internal static string Error203 {
+            get {
+                return ResourceManager.GetString("Error203", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Es ist ein Fehler beim Beantworten der Frage aufgetreten! ähnelt.
+        /// </summary>
+        internal static string Error204 {
+            get {
+                return ResourceManager.GetString("Error204", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe ähnelt.
         /// </summary>
         internal static string ExtendedHelp {
@@ -318,6 +372,15 @@ namespace SimpleQ.Resources {
         internal static string Help {
             get {
                 return ResourceManager.GetString("Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Neuer Gruppe beitreten ähnelt.
+        /// </summary>
+        internal static string JoinDepartment {
+            get {
+                return ResourceManager.GetString("JoinDepartment", resourceCulture);
             }
         }
         
@@ -507,6 +570,15 @@ namespace SimpleQ.Resources {
         internal static string SelectALanguage {
             get {
                 return ResourceManager.GetString("SelectALanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wählen Sie bitte alle Gruppen aus, aus welchen Sie austreten möchten. ähnelt.
+        /// </summary>
+        internal static string SelectUnregisterGroups {
+            get {
+                return ResourceManager.GetString("SelectUnregisterGroups", resourceCulture);
             }
         }
         

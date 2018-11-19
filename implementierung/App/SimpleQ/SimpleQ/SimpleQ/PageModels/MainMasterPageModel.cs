@@ -1,9 +1,11 @@
 ﻿using FreshMvvm;
 using MvvmHelpers;
+using Newtonsoft.Json;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Pages;
 using SimpleQ.Resources;
+using SimpleQ.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,29 +32,26 @@ namespace SimpleQ.PageModels
             this.MenuItems.Add(new MenuItemListModel(ItemType.Navigation.ToString()));
 
             //Generate CodeValidationModel from Application Properties
-            Boolean isValidCodeAvailable = (bool)Application.Current.Properties["IsValidCodeAvailable"];
-            String companyName = (string)Application.Current.Properties["CompanyName"];
-            String departmentName = (string)Application.Current.Properties["DepartmentName"];
-            int registerCode = (int)Application.Current.Properties["RegisterCode"];
+            List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
 
-            this.CodeValidationModel = new CodeValidationModel(isValidCodeAvailable, companyName, departmentName, registerCode);
+            this.RegistrationData = tmp[0];
         }
         #endregion
 
         #region Fields
-        private CodeValidationModel codeValidationModel;
+        private RegistrationDataModel registrationData;
         private MenuItemModel selectedItem;
 
         private Dictionary<String, Page> _pages = new Dictionary<string, Page>();
         #endregion
 
         #region Properties + Getter/Setter Methods
-        public CodeValidationModel CodeValidationModel
+        public RegistrationDataModel RegistrationData
         {
-            get => codeValidationModel;
+            get => registrationData;
             set
             {
-                codeValidationModel = value;
+                registrationData = value;
                 OnPropertyChanged();
             }
         }

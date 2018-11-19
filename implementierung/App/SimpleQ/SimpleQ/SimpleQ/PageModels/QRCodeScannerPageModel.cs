@@ -33,12 +33,17 @@ namespace SimpleQ.PageModels
         public override void Init(object initData)
         {
             base.Init(initData);
+            if (initData != null)
+            {
+                isRegistration = (Boolean)initData;
+            }
         }
         #endregion
 
         #region Fields
         private IDialogService dialogService;
         private Boolean isScanning;
+        private Boolean isRegistration;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -67,7 +72,7 @@ namespace SimpleQ.PageModels
                 {
                     Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
                     //Check if Code is in DB
-                    await CoreMethods.PushPageModel<LoadingPageModel>(int.Parse(parameter.ToString()));
+                    await CoreMethods.PushPageModel<LoadingPageModel>(new List<object> { int.Parse(parameter.ToString()), isRegistration });
                 }
                 else
                 {

@@ -267,20 +267,20 @@
     <value>Soll sich die App, nach dem Beantworten einer neuen Frage, wieder schließen?</value>
   </data>
   <data name="APIMainURL" xml:space="preserve">
-    <value>http://localhost:1899/api/mobile</value>
+    <value>http://simpleq.at/api/mobile</value>
     <comment>NT</comment>
   </data>
   <data name="APIRegisterPlusURL" xml:space="preserve">
-    <value>/Register</value>
+    <value>/register</value>
   </data>
   <data name="APIAnswerSurveyPlusURL" xml:space="preserve">
-    <value>/AnswerSurvey</value>
+    <value>/answerSurvey</value>
   </data>
   <data name="APIUnregisterPlusURL" xml:space="preserve">
-    <value>/Unregister</value>
+    <value>/unregister</value>
   </data>
   <data name="APIGetDataPlusURL" xml:space="preserve">
-    <value>/GetSurveyData</value>
+    <value>/getSurveyData</value>
   </data>
   <data name="KeyResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.private.key</value>
@@ -290,5 +290,29 @@
   </data>
   <data name="Menu" xml:space="preserve">
     <value>Menü</value>
+  </data>
+  <data name="APIJoinDepartmentPlusURL" xml:space="preserve">
+    <value>/joinDepartment</value>
+  </data>
+  <data name="APILeaveDepartmentPlusURL" xml:space="preserve">
+    <value>/leaveDepartment</value>
+  </data>
+  <data name="Error202" xml:space="preserve">
+    <value>Es konnte keine Verbindung zum Server hergestellt werden. Bitte überprüfen Sie ihre Internetverbindung!</value>
+  </data>
+  <data name="Error203" xml:space="preserve">
+    <value>Es ist ein Fehler bei der Aufhebung der Registrierung aufgetreten. Bitte versuchen Sie es erneut!</value>
+  </data>
+  <data name="JoinDepartment" xml:space="preserve">
+    <value>Neuer Gruppe beitreten</value>
+  </data>
+  <data name="SelectUnregisterGroups" xml:space="preserve">
+    <value>Wählen Sie bitte alle Gruppen aus, aus welchen Sie austreten möchten.</value>
+  </data>
+  <data name="Error204" xml:space="preserve">
+    <value>Es ist ein Fehler beim Beantworten der Frage aufgetreten!</value>
+  </data>
+  <data name="DebugMode" xml:space="preserve">
+    <value>Debug-Modus?</value>
   </data>
 </root>

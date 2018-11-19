@@ -18,7 +18,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Command="{Binding LogOutCommand}" Text="{ext:Translate Text=LogOut}"></Button>
+            <Button Command="{Binding JoinDepartmentCommand}" Text="{ext:Translate Text=JoinDepartment}"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

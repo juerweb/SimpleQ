@@ -52,18 +52,13 @@ namespace SimpleQ.PageModels.QuestionPageModels
         {
             if (initData != null)
             {
-                if (initData.GetType() == typeof(SurveyModel))
+                List<object> objects = (List<object>)initData;
+                this.Question = (SurveyModel)objects[0];
+                if (this.Question.TypeDesc == SurveyType.PolytomousOMQuestion || this.Question.TypeDesc == SurveyType.PolytomousOSQuestion)
                 {
-                    this.Question = (SurveyModel)initData;
-                    if (this.Question.TypeDesc == SurveyType.PolytomousOMQuestion || this.Question.TypeDesc == SurveyType.PolytomousOSQuestion)
-                    {
-                        this.Question.GivenAnswers = this.Question.GivenAnswers.OrderBy(ga => ga.AnsText).ToList();
-                    }
+                    this.Question.GivenAnswers = this.Question.GivenAnswers.OrderBy(ga => ga.AnsText).ToList();
                 }
-                else if (initData.GetType() == typeof(Boolean))
-                {
-                    isItAStartQuestion = (Boolean)initData;
-                }
+                this.isItAStartQuestion = (Boolean)objects[1];
             }
 
             base.Init(initData);
@@ -142,15 +137,17 @@ namespace SimpleQ.PageModels.QuestionPageModels
             if (this.questionService == null)
             {
                 IQuestionService qs = FreshIOC.Container.Resolve<IQuestionService>();
-                qs.QuestionAnswered(this.Question);
+                Boolean success = await qs.QuestionAnswered(this.Question);
             }
             else
             {
-                this.questionService.QuestionAnswered(this.Question);
+                Boolean success = await this.questionService.QuestionAnswered(this.Question);
             }
             try
             {
                 Boolean CloseAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
+                Debug.WriteLine("isItAStartQuestion: " + isItAStartQuestion, "Info");
+                Debug.WriteLine("CloseAppAfterNotification: " + CloseAppAfterNotification, "Info");
                 if (CloseAppAfterNotification && isItAStartQuestion)
                 {
                     Debug.WriteLine("Before Closer...", "Info");

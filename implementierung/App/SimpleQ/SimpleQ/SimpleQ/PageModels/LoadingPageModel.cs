@@ -1,8 +1,11 @@
 ﻿using Acr.UserDialogs;
 using Akavache;
+using Com.OneSignal;
 using FreshMvvm;
+using Newtonsoft.Json;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
+using SimpleQ.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,11 +22,12 @@ namespace SimpleQ.PageModels
     public class LoadingPageModel : FreshBasePageModel, INotifyPropertyChanged
     {
         #region Constructor(s)
-        public LoadingPageModel(ISimulationService simulationService, IDialogService dialogService, IQuestionService questionService) : this()
+        public LoadingPageModel(ISimulationService simulationService, IDialogService dialogService, IQuestionService questionService, IWebAPIService webAPIService) : this()
         {
             this.simulationService = simulationService;
             this.dialogService = dialogService;
             this.questionService = questionService;
+            this.webAPIService = webAPIService;
         }
         public LoadingPageModel()
         {
@@ -38,33 +42,120 @@ namespace SimpleQ.PageModels
 
             this.IsRunning = true;
 
+            //isRegister and not joinDepartment
+            Boolean isRegister;
+
             //Code Check
-            CodeValidationModel codeValidationModel = await this.SimulationService.CheckCode((int)initData);
-
-            Application.Current.Properties["IsValidCodeAvailable"] = codeValidationModel.IsValid;
-            Application.Current.Properties["CompanyName"] = codeValidationModel.CompanyName;
-
-            Application.Current.Properties["DepartmentName"] = codeValidationModel.DepartmentName;
-            Application.Current.Properties["RegisterCode"] = codeValidationModel.Code;
-
-            if (codeValidationModel.IsValid)
+            List<object> objects = (List<object>)initData;
+            string code = objects[0].ToString();
+            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
-                Debug.WriteLine("Code is valid...", "Info");
-                this.IsFirstStepTicked = true;
+                Debug.WriteLine("RuntimePlatform is in (iOS, Android)...", "Info");
+                if (Application.Current.Properties["userID"] != null)
+                {
+                    RegistrationDataModel data = new RegistrationDataModel();
+                    try
+                    {
+                        if ((Boolean)objects[1])
+                        {
+                            data.RegistrationData = await this.webAPIService.Register(code, Application.Current.Properties["userID"].ToString());
+                            data.IsRegister = true;
+                        }
+                        else
+                        {
+                            List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
+                            data.RegistrationData = await this.webAPIService.JoinDepartment(code, tmp[0].RegistrationData.PersId);
+                            data.IsRegister = false;
+                        }
+                    }
+                    catch (System.Net.Http.HttpRequestException e)
+                    {
+                        Application.Current.Properties["IsValidCodeAvailable"] = false;
+                        Debug.WriteLine("WebException during the Validation", "Error");
+                        this.IsRunning = false;
+
+                        this.dialogService.ShowErrorDialog(202);
+                        await CoreMethods.PopToRoot(false);
+                        return;
+                    }
+                    if (data.RegistrationData != null)
+                    {
+                        if (Application.Current.Properties.ContainsKey("registrations"))
+                        {
+                            List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
+                            tmp.Add(data);
+                            Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(tmp);
+                        }
+                        else
+                        {
+                            Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(new List <RegistrationDataModel> { data });
+                        }
+                        Debug.WriteLine("Code is valid...", "Info");
+                        this.IsFirstStepTicked = true;
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Code is not valid...", "Info");
+                        this.IsRunning = false;
+
+                        this.dialogService.ShowErrorDialog(201);
+                        await CoreMethods.PopToRoot(false);
+                        return;
+                    }
+                }
+                
             }
             else
             {
-                Debug.WriteLine("Code is not valid...", "Info");
-                this.IsRunning = false;
+                //Code Check
+                CodeValidationModel codeValidationModel = await this.SimulationService.CheckCode(code);
 
-                this.dialogService.ShowErrorDialog(201);
-                await CoreMethods.PopToRoot(false);
-                return;
+                if (codeValidationModel.IsValid)
+                {
+                    Debug.WriteLine("Code is valid...", "Info");
+                    this.IsFirstStepTicked = true;
+
+                    RegistrationDataModel data = new RegistrationDataModel() { RegistrationData=new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Tina Company", PersId = 1 } };
+                    //Code Check
+                    if (Application.Current.Properties.ContainsKey("registrations"))
+                    {
+                        List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
+                        tmp.Add(data);
+                        Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(tmp);
+                    }
+                    else
+                    {
+                        Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(new List<RegistrationDataModel> { data });
+                    }
+                }
+                else
+                {
+                    Debug.WriteLine("Code is not valid...", "Info");
+                    this.IsRunning = false;
+
+                    this.dialogService.ShowErrorDialog(201);
+                    await CoreMethods.PopToRoot(false);
+                    return;
+                }
             }
 
+            await Application.Current.SavePropertiesAsync();
+
+            //Debug.WriteLine("ID: " + Application.Current.Properties["userID"]);
+
             //Load Data
-            await questionService.LoadData();
-            Debug.WriteLine("Requested Data...", "Info");
+            if ((Boolean)objects[1])
+            {
+                if (objects.Count > 2 && (Boolean)objects[2])
+                {
+                    await questionService.LoadData();
+                    Debug.WriteLine("Requested Data in Debug Mode...", "Info");
+                }
+                else
+                {
+                    Debug.WriteLine("No Data Request because not in Debug Mode...", "Info");
+                }
+            }
 
             //Set MainPageModel as new Main Page
             App.GoToRightPage();
@@ -78,6 +169,7 @@ namespace SimpleQ.PageModels
         private ISimulationService simulationService;
         private IDialogService dialogService;
         private IQuestionService questionService;
+        private IWebAPIService webAPIService;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -113,6 +205,7 @@ namespace SimpleQ.PageModels
 
         public ISimulationService SimulationService { get => simulationService; }
         public IDialogService DialogService { get => dialogService; }
+        public IWebAPIService WebAPIService { get => webAPIService; set => webAPIService = value; }
         #endregion
 
         #region Commands

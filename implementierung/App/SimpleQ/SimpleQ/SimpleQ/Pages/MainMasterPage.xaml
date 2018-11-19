@@ -46,8 +46,7 @@
 
                         <Image Source="ic_business_black_48.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start"></Image>
                         <StackLayout Grid.Column="1" Grid.Row="2">
-                            <Label Text="{Binding Path=CodeValidationModel.CompanyName}" Style="{DynamicResource BodyStyle}"/>
-                            <Label Text="{Binding Path=CodeValidationModel.DepartmentName}" Style="{DynamicResource BodyStyle}"/>
+                            <Label Text="{Binding Path=RegistrationData.RegistrationData.DepName}" Style="{DynamicResource BodyStyle}"/>
                         </StackLayout>
                     </Grid>
                 </ListView.Header>
