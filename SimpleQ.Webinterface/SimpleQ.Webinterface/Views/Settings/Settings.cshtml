@@ -1,0 +1,425 @@
+﻿@using System.Resources
+@using SimpleQ.Webinterface.App_LocalResources
+@model SimpleQ.Webinterface.Models.ViewModels.SettingsModel
+
+
+<div class="row pl-4 mt-1 ml-0 mr-0">
+    <h2>Einstellungen</h2>
+</div>
+<div class="row mt-1 ml-0 mr-0">
+    <div class="col-md-4">
+        <h4 class="text-center">@Resources.MinimumGroupSize</h4>
+        <div class="form-group mt-2">
+            <label for="minimumGroupSize">Minimale Gruppengröße</label>
+            <input type="number" class="form-control mr-0" id="minimumGroupSize" value="@Model.MinGroupSize">
+            <button type="button" class="btn btn-primary btn-block mt-3" onclick="changeMinimumGroupSize()" disabled id="changeMinimumGroupSize">Speichern</button>
+        </div>
+        <h4 class="text-center">Umfragekategorie</h4>
+        <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer" onclick="openAddAnswer()"><span class="d-flex justify-content-between"><span>Answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+        <div id="answerBox" class="border border-dark mt-2">
+            <div class="row mt-1 mb-1 mr-0 ml-0">
+                <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>
+                <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>
+                <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions">
+                    @{
+                        foreach (var c in Model.Categories)
+                        {
+                            <li class="list-group-item">
+                                <span class="d-flex justify-content-between">
+                                    <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.CatName" />
+                                    <span>
+                                        <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>
+                                        <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>
+                                    </span>
+                                </span>
+                            </li>
+                        }
+                    }
+
+                </ul>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary btn-block mt-3" onclick="saveUmfr()" id="changeMinimumGroupSize">Speichern</button>
+    </div>
+    <div class="col-md-4">
+        <h4 class="text-center">@Resources.ApplicationSettings</h4>
+        <div class="form-group mt-2 mb-1">
+            <label for="groups">Aktivierte Modi</label>
+            <div class="border border-dark">
+                <ul class="list-group groups-ul pl-2" id="modes">
+                    @{ List<string> t = new List<string>();
+                        t.Add("Ampelsystem");
+                        t.Add("Ja/Nein Umfrage");
+                        t.Add("Ein Wort Antwort");
+                        t.Add("Test");
+                        t.Add("Test");
+                        t.Add("Test");
+                        t.Add("Test");
+                    }
+                    @for (var i = 0; i < t.Count; i++)
+                    {
+                        <li>
+                            <input type="checkbox" name="checkboxcheck" onclick="checkboxChange()">
+                            <span>@t[i]</span>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <button class="btn btn-primary btn-block mt-3" disabled id="save" onclick="answerChecked()">Speichern</button>
+        <h4 class="text-center">@Resources.Password</h4>
+        <div class="form-group mt-2">
+            <label for="password">@Resources.Password</label>
+            <input type="password" id="password" class="form-control mr-0" minlength="8" required placeholder="mindestens 8 Zeichen" />
+            <label for="passwordConfirm">@Resources.PasswordConfirm</label>
+            <input type="password" id="passwordConfirm" class="form-control mr-0" minlength="8" required placeholder="passwort bestätigen" />
+            <button class="btn btn-primary btn-block mt-3" onclick="checkPassword()">Passwort ändern</button>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h4 class="text-center">@Resources.AccountSettings</h4>
+        <div class="form-group mt-2">
+            @using (Html.BeginForm("UpdateCustomer", "Settings", FormMethod.Post))
+            {
+                @*<label for="name">@Resources.Name</label>*@
+                @Html.LabelFor(m => m.Name, Resources.Name);
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Street, Resources.Street);
+                @Html.TextBoxFor(m => m.Street, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.City, Resources.City);
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Plz, Resources.PostalCode);
+                @Html.TextBoxFor(m => m.Plz, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Country, Resources.Country);
+                @Html.TextBoxFor(m => m.Country, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.LanguageCode, Resources.Language);
+                @Html.TextBoxFor(m => m.LanguageCode, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Email, Resources.Email);
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.DataStoragePeriod, Resources.DataStoragePeriod);
+                @Html.TextBoxFor(m => m.DataStoragePeriod, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.LanguageCode);
+                @Html.DropDownListFor(m => m.PaymentMethodId, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });
+                <input type="submit" value="Speichern" class="btn btn-primary btn-block mt-3" />
+            }
+            <br />
+            <button class="btn btn-primary btn-block mt-3">Zur Rechnungsübersicht</button>
+            <button class="btn btn-danger btn-block mt-3">Abo kündigen</button>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Passwort setzen Fehler</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Die eingegebenen Passwörter müssen übereinstimmen.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Schließen</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var dictionary = {};
+                var survCats = [];
+    @{
+        foreach (var c in Model.Categories)
+        {
+            @:dictionary[@c.CatId] = "@c.CatName";
+                }
+    }
+
+    var changed = false;
+    var checkedAnswers = [];
+    //var answers = [];
+
+
+    function answerChecked() {
+        checkedAnswers = [];
+        var listItems = document.getElementById('modes').getElementsByTagName('li');
+        for (i = 0; i < listItems.length; i++) {
+            if (listItems[i].getElementsByTagName('input')[0].checked) {
+                checkedAnswers.push(listItems[i].getElementsByTagName('span')[0].textContent);
+                console.log(listItems[i].getElementsByTagName('span')[0].textContent);
+            }
+        }
+        $("#save").prop('disabled', true);
+    }
+
+    function checkboxChange() {
+        $("#save").prop('disabled', false);
+    }
+
+    $("#minimumGroupSize").on("input", function () {
+        $("#changeMinimumGroupSize").prop('disabled', false);
+    });
+
+    function changeMinimumGroupSize() {
+        let val = $("#minimumGroupSize").val();
+        let url = "@Url.Action("ChangeMinGroup", "Settings")?size=" + val;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
+            }
+        });
+        $("#changeMinimumGroupSize").prop('disabled', true);
+    }
+
+    function checkPassword() {
+        let val1 = $("#password").val();
+        let val2 = $("#passwordConfirm").val();
+
+        if (val1 == val2 && val1 != "" && val2 != "") {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action("ChangePassword", "Settings")",
+                data: {"password": val1},
+                statusCode: {
+                    200: function () {
+                        console.log("amkkkk");
+                    },
+                    404: function () {
+
+                    },
+                    500: function () {
+
+                    }
+                }
+            });
+        } else {
+            //alert("Passwort stimmt nicht überein!");
+            $("#myModal").modal();
+        }
+        $("#password").val("");
+        $("#passwordConfirm").val("");
+    }
+
+    function openAddAnswerBox() {
+        var answerBox = document.getElementById("answerBox");
+        var answerType = document.getElementById("AnswerTypeCB");
+        var value = answerType.value;
+        if (value >= 6 && value <= 9) {
+            if (survCats.length === 0) {
+                $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+            }
+            answerBox.innerHTML =
+                '<div class="row mt-1 mb-1 mr-0 ml-0">' +
+                '        <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>' +
+                '        <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
+                '        <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions"></ul>' +
+                '</div >';
+            if (survCats.length > 0) {
+                let ul = document.getElementById("answerUL");
+                for (i = 0; i < survCats.length; i++) {
+                    let normal =
+                        '<li class="list-group-item">' +
+                        '   <span class="d-flex justify-content-between">' +
+                        '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + survCats[i] + '" />' +
+                        '       <span>' +
+                        '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+                        '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+                        '       </span>' +
+                        '   </span>' +
+                        '</li>';
+                    ul.innerHTML += normal;
+                }
+            }
+        } else {
+            if (firstAnswer !== "" && secondAnswer !== "") {
+                $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+            } else {
+                $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+            }
+            answerBox.innerHTML =
+                '<div class="m-2">' +
+                '    <label>First Answer</label>' +
+                '    <input id="dichotomAnswer1" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + firstAnswer + '" class="form-control" />' +
+                '    <label>Second Answer</label>' +
+                '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + secondAnswer + '" class="form-control" />' +
+                '</div>';
+        }
+
+        $("#answerBox").show();
+    }
+
+    function openAddAnswer() {
+        console.log("he");
+        document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe5ce;";
+        if ($("#answerBox").is(":hidden")) {
+            console.log("gay");
+            openAddAnswerBox();
+        } else if ($("#answerBox").is(":visible")) {
+            $("#answerBox").hide();
+            document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe313;";
+        }
+        console.log("uuu");
+    }
+
+    function dichotomAnswerChanged(inputId) {
+        firstAnswer = document.getElementById("dichotomAnswer1").value;
+        secondAnswer = document.getElementById("dichotomAnswer2").value;
+        if (firstAnswer !== "" && secondAnswer !== "") {
+            $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+        } else {
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+        }
+    }
+
+    function addAnswer() {
+        let ul = document.getElementById("answerUL");
+        let input = document.getElementById("answerInput").value;
+
+        if (input === "") {
+            alert('@Resources.invalidInput');
+            return;
+        } else if (survCats.includes(input)) {
+            alert('@Resources.invalidInput');
+            return;
+        }
+
+        //survCats.push(input);
+        dictionary["schaftid"] = input;
+        let normal =
+        '<li class="list-group-item">' +
+            '   <span class="d-flex justify-content-between">' +
+            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>' +
+            '   </span>' +
+            '</li>';
+        ul.innerHTML += normal;
+        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+    }
+
+    function deleteAnswer(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        let key = getKeyByValue(dictionary, text);
+        delete dictionary[key];
+        let url = "@Url.Action("DeleteCategory", "Settings")?catId=" + key;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
+            }
+        });
+        button.parentElement.parentElement.parentElement.remove();
+        if (survCats.length === 0) {
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+        }
+        console.log(dictionary);
+    }
+
+    function editAnswer(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        let edit =
+            '       <input type="text" class="" name="TextAnswerOptions" value="' + text + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-success ml-2 pb-0" onclick="saveAnswer(this,false,\'' + text + '\')"><i class="material-icons">&#xe5ca;</i></button>' +
+            '           <button type="button" class="btn btn-secondary ml-2 pb-0" onclick="saveAnswer(this,true,\'' + text + '\')"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>';
+        button.parentElement.parentElement.innerHTML = edit;
+    }
+
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
+    }
+
+    function saveAnswer(button, canceled, tempText) {
+        let text;
+        if (canceled) {
+            text = tempText;
+        } else {
+            text = button.parentElement.parentElement.children[0].value;
+            if (Object.values(dictionary).includes(text)) {
+                alert('@Resources.invalidInput');
+                return;
+            }
+            //for (i = 0; i < survCats.length; i++) {
+            //    if (survCats[i] === tempText) {
+            //        survCats[i] = text;
+            //        break;
+            //    }
+            //}
+            let key = getKeyByValue(dictionary, tempText);
+            dictionary[key] = text;
+            let url = "@Url.Action("ModifyCategory", "Settings")?catId=" + key + "&catName=" + encodeURIComponent(text);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                statusCode: {
+                    200: function () {
+                        console.log("amkkkk");
+                    },
+                    404: function () {
+
+                    },
+                    500: function () {
+
+                    }
+                }
+            });
+        }
+
+        let edited =
+            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + text + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>';
+        tempText = "";
+        button.parentElement.parentElement.innerHTML = edited;
+        console.log(dictionary);
+    }
+
+    function saveUmfr() {
+        if (survCats.length > 0) {
+            console.log(survCats);
+        } else {
+            console.log("nix do amk");
+        }
+
+    }
+</script>
