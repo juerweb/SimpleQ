@@ -232,7 +232,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GroupAdministrationController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\SurveyCreationController.cs" />
@@ -243,7 +242,6 @@
     <Compile Include="Models\Mobile\RegistrationData.cs" />
     <Compile Include="Models\Mobile\SurveyData.cs" />
     <Compile Include="Models\Mobile\SurveyVote.cs" />
-    <Compile Include="Models\ViewModels\ContainerViewModel.cs" />
     <Compile Include="Models\ViewModels\GroupAdministrationModel.cs" />
     <Compile Include="Models\ViewModels\MultiResultModel.cs" />
     <Compile Include="Models\ViewModels\SingleResultModel.cs" />
