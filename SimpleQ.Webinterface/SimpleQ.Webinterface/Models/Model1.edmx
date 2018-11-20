@@ -1,0 +1,1047 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SimpleQDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Activates">
+          <Key>
+            <PropertyRef Name="CustCode" />
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="CustCode" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AnswerOption">
+          <Key>
+            <PropertyRef Name="AnsId" />
+          </Key>
+          <Property Name="AnsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SvyId" Type="int" Nullable="false" />
+          <Property Name="AnsText" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AnswerType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="TypeDesc" Type="varchar(max)" Nullable="false" />
+          <Property Name="BaseId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Asking">
+          <Key>
+            <PropertyRef Name="SvyId" />
+            <PropertyRef Name="DepId" />
+            <PropertyRef Name="CustCode" />
+          </Key>
+          <Property Name="SvyId" Type="int" Nullable="false" />
+          <Property Name="DepId" Type="int" Nullable="false" />
+          <Property Name="CustCode" Type="char" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BaseQuestionType">
+          <Key>
+            <PropertyRef Name="BaseId" />
+          </Key>
+          <Property Name="BaseId" Type="int" Nullable="false" />
+          <Property Name="BaseDesc" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="BillId" />
+          </Key>
+          <Property Name="BillId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustCode" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="BillPrice" Type="money" Nullable="false" />
+          <Property Name="BillDate" Type="datetime" Nullable="false" />
+          <Property Name="Paid" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Chooses">
+          <Key>
+            <PropertyRef Name="VoteId" />
+            <PropertyRef Name="AnsId" />
+          </Key>
+          <Property Name="VoteId" Type="int" Nullable="false" />
+          <Property Name="AnsId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustCode" />
+          </Key>
+          <Property Name="CustCode" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="CustName" Type="varchar(max)" Nullable="false" />
+          <Property Name="CustEmail" Type="varchar(max)" Nullable="false" />
+          <Property Name="CustPwdTmp" Type="varchar(max)" />
+          <Property Name="CustPwdHash" Type="varbinary(max)" />
+          <Property Name="Street" Type="varchar(max)" Nullable="false" />
+          <Property Name="Plz" Type="varchar" MaxLength="16" Nullable="false" />
+          <Property Name="City" Type="varchar(max)" Nullable="false" />
+          <Property Name="Country" Type="varchar(max)" Nullable="false" />
+          <Property Name="LanguageCode" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="DataStoragePeriod" Type="int" Nullable="false" />
+          <Property Name="PaymentMethodId" Type="int" Nullable="false" />
+          <Property Name="MinGroupSize" Type="int" Nullable="false" />
+          <Property Name="PricePerClick" Type="money" Nullable="false" />
+          <Property Name="CostBalance" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepId" />
+            <PropertyRef Name="CustCode" />
+          </Key>
+          <Property Name="DepId" Type="int" Nullable="false" />
+          <Property Name="DepName" Type="varchar(max)" Nullable="false" />
+          <Property Name="CustCode" Type="char" MaxLength="6" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DsgvoConstraint">
+          <Key>
+            <PropertyRef Name="ConstrName" />
+          </Key>
+          <Property Name="ConstrName" Type="varchar" MaxLength="512" Nullable="false" />
+          <Property Name="ConstrValue" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employs">
+          <Key>
+            <PropertyRef Name="DepId" />
+            <PropertyRef Name="CustCode" />
+            <PropertyRef Name="PersId" />
+          </Key>
+          <Property Name="DepId" Type="int" Nullable="false" />
+          <Property Name="CustCode" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="PersId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FaqEntry">
+          <Key>
+            <PropertyRef Name="FaqTitle" />
+          </Key>
+          <Property Name="FaqTitle" Type="varchar" MaxLength="128" Nullable="false" />
+          <Property Name="FaqContent" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodId" />
+          </Key>
+          <Property Name="PaymentMethodId" Type="int" Nullable="false" />
+          <Property Name="PaymentMethodDesc" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersId" />
+          </Key>
+          <Property Name="PersId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DeviceId" Type="varchar(max)" />
+        </EntityType>
+        <EntityType Name="PredefinedAnswerOption">
+          <Key>
+            <PropertyRef Name="PreAnsId" />
+          </Key>
+          <Property Name="PreAnsId" Type="int" Nullable="false" />
+          <Property Name="PreAnsText" Type="varchar(max)" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="SvyId" />
+          </Key>
+          <Property Name="SvyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CatId" Type="int" Nullable="false" />
+          <Property Name="CustCode" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="SvyText" Type="varchar(max)" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="TypeId" Type="int" Nullable="false" />
+          <Property Name="Template" Type="bit" Nullable="false" />
+          <Property Name="Sent" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SurveyCategory">
+          <Key>
+            <PropertyRef Name="CatId" />
+            <PropertyRef Name="CustCode" />
+          </Key>
+          <Property Name="CatId" Type="int" Nullable="false" />
+          <Property Name="CustCode" Type="char" MaxLength="6" Nullable="false" />
+          <Property Name="CatName" Type="varchar(max)" Nullable="false" />
+          <Property Name="Deactivated" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="VoteId" />
+          </Key>
+          <Property Name="VoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VoteText" Type="varchar(max)" />
+        </EntityType>
+        <Association Name="FK__Activates__CustC__6A85CC04">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Activates" Type="Self.Activates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Activates">
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Activates__TypeI__6B79F03D">
+          <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
+          <End Role="Activates" Type="Self.Activates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Activates">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnswerOpt__SvyId__7F80E8EA">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+          <End Role="AnswerOption" Type="Self.AnswerOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SvyId" />
+            </Principal>
+            <Dependent Role="AnswerOption">
+              <PropertyRef Name="SvyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnswerTyp__BaseI__67A95F59">
+          <End Role="BaseQuestionType" Type="Self.BaseQuestionType" Multiplicity="1" />
+          <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseQuestionType">
+              <PropertyRef Name="BaseId" />
+            </Principal>
+            <Dependent Role="AnswerType">
+              <PropertyRef Name="BaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Asking__7CA47C3F">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Asking" Type="Self.Asking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepId" />
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Asking">
+              <PropertyRef Name="DepId" />
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Asking__SvyId__7BB05806">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+          <End Role="Asking" Type="Self.Asking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SvyId" />
+            </Principal>
+            <Dependent Role="Asking">
+              <PropertyRef Name="SvyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bill__CustCode__5A4F643B">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Chooses__AnsId__0539C240">
+          <End Role="AnswerOption" Type="Self.AnswerOption" Multiplicity="1" />
+          <End Role="Chooses" Type="Self.Chooses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerOption">
+              <PropertyRef Name="AnsId" />
+            </Principal>
+            <Dependent Role="Chooses">
+              <PropertyRef Name="AnsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Chooses__VoteId__04459E07">
+          <End Role="Vote" Type="Self.Vote" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Chooses" Type="Self.Chooses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vote">
+              <PropertyRef Name="VoteId" />
+            </Principal>
+            <Dependent Role="Chooses">
+              <PropertyRef Name="VoteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__Paymen__5772F790">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="PaymentMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Departmen__CustC__5D2BD0E6">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employs__62E4AA3C">
+          <End Role="Department" Type="Self.Department" Multiplicity="1" />
+          <End Role="Employs" Type="Self.Employs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepId" />
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Employs">
+              <PropertyRef Name="DepId" />
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Employs__PersId__61F08603">
+          <End Role="Person" Type="Self.Person" Multiplicity="1" />
+          <End Role="Employs" Type="Self.Employs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="PersId" />
+            </Principal>
+            <Dependent Role="Employs">
+              <PropertyRef Name="PersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Predefine__TypeI__6E565CE8">
+          <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
+          <End Role="PredefinedAnswerOption" Type="Self.PredefinedAnswerOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="PredefinedAnswerOption">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Survey__77DFC722">
+          <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="1" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyCategory">
+              <PropertyRef Name="CatId" />
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="CatId" />
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Survey__TypeId__75035A77">
+          <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveyCat__CustC__7132C993">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="SurveyCategory">
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_CheckExceededSurveyData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_CreateBills" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="sp_DeleteSurvey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="svyId" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="SimpleQDBModelStoreContainer">
+          <EntitySet Name="Activates" EntityType="Self.Activates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnswerOption" EntityType="Self.AnswerOption" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnswerType" EntityType="Self.AnswerType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Asking" EntityType="Self.Asking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BaseQuestionType" EntityType="Self.BaseQuestionType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Bill" EntityType="Self.Bill" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Chooses" EntityType="Self.Chooses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DsgvoConstraint" EntityType="Self.DsgvoConstraint" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employs" EntityType="Self.Employs" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FaqEntry" EntityType="Self.FaqEntry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaymentMethod" EntityType="Self.PaymentMethod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PredefinedAnswerOption" EntityType="Self.PredefinedAnswerOption" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Survey" EntityType="Self.Survey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyCategory" EntityType="Self.SurveyCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vote" EntityType="Self.Vote" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Activates__CustC__6A85CC04" Association="Self.FK__Activates__CustC__6A85CC04">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Activates" EntitySet="Activates" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Activates__TypeI__6B79F03D" Association="Self.FK__Activates__TypeI__6B79F03D">
+            <End Role="AnswerType" EntitySet="AnswerType" />
+            <End Role="Activates" EntitySet="Activates" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnswerOpt__SvyId__7F80E8EA" Association="Self.FK__AnswerOpt__SvyId__7F80E8EA">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="AnswerOption" EntitySet="AnswerOption" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnswerTyp__BaseI__67A95F59" Association="Self.FK__AnswerTyp__BaseI__67A95F59">
+            <End Role="BaseQuestionType" EntitySet="BaseQuestionType" />
+            <End Role="AnswerType" EntitySet="AnswerType" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Asking__7CA47C3F" Association="Self.FK__Asking__7CA47C3F">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Asking" EntitySet="Asking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Asking__SvyId__7BB05806" Association="Self.FK__Asking__SvyId__7BB05806">
+            <End Role="Survey" EntitySet="Survey" />
+            <End Role="Asking" EntitySet="Asking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bill__CustCode__5A4F643B" Association="Self.FK__Bill__CustCode__5A4F643B">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Bill" EntitySet="Bill" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Chooses__AnsId__0539C240" Association="Self.FK__Chooses__AnsId__0539C240">
+            <End Role="AnswerOption" EntitySet="AnswerOption" />
+            <End Role="Chooses" EntitySet="Chooses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Chooses__VoteId__04459E07" Association="Self.FK__Chooses__VoteId__04459E07">
+            <End Role="Vote" EntitySet="Vote" />
+            <End Role="Chooses" EntitySet="Chooses" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__Paymen__5772F790" Association="Self.FK__Customer__Paymen__5772F790">
+            <End Role="PaymentMethod" EntitySet="PaymentMethod" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Departmen__CustC__5D2BD0E6" Association="Self.FK__Departmen__CustC__5D2BD0E6">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employs__62E4AA3C" Association="Self.FK__Employs__62E4AA3C">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employs" EntitySet="Employs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Employs__PersId__61F08603" Association="Self.FK__Employs__PersId__61F08603">
+            <End Role="Person" EntitySet="Person" />
+            <End Role="Employs" EntitySet="Employs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Predefine__TypeI__6E565CE8" Association="Self.FK__Predefine__TypeI__6E565CE8">
+            <End Role="AnswerType" EntitySet="AnswerType" />
+            <End Role="PredefinedAnswerOption" EntitySet="PredefinedAnswerOption" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Survey__77DFC722" Association="Self.FK__Survey__77DFC722">
+            <End Role="SurveyCategory" EntitySet="SurveyCategory" />
+            <End Role="Survey" EntitySet="Survey" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Survey__TypeId__75035A77" Association="Self.FK__Survey__TypeId__75035A77">
+            <End Role="AnswerType" EntitySet="AnswerType" />
+            <End Role="Survey" EntitySet="Survey" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveyCat__CustC__7132C993" Association="Self.FK__SurveyCat__CustC__7132C993">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="SurveyCategory" EntitySet="SurveyCategory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SimpleQDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AnswerOption">
+          <Key>
+            <PropertyRef Name="AnsId" />
+          </Key>
+          <Property Name="AnsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SvyId" Type="Int32" Nullable="false" />
+          <Property Name="AnsText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Survey" Relationship="Self.FK__AnswerOpt__SvyId__7F80E8EA" FromRole="AnswerOption" ToRole="Survey" />
+          <NavigationProperty Name="Votes" Relationship="Self.Chooses" FromRole="AnswerOption" ToRole="Vote" />
+        </EntityType>
+        <EntityType Name="AnswerType">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="TypeDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BaseId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BaseQuestionType" Relationship="Self.FK__AnswerTyp__BaseI__67A95F59" FromRole="AnswerType" ToRole="BaseQuestionType" />
+          <NavigationProperty Name="PredefinedAnswerOptions" Relationship="Self.FK__Predefine__TypeI__6E565CE8" FromRole="AnswerType" ToRole="PredefinedAnswerOption" />
+          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__TypeId__75035A77" FromRole="AnswerType" ToRole="Survey" />
+          <NavigationProperty Name="Customers" Relationship="Self.Activates" FromRole="AnswerType" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="BaseQuestionType">
+          <Key>
+            <PropertyRef Name="BaseId" />
+          </Key>
+          <Property Name="BaseId" Type="Int32" Nullable="false" />
+          <Property Name="BaseDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AnswerTypes" Relationship="Self.FK__AnswerTyp__BaseI__67A95F59" FromRole="BaseQuestionType" ToRole="AnswerType" />
+        </EntityType>
+        <EntityType Name="Bill">
+          <Key>
+            <PropertyRef Name="BillId" />
+          </Key>
+          <Property Name="BillId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="BillPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="BillDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Paid" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Bill__CustCode__5A4F643B" FromRole="Bill" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="CustCode" />
+          </Key>
+          <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CustName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustPwdTmp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CustPwdHash" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Street" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Plz" Type="String" MaxLength="16" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LanguageCode" Type="String" MaxLength="3" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="DataStoragePeriod" Type="Int32" Nullable="false" />
+          <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
+          <Property Name="MinGroupSize" Type="Int32" Nullable="false" />
+          <Property Name="PricePerClick" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="CostBalance" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <NavigationProperty Name="Bills" Relationship="Self.FK__Bill__CustCode__5A4F643B" FromRole="Customer" ToRole="Bill" />
+          <NavigationProperty Name="PaymentMethod" Relationship="Self.FK__Customer__Paymen__5772F790" FromRole="Customer" ToRole="PaymentMethod" />
+          <NavigationProperty Name="Departments" Relationship="Self.FK__Departmen__CustC__5D2BD0E6" FromRole="Customer" ToRole="Department" />
+          <NavigationProperty Name="SurveyCategories" Relationship="Self.FK__SurveyCat__CustC__7132C993" FromRole="Customer" ToRole="SurveyCategory" />
+          <NavigationProperty Name="AnswerTypes" Relationship="Self.Activates" FromRole="Customer" ToRole="AnswerType" />
+        </EntityType>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepId" />
+            <PropertyRef Name="CustCode" />
+          </Key>
+          <Property Name="DepId" Type="Int32" Nullable="false" />
+          <Property Name="DepName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__Departmen__CustC__5D2BD0E6" FromRole="Department" ToRole="Customer" />
+          <NavigationProperty Name="Surveys" Relationship="Self.Asking" FromRole="Department" ToRole="Survey" />
+          <NavigationProperty Name="People" Relationship="Self.Employs" FromRole="Department" ToRole="Person" />
+        </EntityType>
+        <EntityType Name="DsgvoConstraint">
+          <Key>
+            <PropertyRef Name="ConstrName" />
+          </Key>
+          <Property Name="ConstrName" Type="String" MaxLength="512" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ConstrValue" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FaqEntry">
+          <Key>
+            <PropertyRef Name="FaqTitle" />
+          </Key>
+          <Property Name="FaqTitle" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FaqContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PaymentMethod">
+          <Key>
+            <PropertyRef Name="PaymentMethodId" />
+          </Key>
+          <Property Name="PaymentMethodId" Type="Int32" Nullable="false" />
+          <Property Name="PaymentMethodDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK__Customer__Paymen__5772F790" FromRole="PaymentMethod" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="PersId" />
+          </Key>
+          <Property Name="PersId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DeviceId" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Departments" Relationship="Self.Employs" FromRole="Person" ToRole="Department" />
+        </EntityType>
+        <EntityType Name="PredefinedAnswerOption">
+          <Key>
+            <PropertyRef Name="PreAnsId" />
+          </Key>
+          <Property Name="PreAnsId" Type="Int32" Nullable="false" />
+          <Property Name="PreAnsText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AnswerType" Relationship="Self.FK__Predefine__TypeI__6E565CE8" FromRole="PredefinedAnswerOption" ToRole="AnswerType" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="SvyId" />
+          </Key>
+          <Property Name="SvyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CatId" Type="Int32" Nullable="false" />
+          <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="SvyText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="TypeId" Type="Int32" Nullable="false" />
+          <Property Name="Template" Type="Boolean" Nullable="false" />
+          <Property Name="Sent" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AnswerOptions" Relationship="Self.FK__AnswerOpt__SvyId__7F80E8EA" FromRole="Survey" ToRole="AnswerOption" />
+          <NavigationProperty Name="AnswerType" Relationship="Self.FK__Survey__TypeId__75035A77" FromRole="Survey" ToRole="AnswerType" />
+          <NavigationProperty Name="SurveyCategory" Relationship="Self.FK__Survey__77DFC722" FromRole="Survey" ToRole="SurveyCategory" />
+          <NavigationProperty Name="Departments" Relationship="Self.Asking" FromRole="Survey" ToRole="Department" />
+        </EntityType>
+        <EntityType Name="SurveyCategory">
+          <Key>
+            <PropertyRef Name="CatId" />
+            <PropertyRef Name="CustCode" />
+          </Key>
+          <Property Name="CatId" Type="Int32" Nullable="false" />
+          <Property Name="CustCode" Type="String" MaxLength="6" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CatName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Deactivated" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="Self.FK__SurveyCat__CustC__7132C993" FromRole="SurveyCategory" ToRole="Customer" />
+          <NavigationProperty Name="Surveys" Relationship="Self.FK__Survey__77DFC722" FromRole="SurveyCategory" ToRole="Survey" />
+        </EntityType>
+        <EntityType Name="Vote">
+          <Key>
+            <PropertyRef Name="VoteId" />
+          </Key>
+          <Property Name="VoteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VoteText" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AnswerOptions" Relationship="Self.Chooses" FromRole="Vote" ToRole="AnswerOption" />
+        </EntityType>
+        <Association Name="FK__AnswerOpt__SvyId__7F80E8EA">
+          <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
+          <End Role="AnswerOption" Type="Self.AnswerOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Survey">
+              <PropertyRef Name="SvyId" />
+            </Principal>
+            <Dependent Role="AnswerOption">
+              <PropertyRef Name="SvyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__AnswerTyp__BaseI__67A95F59">
+          <End Role="BaseQuestionType" Type="Self.BaseQuestionType" Multiplicity="1" />
+          <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BaseQuestionType">
+              <PropertyRef Name="BaseId" />
+            </Principal>
+            <Dependent Role="AnswerType">
+              <PropertyRef Name="BaseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Predefine__TypeI__6E565CE8">
+          <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
+          <End Role="PredefinedAnswerOption" Type="Self.PredefinedAnswerOption" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="PredefinedAnswerOption">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Survey__TypeId__75035A77">
+          <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnswerType">
+              <PropertyRef Name="TypeId" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="TypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Bill__CustCode__5A4F643B">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Bill">
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Customer__Paymen__5772F790">
+          <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaymentMethod">
+              <PropertyRef Name="PaymentMethodId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="PaymentMethodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Departmen__CustC__5D2BD0E6">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SurveyCat__CustC__7132C993">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="SurveyCategory">
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Survey__77DFC722">
+          <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="1" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SurveyCategory">
+              <PropertyRef Name="CatId" />
+              <PropertyRef Name="CustCode" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="CatId" />
+              <PropertyRef Name="CustCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Activates">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="*" />
+        </Association>
+        <Association Name="Asking">
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
+        </Association>
+        <Association Name="Chooses">
+          <End Role="AnswerOption" Type="Self.AnswerOption" Multiplicity="*" />
+          <End Role="Vote" Type="Self.Vote" Multiplicity="*" />
+        </Association>
+        <Association Name="Employs">
+          <End Role="Department" Type="Self.Department" Multiplicity="*" />
+          <End Role="Person" Type="Self.Person" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="SimpleQDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AnswerOptions" EntityType="Self.AnswerOption" />
+          <EntitySet Name="AnswerTypes" EntityType="Self.AnswerType" />
+          <EntitySet Name="BaseQuestionTypes" EntityType="Self.BaseQuestionType" />
+          <EntitySet Name="Bills" EntityType="Self.Bill" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Departments" EntityType="Self.Department" />
+          <EntitySet Name="DsgvoConstraints" EntityType="Self.DsgvoConstraint" />
+          <EntitySet Name="FaqEntries" EntityType="Self.FaqEntry" />
+          <EntitySet Name="PaymentMethods" EntityType="Self.PaymentMethod" />
+          <EntitySet Name="People" EntityType="Self.Person" />
+          <EntitySet Name="PredefinedAnswerOptions" EntityType="Self.PredefinedAnswerOption" />
+          <EntitySet Name="Surveys" EntityType="Self.Survey" />
+          <EntitySet Name="SurveyCategories" EntityType="Self.SurveyCategory" />
+          <EntitySet Name="Votes" EntityType="Self.Vote" />
+          <AssociationSet Name="FK__AnswerOpt__SvyId__7F80E8EA" Association="Self.FK__AnswerOpt__SvyId__7F80E8EA">
+            <End Role="Survey" EntitySet="Surveys" />
+            <End Role="AnswerOption" EntitySet="AnswerOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__AnswerTyp__BaseI__67A95F59" Association="Self.FK__AnswerTyp__BaseI__67A95F59">
+            <End Role="BaseQuestionType" EntitySet="BaseQuestionTypes" />
+            <End Role="AnswerType" EntitySet="AnswerTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Predefine__TypeI__6E565CE8" Association="Self.FK__Predefine__TypeI__6E565CE8">
+            <End Role="AnswerType" EntitySet="AnswerTypes" />
+            <End Role="PredefinedAnswerOption" EntitySet="PredefinedAnswerOptions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Survey__TypeId__75035A77" Association="Self.FK__Survey__TypeId__75035A77">
+            <End Role="AnswerType" EntitySet="AnswerTypes" />
+            <End Role="Survey" EntitySet="Surveys" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Bill__CustCode__5A4F643B" Association="Self.FK__Bill__CustCode__5A4F643B">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Customer__Paymen__5772F790" Association="Self.FK__Customer__Paymen__5772F790">
+            <End Role="PaymentMethod" EntitySet="PaymentMethods" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Departmen__CustC__5D2BD0E6" Association="Self.FK__Departmen__CustC__5D2BD0E6">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Department" EntitySet="Departments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SurveyCat__CustC__7132C993" Association="Self.FK__SurveyCat__CustC__7132C993">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="SurveyCategory" EntitySet="SurveyCategories" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Survey__77DFC722" Association="Self.FK__Survey__77DFC722">
+            <End Role="SurveyCategory" EntitySet="SurveyCategories" />
+            <End Role="Survey" EntitySet="Surveys" />
+          </AssociationSet>
+          <AssociationSet Name="Activates" Association="Self.Activates">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="AnswerType" EntitySet="AnswerTypes" />
+          </AssociationSet>
+          <AssociationSet Name="Asking" Association="Self.Asking">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Survey" EntitySet="Surveys" />
+          </AssociationSet>
+          <AssociationSet Name="Chooses" Association="Self.Chooses">
+            <End Role="AnswerOption" EntitySet="AnswerOptions" />
+            <End Role="Vote" EntitySet="Votes" />
+          </AssociationSet>
+          <AssociationSet Name="Employs" Association="Self.Employs">
+            <End Role="Department" EntitySet="Departments" />
+            <End Role="Person" EntitySet="People" />
+          </AssociationSet>
+          <FunctionImport Name="sp_CheckExceededSurveyData" ReturnType="Collection(Int32)" />
+          <FunctionImport Name="sp_CreateBills" />
+          <FunctionImport Name="sp_DeleteSurvey">
+            <Parameter Name="svyId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SimpleQDBModelStoreContainer" CdmEntityContainer="SimpleQDBEntities">
+          <EntitySetMapping Name="AnswerOptions">
+            <EntityTypeMapping TypeName="SimpleQDBModel.AnswerOption">
+              <MappingFragment StoreEntitySet="AnswerOption">
+                <ScalarProperty Name="AnsId" ColumnName="AnsId" />
+                <ScalarProperty Name="SvyId" ColumnName="SvyId" />
+                <ScalarProperty Name="AnsText" ColumnName="AnsText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnswerTypes">
+            <EntityTypeMapping TypeName="SimpleQDBModel.AnswerType">
+              <MappingFragment StoreEntitySet="AnswerType">
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="TypeDesc" ColumnName="TypeDesc" />
+                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BaseQuestionTypes">
+            <EntityTypeMapping TypeName="SimpleQDBModel.BaseQuestionType">
+              <MappingFragment StoreEntitySet="BaseQuestionType">
+                <ScalarProperty Name="BaseId" ColumnName="BaseId" />
+                <ScalarProperty Name="BaseDesc" ColumnName="BaseDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bills">
+            <EntityTypeMapping TypeName="SimpleQDBModel.Bill">
+              <MappingFragment StoreEntitySet="Bill">
+                <ScalarProperty Name="BillId" ColumnName="BillId" />
+                <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+                <ScalarProperty Name="BillPrice" ColumnName="BillPrice" />
+                <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+                <ScalarProperty Name="Paid" ColumnName="Paid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="SimpleQDBModel.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+                <ScalarProperty Name="CustName" ColumnName="CustName" />
+                <ScalarProperty Name="CustEmail" ColumnName="CustEmail" />
+                <ScalarProperty Name="CustPwdTmp" ColumnName="CustPwdTmp" />
+                <ScalarProperty Name="CustPwdHash" ColumnName="CustPwdHash" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Plz" ColumnName="Plz" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="LanguageCode" ColumnName="LanguageCode" />
+                <ScalarProperty Name="DataStoragePeriod" ColumnName="DataStoragePeriod" />
+                <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
+                <ScalarProperty Name="MinGroupSize" ColumnName="MinGroupSize" />
+                <ScalarProperty Name="PricePerClick" ColumnName="PricePerClick" />
+                <ScalarProperty Name="CostBalance" ColumnName="CostBalance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Departments">
+            <EntityTypeMapping TypeName="SimpleQDBModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="DepId" ColumnName="DepId" />
+                <ScalarProperty Name="DepName" ColumnName="DepName" />
+                <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DsgvoConstraints">
+            <EntityTypeMapping TypeName="SimpleQDBModel.DsgvoConstraint">
+              <MappingFragment StoreEntitySet="DsgvoConstraint">
+                <ScalarProperty Name="ConstrName" ColumnName="ConstrName" />
+                <ScalarProperty Name="ConstrValue" ColumnName="ConstrValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FaqEntries">
+            <EntityTypeMapping TypeName="SimpleQDBModel.FaqEntry">
+              <MappingFragment StoreEntitySet="FaqEntry">
+                <ScalarProperty Name="FaqTitle" ColumnName="FaqTitle" />
+                <ScalarProperty Name="FaqContent" ColumnName="FaqContent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaymentMethods">
+            <EntityTypeMapping TypeName="SimpleQDBModel.PaymentMethod">
+              <MappingFragment StoreEntitySet="PaymentMethod">
+                <ScalarProperty Name="PaymentMethodId" ColumnName="PaymentMethodId" />
+                <ScalarProperty Name="PaymentMethodDesc" ColumnName="PaymentMethodDesc" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="SimpleQDBModel.Person">
+              <MappingFragment StoreEntitySet="Person">
+                <ScalarProperty Name="PersId" ColumnName="PersId" />
+                <ScalarProperty Name="DeviceId" ColumnName="DeviceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PredefinedAnswerOptions">
+            <EntityTypeMapping TypeName="SimpleQDBModel.PredefinedAnswerOption">
+              <MappingFragment StoreEntitySet="PredefinedAnswerOption">
+                <ScalarProperty Name="PreAnsId" ColumnName="PreAnsId" />
+                <ScalarProperty Name="PreAnsText" ColumnName="PreAnsText" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Surveys">
+            <EntityTypeMapping TypeName="SimpleQDBModel.Survey">
+              <MappingFragment StoreEntitySet="Survey">
+                <ScalarProperty Name="SvyId" ColumnName="SvyId" />
+                <ScalarProperty Name="CatId" ColumnName="CatId" />
+                <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+                <ScalarProperty Name="SvyText" ColumnName="SvyText" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Template" ColumnName="Template" />
+                <ScalarProperty Name="Sent" ColumnName="Sent" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyCategories">
+            <EntityTypeMapping TypeName="SimpleQDBModel.SurveyCategory">
+              <MappingFragment StoreEntitySet="SurveyCategory">
+                <ScalarProperty Name="CatId" ColumnName="CatId" />
+                <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+                <ScalarProperty Name="CatName" ColumnName="CatName" />
+                <ScalarProperty Name="Deactivated" ColumnName="Deactivated" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Votes">
+            <EntityTypeMapping TypeName="SimpleQDBModel.Vote">
+              <MappingFragment StoreEntitySet="Vote">
+                <ScalarProperty Name="VoteId" ColumnName="VoteId" />
+                <ScalarProperty Name="VoteText" ColumnName="VoteText" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Activates" TypeName="SimpleQDBModel.Activates" StoreEntitySet="Activates">
+            <EndProperty Name="Customer">
+              <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+            </EndProperty>
+            <EndProperty Name="AnswerType">
+              <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Asking" TypeName="SimpleQDBModel.Asking" StoreEntitySet="Asking">
+            <EndProperty Name="Department">
+              <ScalarProperty Name="DepId" ColumnName="DepId" />
+              <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+            </EndProperty>
+            <EndProperty Name="Survey">
+              <ScalarProperty Name="SvyId" ColumnName="SvyId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Chooses" TypeName="SimpleQDBModel.Chooses" StoreEntitySet="Chooses">
+            <EndProperty Name="AnswerOption">
+              <ScalarProperty Name="AnsId" ColumnName="AnsId" />
+            </EndProperty>
+            <EndProperty Name="Vote">
+              <ScalarProperty Name="VoteId" ColumnName="VoteId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Employs" TypeName="SimpleQDBModel.Employs" StoreEntitySet="Employs">
+            <EndProperty Name="Department">
+              <ScalarProperty Name="DepId" ColumnName="DepId" />
+              <ScalarProperty Name="CustCode" ColumnName="CustCode" />
+            </EndProperty>
+            <EndProperty Name="Person">
+              <ScalarProperty Name="PersId" ColumnName="PersId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="sp_CheckExceededSurveyData" FunctionName="SimpleQDBModel.Store.sp_CheckExceededSurveyData" />
+          <FunctionImportMapping FunctionImportName="sp_CreateBills" FunctionName="SimpleQDBModel.Store.sp_CreateBills" />
+          <FunctionImportMapping FunctionImportName="sp_DeleteSurvey" FunctionName="SimpleQDBModel.Store.sp_DeleteSurvey" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
