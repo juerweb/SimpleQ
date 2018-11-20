@@ -112,14 +112,14 @@
                     <ul class="list-group">
                         <li class="list-group-item p-0">
                             <a class="btn btn-light btn-block" href='@Url.Action("Load", "SurveyCreation")'>
-                            <span class="row d-flex">
-                                <span class="col-8 align-self-center p-0">
-                                    Befragung starten
+                                <span class="row d-flex">
+                                    <span class="col-8 align-self-center p-0">
+                                        Befragung starten
+                                    </span>
+                                    <span class="col-4">
+                                        <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />
+                                    </span>
                                 </span>
-                                <span class="col-4">
-                                    <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />
-                                </span>
-                            </span>
                             </a>
                         </li>
                         <li class="list-group-item p-0">
@@ -175,31 +175,32 @@
                 <div class="col-sm-1 p-0">
                     <button class="btn btn-primary btn-block p-2" id="hideNavbarBtn" onclick="hideNavbar()"><<br /><<br /><<br /><<br /><<br /><<br /><</button>
                 </div>
-            </div>            
+            </div>
         </div>
         <div class="col-md-10 p-0 m-0" id="rightCol">
             <button class="btn btn-primary p-2" id="showNavbarBtn" onclick="showNavbar()">><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />></button>
+            @RenderBody()
             @*<div id="surveyCreationWindow">
-                <a href="~/ContactInformation/Index">ContactInformation</a>
-                @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
-            </div>
-            <div id="surveyResultsWindow">
-                @Html.Partial("~/Views/SurveyResults/_SurveyResults.cshtml", Model.SurveyResultsModel)
-            </div>
-            <div id="groupAdministrationWindow">
-                @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml", Model.GroupAdministrationModel)
-            </div>
-            <div id="settingsWindow">
-                @Html.Partial("~/Views/Settings/_Settings.cshtml")
-            </div>
-            <div id="supportWindow">
-                @Html.Partial("~/Views/Support/_Support.cshtml")
-            </div>*@
+            <a href="~/ContactInformation/Index">ContactInformation</a>
+            @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
         </div>
+        <div id="surveyResultsWindow">
+            @Html.Partial("~/Views/SurveyResults/_SurveyResults.cshtml", Model.SurveyResultsModel)
+        </div>
+        <div id="groupAdministrationWindow">
+            @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml", Model.GroupAdministrationModel)
+        </div>
+        <div id="settingsWindow">
+            @Html.Partial("~/Views/Settings/_Settings.cshtml")
+        </div>
+        <div id="supportWindow">
+            @Html.Partial("~/Views/Support/_Support.cshtml")
+        </div>*@
+        </div>
+
     </div>
 
    
-    @RenderBody()
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
