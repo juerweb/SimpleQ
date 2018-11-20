@@ -29,9 +29,6 @@
             <label class="mt-2" for="question">@Resources.questionHeader</label>
             <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText">
 
-            @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", ("SvyText " + "StartDate")), new { @class = "form-control" })*@
-            @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", "SvyText"), " ", new { @class = "form-control" })*@
-
 
             <label class="mt-2">@Resources.surveyCategoryHeader</label>
             <div class="row mr-0 ml-0">
@@ -130,6 +127,7 @@
             <h3 class="text-center">@Resources.surveyPreviewHeader</h3>
 
         </div>
+
     </div>
 }
 <script>
@@ -180,8 +178,6 @@
         }
         let url = '@Url.Action("LoadTemplate", "SurveyCreation", new { svyId = "temp"})'.replace("temp", value);
 
-        console.log(url);
-
         let survey;
         $.get(
             url,
@@ -221,7 +217,8 @@
                     }
                     insertAnswers();
                 }
-            }
+                }
+                answersULChanged();
 
             let depIds = [];
             for (i = 0; i < survey.Departments.length; i++) {
@@ -254,6 +251,17 @@
 
     function clearAll() {
         document.getElementById("question").value = "";
+        document.getElementById('categoryDropdown').options[0].selected = true;
+        document.getElementById('AnswerTypeCB').options[0].selected = true;
+
+        let groupsUl = document.getElementById("groups");
+        let items = groupsUl.getElementsByTagName("li");
+        for (i = 0; i < items.length; ++i) {
+            items[i].children[0].setAttribute("checked", "checked");
+        }
+        answerTypeSelectionChanged();
+
+        document.getElementById("countInput").value = 0;
     }
 
     function answerTypeSelectionChanged() {
@@ -272,7 +280,7 @@
         var answerBox = document.getElementById("answerBox");
         var answerType = document.getElementById("AnswerTypeCB");
         var value = answerType.value;
-        if (value >= 6 && value <= 9) {
+        if (value >= 6 && value <= 9) {          
             if (answers.length === 0) {
                 $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
             }
@@ -303,8 +311,18 @@
         $("#answerBox").show();
     }
 
-    function insertAnswers() {
+    function answersULChanged() {
+        let elem = document.getElementById("answerUL");
+        if (elem.hasChildNodes()) {
+            $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+        } else {
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+        }
+    }
+
+    function insertAnswers() {        
         let ul = document.getElementById("answerUL");
+        ul.innerHTML = "";
         for (i = 0; i < answers.length; i++) {
             let normal =
                 '<li class="list-group-item">' +
