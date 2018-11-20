@@ -13,7 +13,7 @@ namespace SimpleQ.Webinterface.Controllers
     public class SupportController : Controller
     {
         [HttpGet]
-        public ActionResult Load()
+        public ActionResult Index()
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -64,7 +64,7 @@ namespace SimpleQ.Webinterface.Controllers
                 };
                 client.Send(msg);
 
-                return LoadFaqEntries();
+                return Index();
             }
             catch (ArgumentNullException ex)
             {

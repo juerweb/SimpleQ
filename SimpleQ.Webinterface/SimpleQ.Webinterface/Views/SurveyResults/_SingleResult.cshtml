@@ -1,5 +1,6 @@
-﻿@using SimpleQ.Webinterface.App_LocalResources
+﻿@using SimpleQ.Webinterface.Resources
 @model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel
+@*@model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel*@
 @*@{
 
     Dictionary<string, int> votes = new Dictionary<string, int>(); //temporary in place of ajax all
@@ -24,11 +25,26 @@
             <label for="groups">Teilgenommene Gruppen</label>
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="groups">
-                    @for (var i = 0; i < Model.DepartmentNames.Count; i++)
+                    @*@{ List<string> l = new List<string>();
+                    l.Add("HR");
+                    l.Add("Produktion");
+                    l.Add("Einkauf");
+                    l.Add("department 4");
+                    l.Add("testdep4");
+                    l.Add("alddaaa");
+                    .Add("neu");
+                        }
+                    @for (var i = 0; i < l.Count; i++)
                     {
                         <li>
-                            @Model.DepartmentNames[i]
+                            @l[i]
                         </li>
+                    }*@
+                    @for (var i = 0; i < Model.DepartmentNames.Count; i++)
+                    {
+                    <li>
+                        @Model.DepartmentNames[i]
+                    </li>
                     }
                 </ul>
             </div>

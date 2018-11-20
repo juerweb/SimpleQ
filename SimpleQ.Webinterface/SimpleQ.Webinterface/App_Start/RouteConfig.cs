@@ -16,7 +16,7 @@ namespace SimpleQ.Webinterface
             routes.MapRoute(
                 name: "DefaultNoId",
                 url: "{controller}/{action}",
-                defaults: new { controller = "SurveyCreation", action = "Load" }
+                defaults: new { controller = "SurveyCreation", action = "Index" }
             );
         }
     }

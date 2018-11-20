@@ -20,8 +20,10 @@ namespace SimpleQ.Webinterface.Controllers
         private static readonly HashSet<int> queuedSurveys = new HashSet<int>();
 
         [HttpGet]
-        public ActionResult Load()
+        public ActionResult Index()
         {
+            Session["custCode"] = "420420";
+
             using (var db = new SimpleQDBEntities())
             {
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
@@ -108,7 +110,7 @@ namespace SimpleQ.Webinterface.Controllers
             if (timeout < Literal.NextMidnight.Add(TimeSpan.FromHours(1)))
                 ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);
 
-            return Load();
+            return Index();
         }
 
 

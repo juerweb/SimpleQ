@@ -178,7 +178,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GroupAdministrationController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
@@ -246,7 +245,6 @@
     <Compile Include="Models\SurveyCategory.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ViewModels\ContainerViewModel.cs" />
     <Compile Include="Models\ViewModels\GroupAdministrationModel.cs" />
     <Compile Include="Models\ViewModels\MultiResultModel.cs" />
     <Compile Include="Models\ViewModels\SettingsModel.cs" />
@@ -360,11 +358,8 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\SurveyCreation\_SurveyCreation.cshtml" />
-    <Content Include="Views\GroupAdministration\_GroupAdministration.cshtml" />
     <Content Include="Views\Settings\_Settings.cshtml" />
     <Content Include="Views\Support\_Support.cshtml" />
-    <Content Include="Views\SurveyResults\_SurveyResults.cshtml" />
     <Content Include="Views\SurveyResults\_SingleResult.cshtml" />
     <Content Include="Views\SurveyResults\_MultiResult.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
@@ -388,6 +383,9 @@
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Views\GroupAdministration\GroupAdministration.cshtml" />
+    <Content Include="Views\SurveyCreation\SurveyCreation.cshtml" />
+    <Content Include="Views\SurveyResults\SurveyResults.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

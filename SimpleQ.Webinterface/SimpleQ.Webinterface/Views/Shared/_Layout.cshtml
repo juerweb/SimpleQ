@@ -1,4 +1,4 @@
-﻿@model SimpleQ.Webinterface.Models.ViewModels.ContainerViewModel
+﻿
 
 <!DOCTYPE html>
 <html>
@@ -13,19 +13,23 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="~/Content/Layout.css" />
     <link rel="stylesheet" href="~/Content/SurveyResults.css" />
-    @*<link rel="stylesheet" href="~/Content/SurveyCreation.css" />*@
+    <link rel="stylesheet" href="~/Content/SurveyCreation.css" />
+    <link rel="stylesheet" href="~/Content/Site.css" />
+    <link rel="stylesheet" href="~/Content/GroupAdministration.css" />
+
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
 
     <script src="@Url.Content("~/Scripts/Chart.js")"></script>
     <script src="@Url.Content("~/Scripts/chartjs-plugin-labels.js")"></script>
+    <script src="@Url.Content("~/Scripts/qrious.js")"></script>
 
     <script>
 
@@ -34,37 +38,37 @@
             $("#showNavbarBtn").hide();
         });
 
-        function hideAllSubWindows() {
-            $("#surveyCreationWindow").hide();
-            $("#surveyResultsWindow").hide();
-            $("#groupAdministrationWindow").hide();
-            $("#settingsWindow").hide();
-            $("#supportWindow").hide();
-            $("#multiResultPartial").hide();
-            $("#singleResultPartial").hide();
-        }
+        //function hideAllSubWindows() {
+        //    $("#surveyCreationWindow").hide();
+        //    $("#surveyResultsWindow").hide();
+        //    $("#groupAdministrationWindow").hide();
+        //    $("#settingsWindow").hide();
+        //    $("#supportWindow").hide();
+        //    $("#multiResultPartial").hide();
+        //    $("#singleResultPartial").hide();
+        //}
 
-        function showSurveyCreationWindow() {
-            hideAllSubWindows();
-            $("#surveyCreationWindow").show();
-        }
-        function showSurveyResultsWindow() {
-            hideAllSubWindows();
-            switchToMulti();
-            $("#surveyResultsWindow").show();
-        }
-        function showGroupAdministrationWindow() {
-            hideAllSubWindows();
-            $("#groupAdministrationWindow").show();
-        }
-        function showSettingsWindow() {
-            hideAllSubWindows();
-            $("#settingsWindow").show();
-        }
-        function showSupportWindow() {
-            hideAllSubWindows();
-            $("#supportWindow").show();
-        }
+        //function showSurveyCreationWindow() {
+        //    hideAllSubWindows();
+        //    $("#surveyCreationWindow").show();
+        //}
+        //function showSurveyResultsWindow() {
+        //    hideAllSubWindows();
+        //    switchToMulti();
+        //    $("#surveyResultsWindow").show();
+        //}
+        //function showGroupAdministrationWindow() {
+        //    hideAllSubWindows();
+        //    $("#groupAdministrationWindow").show();
+        //}
+        //function showSettingsWindow() {
+        //    hideAllSubWindows();
+        //    $("#settingsWindow").show();
+        //}
+        //function showSupportWindow() {
+        //    hideAllSubWindows();
+        //    $("#supportWindow").show();
+        //}
         function hideNavbar() {
             $("#leftCol").hide(500);
             //$("#leftCol").slideDown(500);
@@ -107,10 +111,10 @@
                 <div class="col-sm-11 p-0" id="navbar">
                     <ul class="list-group">
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showSurveyCreationWindow()">
+                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "SurveyCreation")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
-                                        Umfrage erstellen
+                                        Befragung starten
                                     </span>
                                     <span class="col-4">
                                         <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />
@@ -119,10 +123,10 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showSurveyResultsWindow()">
+                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "SurveyResults")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
-                                        Umfrageauswertung
+                                        Befragungsauswertung
                                     </span>
                                     <span class="col-4">
                                         <img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid navbar-img" />
@@ -131,7 +135,7 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showGroupAdministrationWindow()">
+                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "GroupAdministration")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
                                         Gruppenverwaltung
@@ -143,7 +147,7 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showSettingsWindow()">
+                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "Settings")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
                                         Einstellungen
@@ -155,7 +159,7 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showSupportWindow()">
+                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "Support")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
                                         Support
@@ -171,30 +175,32 @@
                 <div class="col-sm-1 p-0">
                     <button class="btn btn-primary btn-block p-2" id="hideNavbarBtn" onclick="hideNavbar()"><<br /><<br /><<br /><<br /><<br /><<br /><</button>
                 </div>
-            </div>            
+            </div>
         </div>
         <div class="col-md-10 p-0 m-0" id="rightCol">
             <button class="btn btn-primary p-2" id="showNavbarBtn" onclick="showNavbar()">><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />></button>
-            <div id="surveyCreationWindow">
-                @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
-            </div>
-            <div id="surveyResultsWindow">
-                @Html.Partial("~/Views/SurveyResults/_SurveyResults.cshtml", Model.SurveyResultsModel)
-            </div>
-            <div id="groupAdministrationWindow">
-                @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml")
-            </div>
-            <div id="settingsWindow">
-                @Html.Partial("~/Views/Settings/_Settings.cshtml")
-            </div>
-            <div id="supportWindow">
-                @Html.Partial("~/Views/Support/_Support.cshtml")
-            </div>
+            @RenderBody()
+            @*<div id="surveyCreationWindow">
+            <a href="~/ContactInformation/Index">ContactInformation</a>
+            @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
         </div>
+        <div id="surveyResultsWindow">
+            @Html.Partial("~/Views/SurveyResults/_SurveyResults.cshtml", Model.SurveyResultsModel)
+        </div>
+        <div id="groupAdministrationWindow">
+            @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml", Model.GroupAdministrationModel)
+        </div>
+        <div id="settingsWindow">
+            @Html.Partial("~/Views/Settings/_Settings.cshtml")
+        </div>
+        <div id="supportWindow">
+            @Html.Partial("~/Views/Support/_Support.cshtml")
+        </div>*@
+        </div>
+
     </div>
 
    
-    @RenderBody()
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

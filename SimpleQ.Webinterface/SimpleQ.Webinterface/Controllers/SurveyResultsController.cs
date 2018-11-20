@@ -13,7 +13,7 @@ namespace SimpleQ.Webinterface.Controllers
     public class SurveyResultsController : Controller
     {
         [HttpGet]
-        public ActionResult Load()
+        public ActionResult Index()
         {
             using (var db = new SimpleQDBEntities())
             {

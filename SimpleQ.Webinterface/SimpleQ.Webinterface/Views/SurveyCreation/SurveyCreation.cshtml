@@ -1,0 +1,476 @@
+﻿
+@using SimpleQ.Webinterface.Resources;
+@using SimpleQ.Webinterface.Models;
+@using System.Resources;
+@model SimpleQ.Webinterface.Models.ViewModels.SurveyCreationModel
+
+@{
+    Survey survey = new Survey();
+    int maxCount = 0;
+}
+@using (Html.BeginForm("New", "SurveyCreation"))
+{
+    <div class="row mt-1 ml-0 mr-0">
+        <div class="col-md-7 pl-4">
+            <h2>@Resources.surveyCreationHeader</h2>
+
+            <label class="mt-2">@Resources.surveyTemplateHeader</label>
+            <select class="form-control" id="surveyTemplateCB" onchange="surveyTemplateSelectionChanged()">
+                @{
+                    <option value="-1">No template</option> //-1 = no template
+                    foreach (Survey svy in Model.SurveyTemplates)
+                    {
+                        <option value="@svy.SvyId">@svy.SvyText @svy.StartDate</option>
+                    }
+                }
+
+            </select>
+
+            <label class="mt-2" for="question">@Resources.questionHeader</label>
+            <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText">
+
+            @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", ("SvyText " + "StartDate")), new { @class = "form-control" })*@
+            @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", "SvyText"), " ", new { @class = "form-control" })*@
+
+
+            <label class="mt-2">@Resources.surveyCategoryHeader</label>
+            <div class="row mr-0 ml-0">
+                <div class="col-11 p-0">
+                    @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @id = "categoryDropdown", @class = "form-control rightNotRounded" })
+                </div>
+                <div class="col-1 p-0">
+                    <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" id="openAddCategoryBtn"><i class="material-icons">&#xe145;</i></button>
+                </div>
+            </div>
+            <div class="row mr-0 ml-0 mt-2" id="newCategoryDiv">
+                <div class="col-11 p-0">
+                    <input class="form-control border border-success rightNotRounded" id="newCategoryTB" type="text" placeholder="@Resources.newCategoryName" />
+                </div>
+                <div class="col-1 p-0">
+                    <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" id="addCategoryBtn" onclick="addCategory()" data-toggle="tooltip" title="@Resources.add"><i class="material-icons">&#xe148;</i></button>
+                </div>
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="AnswerTypeCB">Antwortart</label>
+                <select class="form-control" id="AnswerTypeCB" onchange="answerTypeSelectionChanged()" name="Survey.TypeId">
+                    @{
+                        ResourceManager rm = Resources.ResourceManager;
+                        foreach (AnswerType at in Model.AnswerTypes)
+                        {
+                            if (at.TypeId == 1)
+                            {
+                                <option value="@at.TypeId" selected>@rm.GetString(at.TypeDesc)</option>
+                            }
+                            else
+                            {
+                                <option value="@at.TypeId">@rm.GetString(at.TypeDesc)</option>
+                            }
+                        }
+                    }
+
+                </select>
+            </div>
+
+            <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+            <div id="answerBox" class="border border-dark mt-2">
+
+            </div>
+
+            <div class="form-group mt-2">
+                <label for="groups">@Resources.groups</label>
+                <div class="border border-dark">
+                    <ul class="list-group groups-ul pl-2" id="groups">
+                        @{
+
+                            foreach (KeyValuePair<Department, int> kvp in Model.Departments)
+                            {
+                                maxCount += kvp.Value;
+                                <li>
+                                    <input type="checkbox" checked="checked" name="SelectedDepartments" value="@kvp.Key.DepId"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
+                                </li>
+                            }
+                        }
+                    </ul>
+                </div>
+            </div>
+
+            <label class="mt-2">@Resources.askedPeopleCount</label>
+            <input id="countInput" class="form-control" type="number" value="0" name="Survey.Amount" oninput="changeSpanColor();checkCount()" />
+            <span class="row colorSpan pl-4 pr-4 mt-2">
+                <span id="colorSpan1" class="col-4"></span>
+                <span id="colorSpan2" class="col-4"></span>
+                <span id="colorSpan3" class="col-4"></span>
+            </span>
+            <span class="mt-1 pl-2 pr-2" id="countTextLabel" style="font-size:medium"></span>
+
+            <span class="row mt-3">
+                <span class="col-md">
+                    <label for="QuestionFromDatePicker">@Resources.questionTimeDateHeader @Resources.from</label>
+                    <input id="QuestionFromDatePicker" type="date" class="form-control" name="StartDate" />
+                    <label for="QuestionToDatePicker" class="mt-2">@Resources.questionTimeDateHeader @Resources.to</label>
+                    <input id="QuestionToDatePicker" type="date" class="form-control" name="EndDate" />
+                </span>
+                <span class="col-md">
+                    <label for="QuestionFromTimePicker">@Resources.questionTimeTimeHeader @Resources.from</label>
+                    <input id="QuestionFromTimePicker" type="time" class="form-control" name="StartTime" />
+                    <label for="QuestionToTimePicker" class="mt-2">@Resources.questionTimeTimeHeader @Resources.to</label>
+                    <input id="QuestimeToTimePicker" type="time" class="form-control" name="EndTime" />
+                </span>
+            </span>
+
+            <div class="mt-2">
+                @Html.CheckBox("Survey.Template")
+                @*<input type="checkbox" checked="checked" onclick="" name="Survey.Template">*@
+                <span data-toggle="tooltip" title="@Resources.TemplateDescription">@Resources.SaveAsTemplate</span>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mb-5">Umfrage absenden</button>
+        </div>
+        <div class="col-md-5 p-0">
+            <h3 class="text-center">@Resources.surveyPreviewHeader</h3>
+
+        </div>
+    </div>
+}
+<script>
+    let answers = [];
+    let firstAnswer = "";
+    let secondAnswer = "";
+
+    $(function () {
+        $("#newCategoryDiv").hide();
+        $("#answerBox").hide();
+        $('[data-toggle="tooltip"]').tooltip();
+        $("#openAddAnswer").hide();
+        answerTypeSelectionChanged();
+
+        $("#openAddCategoryBtn").click(function () {
+            $("#newCategoryDiv").show();
+            $("#openAddCategoryBtn").prop("disabled", true);
+        });
+
+        $("#addCategoryBtn").click(function () {
+            $("#newCategoryDiv").hide();
+            $("#openAddCategoryBtn").prop("disabled", false);
+            $("#openAddCategoryBtn").hover();
+        });
+
+        $("#openAddAnswer").click(function () {
+            openHideAnswerBox();
+        });
+    });
+
+    function openHideAnswerBox() {
+        document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe5ce;";
+        if ($("#answerBox").is(":hidden")) {
+            openAddAnswerBox();
+        } else if ($("#answerBox").is(":visible")) {
+            $("#answerBox").hide();
+            document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe313;";
+        }
+    }
+
+    function surveyTemplateSelectionChanged() {
+        let surveyTemplateCB = document.getElementById("surveyTemplateCB");
+        let value = surveyTemplateCB.value;
+
+        if (value == -1) {
+            clearAll();
+            return;
+        }
+        let url = '@Url.Action("LoadTemplate", "SurveyCreation", new { svyId = "temp"})'.replace("temp", value);
+
+        console.log(url);
+
+        let survey;
+        $.get(
+            url,
+            function (survey) {
+            
+            document.getElementById("question").value = survey.SvyText; //Fill Question input
+
+            let ddl = document.getElementById('categoryDropdown'); //change to Surveycategory from Template
+            let opts = ddl.options.length;
+            for (let i = 0; i < opts; i++) {
+                if (ddl.options[i].value == survey.CatId) {
+                    ddl.options[i].selected = true;
+                    break;
+                }
+            }
+
+            ddl = document.getElementById('AnswerTypeCB'); //change AnswerType from Template
+            opts = ddl.options.length;
+            for (i = 0; i < opts; i++) {
+                if (ddl.options[i].value == survey.TypeId) {
+                    ddl.options[i].selected = true;
+                    answerTypeSelectionChanged();
+                    break;
+                }
+            }
+
+            if (survey.TypeId > 4) { //fill answers if necessary
+                if (survey.TypeId >= 6 && survey.TypeId <= 9) {
+                    openHideAnswerBox(); //open Box to create answerUL
+                    openHideAnswerBox(); // close it in the next possible moment
+                    let ul = document.getElementById("answerUL");
+
+                    answers = [];
+
+                    for (i = 0; i < survey.AnswerOptions.length; i++) {
+                        answers.push(survey.AnswerOptions[i].AnsText);
+                    }
+                    insertAnswers();
+                }
+            }
+
+            let depIds = [];
+            for (i = 0; i < survey.Departments.length; i++) {
+                depIds.push(survey.Departments[i].DepId);
+            }
+
+            let check = false;
+            let groupsUl = document.getElementById("groups");
+            let items = groupsUl.getElementsByTagName("li");
+            for (i = 0; i < items.length; ++i) {
+                for (let j = 0; j < depIds.length; j++) {
+                    if (depIds[j] == items[i].children[0].value) {
+                        items[i].children[0].setAttribute("checked", "checked");
+                        check = true;
+                        break;
+                    }
+                }
+                if (!check) {
+                    items[i].children[0].removeAttribute("checked");
+                }
+                check = false;
+            }
+
+                let countInput = document.getElementById("countInput");
+                countInput.value = survey.Amount;
+
+        });
+
+    }
+
+    function clearAll() {
+        document.getElementById("question").value = "";
+    }
+
+    function answerTypeSelectionChanged() {
+        let answerBox = document.getElementById("answerBox");
+        let answerType = document.getElementById("AnswerTypeCB");
+        let value = answerType.value;
+        if (value > 4) {
+            $("#openAddAnswer").show();
+        } else {
+            $("#openAddAnswer").hide();
+        }
+        $("#answerBox").hide();
+    }
+
+    function openAddAnswerBox(){
+        var answerBox = document.getElementById("answerBox");
+        var answerType = document.getElementById("AnswerTypeCB");
+        var value = answerType.value;
+        if (value >= 6 && value <= 9) {
+            if (answers.length === 0) {
+                $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+            }
+            answerBox.innerHTML =
+                '<div class="row mt-1 mb-1 mr-0 ml-0">' +
+                '        <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>' +
+                '        <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
+                '        <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions"></ul>' +
+                '</div >';
+            if (answers.length > 0) {
+                insertAnswers();
+            }
+        } else {
+            if (firstAnswer !== "" && secondAnswer !== "") {
+                $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+            } else {
+                $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+            }
+            answerBox.innerHTML =
+                '<div class="m-2">' +
+                '    <label>First Answer</label>' +
+                '    <input id="dichotomAnswer1" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + firstAnswer + '" class="form-control" />' +
+                '    <label>Second Answer</label>' +
+                '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + secondAnswer + '" class="form-control" />' +
+                '</div>';
+        }
+
+        $("#answerBox").show();
+    }
+
+    function insertAnswers() {
+        let ul = document.getElementById("answerUL");
+        for (i = 0; i < answers.length; i++) {
+            let normal =
+                '<li class="list-group-item">' +
+                '   <span class="d-flex justify-content-between">' +
+                '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + answers[i] + '" />' +
+                '       <span>' +
+                '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+                '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+                '       </span>' +
+                '   </span>' +
+                '</li>';
+            ul.innerHTML += normal;
+        }
+    }
+
+    function dichotomAnswerChanged(inputId) {
+        firstAnswer = document.getElementById("dichotomAnswer1").value;
+        secondAnswer = document.getElementById("dichotomAnswer2").value;
+        if (firstAnswer !== "" && secondAnswer !== "") {
+            $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+        } else {
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+        }
+    }
+
+    function addAnswer() {
+        let ul = document.getElementById("answerUL");
+        let inputElem = document.getElementById("answerInput")
+        let input = inputElem.value;
+
+        if (input === "") {
+            alert('@Resources.invalidInput');
+            return;
+        } else if (answers.includes(input)) {
+            alert('@Resources.invalidInput');
+            return;
+        }
+
+        answers.push(input);
+        let normal =
+        '<li class="list-group-item">' +
+            '   <span class="d-flex justify-content-between">' +
+            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>' +
+            '   </span>' +
+            '</li>';
+        ul.innerHTML += normal;
+
+        inputElem.value = "";
+        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+    }
+
+    function deleteAnswer(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        for (i = 0; i < answers.length; i++) {
+            if (answers[i] === text) {
+                answers.splice(i, 1);
+                break;
+            }
+        }
+        button.parentElement.parentElement.parentElement.remove();
+        if (answers.length === 0) {
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+        }
+    }
+
+    function editAnswer(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        let edit =
+            '       <input type="text" class="" name="TextAnswerOptions" value="' + text + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-success ml-2 pb-0" onclick="saveAnswer(this,false,\'' + text +'\')"><i class="material-icons">&#xe5ca;</i></button>' +
+            '           <button type="button" class="btn btn-secondary ml-2 pb-0" onclick="saveAnswer(this,true,\'' + text +'\')"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>';
+        button.parentElement.parentElement.innerHTML = edit;
+    }
+
+    function saveAnswer(button, canceled,tempText) {
+        let text;
+        if (canceled) {
+            text = tempText;
+        } else {
+            text = button.parentElement.parentElement.children[0].value;
+            if (answers.includes(text)) {
+                alert('@Resources.invalidInput');
+                return;
+            }
+            for (i = 0; i < answers.length; i++) {
+                if (answers[i] === tempText) {
+                    answers[i] = text;
+                    break;
+                }
+            }
+        }
+
+        let edited =
+            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + text + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>';
+        tempText = "";
+        button.parentElement.parentElement.innerHTML = edited;
+    }
+
+    function checkCount() {
+        let input = document.getElementById("countInput");
+        if (input.value > @maxCount) {
+            alert("You can not ask more people than the selected groups have!");
+            input.value = 0;
+        }
+    }
+
+    function changeSpanColor() {
+        let input = document.getElementById("countInput");
+        if (input.value < 20) {
+            $("#colorSpan1").removeClass(["colorSpanGreen","colorSpanOrange"]).addClass("colorSpanRed");
+            $("#colorSpan2").removeClass(["colorSpanOrange","colorSpanGreen"]);
+            $("#colorSpan3").removeClass("colorSpanGreen");
+            document.getElementById("countTextLabel").innerHTML = "@Resources.badAskGroupCount";
+            //$("#countTextLabel").innerHTML = "Sehr kleine Gruppe .. ungenaue Auswertung..";
+        } else if (input.value < 50) {
+            $("#colorSpan1").removeClass(["colorSpanRed", "colorSpanGreen"]).addClass("colorSpanOrange");
+            $("#colorSpan2").removeClass("colorSpanGreen").addClass("colorSpanOrange");
+            $("#colorSpan3").removeClass("colorSpanGreen");
+            document.getElementById("countTextLabel").innerHTML = "@Resources.middleAskGroupCount";
+            //$("#countTextLabel").innerHTML = "Mittlere Gruppe .. gute Auswertung möglich..";
+        } else {
+            $("#colorSpan1").removeClass(["colorSpanRed", "colorSpanOrange"]).addClass("colorSpanGreen");
+            $("#colorSpan2").removeClass("colorSpanOrange").addClass("colorSpanGreen");
+            $("#colorSpan3").addClass("colorSpanGreen");
+            document.getElementById("countTextLabel").innerHTML = "@Resources.goodAskGroupCount";
+            //$("#countTextLabel").innerHTML = "Große Gruppe .. sehr genaue Auswertung möglich..";
+        }
+    }
+
+    function addCategory() {
+        let input = document.getElementById("newCategoryTB").value;
+        if (input == "") {
+            alert("@Resources.invalidInput");
+            return;
+        }
+        let categories = [];
+        @{
+            foreach(SurveyCategory sc in Model.SurveyCategories)
+            {
+                @:categories.push("@sc.CatName");
+            }
+        }
+
+        if (categories.includes(input)) {
+            alert("@Resources.categoryAlreadyExists");
+            return;
+        }
+
+        let url = '@Url.Action("CreateCategory", "SurveyCreation", new { catName = "temp"})'.replace("temp", input);
+
+        $.ajax({
+            url: url,
+            type: 'GET'
+        });
+    }
+
+</script>
+
+

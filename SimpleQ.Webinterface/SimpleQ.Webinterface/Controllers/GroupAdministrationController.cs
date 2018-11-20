@@ -12,7 +12,7 @@ namespace SimpleQ.Webinterface.Controllers
     public class GroupAdministrationController : Controller
     {
         [HttpGet]
-        public ActionResult Load()
+        public ActionResult Index()
         {
             using (var db = new SimpleQDBEntities())
             {

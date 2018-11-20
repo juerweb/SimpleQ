@@ -13,7 +13,7 @@ namespace SimpleQ.Webinterface.Controllers
     public class SettingsController : Controller
     {
         [HttpGet]
-        public ActionResult Load()
+        public ActionResult Index()
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -181,7 +181,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 db.SaveChanges();
 
-                return Load();
+                return Index();
             }
         }
 
@@ -218,7 +218,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     db.SaveChanges();
                     
-                    return Load();
+                    return Index();
                 }
                 catch (ArgumentNullException ex)
                 {
