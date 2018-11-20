@@ -38,37 +38,37 @@
             $("#showNavbarBtn").hide();
         });
 
-        function hideAllSubWindows() {
-            $("#surveyCreationWindow").hide();
-            $("#surveyResultsWindow").hide();
-            $("#groupAdministrationWindow").hide();
-            $("#settingsWindow").hide();
-            $("#supportWindow").hide();
-            $("#multiResultPartial").hide();
-            $("#singleResultPartial").hide();
-        }
+        //function hideAllSubWindows() {
+        //    $("#surveyCreationWindow").hide();
+        //    $("#surveyResultsWindow").hide();
+        //    $("#groupAdministrationWindow").hide();
+        //    $("#settingsWindow").hide();
+        //    $("#supportWindow").hide();
+        //    $("#multiResultPartial").hide();
+        //    $("#singleResultPartial").hide();
+        //}
 
-        function showSurveyCreationWindow() {
-            hideAllSubWindows();
-            $("#surveyCreationWindow").show();
-        }
-        function showSurveyResultsWindow() {
-            hideAllSubWindows();
-            switchToMulti();
-            $("#surveyResultsWindow").show();
-        }
-        function showGroupAdministrationWindow() {
-            hideAllSubWindows();
-            $("#groupAdministrationWindow").show();
-        }
-        function showSettingsWindow() {
-            hideAllSubWindows();
-            $("#settingsWindow").show();
-        }
-        function showSupportWindow() {
-            hideAllSubWindows();
-            $("#supportWindow").show();
-        }
+        //function showSurveyCreationWindow() {
+        //    hideAllSubWindows();
+        //    $("#surveyCreationWindow").show();
+        //}
+        //function showSurveyResultsWindow() {
+        //    hideAllSubWindows();
+        //    switchToMulti();
+        //    $("#surveyResultsWindow").show();
+        //}
+        //function showGroupAdministrationWindow() {
+        //    hideAllSubWindows();
+        //    $("#groupAdministrationWindow").show();
+        //}
+        //function showSettingsWindow() {
+        //    hideAllSubWindows();
+        //    $("#settingsWindow").show();
+        //}
+        //function showSupportWindow() {
+        //    hideAllSubWindows();
+        //    $("#supportWindow").show();
+        //}
         function hideNavbar() {
             $("#leftCol").hide(500);
             //$("#leftCol").slideDown(500);
@@ -111,19 +111,19 @@
                 <div class="col-sm-11 p-0" id="navbar">
                     <ul class="list-group">
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showSurveyCreationWindow()">
-                                <span class="row d-flex">
-                                    <span class="col-8 align-self-center p-0">
-                                        Befragung starten
-                                    </span>
-                                    <span class="col-4">
-                                        <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />
-                                    </span>
+                            <a class="btn btn-light btn-block" href='@Url.Action("Load", "SurveyCreation")'>
+                            <span class="row d-flex">
+                                <span class="col-8 align-self-center p-0">
+                                    Befragung starten
                                 </span>
+                                <span class="col-4">
+                                    <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />
+                                </span>
+                            </span>
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showSurveyResultsWindow()">
+                            <a class="btn btn-light btn-block" href='@Url.Action("Load", "SurveyResults")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
                                         Befragungsauswertung
@@ -135,7 +135,7 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showGroupAdministrationWindow()">
+                            <a class="btn btn-light btn-block" href='@Url.Action("Load", "GroupAdministration")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
                                         Gruppenverwaltung
@@ -147,7 +147,7 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showSettingsWindow()">
+                            <a class="btn btn-light btn-block" href='@Url.Action("Load", "Settings")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
                                         Einstellungen
@@ -159,7 +159,7 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" onclick="showSupportWindow()">
+                            <a class="btn btn-light btn-block" href='@Url.Action("Load", "Support")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
                                         Support
@@ -179,7 +179,8 @@
         </div>
         <div class="col-md-10 p-0 m-0" id="rightCol">
             <button class="btn btn-primary p-2" id="showNavbarBtn" onclick="showNavbar()">><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />></button>
-            <div id="surveyCreationWindow">
+            @*<div id="surveyCreationWindow">
+                <a href="~/ContactInformation/Index">ContactInformation</a>
                 @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
             </div>
             <div id="surveyResultsWindow">
@@ -193,7 +194,7 @@
             </div>
             <div id="supportWindow">
                 @Html.Partial("~/Views/Support/_Support.cshtml")
-            </div>
+            </div>*@
         </div>
     </div>
 

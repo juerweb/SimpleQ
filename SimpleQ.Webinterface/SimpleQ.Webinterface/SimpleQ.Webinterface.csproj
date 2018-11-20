@@ -343,12 +343,12 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\SurveyCreation\_SurveyCreation.cshtml" />
-    <Content Include="Views\GroupAdministration\_GroupAdministration.cshtml" />
+    <Content Include="Views\SurveyCreation\SurveyCreation.cshtml" />
+    <Content Include="Views\GroupAdministration\GroupAdministration.cshtml" />
     <Content Include="Views\Settings\_Settings.cshtml" />
     <Content Include="Views\Support\_Support.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
@@ -374,7 +374,7 @@
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Views\SurveyResults\_MultiResult.cshtml" />
     <Content Include="Views\SurveyResults\_SingleResult.cshtml" />
-    <Content Include="Views\SurveyResults\_SurveyResults.cshtml" />
+    <Content Include="Views\SurveyResults\SurveyResults.cshtml" />
     <Content Include="Scripts\qrious.js.map" />
     <Content Include="Web.config" />
     <None Include="Web.Debug.config">
