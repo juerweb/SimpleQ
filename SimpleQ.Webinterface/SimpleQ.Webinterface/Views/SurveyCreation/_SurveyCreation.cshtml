@@ -15,7 +15,7 @@
 
             <label class="mt-2">@Resources.surveyTemplateHeader</label>
             @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", ("SvyText " + "StartDate")), new { @class = "form-control" })*@
-            @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", "SvyText"), new { @class = "form-control" })
+            @*@Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyTemplates, "SvyId", "SvyText"), new { @class = "form-control" })*@
 
 
             <label class="mt-2">@Resources.surveyCategoryHeader</label>

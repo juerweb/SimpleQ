@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SimpleQ.Webinterface.Extensions
 {
-    public static class Extensions
+    public static class Literal
     {
         public static byte[] GetSHA512(this string str)
         {
@@ -15,6 +15,11 @@ namespace SimpleQ.Webinterface.Extensions
             {
                 return alg.ComputeHash(Encoding.UTF8.GetBytes(str));
             }
+        }
+
+        public static TimeSpan NextMidnight
+        {
+            get => DateTime.Now.AddDays(1).Date - DateTime.Now;
         }
     }
 }

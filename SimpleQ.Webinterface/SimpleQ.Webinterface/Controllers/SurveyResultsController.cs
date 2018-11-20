@@ -1,4 +1,5 @@
-﻿using SimpleQ.Webinterface.Models;
+﻿using SimpleQ.Webinterface.Extensions;
+using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,10 @@ namespace SimpleQ.Webinterface.Controllers
                 Survey survey = db.Surveys
                     .Where(s => s.SvyId == svyId && s.CustCode == CustCode)
                     .FirstOrDefault();
+
+                if (survey == null)
+                    return Http.NotFound("Survey not found.");
+                
 
                 var model = new SingleResultModel
                 {
@@ -56,35 +61,50 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpPost]
         public ActionResult LoadMultiResult(MultiResultModel req)
         {
-            // SAMPLE DATA
+            //SAMPLE DATA
             //req = new MultiResultModel
             //{
             //    CatId = 4,
-            //    TypeId = 1,
+            //    TypeId = 2,
             //    StartDate = DateTime.Now.AddYears(-1),
             //    EndDate = DateTime.Now,
             //};
+
+            if (req == null)
+                return Http.BadRequest("Model object must not be null.");
+            if (req.StartDate >= req.EndDate)
+                return Http.Conflict("StartDate must be smaller than EndDate.");
 
             using (var db = new SimpleQDBEntities())
             {
                 var selectedSurveys = db.Surveys
                     .Where(s => s.CatId == req.CatId && s.TypeId == req.TypeId
-                     && s.StartDate >= req.StartDate && s.StartDate <= req.EndDate);
+                     && s.StartDate >= req.StartDate && s.StartDate <= req.EndDate
+                     && s.CustCode == CustCode);
+
+                string catName = db.SurveyCategories
+                            .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
+                            .Select(c => c.CatName)
+                            .FirstOrDefault();
+                if (catName == null)
+                    return Http.NotFound("Category not found.");
+
+                string typeName = db.AnswerTypes
+                            .Where(a => a.TypeId == req.TypeId)
+                            .Select(a => a.TypeDesc) // GLOBALIZATION!
+                            .FirstOrDefault();
+                if (typeName == null)
+                    return Http.Conflict("Answer type does not exist.");
+
 
                 MultiResultModel model;
                 if (selectedSurveys.Count() == 0)
                 {
                     model = new MultiResultModel
                     {
-                        CatName = db.SurveyCategories
-                            .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
-                            .Select(c => c.CatName)
-                            .FirstOrDefault(),
+                        CatName = catName,
 
-                        TypeName = db.AnswerTypes
-                            .Where(a => a.TypeId == req.TypeId)
-                            .Select(a => a.TypeDesc) // GLOBALIZATION!
-                            .FirstOrDefault(),
+                        TypeName = typeName,
 
                         AvgAmount = 0,
 
@@ -97,18 +117,11 @@ namespace SimpleQ.Webinterface.Controllers
                 }
                 else
                 {
-
                     model = new MultiResultModel
                     {
-                        CatName = db.SurveyCategories
-                            .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
-                            .Select(c => c.CatName)
-                            .FirstOrDefault(),
+                        CatName = catName,
 
-                        TypeName = db.AnswerTypes
-                            .Where(a => a.TypeId == req.TypeId)
-                            .Select(a => a.TypeDesc) // GLOBALIZATION!
-                            .FirstOrDefault(),
+                        TypeName = typeName,
 
                         AvgAmount = (selectedSurveys.Sum(s => s.Amount) / (double)selectedSurveys.Count()),
 
@@ -168,7 +181,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             get
             {
-                return "m4rku5";//Session["custCode"] as string;
+                return Session["custCode"] as string;
             }
         }
     }

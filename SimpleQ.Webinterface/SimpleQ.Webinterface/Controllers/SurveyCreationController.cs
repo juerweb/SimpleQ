@@ -8,21 +8,78 @@ using System.Web.Mvc;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Mobile;
 using SimpleQ.Webinterface.Models.ViewModels;
+//using OneSignal.CSharp.SDK;
+//using OneSignal.CSharp.SDK.Resources.Devices;
+//using OneSignal.CSharp.SDK.Resources.Notifications;
+using SimpleQ.Webinterface.Extensions;
 
 namespace SimpleQ.Webinterface.Controllers
 {
     public class SurveyCreationController : Controller
     {
-        private static HashSet<int> queuedSurveys = new HashSet<int>();
+        private static readonly HashSet<int> queuedSurveys = new HashSet<int>();
+
+        [HttpGet]
+        public ActionResult Load()
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                if (cust == null)
+                    return Http.NotFound("Customer not found.");
+
+                var model = new SurveyCreationModel
+                {
+                    SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
+                    AnswerTypes = cust.AnswerTypes.ToList(),
+                    Departments = cust.Departments.Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount),
+                    SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
+                };
+
+                return PartialView(viewName: "_SurveyCreation", model: model);
+            }
+        }
 
         [HttpPost]
         public ActionResult New(SurveyCreationModel req)
         {
+            if (req == null)
+                return Http.BadRequest("Model object must not be null.");
+            if (req.Survey == null)
+                return Http.BadRequest("Survey must not be null.");
+            if (req.Survey.SvyText == null)
+                return Http.BadRequest("SvyText must not be null.");
+            if (req.SelectedDepartments == null || req.SelectedDepartments.Count() == 0)
+                return Http.BadRequest("SelectedDepartments must not be null or empty.");
+
             using (var db = new SimpleQDBEntities())
             {
+                if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
+                    return Http.NotFound("Customer not found.");
+
                 req.Survey.CustCode = CustCode;
                 req.Survey.StartDate = req.StartDate.Date.Add(req.StartTime);
                 req.Survey.EndDate = req.EndDate.Date.Add(req.EndTime);
+                req.Survey.Sent = false;
+
+                if (req.Survey.StartDate >= req.Survey.EndDate)
+                    return Http.Conflict("StartDate must be earlier than EndDate.");
+
+                if (req.Survey.Amount <= 0)
+                    return Http.Conflict("Amount must be at least 1.");
+
+                if (db.SurveyCategories.Where(c => c.CatId == req.Survey.CatId && c.CustCode == CustCode).FirstOrDefault() == null)
+                    return Http.NotFound("Category not found.");
+
+                if (db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefault() == null)
+                    return Http.Conflict("AnswerType does not exist.");
+
+                foreach (var depId in req.SelectedDepartments)
+                {
+                    if (db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault() == null)
+                        return Http.NotFound("Department not found.");
+                }
+
 
                 int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
                     .SelectMany(d => d.People).Distinct().Count();
@@ -34,7 +91,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 req.SelectedDepartments.ForEach(depId =>
                 {
-                    db.Surveys.Where(s => s.SvyId == req.Survey.SvyId).First().Departments.Add(db.Departments.Where(d => d.DepId == depId).First());
+                    req.Survey.Departments.Add(db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault());
                 });
                 db.SaveChanges();
 
@@ -48,42 +105,50 @@ namespace SimpleQ.Webinterface.Controllers
             TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
 
             // Umfrage nur schedulen wenn sie bis zur nächsten Mitternacht (+1h Toleranz) startet
-            //if (timeout < Extensions.NextMidnight.Add(TimeSpan.FromHours(1)))
-            //    ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);
+            if (timeout < Literal.NextMidnight.Add(TimeSpan.FromHours(1)))
+                ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);
 
-            return RedirectToAction("Index", "Home");
+            return Load();
         }
 
 
         [HttpGet]
-        public Survey LoadTemplate(int svyId)
+        public ActionResult LoadTemplate(int svyId)
         {
             using (var db = new SimpleQDBEntities())
             {
-                return db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template).FirstOrDefault();
+                db.Configuration.LazyLoadingEnabled = false;
+                var survey = db.Surveys
+                    .Include("Departments")
+                    .Include("AnswerOptions")
+                    .Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template)
+                    .FirstOrDefault();
+
+                if (survey == null)
+                    return Http.NotFound("Template not found.");
+
+                return Json(survey, JsonRequestBehavior.AllowGet);
             }
         }
 
         [HttpGet]
-        public void CreateCategory(string catName)
+        public ActionResult CreateCategory(string catName)
         {
-            using (var db = new SimpleQDBEntities())
-            {
-                db.SurveyCategories.Add(new SurveyCategory { CatName = catName, CustCode = CustCode });
-                db.SaveChanges();
-            }
-            
+            return RedirectToAction("AddCategory", "Settings", new { catName });
         }
 
         [HttpGet]
-        public void CancelSurvey(int svyId)
+        public ActionResult CancelSurvey(int svyId)
         {
             using (var db = new SimpleQDBEntities())
             {
-                var survey = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault();
+                var survey = db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode).FirstOrDefault();
+                if (survey == null)
+                    return Http.NotFound("Survey not found.");
+
                 if (survey.Sent)
                 {
-                    survey.Departments.ToList().ForEach(dep =>
+                    survey.Departments.Where(c => c.CustCode == CustCode).ToList().ForEach(dep =>
                     {
                         dep.People.ToList().ForEach(p =>
                         {
@@ -101,24 +166,35 @@ namespace SimpleQ.Webinterface.Controllers
                 }
                 else
                 {
-                    queuedSurveys.Remove(svyId);
+                    lock (queuedSurveys)
+                    {
+                        queuedSurveys.Remove(svyId);
+                    }
                 }
-                db.Surveys.Remove(survey);
+                db.sp_DeleteSurvey(svyId);
                 db.SaveChanges();
+
+                return Http.Ok();
             }
         }
 
 
         internal static void ScheduleSurvey(int svyId, TimeSpan timeout, string custCode)
         {
-            if (!queuedSurveys.Add(svyId)) return;
+            lock (queuedSurveys)
+            {
+                if (!queuedSurveys.Add(svyId)) return;
+            }
 
             HostingEnvironment.QueueBackgroundWorkItem(ct =>
             {
                 if (timeout.TotalMilliseconds > 0)
                     Thread.Sleep((int)timeout.TotalMilliseconds);
 
-                if (!queuedSurveys.Contains(svyId)) return;
+                lock (queuedSurveys)
+                {
+                    if (!queuedSurveys.Contains(svyId)) return;
+                }
 
                 using (var db = new SimpleQDBEntities())
                 {
@@ -194,12 +270,13 @@ namespace SimpleQ.Webinterface.Controllers
             });
         }
 
+        private ArgumentNullException ANEx(string paramName) => new ArgumentNullException(paramName);
 
         private string CustCode
         {
             get
             {
-                return "m4rku5";//Session["custCode"] as string;
+                return Session["custCode"] as string;
             }
         }
     }

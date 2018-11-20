@@ -1,5 +1,7 @@
-﻿@using System.Resources;
-@using SimpleQ.Webinterface.App_LocalResources;
+﻿@using System.Resources
+@using SimpleQ.Webinterface.App_LocalResources
+@model SimpleQ.Webinterface.Models.ViewModels.SettingsModel
+
 
 <div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>Einstellungen</h2>
@@ -9,7 +11,7 @@
         <h4 class="text-center">@Resources.MinimumGroupSize</h4>
         <div class="form-group mt-2">
             <label for="minimumGroupSize">Minimale Gruppengröße</label>
-            <input type="text" class="form-control mr-0" id="minimumGroupSize" value="30">
+            <input type="number" class="form-control mr-0" id="minimumGroupSize" value="@Model.MinGroupSize">
             <button type="button" class="btn btn-primary btn-block mt-3" onclick="changeMinimumGroupSize()" disabled id="changeMinimumGroupSize">Speichern</button>
         </div>
         <h4 class="text-center">Umfragekategorie</h4>
@@ -19,15 +21,21 @@
                 <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>
                 <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>
                 <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions">
-                    @*<li class="list-group-item">
-                        <span class="d-flex justify-content-between">
-                            <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="oida" />
-                            <span>
-                                <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>
-                                <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>
-                            </span>
-                        </span>
-                    </li>*@
+                    @{
+                        foreach (var c in Model.Categories)
+                        {
+                            <li class="list-group-item">
+                                <span class="d-flex justify-content-between">
+                                    <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.CatName" />
+                                    <span>
+                                        <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>
+                                        <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>
+                                    </span>
+                                </span>
+                            </li>
+                        }
+                    }
+
                 </ul>
             </div>
         </div>
@@ -71,24 +79,27 @@
     <div class="col-md-4">
         <h4 class="text-center">@Resources.AccountSettings</h4>
         <div class="form-group mt-2">
-            @using (Html.BeginForm("myMethod", "Home", FormMethod.Post))
+            @using (Html.BeginForm("UpdateCustomer", "Settings", FormMethod.Post))
             {
-                <label for="name">@Resources.Name</label>
-                @Html.TextBox("name", null, new { @class = "form-control mr-0", @Value = "Peter Meininger", @Autocomplete = "nope" })  ;
-                <label for="street">@Resources.Street</label>
-                @Html.TextBox("street", null, new { @class = "form-control mr-0", @Value = "Meinungsredestraße 26", @Autocomplete = "nope" })  ;
-                <label for="city">@Resources.City</label>
-                @Html.TextBox("city", null, new { @class = "form-control mr-0", @Value = "Pöttsching", @Autocomplete = "nope" })  ;
-                <label for="postalcode">@Resources.PostalCode</label>
-                @Html.TextBox("postalcode", null, new { @class = "form-control mr-0", @Value = "7033", @Autocomplete = "nope" })  ;
-                <label for="country">@Resources.Country</label>
-                @Html.TextBox("country", null, new { @class = "form-control mr-0", @Value = "Österreich", @Autocomplete = "nope" })  ;
-                @*<label for="language">@Resources.Language</label>*@
-                @*@Html.DropDownList("language", null, "Sprache auswählen", new { @class = "form-control mr-0" });*@
-                <label for="email">@Resources.Email</label>
-                @Html.TextBox("email", null, new { @class = "form-control mr-0", @Value = "nico.srnka@gmail.com", @Autocomplete = "nope" })  ;
-                <label for="dataStoragePeriod">@Resources.DataStoragePeriod</label>
-                @Html.TextBox("dataStoragePeriod", null, new { @class = "form-control mr-0", @Value = "4", @Autocomplete = "nope" })  ;
+                @*<label for="name">@Resources.Name</label>*@
+                @Html.LabelFor(m => m.Name, Resources.Name);
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Street, Resources.Street);
+                @Html.TextBoxFor(m => m.Street, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.City, Resources.City);
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Plz, Resources.PostalCode);
+                @Html.TextBoxFor(m => m.Plz, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Country, Resources.Country);
+                @Html.TextBoxFor(m => m.Country, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.LanguageCode, Resources.Language);
+                @Html.TextBoxFor(m => m.LanguageCode, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Email, Resources.Email);
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.DataStoragePeriod, Resources.DataStoragePeriod);
+                @Html.TextBoxFor(m => m.DataStoragePeriod, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.LanguageCode);
+                @Html.DropDownListFor(m => m.PaymentMethodId, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });
                 <input type="submit" value="Speichern" class="btn btn-primary btn-block mt-3" />
             }
             <br />
@@ -119,18 +130,19 @@
 </div>
 
 <script>
-    var survCats = [];
-    @*@{
-        foreach(Category c in Model.Categories)
-    {
-        @:groups.push('@c.Name');
-        }
-    }*@
+    var dictionary = {};
+                var survCats = [];
+    @{
+        foreach (var c in Model.Categories)
+        {
+            @:dictionary[@c.CatId] = "@c.CatName";
+                }
+    }
 
     var changed = false;
     var checkedAnswers = [];
     //var answers = [];
-    
+
 
     function answerChecked() {
         checkedAnswers = [];
@@ -154,11 +166,22 @@
 
     function changeMinimumGroupSize() {
         let val = $("#minimumGroupSize").val();
-        //let url = '@Url.Action("CreateCategory", "SurveyCreation", new { catName = "temp"})'.replace("temp", input);
-        //$.ajax({
-        //    url: url,
-        //    type: 'GET'
-        //});
+        let url = "@Url.Action("ChangeMinGroup", "Settings")?size=" + val;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
+            }
+        });
         $("#changeMinimumGroupSize").prop('disabled', true);
     }
 
@@ -167,11 +190,22 @@
         let val2 = $("#passwordConfirm").val();
 
         if (val1 == val2 && val1 != "" && val2 != "") {
-            @*let url = '@Url.Action("CreateCategory", "SurveyCreation", new { catName = "temp"})'.replace("temp", input);
             $.ajax({
-                url: url,
-                type: 'GET'
-            });*@
+                type: "POST",
+                url: "@Url.Action("ChangePassword", "Settings")",
+                data: {"password": val1},
+                statusCode: {
+                    200: function () {
+                        console.log("amkkkk");
+                    },
+                    404: function () {
+
+                    },
+                    500: function () {
+
+                    }
+                }
+            });
         } else {
             //alert("Passwort stimmt nicht überein!");
             $("#myModal").modal();
@@ -263,7 +297,8 @@
             return;
         }
 
-        survCats.push(input);
+        //survCats.push(input);
+        dictionary["schaftid"] = input;
         let normal =
         '<li class="list-group-item">' +
             '   <span class="d-flex justify-content-between">' +
@@ -280,16 +315,41 @@
 
     function deleteAnswer(button) {
         let text = button.parentElement.parentElement.children[0].value;
-        for (i = 0; i < survCats.length; i++) {
-            if (survCats[i] === text) {
-                survCats.splice(i, 1);
-                break;
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        let key = getKeyByValue(dictionary, text);
+        delete dictionary[key];
+        let url = "@Url.Action("DeleteCategory", "Settings")?catId=" + key;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
             }
-        }
+        });
         button.parentElement.parentElement.parentElement.remove();
         if (survCats.length === 0) {
             $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
         }
+        console.log(dictionary);
     }
 
     function editAnswer(button) {
@@ -303,22 +363,44 @@
         button.parentElement.parentElement.innerHTML = edit;
     }
 
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
+    }
+
     function saveAnswer(button, canceled, tempText) {
         let text;
         if (canceled) {
             text = tempText;
         } else {
             text = button.parentElement.parentElement.children[0].value;
-            if (survCats.includes(text)) {
+            if (Object.values(dictionary).includes(text)) {
                 alert('@Resources.invalidInput');
                 return;
             }
-            for (i = 0; i < survCats.length; i++) {
-                if (survCats[i] === tempText) {
-                    survCats[i] = text;
-                    break;
+            //for (i = 0; i < survCats.length; i++) {
+            //    if (survCats[i] === tempText) {
+            //        survCats[i] = text;
+            //        break;
+            //    }
+            //}
+            let key = getKeyByValue(dictionary, tempText);
+            dictionary[key] = text;
+            let url = "@Url.Action("ModifyCategory", "Settings")?catId=" + key + "&catName=" + encodeURIComponent(text);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                statusCode: {
+                    200: function () {
+                        console.log("amkkkk");
+                    },
+                    404: function () {
+
+                    },
+                    500: function () {
+
+                    }
                 }
-            }
+            });
         }
 
         let edited =
@@ -329,6 +411,7 @@
             '       </span>';
         tempText = "";
         button.parentElement.parentElement.innerHTML = edited;
+        console.log(dictionary);
     }
 
     function saveUmfr() {
@@ -337,6 +420,6 @@
         } else {
             console.log("nix do amk");
         }
-        
+
     }
 </script>

@@ -189,10 +189,10 @@
                 @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml", Model.GroupAdministrationModel)
             </div>
             <div id="settingsWindow">
-                @Html.Partial("~/Views/Settings/_Settings.cshtml")
+                @Html.Partial("~/Views/Settings/_Settings.cshtml", Model.SettingsModel)
             </div>
             <div id="supportWindow">
-                @Html.Partial("~/Views/Support/_Support.cshtml")
+                @Html.Partial("~/Views/Support/_Support.cshtml", Model.SupportModel)
             </div>
         </div>
     </div>
