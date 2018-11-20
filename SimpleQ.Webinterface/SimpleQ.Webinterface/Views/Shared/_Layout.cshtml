@@ -34,7 +34,6 @@
     <script>
 
         $(document).ready(function () {
-            showSurveyCreationWindow();
             $("#showNavbarBtn").hide();
         });
 
@@ -70,7 +69,7 @@
         //    $("#supportWindow").show();
         //}
         function hideNavbar() {
-            $("#leftCol").hide(500);
+            $("#leftCol").hide();
             //$("#leftCol").slideDown(500);
             //$("#leftCol").hide("slide", { direction: "left" }, 1000);
             $("#rightCol").removeClass("col-md-10").addClass("col-md-12");

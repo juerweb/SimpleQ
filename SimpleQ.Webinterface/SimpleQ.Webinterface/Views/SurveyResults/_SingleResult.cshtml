@@ -1,23 +1,23 @@
-﻿@using SimpleQ.Webinterface.Resources
+﻿@using SimpleQ.Webinterface.Properties;
 @model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel
 @*@model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel*@
 @*@{
 
-    Dictionary<string, int> votes = new Dictionary<string, int>(); //temporary in place of ajax all
-    votes.Add("ORF1", 12);
-    votes.Add("ORF2", 8);
-    votes.Add("ATV", 8);
-    votes.Add("Puls 4", 7);
-    votes.Add("Pro 7", 9);
-    votes.Add("RTL", 3);
-    votes.Add("RTL II", 2);
-    votes.Add("ORF3", 4);
-    votes.Add("DMAX", 10);
-    votes.Add("Super RTL", 0);
-    votes.Add("Nickelodeon", 6);
-    votes.Add("ZDF", 15);
-    votes.Add("ARD", 2);
-}*@
+        Dictionary<string, int> votes = new Dictionary<string, int>(); //temporary in place of ajax all
+        votes.Add("ORF1", 12);
+        votes.Add("ORF2", 8);
+        votes.Add("ATV", 8);
+        votes.Add("Puls 4", 7);
+        votes.Add("Pro 7", 9);
+        votes.Add("RTL", 3);
+        votes.Add("RTL II", 2);
+        votes.Add("ORF3", 4);
+        votes.Add("DMAX", 10);
+        votes.Add("Super RTL", 0);
+        votes.Add("Nickelodeon", 6);
+        votes.Add("ZDF", 15);
+        votes.Add("ARD", 2);
+    }*@
 
 <div class="row">
     <div class="col-md-4">
@@ -26,25 +26,25 @@
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="groups">
                     @*@{ List<string> l = new List<string>();
-                    l.Add("HR");
-                    l.Add("Produktion");
-                    l.Add("Einkauf");
-                    l.Add("department 4");
-                    l.Add("testdep4");
-                    l.Add("alddaaa");
-                    .Add("neu");
-                        }
-                    @for (var i = 0; i < l.Count; i++)
-                    {
-                        <li>
-                            @l[i]
-                        </li>
-                    }*@
+                        l.Add("HR");
+                        l.Add("Produktion");
+                        l.Add("Einkauf");
+                        l.Add("department 4");
+                        l.Add("testdep4");
+                        l.Add("alddaaa");
+                        .Add("neu");
+                            }
+                        @for (var i = 0; i < l.Count; i++)
+                        {
+                            <li>
+                                @l[i]
+                            </li>
+                        }*@
                     @for (var i = 0; i < Model.DepartmentNames.Count; i++)
                     {
-                    <li>
-                        @Model.DepartmentNames[i]
-                    </li>
+                        <li>
+                            @Model.DepartmentNames[i]
+                        </li>
                     }
                 </ul>
             </div>
@@ -107,10 +107,10 @@
         @foreach (KeyValuePair<string,int> kvp in Model.Votes)
         {
             @:dict.push({
-                @:key:"@kvp.Key" 
+                @:key:"@kvp.Key"
             @:,
                 @:value: "@kvp.Value"
-            @:}); 
+            @:});
         }
 
         $("#chart1SelectSingle").change();

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SimpleQ.Webinterface.Resources {
+namespace SimpleQ.Webinterface.Properties {
     using System;
     
     

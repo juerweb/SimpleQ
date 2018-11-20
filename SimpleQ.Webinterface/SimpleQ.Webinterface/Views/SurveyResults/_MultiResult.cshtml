@@ -1,4 +1,4 @@
-﻿@using SimpleQ.Webinterface.Resources
+﻿@using SimpleQ.Webinterface.Properties;
 @model SimpleQ.Webinterface.Models.ViewModels.MultiResultModel
 
 
@@ -8,7 +8,7 @@
             <label for="groups">Antwortmöglichkeiten</label>
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="answers">
-                    @{ 
+                    @{
                         foreach (string key in Model.Votes.Keys)
                         {
                             <li>
@@ -27,18 +27,18 @@
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="groups">
                     @*@{ List<string> l = new List<string>();
-                        l.Add("HR");
-                        l.Add("Produktion");
-                        l.Add("Einkauf");
-                        l.Add("department 4");
+                            l.Add("HR");
+                            l.Add("Produktion");
+                            l.Add("Einkauf");
+                            l.Add("department 4");
 
-                    }
-                    @for (var i = 0; i < l.Count; i++)
-                    {
-                        <li>
-                            @l[i]
-                        </li>
-                    }*@
+                        }
+                        @for (var i = 0; i < l.Count; i++)
+                        {
+                            <li>
+                                @l[i]
+                            </li>
+                        }*@
                     @for (var i = 0; i < Model.DepartmentNames.Count; i++)
                     {
                         <li>

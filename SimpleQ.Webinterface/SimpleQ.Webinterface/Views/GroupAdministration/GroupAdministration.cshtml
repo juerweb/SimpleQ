@@ -1,4 +1,4 @@
-﻿@using SimpleQ.Webinterface.Resources;
+﻿@using SimpleQ.Webinterface.Properties;
 @using SimpleQ.Webinterface.Models;
 @model SimpleQ.Webinterface.Models.ViewModels.GroupAdministrationModel
 
@@ -30,7 +30,7 @@
         <label>Name</label>
         <div class="row mr-0 ml-0" id="newCategoryDiv">
             <div class="col-10 p-0">
-                <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text"/>
+                <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text" />
             </div>
             <div class="col-2 p-0">
                 <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>
@@ -104,12 +104,12 @@
 </div>
 
 <script>
-    if (groups === 'undefined') {//because of ajax reload
-        let groups = {}; // key = department name, value = depId
-    } else {
-        groups = {};
-    }
-
+    //if (groups === 'undefined') {//because of ajax reload
+    //    let groups = {}; // key = department name, value = depId
+    //} else {
+    //    groups = {};
+    //}
+    let groups = {};
     //if (typeof chosen === 'undefined') {
         let chosen;
     //}
@@ -142,7 +142,7 @@
         });
     }); // <-- Things to to at startup END
 
-    
+
 
     function addNewGroup() {
         let groupName = document.getElementById("NewGroupTB").value;
