@@ -13,6 +13,26 @@ namespace SimpleQ.Webinterface.Controllers
     public class SurveyResultsController : Controller
     {
         [HttpGet]
+        public ActionResult Load()
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                if (cust == null)
+                    return Http.NotFound("Customer not found.");
+
+                var model = new SurveyResultsModel
+                {
+                    SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
+                    Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList(),
+                    AnswerTypes = cust.AnswerTypes.ToList()
+                };
+
+                return View(viewName: "SurveyResults", model: model);
+            }
+        }
+
+        [HttpGet]
         public ActionResult LoadSingleResult(int svyId)
         {
             using (var db = new SimpleQDBEntities())

@@ -13,7 +13,7 @@ namespace SimpleQ.Webinterface.Controllers
     public class SettingsController : Controller
     {
         [HttpGet]
-        public ActionResult LoadSettings()
+        public ActionResult Load()
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -39,7 +39,7 @@ namespace SimpleQ.Webinterface.Controllers
                     DataStoragePeriod = cust.DataStoragePeriod,
                     PaymentMethodId = cust.PaymentMethodId
                 };
-                return PartialView(viewName: "_Settings", model: model);
+                return View(viewName: "Settings", model: model);
             }
         }
 
@@ -181,7 +181,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 db.SaveChanges();
 
-                return LoadSettings();
+                return Load();
             }
         }
 
@@ -217,8 +217,8 @@ namespace SimpleQ.Webinterface.Controllers
                     cust.PaymentMethodId = req.PaymentMethodId;
 
                     db.SaveChanges();
-
-                    return LoadSettings();
+                    
+                    return Load();
                 }
                 catch (ArgumentNullException ex)
                 {

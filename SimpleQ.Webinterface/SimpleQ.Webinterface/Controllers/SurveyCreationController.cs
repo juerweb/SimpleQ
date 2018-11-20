@@ -36,7 +36,7 @@ namespace SimpleQ.Webinterface.Controllers
                     SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
                 };
 
-                return PartialView(viewName: "_SurveyCreation", model: model);
+                return View(viewName: "SurveyCreation", model: model);
             }
         }
 
