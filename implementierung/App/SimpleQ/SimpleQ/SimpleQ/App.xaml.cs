@@ -276,9 +276,15 @@ namespace SimpleQ
             OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540")
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
                 .HandleNotificationOpened(HandleNotificationOpened)
+                .HandleNotificationReceived(HandleNotificationReceived)
                 .EndInit();
 
             OneSignal.Current.IdsAvailable(IdsAvailable);
+        }
+
+        private void HandleNotificationReceived(OSNotification notification)
+        {
+            Debug.WriteLine("NO: Notification Received...", "Info");
         }
 
         private async void IdsAvailable(string userID, string pushToken)
