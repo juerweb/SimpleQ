@@ -51,5 +51,14 @@ namespace SimpleQ.Webinterface.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CreateBills");
         }
+    
+        public virtual int sp_DeleteSurvey(Nullable<int> svyId)
+        {
+            var svyIdParameter = svyId.HasValue ?
+                new ObjectParameter("svyId", svyId) :
+                new ObjectParameter("svyId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeleteSurvey", svyIdParameter);
+        }
     }
 }

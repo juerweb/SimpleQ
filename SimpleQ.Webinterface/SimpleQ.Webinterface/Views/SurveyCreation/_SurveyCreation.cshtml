@@ -213,31 +213,40 @@
                     openHideAnswerBox(); //open Box to create answerUL
                     openHideAnswerBox(); // close it in the next possible moment
                     let ul = document.getElementById("answerUL");
-                    console.log(survey.AnswerOptions);
 
                     answers = [];
 
                     for (i = 0; i < survey.AnswerOptions.length; i++) {
                         answers.push(survey.AnswerOptions[i].AnsText);
-                        console.log(survey.AnswerOptions[i].AnsText);
                     }
                     insertAnswers();
                 }
             }
 
             let depIds = [];
-            console.log(survey.Departments.length);
             for (i = 0; i < survey.Departments.length; i++) {
                 depIds.push(survey.Departments[i].DepId);
             }
 
+            let check = false;
             let groupsUl = document.getElementById("groups");
             let items = groupsUl.getElementsByTagName("li");
             for (i = 0; i < items.length; ++i) {
-                if (depIds.includes(items[i].children[0].value)) {
-                    items[i].children[0].setAttribute("checked", "checked");
+                for (let j = 0; j < depIds.length; j++) {
+                    if (depIds[j] == items[i].children[0].value) {
+                        items[i].children[0].setAttribute("checked", "checked");
+                        check = true;
+                        break;
+                    }
                 }
+                if (!check) {
+                    items[i].children[0].removeAttribute("checked");
+                }
+                check = false;
             }
+
+                let countInput = document.getElementById("countInput");
+                countInput.value = survey.Amount;
 
         });
 

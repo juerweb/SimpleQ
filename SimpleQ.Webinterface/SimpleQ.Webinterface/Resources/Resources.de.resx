@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="surveyCreationHeader" xml:space="preserve">
-    <value>Umfrage erstellen</value>
+    <value>Befragung erstellen</value>
   </data>
   <data name="surveyCategoryHeader" xml:space="preserve">
     <value>Umfragekategorie</value>
@@ -148,7 +148,7 @@
     <value>Datum</value>
   </data>
   <data name="surveyResultsHeader" xml:space="preserve">
-    <value>Umfrageauswertung</value>
+    <value>Befragungsauswertung</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>bis</value>
@@ -251,7 +251,7 @@
     <value>Ungültige Eingabe!</value>
   </data>
   <data name="surveyTemplateHeader" xml:space="preserve">
-    <value>Umfragetemplate (bisherige Umfragen)</value>
+    <value>Befragungstemplate (bisherige Umfragen)</value>
   </data>
   <data name="askedPeopleCount" xml:space="preserve">
     <value>Anzahl der zu befragenden Personen</value>
@@ -281,6 +281,6 @@
     <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
   </data>
   <data name="TemplateDescription" xml:space="preserve">
-    <value>Beim Anhaken, wird die Umfrage als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
+    <value>Beim Anhaken, wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
   </data>
 </root>
