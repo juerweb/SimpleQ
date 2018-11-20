@@ -59,409 +59,785 @@ namespace SimpleQ.Webinterface.Properties {
                 resourceCulture = value;
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Account settings.
+        /// </summary>
+        public static string AccountSettings
+        {
+            get
+            {
+                return ResourceManager.GetString("AccountSettings", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Activated modes.
+        /// </summary>
+        public static string ActivatedModes
+        {
+            get
+            {
+                return ResourceManager.GetString("ActivatedModes", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to add.
         /// </summary>
-        public static string add {
-            get {
+        public static string add
+        {
+            get
+            {
                 return ResourceManager.GetString("add", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to add answer.
         /// </summary>
-        public static string addAnswer {
-            get {
+        public static string addAnswer
+        {
+            get
+            {
                 return ResourceManager.GetString("addAnswer", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to add new category.
         /// </summary>
-        public static string addNewCategory {
-            get {
+        public static string addNewCategory
+        {
+            get
+            {
                 return ResourceManager.GetString("addNewCategory", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to answer.
         /// </summary>
-        public static string answer {
-            get {
+        public static string answer
+        {
+            get
+            {
                 return ResourceManager.GetString("answer", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to answer type.
         /// </summary>
-        public static string answerTypeHeader {
-            get {
+        public static string answerTypeHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("answerTypeHeader", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Application settings.
+        /// </summary>
+        public static string ApplicationSettings
+        {
+            get
+            {
+                return ResourceManager.GetString("ApplicationSettings", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to asked people (count).
+        /// </summary>
+        public static string askedPeopleCount
+        {
+            get
+            {
+                return ResourceManager.GetString("askedPeopleCount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to small group, to get good results create a bigger one.
+        /// </summary>
+        public static string badAskGroupCount
+        {
+            get
+            {
+                return ResourceManager.GetString("badAskGroupCount", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to bar.
         /// </summary>
-        public static string bar {
-            get {
+        public static string bar
+        {
+            get
+            {
                 return ResourceManager.GetString("bar", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to There is already an category with this name .
+        /// </summary>
+        public static string categoryAlreadyExists
+        {
+            get
+            {
+                return ResourceManager.GetString("categoryAlreadyExists", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to City.
+        /// </summary>
+        public static string City
+        {
+            get
+            {
+                return ResourceManager.GetString("City", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to count.
         /// </summary>
-        public static string count {
-            get {
+        public static string count
+        {
+            get
+            {
                 return ResourceManager.GetString("count", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Country.
+        /// </summary>
+        public static string Country
+        {
+            get
+            {
+                return ResourceManager.GetString("Country", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Data protection settings.
+        /// </summary>
+        public static string DataProtectionSettings
+        {
+            get
+            {
+                return ResourceManager.GetString("DataProtectionSettings", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Data Storage Period (Months).
+        /// </summary>
+        public static string DataStoragePeriod
+        {
+            get
+            {
+                return ResourceManager.GetString("DataStoragePeriod", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to diagram.
         /// </summary>
-        public static string diagram {
-            get {
+        public static string diagram
+        {
+            get
+            {
                 return ResourceManager.GetString("diagram", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Dichotomous.
         /// </summary>
-        public static string Dichotomous {
-            get {
+        public static string Dichotomous
+        {
+            get
+            {
                 return ResourceManager.GetString("Dichotomous", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to doughnut.
         /// </summary>
-        public static string doughnut {
-            get {
+        public static string doughnut
+        {
+            get
+            {
                 return ResourceManager.GetString("doughnut", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to edit.
+        /// </summary>
+        public static string edit
+        {
+            get
+            {
+                return ResourceManager.GetString("edit", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Email.
+        /// </summary>
+        public static string Email
+        {
+            get
+            {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to from.
         /// </summary>
-        public static string from {
-            get {
+        public static string from
+        {
+            get
+            {
                 return ResourceManager.GetString("from", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to good size for good results.
+        /// </summary>
+        public static string goodAskGroupCount
+        {
+            get
+            {
+                return ResourceManager.GetString("goodAskGroupCount", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Gruppenverwaltung.
         /// </summary>
-        public static string groupAdministrationHeader {
-            get {
+        public static string groupAdministrationHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("groupAdministrationHeader", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to There is already a group with this name!.
+        /// </summary>
+        public static string groupAlreadyExists
+        {
+            get
+            {
+                return ResourceManager.GetString("groupAlreadyExists", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to groups.
         /// </summary>
-        public static string groups {
-            get {
+        public static string groups
+        {
+            get
+            {
                 return ResourceManager.GetString("groups", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to invalid input!.
         /// </summary>
-        public static string invalidInput {
-            get {
+        public static string invalidInput
+        {
+            get
+            {
                 return ResourceManager.GetString("invalidInput", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Language.
+        /// </summary>
+        public static string Language
+        {
+            get
+            {
+                return ResourceManager.GetString("Language", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Likert-skale 3.
         /// </summary>
-        public static string LikertSkale3 {
-            get {
+        public static string LikertSkale3
+        {
+            get
+            {
                 return ResourceManager.GetString("LikertSkale3", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Likert-skale 4.
         /// </summary>
-        public static string LikertSkale4 {
-            get {
+        public static string LikertSkale4
+        {
+            get
+            {
                 return ResourceManager.GetString("LikertSkale4", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Likert-skale 5.
         /// </summary>
-        public static string LikertSkale5 {
-            get {
+        public static string LikertSkale5
+        {
+            get
+            {
                 return ResourceManager.GetString("LikertSkale5", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Likert-skale 6.
         /// </summary>
-        public static string LikertSkale6 {
-            get {
+        public static string LikertSkale6
+        {
+            get
+            {
                 return ResourceManager.GetString("LikertSkale6", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Likert-skale 7.
         /// </summary>
-        public static string LikertSkale7 {
-            get {
+        public static string LikertSkale7
+        {
+            get
+            {
                 return ResourceManager.GetString("LikertSkale7", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Likert-skale 8.
         /// </summary>
-        public static string LikertSkale8 {
-            get {
+        public static string LikertSkale8
+        {
+            get
+            {
                 return ResourceManager.GetString("LikertSkale8", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Likert-skale 9.
         /// </summary>
-        public static string LikertSkale9 {
-            get {
+        public static string LikertSkale9
+        {
+            get
+            {
                 return ResourceManager.GetString("LikertSkale9", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to line.
         /// </summary>
-        public static string line {
-            get {
+        public static string line
+        {
+            get
+            {
                 return ResourceManager.GetString("line", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to listing (absolute, %).
         /// </summary>
-        public static string listing {
-            get {
+        public static string listing
+        {
+            get
+            {
                 return ResourceManager.GetString("listing", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to members.
+        /// </summary>
+        public static string Members
+        {
+            get
+            {
+                return ResourceManager.GetString("Members", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to size of the group is ok, could be better for more generic results.
+        /// </summary>
+        public static string middleAskGroupCount
+        {
+            get
+            {
+                return ResourceManager.GetString("middleAskGroupCount", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum group size.
+        /// </summary>
+        public static string MinimumGroupSize
+        {
+            get
+            {
+                return ResourceManager.GetString("MinimumGroupSize", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Full name.
+        /// </summary>
+        public static string Name
+        {
+            get
+            {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to new category name ....
         /// </summary>
-        public static string newCategoryName {
-            get {
+        public static string newCategoryName
+        {
+            get
+            {
                 return ResourceManager.GetString("newCategoryName", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Telephone number.
+        /// </summary>
+        public static string Number
+        {
+            get
+            {
+                return ResourceManager.GetString("Number", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Open text-answer.
         /// </summary>
-        public static string Open {
-            get {
+        public static string Open
+        {
+            get
+            {
                 return ResourceManager.GetString("Open", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password
+        {
+            get
+            {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password.
+        /// </summary>
+        public static string PasswordConfirm
+        {
+            get
+            {
+                return ResourceManager.GetString("PasswordConfirm", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to percent.
         /// </summary>
-        public static string percent {
-            get {
+        public static string percent
+        {
+            get
+            {
                 return ResourceManager.GetString("percent", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to polar-area.
         /// </summary>
-        public static string polarArea {
-            get {
+        public static string polarArea
+        {
+            get
+            {
                 return ResourceManager.GetString("polarArea", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Many answers, many to choose (ordered).
         /// </summary>
-        public static string PolytomousOrderedMultiple {
-            get {
+        public static string PolytomousOrderedMultiple
+        {
+            get
+            {
                 return ResourceManager.GetString("PolytomousOrderedMultiple", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Many answers, one to choose (ordered).
         /// </summary>
-        public static string PolytomousOrderedSingle {
-            get {
+        public static string PolytomousOrderedSingle
+        {
+            get
+            {
                 return ResourceManager.GetString("PolytomousOrderedSingle", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Many answers, many to choose (unordered).
         /// </summary>
-        public static string PolytomousUnorderedMultiple {
-            get {
+        public static string PolytomousUnorderedMultiple
+        {
+            get
+            {
                 return ResourceManager.GetString("PolytomousUnorderedMultiple", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Many answers, one to choose (unordered).
         /// </summary>
-        public static string PolytomousUnorderedSingle {
-            get {
+        public static string PolytomousUnorderedSingle
+        {
+            get
+            {
                 return ResourceManager.GetString("PolytomousUnorderedSingle", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Postal code.
+        /// </summary>
+        public static string PostalCode
+        {
+            get
+            {
+                return ResourceManager.GetString("PostalCode", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to ....
         /// </summary>
-        public static string questionHeader {
-            get {
+        public static string questionHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("questionHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to date.
         /// </summary>
-        public static string questionTimeDateHeader {
-            get {
+        public static string questionTimeDateHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("questionTimeDateHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to ....
         /// </summary>
-        public static string questionTimeTimeHeader {
-            get {
+        public static string questionTimeTimeHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("questionTimeTimeHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to radar.
         /// </summary>
-        public static string radar {
-            get {
+        public static string radar
+        {
+            get
+            {
                 return ResourceManager.GetString("radar", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to save as template.
+        /// </summary>
+        public static string SaveAsTemplate
+        {
+            get
+            {
+                return ResourceManager.GetString("SaveAsTemplate", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Address.
+        /// </summary>
+        public static string Street
+        {
+            get
+            {
+                return ResourceManager.GetString("Street", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to ....
         /// </summary>
-        public static string surveyCategoryHeader {
-            get {
+        public static string surveyCategoryHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("surveyCategoryHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Create Survey.
         /// </summary>
-        public static string surveyCreationHeader {
-            get {
+        public static string surveyCreationHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("surveyCreationHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Preview.
         /// </summary>
-        public static string surveyPreviewHeader {
-            get {
+        public static string surveyPreviewHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("surveyPreviewHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Survey Results.
         /// </summary>
-        public static string surveyResultsHeader {
-            get {
+        public static string surveyResultsHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("surveyResultsHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to choose template (by last surveys).
         /// </summary>
-        public static string surveyTemplateHeader {
-            get {
+        public static string surveyTemplateHeader
+        {
+            get
+            {
                 return ResourceManager.GetString("surveyTemplateHeader", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to to.
         /// </summary>
-        public static string to {
-            get {
+        public static string to
+        {
+            get
+            {
                 return ResourceManager.GetString("to", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Traffic-lights (red,yellow,green).
         /// </summary>
-        public static string TrafficLight {
-            get {
+        public static string TrafficLight
+        {
+            get
+            {
                 return ResourceManager.GetString("TrafficLight", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to type.
         /// </summary>
-        public static string typeSmall {
-            get {
+        public static string typeSmall
+        {
+            get
+            {
                 return ResourceManager.GetString("typeSmall", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Yes-no.
         /// </summary>
-        public static string YesNo {
-            get {
+        public static string YesNo
+        {
+            get
+            {
                 return ResourceManager.GetString("YesNo", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Yes-no-dont know.
         /// </summary>
-        public static string YesNoDontKnow {
-            get {
+        public static string YesNoDontKnow
+        {
+            get
+            {
                 return ResourceManager.GetString("YesNoDontKnow", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die if you do the same question later, you dont have to write everything again ähnelt.
+        /// </summary>
+        public static string TemplateDescription
+        {
+            get
+            {
+                return ResourceManager.GetString("TemplateDescription", resourceCulture);
             }
         }
     }

@@ -253,4 +253,81 @@
   <data name="surveyTemplateHeader" xml:space="preserve">
     <value>Umfragetemplate (bisherige Umfragen)</value>
   </data>
+<data name="askedPeopleCount" xml:space="preserve">
+    <value>Anzahl der zu befragenden Personen</value>
+  </data>
+  <data name="badAskGroupCount" xml:space="preserve">
+    <value>für eine gute Auswertung wäre eine größere Gruppe von Nöten</value>
+  </data>
+  <data name="goodAskGroupCount" xml:space="preserve">
+    <value>gute Größe für eine Sinnvolle Auswertung</value>
+  </data>
+  <data name="middleAskGroupCount" xml:space="preserve">
+    <value>Anzahl der Befragten ist ok, könnte aber größer sein</value>
+  </data>
+  <data name="SaveAsTemplate" xml:space="preserve">
+    <value>als Template speichern</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Mitglieder</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>Bearbeiten</value>
+  </data>
+  <data name="categoryAlreadyExists" xml:space="preserve">
+    <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
+  </data>
+  <data name="groupAlreadyExists" xml:space="preserve">
+    <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
+  </data>
+  <data name="AccountSettings" xml:space="preserve">
+    <value>Kontoeinstellungen</value>
+  </data>
+  <data name="ActivatedModes" xml:space="preserve">
+    <value>Aktivierte Modi</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Straße</value>
+  </data>
+  <data name="ApplicationSettings" xml:space="preserve">
+    <value>Anwendungseinstellungen</value>
+  </data>
+  <data name="DataProtectionSettings" xml:space="preserve">
+    <value>Datenschutzeinstellungen</value>
+  </data>
+  <data name="MinimumGroupSize" xml:space="preserve">
+    <value>Minimale Gruppengröße</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>Stadt</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email </value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Telefonnummer</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>PLZ</value>
+  </data>
+  <data name="DataStoragePeriod" xml:space="preserve">
+    <value>Datenaufbewahrung (in Monaten)</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Passwort</value>
+  </data>
+  <data name="PasswordConfirm" xml:space="preserve">
+    <value>Passwort bestätigen</value>
+  </data><data name="TemplateDescription" xml:space="preserve">
+    <value>Beim Anhaken, wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
+  </data>
 </root>

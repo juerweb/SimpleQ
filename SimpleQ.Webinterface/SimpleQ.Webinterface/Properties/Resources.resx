@@ -253,4 +253,82 @@
   <data name="surveyTemplateHeader" xml:space="preserve">
     <value>choose template (by last surveys)</value>
   </data>
+<data name="askedPeopleCount" xml:space="preserve">
+    <value>asked people (count)</value>
+  </data>
+  <data name="badAskGroupCount" xml:space="preserve">
+    <value>small group, to get good results create a bigger one</value>
+  </data>
+  <data name="goodAskGroupCount" xml:space="preserve">
+    <value>good size for good results</value>
+  </data>
+  <data name="middleAskGroupCount" xml:space="preserve">
+    <value>size of the group is ok, could be better for more generic results</value>
+  </data>
+  <data name="SaveAsTemplate" xml:space="preserve">
+    <value>save as template</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>members</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>edit</value>
+  </data>
+  <data name="categoryAlreadyExists" xml:space="preserve">
+    <value>There is already an category with this name </value>
+  </data>
+  <data name="groupAlreadyExists" xml:space="preserve">
+    <value>There is already a group with this name!</value>
+  </data>
+  <data name="AccountSettings" xml:space="preserve">
+    <value>Account settings</value>
+  </data>
+  <data name="ActivatedModes" xml:space="preserve">
+    <value>Activated modes</value>
+  </data>
+  <data name="Street" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="ApplicationSettings" xml:space="preserve">
+    <value>Application settings</value>
+  </data>
+  <data name="DataProtectionSettings" xml:space="preserve">
+    <value>Data protection settings</value>
+  </data>
+  <data name="MinimumGroupSize" xml:space="preserve">
+    <value>Minimum group size</value>
+  </data>
+  <data name="City" xml:space="preserve">
+    <value>City</value>
+  </data>
+  <data name="Country" xml:space="preserve">
+    <value>Country</value>
+  </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Full name</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Telephone number</value>
+  </data>
+  <data name="PostalCode" xml:space="preserve">
+    <value>Postal code</value>
+  </data>
+  <data name="DataStoragePeriod" xml:space="preserve">
+    <value>Data Storage Period (Months)</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PasswordConfirm" xml:space="preserve">
+    <value>Confirm password</value>
+  </data>
+  <data name="TemplateDescription" xml:space="preserve">
+    <value>if you do the same question later, you dont have to write everything again</value>
+  </data>
 </root>

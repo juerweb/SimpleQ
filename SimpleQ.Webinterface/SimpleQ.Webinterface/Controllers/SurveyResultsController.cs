@@ -12,6 +12,8 @@ namespace SimpleQ.Webinterface.Controllers
 {
     public class SurveyResultsController : Controller
     {
+        private const int OPEN = 4;
+
         [HttpGet]
         public ActionResult Index()
         {
@@ -66,9 +68,9 @@ namespace SimpleQ.Webinterface.Controllers
                         .Select(d => d.DepName)
                         .ToList(),
 
-                    Votes = (survey.TypeId != 4) ? SelectVotesFromSurvey(db, survey) : null,
+                    Votes = (survey.TypeId != OPEN) ? SelectVotesFromSurvey(db, survey) : null,
 
-                    FreeTextVotes = (survey.TypeId == 4) ? db.Votes
+                    FreeTextVotes = (survey.TypeId == OPEN) ? db.Votes
                         .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
                         .Select(v => v.VoteText)
                         .ToList()
@@ -166,9 +168,9 @@ namespace SimpleQ.Webinterface.Controllers
             return db.Votes
                 .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
                 .SelectMany(v => v.AnswerOptions)
-                .GroupBy(a => a.AnsId)
-                .ToDictionary(g => g.Where(a => a.AnsId == g.Key).Select(a => a.AnsText).FirstOrDefault(), g => g.Count())
-                .Concat(db.AnswerOptions.Where(a => a.SvyId == survey.SvyId && a.Votes.Count == 0).AsEnumerable().Select(a => new KeyValuePair<string, int>(a.AnsText, 0)))
+                .GroupBy(a => a.AnsText)
+                .ToDictionary(g => g.Key, g => g.Count())
+                .Concat(db.AnswerOptions.Where(a => a.SvyId == survey.SvyId && a.Votes.Count == 0).AsEnumerable().GroupBy(a => a.AnsText).Select(g => new KeyValuePair<string, int>(g.Key, 0)))
                 .ToDictionary(kv => kv.Key, kv => kv.Value);
         }
 

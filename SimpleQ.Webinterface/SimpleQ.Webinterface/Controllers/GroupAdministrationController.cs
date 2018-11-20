@@ -41,14 +41,17 @@ namespace SimpleQ.Webinterface.Controllers
 
                 var query = db.Departments.Where(d => d.CustCode == CustCode);
 
-                db.Departments.Add(new Department {
+                var dep = new Department
+                {
                     DepId = (query.Count() == 0) ? 1 : query.Max(d => d.DepId) + 1,
                     DepName = depName,
                     CustCode = CustCode
-                });
+                };
+                db.Departments.Add(dep);
                 db.SaveChanges();
+
+                return Content($"{dep.DepId}", "text/plain");
             }
-            return Http.Ok();
         }
 
         [HttpGet]
