@@ -12,7 +12,7 @@ namespace SimpleQ.Webinterface.Controllers
     public class GroupAdministrationController : Controller
     {
         [HttpGet]
-        public ActionResult List()
+        public ActionResult Index()
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -24,7 +24,7 @@ namespace SimpleQ.Webinterface.Controllers
                     Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList()
                 };
 
-                return PartialView(viewName: "_GroupAdministration", model: model);
+                return View(viewName: "GroupAdministration", model: model);
             }
         }
 

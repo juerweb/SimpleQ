@@ -20,8 +20,10 @@ namespace SimpleQ.Webinterface.Controllers
         private static readonly HashSet<int> queuedSurveys = new HashSet<int>();
 
         [HttpGet]
-        public ActionResult Load()
+        public ActionResult Index()
         {
+            Session["custCode"] = "420420";
+
             using (var db = new SimpleQDBEntities())
             {
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
@@ -36,7 +38,7 @@ namespace SimpleQ.Webinterface.Controllers
                     SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
                 };
 
-                return PartialView(viewName: "_SurveyCreation", model: model);
+                return View(viewName: "SurveyCreation", model: model);
             }
         }
 
@@ -108,7 +110,7 @@ namespace SimpleQ.Webinterface.Controllers
             if (timeout < Literal.NextMidnight.Add(TimeSpan.FromHours(1)))
                 ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);
 
-            return Load();
+            return Index();
         }
 
 
