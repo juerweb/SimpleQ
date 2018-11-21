@@ -134,7 +134,7 @@ namespace SimpleQ.Webinterface.Controllers
                     for (int i = 0; i < likertScales[req.Survey.TypeId]; i++)
                         db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = $"{i + 2}" });
 
-                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[0] });
+                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[1] });
                 }
                 else if (!predefined.Contains(req.Survey.TypeId))
                 {
