@@ -13,6 +13,7 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public List<PaymentMethod> PaymentMethods { get; set; }
         public List<AnswerType> ActivatedAnswerTypes { get; set; }
         public List<AnswerType> DeactivatedAnswerTypes { get; set; }
+        public List<Survey> Templates { get; set; }
         #endregion
 
         #region Any direction

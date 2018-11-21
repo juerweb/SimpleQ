@@ -28,6 +28,7 @@ namespace SimpleQ.Webinterface.Controllers
                     Categories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
                     ActivatedAnswerTypes = cust.AnswerTypes.ToList(),
                     DeactivatedAnswerTypes = db.AnswerTypes.ToList().Except(cust.AnswerTypes.ToList()).ToList(),
+                    Templates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList(),
                     PaymentMethods = db.PaymentMethods.ToList(),
                     Name = cust.CustName,
                     Email = cust.CustEmail,
@@ -123,6 +124,22 @@ namespace SimpleQ.Webinterface.Controllers
                     db.SurveyCategories.Remove(cat);
 
                 db.SaveChanges();
+                return Http.Ok();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DeleteTemplate(int svyId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                var template = db.Surveys.Where(s => s.SvyId == svyId && s.Template && s.CustCode == CustCode).FirstOrDefault();
+                if (template == null)
+                    return Http.NotFound("Template does not exist.");
+
+                template.Template = false;
+                db.SaveChanges();
+
                 return Http.Ok();
             }
         }
