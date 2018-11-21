@@ -195,35 +195,43 @@ namespace SimpleQ.PageModels.Services
         /// <param name="question">The question.</param>
         public async void AddQuestion(SurveyModel question)
         {
-            Debug.WriteLine("Add new Question...", "Info");
-            List<SurveyModel> list;
-            try
+            if (question.EndDate >= DateTime.Now)
             {
-                list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+                Debug.WriteLine("Add new Question...", "Info");
+                List<SurveyModel> list;
+                try
+                {
+                    list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+                }
+                catch (KeyNotFoundException e)
+                {
+                    list = new List<SurveyModel>();
+                }
+
+                if (list.Count(sm => sm.SurveyId == question.SurveyId) == 0)
+                {
+                    list.Add(question);
+                    await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
+                }
+
+                this.Questions.Add(question);
+
+                if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.CatName) > 0))
+                {
+                    //catName does not exists
+                    Debug.WriteLine("Add new catName from QuestionService", "Info");
+
+                    App.MainMasterPageModel.AddCategorie(question.CatName);
+                }
+
+                await BlobCache.LocalMachine.Flush();
             }
-            catch (KeyNotFoundException e)
+            else
             {
-                list = new List<SurveyModel>();
+                Debug.WriteLine("Question with the id " + question.SurveyId + " is in the past. Enddate: " + question.EndDate, "Info");
             }
-            
-            if (list.Count(sm => sm.SurveyId == question.SurveyId) == 0)
-            {
-                list.Add(question);
-                await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
-            }
-
-            this.Questions.Add(question);
-
-            if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.CatName) > 0))
-            {
-                //catName does not exists
-                Debug.WriteLine("Add new catName from QuestionService", "Info");
-
-                App.MainMasterPageModel.AddCategorie(question.CatName);
-            }
-
-            await BlobCache.LocalMachine.Flush();
         }
+
 
         /// <summary>
         /// This method sets the actual catName filter and furthermore the new public Collection with the questions in it.

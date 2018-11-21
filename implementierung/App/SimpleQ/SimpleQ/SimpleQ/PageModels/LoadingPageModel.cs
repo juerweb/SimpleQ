@@ -115,7 +115,7 @@ namespace SimpleQ.PageModels
                     Debug.WriteLine("Code is valid...", "Info");
                     this.IsFirstStepTicked = true;
 
-                    RegistrationDataModel data = new RegistrationDataModel() { RegistrationData=new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Tina Company", PersId = 1 } };
+                    RegistrationDataModel data = new RegistrationDataModel() { RegistrationData=new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Development", PersId = 1, CustName="SimpleQ Company" } };
                     //Code Check
                     if (Application.Current.Properties.ContainsKey("registrations"))
                     {
