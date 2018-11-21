@@ -13,7 +13,7 @@ namespace SimpleQ.Webinterface.Controllers
     public class SettingsController : Controller
     {
         [HttpGet]
-        public ActionResult Load()
+        public ActionResult Index()
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -76,14 +76,16 @@ namespace SimpleQ.Webinterface.Controllers
 
                 var query = db.SurveyCategories.Where(c => c.CustCode == CustCode);
 
-                db.SurveyCategories.Add(new SurveyCategory
+                var cat = new SurveyCategory
                 {
                     CatId = (query.Count() == 0) ? 1 : query.Max(c => c.CatId) + 1,
                     CatName = catName,
                     CustCode = CustCode
-                });
+                };
+                db.SurveyCategories.Add(cat);
                 db.SaveChanges();
-                return Http.Ok();
+
+                return Content($"{cat.CatId}", "text/plain");
             }
         }
 
@@ -181,7 +183,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 db.SaveChanges();
 
-                return Load();
+                return Index();
             }
         }
 
@@ -218,7 +220,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     db.SaveChanges();
                     
-                    return Load();
+                    return Index();
                 }
                 catch (ArgumentNullException ex)
                 {

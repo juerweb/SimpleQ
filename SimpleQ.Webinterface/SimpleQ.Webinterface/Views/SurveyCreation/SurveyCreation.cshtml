@@ -204,21 +204,31 @@
                 }
             }
 
-            if (survey.TypeId > 4) { //fill answers if necessary
-                if (survey.TypeId >= 6 && survey.TypeId <= 9) {
+                if (survey.TypeId > 4) { //fill answers if necessary
                     openHideAnswerBox(); //open Box to create answerUL
                     openHideAnswerBox(); // close it in the next possible moment
-                    let ul = document.getElementById("answerUL");
+                    if (survey.TypeId >= 6 && survey.TypeId <= 9) {                       
+                        let ul = document.getElementById("answerUL");
 
-                    answers = [];
+                        answers = [];
 
-                    for (i = 0; i < survey.AnswerOptions.length; i++) {
-                        answers.push(survey.AnswerOptions[i].AnsText);
+                        for (i = 0; i < survey.AnswerOptions.length; i++) {
+                            answers.push(survey.AnswerOptions[i].AnsText);
+                        }
+                        insertAnswers();
+                        answersULChanged();
+                    } else {
+                        if (survey.AnswerOptions.length > 1) {
+                            let input1 = document.getElementById("dichotomAnswer1");
+                            let input2 = document.getElementById("dichotomAnswer2");
+
+                            input1.value = survey.AnswerOptions[0].AnsText;
+                            input1.value = survey.AnswerOptions[survey.AnswerOptions.length - 1].AnsText;
+                        }                       
                     }
-                    insertAnswers();
-                }
-                }
-                answersULChanged();
+                   
+                } 
+                
 
             let depIds = [];
             for (i = 0; i < survey.Departments.length; i++) {
