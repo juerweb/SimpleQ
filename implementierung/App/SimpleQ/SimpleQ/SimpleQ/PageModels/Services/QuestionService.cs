@@ -195,18 +195,19 @@ namespace SimpleQ.PageModels.Services
         /// <param name="question">The question.</param>
         public async void AddQuestion(SurveyModel question)
         {
+            List<SurveyModel> list;
+            try
+            {
+                list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
+            }
+            catch (KeyNotFoundException e)
+            {
+                list = new List<SurveyModel>();
+            }
+
             if (question.EndDate >= DateTime.Now)
             {
                 Debug.WriteLine("Add new Question...", "Info");
-                List<SurveyModel> list;
-                try
-                {
-                    list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
-                }
-                catch (KeyNotFoundException e)
-                {
-                    list = new List<SurveyModel>();
-                }
 
                 if (list.Count(sm => sm.SurveyId == question.SurveyId) == 0)
                 {
@@ -228,6 +229,8 @@ namespace SimpleQ.PageModels.Services
             }
             else
             {
+                list.Remove(question);
+                await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
                 Debug.WriteLine("Question with the id " + question.SurveyId + " is in the past. Enddate: " + question.EndDate, "Info");
             }
         }
