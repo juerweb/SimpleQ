@@ -349,6 +349,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die no template ähnelt.
+        /// </summary>
+        public static string noTemplate {
+            get {
+                return ResourceManager.GetString("noTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Open text-answer ähnelt.
         /// </summary>
         public static string Open {

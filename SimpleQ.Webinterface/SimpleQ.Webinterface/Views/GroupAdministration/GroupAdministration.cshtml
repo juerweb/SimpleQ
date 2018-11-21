@@ -15,8 +15,7 @@
                     @foreach (Department d in Model.Departments)
                     {
                         <li>
-                            <input name="groups" type="radio" value="@d.DepName">
-                            @d.DepName
+                            <input name="groups" type="radio" value="@d.DepId"> <a>@d.DepName</a>
                         </li>
                     }
                 </ul>
@@ -104,37 +103,39 @@
 </div>
 
 <script>
-    //if (groups === 'undefined') {//because of ajax reload
-    //    let groups = {}; // key = department name, value = depId
-    //} else {
-    //    groups = {};
-    //}
     let groups = {};
+    let chosenId = 0;
     //if (typeof chosen === 'undefined') {
         let chosen;
-    //}
+    //}   
 
     $(function () { // <-- Things to do at startup
-        let chosenDepId = 0;
+        //let chosenDepId = 0;
         //fill groups array
-        @{
+        @*@{
             foreach(Department d in Model.Departments)
             {
                 @:groups['@d.DepName'] = '@d.DepId';
                 @:if (chosen === '@d.DepName') { chosenDepId = '@d.DepId' };
             }
+        }*@
+        @{
+            foreach(Department d in Model.Departments)
+            {
+                @:groups['@d.DepId'] = '@d.DepName';
+            }
         }
 
         //choose first group automatically
-        let radioBtnElem = document.getElementById("gaGroups").children[0].children[chosenDepId];
+        let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
         radioBtnElem.setAttribute("checked", "checked");
-        updateGroupNameInput(radioBtnElem.value); //fill into Textbox
-        document.getElementById("chosenGroup").innerHTML = radioBtnElem.value;
+        updateGroupNameInput(radioBtnElem.parentElement.children[1].innerHTML); //fill into Textbox
 
-        $("input[type=radio]").change(function () {
-            let text = this.value;
+        $("input[type=radio]").click(function () {
+            handleCheckedAttributes(this);
+            let text = this.parentElement.children[1].innerHTML;
+            chosenId = this.value;
             updateGroupNameInput(text);
-            document.getElementById("chosenGroup").innerHTML = text;
         });
 
         $("#showNewGroupModalBtn").click(function () {
@@ -142,7 +143,16 @@
         });
     }); // <-- Things to to at startup END
 
+    function handleCheckedAttributes(elem) {
+        let list = document.getElementById("gaGroups").children;
 
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].children[0] !== elem) {
+                list[i].children[0].removeAttribute("checked");
+            }
+        }
+        elem.setAttribute("checked", "checked");
+    }
 
     function addNewGroup() {
         let groupName = document.getElementById("NewGroupTB").value;
@@ -152,33 +162,35 @@
             return;
         }
 
-        let keys = Object.keys(groups);
-        if (keys.includes(groupName)) {
+        let values = Object.values(groups);
+        if (values.includes(groupName)) {
             alert('@Resources.groupAlreadyExists');
             return;
         }
 
-        let groupsUl = document.getElementById("gaGroups");
-        groupsUl.innerHTML +=
-            '<li>' +
-                '<input name="groups" type="radio" value="' + groupName + '">' +
-                groupName +
-            '</li>';
-
-        $("input[type=radio][value=" + groupName + "]").prop("checked", true);
-
-        updateGroupNameInput(groupName);
-
         let url = '@Url.Action("Create", "GroupAdministration", new { depName = "temp"})'.replace("temp", groupName);
 
-        $.ajax({
-            url: url,
-            type: 'GET'
-        });
+        $.get(
+            url,
+            function (id) {
+                let groupsUl = document.getElementById("gaGroups");
+                groupsUl.innerHTML +=
+                    '<li>' +
+                    '<input name="groups" type="radio" value="' + id + '">' +
+                    groupName +
+                    '</li>';
+                
+                updateGroupNameInput(groupName);
+
+                //$("input[type=radio][value=" + id + "]").prop("checked", true);
+
+            }
+        );
     }
 
     function updateGroupNameInput(groupName) {
         document.getElementById("groupNameInput").value = groupName;
+        document.getElementById("chosenGroup").innerHTML = groupName;
     }
 
     if (typeof tempTextGroups === 'undefined') {
@@ -213,8 +225,8 @@
             document.getElementById("groupNameInput").value=tempTextGroups;
         } else {
             text = document.getElementById("groupNameInput").value;
-            let keys = Object.keys(groups);
-            if (keys.includes(text)) {
+            let values = Object.values(groups);
+            if (values.includes(text)) {
                 alert('@Resources.groupAlreadyExists');
                 return;
             }

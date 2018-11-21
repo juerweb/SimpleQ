@@ -17,7 +17,7 @@
             <label class="mt-2">@Resources.surveyTemplateHeader</label>
             <select class="form-control" id="surveyTemplateCB" onchange="surveyTemplateSelectionChanged()">
                 @{
-                    <option value="-1">No template</option> //-1 = no template
+                    <option value="-1">@Resources.noTemplate</option> //-1 = no template
                     foreach (Survey svy in Model.SurveyTemplates)
                     {
                         <option value="@svy.SvyId">@svy.SvyText @svy.StartDate</option>
@@ -33,7 +33,7 @@
             <label class="mt-2">@Resources.surveyCategoryHeader</label>
             <div class="row mr-0 ml-0">
                 <div class="col-11 p-0">
-                    @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @id = "categoryDropdown", @class = "form-control rightNotRounded" })
+                    @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories.OrderBy(sc => sc.CatName), "CatId", "CatName"), new { @id = "categoryDropdown", @class = "form-control rightNotRounded" })
                 </div>
                 <div class="col-1 p-0">
                     <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" id="openAddCategoryBtn"><i class="material-icons">&#xe145;</i></button>
@@ -501,10 +501,17 @@
 
         let url = '@Url.Action("CreateCategory", "SurveyCreation", new { catName = "temp"})'.replace("temp", input);
 
-        $.ajax({
-            url: url,
-            type: 'GET'
-        });
+        $.get(
+            url,
+            function (id) {
+                document.getElementById("categoryDropdown").innerHTML += '<option value="' + id + '" selected>' + input + '</option>';
+            }
+        );
+
+        //$.ajax({
+        //    url: url,
+        //    type: 'GET'
+        //});
     }
 
 </script>
