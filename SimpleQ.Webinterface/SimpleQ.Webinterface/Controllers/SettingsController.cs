@@ -161,17 +161,15 @@ namespace SimpleQ.Webinterface.Controllers
                 if (req.CheckedAnswerTypes == null)
                     return Http.BadRequest("CheckedAnswerTypes must not be null.");
 
-                if (req.UncheckedAnswerTypes == null)
-                    return Http.BadRequest("UncheckedAnswerTypes must not be null.");
-
-                foreach (var typeId in req.CheckedAnswerTypes.Concat(req.UncheckedAnswerTypes).Distinct())
+                foreach (var typeId in req.CheckedAnswerTypes.Distinct())
                 {
                     if (db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault() == null)
                         return Http.Conflict("AnswerType does not exist.");
                 }
 
+                var uncheckedAnswerTypes = db.AnswerTypes.Select(a => a.TypeId).Except(req.CheckedAnswerTypes).ToList();
 
-                req.UncheckedAnswerTypes.ForEach(typeId =>
+                uncheckedAnswerTypes.ForEach(typeId =>
                 {
                     cust.AnswerTypes.Remove(db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault());
                 });
