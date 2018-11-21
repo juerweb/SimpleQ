@@ -8,10 +8,9 @@ using System.Web.Mvc;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Mobile;
 using SimpleQ.Webinterface.Models.ViewModels;
-using OneSignal.CSharp.SDK;
-using OneSignal.CSharp.SDK.Resources.Devices;
-using OneSignal.CSharp.SDK.Resources.Notifications;
 using SimpleQ.Webinterface.Extensions;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -196,15 +195,32 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         dep.People.ToList().ForEach(p =>
                         {
-                            // CANCEL SURVEY
-                            //var client = new OneSignalClient("ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
-                            //var options = new NotificationCreateOptions
-                            //{
-                            //    AppId = new Guid("68b8996a-f664-4130-9854-9ed7f70d5540"),
-                            //    IncludePlayerIds = {p.DeviceId}
-                            //};
-                            //options.Contents.Add("SvyId", $"{svyId}");
-                            //client.Notifications.Create(options);
+                            using (var client = new HttpClient())
+                            {
+                                try
+                                {
+                                    // SEND SURVEY
+                                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                                    var obj = new
+                                    {
+                                        app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
+                                        include_player_ids = new string[] { p.DeviceId },
+                                        contents = new { en = "Cancel survey" },
+                                        data = new { Cancel = true, SvyId = svyId }
+                                    };
+                                    var task = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj);
+                                    task.Wait();
+                                    var response = task.Result;
+                                    System.Diagnostics.Debug.Write("RESPONSE:");
+                                    System.Diagnostics.Debug.WriteLine(response.StatusCode);
+                                    System.Diagnostics.Debug.WriteLine(response.Content);
+                                }
+                                catch (AggregateException ex)
+                                {
+                                    //logging
+                                    throw ex; // just for testing...
+                                }
+                            }
                         });
                     });
                 }
@@ -260,6 +276,9 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         // Anzahl an Personen in der aktuellen Abteilung (mit DepId = id)
                         int currPeople = dep.People.Distinct().Count();
+                        // Abteilung überspringen, wenn keine Leute darin
+                        if (currPeople == 0)
+                            return;
 
                         // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
                         int toAsk = (int)Math.Round(amount * (currPeople / (double)totalPeople));
@@ -276,37 +295,54 @@ namespace SimpleQ.Webinterface.Controllers
                     while (depAmounts.Values.Sum() > amount)
                         depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]--;
 
-
-                    foreach (var kv in depAmounts)
+                    
+                    using (var client = new HttpClient())
                     {
-                        int i = 0;
-                        db.Departments
-                            .Where(d => d.DepId == kv.Key && d.CustCode == custCode)
-                            .SelectMany(d => d.People)
-                            .ToList()
-                            .Where(p => !alreadyAsked.Contains(p.PersId))
-                            .OrderBy(p => rnd.Next())
-                            .Take(kv.Value)
-                            .ToList()
-                            .ForEach(p =>
-                            {
-                                alreadyAsked.Add(p.PersId);
+                        foreach (var kv in depAmounts)
+                        {
+                            int i = 0;
+                            db.Departments
+                                .Where(d => d.DepId == kv.Key && d.CustCode == custCode)
+                                .SelectMany(d => d.People)
+                                .ToList()
+                                .Where(p => !alreadyAsked.Contains(p.PersId))
+                                .OrderBy(p => rnd.Next())
+                                .Take(kv.Value)
+                                .ToList()
+                                .ForEach(p =>
+                                {
+                                    alreadyAsked.Add(p.PersId);
 
-                                // SEND SURVEY
-                                //var client = new OneSignalClient("ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
-                                //var options = new NotificationCreateOptions
-                                //{
-                                //    AppId = new Guid("68b8996a-f664-4130-9854-9ed7f70d5540"),
-                                //    IncludePlayerIds = {p.DeviceId}
-                                //};
-                                //options.Contents.Add("SvyId", $"{svyId}");
-                                //client.Notifications.Create(options);
-
-                                i++;
-                            });
-                        System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {kv.Value}");
+                                    try
+                                    {
+                                        // SEND SURVEY
+                                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                                        var obj = new
+                                        {
+                                            app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
+                                            include_player_ids = new string[] { p.DeviceId },
+                                            contents = new { en = "New survey" },
+                                            content_available = true,
+                                            data = new { Cancel = false, SvyId = svyId }
+                                        };
+                                        var task = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj);
+                                        task.Wait();
+                                        var response = task.Result;
+                                        System.Diagnostics.Debug.Write("RESPONSE:");
+                                        System.Diagnostics.Debug.WriteLine(response.StatusCode);
+                                        System.Diagnostics.Debug.WriteLine(response.Content);
+                                    }
+                                    catch (AggregateException ex)
+                                    {
+                                        //logging
+                                        throw ex; // just for testing...
+                                    }
+                                    i++;
+                                });
+                            System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {kv.Value}");
+                        }
                     }
-                    System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) TOTAL SENT: {alreadyAsked.Count} == {svyId}");
+                    System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) TOTAL SENT: {alreadyAsked.Count}");
 
                     db.Surveys.Where(s => s.SvyId == svyId).First().Sent = true;
                     db.SaveChanges();
