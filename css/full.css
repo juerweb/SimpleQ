@@ -184,9 +184,13 @@ p {
     //////////////////////////////////////////
 */
 
+.yellowTemp{
+    color:lightgreen !important;
+}
+
 .aStart {
     background-image: url(../images/deviceImages/start.PNG);
-    background-size: cover;
+    background-size: inherit;
 }
 
 .aFrage1 {
