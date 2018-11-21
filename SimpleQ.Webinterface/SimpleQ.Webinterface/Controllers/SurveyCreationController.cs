@@ -17,6 +17,33 @@ namespace SimpleQ.Webinterface.Controllers
 {
     public class SurveyCreationController : Controller
     {
+        private const int YES_NO = 1;
+        private const int YES_NO_DONTKNOW = 2;
+        private const int TRAFFIC_LIGHT = 3;
+        private const int OPEN = 4;
+
+        private const int LIKERT_SCALE_3 = 10;
+        private const int LIKERT_SCALE_4 = 11;
+        private const int LIKERT_SCALE_5 = 12;
+        private const int LIKERT_SCALE_6 = 13;
+        private const int LIKERT_SCALE_7 = 14;
+        private const int LIKERT_SCALE_8 = 15;
+        private const int LIKERT_SCALE_9 = 16;
+
+        private static readonly int[] predefined = { YES_NO, YES_NO_DONTKNOW, TRAFFIC_LIGHT, OPEN };
+
+        // <TypeId, intermediate values>
+        private static readonly Dictionary<int, int> likertScales = new Dictionary<int, int>
+        {
+            { LIKERT_SCALE_3,  1},
+            { LIKERT_SCALE_4,  2},
+            { LIKERT_SCALE_5,  3},
+            { LIKERT_SCALE_6,  4},
+            { LIKERT_SCALE_7,  5},
+            { LIKERT_SCALE_8,  6},
+            { LIKERT_SCALE_9,  7},
+        };
+
         private static readonly HashSet<int> queuedSurveys = new HashSet<int>();
 
         [HttpGet]
@@ -97,10 +124,25 @@ namespace SimpleQ.Webinterface.Controllers
                 });
                 db.SaveChanges();
 
-                req.TextAnswerOptions?.ForEach(text =>
+                if (likertScales.ContainsKey(req.Survey.TypeId))
                 {
-                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = text });
-                });
+                    if (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2)
+                        return Http.Conflict("Likert scales must have exactly two answer options.");
+
+                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[0] });
+
+                    for (int i = 0; i < likertScales[req.Survey.TypeId]; i++)
+                        db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = $"{i + 2}" });
+
+                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[1] });
+                }
+                else if (!predefined.Contains(req.Survey.TypeId))
+                {
+                    req.TextAnswerOptions?.ForEach(text =>
+                    {
+                        db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = text });
+                    });
+                }
                 db.SaveChanges();
             }
 
