@@ -4,6 +4,7 @@ go
 set nocount on;
 go
 
+drop table FaqEntry;
 drop table DsgvoConstraint;
 drop table Chooses;
 drop table Vote;
@@ -12,8 +13,10 @@ drop table Asking;
 drop table Survey;
 drop table SurveyCategory;
 drop table PredefinedAnswerOption;
+drop table Activates;
 drop table AnswerType;
 drop table BaseQuestionType;
+drop table Employs;
 drop table Person;
 drop table Department;
 drop table Bill;
@@ -44,8 +47,9 @@ create table Customer
 	City varchar(max) not null,
 	Country varchar(max) not null,
 	LanguageCode char(3) not null,
-	DataStoragePeriod int not null, -- in Monaten
+	DataStoragePeriod int not null check(DataStoragePeriod > 0), -- in Monaten
 	PaymentMethodId int not null references PaymentMethod,
+    MinGroupSize int not null,
     PricePerClick money not null,
 	CostBalance money not null
 );
@@ -53,7 +57,7 @@ go
 
 -- Rechnung
 -- KUNDENSPEZIFISCH
-create table Bill
+create table Bill --Clinton
 (
 	BillId int identity primary key,
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
@@ -79,9 +83,18 @@ go
 create table Person
 (
 	PersId int identity primary key,
-	DepId int not null,
-    CustCode char(6) collate Latin1_General_CS_AS not null,
-    DeviceId varchar(max) null,
+    DeviceId varchar(max) null
+);
+go
+
+-- In Abteilung angestellte Personen
+-- KUNDENSPEZIFISCH
+create table Employs
+(
+    DepId int,
+    CustCode char(6) collate Latin1_General_CS_AS,
+    PersId int references Person,
+    primary key (DepId, CustCode, PersId),
     foreign key (DepId, CustCode) references Department
 );
 go
@@ -105,6 +118,16 @@ create table AnswerType
 );
 go
 
+-- Vom Kunden aktivierte Beantwortungsarten (standardmäßig alle)
+-- KUNDENSPEZIFISCH
+create table Activates
+(
+	CustCode char(6) collate Latin1_General_CS_AS references Customer,
+	TypeId int references AnswerType,
+	primary key (CustCode, TypeId)
+);
+go
+
 -- Vordefinierte Antwortmöglichkeit
 -- NICHT KUNDENSPEZIFISCH
 create table PredefinedAnswerOption
@@ -122,6 +145,7 @@ create table SurveyCategory
 	CatId int not null,
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer, 
 	CatName varchar(max) not null,
+	Deactivated bit not null default 0,
     primary key (CatId, CustCode),
 );
 go
@@ -138,8 +162,10 @@ create table Survey
 	EndDate datetime not null,
     Amount int not null,
 	TypeId int not null references AnswerType,
-	Template bit not null,
-    foreign key (CatId, CustCode) references SurveyCategory
+	Template bit not null default 0,
+	[Sent] bit not null default 0,
+    foreign key (CatId, CustCode) references SurveyCategory,
+	check (StartDate < EndDate)
 );
 go
 
@@ -195,8 +221,18 @@ create table DsgvoConstraint
 go
 
 
+-- FAQ-Eintrag für Supportbereich
+-- NICHT KUNDENSPEZIFISCH
+create table FaqEntry
+(
+    FaqTitle varchar(128) primary key,
+    FaqContent varchar(max) not null
+);
+go
 
--- Hasht das Passwort und setzt das im Klartext Eingegebene NULL
+
+
+-- Hasht das Passwort und setzt das im Klartext Eingegebene NULL, aktiviert standardmäßig alle AnswerTypes für den neuen Kunden
 create trigger tr_CustomerIns
 on Customer
 after insert as
@@ -214,6 +250,9 @@ begin
 			update Customer set CustPwdHash = @hash, CustPwdTmp = null
 			where CustCode = @CustCode
 		end
+
+		insert into Activates (CustCode, TypeId) select @CustCode, TypeId
+												 from AnswerType;
 		
 		fetch c into @CustCode, @hash
 	end
@@ -287,7 +326,7 @@ on Survey
 after update as
 begin
     if(update(TypeId))
-        begin
+    begin
         declare @svyId int, @typeId int;
         declare c cursor local for select SvyId, TypeId from inserted;
 
@@ -312,6 +351,111 @@ end
 go
 
 
+-- Löscht ggf. Umfragekategorien falls diese als deaktiviert gekennzeichnet wurden und nicht mehr verwendet werden
+create trigger tr_SurveyDel
+on Survey
+after delete as
+begin
+	declare @catId int;
+	declare c cursor local for select distinct d.CatId
+									  from deleted d
+									  join SurveyCategory c on d.CatId = c.CatId
+									  where Deactivated = 1;
+
+	open c;
+	fetch c into @catId;
+	while(@@FETCH_STATUS = 0)
+	begin
+		if (not exists(select * from Survey where CatId = @catId))
+		begin
+			delete from SurveyCategory where CatId = @catId;
+		end
+		fetch c into @catId;
+	end
+	close c;
+	deallocate c;
+end
+go
+
+
+-- Zum Überprüfen, ob je Vote nur für AnswerOptions einer einzigen Survey gestimmt werden
+-- sowie zum Aufbuchen der Per-Click-Kosten des Kunden
+create trigger tr_ChoosesIns
+on Chooses
+after insert as
+begin
+	declare @voteId int, @svyId int, @err bit = 0;
+	declare c cursor local for select VoteId, SvyId 
+							   from inserted i
+							   join AnswerOption a on i.AnsId = a.AnsId;
+
+	open c;
+	fetch c into @voteId, @svyId;
+
+	while(@@FETCH_STATUS = 0)
+	begin
+		if (exists(select * from Chooses c join AnswerOption a on c.AnsId = a.AnsId where VoteId = @voteId and SvyId <> @svyId))
+		begin
+			raiserror('A Vote cannot include AnswerOptions of multiple Surveys! VoteId: %d, SvyId: %d', 16, 1, @voteId, @svyId);
+			set @err = 1;
+		end
+		fetch c into @voteId, @svyId;
+	end
+
+	close c;
+	deallocate c;
+	
+	if(@err = 1)
+		rollback;
+	else
+	begin
+		declare @custCode char(6), @pricePerClick money;
+		declare c2 cursor local for select c.CustCode, PricePerClick
+									from inserted i
+									join AnswerOption a on i.AnsId = a.AnsId
+									join Survey s on a.SvyId = s.SvyId
+									join Customer c on s.CustCode = c.CustCode
+									where i.VoteId not in (select VoteId from (select * from Chooses
+																			   except
+																			   select * from inserted) Chooses_before); -- nur für neue VoteIds
+
+	
+		open c2;
+		fetch c2 into @custCode, @pricePerClick;
+
+		while(@@FETCH_STATUS = 0)
+		begin
+			update Customer
+			set CostBalance += @pricePerClick
+			where CustCode = @custCode;
+
+			fetch c2 into @custCode, @pricePerClick;
+		end
+
+		close c2;
+		deallocate c2;
+	end
+end
+go
+
+
+-- Zum Löschen einer bestimmten Umfrage und allen zugehörigen Daten
+drop procedure sp_DeleteSurvey;
+go
+create procedure sp_DeleteSurvey(@svyId int)
+as
+begin
+	delete from Vote where VoteId in (select VoteId
+                                      from Chooses c 
+                                      join AnswerOption a on c.AnsId = a.AnsId
+                                      where a.SvyId = @svyId);
+    delete from AnswerOption where SvyId = @svyId;
+	delete from Asking where SvyId = @svyId;
+	delete from Survey where SvyId = @svyId;
+end
+go
+
+
 -- Zum Löschen der abgelaufenen Umfragedaten
 drop procedure sp_CheckExceededSurveyData;
 go
@@ -322,8 +466,9 @@ begin
 	declare c cursor local for select svyId 
                                from Survey s
 							   join Customer c on s.CustCode = c.CustCode
-							   where datediff(day, s.StartDate, getdate()) >= c.DataStoragePeriod * 30
-							   and Template = 0;
+							   where datediff(day, s.EndDate, getdate()) >= c.DataStoragePeriod * 30
+							   and Template = 0
+							   and [Sent] = 1;
 	
 	open c;
 	fetch c into @svyId;
@@ -332,13 +477,7 @@ begin
 
 	while(@@FETCH_STATUS = 0)
 	begin
-		delete from Vote where VoteId in (select VoteId
-                                          from Chooses c 
-                                          join AnswerOption a on c.AnsId = a.AnsId
-                                          where a.SvyId = @svyId);
-        delete from AnswerOption where SvyId = @svyId;
-		delete from Asking where SvyId = @svyId;
-		delete from Survey where SvyId = @svyId;
+		exec sp_DeleteSurvey @svyId;
 		
 		set @svyCount += 1;
 		fetch c into @svyId;
@@ -350,10 +489,46 @@ begin
 end
 go
 
+
+-- Zum Erstellen von Rechnungen aller Kunden
+drop procedure sp_CreateBills;
+go
+create procedure sp_CreateBills
+as
+begin
+	declare @custCode char(6), @costBalance money;
+	declare c cursor local for select CustCode, CostBalance
+							   from Customer
+							   for update;
+
+	open c;
+	fetch c into @custCode, @costBalance;
+
+	while(@@FETCH_STATUS = 0)
+	begin
+		if(@costBalance > 0)
+		begin
+			insert into Bill values (@custCode, @costBalance, getdate(), 0);
+
+			update Customer
+			set CostBalance = 0
+			where current of c;
+		end
+
+		fetch c into @custCode, @costBalance;
+	end
+
+	close c;
+	deallocate c;
+end
+go
+
 -- Fixe inserts (für alle gleich!)
 begin transaction;
 insert into DsgvoConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 insert into PaymentMethod values (1, 'SEPA'); -- Nur Testwert
+insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.'); -- Nur Testwert
+insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque tú eres un culo muy grande.'); -- Nur Testwert
 
 insert into BaseQuestionType values (1, 'OpenQuestion');
 insert into BaseQuestionType values (2, 'DichotomousQuestion');

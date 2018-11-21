@@ -207,23 +207,19 @@
                 if (survey.TypeId > 4) { //fill answers if necessary
                     openHideAnswerBox(); //open Box to create answerUL
                     openHideAnswerBox(); // close it in the next possible moment
+                    answers = [];
+
+                    for (i = 0; i < survey.AnswerOptions.length; i++) {
+                        answers.push(survey.AnswerOptions[i].AnsText);
+                    }
                     if (survey.TypeId >= 6 && survey.TypeId <= 9) {                       
-                        let ul = document.getElementById("answerUL");
-
-                        answers = [];
-
-                        for (i = 0; i < survey.AnswerOptions.length; i++) {
-                            answers.push(survey.AnswerOptions[i].AnsText);
-                        }
                         insertAnswers();
                         answersULChanged();
                     } else {
                         if (survey.AnswerOptions.length > 1) {
-                            let input1 = document.getElementById("dichotomAnswer1");
-                            let input2 = document.getElementById("dichotomAnswer2");
-
-                            input1.value = survey.AnswerOptions[0].AnsText;
-                            input1.value = survey.AnswerOptions[survey.AnswerOptions.length - 1].AnsText;
+                            firstAnswer = answers[0];
+                            secondAnswer = answers[answers.length - 1];
+                            insertDichotomInputs();                          
                         }                       
                     }
                    
@@ -274,6 +270,7 @@
         document.getElementById("countInput").value = 0;
     }
 
+
     function answerTypeSelectionChanged() {
         let answerBox = document.getElementById("answerBox");
         let answerType = document.getElementById("AnswerTypeCB");
@@ -304,11 +301,14 @@
                 insertAnswers();
             }
         } else {
-            if (firstAnswer !== "" && secondAnswer !== "") {
-                $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
-            } else {
-                $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
-            }
+            insertDichotomInputs();
+        }
+
+        $("#answerBox").show();
+    }
+
+    function insertDichotomInputs() {
+        if (firstAnswer !== "" && secondAnswer !== "") {
             answerBox.innerHTML =
                 '<div class="m-2">' +
                 '    <label>First Answer</label>' +
@@ -316,9 +316,17 @@
                 '    <label>Second Answer</label>' +
                 '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + secondAnswer + '" class="form-control" />' +
                 '</div>';
+            $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+        } else {
+            answerBox.innerHTML =
+                '<div class="m-2">' +
+                '    <label>First Answer</label>' +
+                '    <input id="dichotomAnswer1" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" class="form-control" />' +
+                '    <label>Second Answer</label>' +
+                '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" class="form-control" />' +
+                '</div>';
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
         }
-
-        $("#answerBox").show();
     }
 
     function answersULChanged() {
