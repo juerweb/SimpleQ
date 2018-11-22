@@ -189,6 +189,15 @@ namespace SimpleQ.PageModels.Services
             //simulationService.SetAnswerOfQuestion(question);
         }
 
+        public void RemoveQuestion(int id)
+        {
+            List<SurveyModel> surveys = this.Questions.Where(q => q.SurveyId == id).ToList();
+            if (surveys.Count > 0)
+            {
+                RemoveQuestion(surveys[0]);
+            }
+        }
+
         /// <summary>
         /// This method add a new question and checks if the catName of the question already exists.
         /// </summary>
@@ -225,6 +234,7 @@ namespace SimpleQ.PageModels.Services
                     App.MainMasterPageModel.AddCategorie(question.CatName);
                 }
 
+                this.SetCategorieFilter(AppResources.AllCategories);
                 await BlobCache.LocalMachine.Flush();
             }
             else

@@ -311,19 +311,40 @@ namespace SimpleQ
         {
             Debug.WriteLine("NO: Notification Opened in App.xaml.cs ...", "Info");
             Dictionary<String, object> additionalData = result.notification.payload.additionalData;
-            Debug.WriteLine(additionalData["svyId"]);
+            Debug.WriteLine(additionalData["SvyId"]);
 
             IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
-            Debug.WriteLine(int.Parse(additionalData["svyId"].ToString()));
+            Debug.WriteLine(int.Parse(additionalData["SvyId"].ToString()));
             try
             {
-                SurveyModel surveyModel = await webAPIService.GetSurveyData(int.Parse(additionalData["svyId"].ToString()));
-
                 IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
-                Debug.WriteLine("T5");
-                questionService.AddQuestion(surveyModel);
+                if (additionalData.ContainsKey("Cancel") && Convert.ToBoolean(additionalData["Cancel"].ToString()))
+                {
+                    //Cancel Survey
+                    Debug.WriteLine("Cancel Survey with id: " + additionalData["SvyId"].ToString(), "Info");
+                    questionService.RemoveQuestion(int.Parse(additionalData["SvyId"].ToString()));
+                }
+                else
+                {
+                    SurveyModel surveyModel = await webAPIService.GetSurveyData(int.Parse(additionalData["SvyId"].ToString()));
 
-                OpenQuestionPage(surveyModel);
+                    if (surveyModel.EndDate >= DateTime.Now)
+                    {
+                        Debug.WriteLine("T5");
+                        questionService.AddQuestion(surveyModel);
+
+                        OpenQuestionPage(surveyModel);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Survey with the id: " + surveyModel.SurveyId + " is in the past with enddate: " + surveyModel.EndDate, "Error");
+                        IDialogService dialogService = FreshIOC.Container.Resolve<IDialogService>();
+
+                        dialogService.ShowErrorDialog(102);
+                    }
+
+                }
+
             }
             catch (HttpRequestException e)
             {

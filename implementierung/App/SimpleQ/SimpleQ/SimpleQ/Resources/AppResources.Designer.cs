@@ -295,6 +295,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die Frage kann nicht beantwortet werden, da sie bereits abgelaufen ist. ähnelt.
+        /// </summary>
+        internal static string Error102 {
+            get {
+                return ResourceManager.GetString("Error102", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode. ähnelt.
         /// </summary>
         internal static string Error201 {

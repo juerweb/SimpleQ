@@ -318,4 +318,7 @@
   <data name="Error205" xml:space="preserve">
     <value>Dieser Registrierungscode wird bereits in der App verwendet! Benützten Sie bitte einen anderen.</value>
   </data>
+  <data name="Error102" xml:space="preserve">
+    <value>Die Frage kann nicht beantwortet werden, da sie bereits abgelaufen ist.</value>
+  </data>
 </root>
