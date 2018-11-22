@@ -315,4 +315,7 @@
   <data name="DebugMode" xml:space="preserve">
     <value>Debug-Modus?</value>
   </data>
+  <data name="Error205" xml:space="preserve">
+    <value>Dieser Registrierungscode wird bereits in der App verwendet! Benützten Sie bitte einen anderen.</value>
+  </data>
 </root>

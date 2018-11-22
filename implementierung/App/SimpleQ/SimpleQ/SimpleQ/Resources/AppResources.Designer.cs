@@ -331,6 +331,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dieser Registrierungscode wird bereits in der App verwendet! Benützten Sie bitte einen anderen. ähnelt.
+        /// </summary>
+        internal static string Error205 {
+            get {
+                return ResourceManager.GetString("Error205", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Erweiterte Hilfe ähnelt.
         /// </summary>
         internal static string ExtendedHelp {

@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace SimpleQ.PageModels
 {
@@ -56,16 +57,30 @@ namespace SimpleQ.PageModels
                     RegistrationDataModel data = new RegistrationDataModel();
                     try
                     {
-                        if ((Boolean)objects[1])
+                        if (!Application.Current.Properties.ContainsKey("registrations"))
                         {
+                            Debug.WriteLine("New Registration...", "Info");
                             data.RegistrationData = await this.webAPIService.Register(code, Application.Current.Properties["userID"].ToString());
                             data.IsRegister = true;
                         }
                         else
                         {
+                            Debug.WriteLine("New Join Department...", "Info");
                             List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
-                            data.RegistrationData = await this.webAPIService.JoinDepartment(code, tmp[0].RegistrationData.PersId);
-                            data.IsRegister = false;
+                            if (tmp.Count(registration => registration.RegistrationData.CustCode + registration.RegistrationData.DepId == code) <= 0)
+                            {
+                                data.RegistrationData = await this.webAPIService.JoinDepartment(code, tmp[0].RegistrationData.PersId);
+                                data.IsRegister = false;
+                            }
+                            else
+                            {
+                                Debug.WriteLine("Code is not valid...", "Info");
+                                this.IsRunning = false;
+
+                                this.dialogService.ShowErrorDialog(205);
+                                await CoreMethods.PopToRoot(false);
+                                return;
+                            }
                         }
                     }
                     catch (System.Net.Http.HttpRequestException e)
