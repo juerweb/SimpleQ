@@ -164,31 +164,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Resources.de.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.de.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\GroupAdministrationController.cs" />
-    <Compile Include="Controllers\MobileController.cs" />
-    <Compile Include="Controllers\SettingsController.cs" />
-    <Compile Include="Controllers\SupportController.cs" />
-    <Compile Include="Controllers\SurveyCreationController.cs" />
-    <Compile Include="Controllers\SurveyResultsController.cs" />
-    <Compile Include="Extensions\Literal.cs" />
-    <Compile Include="Extensions\Http.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Models\AnswerOption.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
@@ -210,12 +185,10 @@
     <Compile Include="Models\DsgvoConstraint.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums\BaseQuestionTypes.cs" />
     <Compile Include="Models\FaqEntry.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Mobile\RegistrationData.cs" />
-    <Compile Include="Models\Mobile\SurveyData.cs" />
-    <Compile Include="Models\Mobile\SurveyVote.cs" />
     <Compile Include="Models\PaymentMethod.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
@@ -246,6 +219,37 @@
     <Compile Include="Models\SurveyCategory.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Vote.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.de.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\GroupAdministrationController.cs" />
+    <Compile Include="Controllers\MobileController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SupportController.cs" />
+    <Compile Include="Controllers\SurveyCreationController.cs" />
+    <Compile Include="Controllers\SurveyResultsController.cs" />
+    <Compile Include="Extensions\Literal.cs" />
+    <Compile Include="Extensions\Http.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Mobile\RegistrationData.cs" />
+    <Compile Include="Models\Mobile\SurveyData.cs" />
+    <Compile Include="Models\Mobile\SurveyVote.cs" />
     <Compile Include="Models\ViewModels\GroupAdministrationModel.cs" />
     <Compile Include="Models\ViewModels\MultiResultModel.cs" />
     <Compile Include="Models\ViewModels\SettingsModel.cs" />
@@ -253,9 +257,6 @@
     <Compile Include="Models\ViewModels\SupportModel.cs" />
     <Compile Include="Models\ViewModels\SurveyCreationModel.cs" />
     <Compile Include="Models\ViewModels\SurveyResultsModel.cs" />
-    <Compile Include="Models\Vote.cs">
-      <DependentUpon>SimpleQModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

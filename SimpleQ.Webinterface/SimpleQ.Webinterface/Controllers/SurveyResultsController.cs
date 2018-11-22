@@ -1,6 +1,7 @@
 ﻿using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
+using SimpleQ.Webinterface.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,6 @@ namespace SimpleQ.Webinterface.Controllers
 {
     public class SurveyResultsController : Controller
     {
-        private const int OPEN = 4;
-
         [HttpGet]
         public ActionResult Index()
         {
@@ -27,7 +26,8 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
                     Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList(),
-                    AnswerTypes = cust.AnswerTypes.ToList()
+                    AnswerTypes = db.Surveys.Where(s => s.CustCode == CustCode).Select(s => s.AnswerType)
+                        .Where(a => a.BaseId != (int)BaseQuestionTypes.OpenQuestion).Distinct().ToList()
                 };
 
                 return View(viewName: "SurveyResults", model: model);
@@ -46,7 +46,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 if (survey == null)
                     return Http.NotFound("Survey not found.");
-                
+
 
                 var model = new SingleResultModel
                 {
@@ -68,9 +68,9 @@ namespace SimpleQ.Webinterface.Controllers
                         .Select(d => d.DepName)
                         .ToList(),
 
-                    Votes = (survey.TypeId != OPEN) ? SelectVotesFromSurvey(db, survey) : null,
+                    Votes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? SelectVotesFromSurvey(db, survey) : null,
 
-                    FreeTextVotes = (survey.TypeId == OPEN) ? db.Votes
+                    FreeTextVotes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? db.Votes
                         .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
                         .Select(v => v.VoteText)
                         .ToList()
@@ -112,8 +112,8 @@ namespace SimpleQ.Webinterface.Controllers
                     return Http.NotFound("Category not found.");
 
                 string typeName = db.AnswerTypes
-                            .Where(a => a.TypeId == req.TypeId)
-                            .Select(a => a.TypeDesc) // GLOBALIZATION!
+                            .Where(a => a.TypeId == req.TypeId && a.BaseId != (int)BaseQuestionTypes.OpenQuestion)
+                            .Select(a => a.TypeDesc)
                             .FirstOrDefault();
                 if (typeName == null)
                     return Http.Conflict("Answer type does not exist.");
@@ -163,20 +163,33 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
-        private Dictionary<string, int> SelectVotesFromSurvey(SimpleQDBEntities db, Survey survey)
+        private List<KeyValuePair<string, int>> SelectVotesFromSurvey(SimpleQDBEntities db, Survey survey)
         {
-            return db.Votes
-                .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
-                .SelectMany(v => v.AnswerOptions)
-                .GroupBy(a => a.AnsText)
-                .ToDictionary(g => g.Key, g => g.Count())
-                .Concat(db.AnswerOptions.Where(a => a.SvyId == survey.SvyId && a.Votes.Count == 0).AsEnumerable().GroupBy(a => a.AnsText).Select(g => new KeyValuePair<string, int>(g.Key, 0)))
-                .ToDictionary(kv => kv.Key, kv => kv.Value);
+            var list = new List<KeyValuePair<string, int>>();
+            var query = survey.AnswerOptions.OrderBy(a => a.AnsId).ToList();
+
+            if (survey.AnswerType.BaseId == (int)BaseQuestionTypes.LikertScaleQuestion)
+            {
+                var ans = query.OrderByDescending(a => a.AnsId).Take(2).Last();
+                query.Remove(ans);
+                query.Insert(0, ans);
+            }
+            else
+            {
+                query = query.OrderByDescending(a => a.Votes.Count()).ToList();
+            }
+
+            query.ForEach(a =>
+            {
+                list.Add(new KeyValuePair<string, int>(a.AnsText, a.Votes.Count()));
+            });
+
+            return list;
         }
 
         private Dictionary<string, List<int>> SelectVotesFromSurveyGrouped(SimpleQDBEntities db, IQueryable<Survey> selectedSurveys)
         {
-            Dictionary<string, List<int>> dict = new Dictionary<string, List<int>>();
+            var dict = new Dictionary<string, List<int>>();
 
             selectedSurveys
                 .SelectMany(s => s.AnswerOptions)

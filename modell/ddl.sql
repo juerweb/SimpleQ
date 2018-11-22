@@ -132,7 +132,7 @@ go
 -- NICHT KUNDENSPEZIFISCH
 create table PredefinedAnswerOption
 (
-    PreAnsId int primary key,
+    PreAnsId int primary key identity,
     PreAnsText varchar(max) not null,
     TypeId int not null references AnswerType
 );
@@ -438,7 +438,6 @@ begin
 end
 go
 
-
 -- Zum Löschen einer bestimmten Umfrage und allen zugehörigen Daten
 drop procedure sp_DeleteSurvey;
 go
@@ -533,32 +532,62 @@ insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque 
 insert into BaseQuestionType values (1, 'OpenQuestion');
 insert into BaseQuestionType values (2, 'DichotomousQuestion');
 insert into BaseQuestionType values (3, 'PolytomousQuestion');
+insert into BaseQuestionType values (4, 'LikertScaleQuestion')
+insert into BaseQuestionType values (5, 'FixedAnswerQuestion');
 
-insert into AnswerType values (1, 'YesNo', 2);
-insert into AnswerType values (2, 'YesNoDontKnow', 3);
-insert into AnswerType values (3, 'TrafficLight', 3);
+insert into AnswerType values (1, 'YesNo', 5);
+insert into AnswerType values (2, 'YesNoDontKnow', 5);
+insert into AnswerType values (3, 'TrafficLight', 5);
 insert into AnswerType values (4, 'Open', 1);
 insert into AnswerType values (5, 'Dichotomous', 2);
 insert into AnswerType values (6, 'PolytomousUnorderedSingle', 3);
 insert into AnswerType values (7, 'PolytomousUnorderedMultiple', 3);
 insert into AnswerType values (8, 'PolytomousOrderedSingle', 3);
 insert into AnswerType values (9, 'PolytomousOrderedMultiple', 3);
-insert into AnswerType values (10, 'LikertSkale3', 3);
-insert into AnswerType values (11, 'LikertSkale4', 3);
-insert into AnswerType values (12, 'LikertSkale5', 3);
-insert into AnswerType values (13, 'LikertSkale6', 3);
-insert into AnswerType values (14, 'LikertSkale7', 3);
-insert into AnswerType values (15, 'LikertSkale8', 3);
-insert into AnswerType values (16, 'LikertSkale9', 3);
+insert into AnswerType values (10, 'LikertSkale3', 4);
+insert into AnswerType values (11, 'LikertSkale4', 4);
+insert into AnswerType values (12, 'LikertSkale5', 4);
+insert into AnswerType values (13, 'LikertSkale6', 4);
+insert into AnswerType values (14, 'LikertSkale7', 4);
+insert into AnswerType values (15, 'LikertSkale8', 4);
+insert into AnswerType values (16, 'LikertSkale9', 4);
 
-insert into PredefinedAnswerOption values (1, 'Yes', 1);
-insert into PredefinedAnswerOption values (2, 'No', 1);
-insert into PredefinedAnswerOption values (3, 'Yes', 2);
-insert into PredefinedAnswerOption values (4, 'No', 2);
-insert into PredefinedAnswerOption values (5, 'DontKnow', 2);
-insert into PredefinedAnswerOption values (6, 'Green', 3);
-insert into PredefinedAnswerOption values (7, 'Yellow', 3);
-insert into PredefinedAnswerOption values (8, 'Red', 3);
-insert into PredefinedAnswerOption values (9, 'FreeText', 4);
+insert into PredefinedAnswerOption values ('Yes', 1);
+insert into PredefinedAnswerOption values ('No', 1);
+insert into PredefinedAnswerOption values ('Yes', 2);
+insert into PredefinedAnswerOption values ('No', 2);
+insert into PredefinedAnswerOption values ('DontKnow', 2);
+insert into PredefinedAnswerOption values ('Green', 3);
+insert into PredefinedAnswerOption values ('Yellow', 3);
+insert into PredefinedAnswerOption values ('Red', 3);
+insert into PredefinedAnswerOption values ('FreeText', 4);
+insert into PredefinedAnswerOption values ('2', 10);
+insert into PredefinedAnswerOption values ('2', 11);
+insert into PredefinedAnswerOption values ('3', 11);
+insert into PredefinedAnswerOption values ('2', 12);
+insert into PredefinedAnswerOption values ('3', 12);
+insert into PredefinedAnswerOption values ('4', 12);
+insert into PredefinedAnswerOption values ('2', 13);
+insert into PredefinedAnswerOption values ('3', 13);
+insert into PredefinedAnswerOption values ('4', 13);
+insert into PredefinedAnswerOption values ('5', 13);
+insert into PredefinedAnswerOption values ('2', 14);
+insert into PredefinedAnswerOption values ('3', 14);
+insert into PredefinedAnswerOption values ('4', 14);
+insert into PredefinedAnswerOption values ('5', 14);
+insert into PredefinedAnswerOption values ('6', 14);
+insert into PredefinedAnswerOption values ('2', 15);
+insert into PredefinedAnswerOption values ('3', 15);
+insert into PredefinedAnswerOption values ('4', 15);
+insert into PredefinedAnswerOption values ('5', 15);
+insert into PredefinedAnswerOption values ('6', 15);
+insert into PredefinedAnswerOption values ('7', 15);
+insert into PredefinedAnswerOption values ('2', 16);
+insert into PredefinedAnswerOption values ('3', 16);
+insert into PredefinedAnswerOption values ('4', 16);
+insert into PredefinedAnswerOption values ('5', 16);
+insert into PredefinedAnswerOption values ('6', 16);
+insert into PredefinedAnswerOption values ('7', 16);
+insert into PredefinedAnswerOption values ('8', 16);
 commit;
 go

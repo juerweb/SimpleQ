@@ -6,8 +6,8 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using SimpleQ.Webinterface.Models;
-using SimpleQ.Webinterface.Models.Mobile;
 using SimpleQ.Webinterface.Models.ViewModels;
+using SimpleQ.Webinterface.Models.Enums;
 using SimpleQ.Webinterface.Extensions;
 using System.Net.Http;
 using Newtonsoft.Json;
@@ -16,33 +16,6 @@ namespace SimpleQ.Webinterface.Controllers
 {
     public class SurveyCreationController : Controller
     {
-        private const int YES_NO = 1;
-        private const int YES_NO_DONTKNOW = 2;
-        private const int TRAFFIC_LIGHT = 3;
-        private const int OPEN = 4;
-
-        private const int LIKERT_SCALE_3 = 10;
-        private const int LIKERT_SCALE_4 = 11;
-        private const int LIKERT_SCALE_5 = 12;
-        private const int LIKERT_SCALE_6 = 13;
-        private const int LIKERT_SCALE_7 = 14;
-        private const int LIKERT_SCALE_8 = 15;
-        private const int LIKERT_SCALE_9 = 16;
-
-        private static readonly int[] predefined = { YES_NO, YES_NO_DONTKNOW, TRAFFIC_LIGHT, OPEN };
-
-        // <TypeId, intermediate values>
-        private static readonly Dictionary<int, int> likertScales = new Dictionary<int, int>
-        {
-            { LIKERT_SCALE_3,  1},
-            { LIKERT_SCALE_4,  2},
-            { LIKERT_SCALE_5,  3},
-            { LIKERT_SCALE_6,  4},
-            { LIKERT_SCALE_7,  5},
-            { LIKERT_SCALE_8,  6},
-            { LIKERT_SCALE_9,  7},
-        };
-
         private static readonly HashSet<int> queuedSurveys = new HashSet<int>();
 
         [HttpGet]
@@ -102,6 +75,19 @@ namespace SimpleQ.Webinterface.Controllers
                 if (db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefault() == null)
                     return Http.Conflict("AnswerType does not exist.");
 
+                var baseId = db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefault().BaseId;
+                if (baseId != (int)BaseQuestionTypes.FixedAnswerQuestion && baseId != (int)BaseQuestionTypes.OpenQuestion
+                    && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() == 0))
+                    return Http.Conflict("There must be submitted some AnswerOptions.");
+
+                if (baseId == (int)BaseQuestionTypes.DichotomousQuestion 
+                    && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2))
+                    return Http.Conflict("There must be submitted exactly two AnswerOptions.");
+
+                if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion
+                    && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2))
+                    return Http.Conflict("There must be submitted exactly two AnswerOptions.");
+
                 foreach (var depId in req.SelectedDepartments)
                 {
                     if (db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault() == null)
@@ -123,19 +109,7 @@ namespace SimpleQ.Webinterface.Controllers
                 });
                 db.SaveChanges();
 
-                if (likertScales.ContainsKey(req.Survey.TypeId))
-                {
-                    if (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2)
-                        return Http.Conflict("Likert scales must have exactly two answer options.");
-
-                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[0] });
-
-                    for (int i = 0; i < likertScales[req.Survey.TypeId]; i++)
-                        db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = $"{i + 2}" });
-
-                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[1] });
-                }
-                else if (!predefined.Contains(req.Survey.TypeId))
+                if (baseId != (int)BaseQuestionTypes.FixedAnswerQuestion && baseId != (int)BaseQuestionTypes.OpenQuestion)
                 {
                     req.TextAnswerOptions?.ForEach(text =>
                     {
