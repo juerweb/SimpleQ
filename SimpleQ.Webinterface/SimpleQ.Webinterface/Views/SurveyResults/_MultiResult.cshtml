@@ -9,10 +9,10 @@
             <div class="border border-dark">
                 <ul class="list-group groups-ul pl-2" id="answers">
                     @{ 
-                        foreach (string key in Model.Votes.Keys)
+                        foreach (var kv in Model.Votes)
                         {
                             <li>
-                                <input type="checkbox" checked="checked" onclick="answerChecked()"><span>@key</span>
+                                <input type="checkbox" checked="checked" onclick="answerChecked()"><span>@kv.Key</span>
                             </li>
                         }
                     }

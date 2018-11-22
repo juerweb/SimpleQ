@@ -39,7 +39,6 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                // EXCEPTION HANDLING (NO SURVEY FOUND)
                 Survey survey = db.Surveys
                     .Where(s => s.SvyId == svyId && s.CustCode == CustCode)
                     .FirstOrDefault();
@@ -59,7 +58,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     TypeName = db.AnswerTypes
                         .Where(a => a.TypeId == survey.TypeId)
-                        .Select(a => a.TypeDesc) // GLOBALIZATION!
+                        .Select(a => a.TypeDesc)
                         .FirstOrDefault(),
 
                     DepartmentNames = db.Surveys
@@ -68,7 +67,7 @@ namespace SimpleQ.Webinterface.Controllers
                         .Select(d => d.DepName)
                         .ToList(),
 
-                    Votes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? SelectVotesFromSurvey(db, survey) : null,
+                    Votes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? SelectVotesFromSurvey(survey) : null,
 
                     FreeTextVotes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? db.Votes
                         .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
@@ -111,11 +110,10 @@ namespace SimpleQ.Webinterface.Controllers
                 if (catName == null)
                     return Http.NotFound("Category not found.");
 
-                string typeName = db.AnswerTypes
+                var type = db.AnswerTypes
                             .Where(a => a.TypeId == req.TypeId && a.BaseId != (int)BaseQuestionTypes.OpenQuestion)
-                            .Select(a => a.TypeDesc)
                             .FirstOrDefault();
-                if (typeName == null)
+                if (type == null)
                     return Http.Conflict("Answer type does not exist.");
 
 
@@ -126,7 +124,7 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         CatName = catName,
 
-                        TypeName = typeName,
+                        TypeName = type.TypeDesc,
 
                         AvgAmount = 0,
 
@@ -134,7 +132,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                         SurveyDates = new List<DateTime>(),
 
-                        Votes = new Dictionary<string, List<int>>()
+                        Votes = new List<KeyValuePair<string, List<int>>>()
                     };
                 }
                 else
@@ -143,7 +141,7 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         CatName = catName,
 
-                        TypeName = typeName,
+                        TypeName = type.TypeDesc,
 
                         AvgAmount = (selectedSurveys.Sum(s => s.Amount) / (double)selectedSurveys.Count()),
 
@@ -155,7 +153,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                         SurveyDates = selectedSurveys.Select(s => s.StartDate).ToList(),
 
-                        Votes = SelectVotesFromSurveyGrouped(db, selectedSurveys)
+                        Votes = SelectVotesFromSurveyGrouped(selectedSurveys, type.BaseId)
                     };
                 }
 
@@ -163,16 +161,22 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
-        private List<KeyValuePair<string, int>> SelectVotesFromSurvey(SimpleQDBEntities db, Survey survey)
+        private List<KeyValuePair<string, int>> SelectVotesFromSurvey(Survey survey)
         {
             var list = new List<KeyValuePair<string, int>>();
-            var query = survey.AnswerOptions.OrderBy(a => a.AnsId).ToList();
+            var query = survey.AnswerOptions.ToList();
 
             if (survey.AnswerType.BaseId == (int)BaseQuestionTypes.LikertScaleQuestion)
             {
-                var ans = query.OrderByDescending(a => a.AnsId).Take(2).Last();
-                query.Remove(ans);
-                query.Insert(0, ans);
+                query = query.OrderBy(a => a.AnsText).ToList();
+
+                var first = query.Where(a => a.FirstPosition == true).First();
+                query.Remove(first);
+                query.Insert(0, first);
+
+                var last = query.Where(a => a.FirstPosition == false).First();
+                query.Remove(last);
+                query.Add(last);
             }
             else
             {
@@ -187,16 +191,28 @@ namespace SimpleQ.Webinterface.Controllers
             return list;
         }
 
-        private Dictionary<string, List<int>> SelectVotesFromSurveyGrouped(SimpleQDBEntities db, IQueryable<Survey> selectedSurveys)
+        private List<KeyValuePair<string, List<int>>> SelectVotesFromSurveyGrouped(IQueryable<Survey> selectedSurveys, int baseId)
         {
-            var dict = new Dictionary<string, List<int>>();
+            var list = new List<KeyValuePair<string, List<int>>>();
+            var query = selectedSurveys.SelectMany(s => s.AnswerOptions).ToList();
 
-            selectedSurveys
-                .SelectMany(s => s.AnswerOptions)
-                .Select(a => a.AnsText)
+            if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion)
+            {
+                query = query.OrderBy(a => a.AnsText).ToList();
+
+                var first = query.Where(a => a.FirstPosition == true).ToList();
+                query.RemoveAll(a => a.FirstPosition == true);
+                query.InsertRange(0, first);
+
+                var last = query.Where(a => a.FirstPosition == false).ToList();
+                query.RemoveAll(a => a.FirstPosition == false);
+                query.AddRange(last);
+            }
+
+            query.Select(a => a.AnsText)
                 .Distinct()
                 .ToList()
-                .ForEach(t => dict.Add(t, new List<int>()));
+                .ForEach(t => list.Add(new KeyValuePair<string, List<int>>(t, new List<int>())));
 
             selectedSurveys.ToList()
                 .ForEach(s =>
@@ -205,11 +221,34 @@ namespace SimpleQ.Webinterface.Controllers
                         .ToList()
                         .ForEach(a =>
                         {
-                            dict[a.AnsText].Add(a.Votes.Count());
+                            list.Where(kv => kv.Key == a.AnsText).First().Value.Add(a.Votes.Count());
                         });
                 });
 
-            return dict;
+            return list;
+
+
+            //var dict = new Dictionary<string, List<int>>();
+
+            //selectedSurveys
+            //    .SelectMany(s => s.AnswerOptions)
+            //    .Select(a => a.AnsText)
+            //    .Distinct()
+            //    .ToList()
+            //    .ForEach(t => dict.Add(t, new List<int>()));
+
+            //selectedSurveys.ToList()
+            //    .ForEach(s =>
+            //    {
+            //        s.AnswerOptions
+            //            .ToList()
+            //            .ForEach(a =>
+            //            {
+            //                dict[a.AnsText].Add(a.Votes.Count());
+            //            });
+            //    });
+
+            //return dict;
         }
 
         private string CustCode

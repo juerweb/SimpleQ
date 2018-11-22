@@ -187,7 +187,8 @@ create table AnswerOption
 (
 	AnsId int identity primary key,
     SvyId int not null references Survey,
-	AnsText varchar(max) not null
+	AnsText varchar(max) not null,
+	FirstPosition bit null default null -- 1: ganz vorne, 0: ganz hinten, NULL: egal
 );
 go
 

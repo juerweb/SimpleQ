@@ -109,9 +109,14 @@ namespace SimpleQ.Webinterface.Controllers
                 });
                 db.SaveChanges();
 
-                if (baseId != (int)BaseQuestionTypes.FixedAnswerQuestion && baseId != (int)BaseQuestionTypes.OpenQuestion)
+                if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion)
                 {
-                    req.TextAnswerOptions?.ForEach(text =>
+                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[0], FirstPosition = true });
+                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[1], FirstPosition = false });
+                }
+                else if (baseId != (int)BaseQuestionTypes.FixedAnswerQuestion && baseId != (int)BaseQuestionTypes.OpenQuestion)
+                {
+                    req.TextAnswerOptions.ForEach(text =>
                     {
                         db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = text });
                     });

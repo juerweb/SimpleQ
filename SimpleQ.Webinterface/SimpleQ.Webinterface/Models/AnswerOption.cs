@@ -23,6 +23,7 @@ namespace SimpleQ.Webinterface.Models
         public int AnsId { get; set; }
         public int SvyId { get; set; }
         public string AnsText { get; set; }
+        public Nullable<bool> FirstPosition { get; set; }
     
         [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
         [Newtonsoft.Json.JsonIgnore]

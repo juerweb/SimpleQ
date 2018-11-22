@@ -42,12 +42,12 @@ insert into Asking values (5, 1, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 2 nötig (YesNo) => AnsIds 3, 4
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 3 nötig (YesNoDontKnow) => AnsIds 5, 6, 7
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 5 nötig (Open) => AnsId 8
-insert into AnswerOption values (4, 'Nix'); -- AnsId 9
-insert into AnswerOption values (4, 'Siebzehn');  -- AnsId 10
-insert into AnswerOption values (4, 'Ja, aber in gruen'); -- AnsId 11
-insert into AnswerOption values (4, 'No me gusta mucho');  -- AnsId 12
-insert into AnswerOption values (4, 'No, pero en verde');  -- AnsId 13
-insert into AnswerOption values (4, 'Es el mejor');  -- AnsId 14
+insert into AnswerOption values (4, 'Nix', null); -- AnsId 9
+insert into AnswerOption values (4, 'Siebzehn', null);  -- AnsId 10
+insert into AnswerOption values (4, 'Ja, aber in gruen', null); -- AnsId 11
+insert into AnswerOption values (4, 'No me gusta mucho', null);  -- AnsId 12
+insert into AnswerOption values (4, 'No, pero en verde', null);  -- AnsId 13
+insert into AnswerOption values (4, 'Es el mejor', null);  -- AnsId 14
 
 -- +++ Beantwortungen über Handy +++
 insert into Vote values (null); -- VoteId 1
