@@ -49,7 +49,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                int minAllowed = db.DsgvoConstraints.Where(d => d.ConstrName == "MIN_GROUP_SIZE").FirstOrDefault().ConstrValue;
+                int minAllowed = db.DataConstraints.Where(c => c.ConstrName == "MIN_GROUP_SIZE").FirstOrDefault().ConstrValue;
                 if (size < minAllowed)
                     return Http.Conflict($"Size less than allowed ({minAllowed}).");
 
@@ -85,7 +85,7 @@ namespace SimpleQ.Webinterface.Controllers
                 };
                 db.SurveyCategories.Add(cat);
                 db.SaveChanges();
-
+                
                 return Content($"{cat.CatId}", "text/plain");
             }
         }

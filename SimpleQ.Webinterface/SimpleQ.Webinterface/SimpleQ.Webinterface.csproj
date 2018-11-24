@@ -179,10 +179,10 @@
     <Compile Include="Models\Customer.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Department.cs">
+    <Compile Include="Models\DataConstraint.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DsgvoConstraint.cs">
+    <Compile Include="Models\Department.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Enums\BaseQuestionTypes.cs" />
@@ -213,6 +213,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SimpleQModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\SimpleQModel.Functions.Context.cs" />
     <Compile Include="Models\Survey.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>

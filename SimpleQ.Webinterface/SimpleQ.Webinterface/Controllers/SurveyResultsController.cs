@@ -226,29 +226,6 @@ namespace SimpleQ.Webinterface.Controllers
                 });
 
             return list;
-
-
-            //var dict = new Dictionary<string, List<int>>();
-
-            //selectedSurveys
-            //    .SelectMany(s => s.AnswerOptions)
-            //    .Select(a => a.AnsText)
-            //    .Distinct()
-            //    .ToList()
-            //    .ForEach(t => dict.Add(t, new List<int>()));
-
-            //selectedSurveys.ToList()
-            //    .ForEach(s =>
-            //    {
-            //        s.AnswerOptions
-            //            .ToList()
-            //            .ForEach(a =>
-            //            {
-            //                dict[a.AnsText].Add(a.Votes.Count());
-            //            });
-            //    });
-
-            //return dict;
         }
 
         private string CustCode

@@ -12,7 +12,7 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DsgvoConstraint
+    public partial class DataConstraint
     {
         public string ConstrName { get; set; }
         public int ConstrValue { get; set; }

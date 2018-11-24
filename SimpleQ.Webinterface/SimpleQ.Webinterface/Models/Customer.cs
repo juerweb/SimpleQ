@@ -28,15 +28,16 @@ namespace SimpleQ.Webinterface.Models
         public string CustEmail { get; set; }
         public string CustPwdTmp { get; set; }
         public byte[] CustPwdHash { get; set; }
+        public Nullable<System.DateTime> RegistrationDate { get; set; }
         public string Street { get; set; }
         public string Plz { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public string LanguageCode { get; set; }
         public int DataStoragePeriod { get; set; }
+        public int AccountingPeriod { get; set; }
         public int PaymentMethodId { get; set; }
         public int MinGroupSize { get; set; }
-        public decimal PricePerClick { get; set; }
         public decimal CostBalance { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

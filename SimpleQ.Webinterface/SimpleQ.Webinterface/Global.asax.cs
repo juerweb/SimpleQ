@@ -1,7 +1,9 @@
 ﻿using SimpleQ.Webinterface.Extensions;
+using SimpleQ.Webinterface.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading;
 using System.Web;
 using System.Web.Hosting;
@@ -53,7 +55,7 @@ namespace SimpleQ.Webinterface
                 {
                     // Sleep bis zur nächsten Mitternacht
                     Thread.Sleep((int)Literal.NextMidnight.TotalMilliseconds);
-                    using(var db = new Models.SimpleQDBEntities())
+                    using(var db = new SimpleQDBEntities())
                     {
                         // Alle heutigen Umfragen schedulen
                         db.Surveys.Where(s => s.StartDate.Date == DateTime.Today).ToList().ForEach(s =>
@@ -67,7 +69,7 @@ namespace SimpleQ.Webinterface
 
         private void RestoreQueuedSurveys()
         {
-            using (var db = new Models.SimpleQDBEntities())
+            using (var db = new SimpleQDBEntities())
             {
                 // Alle Umfragen welche bis zur nächsten Mitternacht (+ 1h Toleranz) starten schedulen
                 db.Surveys.Where(s => !s.Sent).ToList()
@@ -91,7 +93,7 @@ namespace SimpleQ.Webinterface
             {
                 // Sleep bis um 03:00 AM
                 Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
-                using (var db = new Models.SimpleQDBEntities())
+                using (var db = new SimpleQDBEntities())
                 {
                     db.sp_CheckExceededSurveyData();
                 }
@@ -108,11 +110,36 @@ namespace SimpleQ.Webinterface
 
             HostingEnvironment.QueueBackgroundWorkItem(ct =>
             {
-                TimeSpan untilDayOne = new DateTime(DateTime.Now.AddMonths(1).Year, DateTime.Now.AddMonths(1).Month, 1) - DateTime.Now;
-                Thread.Sleep(untilDayOne);
-                using (var db = new Models.SimpleQDBEntities())
+                // Sleep bis um 03:00 AM
+               //Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
+                using (var db = new SimpleQDBEntities())
                 {
-                    db.sp_CreateBills();
+                    var result = db.sp_CreateBills().ToList();
+                    foreach (int? billId in result)
+                    {
+                        try
+                        {
+                            Bill clinton = db.Bills.Where(b => b.BillId == billId).First();
+                            MailMessage msg = new MailMessage("payment@simpleq.at", clinton.Customer.CustEmail)
+                            {
+                                Subject = "SIMPLEQ BILL",
+                                Body = $"Bill: {clinton.BillPrice}"
+                            };
+                            SmtpClient client = new SmtpClient("smtp.1und1.de", 587)
+                            {
+                                Credentials = new System.Net.NetworkCredential("payment@simpleq.at", "123SimpleQ..."),
+                                EnableSsl = true
+                            };
+                            client.Send(msg);
+                            clinton.Sent = true;
+                            db.SaveChanges();
+                        }
+                        catch (Exception ex) when (ex is SmtpException || ex is SmtpFailedRecipientsException)
+                        {
+                            // Logging
+                            continue;
+                        }
+                    }
                 }
             });
         }

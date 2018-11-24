@@ -217,6 +217,15 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
+        [HttpGet]
+        public double LoadPricePerClick(int amount)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                return Convert.ToDouble(db.fn_CalcPricePerClick(amount));
+            }
+        }
+
 
         internal static void ScheduleSurvey(int svyId, TimeSpan timeout, string custCode)
         {

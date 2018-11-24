@@ -28,6 +28,7 @@ namespace SimpleQ.Webinterface.Models
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public int Amount { get; set; }
+        public Nullable<decimal> PricePerClick { get; set; }
         public int TypeId { get; set; }
         public bool Template { get; set; }
         public bool Sent { get; set; }
