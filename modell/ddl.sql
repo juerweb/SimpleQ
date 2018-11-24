@@ -5,7 +5,7 @@ set nocount on;
 go
 
 drop table FaqEntry;
-drop table DsgvoConstraint;
+drop table DataConstraint;
 drop table Chooses;
 drop table Vote;
 drop table AnswerOption;
@@ -42,15 +42,16 @@ create table Customer
 	CustEmail varchar(max) not null,
 	CustPwdTmp varchar(max) collate Latin1_General_CS_AS null,
 	CustPwdHash varbinary(max) null,
+	RegistrationDate date null,
 	Street varchar(max) not null,
 	Plz varchar(16) not null,
 	City varchar(max) not null,
 	Country varchar(max) not null,
 	LanguageCode char(3) not null,
 	DataStoragePeriod int not null check(DataStoragePeriod > 0), -- in Monaten
+	AccountingPeriod int not null check(AccountingPeriod in (1, 3, 6, 12)), -- in Monaten
 	PaymentMethodId int not null references PaymentMethod,
     MinGroupSize int not null,
-    PricePerClick money not null,
 	CostBalance money not null
 );
 go
@@ -63,6 +64,7 @@ create table Bill --Clinton
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
 	BillPrice money not null,
 	BillDate datetime not null,
+	[Sent] bit not null,
 	Paid bit not null
 );
 go
@@ -132,7 +134,7 @@ go
 -- NICHT KUNDENSPEZIFISCH
 create table PredefinedAnswerOption
 (
-    PreAnsId int primary key,
+    PreAnsId int primary key identity,
     PreAnsText varchar(max) not null,
     TypeId int not null references AnswerType
 );
@@ -161,6 +163,7 @@ create table Survey
 	StartDate datetime not null,
 	EndDate datetime not null,
     Amount int not null,
+	PricePerClick money null,
 	TypeId int not null references AnswerType,
 	Template bit not null default 0,
 	[Sent] bit not null default 0,
@@ -187,7 +190,8 @@ create table AnswerOption
 (
 	AnsId int identity primary key,
     SvyId int not null references Survey,
-	AnsText varchar(max) not null
+	AnsText varchar(max) not null,
+	FirstPosition bit null default null -- 1: ganz vorne, 0: ganz hinten, NULL: egal
 );
 go
 
@@ -213,7 +217,7 @@ go
 
 -- DSGVO-spezifische Bestimmung
 -- NICHT KUNDENSPEZIFISCH
-create table DsgvoConstraint
+create table DataConstraint
 (
 	ConstrName varchar(512) primary key,
 	ConstrValue int not null,
@@ -245,6 +249,9 @@ begin
 
 	while(@@FETCH_STATUS = 0)
 	begin
+	    update Customer set RegistrationDate = getdate()
+		where CustCode = @CustCode;
+
 		if(@hash is not null)
 		begin
 			update Customer set CustPwdHash = @hash, CustPwdTmp = null
@@ -300,19 +307,22 @@ create trigger tr_SurveyIns
 on Survey
 after insert as
 begin
-    declare @svyId int, @typeId int;
-    declare c cursor local for select SvyId, TypeId from inserted;
+    declare @svyId int, @typeId int, @amount int;
+    declare c cursor local for select SvyId, TypeId, Amount from inserted;
 
     open c;
-    fetch c into @svyId, @typeId;
+    fetch c into @svyId, @typeId, @amount;
 
     while(@@FETCH_STATUS = 0)
     begin
+		update Survey set PricePerClick = dbo.fn_CalcPricePerClick(@amount)
+		where SvyId = @svyId;
+
         insert into AnswerOption (SvyId, AnsText) select @svyId, PreAnsText
                                                   from PredefinedAnswerOption
                                                   where TypeId = @typeId;
 
-        fetch c into @svyId, @typeId;
+        fetch c into @svyId, @typeId, @amount;
     end
     
     close c;
@@ -410,11 +420,10 @@ begin
 	else
 	begin
 		declare @custCode char(6), @pricePerClick money;
-		declare c2 cursor local for select c.CustCode, PricePerClick
+		declare c2 cursor local for select s.CustCode, PricePerClick
 									from inserted i
 									join AnswerOption a on i.AnsId = a.AnsId
 									join Survey s on a.SvyId = s.SvyId
-									join Customer c on s.CustCode = c.CustCode
 									where i.VoteId not in (select VoteId from (select * from Chooses
 																			   except
 																			   select * from inserted) Chooses_before); -- nur für neue VoteIds
@@ -437,7 +446,6 @@ begin
 	end
 end
 go
-
 
 -- Zum Löschen einer bestimmten Umfrage und allen zugehörigen Daten
 drop procedure sp_DeleteSurvey;
@@ -466,7 +474,10 @@ begin
 	declare c cursor local for select svyId 
                                from Survey s
 							   join Customer c on s.CustCode = c.CustCode
-							   where datediff(day, s.EndDate, getdate()) >= c.DataStoragePeriod * 30
+							   where iif(datepart(day, s.EndDate) > datepart(day, getdate()),
+										 datediff(month, s.EndDate, getdate()) - 1,
+										 datediff(month, s.EndDate, getdate())
+										) >= c.DataStoragePeriod
 							   and Template = 0
 							   and [Sent] = 1;
 	
@@ -497,8 +508,14 @@ create procedure sp_CreateBills
 as
 begin
 	declare @custCode char(6), @costBalance money;
-	declare c cursor local for select CustCode, CostBalance
-							   from Customer
+	declare @table table (BillId int);
+	declare c cursor local for select c.CustCode, CostBalance
+							   from Customer c
+							   where iif(datepart(day, (select coalesce(max(BillDate), c.RegistrationDate) from Bill b where b.CustCode = c.CustCode)) > datepart(day, getdate()),
+										 datediff(month, (select coalesce(max(BillDate), c.RegistrationDate) from Bill b where b.CustCode = c.CustCode), getdate()) - 1,
+										 datediff(month, (select coalesce(max(BillDate), c.RegistrationDate) from Bill b where b.CustCode = c.CustCode), getdate())
+										) >= c.AccountingPeriod
+							   and CostBalance > 0
 							   for update;
 
 	open c;
@@ -506,59 +523,118 @@ begin
 
 	while(@@FETCH_STATUS = 0)
 	begin
-		if(@costBalance > 0)
-		begin
-			insert into Bill values (@custCode, @costBalance, getdate(), 0);
+		insert into Bill values (@custCode, @costBalance, getdate(), 0, 0);
+		insert into @table values (IDENT_CURRENT('Bill'));
 
-			update Customer
-			set CostBalance = 0
-			where current of c;
-		end
+		update Customer
+		set CostBalance = 0
+		where current of c;
 
 		fetch c into @custCode, @costBalance;
 	end
 
 	close c;
 	deallocate c;
+
+	select BillId from @table;
 end
 go
 
+
+-- Zum Berechnen der Per-Click-Kosten bei einer bestimmten Befragtenanzahl
+drop function fn_CalcPricePerClick;
+go
+create function fn_CalcPricePerClick(@amount int)
+returns money
+as
+begin
+	declare @value money;
+
+	if (@amount between 0 and 20)			-- f(x) = 0.125 | 0 <= x <= 20
+		set @value = 0.125;
+	else if (@amount between 21 and 200)	-- f(x) = -0.000135789x + 0.12631578 | 21 <= x <= 200
+		set @value = -0.000135789 * @amount + 0.12631578;
+	else if (@amount between 201 and 5000)	-- f(x) = 0.107*e^(-0.000335*x) | 201 <= x <= 5000
+		set @value = 0.107 * exp(-0.000335 * @amount);
+	else if (@amount > 5000)				-- f(x) = 0.02 | x > 5000
+		set @value = 0.02;
+	else									-- f(x) = -1 | x < 0
+		set @value = -1;
+
+	return @value;
+end
+go
+
+
+
 -- Fixe inserts (für alle gleich!)
 begin transaction;
-insert into DsgvoConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
-insert into PaymentMethod values (1, 'SEPA'); -- Nur Testwert
+insert into DataConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
+
 insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.'); -- Nur Testwert
 insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque tú eres un culo muy grande.'); -- Nur Testwert
+
+insert into PaymentMethod values (1, 'OnAccount');
 
 insert into BaseQuestionType values (1, 'OpenQuestion');
 insert into BaseQuestionType values (2, 'DichotomousQuestion');
 insert into BaseQuestionType values (3, 'PolytomousQuestion');
+insert into BaseQuestionType values (4, 'LikertScaleQuestion')
+insert into BaseQuestionType values (5, 'FixedAnswerQuestion');
 
-insert into AnswerType values (1, 'YesNo', 2);
-insert into AnswerType values (2, 'YesNoDontKnow', 3);
-insert into AnswerType values (3, 'TrafficLight', 3);
+insert into AnswerType values (1, 'YesNo', 5);
+insert into AnswerType values (2, 'YesNoDontKnow', 5);
+insert into AnswerType values (3, 'TrafficLight', 5);
 insert into AnswerType values (4, 'Open', 1);
 insert into AnswerType values (5, 'Dichotomous', 2);
 insert into AnswerType values (6, 'PolytomousUnorderedSingle', 3);
 insert into AnswerType values (7, 'PolytomousUnorderedMultiple', 3);
 insert into AnswerType values (8, 'PolytomousOrderedSingle', 3);
 insert into AnswerType values (9, 'PolytomousOrderedMultiple', 3);
-insert into AnswerType values (10, 'LikertSkale3', 3);
-insert into AnswerType values (11, 'LikertSkale4', 3);
-insert into AnswerType values (12, 'LikertSkale5', 3);
-insert into AnswerType values (13, 'LikertSkale6', 3);
-insert into AnswerType values (14, 'LikertSkale7', 3);
-insert into AnswerType values (15, 'LikertSkale8', 3);
-insert into AnswerType values (16, 'LikertSkale9', 3);
+insert into AnswerType values (10, 'LikertSkale3', 4);
+insert into AnswerType values (11, 'LikertSkale4', 4);
+insert into AnswerType values (12, 'LikertSkale5', 4);
+insert into AnswerType values (13, 'LikertSkale6', 4);
+insert into AnswerType values (14, 'LikertSkale7', 4);
+insert into AnswerType values (15, 'LikertSkale8', 4);
+insert into AnswerType values (16, 'LikertSkale9', 4);
 
-insert into PredefinedAnswerOption values (1, 'Yes', 1);
-insert into PredefinedAnswerOption values (2, 'No', 1);
-insert into PredefinedAnswerOption values (3, 'Yes', 2);
-insert into PredefinedAnswerOption values (4, 'No', 2);
-insert into PredefinedAnswerOption values (5, 'DontKnow', 2);
-insert into PredefinedAnswerOption values (6, 'Green', 3);
-insert into PredefinedAnswerOption values (7, 'Yellow', 3);
-insert into PredefinedAnswerOption values (8, 'Red', 3);
-insert into PredefinedAnswerOption values (9, 'FreeText', 4);
+insert into PredefinedAnswerOption values ('Yes', 1);
+insert into PredefinedAnswerOption values ('No', 1);
+insert into PredefinedAnswerOption values ('Yes', 2);
+insert into PredefinedAnswerOption values ('No', 2);
+insert into PredefinedAnswerOption values ('DontKnow', 2);
+insert into PredefinedAnswerOption values ('Green', 3);
+insert into PredefinedAnswerOption values ('Yellow', 3);
+insert into PredefinedAnswerOption values ('Red', 3);
+insert into PredefinedAnswerOption values ('FreeText', 4);
+insert into PredefinedAnswerOption values ('2', 10);
+insert into PredefinedAnswerOption values ('2', 11);
+insert into PredefinedAnswerOption values ('3', 11);
+insert into PredefinedAnswerOption values ('2', 12);
+insert into PredefinedAnswerOption values ('3', 12);
+insert into PredefinedAnswerOption values ('4', 12);
+insert into PredefinedAnswerOption values ('2', 13);
+insert into PredefinedAnswerOption values ('3', 13);
+insert into PredefinedAnswerOption values ('4', 13);
+insert into PredefinedAnswerOption values ('5', 13);
+insert into PredefinedAnswerOption values ('2', 14);
+insert into PredefinedAnswerOption values ('3', 14);
+insert into PredefinedAnswerOption values ('4', 14);
+insert into PredefinedAnswerOption values ('5', 14);
+insert into PredefinedAnswerOption values ('6', 14);
+insert into PredefinedAnswerOption values ('2', 15);
+insert into PredefinedAnswerOption values ('3', 15);
+insert into PredefinedAnswerOption values ('4', 15);
+insert into PredefinedAnswerOption values ('5', 15);
+insert into PredefinedAnswerOption values ('6', 15);
+insert into PredefinedAnswerOption values ('7', 15);
+insert into PredefinedAnswerOption values ('2', 16);
+insert into PredefinedAnswerOption values ('3', 16);
+insert into PredefinedAnswerOption values ('4', 16);
+insert into PredefinedAnswerOption values ('5', 16);
+insert into PredefinedAnswerOption values ('6', 16);
+insert into PredefinedAnswerOption values ('7', 16);
+insert into PredefinedAnswerOption values ('8', 16);
 commit;
 go
