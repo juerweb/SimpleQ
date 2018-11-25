@@ -8,11 +8,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Security.Claims;
 
 namespace SimpleQ.Webinterface.Controllers
 {
+    [CAuthorize]
     public class SurveyResultsController : Controller
     {
+        #region MVC-Actions
         [HttpGet]
         public ActionResult Index()
         {
@@ -30,21 +33,27 @@ namespace SimpleQ.Webinterface.Controllers
                         .Where(a => a.BaseId != (int)BaseQuestionTypes.OpenQuestion).Distinct().ToList()
                 };
 
-                return View(viewName: "SurveyResults", model: model);
+                return View("SurveyResults", model);
             }
         }
 
         [HttpGet]
         public ActionResult LoadSingleResult(int svyId)
         {
+            bool err = false;
             using (var db = new SimpleQDBEntities())
             {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    return Http.NotFound("Customer not found.");
+
                 Survey survey = db.Surveys
                     .Where(s => s.SvyId == svyId && s.CustCode == CustCode)
                     .FirstOrDefault();
 
                 if (survey == null)
-                    return Http.NotFound("Survey not found.");
+                    AddModelError("svyId", "Survey not found.", ref err);
+
+                if (err) return Index();
 
 
                 var model = new SingleResultModel
@@ -82,6 +91,7 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpPost]
         public ActionResult LoadMultiResult(MultiResultModel req)
         {
+            bool err = false;
             //SAMPLE DATA
             //req = new MultiResultModel
             //{
@@ -92,12 +102,15 @@ namespace SimpleQ.Webinterface.Controllers
             //};
 
             if (req == null)
-                return Http.BadRequest("Model object must not be null.");
+                AddModelError("Model", "Model object must not be null.", ref err);
             if (req.StartDate >= req.EndDate)
-                return Http.Conflict("StartDate must be smaller than EndDate.");
+                AddModelError("StartDate", "StartDate must be smaller than EndDate.", ref err);
 
             using (var db = new SimpleQDBEntities())
             {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    return Http.NotFound("Customer not found.");
+
                 var selectedSurveys = db.Surveys
                     .Where(s => s.CatId == req.CatId && s.TypeId == req.TypeId
                      && s.StartDate >= req.StartDate && s.StartDate <= req.EndDate
@@ -108,14 +121,15 @@ namespace SimpleQ.Webinterface.Controllers
                             .Select(c => c.CatName)
                             .FirstOrDefault();
                 if (catName == null)
-                    return Http.NotFound("Category not found.");
+                    AddModelError("CatId", "Category not found.", ref err);
 
                 var type = db.AnswerTypes
                             .Where(a => a.TypeId == req.TypeId && a.BaseId != (int)BaseQuestionTypes.OpenQuestion)
                             .FirstOrDefault();
                 if (type == null)
-                    return Http.Conflict("Answer type does not exist.");
+                    AddModelError("TypeId", "AnswerType does not exist.", ref err);
 
+                if (err) return Index();
 
                 MultiResultModel model;
                 if (selectedSurveys.Count() == 0)
@@ -160,7 +174,9 @@ namespace SimpleQ.Webinterface.Controllers
                 return PartialView(viewName: "_MultiResult", model: model);
             }
         }
+        #endregion
 
+        #region Helpers
         private List<KeyValuePair<string, int>> SelectVotesFromSurvey(Survey survey)
         {
             var list = new List<KeyValuePair<string, int>>();
@@ -228,12 +244,13 @@ namespace SimpleQ.Webinterface.Controllers
             return list;
         }
 
-        private string CustCode
+        private void AddModelError(string key, string errorMessage, ref bool error)
         {
-            get
-            {
-                return Session["custCode"] as string;
-            }
+            ModelState.AddModelError(key, errorMessage);
+            error = true;
         }
+
+        private string CustCode => HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+        #endregion
     }
 }

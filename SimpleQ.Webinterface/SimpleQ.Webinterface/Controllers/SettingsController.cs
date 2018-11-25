@@ -5,13 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
 namespace SimpleQ.Webinterface.Controllers
 {
+    [CAuthorize]
     public class SettingsController : Controller
     {
+        #region MVC-Actions
         [HttpGet]
         public ActionResult Index()
         {
@@ -40,11 +43,105 @@ namespace SimpleQ.Webinterface.Controllers
                     DataStoragePeriod = cust.DataStoragePeriod,
                     PaymentMethodId = cust.PaymentMethodId
                 };
-                return View(viewName: "Settings", model: model);
+                return View("Settings", model);
             }
         }
 
-        [HttpGet]
+        [HttpPost]
+        public ActionResult ChangeAnswerTypes(SettingsModel req)
+        {
+            bool err = false;
+
+            if (req == null)
+                AddModelError("Model", "Model object must not be null.", ref err);
+
+            using (var db = new SimpleQDBEntities())
+            {
+                var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                if (cust == null)
+                    return Http.NotFound("Customer not found.");
+
+                if (req.CheckedAnswerTypes == null)
+                    AddModelError("CheckedAnswerTypes", "AnswerTypes must not be null.", ref err);
+
+                foreach (var typeId in req.CheckedAnswerTypes.Distinct())
+                {
+                    if (db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault() == null)
+                    {
+                        AddModelError("CheckedAnswerTypes", "AnswerType does not exist.", ref err);
+                        break;
+                    }
+                }
+
+                if (err) return Index();
+
+                var uncheckedAnswerTypes = db.AnswerTypes.Select(a => a.TypeId).Except(req.CheckedAnswerTypes).ToList();
+
+                uncheckedAnswerTypes.ForEach(typeId =>
+                {
+                    cust.AnswerTypes.Remove(db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault());
+                });
+
+                req.CheckedAnswerTypes.ForEach(typeId =>
+                {
+                    cust.AnswerTypes.Add(db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault());
+                });
+
+                db.SaveChanges();
+
+                return Index();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult UpdateCustomer(SettingsModel req)
+        {
+            bool err = false;
+
+            if (req == null)
+                AddModelError("Model", "Model object must not be null.", ref err);
+
+            using (var db = new SimpleQDBEntities())
+            {
+                try
+                {
+                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                    if (cust == null)
+                        return Http.NotFound("Customer not found.");
+
+                    cust.CustName = req.Name ?? throw ANEx("CustName");
+                    cust.CustEmail = req.Email ?? throw ANEx("CustEmail");
+                    cust.Street = req.Street ?? throw ANEx("Street");
+                    cust.Plz = req.Plz ?? throw ANEx("Plz");
+                    cust.City = req.City ?? throw ANEx("City");
+                    cust.Country = req.Country ?? throw ANEx("Country");
+                    cust.LanguageCode = req.LanguageCode ?? throw ANEx("LanguageCode");
+
+                    if (db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).Count() == 0)
+                        AddModelError("PaymentMethodId", "PaymentMethod does not exist.", ref err);
+
+                    if (req.DataStoragePeriod <= 0)
+                        AddModelError("DataStoragePeriod", "DataStoragePeriod must be greater than 0.", ref err);
+
+                    if (err) return Index();
+
+                    cust.DataStoragePeriod = req.DataStoragePeriod;
+                    cust.PaymentMethodId = req.PaymentMethodId;
+
+                    db.SaveChanges();
+
+                    return Index();
+                }
+                catch (ArgumentNullException ex)
+                {
+                    AddModelError(ex.ParamName, $"{ex.ParamName} must not be null.", ref err);
+                    return Index();
+                }
+            }
+        }
+        #endregion
+
+        #region AJAX-Methods[HttpGet]
         public ActionResult ChangeMinGroup(int size)
         {
             using (var db = new SimpleQDBEntities())
@@ -85,7 +182,7 @@ namespace SimpleQ.Webinterface.Controllers
                 };
                 db.SurveyCategories.Add(cat);
                 db.SaveChanges();
-                
+
                 return Content($"{cat.CatId}", "text/plain");
             }
         }
@@ -162,96 +259,18 @@ namespace SimpleQ.Webinterface.Controllers
                 return Http.Ok();
             }
         }
+        #endregion
 
-        [HttpPost]
-        public ActionResult ChangeAnswerTypes(SettingsModel req)
+        #region Helpers
+        private void AddModelError(string key, string errorMessage, ref bool error)
         {
-            if (req == null)
-                return Http.BadRequest("Model object must not be null.");
-
-            using (var db = new SimpleQDBEntities())
-            {
-                var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
-                if (cust == null)
-                    return Http.NotFound("Customer not found.");
-
-                if (req.CheckedAnswerTypes == null)
-                    return Http.BadRequest("CheckedAnswerTypes must not be null.");
-
-                foreach (var typeId in req.CheckedAnswerTypes.Distinct())
-                {
-                    if (db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault() == null)
-                        return Http.Conflict("AnswerType does not exist.");
-                }
-
-                var uncheckedAnswerTypes = db.AnswerTypes.Select(a => a.TypeId).Except(req.CheckedAnswerTypes).ToList();
-
-                uncheckedAnswerTypes.ForEach(typeId =>
-                {
-                    cust.AnswerTypes.Remove(db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault());
-                });
-
-                req.CheckedAnswerTypes.ForEach(typeId =>
-                {
-                    cust.AnswerTypes.Add(db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault());
-                });
-
-                db.SaveChanges();
-
-                return Index();
-            }
-        }
-
-        [HttpPost]
-        public ActionResult UpdateCustomer(SettingsModel req)
-        {
-            if (req == null)
-                return Http.BadRequest("Model object must not be null.");
-
-            using (var db = new SimpleQDBEntities())
-            {
-                try
-                {
-                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
-                    if (cust == null)
-                        return Http.NotFound("Customer not found.");
-
-                    cust.CustName = req.Name ?? throw ANEx("CustName");
-                    cust.CustEmail = req.Email ?? throw ANEx("CustEmail");
-                    cust.Street = req.Street ?? throw ANEx("Street");
-                    cust.Plz = req.Plz ?? throw ANEx("Plz");
-                    cust.City = req.City ?? throw ANEx("City");
-                    cust.Country = req.Country ?? throw ANEx("Country");
-                    cust.LanguageCode = req.LanguageCode ?? throw ANEx("LanguageCode");
-
-                    if (db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).Count() == 0)
-                        return Http.Conflict("PaymentMethod does not exist.");
-
-                    if (req.DataStoragePeriod <= 0)
-                        return Http.Conflict("DataStoragePeriod must be greater than 0");
-
-                    cust.DataStoragePeriod = req.DataStoragePeriod;
-                    cust.PaymentMethodId = req.PaymentMethodId;
-
-                    db.SaveChanges();
-                    
-                    return Index();
-                }
-                catch (ArgumentNullException ex)
-                {
-                    return Http.BadRequest($"{ex.ParamName} must not be null.");
-                }
-            }
+            ModelState.AddModelError(key, errorMessage);
+            error = true;
         }
 
         private ArgumentNullException ANEx(string paramName) => new ArgumentNullException(paramName);
 
-        private string CustCode
-        {
-            get
-            {
-                return Session["custCode"] as string;
-            }
-        }
+        private string CustCode => HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+        #endregion
     }
 }

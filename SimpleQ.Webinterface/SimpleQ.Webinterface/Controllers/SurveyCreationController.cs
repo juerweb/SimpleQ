@@ -11,13 +11,16 @@ using SimpleQ.Webinterface.Models.Enums;
 using SimpleQ.Webinterface.Extensions;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace SimpleQ.Webinterface.Controllers
 {
+    [CAuthorize]
     public class SurveyCreationController : Controller
     {
         private static readonly HashSet<int> queuedSurveys = new HashSet<int>();
 
+        #region MVC-Actions
         [HttpGet]
         public ActionResult Index()
         {
@@ -37,21 +40,23 @@ namespace SimpleQ.Webinterface.Controllers
                     SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
                 };
 
-                return View(viewName: "SurveyCreation", model: model);
+                return View("SurveyCreation", model);
             }
         }
 
         [HttpPost]
         public ActionResult New(SurveyCreationModel req)
         {
+            bool err = false;
+
             if (req == null)
-                return Http.BadRequest("Model object must not be null.");
+                AddModelError("Model", "Model object must not be null.", ref err);
             if (req.Survey == null)
-                return Http.BadRequest("Survey must not be null.");
+                AddModelError("Survey", "Survey must not be null.", ref err);
             if (req.Survey.SvyText == null)
-                return Http.BadRequest("SvyText must not be null.");
+                AddModelError("Survey.SvyText", "SvyText must not be null.", ref err);
             if (req.SelectedDepartments == null || req.SelectedDepartments.Count() == 0)
-                return Http.BadRequest("SelectedDepartments must not be null or empty.");
+                AddModelError("SelectedDepartments", "SelectedDepartments object must not be null or empty.", ref err);
 
             using (var db = new SimpleQDBEntities())
             {
@@ -64,35 +69,49 @@ namespace SimpleQ.Webinterface.Controllers
                 req.Survey.Sent = false;
 
                 if (req.Survey.StartDate >= req.Survey.EndDate)
-                    return Http.Conflict("StartDate must be earlier than EndDate.");
+                    AddModelError("Survey.StartDate", "StartDate must be earlier than EndDate.", ref err);
 
                 if (req.Survey.Amount <= 0)
-                    return Http.Conflict("Amount must be at least 1.");
+                    AddModelError("Survey.Amount", "Amount must be at least 1.", ref err);
 
                 if (db.SurveyCategories.Where(c => c.CatId == req.Survey.CatId && c.CustCode == CustCode).FirstOrDefault() == null)
-                    return Http.NotFound("Category not found.");
+                    AddModelError("Survey.CatId", "Category not found.", ref err);
 
                 if (db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefault() == null)
-                    return Http.Conflict("AnswerType does not exist.");
+                    AddModelError("Survey.TypeId", "AnswerType does not exist.", ref err);
 
                 var baseId = db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefault().BaseId;
                 if (baseId != (int)BaseQuestionTypes.FixedAnswerQuestion && baseId != (int)BaseQuestionTypes.OpenQuestion
                     && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() == 0))
-                    return Http.Conflict("There must be submitted some AnswerOptions.");
+                    AddModelError("TextAnswerOptions", "There must be submitted some AnswerOptions.", ref err);
 
                 if (baseId == (int)BaseQuestionTypes.DichotomousQuestion 
                     && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2))
-                    return Http.Conflict("There must be submitted exactly two AnswerOptions.");
+                    AddModelError("TextAnswerOptions", "There must be submitted exactly two AnswerOptions.", ref err);
 
                 if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion
                     && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2))
-                    return Http.Conflict("There must be submitted exactly two AnswerOptions.");
+                    AddModelError("TextAnswerOptions", "There must be submitted exactly two AnswerOptions.", ref err);
 
                 foreach (var depId in req.SelectedDepartments)
                 {
                     if (db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault() == null)
-                        return Http.NotFound("Department not found.");
+                    {
+                        AddModelError("SelectedDepartments", "Department not found.", ref err);
+                        break;
+                    }
                 }
+
+                foreach (var ans in req.TextAnswerOptions)
+                {
+                    if (string.IsNullOrEmpty(ans))
+                    {
+                        AddModelError("TextAnswerOptions", "AnswerOptions must not be empty.", ref err);
+                        break;
+                    }
+                }
+
+                if (err) return Index();
 
 
                 int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
@@ -132,8 +151,9 @@ namespace SimpleQ.Webinterface.Controllers
 
             return Index();
         }
+        #endregion
 
-
+        #region AJAX-Methods
         [HttpGet]
         public ActionResult LoadTemplate(int svyId)
         {
@@ -218,6 +238,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public double LoadPricePerClick(int amount)
         {
             using (var db = new SimpleQDBEntities())
@@ -225,8 +246,9 @@ namespace SimpleQ.Webinterface.Controllers
                 return Convert.ToDouble(db.fn_CalcPricePerClick(amount));
             }
         }
+        #endregion
 
-
+        #region Helpers
         internal static void ScheduleSurvey(int svyId, TimeSpan timeout, string custCode)
         {
             lock (queuedSurveys)
@@ -338,14 +360,15 @@ namespace SimpleQ.Webinterface.Controllers
             });
         }
 
+        private void AddModelError(string key, string errorMessage, ref bool error)
+        {
+            ModelState.AddModelError(key, errorMessage);
+            error = true;
+        }
+
         private ArgumentNullException ANEx(string paramName) => new ArgumentNullException(paramName);
 
-        private string CustCode
-        {
-            get
-            {
-                return Session["custCode"] as string;
-            }
-        }
+        private string CustCode => HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+        #endregion
     }
 }

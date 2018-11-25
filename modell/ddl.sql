@@ -242,7 +242,7 @@ on Customer
 after insert as
 begin
 	declare @CustCode char(6), @hash varbinary(max);
-	declare c cursor local for select CustCode, hashbytes('SHA2_512', CustPwdTmp) from inserted;
+	declare c cursor local for select CustCode, dbo.fn_GetHash(CustPwdTmp) from inserted;
 	
 	open c;
 	fetch c into @CustCode, @hash;
@@ -277,7 +277,7 @@ begin
     if(trigger_nestlevel() = 1 and update(CustPwdTmp))
     begin
         declare @CustCode char(6), @hash varbinary(max);
-	    declare c cursor local for select CustCode, hashbytes('SHA2_512', CustPwdTmp) from inserted;
+	    declare c cursor local for select CustCode, dbo.fn_GetHash(CustPwdTmp) from inserted;
 	
 	    open c;
 	    fetch c into @CustCode, @hash;
@@ -565,6 +565,17 @@ begin
 end
 go
 
+
+-- Zum hashen eines Strings
+drop function fn_GetHash;
+go
+create function fn_GetHash(@str varchar(max))
+returns varbinary(max)
+as
+begin
+	return hashbytes('SHA2_512', @str);
+end
+go
 
 
 -- Fixe inserts (für alle gleich!)

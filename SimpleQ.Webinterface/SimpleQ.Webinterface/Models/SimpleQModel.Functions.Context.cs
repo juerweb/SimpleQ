@@ -25,5 +25,20 @@ namespace SimpleQ.Webinterface.Models
                  .Execute(MergeOption.NoTracking)
                  .FirstOrDefault();
         }
+
+        [DbFunction("SimpleQDBModel.Store", "fn_GetHash")]
+        public virtual byte[] fn_GetHash(string str)
+        {
+            var objectContext = ((IObjectContextAdapter)this).ObjectContext;
+
+            var parameters = new List<ObjectParameter>
+            {
+                new ObjectParameter("str", str)
+            };
+
+            return objectContext.CreateQuery<byte[]>("SimpleQDBModel.Store.fn_GetHash(@str)", parameters.ToArray())
+                 .Execute(MergeOption.NoTracking)
+                 .FirstOrDefault();
+        }
     }
 }

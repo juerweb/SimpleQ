@@ -93,7 +93,7 @@
         </div>
         <div class="col-md-6 d-flex justify-content-end align-items-center">
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
-            <a class="btn btn-light border border-danger">
+            <a class="btn btn-light border border-danger" href="@Url.Action("Logout", "Account")">
                 <span class="row">
                     <span class="col-6">
                         Logout
@@ -178,7 +178,6 @@
             </div>
         </div>
         <div class="col-md-10 p-0 m-0" id="rightCol">
-            <button class="btn btn-primary p-2" id="showNavbarBtn" onclick="showNavbar()">><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />></button>
             @RenderBody()
             @*<div id="surveyCreationWindow">
             <a href="~/ContactInformation/Index">ContactInformation</a>

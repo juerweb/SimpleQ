@@ -10,8 +10,10 @@ using System.Web.Mvc;
 
 namespace SimpleQ.Webinterface.Controllers
 {
+    [CAuthorize]
     public class SupportController : Controller
     {
+        #region MVC-Actions
         [HttpGet]
         public ActionResult Index()
         {
@@ -22,7 +24,7 @@ namespace SimpleQ.Webinterface.Controllers
                     FaqEntries = db.FaqEntries.ToList()
                 };
 
-                return View("Support", model: model);
+                return View("Support", model);
             }
         }
 
@@ -34,18 +36,21 @@ namespace SimpleQ.Webinterface.Controllers
             //req.QuestionCatgeory = "Lelelele";
             //req.QuestionText = "Sads ma BITTE NED BES";
 
+            bool err = false;
 
             if (req == null)
-                return Http.BadRequest("Model object must not be null.");
+                AddModelError("Model", "Model object must not be null.", ref err);
 
             if (string.IsNullOrEmpty(req.Email))
-                return Http.BadRequest("Email must not be null.");
+                AddModelError("Email", "Email must not be null.", ref err);
 
             if (string.IsNullOrEmpty(req.QuestionText))
-                return Http.BadRequest("QuestionText must not be null.");
+                AddModelError("QuestionText", "QuestionText must not be null.", ref err);
 
             if (string.IsNullOrEmpty(req.QuestionCatgeory))
-                return Http.BadRequest("QuestionCategory must not be null.");
+                AddModelError("QuestionCatgeory", "QuestionCatgeory must not be null.", ref err);
+
+            if (err) return Index();
 
 
             req.QuestionText = $"FROM: {req.Email}{Environment.NewLine}{req.QuestionText}";
@@ -66,14 +71,19 @@ namespace SimpleQ.Webinterface.Controllers
 
                 return Index();
             }
-            catch (ArgumentNullException ex)
-            {
-                return Http.BadRequest($"{ex.ParamName} must not be null.");
-            }
             catch (Exception ex) when (ex is SmtpException || ex is SmtpFailedRecipientsException)
             {
                 return Http.ServiceUnavailable("Sending failed due to internal error(s).");
             }
         }
+        #endregion
+
+        #region Helpers
+        private void AddModelError(string key, string errorMessage, ref bool error)
+        {
+            ModelState.AddModelError(key, errorMessage);
+            error = true;
+        }
+        #endregion
     }
 }
