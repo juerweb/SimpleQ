@@ -239,6 +239,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         [HttpGet]
         [AllowAnonymous]
+        [ValidateAntiForgeryToken]
         public double LoadPricePerClick(int amount)
         {
             using (var db = new SimpleQDBEntities())

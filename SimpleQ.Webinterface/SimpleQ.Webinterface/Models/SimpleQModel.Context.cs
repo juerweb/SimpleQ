@@ -60,5 +60,10 @@ namespace SimpleQ.Webinterface.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeleteSurvey", svyIdParameter);
         }
+    
+        public virtual ObjectResult<string> sp_GenerateCustCode()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_GenerateCustCode");
+        }
     }
 }

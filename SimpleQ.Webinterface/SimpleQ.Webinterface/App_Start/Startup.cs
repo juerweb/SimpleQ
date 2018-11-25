@@ -16,7 +16,7 @@ namespace SimpleQ.Webinterface
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = "ApplicationCookie",
-                LoginPath = new PathString("/Account/Index")
+                LoginPath = new PathString("/Account/Login")
             });
         }
     }

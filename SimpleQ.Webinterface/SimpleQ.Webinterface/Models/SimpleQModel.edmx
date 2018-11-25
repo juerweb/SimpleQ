@@ -76,6 +76,7 @@
           <Property Name="CustPwdTmp" Type="varchar(max)" />
           <Property Name="CustPwdHash" Type="varbinary(max)" />
           <Property Name="RegistrationDate" Type="date" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
           <Property Name="Street" Type="varchar(max)" Nullable="false" />
           <Property Name="Plz" Type="varchar" MaxLength="16" Nullable="false" />
           <Property Name="City" Type="varchar(max)" Nullable="false" />
@@ -175,7 +176,7 @@
           <Property Name="VoteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="VoteText" Type="varchar(max)" />
         </EntityType>
-        <Association Name="FK__Activates__CustC__3278DF10">
+        <Association Name="FK__Activates__CustC__4B999295">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Activates" Type="Self.Activates" Multiplicity="*" />
           <ReferentialConstraint>
@@ -187,7 +188,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Activates__TypeI__336D0349">
+        <Association Name="FK__Activates__TypeI__4C8DB6CE">
           <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
           <End Role="Activates" Type="Self.Activates" Multiplicity="*" />
           <ReferentialConstraint>
@@ -199,7 +200,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AnswerOpt__SvyId__4773FBF6">
+        <Association Name="FK__AnswerOpt__SvyId__6094AF7B">
           <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
           <End Role="AnswerOption" Type="Self.AnswerOption" Multiplicity="*" />
           <ReferentialConstraint>
@@ -211,7 +212,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__AnswerTyp__BaseI__2F9C7265">
+        <Association Name="FK__AnswerTyp__BaseI__48BD25EA">
           <End Role="BaseQuestionType" Type="Self.BaseQuestionType" Multiplicity="1" />
           <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="*" />
           <ReferentialConstraint>
@@ -223,7 +224,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Asking__44978F4B">
+        <Association Name="FK__Asking__5DB842D0">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="Asking" Type="Self.Asking" Multiplicity="*" />
           <ReferentialConstraint>
@@ -237,7 +238,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Asking__SvyId__43A36B12">
+        <Association Name="FK__Asking__SvyId__5CC41E97">
           <End Role="Survey" Type="Self.Survey" Multiplicity="1" />
           <End Role="Asking" Type="Self.Asking" Multiplicity="*" />
           <ReferentialConstraint>
@@ -249,7 +250,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Bill__CustCode__22427747">
+        <Association Name="FK__Bill__CustCode__3B632ACC">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
           <ReferentialConstraint>
@@ -261,7 +262,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Chooses__AnsId__4E20F985">
+        <Association Name="FK__Chooses__AnsId__6741AD0A">
           <End Role="AnswerOption" Type="Self.AnswerOption" Multiplicity="1" />
           <End Role="Chooses" Type="Self.Chooses" Multiplicity="*" />
           <ReferentialConstraint>
@@ -273,7 +274,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Chooses__VoteId__4D2CD54C">
+        <Association Name="FK__Chooses__VoteId__664D88D1">
           <End Role="Vote" Type="Self.Vote" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
@@ -287,7 +288,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Customer__Paymen__1F660A9C">
+        <Association Name="FK__Customer__Paymen__3886BE21">
           <End Role="PaymentMethod" Type="Self.PaymentMethod" Multiplicity="1" />
           <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -299,7 +300,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Departmen__CustC__251EE3F2">
+        <Association Name="FK__Departmen__CustC__3E3F9777">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Department" Type="Self.Department" Multiplicity="*" />
           <ReferentialConstraint>
@@ -311,7 +312,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Employs__2AD7BD48">
+        <Association Name="FK__Employs__43F870CD">
           <End Role="Department" Type="Self.Department" Multiplicity="1" />
           <End Role="Employs" Type="Self.Employs" Multiplicity="*" />
           <ReferentialConstraint>
@@ -325,7 +326,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Employs__PersId__29E3990F">
+        <Association Name="FK__Employs__PersId__43044C94">
           <End Role="Person" Type="Self.Person" Multiplicity="1" />
           <End Role="Employs" Type="Self.Employs" Multiplicity="*" />
           <ReferentialConstraint>
@@ -337,7 +338,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Predefine__TypeI__36496FF4">
+        <Association Name="FK__Predefine__TypeI__4F6A2379">
           <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
           <End Role="PredefinedAnswerOption" Type="Self.PredefinedAnswerOption" Multiplicity="*" />
           <ReferentialConstraint>
@@ -349,7 +350,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__3FD2DA2E">
+        <Association Name="FK__Survey__58F38DB3">
           <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -363,7 +364,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Survey__TypeId__3CF66D83">
+        <Association Name="FK__Survey__TypeId__56172108">
           <End Role="AnswerType" Type="Self.AnswerType" Multiplicity="1" />
           <End Role="Survey" Type="Self.Survey" Multiplicity="*" />
           <ReferentialConstraint>
@@ -375,7 +376,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SurveyCat__CustC__3925DC9F">
+        <Association Name="FK__SurveyCat__CustC__52469024">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="SurveyCategory" Type="Self.SurveyCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -398,6 +399,7 @@
         <Function Name="sp_DeleteSurvey" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="svyId" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_GenerateCustCode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="SimpleQDBModelStoreContainer">
           <EntitySet Name="Activates" EntityType="Self.Activates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AnswerOption" EntityType="Self.AnswerOption" Schema="dbo" store:Type="Tables" />
@@ -417,71 +419,71 @@
           <EntitySet Name="Survey" EntityType="Self.Survey" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SurveyCategory" EntityType="Self.SurveyCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vote" EntityType="Self.Vote" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Activates__CustC__3278DF10" Association="Self.FK__Activates__CustC__3278DF10">
+          <AssociationSet Name="FK__Activates__CustC__4B999295" Association="Self.FK__Activates__CustC__4B999295">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Activates" EntitySet="Activates" />
           </AssociationSet>
-          <AssociationSet Name="FK__Activates__TypeI__336D0349" Association="Self.FK__Activates__TypeI__336D0349">
+          <AssociationSet Name="FK__Activates__TypeI__4C8DB6CE" Association="Self.FK__Activates__TypeI__4C8DB6CE">
             <End Role="AnswerType" EntitySet="AnswerType" />
             <End Role="Activates" EntitySet="Activates" />
           </AssociationSet>
-          <AssociationSet Name="FK__AnswerOpt__SvyId__4773FBF6" Association="Self.FK__AnswerOpt__SvyId__4773FBF6">
+          <AssociationSet Name="FK__AnswerOpt__SvyId__6094AF7B" Association="Self.FK__AnswerOpt__SvyId__6094AF7B">
             <End Role="Survey" EntitySet="Survey" />
             <End Role="AnswerOption" EntitySet="AnswerOption" />
           </AssociationSet>
-          <AssociationSet Name="FK__AnswerTyp__BaseI__2F9C7265" Association="Self.FK__AnswerTyp__BaseI__2F9C7265">
+          <AssociationSet Name="FK__AnswerTyp__BaseI__48BD25EA" Association="Self.FK__AnswerTyp__BaseI__48BD25EA">
             <End Role="BaseQuestionType" EntitySet="BaseQuestionType" />
             <End Role="AnswerType" EntitySet="AnswerType" />
           </AssociationSet>
-          <AssociationSet Name="FK__Asking__44978F4B" Association="Self.FK__Asking__44978F4B">
+          <AssociationSet Name="FK__Asking__5DB842D0" Association="Self.FK__Asking__5DB842D0">
             <End Role="Department" EntitySet="Department" />
             <End Role="Asking" EntitySet="Asking" />
           </AssociationSet>
-          <AssociationSet Name="FK__Asking__SvyId__43A36B12" Association="Self.FK__Asking__SvyId__43A36B12">
+          <AssociationSet Name="FK__Asking__SvyId__5CC41E97" Association="Self.FK__Asking__SvyId__5CC41E97">
             <End Role="Survey" EntitySet="Survey" />
             <End Role="Asking" EntitySet="Asking" />
           </AssociationSet>
-          <AssociationSet Name="FK__Bill__CustCode__22427747" Association="Self.FK__Bill__CustCode__22427747">
+          <AssociationSet Name="FK__Bill__CustCode__3B632ACC" Association="Self.FK__Bill__CustCode__3B632ACC">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Bill" EntitySet="Bill" />
           </AssociationSet>
-          <AssociationSet Name="FK__Chooses__AnsId__4E20F985" Association="Self.FK__Chooses__AnsId__4E20F985">
+          <AssociationSet Name="FK__Chooses__AnsId__6741AD0A" Association="Self.FK__Chooses__AnsId__6741AD0A">
             <End Role="AnswerOption" EntitySet="AnswerOption" />
             <End Role="Chooses" EntitySet="Chooses" />
           </AssociationSet>
-          <AssociationSet Name="FK__Chooses__VoteId__4D2CD54C" Association="Self.FK__Chooses__VoteId__4D2CD54C">
+          <AssociationSet Name="FK__Chooses__VoteId__664D88D1" Association="Self.FK__Chooses__VoteId__664D88D1">
             <End Role="Vote" EntitySet="Vote" />
             <End Role="Chooses" EntitySet="Chooses" />
           </AssociationSet>
-          <AssociationSet Name="FK__Customer__Paymen__1F660A9C" Association="Self.FK__Customer__Paymen__1F660A9C">
+          <AssociationSet Name="FK__Customer__Paymen__3886BE21" Association="Self.FK__Customer__Paymen__3886BE21">
             <End Role="PaymentMethod" EntitySet="PaymentMethod" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
-          <AssociationSet Name="FK__Departmen__CustC__251EE3F2" Association="Self.FK__Departmen__CustC__251EE3F2">
+          <AssociationSet Name="FK__Departmen__CustC__3E3F9777" Association="Self.FK__Departmen__CustC__3E3F9777">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Department" EntitySet="Department" />
           </AssociationSet>
-          <AssociationSet Name="FK__Employs__2AD7BD48" Association="Self.FK__Employs__2AD7BD48">
+          <AssociationSet Name="FK__Employs__43F870CD" Association="Self.FK__Employs__43F870CD">
             <End Role="Department" EntitySet="Department" />
             <End Role="Employs" EntitySet="Employs" />
           </AssociationSet>
-          <AssociationSet Name="FK__Employs__PersId__29E3990F" Association="Self.FK__Employs__PersId__29E3990F">
+          <AssociationSet Name="FK__Employs__PersId__43044C94" Association="Self.FK__Employs__PersId__43044C94">
             <End Role="Person" EntitySet="Person" />
             <End Role="Employs" EntitySet="Employs" />
           </AssociationSet>
-          <AssociationSet Name="FK__Predefine__TypeI__36496FF4" Association="Self.FK__Predefine__TypeI__36496FF4">
+          <AssociationSet Name="FK__Predefine__TypeI__4F6A2379" Association="Self.FK__Predefine__TypeI__4F6A2379">
             <End Role="AnswerType" EntitySet="AnswerType" />
             <End Role="PredefinedAnswerOption" EntitySet="PredefinedAnswerOption" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__3FD2DA2E" Association="Self.FK__Survey__3FD2DA2E">
+          <AssociationSet Name="FK__Survey__58F38DB3" Association="Self.FK__Survey__58F38DB3">
             <End Role="SurveyCategory" EntitySet="SurveyCategory" />
             <End Role="Survey" EntitySet="Survey" />
           </AssociationSet>
-          <AssociationSet Name="FK__Survey__TypeId__3CF66D83" Association="Self.FK__Survey__TypeId__3CF66D83">
+          <AssociationSet Name="FK__Survey__TypeId__56172108" Association="Self.FK__Survey__TypeId__56172108">
             <End Role="AnswerType" EntitySet="AnswerType" />
             <End Role="Survey" EntitySet="Survey" />
           </AssociationSet>
-          <AssociationSet Name="FK__SurveyCat__CustC__3925DC9F" Association="Self.FK__SurveyCat__CustC__3925DC9F">
+          <AssociationSet Name="FK__SurveyCat__CustC__52469024" Association="Self.FK__SurveyCat__CustC__52469024">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="SurveyCategory" EntitySet="SurveyCategory" />
           </AssociationSet>
@@ -558,6 +560,7 @@
           <NavigationProperty Name="Departments" Relationship="Self.FK__Departmen__CustC__47890A8F" FromRole="Customer" ToRole="Department" />
           <NavigationProperty Name="SurveyCategories" Relationship="Self.FK__SurveyCat__CustC__5B90033C" FromRole="Customer" ToRole="SurveyCategory" />
           <NavigationProperty Name="AnswerTypes" Relationship="Self.Activates" FromRole="Customer" ToRole="AnswerType" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="DataConstraint">
           <Key>
@@ -848,6 +851,7 @@
           <FunctionImport Name="sp_DeleteSurvey">
           <Parameter Name="svyId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_GenerateCustCode" ReturnType="Collection(String)" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -897,6 +901,7 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="SimpleQDBModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
                 <ScalarProperty Name="CustCode" ColumnName="CustCode" />
                 <ScalarProperty Name="CustName" ColumnName="CustName" />
                 <ScalarProperty Name="CustEmail" ColumnName="CustEmail" />
@@ -1038,6 +1043,7 @@
           <FunctionImportMapping FunctionImportName="sp_CheckExceededSurveyData" FunctionName="SimpleQDBModel.Store.sp_CheckExceededSurveyData" />
           <FunctionImportMapping FunctionImportName="sp_CreateBills" FunctionName="SimpleQDBModel.Store.sp_CreateBills" />
           <FunctionImportMapping FunctionImportName="sp_DeleteSurvey" FunctionName="SimpleQDBModel.Store.sp_DeleteSurvey" />
+          <FunctionImportMapping FunctionImportName="sp_GenerateCustCode" FunctionName="SimpleQDBModel.Store.sp_GenerateCustCode" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

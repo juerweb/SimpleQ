@@ -408,7 +408,10 @@
     <Content Include="Views\SurveyCreation\SurveyCreation.cshtml" />
     <Content Include="Views\SurveyResults\SurveyResults.cshtml" />
     <Content Include="Views\Settings\Settings.cshtml" />
-    <Content Include="Views\Account\Account.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Confirmation.cshtml" />
+    <Content Include="Views\Account\InvalidConfirmation.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

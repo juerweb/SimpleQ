@@ -39,6 +39,7 @@ namespace SimpleQ.Webinterface.Models
         public int PaymentMethodId { get; set; }
         public int MinGroupSize { get; set; }
         public decimal CostBalance { get; set; }
+        public bool EmailConfirmed { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }

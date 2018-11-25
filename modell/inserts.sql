@@ -5,7 +5,7 @@ go
 
 
 begin transaction;
-insert into Customer values ('420420', 'inge gmbh.', 'g@b.i', 'asdfjklö', null, null, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 12, 3, 1, 5, 0);
+insert into Customer values ('420420', 'inge gmbh.', 'g@b.i', 'asdfjklö', null, null, 1, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 12, 3, 1, 5, 0);
 insert into Department values (1, 'development', '420420');
 insert into Department values (2, 'putzkleschn', '420420');
 insert into Person values (null); -- PersId 1

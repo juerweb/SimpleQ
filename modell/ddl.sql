@@ -43,6 +43,7 @@ create table Customer
 	CustPwdTmp varchar(max) collate Latin1_General_CS_AS null,
 	CustPwdHash varbinary(max) null,
 	RegistrationDate date null,
+	EmailConfirmed bit not null,
 	Street varchar(max) not null,
 	Plz varchar(16) not null,
 	City varchar(max) not null,
@@ -540,6 +541,23 @@ begin
 end
 go
 
+-- Zum Generieren eines neuen CustCode
+drop procedure sp_GenerateCustCode;
+go
+create procedure sp_GenerateCustCode
+as
+begin
+	declare @custCode char(6);
+
+	set @custCode = (select cast(right('000000' + cast(round(999999 * rand(), 0) as varchar(6)), 6) as char(6)));
+	while(@custCode in (select CustCode from Customer))
+	begin
+		set @custCode = (select cast(right('000000' + cast(round(999999 * rand(), 0) as varchar(6)), 6) as char(6)));
+	end
+
+	select @custCode as 'CustCode';
+end
+go
 
 -- Zum Berechnen der Per-Click-Kosten bei einer bestimmten Befragtenanzahl
 drop function fn_CalcPricePerClick;
@@ -566,7 +584,7 @@ end
 go
 
 
--- Zum hashen eines Strings
+-- Zum Hashen eines Strings
 drop function fn_GetHash;
 go
 create function fn_GetHash(@str varchar(max))

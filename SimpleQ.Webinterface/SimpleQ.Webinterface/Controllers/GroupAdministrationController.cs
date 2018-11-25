@@ -96,7 +96,7 @@ namespace SimpleQ.Webinterface.Controllers
                     return Index();
 
                 }
-                catch (Exception ex) when (ex is SmtpException || ex is SmtpFailedRecipientsException)
+                catch (SmtpException)
                 {
                     return Http.ServiceUnavailable("Sending failed due to internal error(s).");
                 }

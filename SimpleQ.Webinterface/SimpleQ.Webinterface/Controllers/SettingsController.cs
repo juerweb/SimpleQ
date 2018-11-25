@@ -141,7 +141,8 @@ namespace SimpleQ.Webinterface.Controllers
         }
         #endregion
 
-        #region AJAX-Methods[HttpGet]
+        #region AJAX-Methods
+        [HttpGet]
         public ActionResult ChangeMinGroup(int size)
         {
             using (var db = new SimpleQDBEntities())
