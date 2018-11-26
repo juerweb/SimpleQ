@@ -264,6 +264,12 @@
     <Content Include="Content\Images\Icons\support.png" />
     <Content Include="Content\Images\Icons\surveyResults.png" />
     <Content Include="Content\Images\Logos\simpleQ.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\Layout.css" />
     <Content Include="Content\SurveyCreation.css" />
     <Content Include="Content\SurveyResults.css" />
@@ -318,13 +324,6 @@
     </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Scripts\jquery.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.3.0.js" />
-    <Content Include="Scripts\jquery.signalR-2.3.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -361,8 +360,6 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />

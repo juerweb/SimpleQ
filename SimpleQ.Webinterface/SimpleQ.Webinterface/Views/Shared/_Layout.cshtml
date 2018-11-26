@@ -16,25 +16,48 @@
     <link rel="stylesheet" href="~/Content/SurveyCreation.css" />
     <link rel="stylesheet" href="~/Content/Site.css" />
     <link rel="stylesheet" href="~/Content/GroupAdministration.css" />
+    @*<link rel="stylesheet" href="~/Content/jquery-ui.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.structure.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.structure.min.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.theme.css" />
+    <link rel="stylesheet" href="~/Content/jquery-ui.theme.min.css" />*@
 
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"
+            integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk="
+            crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
+
 
     <script src="@Url.Content("~/Scripts/Chart.js")"></script>
     <script src="@Url.Content("~/Scripts/chartjs-plugin-labels.js")"></script>
-    <script src="@Url.Content("~/Scripts/qrious.js")"></script>
 
     <script>
 
-        $(document).ready(function () {
+        $(function () {
             $("#showNavbarBtn").hide();
+            $("#smallLeftCol").hide();
+            $("body").on("mousemove", function (event) {
+                if (event.pageX < 30 && $("#leftCol").is(":hidden")) {
+                    $("#smallLeftCol").show('slide', { direction: 'left' }, 500);
+                    $("#rightCol").removeClass("col-md-12").addClass("col-md-11");
+                }               
+                if (event.pageX > 150 && $("#smallLeftCol").is(":visible")) {
+                    //$("#smallLeftCol").hide('slide', { direction: 'left' }, 500);
+                    $("#smallLeftCol").hide(); 
+                    //setTimeout(function () { $("#rightCol").removeClass("col-md-11").addClass("col-md-12"); }, 500);
+                    //$("#rightCol").removeClass("col-md-11").addClass("col-md-12");
+                }
+            });
         });
 
         //function hideAllSubWindows() {
@@ -69,10 +92,19 @@
         //    $("#supportWindow").show();
         //}
         function hideNavbar() {
+
+            //$(document).ready(function () {
+            //    $("#flip").click(function () {
+            //        $("#panel").hide("slide", { direction: "left" }, 1000);
+            //    });
+            //});
+
+            //$("#leftCol").hide("slide", { direction: "left" }, 1000);
             $("#leftCol").hide();
             //$("#leftCol").slideDown(500);
             //$("#leftCol").hide("slide", { direction: "left" }, 1000);
             $("#rightCol").removeClass("col-md-10").addClass("col-md-12");
+            //$("#leftHoverDiv").show();
             $("#showNavbarBtn").show();
         }
         function showNavbar() {
@@ -81,8 +113,12 @@
             $("#leftCol").show();
         }
 
-    </script>
+        function hoverOnEdge() {
+            //document.getElementById("leftHoverDiv")
+            $("#leftHoverDiv").css("background-color", "red");
+        }
 
+    </script>
 
 </head>
 <body>
@@ -107,7 +143,7 @@
     <div class="row m-0">
         <div class="col-md-2 border-right border-dark p-0 m-0" id="leftCol">
             <div class="row m-0">
-                <div class="col-sm-11 p-0" id="navbar">
+                <div class="col-sm-12 p-0" id="navbar">
                     <ul class="list-group">
                         <li class="list-group-item p-0">
                             <a class="btn btn-light btn-block" href='@Url.Action("Index", "SurveyCreation")'>
@@ -169,37 +205,84 @@
                                 </span>
                             </a>
                         </li>
+                        <li class="list-group-item p-0">
+                            <button class="btn btn-primary btn-block pt-0 pb-0" id="hideNavbarBtn" onclick="hideNavbar()">
+                                <<<<<<<<<<
+                            </button>
+                        </li>
                     </ul>
                 </div>
-                <div class="col-sm-1 p-0">
-                    <button class="btn btn-primary btn-block p-2" id="hideNavbarBtn" onclick="hideNavbar()"><<br /><<br /><<br /><<br /><<br /><<br /><</button>
-                </div>
+                @*<div class="col-sm-1 p-0">
+                        <button class="btn btn-primary btn-block p-2" id="hideNavbarBtn" onclick="hideNavbar()"><<br /><<br /><<br /><<br /><<br /><<br /><</button>
+                    </div>*@
             </div>
         </div>
+        <div class="col-md-1  p-0 m-0" id="smallLeftCol">
+            <div class="row m-0">
+                <div class="col-sm-12 p-0" id="smallNavbar">
+                    <ul class="list-group pl-2">
+                        <li class="p-0 mt-1">
+                            <a href='@Url.Action("Index", "SurveyCreation")'>
+                                <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid" />
+                            </a>                                             
+                        </li>
+                        <li class="p-0 mt-1">
+                            <a href='@Url.Action("Index", "SurveyResults")'>
+                                <img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid" />
+                            </a>
+                        </li>
+                        <li class="p-0 mt-1">
+                            <a href='@Url.Action("Index", "GroupAdministration")'>
+                                <img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid" />
+                            </a>
+                        </li>
+                        <li class="p-0 mt-1">
+                            <a href='@Url.Action("Index", "Settings")'>
+                                <img src="../../Content/Images/Icons/settings.png" class="img-fluid" />
+                            </a>
+                        </li>
+                        <li class="p-0 mt-1">
+                            <a href='@Url.Action("Index", "Support")'>
+                                <img src="../../Content/Images/Icons/support.png" class="img-fluid" />
+                            </a>
+                        </li>
+                        <li class="p-0 mt-1">
+                            <button class="btn btn-primary btn-block pt-0 pb-0" id="hideNavbarBtn" onclick="hideNavbar()">
+                                <<<<<<<<<<
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            @*<div class="col-sm-1 p-0">
+                    <button class="btn btn-primary btn-block p-2" id="hideNavbarBtn" onclick="hideNavbar()"><<br /><<br /><<br /><<br /><<br /><<br /><</button>
+                </div>*@
+        </div>
+        @*<div id="leftHoverDiv" class="col-md-1" onmouseover="hoverOnEdge()" style="float:left;width:100px;height:auto;"></div>*@
         <div class="col-md-10 p-0 m-0" id="rightCol">
-            <button class="btn btn-primary p-2" id="showNavbarBtn" onclick="showNavbar()">><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />></button>
+            @*<button class="btn btn-primary p-2" id="showNavbarBtn" onclick="showNavbar()">><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />></button>*@
             @RenderBody()
             @*<div id="surveyCreationWindow">
-            <a href="~/ContactInformation/Index">ContactInformation</a>
-            @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
-        </div>
-        <div id="surveyResultsWindow">
-            @Html.Partial("~/Views/SurveyResults/_SurveyResults.cshtml", Model.SurveyResultsModel)
-        </div>
-        <div id="groupAdministrationWindow">
-            @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml", Model.GroupAdministrationModel)
-        </div>
-        <div id="settingsWindow">
-            @Html.Partial("~/Views/Settings/_Settings.cshtml")
-        </div>
-        <div id="supportWindow">
-            @Html.Partial("~/Views/Support/_Support.cshtml")
-        </div>*@
+                    <a href="~/ContactInformation/Index">ContactInformation</a>
+                    @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
+                </div>
+                <div id="surveyResultsWindow">
+                    @Html.Partial("~/Views/SurveyResults/_SurveyResults.cshtml", Model.SurveyResultsModel)
+                </div>
+                <div id="groupAdministrationWindow">
+                    @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml", Model.GroupAdministrationModel)
+                </div>
+                <div id="settingsWindow">
+                    @Html.Partial("~/Views/Settings/_Settings.cshtml")
+                </div>
+                <div id="supportWindow">
+                    @Html.Partial("~/Views/Support/_Support.cshtml")
+                </div>*@
         </div>
 
     </div>
 
-   
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
