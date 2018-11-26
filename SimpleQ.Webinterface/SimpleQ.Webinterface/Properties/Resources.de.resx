@@ -283,4 +283,7 @@
   <data name="TemplateDescription" xml:space="preserve">
     <value>Beim Anhaken, wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
   </data>
+  <data name="noTemplate" xml:space="preserve">
+    <value>kein Template</value>
+  </data>
 </root>

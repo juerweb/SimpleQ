@@ -283,4 +283,7 @@
   <data name="TemplateDescription" xml:space="preserve">
     <value>if you do the same question later, you dont have to write everything again</value>
   </data>
+  <data name="noTemplate" xml:space="preserve">
+    <value>no template</value>
+  </data>
 </root>
