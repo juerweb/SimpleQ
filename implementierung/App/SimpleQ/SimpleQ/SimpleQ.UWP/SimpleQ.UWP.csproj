@@ -199,6 +199,9 @@
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3">
       <Version>1.1.11</Version>
     </PackageReference>
+    <PackageReference Include="Toasts.Forms.Plugin">
+      <Version>3.3.2</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.3.0.912540" />
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.1" />
     <PackageReference Include="ZXing.Net.Mobile">

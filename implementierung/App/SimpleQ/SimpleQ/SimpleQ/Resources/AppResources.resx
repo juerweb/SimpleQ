@@ -307,7 +307,7 @@
     <value>Neuer Gruppe beitreten</value>
   </data>
   <data name="SelectUnregisterGroups" xml:space="preserve">
-    <value>Wählen Sie bitte alle Gruppen aus, aus welchen Sie austreten möchten.</value>
+    <value>Wählen Sie bitte alle Gruppen aus, von welchen Sie keine Fragen mehr erhalten möchten.</value>
   </data>
   <data name="Error204" xml:space="preserve">
     <value>Es ist ein Fehler beim Beantworten der Frage aufgetreten!</value>

@@ -28,6 +28,7 @@ using Xamarin.Forms.Internals;
 using System.IO;
 using SimpleQ.Shared;
 using System.Net.Http;
+using Plugin.Toasts;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -46,6 +47,15 @@ namespace SimpleQ
         public App ()
 		{
             Debug.WriteLine("NO: App started...", "Info");
+            var notificator = DependencyService.Get<IToastNotificator>();
+
+            INotificationOptions options = new NotificationOptions()
+            {
+                Title = "Title",
+                Description = "Description"
+            };
+
+            notificator.Notify(options);
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
 

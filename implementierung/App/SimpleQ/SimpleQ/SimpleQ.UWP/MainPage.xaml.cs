@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.Toasts.UWP;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Xamarin.Forms;
 
 namespace SimpleQ.UWP
 {
@@ -22,6 +24,8 @@ namespace SimpleQ.UWP
             this.InitializeComponent();
 
             ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer.Init();
+            DependencyService.Register<ToastNotification>(); // Register your dependency
+            ToastNotification.Init();
 
             LoadApplication(new SimpleQ.App());
         }

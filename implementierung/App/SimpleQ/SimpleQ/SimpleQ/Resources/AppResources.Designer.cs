@@ -592,7 +592,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Wählen Sie bitte alle Gruppen aus, aus welchen Sie austreten möchten. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wählen Sie bitte alle Gruppen aus, von welchen Sie keine Fragen mehr erhalten möchten. ähnelt.
         /// </summary>
         internal static string SelectUnregisterGroups {
             get {
