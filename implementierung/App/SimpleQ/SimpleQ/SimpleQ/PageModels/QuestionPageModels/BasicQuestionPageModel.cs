@@ -76,6 +76,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private IQuestionService questionService;
 
         protected Boolean isItAStartQuestion;
+        private Boolean isRunning;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -110,6 +111,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Methods
+
         public void QuestionAnswered(string answerText)
         {
             this.question.SurveyVote.ChosenAnswerOptions = this.question.GivenAnswers;

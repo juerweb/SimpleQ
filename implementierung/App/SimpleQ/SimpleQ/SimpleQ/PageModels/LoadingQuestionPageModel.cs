@@ -38,7 +38,8 @@ namespace SimpleQ.PageModels
             base.Init(initData);
             Debug.WriteLine("LoadingPageModel initalised with InitData: " + initData, "Info");
 
-            this.IsRunning = true;
+            LoadQuestion(int.Parse(initData.ToString()));
+
         }
         #endregion
 
@@ -67,6 +68,26 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
+        private async void LoadQuestion(int id)
+        {
+            this.IsRunning = true;
+            IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
+            SurveyModel surveyModel = await webAPIService.GetSurveyData(id);
+            this.IsRunning = false;
+            if (surveyModel.EndDate >= DateTime.Now)
+            {
+                questionService.AddQuestion(surveyModel);
+
+                App.OpenQuestionPage(surveyModel);
+            }
+            else
+            {
+                Debug.WriteLine("Survey with the id: " + surveyModel.SurveyId + " is in the past with enddate: " + surveyModel.EndDate, "Error");
+                IDialogService dialogService = FreshIOC.Container.Resolve<IDialogService>();
+
+                dialogService.ShowErrorDialog(102);
+            }
+        }
         #endregion
 
         #region INotifyPropertyChanged Implementation

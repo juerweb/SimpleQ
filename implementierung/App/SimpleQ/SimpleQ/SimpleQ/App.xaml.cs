@@ -158,7 +158,7 @@ namespace SimpleQ
             Debug.WriteLine("Erfolgreich?: " + b);*/
         }
 
-        private static async void OpenQuestionPage(SurveyModel surveyModel)
+        public static async void OpenQuestionPage(SurveyModel surveyModel)
         {
             IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
 
@@ -326,23 +326,10 @@ namespace SimpleQ
                 }
                 else
                 {
-                    SurveyModel surveyModel = await webAPIService.GetSurveyData(int.Parse(additionalData["SvyId"].ToString()));
-
-                    if (surveyModel.EndDate >= DateTime.Now)
-                    {
-                        Debug.WriteLine("T5");
-                        questionService.AddQuestion(surveyModel);
-
-                        OpenQuestionPage(surveyModel);
-                    }
-                    else
-                    {
-                        Debug.WriteLine("Survey with the id: " + surveyModel.SurveyId + " is in the past with enddate: " + surveyModel.EndDate, "Error");
-                        IDialogService dialogService = FreshIOC.Container.Resolve<IDialogService>();
-
-                        dialogService.ShowErrorDialog(102);
-                    }
-
+                    IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
+                    LoadingQuestionPage page = (LoadingQuestionPage)FreshPageModelResolver.ResolvePageModel<LoadingQuestionPageModel>(int.Parse(additionalData["SvyId"].ToString()));
+                    LoadingQuestionPageModel pageModel = (LoadingQuestionPageModel)page.BindingContext;
+                    navService.PushPage(page, pageModel);
                 }
 
             }
