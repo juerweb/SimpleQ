@@ -286,4 +286,13 @@
   <data name="noTemplate" xml:space="preserve">
     <value>no template</value>
   </data>
+  <data name="cancel" xml:space="preserve">
+    <value>cancel</value>
+  </data>
+  <data name="max" xml:space="preserve">
+    <value>max</value>
+  </data>
+  <data name="predictedPrice" xml:space="preserve">
+    <value>predicted price</value>
+  </data>
 </root>

@@ -133,6 +133,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die cancel ähnelt.
+        /// </summary>
+        public static string cancel {
+            get {
+                return ResourceManager.GetString("cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die There is already an category with this name  ähnelt.
         /// </summary>
         public static string categoryAlreadyExists {
@@ -322,6 +331,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die max ähnelt.
+        /// </summary>
+        public static string max {
+            get {
+                return ResourceManager.GetString("max", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die members ähnelt.
         /// </summary>
         public static string Members {
@@ -417,6 +435,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string PolytomousUnorderedSingle {
             get {
                 return ResourceManager.GetString("PolytomousUnorderedSingle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die predicted price ähnelt.
+        /// </summary>
+        public static string predictedPrice {
+            get {
+                return ResourceManager.GetString("predictedPrice", resourceCulture);
             }
         }
         
