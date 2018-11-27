@@ -49,7 +49,7 @@ namespace SimpleQ.PageModels
 
         #region Fields
         private Boolean closeAppAfterNotification;
-
+        private Boolean showMessageAfterAnswering;
 
         #endregion
 
@@ -67,6 +67,19 @@ namespace SimpleQ.PageModels
             } 
         }
 
+        public bool ShowMessageAfterAnswering
+        {
+            get => showMessageAfterAnswering;
+            set
+            {
+                showMessageAfterAnswering = value;
+                OnPropertyChanged();
+                BlobCache.UserAccount.InvalidateObject<Boolean>("ShowMessageAfterAnswering");
+                BlobCache.UserAccount.InsertObject<Boolean>("ShowMessageAfterAnswering", showMessageAfterAnswering);
+                Debug.WriteLine("ShowMessageAfterAnswering changed...", "Info");
+            } 
+        }
+
         #endregion
 
         #region Commands
@@ -78,6 +91,7 @@ namespace SimpleQ.PageModels
             try
             {
                 BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification").Subscribe(obj => { CloseAppAfterNotification = obj; });
+                BlobCache.UserAccount.GetObject<Boolean>("ShowMessageAfterAnswering").Subscribe(obj => { ShowMessageAfterAnswering = obj; });
             }
             catch (Exception e)
             {

@@ -14,6 +14,7 @@ using SimpleQ.Extensions;
 using Xamarin.Forms;
 using SimpleQ.Shared;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -145,6 +146,25 @@ namespace SimpleQ.PageModels.QuestionPageModels
             {
                 Boolean success = await this.questionService.QuestionAnswered(this.Question);
             }
+
+            Boolean ShowMessageAfterAnswering = false;
+            try
+            {
+                ShowMessageAfterAnswering = await BlobCache.UserAccount.GetObject<Boolean>("ShowMessageAfterAnswering");
+                if (ShowMessageAfterAnswering)
+                {
+                    if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+                    {
+                        IToastService toastService = FreshIOC.Container.Resolve<IToastService>();
+                        toastService.LongMessage("Frage erfolgreich beantwortet.");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Exception thrown " + e.StackTrace, "Exception");
+            }
+
             try
             {
                 Boolean CloseAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
@@ -152,6 +172,11 @@ namespace SimpleQ.PageModels.QuestionPageModels
                 Debug.WriteLine("CloseAppAfterNotification: " + CloseAppAfterNotification, "Info");
                 if (CloseAppAfterNotification && isItAStartQuestion)
                 {
+                    if (ShowMessageAfterAnswering)
+                    {
+                        await Task.Delay(int.Parse(AppResources.CloseInterval));
+                    }
+
                     Debug.WriteLine("Before Closer...", "Info");
                     ICloseApplication closer = DependencyService.Get<ICloseApplication>();
                     Debug.WriteLine("Closer: " + closer, "Info");

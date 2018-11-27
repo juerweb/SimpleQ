@@ -98,6 +98,7 @@
     <Compile Include="iOS.Localise.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="MessageIOS.cs" />
     <Compile Include="VersionAndBuild_iOS.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
@@ -196,9 +197,6 @@
     </PackageReference>
     <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3">
       <Version>1.1.11</Version>
-    </PackageReference>
-    <PackageReference Include="Toasts.Forms.Plugin">
-      <Version>3.3.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="3.3.0.912540" />
     <PackageReference Include="ZXing.Net.Mobile">

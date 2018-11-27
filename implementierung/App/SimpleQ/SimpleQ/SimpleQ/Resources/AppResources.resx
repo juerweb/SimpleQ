@@ -321,4 +321,11 @@
   <data name="Error102" xml:space="preserve">
     <value>Die Frage kann nicht beantwortet werden, da sie bereits abgelaufen ist.</value>
   </data>
+  <data name="CloseInterval" xml:space="preserve">
+    <value>1000</value>
+    <comment>NT</comment>
+  </data>
+  <data name="ShowMessageAfterAnswering" xml:space="preserve">
+    <value>Soll nach dem Beantworten einer Frage eine Nachricht angezeigt werden.</value>
+  </data>
 </root>

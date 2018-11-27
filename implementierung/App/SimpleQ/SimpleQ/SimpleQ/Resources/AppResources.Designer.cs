@@ -196,6 +196,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1000 ähnelt.
+        /// </summary>
+        internal static string CloseInterval {
+            get {
+                return ResourceManager.GetString("CloseInterval", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Kontakt ähnelt.
         /// </summary>
         internal static string Contact {
@@ -615,6 +624,15 @@ namespace SimpleQ.Resources {
         internal static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Soll nach dem Beantworten einer Frage eine Nachricht angezeigt werden. ähnelt.
+        /// </summary>
+        internal static string ShowMessageAfterAnswering {
+            get {
+                return ResourceManager.GetString("ShowMessageAfterAnswering", resourceCulture);
             }
         }
         

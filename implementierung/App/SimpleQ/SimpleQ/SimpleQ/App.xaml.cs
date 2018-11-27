@@ -28,7 +28,6 @@ using Xamarin.Forms.Internals;
 using System.IO;
 using SimpleQ.Shared;
 using System.Net.Http;
-using Plugin.Toasts;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -47,15 +46,6 @@ namespace SimpleQ
         public App ()
 		{
             Debug.WriteLine("NO: App started...", "Info");
-            var notificator = DependencyService.Get<IToastNotificator>();
-
-            INotificationOptions options = new NotificationOptions()
-            {
-                Title = "Title",
-                Description = "Description"
-            };
-
-            notificator.Notify(options);
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
 
@@ -68,6 +58,7 @@ namespace SimpleQ
 
             //GetKeyFromFile();
             InitializeComponent();
+
 
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
@@ -89,6 +80,17 @@ namespace SimpleQ
             {
                 Debug.WriteLine("CloseAppAfterNotification is not set... ", "Info");
                 BlobCache.UserAccount.InsertObject<Boolean>("CloseAppAfterNotification", true);
+            }
+
+            try
+            {
+                Boolean showMessageAfterAnswering = await BlobCache.UserAccount.GetObject<Boolean>("ShowMessageAfterAnswering");
+                Debug.WriteLine("CloseAppAfterNotification is set to " + showMessageAfterAnswering, "Info");
+            }
+            catch (KeyNotFoundException e)
+            {
+                Debug.WriteLine("ShowMessageAfterAnswering is not set... ", "Info");
+                BlobCache.UserAccount.InsertObject<Boolean>("ShowMessageAfterAnswering", true);
             }
         }
 
@@ -249,6 +251,7 @@ namespace SimpleQ
             FreshIOC.Container.Register<IQuestionService, QuestionService>();
             FreshIOC.Container.Register<ISettingsService, SettingsService>();
             FreshIOC.Container.Register<IWebAPIService, WebAPIService>();
+            FreshIOC.Container.Register<IToastService, ToastService>();
         }
 
 		protected override async void OnStart ()

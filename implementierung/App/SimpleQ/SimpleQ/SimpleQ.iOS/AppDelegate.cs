@@ -4,7 +4,6 @@ using System.Linq;
 using Acr.UserDialogs;
 using Com.OneSignal;
 using Foundation;
-using Plugin.Toasts;
 using UIKit;
 using UserNotifications;
 using Xamarin.Forms;
@@ -33,26 +32,6 @@ namespace SimpleQ.iOS
             LoadApplication(new App());
 
             OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540").EndInit();
-
-            // Request Permissions
-            if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
-            {
-                // Request Permissions
-                UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound, (granted, error) =>
-                {
-                    // Do something if needed
-                });
-            }
-            else if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
-            {
-                var notificationSettings = UIUserNotificationSettings.GetSettingsForTypes(
-                UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, null);
-
-                app.RegisterUserNotificationSettings(notificationSettings);
-            }
-
-            DependencyService.Register<ToastNotification>(); // Register your dependency
-            ToastNotification.Init();
 
             return base.FinishedLaunching(app, options);
         }

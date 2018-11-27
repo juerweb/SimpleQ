@@ -11,6 +11,12 @@
                     <Switch IsToggled="{Binding CloseAppAfterNotification}"></Switch>
                 </StackLayout>
             </Frame>
+            <Frame BorderColor="Black">
+                <StackLayout>
+                    <Label Text="{ext:Translate Text=ShowMessageAfterAnswering}"></Label>
+                    <Switch IsToggled="{Binding ShowMessageAfterAnswering}"></Switch>
+                </StackLayout>
+            </Frame>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

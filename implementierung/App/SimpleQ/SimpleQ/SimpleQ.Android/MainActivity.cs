@@ -12,7 +12,6 @@ using Com.OneSignal;
 using Xamarin.Forms;
 using Com.OneSignal.Abstractions;
 using System.Diagnostics;
-using Plugin.Toasts;
 
 namespace SimpleQ.Droid
 {
@@ -32,9 +31,6 @@ namespace SimpleQ.Droid
             OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540").HandleNotificationOpened(HandleNotificationOpened).EndInit();
 
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
-
-            DependencyService.Register<ToastNotification>(); // Register your dependency
-            ToastNotification.Init(this);
             UserDialogs.Init(this);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
