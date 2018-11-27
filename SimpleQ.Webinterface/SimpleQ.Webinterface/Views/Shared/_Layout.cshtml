@@ -42,80 +42,78 @@
     <script src="@Url.Content("~/Scripts/chartjs-plugin-labels.js")"></script>
 
     <script>
+        let navbarHidden = false;
+        
+        $(function () {           
+            if (window.localStorage.getItem('navbarHidden') === null) {
+                window.localStorage.setItem('navbarHidden', 'false');
+            } else {
+                navbarHidden = getNavbarHidden();
+            }
 
-        $(function () {
-            $("#showNavbarBtn").hide();
-            $("#smallLeftCol").hide();
+            if (!navbarHidden) {
+                $("#showNavbarBtn").hide();
+                $("#smallLeftCol").hide();                
+            } else {
+                $("#leftCol").hide();
+                $("#rightCol").removeClass("col-md-10").addClass("col-md-12");
+            }
+            $("#settingsOptions").hide();
+
+
             $("body").on("mousemove", function (event) {
-                if (event.pageX < 30 && $("#leftCol").is(":hidden")) {
+                if (event.pageX < 30 && navbarHidden) {
                     $("#smallLeftCol").show('slide', { direction: 'left' }, 500);
                     $("#rightCol").removeClass("col-md-12").addClass("col-md-11");
                 }               
                 if (event.pageX > 150 && $("#smallLeftCol").is(":visible")) {
-                    //$("#smallLeftCol").hide('slide', { direction: 'left' }, 500);
                     $("#smallLeftCol").hide(); 
-                    //setTimeout(function () { $("#rightCol").removeClass("col-md-11").addClass("col-md-12"); }, 500);
-                    //$("#rightCol").removeClass("col-md-11").addClass("col-md-12");
+                    $("#rightCol").removeClass("col-md-11").addClass("col-md-12");
                 }
             });
+            $("#smallSettingBtn").click(function () {
+                if ($("#settingsOptions").is(":visible")) {
+                    $("#settingsOptions").hide(500);
+                } else {
+                    $("#settingsOptions").show(500);
+                }
+
+            });
+
         });
 
-        //function hideAllSubWindows() {
-        //    $("#surveyCreationWindow").hide();
-        //    $("#surveyResultsWindow").hide();
-        //    $("#groupAdministrationWindow").hide();
-        //    $("#settingsWindow").hide();
-        //    $("#supportWindow").hide();
-        //    $("#multiResultPartial").hide();
-        //    $("#singleResultPartial").hide();
-        //}
-
-        //function showSurveyCreationWindow() {
-        //    hideAllSubWindows();
-        //    $("#surveyCreationWindow").show();
-        //}
-        //function showSurveyResultsWindow() {
-        //    hideAllSubWindows();
-        //    switchToMulti();
-        //    $("#surveyResultsWindow").show();
-        //}
-        //function showGroupAdministrationWindow() {
-        //    hideAllSubWindows();
-        //    $("#groupAdministrationWindow").show();
-        //}
-        //function showSettingsWindow() {
-        //    hideAllSubWindows();
-        //    $("#settingsWindow").show();
-        //}
-        //function showSupportWindow() {
-        //    hideAllSubWindows();
-        //    $("#supportWindow").show();
-        //}
         function hideNavbar() {
-
-            //$(document).ready(function () {
-            //    $("#flip").click(function () {
-            //        $("#panel").hide("slide", { direction: "left" }, 1000);
-            //    });
-            //});
-
-            //$("#leftCol").hide("slide", { direction: "left" }, 1000);
+            navbarHidden = true;
+            setNavbarHidden(navbarHidden);
             $("#leftCol").hide();
-            //$("#leftCol").slideDown(500);
-            //$("#leftCol").hide("slide", { direction: "left" }, 1000);
             $("#rightCol").removeClass("col-md-10").addClass("col-md-12");
-            //$("#leftHoverDiv").show();
             $("#showNavbarBtn").show();
         }
+
         function showNavbar() {
+            $("#smallLeftCol").hide();
+            navbarHidden = false;
+            setNavbarHidden(navbarHidden);
+            $("#settingsOptions").hide();
             $("#showNavbarBtn").hide();
-            $("#rightCol").removeClass("col-md-12").addClass("col-md-10");
-            $("#leftCol").show();
+            $("#rightCol").removeClass("col-md-11").addClass("col-md-10");
+            $("#leftCol").show('slide', { direction: 'left' }, 500);
         }
 
-        function hoverOnEdge() {
-            //document.getElementById("leftHoverDiv")
-            $("#leftHoverDiv").css("background-color", "red");
+        function setNavbarHidden(boolValue) {
+            if (boolValue) {
+                window.localStorage.setItem('navbarHidden', 'true');
+            } else {
+                window.localStorage.setItem('navbarHidden', 'false');
+            }    
+        }
+
+        function getNavbarHidden() {
+            if (window.localStorage.getItem('navbarHidden') === 'true') {
+                return true;
+            } else {
+                return false;
+            }
         }
 
     </script>
@@ -128,16 +126,20 @@
         </div>
         <div class="col-md-6 d-flex justify-content-end align-items-center">
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
-            <a class="btn btn-light border border-danger">
+            <div class="mr-4">
                 <span class="row">
-                    <span class="col-6">
-                        Logout
-                    </span>
-                    <span class="col-4">
-                        <img src="../../Content/Images/Icons/logout.png" class="img-fluid navbar-img" />
-                    </span>
+                    <button type="button" class="btn btn-danger btn-block" id="logout">
+                        <span class="d-flex justify-content-between">
+                            <span>Logout</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe8ac;</i>
+                        </span>
+                    </button>
                 </span>
-            </a>
+                <span class="row" id="verion" style="font-size:medium">
+                    Version: 2.3.4.5
+                </span>
+                
+            </div>
+            
         </div>
     </div>
     <div class="row m-0">
@@ -182,7 +184,7 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "Settings")'>
+                            <a class="btn btn-light btn-block">
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
                                         Einstellungen
@@ -206,8 +208,8 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <button class="btn btn-primary btn-block pt-0 pb-0" id="hideNavbarBtn" onclick="hideNavbar()">
-                                <<<<<<<<<<
+                            <button class="btn btn-light btn-block pb-0 border border-primary" id="hideNavbarBtn" onclick="hideNavbar()">
+                                <i class="material-icons">&#xe020;</i>
                             </button>
                         </li>
                     </ul>
@@ -221,63 +223,49 @@
             <div class="row m-0">
                 <div class="col-sm-12 p-0" id="smallNavbar">
                     <ul class="list-group pl-2">
-                        <li class="p-0 mt-1">
+                        <li class="p-0 mt-3 d-flex justify-content-center">
                             <a href='@Url.Action("Index", "SurveyCreation")'>
-                                <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid" />
-                            </a>                                             
+                                <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-hidden-img" />
+                            </a>
                         </li>
-                        <li class="p-0 mt-1">
+                        <li class="p-0 mt-1 d-flex justify-content-center">
                             <a href='@Url.Action("Index", "SurveyResults")'>
-                                <img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid" />
+                                <img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid navbar-hidden-img" />
                             </a>
                         </li>
-                        <li class="p-0 mt-1">
+                        <li class="p-0 mt-1 d-flex justify-content-center">
                             <a href='@Url.Action("Index", "GroupAdministration")'>
-                                <img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid" />
+                                <img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid navbar-hidden-img" />
                             </a>
                         </li>
-                        <li class="p-0 mt-1">
-                            <a href='@Url.Action("Index", "Settings")'>
-                                <img src="../../Content/Images/Icons/settings.png" class="img-fluid" />
+                        <li id="smallSettingBtn" class="p-0 mt-1 d-flex justify-content-center">
+                            <a>
+                                <img src="../../Content/Images/Icons/settings.png" class="img-fluid navbar-hidden-img" />
                             </a>
                         </li>
-                        <li class="p-0 mt-1">
+                        <li id="settingsOptions">
+                            <ul class="list-group">
+                                <li class="settingsOption mt-1"><button type="button" href="#" class="btn btn-primary btn-block">Anwendung</button></li>
+                                <li class="settingsOption mt-1"><button type="button" href="#" class="btn btn-primary btn-block">Rechnung</button></li>
+                                <li class="settingsOption mt-1"><button type="button" href="#" class="btn btn-primary btn-block">Konto</button></li>
+                            </ul>
+                        </li>                        
+                        <li class="p-0 mt-1 d-flex justify-content-center">
                             <a href='@Url.Action("Index", "Support")'>
-                                <img src="../../Content/Images/Icons/support.png" class="img-fluid" />
+                                <img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-hidden-img" />
                             </a>
                         </li>
-                        <li class="p-0 mt-1">
-                            <button class="btn btn-primary btn-block pt-0 pb-0" id="hideNavbarBtn" onclick="hideNavbar()">
-                                <<<<<<<<<<
+                        <li class="p-0 mt-2 d-flex justify-content-center">
+                            <button class="btn btn-light pb-0 border border-primary" onclick="showNavbar()">
+                                <i class="material-icons">&#xe01f;</i>                               
                             </button>
                         </li>
                     </ul>
                 </div>
             </div>
-            @*<div class="col-sm-1 p-0">
-                    <button class="btn btn-primary btn-block p-2" id="hideNavbarBtn" onclick="hideNavbar()"><<br /><<br /><<br /><<br /><<br /><<br /><</button>
-                </div>*@
         </div>
-        @*<div id="leftHoverDiv" class="col-md-1" onmouseover="hoverOnEdge()" style="float:left;width:100px;height:auto;"></div>*@
         <div class="col-md-10 p-0 m-0" id="rightCol">
-            @*<button class="btn btn-primary p-2" id="showNavbarBtn" onclick="showNavbar()">><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />><br />></button>*@
             @RenderBody()
-            @*<div id="surveyCreationWindow">
-                    <a href="~/ContactInformation/Index">ContactInformation</a>
-                    @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
-                </div>
-                <div id="surveyResultsWindow">
-                    @Html.Partial("~/Views/SurveyResults/_SurveyResults.cshtml", Model.SurveyResultsModel)
-                </div>
-                <div id="groupAdministrationWindow">
-                    @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml", Model.GroupAdministrationModel)
-                </div>
-                <div id="settingsWindow">
-                    @Html.Partial("~/Views/Settings/_Settings.cshtml")
-                </div>
-                <div id="supportWindow">
-                    @Html.Partial("~/Views/Support/_Support.cshtml")
-                </div>*@
         </div>
 
     </div>
