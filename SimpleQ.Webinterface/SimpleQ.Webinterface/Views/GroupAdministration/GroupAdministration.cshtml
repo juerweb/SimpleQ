@@ -6,7 +6,7 @@
     <h2>@Resources.groupAdministrationHeader</h2>
 </div>
 <div class="row mt-1 pl-3 ml-0 mr-0">
-    <div class="col-md-4 pr-0 border-right">
+    <div class="col-md-4 pr-0">
         <h4 class="text-center">Gruppenauswahl</h4>
         <div class="form-group mt-2 mb-1">
             <label for="groups">@Resources.groups</label>
@@ -37,21 +37,19 @@
         </div>
 
 
-        <button class="btn btn-primary btn-block mt-2"><span class="d-flex justify-content-between"><span>Mitglieder hinzufügen</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe0d0;</i></span></button>
-        <button class="btn btn-danger btn-block mt-2"><span class="d-flex justify-content-between"><span>Gruppe löschen</span><i id="openAddAnswerUpDownIcon" class="material-icons">	&#xe92b;</i></span></button>
+        <button class="btn btn-primary btn-block mt-2" onclick="openMailDiv()"><span class="d-flex justify-content-between"><span>Mitglieder einladen</span><i id="inviteMatesIcon" class="material-icons">&#xe01f;</i></span></button>
+        <button class="btn btn-danger btn-block mt-2"><span class="d-flex justify-content-between"><span>Gruppe löschen</span><i class="material-icons">	&#xe92b;</i></span></button>
 
     </div>
-    <div class="col-md-5 border-left">
+    <div class="col-md-5 border-left" id="mailDiv">
         <h4 class="text-center">Infos</h4>
-        <div>
-            <input class="form-control" type="text" />
-        </div>
-        <div>
-            <textarea>
-                This is where the user can enter text...
-            </textarea>
-        </div>
-        
+
+        <label>@Resources.subject</label>
+        <input class="form-control" type="text" placeholder="@Resources.invitationToSimpleQ"/>
+
+        <label class="mt-2 mb-0">@Resources.content</label>
+        <div id="textEditorDiv" class="textEditor"></div>
+        <button class="btn btn-primary btn-block mt-2"><span class="d-flex justify-content-between"><span>Email versenden</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe0d0;</i></span></button>
 
     </div>
 </div>
@@ -87,20 +85,13 @@
 <script>
     let groups = {};
     let chosenId = 0;
-    //if (typeof chosen === 'undefined') {
-        let chosen;
-    //}   
+    let chosen;
+
 
     $(function () { // <-- Things to do at startup
-        //let chosenDepId = 0;
-        //fill groups array
-        @*@{
-            foreach(Department d in Model.Departments)
-            {
-                @:groups['@d.DepName'] = '@d.DepId';
-                @:if (chosen === '@d.DepName') { chosenDepId = '@d.DepId' };
-            }
-        }*@
+
+        mailEditorStartup();
+
         @{
             foreach(Department d in Model.Departments)
             {
@@ -161,7 +152,7 @@
                     '<input name="groups" type="radio" value="' + id + '">' +
                     groupName +
                     '</li>';
-                
+
                 updateGroupNameInput(groupName);
 
                 //$("input[type=radio][value=" + id + "]").prop("checked", true);
@@ -233,7 +224,25 @@
         let edited = '<button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>';
         tempTextGroups = "";
         button.parentElement.parentElement.parentElement.parentElement.children[1].innerHTML = edited;
+    }
 
+    function mailEditorStartup() {
+        $("#mailDiv").hide();
+        $("#textEditorDiv").trumbowyg({
+            lang: '@Resources.textEditorLanguage'
+        });
+        $('#mailDiv').trumbowyg('html', "<p>@Resources.downloadAppHere</p><a href='#'>https://play.google.com/store/apps/details?id=com.ubisoft.accovenant</a>");
+    }
+
+    function openMailDiv() {
+        if ($("#mailDiv").is(":hidden")) {
+            $("#mailDiv").show('slide', { direction: 'left' }, 500);
+            document.getElementById("inviteMatesIcon").innerHTML = "&#xe020;";
+        } else {
+            $("#mailDiv").hide('slide', { direction: 'left' }, 500);
+            document.getElementById("inviteMatesIcon").innerHTML = "&#xe0d0;";
+        }
+        
     }
 
 </script>

@@ -289,10 +289,26 @@
   <data name="cancel" xml:space="preserve">
     <value>cancel</value>
   </data>
+  <data name="content" xml:space="preserve">
+    <value>content</value>
+  </data>
+  <data name="downloadAppHere" xml:space="preserve">
+    <value>You can download the app here</value>
+  </data>
+  <data name="invitationToSimpleQ" xml:space="preserve">
+    <value>invitation to simpleQ</value>
+  </data>
   <data name="max" xml:space="preserve">
     <value>max</value>
   </data>
   <data name="predictedPrice" xml:space="preserve">
     <value>predicted price</value>
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>subject</value>
+    <comment>for mail</comment>
+  </data>
+  <data name="textEditorLanguage" xml:space="preserve">
+    <value>en</value>
   </data>
 </root>

@@ -16,12 +16,8 @@
     <link rel="stylesheet" href="~/Content/SurveyCreation.css" />
     <link rel="stylesheet" href="~/Content/Site.css" />
     <link rel="stylesheet" href="~/Content/GroupAdministration.css" />
-    @*<link rel="stylesheet" href="~/Content/jquery-ui.css" />
-    <link rel="stylesheet" href="~/Content/jquery-ui.min.css" />
-    <link rel="stylesheet" href="~/Content/jquery-ui.structure.css" />
-    <link rel="stylesheet" href="~/Content/jquery-ui.structure.min.css" />
-    <link rel="stylesheet" href="~/Content/jquery-ui.theme.css" />
-    <link rel="stylesheet" href="~/Content/jquery-ui.theme.min.css" />*@
+
+    <link rel="stylesheet" href="~/Scripts/texteditor/ui/trumbowyg.css"><!--Texteditor-->
 
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -40,11 +36,13 @@
 
     <script src="@Url.Content("~/Scripts/Chart.js")"></script>
     <script src="@Url.Content("~/Scripts/chartjs-plugin-labels.js")"></script>
+    <script src="@Url.Content("~/Scripts/texteditor/trumbowyg.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/texteditor/langs/de.min.js")"></script>
 
     <script>
         let navbarHidden = false;
-        
-        $(function () {           
+
+        $(function () {
             if (window.localStorage.getItem('navbarHidden') === null) {
                 window.localStorage.setItem('navbarHidden', 'false');
             } else {
@@ -53,7 +51,7 @@
 
             if (!navbarHidden) {
                 $("#showNavbarBtn").hide();
-                $("#smallLeftCol").hide();                
+                $("#smallLeftCol").hide();
             } else {
                 $("#leftCol").hide();
                 $("#rightCol").removeClass("col-md-10").addClass("col-md-12");
@@ -65,9 +63,9 @@
                 if (event.pageX < 30 && navbarHidden) {
                     $("#smallLeftCol").show('slide', { direction: 'left' }, 500);
                     $("#rightCol").removeClass("col-md-12").addClass("col-md-11");
-                }               
+                }
                 if (event.pageX > 150 && $("#smallLeftCol").is(":visible")) {
-                    $("#smallLeftCol").hide(); 
+                    $("#smallLeftCol").hide();
                     $("#rightCol").removeClass("col-md-11").addClass("col-md-12");
                 }
             });
@@ -105,7 +103,7 @@
                 window.localStorage.setItem('navbarHidden', 'true');
             } else {
                 window.localStorage.setItem('navbarHidden', 'false');
-            }    
+            }
         }
 
         function getNavbarHidden() {

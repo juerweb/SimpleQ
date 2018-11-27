@@ -151,6 +151,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die content ähnelt.
+        /// </summary>
+        public static string content {
+            get {
+                return ResourceManager.GetString("content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die count ähnelt.
         /// </summary>
         public static string count {
@@ -183,6 +192,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string doughnut {
             get {
                 return ResourceManager.GetString("doughnut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die You can download the app here ähnelt.
+        /// </summary>
+        public static string downloadAppHere {
+            get {
+                return ResourceManager.GetString("downloadAppHere", resourceCulture);
             }
         }
         
@@ -246,6 +264,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string invalidInput {
             get {
                 return ResourceManager.GetString("invalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die invitation to simpleQ ähnelt.
+        /// </summary>
+        public static string invitationToSimpleQ {
+            get {
+                return ResourceManager.GetString("invitationToSimpleQ", resourceCulture);
             }
         }
         
@@ -493,6 +520,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die subject ähnelt.
+        /// </summary>
+        public static string subject {
+            get {
+                return ResourceManager.GetString("subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die ... ähnelt.
         /// </summary>
         public static string surveyCategoryHeader {
@@ -543,6 +579,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string TemplateDescription {
             get {
                 return ResourceManager.GetString("TemplateDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die en ähnelt.
+        /// </summary>
+        public static string textEditorLanguage {
+            get {
+                return ResourceManager.GetString("textEditorLanguage", resourceCulture);
             }
         }
         
