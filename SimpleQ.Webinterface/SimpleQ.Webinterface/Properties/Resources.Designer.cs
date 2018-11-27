@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SimpleQ.Webinterface.App_LocalResources {
+namespace SimpleQ.Webinterface.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SimpleQ.Webinterface.App_LocalResources.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SimpleQ.Webinterface.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -642,6 +642,15 @@ namespace SimpleQ.Webinterface.App_LocalResources {
         public static string surveyTemplateHeader {
             get {
                 return ResourceManager.GetString("surveyTemplateHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to yeah.
+        /// </summary>
+        public static string TemplateDescription {
+            get {
+                return ResourceManager.GetString("TemplateDescription", resourceCulture);
             }
         }
         

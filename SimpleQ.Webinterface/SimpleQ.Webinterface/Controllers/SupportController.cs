@@ -13,7 +13,7 @@ namespace SimpleQ.Webinterface.Controllers
     public class SupportController : Controller
     {
         [HttpGet]
-        public ActionResult LoadFaqEntries()
+        public ActionResult Index()
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -22,7 +22,7 @@ namespace SimpleQ.Webinterface.Controllers
                     FaqEntries = db.FaqEntries.ToList()
                 };
 
-                return PartialView("_Support", model: model);
+                return View("Support", model: model);
             }
         }
 
@@ -64,7 +64,7 @@ namespace SimpleQ.Webinterface.Controllers
                 };
                 client.Send(msg);
 
-                return LoadFaqEntries();
+                return Index();
             }
             catch (ArgumentNullException ex)
             {

@@ -30,7 +30,6 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         #region View to Controller
         public string Password { get; set; }
         public List<int> CheckedAnswerTypes { get; set; }
-        public List<int> UncheckedAnswerTypes { get; set; }
         #endregion
     }
 }

@@ -328,4 +328,7 @@
   <data name="PasswordConfirm" xml:space="preserve">
     <value>Confirm password</value>
   </data>
+  <data name="TemplateDescription" xml:space="preserve">
+    <value>yeah</value>
+  </data>
 </root>

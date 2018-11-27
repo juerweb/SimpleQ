@@ -157,22 +157,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_LocalResources\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="App_LocalResources\Resources.de.Designer.cs">
+    <Compile Include="Properties\Resources.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.de.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GroupAdministrationController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
@@ -277,10 +276,10 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="App_LocalResources\Resources.de.resx">
+    <EmbeddedResource Include="Properties\Resources.de.resx">
+      <SubType>Designer</SubType>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <Content Include="Models\SimpleQModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -350,11 +349,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\SurveyCreation\_SurveyCreation.cshtml" />
-    <Content Include="Views\GroupAdministration\_GroupAdministration.cshtml" />
-    <Content Include="Views\Settings\_Settings.cshtml" />
-    <Content Include="Views\Support\_Support.cshtml" />
+    <Content Include="Views\Settings\Settings.cshtml" />
+    <Content Include="Views\Support\Support.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
     <Content Include="Scripts\bootstrap.js.map" />
@@ -378,9 +374,11 @@
     <Content Include="Scripts\umd\popper.min.js.map" />
     <Content Include="Views\SurveyResults\_MultiResult.cshtml" />
     <Content Include="Views\SurveyResults\_SingleResult.cshtml" />
-    <Content Include="Views\SurveyResults\_SurveyResults.cshtml" />
     <Content Include="Scripts\qrious.js.map" />
     <Content Include="Web.config" />
+    <Content Include="Views\GroupAdministration\GroupAdministration.cshtml" />
+    <Content Include="Views\SurveyCreation\SurveyCreation.cshtml" />
+    <Content Include="Views\SurveyResults\SurveyResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -390,6 +388,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="App_LocalResources\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -399,7 +398,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="App_LocalResources\Resources.resx">
+    <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

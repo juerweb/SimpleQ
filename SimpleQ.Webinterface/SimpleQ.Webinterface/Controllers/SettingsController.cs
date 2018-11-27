@@ -13,7 +13,7 @@ namespace SimpleQ.Webinterface.Controllers
     public class SettingsController : Controller
     {
         [HttpGet]
-        public ActionResult LoadSettings()
+        public ActionResult Index()
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -39,7 +39,7 @@ namespace SimpleQ.Webinterface.Controllers
                     DataStoragePeriod = cust.DataStoragePeriod,
                     PaymentMethodId = cust.PaymentMethodId
                 };
-                return PartialView(viewName: "_Settings", model: model);
+                return View(viewName: "Settings", model: model);
             }
         }
 
@@ -76,14 +76,16 @@ namespace SimpleQ.Webinterface.Controllers
 
                 var query = db.SurveyCategories.Where(c => c.CustCode == CustCode);
 
-                db.SurveyCategories.Add(new SurveyCategory
+                var cat = new SurveyCategory
                 {
                     CatId = (query.Count() == 0) ? 1 : query.Max(c => c.CatId) + 1,
                     CatName = catName,
                     CustCode = CustCode
-                });
+                };
+                db.SurveyCategories.Add(cat);
                 db.SaveChanges();
-                return Http.Ok();
+
+                return Content($"{cat.CatId}", "text/plain");
             }
         }
 
@@ -159,17 +161,16 @@ namespace SimpleQ.Webinterface.Controllers
                 if (req.CheckedAnswerTypes == null)
                     return Http.BadRequest("CheckedAnswerTypes must not be null.");
 
-                if (req.UncheckedAnswerTypes == null)
-                    return Http.BadRequest("UncheckedAnswerTypes must not be null.");
+                var uncheckedAnswerTypes = db.AnswerTypes.Select(a => a.TypeId).Except(req.CheckedAnswerTypes).ToList();
 
-                foreach (var typeId in req.CheckedAnswerTypes.Concat(req.UncheckedAnswerTypes).Distinct())
+                foreach (var typeId in req.CheckedAnswerTypes.Distinct())
                 {
                     if (db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault() == null)
                         return Http.Conflict("AnswerType does not exist.");
                 }
 
 
-                req.UncheckedAnswerTypes.ForEach(typeId =>
+                uncheckedAnswerTypes.ForEach(typeId =>
                 {
                     cust.AnswerTypes.Remove(db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault());
                 });
@@ -181,7 +182,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 db.SaveChanges();
 
-                return LoadSettings();
+                return Index();
             }
         }
 
@@ -217,8 +218,8 @@ namespace SimpleQ.Webinterface.Controllers
                     cust.PaymentMethodId = req.PaymentMethodId;
 
                     db.SaveChanges();
-
-                    return LoadSettings();
+                    
+                    return Index();
                 }
                 catch (ArgumentNullException ex)
                 {

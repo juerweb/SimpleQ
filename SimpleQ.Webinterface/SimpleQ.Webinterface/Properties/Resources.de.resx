@@ -328,4 +328,13 @@
   <data name="PasswordConfirm" xml:space="preserve">
     <value>Passwort bestätigen</value>
   </data>
+  <data name="dddd" xml:space="preserve">
+    <value>ddd</value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value>sssss</value>
+  </data>
+  <data name="TemplateDescription" xml:space="preserve">
+    <value>yeah</value>
+  </data>
 </root>

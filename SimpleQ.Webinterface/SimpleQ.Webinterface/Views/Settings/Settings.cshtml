@@ -1,7 +1,6 @@
 ﻿@using System.Resources
-@using SimpleQ.Webinterface.App_LocalResources
+@using SimpleQ.Webinterface.Properties
 @model SimpleQ.Webinterface.Models.ViewModels.SettingsModel
-
 
 <div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>Einstellungen</h2>
@@ -15,10 +14,10 @@
             <button type="button" class="btn btn-primary btn-block mt-3" onclick="changeMinimumGroupSize()" disabled id="changeMinimumGroupSize">Speichern</button>
         </div>
         <h4 class="text-center">Umfragekategorie</h4>
-        <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer" onclick="openAddAnswer()"><span class="d-flex justify-content-between"><span>Answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Kategorien</span></span></button>
         <div id="answerBox" class="border border-dark mt-2">
             <div class="row mt-1 mb-1 mr-0 ml-0">
-                <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>
+                <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="Umfragekategorie hinzufügen" /></div>
                 <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>
                 <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions">
                     @{
@@ -39,34 +38,55 @@
                 </ul>
             </div>
         </div>
-        <button type="button" class="btn btn-primary btn-block mt-3" onclick="saveUmfr()" id="changeMinimumGroupSize">Speichern</button>
-    </div>
-    <div class="col-md-4">
-        <h4 class="text-center">@Resources.ApplicationSettings</h4>
-        <div class="form-group mt-2 mb-1">
-            <label for="groups">Aktivierte Modi</label>
-            <div class="border border-dark">
-                <ul class="list-group groups-ul pl-2" id="modes">
-                    @{ List<string> t = new List<string>();
-                        t.Add("Ampelsystem");
-                        t.Add("Ja/Nein Umfrage");
-                        t.Add("Ein Wort Antwort");
-                        t.Add("Test");
-                        t.Add("Test");
-                        t.Add("Test");
-                        t.Add("Test");
-                    }
-                    @for (var i = 0; i < t.Count; i++)
-                    {
-                        <li>
-                            <input type="checkbox" name="checkboxcheck" onclick="checkboxChange()">
-                            <span>@t[i]</span>
-                        </li>
-                    }
+        <h4 class="text-center">Templates</h4>
+        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Templates</span></span></button>
+        <div id="answerBox" class="border border-dark mt-2">
+            <div class="row mt-1 mb-1 mr-0 ml-0">
+                <ul class="list-group" style="width:100%" id="answerULT" name="TextAnswerOptions">
+                    <li class="list-group-item">
+                        <span class="d-flex justify-content-between">
+                            <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="Nice" />
+                            <span>
+                                <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe5cd;</i></button>
+                            </span>
+                        </span>
+                    </li>
                 </ul>
             </div>
         </div>
-        <button class="btn btn-primary btn-block mt-3" disabled id="save" onclick="answerChecked()">Speichern</button>
+    </div>
+    <div class="col-md-4">
+        @using (Html.BeginForm("ChangeAnswerTypes", "Settings", FormMethod.Post))
+        {
+            <h4 class="text-center">@Resources.ApplicationSettings</h4>
+            <div class="form-group mt-2 mb-1">
+                <label for="groups">Aktivierte Modi</label>
+                <div class="border border-dark">
+                    <ul class="list-group groups-ul pl-2" id="modes">
+                        @{
+                            foreach (var c in Model.ActivatedAnswerTypes)
+                            {
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" checked />@c.TypeDesc
+                                    </label>
+                                </li>
+                            }
+                            foreach (var c in Model.DeactivatedAnswerTypes)
+                            {
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" />@c.TypeDesc
+                                    </label>
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-3" id="save">Speichern</button>
+                            }
         <h4 class="text-center">@Resources.Password</h4>
         <div class="form-group mt-2">
             <label for="password">@Resources.Password</label>
@@ -93,7 +113,8 @@
                 @Html.LabelFor(m => m.Country, Resources.Country);
                 @Html.TextBoxFor(m => m.Country, new { @class = "form-control mr-0" });
                 @Html.LabelFor(m => m.LanguageCode, Resources.Language);
-                @Html.TextBoxFor(m => m.LanguageCode, new { @class = "form-control mr-0" });
+                @*@Html.TextBoxFor(m => m.LanguageCode, new { @class = "form-control mr-0" });*@
+                @Html.DropDownListFor(m => m.LanguageCode, new SelectList(new[] { "DE", "EN" }), new { @class = "form-control mr-0" })
                 @Html.LabelFor(m => m.Email, Resources.Email);
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
                 @Html.LabelFor(m => m.DataStoragePeriod, Resources.DataStoragePeriod);
@@ -131,14 +152,16 @@
 
 <script>
     var dictionary = {};
-                var survCats = [];
+    var survCats = [];
     @{
         foreach (var c in Model.Categories)
         {
             @:dictionary[@c.CatId] = "@c.CatName";
-                }
+                                }
     }
-
+    var dictionary2 = {};
+    dictionary2["0"] = "Nice";
+    console.log(getKeyByValue(dictionary2, "nice"));
     var changed = false;
     var checkedAnswers = [];
     //var answers = [];
@@ -285,10 +308,10 @@
         }
     }
 
-    function addAnswer() {
-        let ul = document.getElementById("answerUL");
-        let input = document.getElementById("answerInput").value;
-
+    function addAnswerTemplates() {
+        let ul = document.getElementById("answerULT");
+        let input = document.getElementById("answerInputT").value;
+        let id;
         if (input === "") {
             alert('@Resources.invalidInput');
             return;
@@ -296,9 +319,76 @@
             alert('@Resources.invalidInput');
             return;
         }
+        @*let url = "@Url.Action("AddCategory", "Settings")?catName=" + encodeURIComponent(input);
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
+            },
+            success: function(data) {
+                id = data;
+            }
+        });*@
+
 
         //survCats.push(input);
-        dictionary["schaftid"] = input;
+        dictionary2[id] = input;
+        let normal =
+        '<li class="list-group-item">' +
+            '   <span class="d-flex justify-content-between">' +
+            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>' +
+            '   </span>' +
+            '</li>';
+        ul.innerHTML += normal;
+        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+    }
+
+    function addAnswer() {
+        let ul = document.getElementById("answerUL");
+        let input = document.getElementById("answerInput").value;
+        let id;
+        if (input === "") {
+            alert('@Resources.invalidInput');
+            return;
+        } else if (survCats.includes(input)) {
+            alert('@Resources.invalidInput');
+            return;
+        }
+        let url = "@Url.Action("AddCategory", "Settings")?catName=" + encodeURIComponent(input);
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
+            },
+            success: function(data) {
+                id = data;
+            }
+        });
+
+
+        //survCats.push(input);
+        dictionary[id] = input;
         let normal =
         '<li class="list-group-item">' +
             '   <span class="d-flex justify-content-between">' +
@@ -312,6 +402,48 @@
         ul.innerHTML += normal;
         $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
     }
+
+    function deleteAnswerTemplate(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        console.log(text);
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        let key = getKeyByValue(dictionary2, text);
+        console.log(key);
+        delete dictionary2[key];
+        @*let url = "@Url.Action("DeleteCategory", "Settings")?catId=" + key;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
+            }
+        });*@
+        button.parentElement.parentElement.parentElement.remove();
+        if (survCats.length === 0) {
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+        }
+        console.log(dictionary2);
+    }
+
 
     function deleteAnswer(button) {
         let text = button.parentElement.parentElement.children[0].value;
