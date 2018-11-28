@@ -6,7 +6,7 @@
     <h2>@Resources.groupAdministrationHeader</h2>
 </div>
 <div class="row mt-1 pl-3 ml-0 mr-0">
-    <div class="col-md-4 pr-0">
+    <div id="col1" class="col-md-4 pr-0">
         <h4 class="text-center">Gruppenauswahl</h4>
         <div class="form-group mt-2 mb-1">
             <label for="groups">@Resources.groups</label>
@@ -24,10 +24,10 @@
         <span>Gewählte Gruppe: <b id="chosenGroup"></b></span>
         <button type="button" class="btn btn-primary btn-block mt-3" id="showNewGroupModalBtn">Neue Gruppe erstellen</button>
     </div>
-    <div class="col-md-3">
+    <div id="col2" class="col-md-3">
         <h4 class="text-center">Aktionen</h4>
         <label>Name</label>
-        <div class="row mr-0 ml-0" id="newCategoryDiv">
+        <div class="row mr-0 ml-0">
             <div class="col-10 p-0">
                 <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text" />
             </div>
@@ -35,10 +35,23 @@
                 <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>
             </div>
         </div>
+        <span>
+            <a>@Resources.count @Resources.Members:</a> <b id="countMembers">0</b>
+        </span>
 
 
-        <button class="btn btn-primary btn-block mt-2" onclick="openMailDiv()"><span class="d-flex justify-content-between"><span>Mitglieder einladen</span><i id="inviteMatesIcon" class="material-icons">&#xe01f;</i></span></button>
         <button class="btn btn-danger btn-block mt-2"><span class="d-flex justify-content-between"><span>Gruppe löschen</span><i class="material-icons">	&#xe92b;</i></span></button>
+        <hr />
+        <button class="btn btn-primary btn-block mt-2" onclick="openMailDiv()"><span class="d-flex justify-content-between"><span>Mitglieder einladen</span><i id="inviteMatesIcon" class="material-icons">&#xe0d0;</i></span></button>
+
+        <div id="mailAddressesBox" class="border border-dark mt-2">
+            <div class="row mt-1 mb-1 mr-0 ml-0">
+                <div class="col-9 pr-0"><input id="mailAddressInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addMailAddress" /></div>
+                <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addMailAddress()"><i class="material-icons">&#xe148;</i></button></div>
+                <ul class="list-group" id="mailAddressUL" name="MailAddresses"></ul>
+               
+            </div>
+        </div>
 
     </div>
     <div class="col-md-5 border-left" id="mailDiv">
@@ -95,7 +108,7 @@
         @{
             foreach(Department d in Model.Departments)
             {
-                @:groups['@d.DepId'] = '@d.DepName';
+                @:groups['@d.DepId'] = '@d.DepName';//['@d.DepName', @*@d.People.Count*@];  Luki muss object disposed beheben bei People
             }
         }
 
@@ -237,12 +250,125 @@
     function openMailDiv() {
         if ($("#mailDiv").is(":hidden")) {
             $("#mailDiv").show('slide', { direction: 'left' }, 500);
+            $("#col1").removeClass("col-md-4").addClass("col-md-3");
+            $("#col2").removeClass("col-md-3").addClass("col-md-4");
+           
             document.getElementById("inviteMatesIcon").innerHTML = "&#xe020;";
         } else {
             $("#mailDiv").hide('slide', { direction: 'left' }, 500);
+            $("#col2").removeClass("col-md-4").addClass("col-md-3");
+            $("#col1").removeClass("col-md-3").addClass("col-md-4");
             document.getElementById("inviteMatesIcon").innerHTML = "&#xe0d0;";
+        }      
+    }
+
+    let mailAddresses = [];
+
+    function addMailAddress() {
+        let ul = document.getElementById("mailAddressUL");
+        let inputElem = document.getElementById("mailAddressInput");
+        let input = inputElem.value;
+
+        if (!validateEmail(input)) {
+            alert('@Resources.invalidMailAddress');
+            inputElem.value = '';
+            return;
         }
-        
+
+        if (input === "") {
+            alert('@Resources.invalidInput');
+            return;
+        } else if (mailAddresses.includes(input)) {
+            alert('@Resources.invalidInput');
+            return;
+        }
+
+        mailAddresses.push(input);
+        let normal =
+        '<li class="list-group-item pl-1 pr-1">' +
+            '   <span class="row mr-0 ml-0">' +
+            '       <span class="col-10 p-0">'+
+            '           <input type="text" class="form-control withoutBorder pl-1 pr-1" readonly name="MailAddresses" value="' + input + '" />' +
+            '       </span>'  +
+            '       <span class="col-2 p-0">' +
+            '           <span class="row ml-0 mr-0">' +
+            '               <span class="col-6 p-0">' +
+            '                   <button type="button" class="btn btn-info btn-block pb-0" onclick="editMailAddress(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '               </span>' +
+            '               <span class="col-6 p-0">' +
+            '                   <button type="button" class="btn btn-danger btn-block pb-0" onclick="deleteMailAddress(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '               </span>' +
+            '           </span>' +
+            '       </span>' +
+            '   </span>' +
+            '</li>';
+        ul.innerHTML += normal;
+
+        inputElem.value = "";
+        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+    }
+
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function deleteMailAddress(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        for (i = 0; i < mailAddresses.length; i++) {
+            if (mailAddresses[i] === text) {
+                mailAddresses.splice(i, 1);
+                break;
+            }
+        }
+        button.parentElement.parentElement.parentElement.remove();
+        if (mailAddresses.length === 0) {
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+        }
+    }
+
+    function editMailAddress(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        let edit =
+            '       <input type="text" class="form-control" name="TextAnswerOptions" value="' + text + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-success ml-2 pb-0" onclick="saveMailAddress(this,false,\'' + text +'\')"><i class="material-icons">&#xe5ca;</i></button>' +
+            '           <button type="button" class="btn btn-secondary ml-2 pb-0" onclick="saveMailAddress(this,true,\'' + text +'\')"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>';
+        button.parentElement.parentElement.innerHTML = edit;
+    }
+
+    function saveMailAddress(button, canceled, tempText) {
+        let text;
+        if (canceled) {
+            text = tempText;
+        } else {
+            text = button.parentElement.parentElement.children[0].value;
+            if (validateEmail(text)) {
+                alert('@Resources.invalidMailAddress');
+                inputElem.value = tempText;
+                return;
+            }
+            if (mailAddresses.includes(text)) {
+                alert('@Resources.invalidInput');
+                return;
+            }
+            for (i = 0; i < mailAddresses.length; i++) {
+                if (mailAddresses[i] === tempText) {
+                    mailAddresses[i] = text;
+                    break;
+                }
+            }
+        }
+
+        let edited =
+            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + text + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editMailAddress(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteMailAddress(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>';
+        tempText = "";
+        button.parentElement.parentElement.innerHTML = edited;
     }
 
 </script>

@@ -311,4 +311,10 @@
   <data name="textEditorLanguage" xml:space="preserve">
     <value>en</value>
   </data>
+  <data name="addMailAddress" xml:space="preserve">
+    <value>add mail address</value>
+  </data>
+  <data name="invalidMailAddress" xml:space="preserve">
+    <value>the email address in invalid!</value>
+  </data>
 </root>

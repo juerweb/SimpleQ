@@ -79,6 +79,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die add mail address ähnelt.
+        /// </summary>
+        public static string addMailAddress {
+            get {
+                return ResourceManager.GetString("addMailAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die add new category ähnelt.
         /// </summary>
         public static string addNewCategory {
@@ -264,6 +273,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string invalidInput {
             get {
                 return ResourceManager.GetString("invalidInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die the email address in invalid! ähnelt.
+        /// </summary>
+        public static string invalidMailAddress {
+            get {
+                return ResourceManager.GetString("invalidMailAddress", resourceCulture);
             }
         }
         
