@@ -7,3 +7,8 @@
 .textEditor {
     height: 500px;
 }
+
+#mailAddressesBox {
+    height: 310px;
+    overflow-y: scroll;
+}
