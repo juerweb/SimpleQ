@@ -18,10 +18,9 @@ namespace SimpleQ.Webinterface.Models
         public string CustCode { get; set; }
         public decimal BillPrice { get; set; }
         public System.DateTime BillDate { get; set; }
+        public bool Sent { get; set; }
         public bool Paid { get; set; }
     
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual Customer Customer { get; set; }
     }
 }

@@ -32,6 +32,7 @@ namespace SimpleQ.Webinterface.Models
         public virtual DbSet<BaseQuestionType> BaseQuestionTypes { get; set; }
         public virtual DbSet<Bill> Bills { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<DataConstraint> DataConstraints { get; set; }
         public virtual DbSet<Department> Departments { get; set; }
         public virtual DbSet<DsgvoConstraint> DsgvoConstraints { get; set; }
         public virtual DbSet<FaqEntry> FaqEntries { get; set; }
@@ -47,9 +48,9 @@ namespace SimpleQ.Webinterface.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_CheckExceededSurveyData");
         }
     
-        public virtual int sp_CreateBills()
+        public virtual ObjectResult<Nullable<int>> sp_CreateBills()
         {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_CreateBills");
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("sp_CreateBills");
         }
     
         public virtual int sp_DeleteSurvey(Nullable<int> svyId)
@@ -59,6 +60,11 @@ namespace SimpleQ.Webinterface.Models
                 new ObjectParameter("svyId", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_DeleteSurvey", svyIdParameter);
+        }
+    
+        public virtual ObjectResult<string> sp_GenerateCustCode()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("sp_GenerateCustCode");
         }
     }
 }
