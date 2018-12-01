@@ -240,13 +240,13 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpGet]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public double LoadPricePerClick(int amount)
-        {
-            using (var db = new SimpleQDBEntities())
-            {
-                return Convert.ToDouble(db.fn_CalcPricePerClick(amount));
-            }
-        }
+        //public double LoadPricePerClick(int amount)
+        //{
+        //    using (var db = new SimpleQDBEntities())
+        //    {
+        //        return Convert.ToDouble(db.fn_CalcPricePerClick(amount));
+        //    }
+        //}
         #endregion
 
         #region Helpers
