@@ -179,6 +179,7 @@
     <Compile Include="Models\DsgvoConstraint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Enums\BaseQuestionTypes.cs" />
     <Compile Include="Models\FaqEntry.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
