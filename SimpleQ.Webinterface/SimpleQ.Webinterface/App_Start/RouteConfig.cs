@@ -14,9 +14,9 @@ namespace SimpleQ.Webinterface
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "DefaultNoId",
+                name: "Default",
                 url: "{controller}/{action}",
-                defaults: new { controller = "SurveyCreation", action = "Index" }
+                defaults: new { controller = "Account", action = "Login" }
             );
         }
     }
