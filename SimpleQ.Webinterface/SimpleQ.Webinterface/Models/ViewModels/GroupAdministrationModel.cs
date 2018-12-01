@@ -12,6 +12,9 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         #endregion
 
         #region View to Controller
+        public int DepId { get; set; }
+        public List<string> Emails { get; set; }
+        public string InvitationText { get; set; }
         #endregion
     }
 }

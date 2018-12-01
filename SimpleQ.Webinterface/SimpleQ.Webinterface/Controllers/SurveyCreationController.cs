@@ -6,46 +6,21 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using SimpleQ.Webinterface.Models;
-using SimpleQ.Webinterface.Models.Mobile;
 using SimpleQ.Webinterface.Models.ViewModels;
-//using OneSignal.CSharp.SDK;
-//using OneSignal.CSharp.SDK.Resources.Devices;
-//using OneSignal.CSharp.SDK.Resources.Notifications;
+using SimpleQ.Webinterface.Models.Enums;
 using SimpleQ.Webinterface.Extensions;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace SimpleQ.Webinterface.Controllers
 {
+    [CAuthorize]
     public class SurveyCreationController : Controller
     {
-        private const int YES_NO = 1;
-        private const int YES_NO_DONTKNOW = 2;
-        private const int TRAFFIC_LIGHT = 3;
-        private const int OPEN = 4;
-
-        private const int LIKERT_SCALE_3 = 10;
-        private const int LIKERT_SCALE_4 = 11;
-        private const int LIKERT_SCALE_5 = 12;
-        private const int LIKERT_SCALE_6 = 13;
-        private const int LIKERT_SCALE_7 = 14;
-        private const int LIKERT_SCALE_8 = 15;
-        private const int LIKERT_SCALE_9 = 16;
-
-        private static readonly int[] predefined = { YES_NO, YES_NO_DONTKNOW, TRAFFIC_LIGHT, OPEN };
-
-        // <TypeId, intermediate values>
-        private static readonly Dictionary<int, int> likertScales = new Dictionary<int, int>
-        {
-            { LIKERT_SCALE_3,  1},
-            { LIKERT_SCALE_4,  2},
-            { LIKERT_SCALE_5,  3},
-            { LIKERT_SCALE_6,  4},
-            { LIKERT_SCALE_7,  5},
-            { LIKERT_SCALE_8,  6},
-            { LIKERT_SCALE_9,  7},
-        };
-
         private static readonly HashSet<int> queuedSurveys = new HashSet<int>();
 
+        #region MVC-Actions
         [HttpGet]
         public ActionResult Index()
         {
@@ -65,21 +40,23 @@ namespace SimpleQ.Webinterface.Controllers
                     SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
                 };
 
-                return View(viewName: "SurveyCreation", model: model);
+                return View("SurveyCreation", model);
             }
         }
 
         [HttpPost]
         public ActionResult New(SurveyCreationModel req)
         {
+            bool err = false;
+
             if (req == null)
-                return Http.BadRequest("Model object must not be null.");
+                AddModelError("Model", "Model object must not be null.", ref err);
             if (req.Survey == null)
-                return Http.BadRequest("Survey must not be null.");
+                AddModelError("Survey", "Survey must not be null.", ref err);
             if (req.Survey.SvyText == null)
-                return Http.BadRequest("SvyText must not be null.");
+                AddModelError("Survey.SvyText", "SvyText must not be null.", ref err);
             if (req.SelectedDepartments == null || req.SelectedDepartments.Count() == 0)
-                return Http.BadRequest("SelectedDepartments must not be null or empty.");
+                AddModelError("SelectedDepartments", "SelectedDepartments object must not be null or empty.", ref err);
 
             using (var db = new SimpleQDBEntities())
             {
@@ -92,22 +69,49 @@ namespace SimpleQ.Webinterface.Controllers
                 req.Survey.Sent = false;
 
                 if (req.Survey.StartDate >= req.Survey.EndDate)
-                    return Http.Conflict("StartDate must be earlier than EndDate.");
+                    AddModelError("Survey.StartDate", "StartDate must be earlier than EndDate.", ref err);
 
                 if (req.Survey.Amount <= 0)
-                    return Http.Conflict("Amount must be at least 1.");
+                    AddModelError("Survey.Amount", "Amount must be at least 1.", ref err);
 
                 if (db.SurveyCategories.Where(c => c.CatId == req.Survey.CatId && c.CustCode == CustCode).FirstOrDefault() == null)
-                    return Http.NotFound("Category not found.");
+                    AddModelError("Survey.CatId", "Category not found.", ref err);
 
                 if (db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefault() == null)
-                    return Http.Conflict("AnswerType does not exist.");
+                    AddModelError("Survey.TypeId", "AnswerType does not exist.", ref err);
+
+                var baseId = db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefault().BaseId;
+                if (baseId != (int)BaseQuestionTypes.FixedAnswerQuestion && baseId != (int)BaseQuestionTypes.OpenQuestion
+                    && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() == 0))
+                    AddModelError("TextAnswerOptions", "There must be submitted some AnswerOptions.", ref err);
+
+                if (baseId == (int)BaseQuestionTypes.DichotomousQuestion 
+                    && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2))
+                    AddModelError("TextAnswerOptions", "There must be submitted exactly two AnswerOptions.", ref err);
+
+                if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion
+                    && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2))
+                    AddModelError("TextAnswerOptions", "There must be submitted exactly two AnswerOptions.", ref err);
 
                 foreach (var depId in req.SelectedDepartments)
                 {
                     if (db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault() == null)
-                        return Http.NotFound("Department not found.");
+                    {
+                        AddModelError("SelectedDepartments", "Department not found.", ref err);
+                        break;
+                    }
                 }
+
+                foreach (var ans in req.TextAnswerOptions)
+                {
+                    if (string.IsNullOrEmpty(ans))
+                    {
+                        AddModelError("TextAnswerOptions", "AnswerOptions must not be empty.", ref err);
+                        break;
+                    }
+                }
+
+                if (err) return Index();
 
 
                 int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
@@ -124,21 +128,14 @@ namespace SimpleQ.Webinterface.Controllers
                 });
                 db.SaveChanges();
 
-                if (likertScales.ContainsKey(req.Survey.TypeId))
+                if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion)
                 {
-                    if (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2)
-                        return Http.Conflict("Likert scales must have exactly two answer options.");
-
-                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[0] });
-
-                    for (int i = 0; i < likertScales[req.Survey.TypeId]; i++)
-                        db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = $"{i + 2}" });
-
-                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[1] });
+                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[0], FirstPosition = true });
+                    db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = req.TextAnswerOptions[1], FirstPosition = false });
                 }
-                else if (!predefined.Contains(req.Survey.TypeId))
+                else if (baseId != (int)BaseQuestionTypes.FixedAnswerQuestion && baseId != (int)BaseQuestionTypes.OpenQuestion)
                 {
-                    req.TextAnswerOptions?.ForEach(text =>
+                    req.TextAnswerOptions.ForEach(text =>
                     {
                         db.AnswerOptions.Add(new AnswerOption { SvyId = req.Survey.SvyId, AnsText = text });
                     });
@@ -154,8 +151,9 @@ namespace SimpleQ.Webinterface.Controllers
 
             return Index();
         }
+        #endregion
 
-
+        #region AJAX-Methods
         [HttpGet]
         public ActionResult LoadTemplate(int svyId)
         {
@@ -196,15 +194,32 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         dep.People.ToList().ForEach(p =>
                         {
-                            // CANCEL SURVEY
-                            //var client = new OneSignalClient("ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
-                            //var options = new NotificationCreateOptions
-                            //{
-                            //    AppId = new Guid("68b8996a-f664-4130-9854-9ed7f70d5540"),
-                            //    IncludePlayerIds = {p.DeviceId}
-                            //};
-                            //options.Contents.Add("SvyId", $"{svyId}");
-                            //client.Notifications.Create(options);
+                            using (var client = new HttpClient())
+                            {
+                                try
+                                {
+                                    // SEND SURVEY
+                                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                                    var obj = new
+                                    {
+                                        app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
+                                        include_player_ids = new string[] { p.DeviceId },
+                                        contents = new { en = "Cancel survey" },
+                                        data = new { Cancel = true, SvyId = svyId }
+                                    };
+                                    var task = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj);
+                                    task.Wait();
+                                    var response = task.Result;
+                                    System.Diagnostics.Debug.Write("RESPONSE:");
+                                    System.Diagnostics.Debug.WriteLine(response.StatusCode);
+                                    System.Diagnostics.Debug.WriteLine(response.Content);
+                                }
+                                catch (AggregateException ex)
+                                {
+                                    //logging
+                                    throw ex; // just for testing...
+                                }
+                            }
                         });
                     });
                 }
@@ -222,7 +237,19 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public double LoadPricePerClick(int amount)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                return Convert.ToDouble(db.fn_CalcPricePerClick(amount));
+            }
+        }
+        #endregion
 
+        #region Helpers
         internal static void ScheduleSurvey(int svyId, TimeSpan timeout, string custCode)
         {
             lock (queuedSurveys)
@@ -260,6 +287,9 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         // Anzahl an Personen in der aktuellen Abteilung (mit DepId = id)
                         int currPeople = dep.People.Distinct().Count();
+                        // Abteilung überspringen, wenn keine Leute darin
+                        if (currPeople == 0)
+                            return;
 
                         // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
                         int toAsk = (int)Math.Round(amount * (currPeople / (double)totalPeople));
@@ -276,37 +306,54 @@ namespace SimpleQ.Webinterface.Controllers
                     while (depAmounts.Values.Sum() > amount)
                         depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]--;
 
-
-                    foreach (var kv in depAmounts)
+                    
+                    using (var client = new HttpClient())
                     {
-                        int i = 0;
-                        db.Departments
-                            .Where(d => d.DepId == kv.Key && d.CustCode == custCode)
-                            .SelectMany(d => d.People)
-                            .ToList()
-                            .Where(p => !alreadyAsked.Contains(p.PersId))
-                            .OrderBy(p => rnd.Next())
-                            .Take(kv.Value)
-                            .ToList()
-                            .ForEach(p =>
-                            {
-                                alreadyAsked.Add(p.PersId);
+                        foreach (var kv in depAmounts)
+                        {
+                            int i = 0;
+                            db.Departments
+                                .Where(d => d.DepId == kv.Key && d.CustCode == custCode)
+                                .SelectMany(d => d.People)
+                                .ToList()
+                                .Where(p => !alreadyAsked.Contains(p.PersId))
+                                .OrderBy(p => rnd.Next())
+                                .Take(kv.Value)
+                                .ToList()
+                                .ForEach(p =>
+                                {
+                                    alreadyAsked.Add(p.PersId);
 
-                                // SEND SURVEY
-                                //var client = new OneSignalClient("ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
-                                //var options = new NotificationCreateOptions
-                                //{
-                                //    AppId = new Guid("68b8996a-f664-4130-9854-9ed7f70d5540"),
-                                //    IncludePlayerIds = {p.DeviceId}
-                                //};
-                                //options.Contents.Add("SvyId", $"{svyId}");
-                                //client.Notifications.Create(options);
-
-                                i++;
-                            });
-                        System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {kv.Value}");
+                                    try
+                                    {
+                                        // SEND SURVEY
+                                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                                        var obj = new
+                                        {
+                                            app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
+                                            include_player_ids = new string[] { p.DeviceId },
+                                            contents = new { en = "New survey" },
+                                            content_available = true,
+                                            data = new { Cancel = false, SvyId = svyId }
+                                        };
+                                        var task = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj);
+                                        task.Wait();
+                                        var response = task.Result;
+                                        System.Diagnostics.Debug.Write("RESPONSE:");
+                                        System.Diagnostics.Debug.WriteLine(response.StatusCode);
+                                        System.Diagnostics.Debug.WriteLine(response.Content);
+                                    }
+                                    catch (AggregateException ex)
+                                    {
+                                        //logging
+                                        throw ex; // just for testing...
+                                    }
+                                    i++;
+                                });
+                            System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) SURVEYS SENT: {i} == {kv.Value}");
+                        }
                     }
-                    System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) TOTAL SENT: {alreadyAsked.Count} == {svyId}");
+                    System.Diagnostics.Debug.WriteLine($"(SvyId {svyId}) TOTAL SENT: {alreadyAsked.Count}");
 
                     db.Surveys.Where(s => s.SvyId == svyId).First().Sent = true;
                     db.SaveChanges();
@@ -314,14 +361,15 @@ namespace SimpleQ.Webinterface.Controllers
             });
         }
 
+        private void AddModelError(string key, string errorMessage, ref bool error)
+        {
+            ModelState.AddModelError(key, errorMessage);
+            error = true;
+        }
+
         private ArgumentNullException ANEx(string paramName) => new ArgumentNullException(paramName);
 
-        private string CustCode
-        {
-            get
-            {
-                return Session["custCode"] as string;
-            }
-        }
+        private string CustCode => HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+        #endregion
     }
 }
