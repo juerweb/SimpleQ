@@ -507,6 +507,10 @@
     <Content Include="Scripts\texteditor\plugins\mention\ui\sass\trumbowyg.mention.scss" />
     <Content Include="Scripts\texteditor\plugins\table\ui\sass\trumbowyg.table.scss" />
     <Content Include="Scripts\texteditor\ui\sass\trumbowyg.scss" />
+    <Content Include="Views\Account\Confirmation.cshtml" />
+    <Content Include="Views\Account\InvalidConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
