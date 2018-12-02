@@ -1,50 +1,86 @@
-﻿
-@{
-    Layout = null;
+﻿@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link rel="SHORTCUT ICON" href="../../Content/Images/Icons/favicon.ico" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js" integrity="sha256-0YPKAwZP7Mp3ALMRVB2i8GXeEndvCq3eSl/WsAl1Ryk=" crossorigin="anonymous"></script>
-    <title>SimpleQ</title>
-</head>
-<body>
-    <div class="container">
-        <div class="col-md-6">
-            <img src="../../Content/Images/Logos/simpleq.png" style="max-height: 100px;" class="img-fluid" />
-        </div>
-        <a class="btn btn-primary" href="@Url.Action("Register", "Account")">Go to registration</a>
-        @using (Html.BeginForm("Login", "Account"))
-        {
-            <div class="form-group">
-                @Html.Label("custCode", "Kunden-Code:")
-                @Html.TextBox("custCode", "", new { @class = "form-control" })
-                @Html.ValidationMessage("custCode")
-            </div>
-
-            <div class="form-group">
-                @Html.Label("password", "Passwort")
-                @Html.Password("password", "", new { @class = "form-control" })
-                @Html.ValidationMessage("password")
-            </div>
-
-            <div class="form-group form-check">
-                <label for="remember" class="form-check-label">
-                    @Html.CheckBox("remember", false, new { @class = "form-check-input" }) Eingeloggt bleiben
-                </label>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-            <br />
-            @Html.ValidationMessage("EmailConfirmation")
-        }
+@if (ViewBag.confirmed == true)
+{
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>E-Mail bestätigt!</strong> Sie können sich nun einloggen.
     </div>
-</body>
-</html>
+}
+
+<a class="btn btn-primary" href="@Url.Action("Register", "Account")">Go to registration</a>
+<br /><br />
+@using (Html.BeginForm("Login", "Account"))
+{
+    <div class="form-group">
+        @Html.Label("custCode", "Kunden-Code")
+        @Html.TextBox("custCode", "", new { @class = "form-control" })
+        @Html.ValidationMessage("custCode")
+    </div>
+
+    <div class="form-group">
+        @Html.Label("password", "Passwort")
+        @Html.Password("password", "", new { @class = "form-control" })
+        @Html.ValidationMessage("password")
+    </div>
+
+    <div class="form-group form-check">
+        <label for="remember" class="form-check-label">
+            @Html.CheckBox("remember", false, new { @class = "form-check-input" }) Eingeloggt bleiben
+        </label>
+    </div>
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">Login</button>
+}
+<br />
+<a id="forgotPwdBtn" href="#">Passwort vergessen</a>
+<div id="resetPwdDiv" style="display: none">
+    <div class="form-group">
+        <label for="resCustCode">Kunden-Code</label>
+        <input id="resCustCode" class="form-control" />
+    </div>
+    <button type="button" class="btn btn-primary" id="sendResetBtn">Reset-Link senden</button>
+    <br />
+    <span id="msg"></span>
+</div>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<script>
+    $(function () {
+        $("#forgotPwdBtn").click(function () {
+            console.log(2);
+            $("#resetPwdDiv").toggle();
+        });
+
+        $("#sendResetBtn").click(function () {
+            let form = $("#__AjaxAntiForgeryForm");
+            let token = $('input[name="__RequestVerificationToken"]', form).val();
+            let custCode = encodeURIComponent($("#resCustCode").val());
+
+            $.ajax({
+                method: "POST",
+                url: "@Url.Action("ForgotPassword", "Account")",
+                data: {
+                    "__RequestVerificationToken": token,
+                    "custCode": custCode,
+                },
+                statusCode: {
+                    200: function () {
+                        $("#msg").text("E-Mail gesendet.");
+                    },
+                    404: function () {
+                        $("#msg").text("Ungültiger Kunden-Code.");
+                    },
+                    503: function () {
+                        $("#msg").text("E-Mail konnte derzeit nicht gesendet werden.\nBitte später erneut versuchen.")
+                    }
+                }
+            });
+        });
+    });
+</script>

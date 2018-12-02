@@ -515,11 +515,11 @@
     <Content Include="Scripts\texteditor\plugins\table\ui\sass\trumbowyg.table.scss" />
     <Content Include="Scripts\texteditor\ui\sass\trumbowyg.scss" />
     <Content Include="Views\Account\Confirmation.cshtml" />
-    <Content Include="Views\Account\InvalidConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\AccountError.cshtml" />
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
