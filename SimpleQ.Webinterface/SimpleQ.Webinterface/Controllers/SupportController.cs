@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
@@ -24,6 +25,7 @@ namespace SimpleQ.Webinterface.Controllers
                     FaqEntries = db.FaqEntries.ToList()
                 };
 
+                ViewBag.emailConfirmed = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().EmailConfirmed;
                 return View("Support", model);
             }
         }
@@ -55,25 +57,15 @@ namespace SimpleQ.Webinterface.Controllers
 
             req.QuestionText = $"FROM: {req.Email}{Environment.NewLine}{req.QuestionText}";
 
-            try
-            {
-                MailMessage msg = new MailMessage("contactform@simpleq.at", "support@simpleq.at")
-                {
-                    Subject = "SIMPLEQ SUPPORT: " + req.QuestionCatgeory,
-                    Body = req.QuestionText
-                };
-                SmtpClient client = new SmtpClient("smtp.1und1.de", 587)
-                {
-                    Credentials = new System.Net.NetworkCredential("contactform@simpleq.at", "123SimpleQ..."),
-                    EnableSsl = true
-                };
-                client.Send(msg);
 
+            if (Email.Send("contactform@simpleq.at", "support@simpleq.at", "SIMPLEQ SUPPORT: " + req.QuestionCatgeory, req.QuestionText))
+            {
                 return Index();
             }
-            catch (Exception ex) when (ex is SmtpException || ex is SmtpFailedRecipientsException)
+            else
             {
-                return Http.ServiceUnavailable("Sending failed due to internal error(s).");
+                var model = new ErrorModel { Title = "Unable to send e-mail", Message = "Sending failed due to internal error(s)." };
+                return View("Error", model);
             }
         }
         #endregion
@@ -84,6 +76,8 @@ namespace SimpleQ.Webinterface.Controllers
             ModelState.AddModelError(key, errorMessage);
             error = true;
         }
+
+        private string CustCode => HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
         #endregion
     }
 }
