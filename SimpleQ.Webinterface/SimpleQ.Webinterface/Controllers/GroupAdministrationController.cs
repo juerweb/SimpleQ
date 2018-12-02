@@ -29,7 +29,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 var model = new GroupAdministrationModel
                 {
-                    Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList()
+                    Departments = db.Departments.Where(d => d.CustCode == CustCode).ToDictionary(d => d, d => d.People.Count())
                 };
 
                 ViewBag.emailConfirmed = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().EmailConfirmed;
