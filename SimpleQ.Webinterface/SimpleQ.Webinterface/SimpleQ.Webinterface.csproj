@@ -181,7 +181,7 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Attributes\CAuthorizeAttribute.cs" />
-    <Compile Include="Attributes\RequireHttpsAttribute.cs" />
+    <Compile Include="Attributes\RequireAuthAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Extensions\Email.cs" />
     <Compile Include="Models\AnswerOption.cs">

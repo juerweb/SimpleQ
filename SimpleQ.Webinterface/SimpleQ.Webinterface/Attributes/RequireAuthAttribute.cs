@@ -11,7 +11,7 @@ using System.Web.Http.Filters;
 
 namespace SimpleQ.Webinterface.Attributes
 {
-    public class RequireHttpsAttribute : AuthorizationFilterAttribute
+    public class RequireAuthAttribute : AuthorizationFilterAttribute
     {
         public override void OnAuthorization(HttpActionContext actionContext)
         {
