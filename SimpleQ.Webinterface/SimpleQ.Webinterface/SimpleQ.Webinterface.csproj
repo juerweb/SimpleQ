@@ -181,7 +181,7 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Attributes\CAuthorizeAttribute.cs" />
-    <Compile Include="Attributes\RequireCertificateAttribute.cs" />
+    <Compile Include="Attributes\RequireHttpsAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Extensions\Email.cs" />
     <Compile Include="Models\AnswerOption.cs">
@@ -329,7 +329,7 @@
       <DependentUpon>SimpleQModel.edmx</DependentUpon>
       <LastGenOutput>SimpleQModel.cs</LastGenOutput>
     </Content>
-    <Content Include="private.key" />
+    <Content Include="Authorization\private.key" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-reboot.css.map" />
@@ -343,8 +343,6 @@
     <Content Include="Models\SimpleQModel.edmx.diagram">
       <DependentUpon>SimpleQModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Certificates\SimpleQ.cer" />
-    <Content Include="Certificates\SimpleQ.pvk" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
