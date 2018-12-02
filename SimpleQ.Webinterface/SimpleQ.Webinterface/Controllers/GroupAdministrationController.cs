@@ -41,12 +41,12 @@ namespace SimpleQ.Webinterface.Controllers
         public ActionResult SendInvitations(GroupAdministrationModel req)
         {
             bool err = false;
-            //req = new GroupAdministrationModel
-            //{
-            //    DepId = 1,
-            //    Emails = new List<string> { "dev@simpleq.at", "lukas.schendlinger@a1.net" },
-            //    InvitationText = "sads ma BITTE NED BES"
-            //};
+            req = new GroupAdministrationModel
+            {
+                DepId = 1,
+                Emails = new List<string> { "dev@simpleq.at", "lukas.schendlinger@a1.net" },
+                InvitationText = "sads ma BITTE NED BES"
+            };
 
             if (req == null)
                 AddModelError("Model", "Model object must not be null.", ref err);
