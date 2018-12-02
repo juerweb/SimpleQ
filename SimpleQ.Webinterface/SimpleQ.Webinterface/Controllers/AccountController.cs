@@ -96,14 +96,14 @@ namespace SimpleQ.Webinterface.Controllers
             bool err = false;
             using (var db = new SimpleQDBEntities())
             {
-                if (!db.Customers.Any(c => c.CustCode == custCode))
-                    AddModelError("custCode", "Invalid customer code.", ref err);
-                else if (!db.Customers.Any(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)))
-                    AddModelError("password", "Invalid password.", ref err);
-                else if (!db.Customers.Where(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)).First().EmailConfirmed)
-                    AddModelError("EmailConfirmation", "Please confirm your email before logging in.", ref err);
+                //if (!db.Customers.Any(c => c.CustCode == custCode))
+                //    AddModelError("custCode", "Invalid customer code.", ref err);
+                //else if (!db.Customers.Any(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)))
+                //    AddModelError("password", "Invalid password.", ref err);
+                //else if (!db.Customers.Where(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)).First().EmailConfirmed)
+                //    AddModelError("EmailConfirmation", "Please confirm your email before logging in.", ref err);
 
-                if (err) return View("Login");
+                //if (err) return View("Login");
 
                 SignIn(db.Customers.Where(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)).FirstOrDefault(), remember);
                 return RedirectToAction("Index", "SurveyCreation");
