@@ -24,6 +24,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
+                db.Configuration.LazyLoadingEnabled = false;
                 if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
                     return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
@@ -41,12 +42,12 @@ namespace SimpleQ.Webinterface.Controllers
         public ActionResult SendInvitations(GroupAdministrationModel req)
         {
             bool err = false;
-            req = new GroupAdministrationModel
-            {
-                DepId = 1,
-                Emails = new List<string> { "dev@simpleq.at", "lukas.schendlinger@a1.net" },
-                InvitationText = "sads ma BITTE NED BES"
-            };
+            //req = new GroupAdministrationModel
+            //{
+            //    DepId = 1,
+            //    Emails = new List<string> { "dev@simpleq.at", "lukas.schendlinger@a1.net" },
+            //    InvitationText = "sads ma BITTE NED BES"
+            //};
 
             if (req == null)
                 AddModelError("Model", "Model object must not be null.", ref err);
@@ -76,8 +77,9 @@ namespace SimpleQ.Webinterface.Controllers
                     Name = "QR Code"
                 };
 
-                if (Email.Send("invitation@simpleq.at", req.Emails.ToArray(), "SimpleQ Invitation",
+                if (Email.Send("invitation@simpleq.at", req.Emails.ToArray(), req.InvitationSubject,
                     $"REGISTRATION CODE: {CustCode}{req.DepId}{Environment.NewLine}{req.InvitationText}",
+                    true,
                     new Attachment(new MemoryStream(b), contentType)))
                 {
                     return Index();
@@ -114,7 +116,7 @@ namespace SimpleQ.Webinterface.Controllers
                 db.Departments.Add(dep);
                 db.SaveChanges();
 
-                return Content($"{dep.DepId}", "text/plain");
+                return Content($"{dep.DepId}","text/plain");
             }
         }
 

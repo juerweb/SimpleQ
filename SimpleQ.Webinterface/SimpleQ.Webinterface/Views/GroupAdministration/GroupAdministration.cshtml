@@ -17,7 +17,7 @@
                         @foreach (Department d in Model.Departments)
                         {
                             <li>
-                                <input name="DepId" type="radio" value="@d.DepId"> <a>@d.DepName</a>
+                                <input id="@d.DepId" name="DepId" type="radio" value="@d.DepId"> <a>@d.DepName</a>
                             </li>
                         }
                     </ul>
@@ -42,7 +42,7 @@
             </span>
 
 
-            <button type="button" class="btn btn-danger btn-block mt-2"><span class="d-flex justify-content-between"><span>Gruppe löschen</span><i class="material-icons">&#xe92b;</i></span></button>
+            <button type="button" class="btn btn-danger btn-block mt-2" onclick="deleteSelectedGroup()"><span class="d-flex justify-content-between"><span>Gruppe löschen</span><i class="material-icons">&#xe92b;</i></span></button>
             <hr />
             <button type="button" class="btn btn-primary btn-block mt-2" onclick="openMailDiv()"><span class="d-flex justify-content-between"><span>Mitglieder einladen</span><i id="inviteMatesIcon" class="material-icons">&#xe0d0;</i></span></button>
 
@@ -60,7 +60,7 @@
             <h4 class="text-center">Infos</h4>
 
             <label>@Resources.subject</label>
-            <input class="form-control" type="text" placeholder="@Resources.invitationToSimpleQ" />
+            <input class="form-control" type="text" placeholder="@Resources.invitationToSimpleQ" name="InvitationSubject" />
 
             <label class="mt-2 mb-0">@Resources.content</label>
             <div id="textEditorDiv" class="textEditor"></div>
@@ -110,16 +110,14 @@
         @{
             foreach(Department d in Model.Departments)
             {
-                @:groups['@d.DepId'] = '@d.DepName';//['@d.DepName', @*@d.People.Count*@];  Luki muss object disposed beheben bei People
+                @:groups['@d.DepId'] = ['@d.DepName', @d.People.Count]; 
             }
         }
 
         //choose first group automatically
-        let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
-        radioBtnElem.setAttribute("checked", "checked");
-        updateGroupNameInput(radioBtnElem.parentElement.children[1].innerHTML); //fill into Textbox
+        checkFirstElem();
 
-        $("input[type=radio]").click(function () {
+        $("#gaGroups").on("click", "input[type = radio]", function () {
             handleCheckedAttributes(this);
             let text = this.parentElement.children[1].innerHTML;
             chosenId = this.value;
@@ -130,6 +128,14 @@
             $("#newGroupModal").modal("show");
         });
     }); // <-- Things to to at startup END
+
+    function checkFirstElem() {
+        let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
+        radioBtnElem.setAttribute("checked", "checked");
+        radioBtnElem.click();
+        updateGroupNameInput(radioBtnElem.parentElement.children[1].innerHTML); //fill into Textbox
+        updateMemberCount(radioBtnElem.value);
+    }
 
     function handleCheckedAttributes(elem) {
         let list = document.getElementById("gaGroups").children;
@@ -161,17 +167,16 @@
         $.get(
             url,
             function (id) {
+                groups[id] = [groupName, 0];
                 let groupsUl = document.getElementById("gaGroups");
                 groupsUl.innerHTML +=
                     '<li>' +
-                    '<input name="groups" type="radio" value="' + id + '">' +
-                    groupName +
+                        '<input id="'+id+'" name="DepId" type="radio" value="' + id + '"><a>'+groupName+'</a>'+
                     '</li>';
-
+                let elem = document.getElementById(id);
+                handleCheckedAttributes(elem);
                 updateGroupNameInput(groupName);
-
-                //$("input[type=radio][value=" + id + "]").prop("checked", true);
-
+                updateMemberCount(id);
             }
         );
     }
@@ -179,6 +184,10 @@
     function updateGroupNameInput(groupName) {
         document.getElementById("groupNameInput").value = groupName;
         document.getElementById("chosenGroup").innerHTML = groupName;
+    }
+
+    function updateMemberCount(id) {
+        document.getElementById("countMembers").innerHTML = groups[id][1];
     }
 
     if (typeof tempTextGroups === 'undefined') {
@@ -210,23 +219,31 @@
         let text;
         if (canceled) {
             //text = tempTextGroups;
-            document.getElementById("groupNameInput").value=tempTextGroups;
+            document.getElementById("groupNameInput").value = tempTextGroups;
         } else {
+            let id;
+            let memCount;
             text = document.getElementById("groupNameInput").value;
-            let values = Object.values(groups);
-            if (values.includes(text)) {
-                alert('@Resources.groupAlreadyExists');
-                return;
+
+            for (let key in groups) {
+                if (groups[key][0] === tempText) {
+                    id = key;
+                    memCount = groups[key][1];
+                }
+                if (groups[key][0] === text) {
+                    alert('@Resources.groupAlreadyExists');
+                    return;
+                }
             }
-
-
             let url = '@Url.Action("Modify", "GroupAdministration")'//, new {depId = "temp1", depName = "temp2"})'.replace("temp1", groups[tempTextGroups]).replace("temp2", text);
-            url += '?depId=' + groups[tempTextGroups] + '&depName=' + text;
-            $("#groupAdministrationWindow").load(url, function () {
-                chosen = text;
-            });
-
-            //updateGroups();
+            url += '?depId=' + id + '&depName=' + text;
+            $.get(
+                url,
+                function (id) { }  //unnecessary     
+            );
+            groups[id] = [text, memCount];
+            let aElem = document.getElementById(id).parentElement.children[1];
+            aElem.innerHTML = text;
         }
         $("#groupNameInput").attr("readonly", true);
         $("#groupNameInput").addClass("withoutBorder");
@@ -239,6 +256,19 @@
         let edited = '<button type="button" class="btn btn-info btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>';
         tempTextGroups = "";
         button.parentElement.parentElement.parentElement.parentElement.children[1].innerHTML = edited;
+    }
+
+    function deleteSelectedGroup() {
+        let id = $("input:checked").attr('id');
+
+        let url = '@Url.Action("Delete", "GroupAdministration", new { depId = "temp"})'.replace("temp", id);
+        $.get(
+            url,
+            function (id) {} //unnecessary
+        );
+        delete groups[id];
+        document.getElementById(id).parentElement.remove();
+        checkFirstElem();
     }
 
     function mailEditorStartup() {
