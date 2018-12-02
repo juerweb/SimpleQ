@@ -1,4 +1,5 @@
-﻿using SimpleQ.Webinterface.Models;
+﻿using SimpleQ.Webinterface.Attributes;
+using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Mobile;
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,12 @@ using System.Web.Http;
 
 namespace SimpleQ.Webinterface.Controllers
 {
+    [RequireCertificate]
     public class MobileController : ApiController
     {
         [HttpGet]
         public IHttpActionResult Register(string regCode, string deviceId)
         {
-            if (!IsAuth(Request))
-                return Unauthorized();
-
             if (string.IsNullOrEmpty(regCode))
                 return BadRequest();
 
@@ -59,9 +58,6 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpGet]
         public IHttpActionResult JoinDepartment(string regCode, int persId)
         {
-            if (!IsAuth(Request))
-                return Unauthorized();
-
             if (string.IsNullOrEmpty(regCode))
                 return BadRequest();
 
@@ -100,9 +96,6 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpGet]
         public IHttpActionResult LeaveDepartment(int persId, int depId, string custCode)
         {
-            if (!IsAuth(Request))
-                return Unauthorized();
-
             if (string.IsNullOrEmpty(custCode))
                 return BadRequest();
 
@@ -127,9 +120,6 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpGet]
         public IHttpActionResult Unregister(int persId, string custCode)
         {
-            if (!IsAuth(Request))
-                return Unauthorized();
-
             if (string.IsNullOrEmpty(custCode))
                 return BadRequest();
 
@@ -157,9 +147,6 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpGet]
         public IHttpActionResult GetSurveyData(int svyId)
         {
-            if (!IsAuth(Request))
-                return Unauthorized();
-
             using (var db = new SimpleQDBEntities())
             {
                 Survey svy = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault();
@@ -186,9 +173,6 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpPost]
         public IHttpActionResult AnswerSurvey([FromBody] SurveyVote sv)
         {
-            if (!IsAuth(Request))
-                return Unauthorized();
-
             if (sv == null)
                 return BadRequest();
 
@@ -221,14 +205,6 @@ namespace SimpleQ.Webinterface.Controllers
 
                 return Ok();
             }
-        }
-
-        private bool IsAuth(HttpRequestMessage request)
-        {
-            string privateKey = File.ReadAllText(System.Web.Hosting.HostingEnvironment.MapPath(@"~\private.key"));
-            bool headerExists = request.Headers.TryGetValues("auth-key", out IEnumerable<string> values);
-
-            return headerExists && values?.FirstOrDefault() as string == privateKey;
         }
     }
 }

@@ -181,7 +181,9 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Attributes\CAuthorizeAttribute.cs" />
+    <Compile Include="Attributes\RequireCertificateAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Extensions\Email.cs" />
     <Compile Include="Models\AnswerOption.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
@@ -238,8 +240,14 @@
     <Compile Include="Models\SurveyCategory.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\ErrorModel.cs" />
     <Compile Include="Models\Vote.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\BackendResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BackendResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -301,6 +309,11 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <EmbeddedResource Include="Properties\BackendResources.de.resx" />
+    <EmbeddedResource Include="Properties\BackendResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BackendResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
@@ -330,6 +343,8 @@
     <Content Include="Models\SimpleQModel.edmx.diagram">
       <DependentUpon>SimpleQModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Certificates\SimpleQ.cer" />
+    <Content Include="Certificates\SimpleQ.pvk" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -341,6 +356,7 @@
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
     <Content Include="Scripts\esm\popper.min.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -378,7 +394,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Support\Support.cshtml" />
     <Content Include="Views\SurveyResults\_SingleResult.cshtml" />
@@ -410,8 +425,11 @@
     <Content Include="Views\Settings\Settings.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Confirmation.cshtml" />
-    <Content Include="Views\Account\InvalidConfirmation.cshtml" />
+    <Content Include="Views\Shared\AccountError.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Shared\_AccountLayout.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

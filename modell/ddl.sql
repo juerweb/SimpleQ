@@ -39,7 +39,7 @@ create table Customer
 (
 	CustCode char(6) collate Latin1_General_CS_AS primary key,
 	CustName varchar(max) not null,
-	CustEmail varchar(max) not null,
+	CustEmail varchar(512) unique not null,
 	CustPwdTmp varchar(max) collate Latin1_General_CS_AS null,
 	CustPwdHash varbinary(max) null,
 	RegistrationDate date null,
@@ -53,8 +53,16 @@ create table Customer
 	AccountingPeriod int not null check(AccountingPeriod in (1, 3, 6, 12)), -- in Monaten
 	PaymentMethodId int not null references PaymentMethod,
     MinGroupSize int not null,
-	CostBalance money not null
+	CostBalance money not null,
+	AuthToken char(20) null,
+	LastTokenGenerated datetime null,
 );
+go
+
+-- Unique-Constraint für Customer.AuthToken
+create unique nonclustered index idx_AuthToken_NotNull
+on Customer(AuthToken)
+where AuthToken is not null;
 go
 
 -- Rechnung
@@ -556,6 +564,47 @@ begin
 	end
 
 	select @custCode as 'CustCode';
+end
+go
+
+-- Zum Generieren eines Authentifizierungs-Tokens für einen Kunden
+drop procedure sp_GenerateAuthToken;
+go
+create procedure sp_GenerateAuthToken(@custCode char(6))
+as
+begin
+	if (@custCode not in (select CustCode from Customer))
+	begin
+		raiserror('Customer with CustCode %s does not exist.',16, 1, @custCode);
+		return;
+	end
+
+	declare @token varchar(20) = '';
+	declare @chars char(62) = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	declare @i int = 0;
+	
+	while (@i < 20)
+	begin
+		set @token += substring(@chars, cast(round(62 * rand(), 0) as int), 1);
+		set @i += 1;
+	end
+	
+	while(@token in (select AuthToken from Customer))
+	begin
+		set @token = '';
+		set @i = 0;
+		while (@i < 20)
+		begin
+			set @token += substring(@chars, cast(round(62 * rand(), 0) as int), 1);
+			set @i += 1;
+		end
+	end
+
+	update Customer 
+	set AuthToken = cast(@token as char(20)), LastTokenGenerated = getdate()
+	where CustCode = @custCode;
+
+	select cast(@token as char(20)) as 'AuthToken';
 end
 go
 

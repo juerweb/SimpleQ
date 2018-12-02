@@ -1,9 +1,4 @@
-﻿
-@{
-    Layout = null;
-}
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html>
 <head>
@@ -19,10 +14,9 @@
 <body>
     <div class="container">
         <div class="col-md-6">
-            <img src="../../Content/Images/Logos/simpleq.png" style="max-height: 100px;" class="img-fluid" />
+            <a href="@Url.Action("Login", "Account")"><img src="../../Content/Images/Logos/simpleq.png" style="max-height: 100px;" class="img-fluid" /></a>
         </div>
-        <h5>Invalid confirmation link!</h5>
-        Please try again.
+        @RenderBody()
     </div>
 </body>
 </html>

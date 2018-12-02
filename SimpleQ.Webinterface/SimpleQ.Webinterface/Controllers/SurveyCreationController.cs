@@ -30,7 +30,7 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                 if (cust == null)
-                    return Http.NotFound("Customer not found.");
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
                 var model = new SurveyCreationModel
                 {
@@ -40,6 +40,7 @@ namespace SimpleQ.Webinterface.Controllers
                     SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
                 };
 
+                ViewBag.emailConfirmed = cust.EmailConfirmed;
                 return View("SurveyCreation", model);
             }
         }
@@ -61,7 +62,10 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
-                    return Http.NotFound("Customer not found.");
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+
+                if(!db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().EmailConfirmed)
+                    return View("Error", new ErrorModel { Title = "Confirm your e-mail", Message = "Please confirm your e-mail address before creating surveys." });
 
                 req.Survey.CustCode = CustCode;
                 req.Survey.StartDate = req.StartDate.Date.Add(req.StartTime);
@@ -239,7 +243,6 @@ namespace SimpleQ.Webinterface.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public double LoadPricePerClick(int amount)
         {
             using (var db = new SimpleQDBEntities())

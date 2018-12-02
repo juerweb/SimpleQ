@@ -33,6 +33,7 @@ namespace SimpleQ.Webinterface.Controllers
                         .Where(a => a.BaseId != (int)BaseQuestionTypes.OpenQuestion).Distinct().ToList()
                 };
 
+                ViewBag.emailConfirmed = cust.EmailConfirmed;
                 return View("SurveyResults", model);
             }
         }
@@ -44,7 +45,7 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 if (!db.Customers.Any(c => c.CustCode == CustCode))
-                    return Http.NotFound("Customer not found.");
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
                 Survey survey = db.Surveys
                     .Where(s => s.SvyId == svyId && s.CustCode == CustCode)
@@ -109,7 +110,7 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 if (!db.Customers.Any(c => c.CustCode == CustCode))
-                    return Http.NotFound("Customer not found.");
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
                 var selectedSurveys = db.Surveys
                     .Where(s => s.CatId == req.CatId && s.TypeId == req.TypeId

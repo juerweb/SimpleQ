@@ -25,13 +25,14 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
-                    return Http.NotFound("Customer not found");
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
                 var model = new GroupAdministrationModel
                 {
                     Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList()
                 };
 
+                ViewBag.emailConfirmed = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().EmailConfirmed;
                 return View("GroupAdministration", model);
             }
         }
@@ -56,49 +57,35 @@ namespace SimpleQ.Webinterface.Controllers
             using (var db = new SimpleQDBEntities())
             {
                 if (!db.Customers.Any(c => c.CustCode == CustCode))
-                    return Http.NotFound("Customer not found.");
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
                 if (db.Departments.Where(d => d.DepId == req.DepId && d.CustCode == CustCode).Count() == 0)
                     AddModelError("DepId", "Department not found.", ref err);
 
                 if (err) return Index();
 
-                try
+
+                var gen = new QRCodeGenerator();
+                var qr = new QRCode(gen.CreateQrCode($"{CustCode}{req.DepId}", QRCodeGenerator.ECCLevel.Q));
+                var img = qr.GetGraphic(20);
+                var ic = new ImageConverter();
+                byte[] b = (byte[])ic.ConvertTo(img, typeof(byte[]));
+                var contentType = new ContentType
                 {
-                    var gen = new QRCodeGenerator();
-                    var qr = new QRCode(gen.CreateQrCode($"{CustCode}{req.DepId}", QRCodeGenerator.ECCLevel.Q));
-                    var img = qr.GetGraphic(20);
+                    MediaType = MediaTypeNames.Image.Jpeg,
+                    Name = "QR Code"
+                };
 
-                    MailMessage msg = new MailMessage
-                    {
-                        From = new MailAddress("invitation@simpleq.at"),
-                        Subject = "SimpleQ Invitation",
-                        Body = $"REGISTRATION CODE: {CustCode}{req.DepId}{Environment.NewLine}{req.InvitationText}"
-                    };
-                    req.Emails.ForEach(e => msg.To.Add(e));
-
-                    var ic = new ImageConverter();
-                    byte[] b = (byte[])ic.ConvertTo(img, typeof(byte[]));
-                    var contentType = new ContentType
-                    {
-                        MediaType = MediaTypeNames.Image.Jpeg,
-                        Name = "QR Code"
-                    };
-                    msg.Attachments.Add(new Attachment(new MemoryStream(b), contentType));
-
-                    SmtpClient client = new SmtpClient("smtp.1und1.de", 587)
-                    {
-                        Credentials = new System.Net.NetworkCredential("invitation@simpleq.at", "123SimpleQ..."),
-                        EnableSsl = true
-                    };
-                    client.Send(msg);
-
+                if (Email.Send("invitation@simpleq.at", req.Emails.ToArray(), "SimpleQ Invitation",
+                    $"REGISTRATION CODE: {CustCode}{req.DepId}{Environment.NewLine}{req.InvitationText}",
+                    new Attachment(new MemoryStream(b), contentType)))
+                {
                     return Index();
-
                 }
-                catch (SmtpException)
+                else
                 {
-                    return Http.ServiceUnavailable("Sending failed due to internal error(s).");
+                    var model = new ErrorModel { Title = "Unable to send e-mail", Message = "Sending failed due to internal error(s)." };
+                    return View("Error", model);
                 }
             }
         }

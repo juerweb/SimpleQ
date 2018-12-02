@@ -178,28 +178,35 @@
             </div>
         </div>
         <div class="col-md-10 p-0 m-0" id="rightCol">
+            @if (ViewBag.emailConfirmed == false)
+            {
+                <div class="alert alert-danger ml-4 mr-4 mt-2">
+                    <strong>Achtung!</strong> Bitte bestätigen Sie umgehend Ihre E-Mail Adresse.
+                </div>
+            }
+
             @RenderBody()
             @*<div id="surveyCreationWindow">
-            <a href="~/ContactInformation/Index">ContactInformation</a>
-            @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
-        </div>
-        <div id="surveyResultsWindow">
-            @Html.Partial("~/Views/SurveyResults/_SurveyResults.cshtml", Model.SurveyResultsModel)
-        </div>
-        <div id="groupAdministrationWindow">
-            @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml", Model.GroupAdministrationModel)
-        </div>
-        <div id="settingsWindow">
-            @Html.Partial("~/Views/Settings/_Settings.cshtml")
-        </div>
-        <div id="supportWindow">
-            @Html.Partial("~/Views/Support/_Support.cshtml")
-        </div>*@
+                    <a href="~/ContactInformation/Index">ContactInformation</a>
+                    @Html.Partial("~/Views/SurveyCreation/_SurveyCreation.cshtml", Model.SurveyCreationModel)
+                </div>
+                <div id="surveyResultsWindow">
+                    @Html.Partial("~/Views/SurveyResults/_SurveyResults.cshtml", Model.SurveyResultsModel)
+                </div>
+                <div id="groupAdministrationWindow">
+                    @Html.Partial("~/Views/GroupAdministration/_GroupAdministration.cshtml", Model.GroupAdministrationModel)
+                </div>
+                <div id="settingsWindow">
+                    @Html.Partial("~/Views/Settings/_Settings.cshtml")
+                </div>
+                <div id="supportWindow">
+                    @Html.Partial("~/Views/Support/_Support.cshtml")
+                </div>*@
         </div>
 
     </div>
 
-   
+
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

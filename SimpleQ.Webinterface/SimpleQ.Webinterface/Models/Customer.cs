@@ -29,6 +29,7 @@ namespace SimpleQ.Webinterface.Models
         public string CustPwdTmp { get; set; }
         public byte[] CustPwdHash { get; set; }
         public Nullable<System.DateTime> RegistrationDate { get; set; }
+        public bool EmailConfirmed { get; set; }
         public string Street { get; set; }
         public string Plz { get; set; }
         public string City { get; set; }
@@ -39,7 +40,8 @@ namespace SimpleQ.Webinterface.Models
         public int PaymentMethodId { get; set; }
         public int MinGroupSize { get; set; }
         public decimal CostBalance { get; set; }
-        public bool EmailConfirmed { get; set; }
+        public string AuthToken { get; set; }
+        public Nullable<System.DateTime> LastTokenGenerated { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }

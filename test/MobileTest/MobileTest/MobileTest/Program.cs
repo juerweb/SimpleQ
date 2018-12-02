@@ -39,14 +39,18 @@ namespace SimpleQ.Tests.MobileTest
         static string custCode;
         static string custName;
         static Dictionary<int, string> deps = new Dictionary<int, string>();
+        static WebRequestHandler requestHandler = new WebRequestHandler();
 
-        const string SERVER = "https://localhost:44338";
+        const string SERVER = "https://simpleq.at";
         const int YESNO_ID = 1;
         const int SPEC_ID = 4;
         const int FREE_ID = 5;
 
         static void Main(string[] args)
         {
+            var cert = new X509Certificate2(@"Certificates\SimpleQ.cer", "123SimpleQ...");
+            requestHandler.ClientCertificates.Add(cert);
+
             try
             {
                 string input;
@@ -122,9 +126,11 @@ namespace SimpleQ.Tests.MobileTest
                 WriteLine("Registration code:");
                 string regCode = ReadLine();
 
-                using (HttpClient client = new HttpClient())
+                var cert = new X509Certificate2(@"Certificates\SimpleQ.cer", "123SimpleQ...");
+                var requestHandler = new WebRequestHandler();
+                requestHandler.ClientCertificates.Add(cert);
+                using (HttpClient client = new HttpClient(requestHandler))
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
                     HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/register?regCode={Uri.EscapeDataString(regCode)}&deviceId=null");
                     string json = await response.Content.ReadAsStringAsync();
                     if (!response.IsSuccessStatusCode)
@@ -154,9 +160,8 @@ namespace SimpleQ.Tests.MobileTest
                 WriteLine("Registration code:");
                 string regCode = ReadLine();
 
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new HttpClient(requestHandler))
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
                     HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/joinDepartment?regCode={Uri.EscapeDataString(regCode)}&persId={persId}");
                     string json = await response.Content.ReadAsStringAsync();
                     if (!response.IsSuccessStatusCode)
@@ -182,9 +187,8 @@ namespace SimpleQ.Tests.MobileTest
             {
                 WriteLine("DepId:");
                 if (!int.TryParse(ReadLine(), out int depId)) return;
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new HttpClient(requestHandler))
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
                     HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/leaveDepartment?persId={persId}&depId={depId}&custCode={Uri.EscapeDataString(custCode)}");
                     WriteLine(response.StatusCode);
                     if (response.IsSuccessStatusCode)
@@ -200,9 +204,8 @@ namespace SimpleQ.Tests.MobileTest
         {
             Task.Run(async () =>
             {
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new HttpClient(requestHandler))
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
                     WriteLine((await client.GetAsync($"{SERVER}/api/mobile/unregister?persId={persId}&custCode={Uri.EscapeDataString(custCode)}")).StatusCode);
 
                     persId = 0;
@@ -221,9 +224,8 @@ namespace SimpleQ.Tests.MobileTest
                 string json;
                 SurveyData survey;
 
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new HttpClient(requestHandler))
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
                     response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={YESNO_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
@@ -266,9 +268,8 @@ namespace SimpleQ.Tests.MobileTest
                 string json;
                 SurveyData survey;
 
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new HttpClient(requestHandler))
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
                     response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={SPEC_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
@@ -318,9 +319,8 @@ namespace SimpleQ.Tests.MobileTest
                 string json;
                 SurveyData survey;
 
-                using (HttpClient client = new HttpClient())
+                using (HttpClient client = new HttpClient(requestHandler))
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
                     response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={FREE_ID}");
                     json = await response.Content.ReadAsStringAsync();
 

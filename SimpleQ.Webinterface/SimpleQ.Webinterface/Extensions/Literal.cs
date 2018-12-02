@@ -21,5 +21,13 @@ namespace SimpleQ.Webinterface.Extensions
         {
             get => DateTime.Now.AddDays(1).Date - DateTime.Now;
         }
+
+        public static string RandomString(int count)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            var rnd = new Random();
+
+            return new string(chars.OrderBy(c => rnd.Next()).Take(count).ToArray());
+        }
     }
 }

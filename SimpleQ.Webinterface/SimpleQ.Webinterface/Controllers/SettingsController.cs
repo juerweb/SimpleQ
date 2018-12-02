@@ -22,7 +22,7 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                 if (cust == null)
-                    return Http.NotFound("Customer not found.");
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
 
                 var model = new SettingsModel
@@ -43,6 +43,8 @@ namespace SimpleQ.Webinterface.Controllers
                     DataStoragePeriod = cust.DataStoragePeriod,
                     PaymentMethodId = cust.PaymentMethodId
                 };
+
+                ViewBag.emailConfirmed = cust.EmailConfirmed;
                 return View("Settings", model);
             }
         }
@@ -59,7 +61,7 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                 if (cust == null)
-                    return Http.NotFound("Customer not found.");
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
                 if (req.CheckedAnswerTypes == null)
                     AddModelError("CheckedAnswerTypes", "AnswerTypes must not be null.", ref err);
@@ -107,7 +109,9 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
                     if (cust == null)
-                        return Http.NotFound("Customer not found.");
+                        return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+
+                    var prevEmail = cust.CustEmail;
 
                     cust.CustName = req.Name ?? throw ANEx("CustName");
                     cust.CustEmail = req.Email ?? throw ANEx("CustEmail");
@@ -129,6 +133,29 @@ namespace SimpleQ.Webinterface.Controllers
                     cust.PaymentMethodId = req.PaymentMethodId;
 
                     db.SaveChanges();
+
+                    //if (prevEmail != cust.CustEmail)
+                    //{
+                    //    var authToken = db.sp_GenerateAuthToken(cust.CustCode).First();
+
+                    //    var body = $"You registered successfully! Now please confirm your e-mail address.{Environment.NewLine}" +
+                    //        $"Your customer code: {cust.CustCode}{Environment.NewLine}" +
+                    //        $"Confirmation link: {Url.Action("ConfirmEmail", "Account", new { authToken }, Request.Url.Scheme)}{Environment.NewLine}" +
+                    //        $"{Environment.NewLine}{Environment.NewLine}" +
+                    //        $"Best regards{Environment.NewLine}" +
+                    //        $"Your SimpleQ-Team";
+
+                    //    if (Email.Send("registration@simpleq.at", cust.CustEmail, "E-mail confirmation", body))
+                    //    {
+                    //        cust.EmailConfirmed = false;
+                    //        db.SaveChanges();
+                    //    }
+                    //    else
+                    //    {
+                    //        var model = new ErrorModel { Title = "Unable to send confirmation e-mail", Message = "Sending failed due to internal error(s)." };
+                    //        return View("AccountError", model);
+                    //    }
+                    //}
 
                     return Index();
                 }
