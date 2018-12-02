@@ -76,8 +76,9 @@ namespace SimpleQ.Webinterface.Controllers
                     Name = "QR Code"
                 };
 
-                if (Email.Send("invitation@simpleq.at", req.Emails.ToArray(), "SimpleQ Invitation",
+                if (Email.Send("invitation@simpleq.at", req.Emails.ToArray(), req.InvitationSubject,
                     $"REGISTRATION CODE: {CustCode}{req.DepId}{Environment.NewLine}{req.InvitationText}",
+                    true,
                     new Attachment(new MemoryStream(b), contentType)))
                 {
                     return Index();
