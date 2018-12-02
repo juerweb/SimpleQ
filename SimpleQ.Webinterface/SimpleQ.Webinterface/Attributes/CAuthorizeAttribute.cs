@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,17 @@ namespace SimpleQ.Webinterface
 {
     public class CAuthorizeAttribute : AuthorizeAttribute
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
+
+        public override void OnAuthorization(AuthorizationContext filterContext)
+        {
+            logger.Debug("Auth entered");
+            base.OnAuthorization(filterContext);
+        }
+
         protected override void HandleUnauthorizedRequest(AuthorizationContext context)
         {
+            logger.Debug("Unauthorized");
             if (context.HttpContext.Request.IsAjaxRequest())
             {
                 var urlHelper = new UrlHelper(context.RequestContext);
