@@ -8,86 +8,162 @@
 <br /><br />
 @using (Html.BeginForm("Register", "Account"))
 {
-      <div id="baseData">
-          <h3>Basisdaten</h3>
-          <div class="form-group">
-              @Html.LabelFor(c => c.CustName, "Kunden-Name")
-              @Html.TextBoxFor(c => c.CustName, new { @class = "form-control", required = "required" })
-              @Html.ValidationMessageFor(c => c.CustName)
+      <div>
+          <div id="baseData">
+              <h3>Basisdaten</h3>
+              <div class="form-group">
+                  @Html.LabelFor(c => c.CustName, "Kunden-Name")
+                  @Html.TextBoxFor(c => c.CustName, new { @class = "form-control", required = "required", id = "custName" })
+                  @Html.ValidationMessageFor(c => c.CustName)
+              </div>
+
+              <div class="form-group">
+                  @Html.LabelFor(c => c.CustEmail, "E-Mail")
+                  @Html.TextBoxFor(c => c.CustEmail, new { @class = "form-control", required = "required", id = "mail" })
+                  @Html.ValidationMessageFor(c => c.CustEmail)
+              </div>
+
+              <div class="form-group">
+                  @Html.LabelFor(c => c.CustPwdTmp, "Passwort")
+                  @Html.PasswordFor(c => c.CustPwdTmp, new { @class = "form-control", required = "required", id = "pawword1" })
+                  @Html.ValidationMessageFor(c => c.CustPwdTmp)
+              </div>
+
+              <div class="form-group">
+                  @Html.Label("confirmPassword", "Passwort bestätigen")
+                  @Html.Password("confirmPassword", "", new { @class = "form-control", required = "required", id = "password2" })
+                  @Html.ValidationMessage("confirmPassword")
+              </div>
+
+              <div class="row">
+                  <div class="col-lg-6">
+                  </div>
+                  <div class="col-lg-6">
+                      <button type="button" id="nextBtn" class="btn btn-primary btn-block" onclick="toNextView()">Next</button>
+                  </div>
+              </div>
           </div>
 
-          <div class="form-group">
-              @Html.LabelFor(c => c.CustEmail, "E-Mail")
-              @Html.TextBoxFor(c => c.CustEmail, new { @class = "form-control", required = "required" })
-              @Html.ValidationMessageFor(c => c.CustEmail)
+          <div id="addressData">
+              <h3>Adressdaten</h3>
+              <div class="form-group">
+                  @Html.LabelFor(c => c.Street, "Straße und Hausnr.")
+                  @Html.TextBoxFor(c => c.Street, new { @class = "form-control", required = "required" })
+                  @Html.ValidationMessageFor(c => c.Street)
+              </div>
+
+              <div class="form-group">
+                  @Html.LabelFor(c => c.Plz, "PLZ")
+                  @Html.TextBoxFor(c => c.Plz, new { @class = "form-control", required = "required" })
+                  @Html.ValidationMessageFor(c => c.Plz)
+              </div>
+
+              <div class="form-group">
+                  @Html.LabelFor(c => c.City, "Stadt")
+                  @Html.TextBoxFor(c => c.City, new { @class = "form-control", required = "required" })
+                  @Html.ValidationMessageFor(c => c.City)
+              </div>
+
+              <div class="form-group">
+                  @Html.LabelFor(c => c.Country, "Land")
+                  @Html.TextBoxFor(c => c.Country, new { @class = "form-control", required = "required" })
+                  @Html.ValidationMessageFor(c => c.Country)
+              </div>
+
+              <div class="form-group">
+                  @Html.LabelFor(c => c.LanguageCode, "Sprache")
+                  @Html.DropDownListFor(c => c.LanguageCode, new SelectList(new[] { "DE", "EN", "ES" }), new { @class = "form-control", required = "required" })
+                  @Html.ValidationMessageFor(c => c.LanguageCode)
+              </div>
+
+              <div class="row">
+                  <div class="col-6">
+                      <button type="button" class="btn btn-primary btn-block" onclick="toLastView()">Previous</button>
+                  </div>
+                  <div class="col-6">
+                      <button type="button" class="btn btn-primary btn-block" onclick="toNextView()">Next</button>
+                  </div>
+              </div>
           </div>
 
-          <div class="form-group">
-              @Html.LabelFor(c => c.CustPwdTmp, "Passwort")
-              @Html.PasswordFor(c => c.CustPwdTmp, new { @class = "form-control", required = "required" })
-              @Html.ValidationMessageFor(c => c.CustPwdTmp)
-          </div>
+          <div id="specificData">
+              <h3>Spezifische Daten</h3>
+              <div class="form-group">
+                  @Html.LabelFor(c => c.DataStoragePeriod, "Datenspeicherungsfrist in Monaten")
+                  @Html.TextBoxFor(c => c.DataStoragePeriod, new { @class = "form-control", required = "required", @type = "number", min = 1, max = 24 })
+                  @Html.ValidationMessageFor(c => c.DataStoragePeriod)
+              </div>
 
-          <div class="form-group">
-              @Html.Label("confirmPassword", "Passwort bestätigen")
-              @Html.Password("confirmPassword", "", new { @class = "form-control", required = "required" })
-              @Html.ValidationMessage("confirmPassword")
+              <div class="form-group">
+                  @Html.LabelFor(c => c.AccountingPeriod, "Rechnungsperiode in Monaten")
+                  @Html.DropDownListFor(c => c.AccountingPeriod, new SelectList(new[] { 1, 3, 6, 12 }), new { @class = "form-control", required = "required" })
+                  @Html.ValidationMessageFor(c => c.AccountingPeriod)
+              </div>
+
+              <div class="form-group">
+                  @Html.LabelFor(c => c.PaymentMethodId, "Bezahlungsart")
+                  @Html.DropDownListFor(c => c.PaymentMethodId, new SelectList(ViewBag.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control", required = "required" })
+                  @Html.ValidationMessageFor(c => c.PaymentMethodId)
+              </div>
+              @Html.AntiForgeryToken()
+
+              <div class="row">
+                  <div class="col-6">
+                      <button type="button" class="btn btn-primary btn-block" onclick="toLastView()">Previous</button>
+                  </div>
+                  <div class="col-6">
+                      <button type="submit" class="btn btn-primary btn-block">Finish</button>
+                  </div>
+              </div>
           </div>
       </div>
-
-    <div id="addressData">
-        <h3>Adressdaten</h3>
-        <div class="form-group">
-            @Html.LabelFor(c => c.Street, "Straße und Hausnr.")
-            @Html.TextBoxFor(c => c.Street, new { @class = "form-control", required = "required" })
-            @Html.ValidationMessageFor(c => c.Street)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(c => c.Plz, "PLZ")
-            @Html.TextBoxFor(c => c.Plz, new { @class = "form-control", required = "required" })
-            @Html.ValidationMessageFor(c => c.Plz)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(c => c.City, "Stadt")
-            @Html.TextBoxFor(c => c.City, new { @class = "form-control", required = "required" })
-            @Html.ValidationMessageFor(c => c.City)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(c => c.Country, "Land")
-            @Html.TextBoxFor(c => c.Country, new { @class = "form-control", required = "required" })
-            @Html.ValidationMessageFor(c => c.Country)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(c => c.LanguageCode, "Sprache")
-            @Html.DropDownListFor(c => c.LanguageCode, new SelectList(new[] { "DE", "EN", "ES" }), new { @class = "form-control", required = "required" })
-            @Html.ValidationMessageFor(c => c.LanguageCode)
-        </div>
-    </div>
-
-    <div id="specificData">
-        <h3>Spezifische Daten</h3>
-        <div class="form-group">
-            @Html.LabelFor(c => c.DataStoragePeriod, "Datenspeicherungsfrist in Monaten")
-            @Html.TextBoxFor(c => c.DataStoragePeriod, new { @class = "form-control", required = "required", @type = "number", min = 1, max = 24 })
-            @Html.ValidationMessageFor(c => c.DataStoragePeriod)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(c => c.AccountingPeriod, "Rechnungsperiode in Monaten")
-            @Html.DropDownListFor(c => c.AccountingPeriod, new SelectList(new[] { 1, 3, 6, 12 }), new { @class = "form-control", required = "required" })
-            @Html.ValidationMessageFor(c => c.AccountingPeriod)
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(c => c.PaymentMethodId, "Bezahlungsart")
-            @Html.DropDownListFor(c => c.PaymentMethodId, new SelectList(ViewBag.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control", required = "required" })
-            @Html.ValidationMessageFor(c => c.PaymentMethodId)
-        </div>
-        @Html.AntiForgeryToken()
-        <button type="submit" class="btn btn-primary">Registrieren</button>
-    </div>
 }
+
+<script>
+    $(function () {
+        $("#addressData").hide();
+        $("#specificData").hide();
+    });
+
+    function toNextView() {
+        if ($("#baseData").is(":visible")) {
+            let custNameTB = document.getElementById("custName");
+            let mailTB = document.getElementById("mail");
+            let password1TB = document.getElementById("password1");
+            let password2TB = document.getElementById("password2");
+            if (custNameTB.value == "") {
+                alert("Der Kundenname darf nicht leer sein!");
+                return;
+            }
+            if (!validateEmail(mailTB.value)) {
+                alert("Die angegebene Email-Adresse ist nicht gültig!");
+                return;
+            }
+            //if (password1TB.value !== password2TB.value) {
+
+            //}
+
+            $("#baseData").hide();
+            $("#addressData").show();
+        } else if ($("#addressData").is(":visible")) {
+            $("#addressData").hide();
+            $("#specificData").show();
+        }
+    }
+
+    function toLastView() {
+        if ($("#addressData").is(":visible")) {
+            $("#addressData").hide();
+            $("#baseData").show();
+        } else if ($("#specificData").is(":visible")) {
+            $("#specificData").hide();
+            $("#addressData").show();
+        }
+    }
+
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+</script>
