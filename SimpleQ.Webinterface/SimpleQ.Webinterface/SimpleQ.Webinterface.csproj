@@ -296,6 +296,7 @@
     <Content Include="Content\Images\Icons\support.png" />
     <Content Include="Content\Images\Icons\surveyResults.png" />
     <Content Include="Content\Images\Logos\simpleQ.png" />
+    <Content Include="Content\Images\registrationBG.jpg" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery-ui.min.css" />
     <Content Include="Content\jquery-ui.structure.css" />
@@ -303,6 +304,7 @@
     <Content Include="Content\jquery-ui.theme.css" />
     <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\Layout.css" />
+    <Content Include="Content\Login.css" />
     <Content Include="Content\SurveyCreation.css" />
     <Content Include="Content\SurveyResults.css" />
     <Content Include="favicon.ico" />
