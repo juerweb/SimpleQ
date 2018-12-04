@@ -637,6 +637,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die preferred billing date for ervery month ähnelt.
+        /// </summary>
+        public static string preferredBillingDay {
+            get {
+                return ResourceManager.GetString("preferredBillingDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die previous ähnelt.
         /// </summary>
         public static string previous {

@@ -380,4 +380,7 @@
   <data name="weak" xml:space="preserve">
     <value>schwach</value>
   </data>
+  <data name="preferredBillingDay" xml:space="preserve">
+    <value>Bevorzugtes Zahlungsdatum im Monat</value>
+  </data>
 </root>

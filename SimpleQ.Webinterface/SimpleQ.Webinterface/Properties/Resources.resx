@@ -380,4 +380,7 @@
   <data name="email" xml:space="preserve">
     <value>email</value>
   </data>
+  <data name="preferredBillingDay" xml:space="preserve">
+    <value>preferred billing date for ervery month</value>
+  </data>
 </root>
