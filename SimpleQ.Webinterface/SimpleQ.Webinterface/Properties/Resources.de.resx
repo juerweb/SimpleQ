@@ -317,4 +317,67 @@
   <data name="invalidMailAddress" xml:space="preserve">
     <value>Die Email-Adresse ist ungültig!</value>
   </data>
+  <data name="addressData" xml:space="preserve">
+    <value>Adressdaten</value>
+  </data>
+  <data name="baseData" xml:space="preserve">
+    <value>Basisdaten</value>
+  </data>
+  <data name="billingPeriodInMonths" xml:space="preserve">
+    <value>Rechnungsperiode in Monaten</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>Stadt</value>
+  </data>
+  <data name="confirmPassword" xml:space="preserve">
+    <value>Passwort bestätigen</value>
+  </data>
+  <data name="country" xml:space="preserve">
+    <value>Land</value>
+  </data>
+  <data name="customerName" xml:space="preserve">
+    <value>Kundenname</value>
+  </data>
+  <data name="dataRetentionPeriodInMonths" xml:space="preserve">
+    <value>Datenspeicherungsfrist in Monaten</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>Email</value>
+  </data>
+  <data name="finish" xml:space="preserve">
+    <value>Fertigstellen</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="medium" xml:space="preserve">
+    <value>mittel</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="paymentMethod" xml:space="preserve">
+    <value>Zahlungsmethode</value>
+  </data>
+  <data name="postCode" xml:space="preserve">
+    <value>Postleitzahl</value>
+  </data>
+  <data name="previous" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="specificData" xml:space="preserve">
+    <value>Spezifische Daten</value>
+  </data>
+  <data name="streetAndHousenumber" xml:space="preserve">
+    <value>Straße und Hausnummer</value>
+  </data>
+  <data name="strong" xml:space="preserve">
+    <value>stark</value>
+  </data>
+  <data name="weak" xml:space="preserve">
+    <value>schwach</value>
+  </data>
 </root>

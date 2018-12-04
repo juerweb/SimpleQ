@@ -295,6 +295,17 @@
     <Content Include="Content\Images\Icons\createSurvey.png" />
     <Content Include="Content\Images\Icons\support.png" />
     <Content Include="Content\Images\Icons\surveyResults.png" />
+    <Content Include="Content\Images\loginBG1.jpg" />
+    <Content Include="Content\Images\loginBG10.jpg" />
+    <Content Include="Content\Images\loginBG11.jpg" />
+    <Content Include="Content\Images\loginBG2.jpg" />
+    <Content Include="Content\Images\loginBG3.jpg" />
+    <Content Include="Content\Images\loginBG4.jpg" />
+    <Content Include="Content\Images\loginBG5.jpg" />
+    <Content Include="Content\Images\loginBG6.jpg" />
+    <Content Include="Content\Images\loginBG7.jpg" />
+    <Content Include="Content\Images\loginBG8.jpg" />
+    <Content Include="Content\Images\loginBG9.jpg" />
     <Content Include="Content\Images\Logos\simpleQ.png" />
     <Content Include="Content\Images\registrationBG.jpg" />
     <Content Include="Content\jquery-ui.css" />

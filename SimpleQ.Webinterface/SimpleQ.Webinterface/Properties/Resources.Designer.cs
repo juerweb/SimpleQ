@@ -97,6 +97,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Address data ähnelt.
+        /// </summary>
+        public static string addressData {
+            get {
+                return ResourceManager.GetString("addressData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die answer ähnelt.
         /// </summary>
         public static string answer {
@@ -142,6 +151,24 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Base data ähnelt.
+        /// </summary>
+        public static string baseData {
+            get {
+                return ResourceManager.GetString("baseData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die billing period in months ähnelt.
+        /// </summary>
+        public static string billingPeriodInMonths {
+            get {
+                return ResourceManager.GetString("billingPeriodInMonths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die cancel ähnelt.
         /// </summary>
         public static string cancel {
@@ -160,6 +187,24 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die city ähnelt.
+        /// </summary>
+        public static string city {
+            get {
+                return ResourceManager.GetString("city", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die confirm password ähnelt.
+        /// </summary>
+        public static string confirmPassword {
+            get {
+                return ResourceManager.GetString("confirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die content ähnelt.
         /// </summary>
         public static string content {
@@ -174,6 +219,33 @@ namespace SimpleQ.Webinterface.Properties {
         public static string count {
             get {
                 return ResourceManager.GetString("count", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die country ähnelt.
+        /// </summary>
+        public static string country {
+            get {
+                return ResourceManager.GetString("country", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die customer name ähnelt.
+        /// </summary>
+        public static string customerName {
+            get {
+                return ResourceManager.GetString("customerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die data retention period in months ähnelt.
+        /// </summary>
+        public static string dataRetentionPeriodInMonths {
+            get {
+                return ResourceManager.GetString("dataRetentionPeriodInMonths", resourceCulture);
             }
         }
         
@@ -219,6 +291,24 @@ namespace SimpleQ.Webinterface.Properties {
         public static string edit {
             get {
                 return ResourceManager.GetString("edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die email ähnelt.
+        /// </summary>
+        public static string email {
+            get {
+                return ResourceManager.GetString("email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die finish ähnelt.
+        /// </summary>
+        public static string finish {
+            get {
+                return ResourceManager.GetString("finish", resourceCulture);
             }
         }
         
@@ -291,6 +381,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string invitationToSimpleQ {
             get {
                 return ResourceManager.GetString("invitationToSimpleQ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die language ähnelt.
+        /// </summary>
+        public static string language {
+            get {
+                return ResourceManager.GetString("language", resourceCulture);
             }
         }
         
@@ -385,6 +484,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die medium ähnelt.
+        /// </summary>
+        public static string medium {
+            get {
+                return ResourceManager.GetString("medium", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die members ähnelt.
         /// </summary>
         public static string Members {
@@ -412,6 +520,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die next ähnelt.
+        /// </summary>
+        public static string next {
+            get {
+                return ResourceManager.GetString("next", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die no template ähnelt.
         /// </summary>
         public static string noTemplate {
@@ -426,6 +543,24 @@ namespace SimpleQ.Webinterface.Properties {
         public static string Open {
             get {
                 return ResourceManager.GetString("Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die password ähnelt.
+        /// </summary>
+        public static string password {
+            get {
+                return ResourceManager.GetString("password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die payment method ähnelt.
+        /// </summary>
+        public static string paymentMethod {
+            get {
+                return ResourceManager.GetString("paymentMethod", resourceCulture);
             }
         }
         
@@ -484,11 +619,29 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die post code ähnelt.
+        /// </summary>
+        public static string postCode {
+            get {
+                return ResourceManager.GetString("postCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die predicted price ähnelt.
         /// </summary>
         public static string predictedPrice {
             get {
                 return ResourceManager.GetString("predictedPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die previous ähnelt.
+        /// </summary>
+        public static string previous {
+            get {
+                return ResourceManager.GetString("previous", resourceCulture);
             }
         }
         
@@ -534,6 +687,33 @@ namespace SimpleQ.Webinterface.Properties {
         public static string SaveAsTemplate {
             get {
                 return ResourceManager.GetString("SaveAsTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Specific data ähnelt.
+        /// </summary>
+        public static string specificData {
+            get {
+                return ResourceManager.GetString("specificData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die street and house number ähnelt.
+        /// </summary>
+        public static string streetAndHousenumber {
+            get {
+                return ResourceManager.GetString("streetAndHousenumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die strong ähnelt.
+        /// </summary>
+        public static string strong {
+            get {
+                return ResourceManager.GetString("strong", resourceCulture);
             }
         }
         
@@ -633,6 +813,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string typeSmall {
             get {
                 return ResourceManager.GetString("typeSmall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die weak ähnelt.
+        /// </summary>
+        public static string weak {
+            get {
+                return ResourceManager.GetString("weak", resourceCulture);
             }
         }
         
