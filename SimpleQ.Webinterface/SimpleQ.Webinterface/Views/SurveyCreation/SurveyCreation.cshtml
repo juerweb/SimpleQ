@@ -98,10 +98,10 @@
             <label class="mt-2">@Resources.askedPeopleCount</label>
             <div class="row">
                 <span class="col-md-6">
-                    <input id="countInput" class="form-control" type="number" value="0" name="Survey.Amount" oninput="changeSpanColor();checkCount()" />
+                    <input id="countInput" class="form-control" type="number" value="0" name="Survey.Amount" oninput="changeSpanColor(); checkCount(); changePrice(this);" />
                 </span>
                 <span class="col-md-6">
-                    <a>@Resources.predictedPrice: <b id="minPrice">0</b> @Resources.to @Resources.max <b id="maxPrice">300</b><b>€</b></a>
+                    <a>@Resources.predictedPrice: <b id="minPrice">0</b> @Resources.to @Resources.max <b id="maxPrice">0</b><b>€</b></a>
                 </span>
             </div>            
             <span class="row colorSpan pl-4 pr-4 mt-2">
@@ -131,7 +131,7 @@
                 @*<input type="checkbox" checked="checked" onclick="" name="Survey.Template">*@
                 <span data-toggle="tooltip" title="@Resources.TemplateDescription">@Resources.SaveAsTemplate</span>
             </div>
-            <button type="submit" class="btn btn-primary btn-block mb-5">Umfrage absenden</button>
+            <button type="submit" class="btn btn-primary btn-block mb-5">@Resources.startSurvey</button>
         </div>
         <div class="col-md-5 p-0">
             <h3 class="text-center">@Resources.surveyPreviewHeader</h3>
@@ -524,11 +524,17 @@
                 document.getElementById("categoryDropdown").innerHTML += '<option value="' + id + '" selected>' + input + '</option>';
             }
         );
+    }
 
-        //$.ajax({
-        //    url: url,
-        //    type: 'GET'
-        //});
+    function changePrice(inputElem) {
+
+        let url = '@Url.Action("LoadPricePerClick", "SurveyCreation", new { amount = "temp"})'.replace("temp", inputElem.value);
+        $.get(
+            url,
+            function (price) {
+                document.getElementById("maxPrice").innerHTML = inputElem.value*price;
+            }
+        );
     }
 
 </script>

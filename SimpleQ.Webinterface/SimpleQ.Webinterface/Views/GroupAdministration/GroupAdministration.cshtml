@@ -14,10 +14,10 @@
                 <label for="groups">@Resources.groups</label>
                 <div class="border border-dark">
                     <ul class="list-group ga-groups-ul pl-2" id="gaGroups">
-                        @foreach (Department d in Model.Departments)
+                        @foreach (KeyValuePair< Department, int> kvp in Model.Departments)
                         {
                             <li>
-                                <input id="@d.DepId" name="DepId" type="radio" value="@d.DepId"> <a>@d.DepName</a>
+                                <input id="@kvp.Key.DepId" name="DepId" type="radio" value="@kvp.Key.DepId"> <a>@kvp.Key.DepName</a>
                             </li>
                         }
                     </ul>
@@ -108,9 +108,9 @@
         mailEditorStartup();
 
         @{
-            foreach(Department d in Model.Departments)
+            foreach(KeyValuePair<Department, int> kvp in Model.Departments)
             {
-                @:groups['@d.DepId'] = ['@d.DepName', @d.People.Count]; 
+                @:groups['@kvp.Key.DepId'] = ['@kvp.Key.DepName', @kvp.Value]; 
             }
         }
 

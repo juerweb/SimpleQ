@@ -24,13 +24,12 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                db.Configuration.LazyLoadingEnabled = false;
                 if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
                     return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
                 var model = new GroupAdministrationModel
                 {
-                    Departments = db.Departments.Where(d => d.CustCode == CustCode).ToList()
+                    Departments = db.Departments.Where(d => d.CustCode == CustCode).ToDictionary(d => d, d => d.People.Count())
                 };
 
                 ViewBag.emailConfirmed = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().EmailConfirmed;
@@ -42,12 +41,12 @@ namespace SimpleQ.Webinterface.Controllers
         public ActionResult SendInvitations(GroupAdministrationModel req)
         {
             bool err = false;
-            //req = new GroupAdministrationModel
-            //{
-            //    DepId = 1,
-            //    Emails = new List<string> { "dev@simpleq.at", "lukas.schendlinger@a1.net" },
-            //    InvitationText = "sads ma BITTE NED BES"
-            //};
+            req = new GroupAdministrationModel
+            {
+                DepId = 1,
+                Emails = new List<string> { "dev@simpleq.at", "lukas.schendlinger@a1.net" },
+                InvitationText = "sads ma BITTE NED BES"
+            };
 
             if (req == null)
                 AddModelError("Model", "Model object must not be null.", ref err);
@@ -116,7 +115,7 @@ namespace SimpleQ.Webinterface.Controllers
                 db.Departments.Add(dep);
                 db.SaveChanges();
 
-                return Content($"{dep.DepId}","text/plain");
+                return Content($"{dep.DepId}", "text/plain");
             }
         }
 

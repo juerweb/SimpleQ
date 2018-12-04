@@ -232,6 +232,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die customer code ähnelt.
+        /// </summary>
+        public static string customerCode {
+            get {
+                return ResourceManager.GetString("customerCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die customer name ähnelt.
         /// </summary>
         public static string customerName {
@@ -309,6 +318,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string finish {
             get {
                 return ResourceManager.GetString("finish", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die forgot passwort ähnelt.
+        /// </summary>
+        public static string forgotPassword {
+            get {
+                return ResourceManager.GetString("forgotPassword", resourceCulture);
             }
         }
         
@@ -471,6 +489,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string listing {
             get {
                 return ResourceManager.GetString("listing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die login ähnelt.
+        /// </summary>
+        public static string login {
+            get {
+                return ResourceManager.GetString("login", resourceCulture);
             }
         }
         
@@ -705,6 +732,24 @@ namespace SimpleQ.Webinterface.Properties {
         public static string specificData {
             get {
                 return ResourceManager.GetString("specificData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die send out survey ähnelt.
+        /// </summary>
+        public static string startSurvey {
+            get {
+                return ResourceManager.GetString("startSurvey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die stay logged in ähnelt.
+        /// </summary>
+        public static string stayLoggedIn {
+            get {
+                return ResourceManager.GetString("stayLoggedIn", resourceCulture);
             }
         }
         

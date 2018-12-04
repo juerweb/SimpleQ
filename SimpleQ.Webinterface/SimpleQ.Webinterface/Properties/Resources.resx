@@ -383,4 +383,19 @@
   <data name="preferredBillingDay" xml:space="preserve">
     <value>preferred billing date for ervery month</value>
   </data>
+  <data name="customerCode" xml:space="preserve">
+    <value>customer code</value>
+  </data>
+  <data name="forgotPassword" xml:space="preserve">
+    <value>forgot passwort</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>login</value>
+  </data>
+  <data name="startSurvey" xml:space="preserve">
+    <value>send out survey</value>
+  </data>
+  <data name="stayLoggedIn" xml:space="preserve">
+    <value>stay logged in</value>
+  </data>
 </root>

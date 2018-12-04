@@ -34,7 +34,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Customer cust, string confirmPassword)
+        public ActionResult Register(Customer cust, string confirmPassword, int day)
         {
             bool err = false;
 
@@ -74,6 +74,9 @@ namespace SimpleQ.Webinterface.Controllers
             if (!new[] { 1, 3, 6, 12 }.Contains(cust.AccountingPeriod))
                 AddModelError("AccountingPeriod", "Accounting period must either 1, 3, 6 or 12 months", ref err);
 
+            if (day < 1 || day > 31)
+                AddModelError("day", "Invalid day value", ref err);
+
             using (var db = new SimpleQDBEntities())
             {
                 if (db.Customers.Any(c => c.CustEmail == cust.CustEmail))
@@ -92,6 +95,11 @@ namespace SimpleQ.Webinterface.Controllers
                 cust.MinGroupSize = minGroupSize;
                 cust.CostBalance = 0m;
                 cust.EmailConfirmed = false;
+
+                var date = DateTime.Now;
+                day = (DateTime.DaysInMonth(date.Year, date.Month) < day) ? DateTime.DaysInMonth(date.Year, date.Month) : day;
+                var old = cust.AccountingDate;
+                cust.AccountingDate = new DateTime(old.Year, old.Month, day);
 
                 db.Customers.Add(cust);
                 db.SaveChanges();

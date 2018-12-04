@@ -24,8 +24,6 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            Session["custCode"] = "420420";
-
             using (var db = new SimpleQDBEntities())
             {
                 var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();

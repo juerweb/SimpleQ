@@ -357,7 +357,7 @@
     <value>Weiter</value>
   </data>
   <data name="password" xml:space="preserve">
-    <value>Password</value>
+    <value>Passwort</value>
   </data>
   <data name="paymentMethod" xml:space="preserve">
     <value>Zahlungsmethode</value>
@@ -382,5 +382,20 @@
   </data>
   <data name="preferredBillingDay" xml:space="preserve">
     <value>Bevorzugtes Zahlungsdatum im Monat</value>
+  </data>
+  <data name="customerCode" xml:space="preserve">
+    <value>Kunden-Code</value>
+  </data>
+  <data name="forgotPassword" xml:space="preserve">
+    <value>Passwort vergessen</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="startSurvey" xml:space="preserve">
+    <value>Befragung aussenden</value>
+  </data>
+  <data name="stayLoggedIn" xml:space="preserve">
+    <value>eingeloggt bleiben</value>
   </data>
 </root>
