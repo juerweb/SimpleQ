@@ -51,6 +51,7 @@ create table Customer
 	LanguageCode char(3) not null,
 	DataStoragePeriod int not null check(DataStoragePeriod > 0), -- in Monaten
 	AccountingPeriod int not null check(AccountingPeriod in (1, 3, 6, 12)), -- in Monaten
+    AccountingDate date not null,
 	PaymentMethodId int not null references PaymentMethod,
     MinGroupSize int not null,
 	CostBalance money not null,
@@ -520,9 +521,9 @@ begin
 	declare @table table (BillId int);
 	declare c cursor local for select c.CustCode, CostBalance
 							   from Customer c
-							   where iif(datepart(day, (select coalesce(max(BillDate), c.RegistrationDate) from Bill b where b.CustCode = c.CustCode)) > datepart(day, getdate()),
-										 datediff(month, (select coalesce(max(BillDate), c.RegistrationDate) from Bill b where b.CustCode = c.CustCode), getdate()) - 1,
-										 datediff(month, (select coalesce(max(BillDate), c.RegistrationDate) from Bill b where b.CustCode = c.CustCode), getdate())
+							   where iif(datepart(day, c.AccountingDate) > datepart(day, getdate()),
+										 datediff(month, c.AccountingDate, getdate()) - 1,
+										 datediff(month, c.AccountingDate, getdate())
 										) >= c.AccountingPeriod
 							   and CostBalance > 0
 							   for update;
@@ -536,7 +537,8 @@ begin
 		insert into @table values (IDENT_CURRENT('Bill'));
 
 		update Customer
-		set CostBalance = 0
+		set CostBalance = 0,
+            AccountingDate = getdate()
 		where current of c;
 
 		fetch c into @custCode, @costBalance;

@@ -287,6 +287,50 @@ namespace SimpleQ.Webinterface.Controllers
                 return Http.Ok();
             }
         }
+
+        [HttpGet]
+        public ActionResult ChangeAccountingPeriod(int period)
+        {
+            if (!new[] { 1, 3, 6, 12 }.Contains(period))
+                return Http.Conflict("Invalid period value");
+
+            using (var db = new SimpleQDBEntities())
+            {
+                var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                if (cust == null)
+                    return Http.NotFound("Customer not found.");
+
+
+                cust.AccountingPeriod = period;
+                db.SaveChanges();
+                return Http.Ok();
+            }
+        }
+
+
+        [HttpGet]
+        public ActionResult ChangeAccountingDay(int day)
+        {
+            if (day < 1 || day > 31)
+                return Http.Conflict("Invalid day value");
+
+            var date = DateTime.Now;
+            day = (DateTime.DaysInMonth(date.Year, date.Month) < day) ? DateTime.DaysInMonth(date.Year, date.Month) : day;
+
+            using (var db = new SimpleQDBEntities())
+            {
+                var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                if (cust == null)
+                    return Http.NotFound("Customer not found.");
+
+
+                var old = cust.AccountingDate;
+                cust.AccountingDate = new DateTime(old.Year, old.Month, day);
+                db.SaveChanges();
+
+                return Http.Ok();
+            }
+        }
         #endregion
 
         #region Helpers

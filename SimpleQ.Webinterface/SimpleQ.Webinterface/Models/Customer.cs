@@ -42,6 +42,7 @@ namespace SimpleQ.Webinterface.Models
         public decimal CostBalance { get; set; }
         public string AuthToken { get; set; }
         public Nullable<System.DateTime> LastTokenGenerated { get; set; }
+        public System.DateTime AccountingDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
