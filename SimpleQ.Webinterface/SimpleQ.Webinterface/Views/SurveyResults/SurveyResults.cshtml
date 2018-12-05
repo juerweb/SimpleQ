@@ -1,4 +1,6 @@
-﻿@using SimpleQ.Webinterface.Properties;
+﻿@using SimpleQ.Webinterface.Models;
+@using System.Resources;
+@using SimpleQ.Webinterface.Properties;
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
 
 <div class="row pl-4 mt-1 ml-0 mr-0">
@@ -28,8 +30,27 @@
         <div id="multiResultOptions">
             <label for="SurveyCategories">@Resources.surveyCategoryHeader</label>
             @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
-            <label for="AnswerTypes">@Resources.surveyCategoryHeader</label>
-            @Html.DropDownListFor(model => model.AnswerTypes, new SelectList(Model.AnswerTypes, "TypeId", "TypeDesc"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
+            <label for="AnswerTypes">@Resources.answerTypeHeader</label>
+            @*@Html.DropDownListFor(model => model.AnswerTypes, new SelectList(Model.AnswerTypes, "TypeId", "TypeDesc"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })*@
+            <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()">
+                @{
+                    ResourceManager rm = Resources.ResourceManager;
+                    bool first = true;
+                    foreach (AnswerType at in Model.AnswerTypes)
+                    {
+                        if (first)
+                        {
+                            <option value="@at.TypeId" selected>@rm.GetString(at.TypeDesc)</option>
+                            first = false;
+                        }
+                        else
+                        {
+                            <option value="@at.TypeId">@rm.GetString(at.TypeDesc)</option>
+                        }
+                    }
+                }
+            </select>
+
             <div class="row mt-2">
                 <div class="col-md-6">
                     <div class="form-group mb-0">
@@ -42,7 +63,7 @@
                     <div class="form-group mb-0">
                         <label for="timeTwo">@Resources.to</label>
                         @*<input type="date" class="form-control" id="dateTo">*@
-                        <input type="date" class="form-control" id="dateTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="loadMulitResultAsync()">
+                        <input type="date" class="form-control" id="dateTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="loadMultiResultAsync()">
                     </div>
                 </div>
             </div>
@@ -81,6 +102,9 @@
 </div>
 
 <script>
+    $(function () {
+        switchToMulti();
+    });
 
    function loadSingleResultAsync() {
         $("#singleResultPartial").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + $("#Surveys").val());
@@ -463,8 +487,6 @@
                 }
             });
         }
-
-
     }
 
     function createDatasets(withBackground) {
