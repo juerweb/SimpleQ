@@ -16,7 +16,7 @@ using System.Web.Http;
 
 namespace SimpleQ.Webinterface.Controllers
 {
-    //[RequireAuth]
+    [RequireAuth]
     public class MobileController : ApiController
     {
         [HttpGet]
