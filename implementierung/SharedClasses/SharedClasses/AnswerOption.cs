@@ -18,5 +18,6 @@ namespace SimpleQ.Shared
         public int AnsId { get; set; }
         public int SvyId { get; set; }
         public string AnsText { get; set; }
+        public bool? FirstPosition { get; set; }
     }
 }

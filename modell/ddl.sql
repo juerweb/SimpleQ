@@ -39,10 +39,11 @@ create table Customer
 (
 	CustCode char(6) collate Latin1_General_CS_AS primary key,
 	CustName varchar(max) not null,
-	CustEmail varchar(max) not null,
+	CustEmail varchar(512) unique not null,
 	CustPwdTmp varchar(max) collate Latin1_General_CS_AS null,
 	CustPwdHash varbinary(max) null,
 	RegistrationDate date null,
+	EmailConfirmed bit not null,
 	Street varchar(max) not null,
 	Plz varchar(16) not null,
 	City varchar(max) not null,
@@ -50,10 +51,20 @@ create table Customer
 	LanguageCode char(3) not null,
 	DataStoragePeriod int not null check(DataStoragePeriod > 0), -- in Monaten
 	AccountingPeriod int not null check(AccountingPeriod in (1, 3, 6, 12)), -- in Monaten
+    AccountingDate date not null,
 	PaymentMethodId int not null references PaymentMethod,
     MinGroupSize int not null,
-	CostBalance money not null
+	CostBalance money not null,
+	AuthToken char(20) null,
+	LastTokenGenerated datetime null,
+	Rebate int not null default(0) check(Rebate between 0 and 100)
 );
+go
+
+-- Unique-Constraint für Customer.AuthToken
+create unique nonclustered index idx_AuthToken_NotNull
+on Customer(AuthToken)
+where AuthToken is not null;
 go
 
 -- Rechnung
@@ -242,7 +253,7 @@ on Customer
 after insert as
 begin
 	declare @CustCode char(6), @hash varbinary(max);
-	declare c cursor local for select CustCode, hashbytes('SHA2_512', CustPwdTmp) from inserted;
+	declare c cursor local for select CustCode, dbo.fn_GetHash(CustPwdTmp) from inserted;
 	
 	open c;
 	fetch c into @CustCode, @hash;
@@ -277,7 +288,7 @@ begin
     if(trigger_nestlevel() = 1 and update(CustPwdTmp))
     begin
         declare @CustCode char(6), @hash varbinary(max);
-	    declare c cursor local for select CustCode, hashbytes('SHA2_512', CustPwdTmp) from inserted;
+	    declare c cursor local for select CustCode, dbo.fn_GetHash(CustPwdTmp) from inserted;
 	
 	    open c;
 	    fetch c into @CustCode, @hash;
@@ -307,22 +318,22 @@ create trigger tr_SurveyIns
 on Survey
 after insert as
 begin
-    declare @svyId int, @typeId int, @amount int;
-    declare c cursor local for select SvyId, TypeId, Amount from inserted;
+    declare @custCode char(6), @svyId int, @typeId int, @amount int;
+    declare c cursor local for select CustCode, SvyId, TypeId, Amount from inserted;
 
     open c;
-    fetch c into @svyId, @typeId, @amount;
+    fetch c into @custCode, @svyId, @typeId, @amount;
 
     while(@@FETCH_STATUS = 0)
     begin
-		update Survey set PricePerClick = dbo.fn_CalcPricePerClick(@amount)
+		update Survey set PricePerClick = dbo.fn_CalcPricePerClick(@amount, @custCode)
 		where SvyId = @svyId;
 
         insert into AnswerOption (SvyId, AnsText) select @svyId, PreAnsText
                                                   from PredefinedAnswerOption
                                                   where TypeId = @typeId;
 
-        fetch c into @svyId, @typeId, @amount;
+        fetch c into @custCode, @svyId, @typeId, @amount;
     end
     
     close c;
@@ -511,9 +522,9 @@ begin
 	declare @table table (BillId int);
 	declare c cursor local for select c.CustCode, CostBalance
 							   from Customer c
-							   where iif(datepart(day, (select coalesce(max(BillDate), c.RegistrationDate) from Bill b where b.CustCode = c.CustCode)) > datepart(day, getdate()),
-										 datediff(month, (select coalesce(max(BillDate), c.RegistrationDate) from Bill b where b.CustCode = c.CustCode), getdate()) - 1,
-										 datediff(month, (select coalesce(max(BillDate), c.RegistrationDate) from Bill b where b.CustCode = c.CustCode), getdate())
+							   where iif(datepart(day, c.AccountingDate) > datepart(day, getdate()),
+										 datediff(month, c.AccountingDate, getdate()) - 1,
+										 datediff(month, c.AccountingDate, getdate())
 										) >= c.AccountingPeriod
 							   and CostBalance > 0
 							   for update;
@@ -527,7 +538,8 @@ begin
 		insert into @table values (IDENT_CURRENT('Bill'));
 
 		update Customer
-		set CostBalance = 0
+		set CostBalance = 0,
+            AccountingDate = getdate()
 		where current of c;
 
 		fetch c into @custCode, @costBalance;
@@ -540,15 +552,76 @@ begin
 end
 go
 
+-- Zum Generieren eines neuen CustCode
+drop procedure sp_GenerateCustCode;
+go
+create procedure sp_GenerateCustCode
+as
+begin
+	declare @custCode char(6);
+
+	set @custCode = (select cast(right('000000' + cast(round(999999 * rand(), 0) as varchar(6)), 6) as char(6)));
+	while(@custCode in (select CustCode from Customer))
+	begin
+		set @custCode = (select cast(right('000000' + cast(round(999999 * rand(), 0) as varchar(6)), 6) as char(6)));
+	end
+
+	select @custCode as 'CustCode';
+end
+go
+
+-- Zum Generieren eines Authentifizierungs-Tokens für einen Kunden
+drop procedure sp_GenerateAuthToken;
+go
+create procedure sp_GenerateAuthToken(@custCode char(6))
+as
+begin
+	if (@custCode not in (select CustCode from Customer))
+	begin
+		raiserror('Customer with CustCode %s does not exist.',16, 1, @custCode);
+		return;
+	end
+
+	declare @token varchar(20) = '';
+	declare @chars char(62) = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	declare @i int = 0;
+	
+	while (@i < 20)
+	begin
+		set @token += substring(@chars, cast(round(62 * rand(), 0) as int), 1);
+		set @i += 1;
+	end
+	
+	while(@token in (select AuthToken from Customer))
+	begin
+		set @token = '';
+		set @i = 0;
+		while (@i < 20)
+		begin
+			set @token += substring(@chars, cast(round(62 * rand(), 0) as int), 1);
+			set @i += 1;
+		end
+	end
+
+	update Customer 
+	set AuthToken = cast(@token as char(20)), LastTokenGenerated = getdate()
+	where CustCode = @custCode;
+
+	select cast(@token as char(20)) as 'AuthToken';
+end
+go
 
 -- Zum Berechnen der Per-Click-Kosten bei einer bestimmten Befragtenanzahl
 drop function fn_CalcPricePerClick;
 go
-create function fn_CalcPricePerClick(@amount int)
+create function fn_CalcPricePerClick(@amount int, @custCode char(6))
 returns money
 as
 begin
 	declare @value money;
+	declare @rebate decimal(5, 2);
+
+	set @rebate = coalesce((select Rebate from Customer where CustCode = @custCode), 0);
 
 	if (@amount between 0 and 20)			-- f(x) = 0.125 | 0 <= x <= 20
 		set @value = 0.125;
@@ -561,10 +634,21 @@ begin
 	else									-- f(x) = -1 | x < 0
 		set @value = -1;
 
-	return @value;
+	return @value * (1 - @rebate/100);
 end
 go
 
+
+-- Zum Hashen eines Strings
+drop function fn_GetHash;
+go
+create function fn_GetHash(@str varchar(max))
+returns varbinary(max)
+as
+begin
+	return hashbytes('SHA2_512', @str);
+end
+go
 
 
 -- Fixe inserts (für alle gleich!)
