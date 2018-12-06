@@ -122,7 +122,7 @@ namespace SimpleQ.Tests.MobileTest
                 string regCode = ReadLine();
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/register?regCode={Uri.EscapeDataString(regCode)}&deviceId=null");
                     string json = await response.Content.ReadAsStringAsync();
                     if (!response.IsSuccessStatusCode)
@@ -154,7 +154,7 @@ namespace SimpleQ.Tests.MobileTest
 
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/joinDepartment?regCode={Uri.EscapeDataString(regCode)}&persId={persId}");
                     string json = await response.Content.ReadAsStringAsync();
                     if (!response.IsSuccessStatusCode)
@@ -182,7 +182,7 @@ namespace SimpleQ.Tests.MobileTest
                 if (!int.TryParse(ReadLine(), out int depId)) return;
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/leaveDepartment?persId={persId}&depId={depId}&custCode={Uri.EscapeDataString(custCode)}");
                     WriteLine(response.StatusCode);
                     if (response.IsSuccessStatusCode)
@@ -200,7 +200,7 @@ namespace SimpleQ.Tests.MobileTest
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     WriteLine((await client.GetAsync($"{SERVER}/api/mobile/unregister?persId={persId}&custCode={Uri.EscapeDataString(custCode)}")).StatusCode);
 
                     persId = 0;
@@ -221,7 +221,7 @@ namespace SimpleQ.Tests.MobileTest
 
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={YESNO_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
@@ -266,7 +266,7 @@ namespace SimpleQ.Tests.MobileTest
 
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={SPEC_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
@@ -318,7 +318,7 @@ namespace SimpleQ.Tests.MobileTest
 
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={FREE_ID}");
                     json = await response.Content.ReadAsStringAsync();
 

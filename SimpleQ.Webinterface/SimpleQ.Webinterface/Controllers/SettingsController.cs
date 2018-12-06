@@ -134,29 +134,6 @@ namespace SimpleQ.Webinterface.Controllers
 
                     db.SaveChanges();
 
-                    //if (prevEmail != cust.CustEmail)
-                    //{
-                    //    var authToken = db.sp_GenerateAuthToken(cust.CustCode).First();
-
-                    //    var body = $"You registered successfully! Now please confirm your e-mail address.{Environment.NewLine}" +
-                    //        $"Your customer code: {cust.CustCode}{Environment.NewLine}" +
-                    //        $"Confirmation link: {Url.Action("ConfirmEmail", "Account", new { authToken }, Request.Url.Scheme)}{Environment.NewLine}" +
-                    //        $"{Environment.NewLine}{Environment.NewLine}" +
-                    //        $"Best regards{Environment.NewLine}" +
-                    //        $"Your SimpleQ-Team";
-
-                    //    if (Email.Send("registration@simpleq.at", cust.CustEmail, "E-mail confirmation", body))
-                    //    {
-                    //        cust.EmailConfirmed = false;
-                    //        db.SaveChanges();
-                    //    }
-                    //    else
-                    //    {
-                    //        var model = new ErrorModel { Title = "Unable to send confirmation e-mail", Message = "Sending failed due to internal error(s)." };
-                    //        return View("AccountError", model);
-                    //    }
-                    //}
-
                     return Index();
                 }
                 catch (ArgumentNullException ex)

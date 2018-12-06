@@ -115,7 +115,7 @@ namespace SimpleQ.Webinterface.Controllers
                 db.Departments.Add(dep);
                 db.SaveChanges();
 
-                return Content($"{dep.DepId}", "text/plain");
+                return Json(new { dep.DepId, RegCode = $"{CustCode}{dep.DepId}" },JsonRequestBehavior.AllowGet);
             }
         }
 
