@@ -57,6 +57,7 @@ create table Customer
 	CostBalance money not null,
 	AuthToken char(20) null,
 	LastTokenGenerated datetime null,
+	Rebate int not null default(0) check(Rebate between 0 and 100)
 );
 go
 
@@ -317,22 +318,22 @@ create trigger tr_SurveyIns
 on Survey
 after insert as
 begin
-    declare @svyId int, @typeId int, @amount int;
-    declare c cursor local for select SvyId, TypeId, Amount from inserted;
+    declare @custCode char(6), @svyId int, @typeId int, @amount int;
+    declare c cursor local for select CustCode, SvyId, TypeId, Amount from inserted;
 
     open c;
-    fetch c into @svyId, @typeId, @amount;
+    fetch c into @custCode, @svyId, @typeId, @amount;
 
     while(@@FETCH_STATUS = 0)
     begin
-		update Survey set PricePerClick = dbo.fn_CalcPricePerClick(@amount)
+		update Survey set PricePerClick = dbo.fn_CalcPricePerClick(@amount, @custCode)
 		where SvyId = @svyId;
 
         insert into AnswerOption (SvyId, AnsText) select @svyId, PreAnsText
                                                   from PredefinedAnswerOption
                                                   where TypeId = @typeId;
 
-        fetch c into @svyId, @typeId, @amount;
+        fetch c into @custCode, @svyId, @typeId, @amount;
     end
     
     close c;
@@ -613,11 +614,14 @@ go
 -- Zum Berechnen der Per-Click-Kosten bei einer bestimmten Befragtenanzahl
 drop function fn_CalcPricePerClick;
 go
-create function fn_CalcPricePerClick(@amount int)
+create function fn_CalcPricePerClick(@amount int, @custCode char(6))
 returns money
 as
 begin
 	declare @value money;
+	declare @rebate decimal(5, 2);
+
+	set @rebate = coalesce((select Rebate from Customer where CustCode = @custCode), 0);
 
 	if (@amount between 0 and 20)			-- f(x) = 0.125 | 0 <= x <= 20
 		set @value = 0.125;
@@ -630,7 +634,7 @@ begin
 	else									-- f(x) = -1 | x < 0
 		set @value = -1;
 
-	return @value;
+	return @value * (1 - @rebate/100);
 end
 go
 

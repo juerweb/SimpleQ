@@ -12,16 +12,17 @@ namespace SimpleQ.Webinterface.Models
     public partial class SimpleQDBEntities
     {
         [DbFunction("SimpleQDBModel.Store", "fn_CalcPricePerClick")]
-        public virtual decimal? fn_CalcPricePerClick(int amount)
+        public virtual decimal? fn_CalcPricePerClick(int amount, string custCode = "")
         {
             var objectContext = ((IObjectContextAdapter)this).ObjectContext;
 
             var parameters = new List<ObjectParameter>
             {
-                new ObjectParameter("amount", amount)
+                new ObjectParameter("amount", amount),
+                new ObjectParameter("custCode", custCode)
             };
 
-            return objectContext.CreateQuery<decimal>("SimpleQDBModel.Store.fn_CalcPricePerClick(@amount)", parameters.ToArray())
+            return objectContext.CreateQuery<decimal>("SimpleQDBModel.Store.fn_CalcPricePerClick(@amount, @custCode)", parameters.ToArray())
                  .Execute(MergeOption.NoTracking)
                  .FirstOrDefault();
         }

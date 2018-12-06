@@ -37,12 +37,13 @@ namespace SimpleQ.Webinterface.Models
         public string LanguageCode { get; set; }
         public int DataStoragePeriod { get; set; }
         public int AccountingPeriod { get; set; }
+        public System.DateTime AccountingDate { get; set; }
         public int PaymentMethodId { get; set; }
         public int MinGroupSize { get; set; }
         public decimal CostBalance { get; set; }
         public string AuthToken { get; set; }
         public Nullable<System.DateTime> LastTokenGenerated { get; set; }
-        public System.DateTime AccountingDate { get; set; }
+        public int Rebate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Bill> Bills { get; set; }
