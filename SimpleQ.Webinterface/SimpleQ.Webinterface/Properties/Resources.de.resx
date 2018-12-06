@@ -398,4 +398,7 @@
   <data name="stayLoggedIn" xml:space="preserve">
     <value>eingeloggt bleiben</value>
   </data>
+  <data name="groupCode" xml:space="preserve">
+    <value>Gruppencode</value>
+  </data>
 </root>

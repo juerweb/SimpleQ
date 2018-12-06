@@ -367,6 +367,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die group code ähnelt.
+        /// </summary>
+        public static string groupCode {
+            get {
+                return ResourceManager.GetString("groupCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die groups ähnelt.
         /// </summary>
         public static string groups {

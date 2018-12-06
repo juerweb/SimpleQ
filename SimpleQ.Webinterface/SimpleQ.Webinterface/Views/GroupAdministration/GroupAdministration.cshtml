@@ -38,7 +38,8 @@
                 </div>
             </div>
             <span>
-                <a>@Resources.count @Resources.Members:</a> <b id="countMembers">0</b>
+                <a>@Resources.count @Resources.Members:</a> <b id="countMembers">0</b><br />
+                <a>@Resources.groupCode:</a> <b id="groupCode"></b>
             </span>
 
 
@@ -77,7 +78,8 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title">New Group..</h4>
+                <h4 id="newGroupH" class="modal-title">New Group..</h4>
+                <h4 id="noGroupH" style="display:none" class="modal-title">You have no groups yet, please define your first one!</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -110,7 +112,7 @@
         @{
             foreach(KeyValuePair<Department, int> kvp in Model.Departments)
             {
-                @:groups['@kvp.Key.DepId'] = ['@kvp.Key.DepName', @kvp.Value]; 
+                @:groups['@kvp.Key.DepId'] = ['@kvp.Key.DepName', @kvp.Value, '@kvp.Key.CustCode@kvp.Key.DepId']; 
             }
         }
 
@@ -130,11 +132,18 @@
     }); // <-- Things to to at startup END
 
     function checkFirstElem() {
-        let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
-        radioBtnElem.setAttribute("checked", "checked");
-        radioBtnElem.click();
-        updateGroupNameInput(radioBtnElem.parentElement.children[1].innerHTML); //fill into Textbox
-        updateMemberCount(radioBtnElem.value);
+        if (Object.keys(groups).length > 0) {
+            let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
+            radioBtnElem.setAttribute("checked", "checked");
+            radioBtnElem.click();
+            updateGroupNameInput(radioBtnElem.parentElement.children[1].innerHTML); //fill into Textbox
+            updateMemberCount(radioBtnElem.value);
+        }
+        else {
+            $("#newGroupModal").modal("show");
+            $("#newGroupH").hide();
+            $("#noGroupH").show();
+        }
     }
 
     function handleCheckedAttributes(elem) {
@@ -167,7 +176,7 @@
         $.get(
             url,
             function (id) {
-                groups[id] = [groupName, 0];
+                groups[id] = [groupName, 0,@Session.];
                 let groupsUl = document.getElementById("gaGroups");
                 groupsUl.innerHTML +=
                     '<li>' +
@@ -177,6 +186,7 @@
                 handleCheckedAttributes(elem);
                 updateGroupNameInput(groupName);
                 updateMemberCount(id);
+                updateGroupCode(id);
             }
         );
     }
@@ -187,6 +197,11 @@
     }
 
     function updateMemberCount(id) {
+        document.getElementById("countMembers").innerHTML = groups[id][1];
+    }
+
+    function updateGroupCode(id) {
+        document.getElementById("groupCode").innerHTML = 
         document.getElementById("countMembers").innerHTML = groups[id][1];
     }
 

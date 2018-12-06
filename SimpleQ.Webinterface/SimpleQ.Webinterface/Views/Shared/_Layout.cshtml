@@ -126,7 +126,7 @@
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
             <div class="mr-4">
                 <span class="row">
-                    <button type="button" class="btn btn-danger btn-block" id="logout">
+                    <button type="button" href="@Url.Action("Logout", "Account")" class="btn btn-danger btn-block" id="logout">
                         <span class="d-flex justify-content-between">
                             <span>Logout</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe8ac;</i>
                         </span>
@@ -263,6 +263,12 @@
             </div>
         </div>
         <div class="col-md-10 p-0 m-0" id="rightCol">
+            @if (ViewBag.emailConfirmed == false)
+            {
+                <div class="alert alert-danger ml-4 mr-4 mt-2">
+                    <strong>Achtung!</strong> Bitte bestätigen Sie umgehend Ihre E-Mail Adresse.
+                </div>
+            }
             @RenderBody()
         </div>
 
