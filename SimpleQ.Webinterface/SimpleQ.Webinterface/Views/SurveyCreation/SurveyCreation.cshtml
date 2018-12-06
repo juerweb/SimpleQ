@@ -532,7 +532,7 @@
         $.get(
             url,
             function (price) {
-                document.getElementById("maxPrice").innerHTML = inputElem.value*price;
+                document.getElementById("maxPrice").innerHTML = (inputElem.value * price).toFixed(2);
             }
         );
     }
