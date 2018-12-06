@@ -2,6 +2,9 @@
 @using System.Resources;
 @using SimpleQ.Webinterface.Properties;
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
+@{ 
+    ResourceManager rm = Resources.ResourceManager;
+}
 
 <div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>@Resources.surveyResultsHeader</h2>
@@ -33,7 +36,7 @@
             <label for="AnswerTypes">@Resources.answerTypeHeader</label>
             @*@Html.DropDownListFor(model => model.AnswerTypes, new SelectList(Model.AnswerTypes, "TypeId", "TypeDesc"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })*@
             <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()">
-                @{
+                @*@{
                     ResourceManager rm = Resources.ResourceManager;
                     bool first = true;
                     foreach (AnswerType at in Model.AnswerTypes)
@@ -48,7 +51,7 @@
                             <option value="@at.TypeId">@rm.GetString(at.TypeDesc)</option>
                         }
                     }
-                }
+                }*@
             </select>
 
             <div class="row mt-2">
@@ -102,11 +105,26 @@
 </div>
 
 <script>
+
+    var languageDict = {};
+
     $(function () {
+        fillLangDict();
+        loadAnswerTypes();
         switchToMulti();
     });
 
-   function loadSingleResultAsync() {
+    function fillLangDict() {
+        @{
+            foreach(AnswerType at in Model.AnswerTypes)
+            {
+                @:languageDict['@at.TypeId'] = '@rm.GetString(at.TypeDesc)';
+            }
+        }
+        console.log(languageDict);
+    }
+
+    function loadSingleResultAsync() {
         $("#singleResultPartial").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + $("#Surveys").val());
     }
 
@@ -120,6 +138,29 @@
             },
             function (data) {
                 $("#multiResultPartial").html(data);
+                loadAnswerTypes();
+            });
+    }
+
+    function loadAnswerTypes() {
+        let id = document.getElementById("SurveyCategories").value;
+        let url = '@Url.Action("LoadTypesByCategory", "SurveyResults", new { catId = "temp"})'.replace("temp", id);
+        $.get(
+            url,
+            function (data) {
+                let elem = document.getElementById("AnswerTypes");
+                elem.innerHTML = "";
+                //console.log(data);
+                //console.log(data.length);
+                for (i = 0; i < data.length; i++) {
+                    let typeId = data[i].TypeId;
+                    console.log(data[i]);
+                    if (i == 0) {
+                        elem.innerHTML += '<option value="' + typeId + '" selected>' + languageDict[typeId] + '</option>';
+                    } else {
+                        elem.innerHTML += '<option value="' + typeId + '">' + languageDict[typeId] + '</option>';
+                    }
+                }
             });
     }
 

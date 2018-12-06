@@ -177,6 +177,32 @@ namespace SimpleQ.Webinterface.Controllers
         }
         #endregion
 
+        #region AJAX-Methods
+        [HttpGet]
+        public ActionResult LoadTypesByCategory(int catId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                var cat = db.SurveyCategories.Where(c => c.CustCode == CustCode && c.CatId == catId).FirstOrDefault();
+                if (cat == null)
+                    return Http.NotFound("Category not found.");
+
+                var types = cat.Surveys
+                    .Select(s => new AnswerType
+                        {
+                            TypeId = s.AnswerType.TypeId,
+                            TypeDesc = s.AnswerType.TypeDesc,
+                            BaseId = s.AnswerType.BaseId
+                        })
+                    .GroupBy(t => t.TypeId)
+                    .Select(g => g.First())
+                    .ToList();
+
+                return Json(types, JsonRequestBehavior.AllowGet);
+            }
+        }
+        #endregion
+
         #region Helpers
         private List<KeyValuePair<string, int>> SelectVotesFromSurvey(Survey survey)
         {

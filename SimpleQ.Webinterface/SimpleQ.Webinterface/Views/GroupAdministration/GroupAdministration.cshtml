@@ -101,7 +101,6 @@
 
 <script>
     let groups = {};
-    let chosenId = 0;
     let chosen;
 
 
@@ -115,15 +114,17 @@
                 @:groups['@kvp.Key.DepId'] = ['@kvp.Key.DepName', @kvp.Value, '@kvp.Key.CustCode@kvp.Key.DepId']; 
             }
         }
-
+        console.log(groups);
         //choose first group automatically
         checkFirstElem();
 
         $("#gaGroups").on("click", "input[type = radio]", function () {
             handleCheckedAttributes(this);
             let text = this.parentElement.children[1].innerHTML;
-            chosenId = this.value;
+            let id = this.value;
             updateGroupNameInput(text);
+            updateMemberCount(id);
+            updateGroupCode(id);
         });
 
         $("#showNewGroupModalBtn").click(function () {
@@ -138,6 +139,7 @@
             radioBtnElem.click();
             updateGroupNameInput(radioBtnElem.parentElement.children[1].innerHTML); //fill into Textbox
             updateMemberCount(radioBtnElem.value);
+            updateGroupCode(radioBtnElem.value);
         }
         else {
             $("#newGroupModal").modal("show");
@@ -175,8 +177,8 @@
 
         $.get(
             url,
-            function (id) {
-                groups[id] = [groupName, 0,@Session.];
+            function (id, groupCode) {
+                groups[id] = [groupName, 0, groupCode];
                 let groupsUl = document.getElementById("gaGroups");
                 groupsUl.innerHTML +=
                     '<li>' +
@@ -201,8 +203,7 @@
     }
 
     function updateGroupCode(id) {
-        document.getElementById("groupCode").innerHTML = 
-        document.getElementById("countMembers").innerHTML = groups[id][1];
+        document.getElementById("groupCode").innerHTML = groups[id][2];
     }
 
     if (typeof tempTextGroups === 'undefined') {
