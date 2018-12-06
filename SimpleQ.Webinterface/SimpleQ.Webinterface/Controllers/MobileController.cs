@@ -159,12 +159,15 @@ namespace SimpleQ.Webinterface.Controllers
                     SvyText = svy.SvyText,
                     EndDate = svy.EndDate,
                     TypeId = svy.TypeId,
-                    CatName = db.SurveyCategories
-                        .Where(c => c.CatId == svy.CatId)
-                        .Select(c => c.CatName)
-                        .First(),
-                    AnswerOptions = db.AnswerOptions
-                        .Where(a => a.SvyId == svy.SvyId)
+                    CatName = svy.SurveyCategory.CatName,
+                    AnswerOptions = svy.AnswerOptions
+                        .Select(a => new AnswerOption
+                            {
+                                AnsId = a.AnsId,
+                                AnsText = a.AnsText,
+                                SvyId = a.SvyId,
+                                FirstPosition = a.FirstPosition
+                            })
                         .ToList()
                 });
             }

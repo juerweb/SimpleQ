@@ -38,7 +38,7 @@ namespace SimpleQ.Tests.MobileTest
         static string custName;
         static Dictionary<int, string> deps = new Dictionary<int, string>();
 
-        const string SERVER = "https://dev.simpleq.at";
+        const string SERVER = "https://localhost:44338";//"https://dev.simpleq.at";
         const int YESNO_ID = 1;
         const int SPEC_ID = 4;
         const int FREE_ID = 5;
