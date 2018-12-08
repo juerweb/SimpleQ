@@ -245,7 +245,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             using (var db = new SimpleQDBEntities())
             {
-                return Convert.ToDouble(db.fn_CalcPricePerClick(amount));
+                return Convert.ToDouble(db.fn_CalcPricePerClick(amount, CustCode ?? ""));
             }
         }
         #endregion
@@ -370,7 +370,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         private ArgumentNullException ANEx(string paramName) => new ArgumentNullException(paramName);
 
-        private string CustCode => HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+        private string CustCode => HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value;
         #endregion
     }
 }

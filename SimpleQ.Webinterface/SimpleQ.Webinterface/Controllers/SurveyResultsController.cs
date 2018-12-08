@@ -194,6 +194,7 @@ namespace SimpleQ.Webinterface.Controllers
                             TypeDesc = s.AnswerType.TypeDesc,
                             BaseId = s.AnswerType.BaseId
                         })
+                    .Where(t => t.BaseId != (int)BaseQuestionTypes.OpenQuestion)
                     .GroupBy(t => t.TypeId)
                     .Select(g => g.First())
                     .ToList();
