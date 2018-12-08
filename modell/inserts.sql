@@ -50,66 +50,66 @@ insert into AnswerOption values (4, 'No, pero en verde', null);  -- AnsId 13
 insert into AnswerOption values (4, 'Es el mejor', null);  -- AnsId 14
 
 -- +++ Beantwortungen über Handy +++
-insert into Vote values (null); -- VoteId 1
+insert into Vote values (null, null); -- VoteId 1
 insert into Chooses values (1, 1);
 
-insert into Vote values (null); -- VoteId 2
+insert into Vote values (null, null); -- VoteId 2
 insert into Chooses values (2, 1);
 
-insert into Vote values (null); -- VoteId 3
+insert into Vote values (null, null); -- VoteId 3
 insert into Chooses values (3, 1);
 
-insert into Vote values (null); -- VoteId 4
+insert into Vote values (null, null); -- VoteId 4
 insert into Chooses values (4, 1);
 
-insert into Vote values (null); -- VoteId 5
+insert into Vote values (null, null); -- VoteId 5
 insert into Chooses values (5, 3);
 
-insert into Vote values (null); -- VoteId 6
+insert into Vote values (null, null); -- VoteId 6
 insert into Chooses values (6, 4);
 
-insert into Vote values (null); -- VoteId 7
+insert into Vote values (null, null); -- VoteId 7
 insert into Chooses values (7, 5);
 
-insert into Vote values (null); -- VoteId 8
+insert into Vote values (null, null); -- VoteId 8
 insert into Chooses values (8, 5);
 
-insert into Vote values (null); -- VoteId 9
+insert into Vote values (null, null); -- VoteId 9
 insert into Chooses values (9, 6);
 
-insert into Vote values (null); -- VoteId 10
+insert into Vote values (null, null); -- VoteId 10
 insert into Chooses values (10, 7);
 
-insert into Vote values (null); -- VoteId 11
+insert into Vote values (null, null); -- VoteId 11
 insert into Chooses values (11, 9);
 insert into Chooses values (11, 11);
 
-insert into Vote values (null); -- VoteId 12
+insert into Vote values (null, null); -- VoteId 12
 insert into Chooses values (12, 11);
 insert into Chooses values (12, 12);
 
-insert into Vote values (null); -- VoteId 13
+insert into Vote values (null, null); -- VoteId 13
 insert into Chooses values (13, 12);
 
-insert into Vote values (null); -- VoteId 14
+insert into Vote values (null, null); -- VoteId 14
 insert into Chooses values (14, 12);
 
-insert into Vote values (null); -- VoteId 15
+insert into Vote values (null, null); -- VoteId 15
 insert into Chooses values (15, 13);
 
-insert into Vote values (null); -- VoteId 16
+insert into Vote values (null, null); -- VoteId 16
 insert into Chooses values (16, 13);
 
-insert into Vote values (null); -- VoteId 17
+insert into Vote values (null, null); -- VoteId 17
 insert into Chooses values (17, 14);
 
-insert into Vote values ('Foisch'); -- VoteId 18
+insert into Vote values ('Foisch', null); -- VoteId 18
 insert into Chooses values (18, 8);
 
-insert into Vote values ('Abgehoben'); -- VoteId 19
+insert into Vote values ('Abgehoben', null); -- VoteId 19
 insert into Chooses values (19, 8);
 
-insert into Vote values ('Topf3'); -- VoteId 20
+insert into Vote values ('Topf3', null); -- VoteId 20
 insert into Chooses values (20, 8);
 commit;
 go
@@ -121,77 +121,77 @@ insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?'
 insert into Asking values (6, 1, '420420');
 insert into Asking values (6, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 6 nötig (YesNoDontKnow) => AnsIds 15, 16, 17
-insert into Vote values (null) -- VoteId 21;
+insert into Vote values (null, null) -- VoteId 21;
 insert into Chooses values (21, 15);
-insert into Vote values (null) -- VoteId 22;
+insert into Vote values (null, null) -- VoteId 22;
 insert into Chooses values (22, 15);
-insert into Vote values (null) -- VoteId 23;
+insert into Vote values (null, null) -- VoteId 23;
 insert into Chooses values (23, 16);
-insert into Vote values (null) -- VoteId 24;
+insert into Vote values (null, null) -- VoteId 24;
 insert into Chooses values (24, 17);
 
 insert into Survey values (4, '420420', 'Finden Sie jetzt der Chef ist ein Arschloch?', '2018-07-16', '2018-07-31', 5, null, 2, 0, 0); -- SvyId 7
 insert into Asking values (7, 1, '420420');
 insert into Asking values (7, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 7 nötig (YesNoDontKnow) => AnsIds 18, 19, 20
-insert into Vote values (null) -- VoteId 25;
+insert into Vote values (null, null) -- VoteId 25;
 insert into Chooses values (25, 18);
-insert into Vote values (null) -- VoteId 26;
+insert into Vote values (null, null) -- VoteId 26;
 insert into Chooses values (26, 19);
-insert into Vote values (null) -- VoteId 27;
+insert into Vote values (null, null) -- VoteId 27;
 insert into Chooses values (27, 19);
-insert into Vote values (null) -- VoteId 28;
+insert into Vote values (null, null) -- VoteId 28;
 insert into Chooses values (28, 20);
 
 insert into Survey values (4, '420420', 'Und wie schauts jetzt aus mit Chef=Arschloch?', '2018-08-01', '2018-08-15', 5, null, 2, 0, 0); -- SvyId 8
 insert into Asking values (8, 1, '420420');
 insert into Asking values (8, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 8 nötig (YesNoDontKnow) => AnsIds 21, 22, 23
-insert into Vote values (null) -- VoteId 29;
+insert into Vote values (null, null) -- VoteId 29;
 insert into Chooses values (29, 21);
-insert into Vote values (null) -- VoteId 30;
+insert into Vote values (null, null) -- VoteId 30;
 insert into Chooses values (30, 21);
-insert into Vote values (null) -- VoteId 31;
+insert into Vote values (null, null) -- VoteId 31;
 insert into Chooses values (31, 21);
-insert into Vote values (null) -- VoteId 32;
+insert into Vote values (null, null) -- VoteId 32;
 insert into Chooses values (32, 21);
-insert into Vote values (null) -- VoteId 33;
+insert into Vote values (null, null) -- VoteId 33;
 insert into Chooses values (33, 23);
-insert into Vote values (null) -- VoteId 34;
+insert into Vote values (null, null) -- VoteId 34;
 insert into Chooses values (34, 23);
 
 insert into Survey values (4, '420420', 'Es jefe igual a culo?', '2018-08-16', '2018-08-31', 5, null, 2, 0, 0); -- SvyId 9
 insert into Asking values (9, 1, '420420');
 insert into Asking values (9, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 9 nötig (YesNoDontKnow) => AnsIds 24, 25, 26
-insert into Vote values (null) -- VoteId 35;
+insert into Vote values (null, null) -- VoteId 35;
 insert into Chooses values (35, 24);
-insert into Vote values (null) -- VoteId 36;
+insert into Vote values (null, null) -- VoteId 36;
 insert into Chooses values (36, 24);
-insert into Vote values (null) -- VoteId 37;
+insert into Vote values (null, null) -- VoteId 37;
 insert into Chooses values (37, 25);
-insert into Vote values (null) -- VoteId 38;
+insert into Vote values (null, null) -- VoteId 38;
 insert into Chooses values (38, 25);
-insert into Vote values (null) -- VoteId 39;
+insert into Vote values (null, null) -- VoteId 39;
 insert into Chooses values (39, 25);
-insert into Vote values (null) -- VoteId 40;
+insert into Vote values (null, null) -- VoteId 40;
 insert into Chooses values (40, 26);
 
 insert into Survey values (4, '420420', 'Jefe=culo?', '2018-09-01', '2018-09-15', 5, null, 2, 0, 0); -- SvyId 10
 insert into Asking values (10, 1, '420420');
 insert into Asking values (10, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 10 nötig (YesNoDontKnow) => AnsIds 27, 28, 29
-insert into Vote values (null) -- VoteId 41;
+insert into Vote values (null, null) -- VoteId 41;
 insert into Chooses values (41, 27);
-insert into Vote values (null) -- VoteId 42;
+insert into Vote values (null, null) -- VoteId 42;
 insert into Chooses values (42, 27);
-insert into Vote values (null) -- VoteId 43;
+insert into Vote values (null, null) -- VoteId 43;
 insert into Chooses values (43, 27);
-insert into Vote values (null) -- VoteId 44;
+insert into Vote values (null, null) -- VoteId 44;
 insert into Chooses values (44, 27);
-insert into Vote values (null) -- VoteId 45;
+insert into Vote values (null, null) -- VoteId 45;
 insert into Chooses values (45, 28);
-insert into Vote values (null) -- VoteId 46;
+insert into Vote values (null, null) -- VoteId 46;
 insert into Chooses values (46, 29);
 
 update Survey set [Sent] = 1;

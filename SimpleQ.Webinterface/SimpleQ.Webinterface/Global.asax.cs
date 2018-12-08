@@ -1,9 +1,11 @@
-﻿using SimpleQ.Webinterface.Extensions;
+﻿using MigraDoc.Rendering;
+using PdfSharp.Pdf;
+using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Net.Mail;
 using System.Security.Claims;
 using System.Threading;
 using System.Web;
@@ -58,7 +60,7 @@ namespace SimpleQ.Webinterface
                 {
                     // Sleep bis zur nächsten Mitternacht
                     Thread.Sleep((int)Literal.NextMidnight.TotalMilliseconds);
-                    using(var db = new SimpleQDBEntities())
+                    using (var db = new SimpleQDBEntities())
                     {
                         // Alle heutigen Umfragen schedulen
                         db.Surveys.Where(s => s.StartDate.Date == DateTime.Today).ToList().ForEach(s =>
@@ -94,11 +96,14 @@ namespace SimpleQ.Webinterface
 
             HostingEnvironment.QueueBackgroundWorkItem(ct =>
             {
-                // Sleep bis um 03:00 AM
-                Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
-                using (var db = new SimpleQDBEntities())
+                while (true)
                 {
-                    db.sp_CheckExceededSurveyData();
+                    // Sleep bis um 03:00 AM
+                    Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
+                    using (var db = new SimpleQDBEntities())
+                    {
+                        db.sp_CheckExceededSurveyData();
+                    }
                 }
             });
         }
@@ -113,34 +118,56 @@ namespace SimpleQ.Webinterface
 
             HostingEnvironment.QueueBackgroundWorkItem(ct =>
             {
-                // Sleep bis um 03:00 AM
-               //Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
-                using (var db = new SimpleQDBEntities())
+                while (true)
                 {
-                    var result = db.sp_CreateBills().ToList();
-                    foreach (int? billId in result)
+                    // Sleep bis um 03:00 AM
+                    Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
+                    using (var db = new SimpleQDBEntities())
                     {
-                        try
+                        db.sp_CreateBills().ToList();
+                        var bills = db.Bills.Where(b => !b.Paid).ToList();
+
+                        foreach (Bill clinton in bills)
                         {
-                            Bill clinton = db.Bills.Where(b => b.BillId == billId).First();
-                            MailMessage msg = new MailMessage("payment@simpleq.at", clinton.Customer.CustEmail)
+                            var lastBillDate = db.Bills.Where(b => b.CustCode == clinton.CustCode)
+                                .OrderByDescending(b => b.BillDate)
+                                .Select(b => b.BillDate)
+                                .Skip(1)
+                                .FirstOrDefault();
+
+                            var surveys = db.Surveys
+                                .Where(s => s.CustCode == clinton.CustCode
+                                        && s.StartDate <= clinton.BillDate
+                                        && s.EndDate > lastBillDate)
+                                .OrderBy(s => s.StartDate)
+                                .ToArray();
+
+                            var stream = new MemoryStream();
+                            if (Pdf.CreateBill(ref stream, clinton, surveys, HostingEnvironment.MapPath("~/Content/Images/Logos/simpleQ.png"), lastBillDate))
                             {
-                                Subject = "SIMPLEQ BILL",
-                                Body = $"Bill: {clinton.BillPrice}"
-                            };
-                            SmtpClient client = new SmtpClient("smtp.1und1.de", 587)
+
+                                var body = $"Dear sir or madam!{Environment.NewLine}{Environment.NewLine}" +
+                                    $"Enclosed you will find your most recent bill.{Environment.NewLine}" +
+                                    $"We stay at your entire disposal for further questions.{Environment.NewLine}" +
+                                    $"{Environment.NewLine}{Environment.NewLine}" +
+                                    $"Sincerely{Environment.NewLine}" +
+                                    $"Your SimpleQ team";
+
+                                if (Email.Send("payment@simpleq.at", clinton.Customer.CustEmail, "SimpleQ Bill", body, false,
+                                    new System.Net.Mail.Attachment(stream, $"SimpleQ_Bill_{clinton.BillDate.ToString("yyyy-MM-dd")}.pdf", "application/pdf")))
+                                {
+                                    clinton.Sent = true;
+                                    db.SaveChanges();
+                                }
+                                else
+                                {
+                                    // Logging
+                                }
+                            }
+                            else
                             {
-                                Credentials = new System.Net.NetworkCredential("payment@simpleq.at", "123SimpleQ..."),
-                                EnableSsl = true
-                            };
-                            client.Send(msg);
-                            clinton.Sent = true;
-                            db.SaveChanges();
-                        }
-                        catch (Exception ex) when (ex is SmtpException || ex is SmtpFailedRecipientsException)
-                        {
-                            // Logging
-                            continue;
+                                // Logging
+                            }
                         }
                     }
                 }

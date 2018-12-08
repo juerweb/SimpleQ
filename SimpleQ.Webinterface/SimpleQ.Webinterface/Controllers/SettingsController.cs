@@ -1,8 +1,10 @@
-﻿using SimpleQ.Webinterface.Extensions;
+﻿using MigraDoc.Rendering;
+using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Claims;
@@ -24,6 +26,31 @@ namespace SimpleQ.Webinterface.Controllers
                 if (cust == null)
                     return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
+                var bills = new List<SettingsModel.BillWrapper>();
+                foreach (var bill in db.Bills.Where(b => b.CustCode == CustCode))
+                {
+                    var lastBillDate = db.Bills.Where(b => b.CustCode == bill.CustCode)
+                        .OrderByDescending(b => b.BillDate)
+                        .Select(b => b.BillDate)
+                        .Skip(1)
+                        .FirstOrDefault();
+
+                    var surveys = db.Surveys.Where(s => s.CustCode == bill.CustCode
+                                                    && s.StartDate <= bill.BillDate
+                                                    && s.EndDate > lastBillDate)
+                                            .OrderBy(s => s.StartDate)
+                                            .AsEnumerable()
+                                            .Select(s => new { s, n = s.AnswerOptions.SelectMany(a => a.Votes).Distinct().Where(v => v.VoteDate > lastBillDate).Count() })
+                                            .Select(x => new SettingsModel.SurveyWrapper
+                                            {
+                                                Survey = x.s,
+                                                NumberOfAnswers = x.n,
+                                                SurveyPrice = Convert.ToDouble(x.s.PricePerClick * x.n)
+
+                                            })
+                                            .ToList();
+                    bills.Add(new SettingsModel.BillWrapper { Bill = bill, Surveys = surveys });
+                }
 
                 var model = new SettingsModel
                 {
@@ -41,7 +68,8 @@ namespace SimpleQ.Webinterface.Controllers
                     Country = cust.Country,
                     LanguageCode = cust.LanguageCode,
                     DataStoragePeriod = cust.DataStoragePeriod,
-                    PaymentMethodId = cust.PaymentMethodId
+                    PaymentMethodId = cust.PaymentMethodId,
+                    Bills = bills
                 };
 
                 ViewBag.emailConfirmed = cust.EmailConfirmed;
@@ -306,6 +334,49 @@ namespace SimpleQ.Webinterface.Controllers
                 db.SaveChanges();
 
                 return Http.Ok();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult DownloadBill(int billId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                {
+                    return Http.NotFound("Customer not found"); // WARN
+                }
+
+
+                var bill = db.Bills.Where(b => b.BillId == billId && b.CustCode == CustCode).FirstOrDefault();
+                if (bill == null)
+                {
+                    return Http.NotFound("Bill not found");
+                }
+
+                var lastBillDate = db.Bills.Where(b => b.CustCode == bill.CustCode)
+                                .OrderByDescending(b => b.BillDate)
+                                .Select(b => b.BillDate)
+                                .Skip(1)
+                                .FirstOrDefault();
+
+                var surveys = db.Surveys
+                    .Where(s => s.CustCode == bill.CustCode
+                            && s.StartDate <= bill.BillDate
+                            && s.EndDate > lastBillDate)
+                    .OrderBy(s => s.StartDate)
+                    .ToArray();
+
+                var stream = new MemoryStream();
+
+                if (Pdf.CreateBill(ref stream, bill, surveys, HttpContext.Server.MapPath("~/Content/Images/Logos/simpleQ.png"), lastBillDate))
+                {
+                    return File(stream, "application/pdf");
+                }
+                else
+                {
+                    return Http.ServiceUnavailable("Downloading currently not available. Please try again later.");
+                }
             }
         }
         #endregion

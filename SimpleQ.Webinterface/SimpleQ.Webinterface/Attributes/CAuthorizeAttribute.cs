@@ -37,7 +37,6 @@ namespace SimpleQ.Webinterface
             else
             {
                 base.HandleUnauthorizedRequest(context);
-                logger.Debug("Request authorized");
             }
         }
     }

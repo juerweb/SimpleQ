@@ -22,6 +22,7 @@ namespace SimpleQ.Webinterface.Models
     
         public int VoteId { get; set; }
         public string VoteText { get; set; }
+        public Nullable<System.DateTime> VoteDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
