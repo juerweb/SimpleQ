@@ -520,7 +520,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\SurveyCreation\SurveyCreation.cshtml" />
     <Content Include="Views\GroupAdministration\GroupAdministration.cshtml" />
-    <Content Include="Views\Settings\_Settings.cshtml" />
+    <Content Include="Views\Settings\Settings.cshtml" />
     <Content Include="Views\Support\_Support.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
