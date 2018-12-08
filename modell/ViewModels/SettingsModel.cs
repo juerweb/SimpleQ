@@ -7,6 +7,19 @@ namespace SimpleQ.Webinterface.Models.ViewModels
 {
     public class SettingsModel
     {
+        public struct SurveyWrapper
+        {
+            public Survey Survey { get; set; }
+            public int NumberOfAnswers { get; set; }
+            public double SurveyPrice { get; set; }
+        }
+
+        public struct BillWrapper
+        {
+            public Bill Bill { get; set; }
+            public List<SurveyWrapper> Surveys { get; set; } 
+        }
+
         #region Controller to View
         public int MinGroupSize { get; set; }
         public List<SurveyCategory> Categories { get; set; }
@@ -14,6 +27,7 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public List<AnswerType> ActivatedAnswerTypes { get; set; }
         public List<AnswerType> DeactivatedAnswerTypes { get; set; }
         public List<Survey> Templates { get; set; }
+        public List<BillWrapper> Bills { get; set; }
         #endregion
 
         #region Any direction
