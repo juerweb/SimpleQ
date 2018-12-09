@@ -46,8 +46,8 @@
 
                         <Image Source="ic_business_black_48.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start"></Image>
                         <StackLayout Grid.Column="1" Grid.Row="2">
-                            <Label Text="{Binding Path=RegistrationData.RegistrationData.CustName}" Style="{DynamicResource BodyStyle}"/>
-                            <Label Text="{Binding Path=RegistrationData.RegistrationData.DepName}" Style="{DynamicResource BodyStyle}"/>
+                            <Label Text="{Binding Path=RegistrationData.RegistrationData.CustName}" Style="{DynamicResource BodyStyle}" TextColor="White"/>
+                            <Label Text="{Binding Path=RegistrationData.RegistrationData.DepName}" Style="{DynamicResource BodyStyle}" TextColor="White"/>
                         </StackLayout>
                     </Grid>
                 </ListView.Header>
