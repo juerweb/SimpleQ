@@ -7,20 +7,20 @@
     <ContentPage.Content>
         
         <StackLayout>
-            <Label Text="{ext:Translate Text=SelectUnregisterGroups}"></Label>
+            <Label Text="{ext:Translate Text=SelectUnregisterGroups}" Margin="10,10,10,0"></Label>
             <ListView ItemsSource="{Binding IsChecked}" SelectionMode="Single" ItemSelected="ListView_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal">
-                                <controls:Checkbox IsCheckedChanged="Checkbox_IsCheckedChanged" IsChecked="{Binding IsChecked, Mode=TwoWay}" Margin="10,0,0,0"></controls:Checkbox>
+                            <StackLayout Orientation="Horizontal" Padding="10,10">
+                                <controls:Checkbox IsCheckedChanged="Checkbox_IsCheckedChanged" IsChecked="{Binding IsChecked, Mode=TwoWay}"></controls:Checkbox>
                                 <Label Text="{Binding AnswerOption.RegistrationData.DepName}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Command="{Binding UnregisterCommand}" Text="{ext:Translate Text=LogOut}" IsEnabled="{Binding IsOneChecked}"></Button>
+            <Button Command="{Binding UnregisterCommand}" Text="{ext:Translate Text=LogOut}" IsEnabled="{Binding IsOneChecked}" Margin="10,10"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -5,15 +5,15 @@
              x:Class="SimpleQ.Pages.QuestionPages.OpenQuestionPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
-            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
+            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}" Margin="10,10,10,0"></Label>
+            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}" Margin="10,5,10,0" FontAttributes="Bold"></Label>
 
-            <Entry Placeholder="{ext:Translate Text=Answer}" Text="{Binding Answer}" BindingContext="{Binding}">
+            <Entry Placeholder="{ext:Translate Text=Answer}" Text="{Binding Answer}" BindingContext="{Binding}" Margin="10,0,10,0">
                 <Entry.Behaviors>
                     <ext:OneWordBehavior x:Name="OneWordBehavior"></ext:OneWordBehavior>
                 </Entry.Behaviors>
             </Entry>
-            <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Source={x:Reference OneWordBehavior}, Path=IsValid}"></Button>
+            <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding Source={x:Reference OneWordBehavior}, Path=IsValid}" Margin="10,0,10,0"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

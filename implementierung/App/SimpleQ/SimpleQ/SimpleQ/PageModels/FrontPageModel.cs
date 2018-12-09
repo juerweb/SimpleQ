@@ -50,6 +50,7 @@ namespace SimpleQ.PageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
+            Debug.WriteLine("Count of Questions in PublicQuestions: " + this.QuestionService.PublicQuestions);
             base.Init(initData);
         }
         #endregion

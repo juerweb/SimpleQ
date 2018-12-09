@@ -80,6 +80,7 @@ namespace SimpleQ.PageModels
             {
                 questionService.AddQuestion(surveyModel);
 
+                CoreMethods.PopPageModel();
                 App.OpenQuestionPage(surveyModel);
             }
             else

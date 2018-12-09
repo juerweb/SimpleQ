@@ -6,13 +6,14 @@
              x:Class="SimpleQ.Pages.QuestionPages.PolytomousUMQuestionPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
-            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
+            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}" Margin="10,10,10,0"></Label>
+            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}" Margin="10,5,10,0" FontAttributes="Bold"></Label>
+            
             <ListView ItemsSource="{Binding IsChecked}" SelectionMode="Single" ItemSelected="ListView_ItemSelected">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" Margin="10,0,0,0">
+                            <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
                                 <ia:Checkbox Shape="Rectangle" IsChecked="{Binding IsChecked, Mode=TwoWay}" IsCheckedChanged="Checkbox_IsCheckedChanged"/>
                                 <Label Text="{Binding AnswerOption.AnsText}" VerticalTextAlignment="Center"/>
                             </StackLayout>
@@ -21,7 +22,7 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsQuestionAnswered}"></Button>
+            <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsQuestionAnswered}" Margin="10,0,10,0"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

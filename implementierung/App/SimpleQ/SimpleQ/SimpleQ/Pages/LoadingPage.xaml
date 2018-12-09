@@ -11,7 +11,7 @@
         <StackLayout>
             <Image x:Name="logoImage" Margin="0,30,0,0"></Image>
             <ActivityIndicator IsRunning="{Binding IsRunning}"></ActivityIndicator>
-            <Grid>
+            <Grid Padding="10,0,10,0">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>

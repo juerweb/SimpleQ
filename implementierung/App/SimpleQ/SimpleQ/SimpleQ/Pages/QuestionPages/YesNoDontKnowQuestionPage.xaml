@@ -5,10 +5,10 @@
              x:Class="SimpleQ.Pages.QuestionPages.YesNoDontKnowQuestionPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}"></Label>
-            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}"></Label>
+            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}" Margin="10,10,10,0"></Label>
+            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}" Margin="10,5,10,0" FontAttributes="Bold"></Label>
 
-            <Grid>
+            <Grid Padding="5,0,5,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="4*"></ColumnDefinition>
                     <ColumnDefinition Width="4*"></ColumnDefinition>

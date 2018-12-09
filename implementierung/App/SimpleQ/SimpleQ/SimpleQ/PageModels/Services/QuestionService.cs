@@ -104,6 +104,7 @@ namespace SimpleQ.PageModels.Services
             get => publicQuestions;
             set
             {
+                Debug.WriteLine("PublicQuestion setter Method");
                 publicQuestions = value;
                 OnPropertyChanged();
                 this.PublicQuestions.CollectionChanged += PublicQuestions_CollectionChanged;
@@ -224,7 +225,9 @@ namespace SimpleQ.PageModels.Services
                     await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
                 }
 
+                Debug.WriteLine("Size of Questions before: " + Questions.Count());
                 this.Questions.Add(question);
+                Debug.WriteLine("Size of Questions after: " + Questions.Count());
 
                 if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.CatName) > 0))
                 {
