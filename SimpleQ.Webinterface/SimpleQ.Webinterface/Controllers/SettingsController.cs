@@ -27,7 +27,7 @@ namespace SimpleQ.Webinterface.Controllers
                     return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
                 var bills = new List<SettingsModel.BillWrapper>();
-                foreach (var bill in db.Bills.Where(b => b.CustCode == CustCode))
+                foreach (var bill in db.Bills.Where(b => b.CustCode == CustCode).OrderByDescending(b => b.BillDate))
                 {
                     var lastBillDate = db.Bills.Where(b => b.CustCode == bill.CustCode)
                         .OrderByDescending(b => b.BillDate)
