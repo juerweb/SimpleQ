@@ -90,6 +90,7 @@
     $(function () {
         fillLangDict();
         loadAnswerTypes();
+        loadDatesByCategory();
         switchToMulti();
     });
 
@@ -140,6 +141,18 @@
                         elem.innerHTML += '<option value="' + typeId + '">' + languageDict[typeId] + '</option>';
                     }
                 }
+            });
+    }
+
+    function loadDatesByCategory() {
+        let catId = document.getElementById("SurveyCategories").value;
+        let typeId = document.getElementById("AnswerTypes").value;
+        let url = '@Url.Action("LoadSurveyDates", "SurveyResults", new { catId = "temp", typeId = "temp1"})'.replace("temp", id).replace("temp1", typeId);
+        $.get(
+            url,
+            function (data) {
+                document.getElementById("dateFrom").value = data.StartDate;
+                document.getElementById("dateTo").value = data.EndDate;    
             });
     }
 

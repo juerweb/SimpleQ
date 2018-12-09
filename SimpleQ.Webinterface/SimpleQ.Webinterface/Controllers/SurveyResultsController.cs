@@ -189,17 +189,39 @@ namespace SimpleQ.Webinterface.Controllers
 
                 var types = cat.Surveys
                     .Select(s => new AnswerType
-                        {
-                            TypeId = s.AnswerType.TypeId,
-                            TypeDesc = s.AnswerType.TypeDesc,
-                            BaseId = s.AnswerType.BaseId
-                        })
+                    {
+                        TypeId = s.AnswerType.TypeId,
+                        TypeDesc = s.AnswerType.TypeDesc,
+                        BaseId = s.AnswerType.BaseId
+                    })
                     .Where(t => t.BaseId != (int)BaseQuestionTypes.OpenQuestion)
                     .GroupBy(t => t.TypeId)
                     .Select(g => g.First())
                     .ToList();
 
                 return Json(types, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult LoadSurveyDates(int catId, int typeId)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                {
+                    return Http.NotFound("Customer not found");
+                }
+
+                var query = db.Surveys.Where(s => s.CatId == catId && s.TypeId == typeId && s.CustCode == CustCode);
+                if (query.Count() == 0)
+                    return Http.NotFound("No surveys found");
+
+                return Json(new
+                {
+                    StartDate = query.Select(s => s.StartDate).Min().ToString("yyyy-MM-dd"),
+                    EndDate = query.Select(s => s.StartDate).Max().ToString("yyyy-MM-dd")
+                }, JsonRequestBehavior.AllowGet);
             }
         }
         #endregion
