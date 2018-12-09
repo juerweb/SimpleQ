@@ -133,7 +133,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die http://simpleq.at/api/mobile ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://dev.simpleq.at/api/mobile ähnelt.
         /// </summary>
         internal static string APIMainURL {
             get {
@@ -466,7 +466,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Abmelden ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Abmelden von Fragen ähnelt.
         /// </summary>
         internal static string LogOut {
             get {
@@ -642,6 +642,15 @@ namespace SimpleQ.Resources {
         internal static string StartScan {
             get {
                 return ResourceManager.GetString("StartScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Frage wurde erfolgreich beantwortet ähnelt.
+        /// </summary>
+        internal static string SuccessfulAnsweringQuestion {
+            get {
+                return ResourceManager.GetString("SuccessfulAnsweringQuestion", resourceCulture);
             }
         }
         

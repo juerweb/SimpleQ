@@ -137,26 +137,27 @@ namespace SimpleQ.PageModels.QuestionPageModels
             Debug.WriteLine(String.Format("User answered the question with the id {0}...", Question.SurveyId), "Info");
 
             Debug.WriteLine("QS: " + this.questionService);
+            Boolean success;
             if (this.questionService == null)
             {
                 IQuestionService qs = FreshIOC.Container.Resolve<IQuestionService>();
-                Boolean success = await qs.QuestionAnswered(this.Question);
+                success = await qs.QuestionAnswered(this.Question);
             }
             else
             {
-                Boolean success = await this.questionService.QuestionAnswered(this.Question);
+                success = await this.questionService.QuestionAnswered(this.Question);
             }
 
             Boolean ShowMessageAfterAnswering = false;
             try
             {
                 ShowMessageAfterAnswering = await BlobCache.UserAccount.GetObject<Boolean>("ShowMessageAfterAnswering");
-                if (ShowMessageAfterAnswering)
+                if (ShowMessageAfterAnswering && success)
                 {
                     if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
                     {
                         IToastService toastService = FreshIOC.Container.Resolve<IToastService>();
-                        toastService.LongMessage("Frage erfolgreich beantwortet.");
+                        toastService.LongMessage(AppResources.SuccessfulAnsweringQuestion);
                     }
                 }
             }

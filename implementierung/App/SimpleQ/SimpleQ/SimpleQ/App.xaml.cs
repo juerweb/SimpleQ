@@ -45,6 +45,7 @@ namespace SimpleQ
 
         public App ()
 		{
+
             Debug.WriteLine("NO: App started...", "Info");
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
@@ -66,7 +67,7 @@ namespace SimpleQ
             }
 
             GoToRightPage();
-
+            Debug.WriteLine(Xamarin.Forms.Font.Default);
         }
 
         private async void SetDefaultProperties()

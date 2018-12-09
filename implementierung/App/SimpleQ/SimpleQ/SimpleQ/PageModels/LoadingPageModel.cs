@@ -49,6 +49,9 @@ namespace SimpleQ.PageModels
             //Code Check
             List<object> objects = (List<object>)initData;
             string code = objects[0].ToString();
+
+            Debug.WriteLine("DebugMode: " + (Boolean)objects[1]);
+
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
                 Debug.WriteLine("RuntimePlatform is in (iOS, Android)...", "Info");
