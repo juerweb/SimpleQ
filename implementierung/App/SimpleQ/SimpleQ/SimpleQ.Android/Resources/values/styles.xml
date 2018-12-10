@@ -27,4 +27,7 @@
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">#FF4081</item>
   </style>
+
+  <color name="ListViewSelected">#006bc9</color>
+  <color name="ListViewHighlighted">#006bc9</color>
 </resources>
