@@ -3,6 +3,8 @@
 @using SimpleQ.Webinterface.Properties;
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
 @{
+    /**/
+
     ResourceManager rm = Resources.ResourceManager;
 }
 
@@ -20,15 +22,15 @@
             </span>
             <span class="col-4 text-left text-secondary" id="rightToggleText" onclick="toggleResults()">@Resources.singleQuestionEvaluation</span>
             @*<div class="col-6 pr-0">
-                <button id="trendBtn" onclick="switchToMulti()" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
-            </div>
-            <div class="col-6 pl-0">
-                <button id="singleBtn" onclick="switchToSingle()" class="btn btn-secondary btn-block">Einzelumfrage</button>
-            </div>*@
+                    <button id="trendBtn" onclick="switchToMulti()" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
+                </div>
+                <div class="col-6 pl-0">
+                    <button id="singleBtn" onclick="switchToSingle()" class="btn btn-secondary btn-block">Einzelumfrage</button>
+                </div>*@
         </div>
     </div>
 </div>
-<hr class="mt-1"/>
+<hr class="mt-1" />
 <div class="row mt-1 ml-0 mr-0">
     <div class="col-md-4 pl-4 pr-4">
         <div id="singleResultOptions">
@@ -93,14 +95,14 @@
     if (resultType == undefined) {
         var resultType = "multi";
     }
-    
+
 
     $(function () {
         //console.log("hallo");
         fillLangDict();
         loadAnswerTypes();
         loadDatesByCategory();
-        switchToMulti();    
+        switchToMulti();
     });
 
     function fillLangDict() {
@@ -117,14 +119,14 @@
         console.log(resultType);
         if (resultType === "multi") {
             switchToSingle();
-            $('#circle').animate({ right: 0 }, 800);   
+            $('#circle').animate({ right: 0 }, 800);
             $('#circle').css("right", 0);
             $('#circle').css("left", "unset");
             $('#rightToggleText').removeClass("text-secondary");
             $('#leftToggleText').addClass("text-secondary");
         } else {
             switchToMulti();
-            $('#circle').animate({ left: 0 }, 800); 
+            $('#circle').animate({ left: 0 }, 800);
             $('#circle').css("left", 0);
             $('#circle').css("right", "unset");
             $('#leftToggleText').removeClass("text-secondary");
@@ -187,21 +189,26 @@
         //console.log("type id:" + typeId);
         let url = "@Url.Action("LoadSurveyDates", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId;
         //let url = '@Url.Action("LoadSurveyDates", "SurveyResults", new { catId = "temp"})'.replace("temp", catId + "&" + typeId);
-        $.get(
+        //$.get(
+        //    url,
+        //    function (data) {
+        //        document.getElementById("dateFrom").value = data.StartDate;
+        //        document.getElementById("dateTo").value = data.EndDate;
+        //    });
+        $.ajax({
             url,
-            function (data) {
+            type: "get",
+            async: false,
+            success: function (data) {
                 document.getElementById("dateFrom").value = data.StartDate;
                 document.getElementById("dateTo").value = data.EndDate;
-            });
+            }
+        });
     }
 
 
     function switchToMulti() {
         resultType = "multi";
-        $("#trendBtn").removeClass("btn-primary").addClass("btn-secondary");
-        $("#singleBtn").removeClass("btn-secondary").addClass("btn-primary");
-        $("#trendBtn").attr("disabled", true);
-        $("#singleBtn").attr("disabled", false);
         $("#singleResultOptions").hide();
         $("#multiResultOptions").show();
         $("#singleResultPartial").hide();
@@ -212,10 +219,6 @@
 
     function switchToSingle() {
         resultType = "single";
-        $("#singleBtn").removeClass("btn-primary").addClass("btn-secondary");
-        $("#trendBtn").removeClass("btn-secondary").addClass("btn-primary");
-        $("#singleBtn").attr("disabled", true);
-        $("#trendBtn").attr("disabled", false);
         $("#multiResultOptions").hide();
         $("#singleResultOptions").show();
         $("#multiResultPartial").hide();
