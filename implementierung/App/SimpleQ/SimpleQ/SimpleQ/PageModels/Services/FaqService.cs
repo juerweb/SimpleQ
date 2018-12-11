@@ -54,7 +54,7 @@ namespace SimpleQ.PageModels.Services
             this.faqEntries.Clear();
         }
 
-        public async Task LoadDataFromCache()
+        public async Task LoadData()
         {
             Device.BeginInvokeOnMainThread(async () =>
             {

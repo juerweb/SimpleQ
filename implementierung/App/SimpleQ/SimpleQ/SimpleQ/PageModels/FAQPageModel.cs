@@ -37,12 +37,12 @@ namespace SimpleQ.PageModels
         /// </summary>
         public FAQPageModel()
         {
-            faqs = new ObservableCollection<FAQModel>();
+            /*faqs = new ObservableCollection<FAQModel>();
             faqs.Add(new FAQModel("Question1", AppResources.LoremIpsum));
             faqs.Add(new FAQModel("Question2", AppResources.LoremIpsum));
             faqs.Add(new FAQModel("Question3", AppResources.LoremIpsum));
             faqs.Add(new FAQModel("Question4", AppResources.LoremIpsum));
-            faqs.Add(new FAQModel("Question5", AppResources.LoremIpsum));
+            faqs.Add(new FAQModel("Question5", AppResources.LoremIpsum));*/
         }
 
 
@@ -89,22 +89,6 @@ namespace SimpleQ.PageModels
             }
         }
 
-        /// <summary>
-        /// Gets or sets the faqs Collection
-        /// </summary>
-        /// <value>
-        /// The faqs collection
-        /// </value>
-        public ObservableCollection<FAQModel> FAQs
-        {
-            get => faqs;
-            set
-            {
-                faqs = value;
-                OnPropertyChanged();
-            }
-        }
-
         public IFaqService FaqService
         {
             get => faqService;
@@ -125,7 +109,7 @@ namespace SimpleQ.PageModels
         /// </summary>
         private void DisableAllActiveFAQs()
         {
-            FAQs.Where(faq => faq.IsActive == true).ToList().ForEach(faq => faq.IsActive = false);
+            faqService.FaqEntries.Where(faq => faq.IsActive == true).ToList().ForEach(faq => faq.IsActive = false);
         }
 
         /// <summary>

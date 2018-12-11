@@ -70,7 +70,7 @@ namespace SimpleQ
             Debug.WriteLine(Xamarin.Forms.Font.Default);
 
             IFaqService faqService = FreshIOC.Container.Resolve<IFaqService>();
-            faqService.LoadDataFromCache();
+            faqService.LoadData();
         }
 
         private async void SetDefaultProperties()

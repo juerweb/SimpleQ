@@ -12,9 +12,9 @@
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Padding="10,10">
-                                    <Label Text="{Binding Question}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center" FontAttributes="Bold"></Label>
+                                    <Label Text="{Binding Entry.FaqTitle}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center" FontAttributes="Bold"></Label>
                                     <StackLayout IsVisible="{Binding IsActive}">
-                                        <Label Text="{Binding Answer}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"></Label>
+                                        <Label Text="{Binding Entry.FaqContent}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"></Label>
                                     </StackLayout>
                                 </StackLayout>
                             </ViewCell>

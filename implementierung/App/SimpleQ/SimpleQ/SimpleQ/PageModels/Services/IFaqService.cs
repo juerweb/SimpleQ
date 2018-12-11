@@ -14,7 +14,7 @@ namespace SimpleQ.PageModels.Services
 
         void AddFaqEntry(FAQModel entry);
         void AddFaqEntries(List<FAQModel> entries);
-        Task LoadDataFromCache();
+        Task LoadData();
 
         void ResetFaqEntries();
 
