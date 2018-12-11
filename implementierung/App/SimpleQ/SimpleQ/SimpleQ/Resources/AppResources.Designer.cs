@@ -133,7 +133,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die http://simpleq.at/api/mobile ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://dev.simpleq.at/api/mobile ähnelt.
         /// </summary>
         internal static string APIMainURL {
             get {
@@ -192,6 +192,15 @@ namespace SimpleQ.Resources {
         internal static string CloseAppAfterNotification {
             get {
                 return ResourceManager.GetString("CloseAppAfterNotification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die 1000 ähnelt.
+        /// </summary>
+        internal static string CloseInterval {
+            get {
+                return ResourceManager.GetString("CloseInterval", resourceCulture);
             }
         }
         
@@ -295,6 +304,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Die Frage kann nicht beantwortet werden, da sie bereits abgelaufen ist. ähnelt.
+        /// </summary>
+        internal static string Error102 {
+            get {
+                return ResourceManager.GetString("Error102", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode. ähnelt.
         /// </summary>
         internal static string Error201 {
@@ -327,6 +345,15 @@ namespace SimpleQ.Resources {
         internal static string Error204 {
             get {
                 return ResourceManager.GetString("Error204", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dieser Registrierungscode wird bereits in der App verwendet! Benützten Sie bitte einen anderen. ähnelt.
+        /// </summary>
+        internal static string Error205 {
+            get {
+                return ResourceManager.GetString("Error205", resourceCulture);
             }
         }
         
@@ -439,7 +466,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Abmelden ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Abmelden von Fragen ähnelt.
         /// </summary>
         internal static string LogOut {
             get {
@@ -574,7 +601,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Wählen Sie bitte alle Gruppen aus, aus welchen Sie austreten möchten. ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Wählen Sie bitte alle Gruppen aus, von welchen Sie keine Fragen mehr erhalten möchten. ähnelt.
         /// </summary>
         internal static string SelectUnregisterGroups {
             get {
@@ -601,11 +628,29 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Soll nach dem Beantworten einer Frage eine Nachricht angezeigt werden. ähnelt.
+        /// </summary>
+        internal static string ShowMessageAfterAnswering {
+            get {
+                return ResourceManager.GetString("ShowMessageAfterAnswering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Scan starten 📷 ähnelt.
         /// </summary>
         internal static string StartScan {
             get {
                 return ResourceManager.GetString("StartScan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Frage wurde erfolgreich beantwortet ähnelt.
+        /// </summary>
+        internal static string SuccessfulAnsweringQuestion {
+            get {
+                return ResourceManager.GetString("SuccessfulAnsweringQuestion", resourceCulture);
             }
         }
         

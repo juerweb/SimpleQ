@@ -20,6 +20,7 @@ namespace SimpleQ.PageModels.Services
         Task LoadData();
         Task LoadDataFromCache();
         void RemoveQuestion(SurveyModel questionModel);
+        void RemoveQuestion(int id);
         void RemoveQuestions();
 
     }

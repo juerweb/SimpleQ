@@ -14,6 +14,7 @@ using SimpleQ.Extensions;
 using Xamarin.Forms;
 using SimpleQ.Shared;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -76,6 +77,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private IQuestionService questionService;
 
         protected Boolean isItAStartQuestion;
+        private Boolean isRunning;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -110,6 +112,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Methods
+
         public void QuestionAnswered(string answerText)
         {
             this.question.SurveyVote.ChosenAnswerOptions = this.question.GivenAnswers;
@@ -134,15 +137,35 @@ namespace SimpleQ.PageModels.QuestionPageModels
             Debug.WriteLine(String.Format("User answered the question with the id {0}...", Question.SurveyId), "Info");
 
             Debug.WriteLine("QS: " + this.questionService);
+            Boolean success;
             if (this.questionService == null)
             {
                 IQuestionService qs = FreshIOC.Container.Resolve<IQuestionService>();
-                Boolean success = await qs.QuestionAnswered(this.Question);
+                success = await qs.QuestionAnswered(this.Question);
             }
             else
             {
-                Boolean success = await this.questionService.QuestionAnswered(this.Question);
+                success = await this.questionService.QuestionAnswered(this.Question);
             }
+
+            Boolean ShowMessageAfterAnswering = false;
+            try
+            {
+                ShowMessageAfterAnswering = await BlobCache.UserAccount.GetObject<Boolean>("ShowMessageAfterAnswering");
+                if (ShowMessageAfterAnswering && success)
+                {
+                    if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+                    {
+                        IToastService toastService = FreshIOC.Container.Resolve<IToastService>();
+                        toastService.LongMessage(AppResources.SuccessfulAnsweringQuestion);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine("Exception thrown " + e.StackTrace, "Exception");
+            }
+
             try
             {
                 Boolean CloseAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
@@ -150,6 +173,11 @@ namespace SimpleQ.PageModels.QuestionPageModels
                 Debug.WriteLine("CloseAppAfterNotification: " + CloseAppAfterNotification, "Info");
                 if (CloseAppAfterNotification && isItAStartQuestion)
                 {
+                    if (ShowMessageAfterAnswering)
+                    {
+                        await Task.Delay(int.Parse(AppResources.CloseInterval));
+                    }
+
                     Debug.WriteLine("Before Closer...", "Info");
                     ICloseApplication closer = DependencyService.Get<ICloseApplication>();
                     Debug.WriteLine("Closer: " + closer, "Info");

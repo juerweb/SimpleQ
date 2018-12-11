@@ -16,21 +16,21 @@ namespace SimpleQ.PageModels.Services
 
             answerTypes.Add(new AnswerOption() { AnsId = 0, SvyId = 0, AnsText = "Yes" });
             answerTypes.Add(new AnswerOption() { AnsId = 1, SvyId = 0, AnsText = "No" });
-            questions.Add(new SurveyModel(0, "Sind Sie männlich?", "YesNoQuestion Test", SurveyType.YesNoQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(0, "Sind Sie männlich?", "YesNoQuestion Test", SurveyType.YesNoQuestion, DateTime.Now.AddYears(2), answerTypes));
 
             answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, SvyId = 1, AnsText = "Yes" });
             answerTypes.Add(new AnswerOption() { AnsId = 1, SvyId = 1, AnsText = "No" });
             answerTypes.Add(new AnswerOption() { AnsId = 2, SvyId = 1, AnsText = "DontKnow" });
-            questions.Add(new SurveyModel(3, "Sind Sie männlich?", "YesNoDontKnowQuestion Test", SurveyType.YesNoDontKnowQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(3, "Sind Sie männlich?", "YesNoDontKnowQuestion Test", SurveyType.YesNoDontKnowQuestion, DateTime.Now.AddYears(2), answerTypes));
 
             answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, SvyId = 2, AnsText = "Green" });
             answerTypes.Add(new AnswerOption() { AnsId = 1, SvyId = 2, AnsText = "Yellow" });
             answerTypes.Add(new AnswerOption() { AnsId = 2, SvyId = 2, AnsText = "Red" });
-            questions.Add(new SurveyModel(1, "Sind Sie anwesend?", "TrafficLightQuestion Test", SurveyType.TrafficLightQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(1, "Sind Sie anwesend?", "TrafficLightQuestion Test", SurveyType.TrafficLightQuestion, DateTime.Now.AddYears(2), answerTypes));
 
-            questions.Add(new SurveyModel(2, "Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OpenQuestion Test", SurveyType.OpenQuestion, DateTime.Now, new List<AnswerOption>()));
+            questions.Add(new SurveyModel(2, "Beschreiben Sie sich mit einem Wort oder doch mit zwei oder vielleicht nur mit einem. O.k. bitte nur mit einem Wort beschreiben!", "OpenQuestion Test", SurveyType.OpenQuestion, DateTime.Now.AddYears(2), new List<AnswerOption>()));
 
             answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Grün", SvyId = 3 });
@@ -38,13 +38,13 @@ namespace SimpleQ.PageModels.Services
             answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Gelb", SvyId = 3 });
             answerTypes.Add(new AnswerOption() { AnsId = 3, AnsText = "Blau", SvyId = 3 });
 
-            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "Polytomous US Test", SurveyType.PolytomousUSQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(3, "Was ist Ihre Lieblingsfarbe?", "Polytomous US Test", SurveyType.PolytomousUSQuestion, DateTime.Now.AddYears(2), answerTypes));
 
             answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Männlich", SvyId = 4 });
             answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Weiblich", SvyId = 4 });
 
-            questions.Add(new SurveyModel(4, "Wählen Sie aus!", "Dichotomous Test", SurveyType.DichotomousQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(4, "Wählen Sie aus!", "Dichotomous Test", SurveyType.DichotomousQuestion, DateTime.Now.AddYears(2), answerTypes));
 
             answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Grün", SvyId = 5 });
@@ -52,16 +52,16 @@ namespace SimpleQ.PageModels.Services
             answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Gelb", SvyId = 5 });
             answerTypes.Add(new AnswerOption() { AnsId = 3, AnsText = "Blau", SvyId = 5 });
 
-            questions.Add(new SurveyModel(5, "Was ist Ihre Lieblingsfarbe?", "Polytomous OS Test", SurveyType.PolytomousOSQuestion, DateTime.Now, answerTypes));
-            questions.Add(new SurveyModel(6, "Was ist Ihre Lieblingsfarbe?", "Polytomous OM Test", SurveyType.PolytomousOMQuestion, DateTime.Now, answerTypes));
-            questions.Add(new SurveyModel(7, "Was ist Ihre Lieblingsfarbe?", "Polytomous UM Test", SurveyType.PolytomousUMQuestion, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(5, "Was ist Ihre Lieblingsfarbe?", "Polytomous OS Test", SurveyType.PolytomousOSQuestion, DateTime.Now.AddYears(2), answerTypes));
+            questions.Add(new SurveyModel(6, "Was ist Ihre Lieblingsfarbe?", "Polytomous OM Test", SurveyType.PolytomousOMQuestion, DateTime.Now.AddYears(2), answerTypes));
+            questions.Add(new SurveyModel(7, "Was ist Ihre Lieblingsfarbe?", "Polytomous UM Test", SurveyType.PolytomousUMQuestion, DateTime.Now.AddYears(2), answerTypes));
 
             answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Gut", SvyId = 8 });
             answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Mittel", SvyId = 8 });
             answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Schlecht", SvyId = 8 });
 
-            questions.Add(new SurveyModel(8, "Wie fühlen Sie sich?", "Likert Scale 3 Test", SurveyType.LikertScale3Question, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(8, "Wie fühlen Sie sich?", "Likert Scale 3 Test", SurveyType.LikertScale3Question, DateTime.Now.AddYears(2), answerTypes));
 
             answerTypes = new List<AnswerOption>();
             answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Sehr Gut", SvyId = 9 });
@@ -71,7 +71,7 @@ namespace SimpleQ.PageModels.Services
             answerTypes.Add(new AnswerOption() { AnsId = 4, AnsText = "Sehr Schlecht", SvyId = 9 });
             answerTypes.Add(new AnswerOption() { AnsId = 5, AnsText = "Sehr Sehr Schlecht", SvyId = 9 });
 
-            questions.Add(new SurveyModel(9, "Wie fühlen Sie sich?", "Likert Scale 6 Test", SurveyType.LikertScale6Question, DateTime.Now, answerTypes));
+            questions.Add(new SurveyModel(9, "Wie fühlen Sie sich?", "Likert Scale 6 Test", SurveyType.LikertScale6Question, DateTime.Now.AddYears(2), answerTypes));
         }
 
         List<SurveyModel> questions = new List<SurveyModel>();

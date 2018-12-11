@@ -45,6 +45,7 @@ namespace SimpleQ
 
         public App ()
 		{
+
             Debug.WriteLine("NO: App started...", "Info");
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
@@ -59,13 +60,14 @@ namespace SimpleQ
             //GetKeyFromFile();
             InitializeComponent();
 
+
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
                 SetupOneSignal();
             }
 
             GoToRightPage();
-
+            Debug.WriteLine(Xamarin.Forms.Font.Default);
         }
 
         private async void SetDefaultProperties()
@@ -79,6 +81,17 @@ namespace SimpleQ
             {
                 Debug.WriteLine("CloseAppAfterNotification is not set... ", "Info");
                 BlobCache.UserAccount.InsertObject<Boolean>("CloseAppAfterNotification", true);
+            }
+
+            try
+            {
+                Boolean showMessageAfterAnswering = await BlobCache.UserAccount.GetObject<Boolean>("ShowMessageAfterAnswering");
+                Debug.WriteLine("CloseAppAfterNotification is set to " + showMessageAfterAnswering, "Info");
+            }
+            catch (KeyNotFoundException e)
+            {
+                Debug.WriteLine("ShowMessageAfterAnswering is not set... ", "Info");
+                BlobCache.UserAccount.InsertObject<Boolean>("ShowMessageAfterAnswering", true);
             }
         }
 
@@ -158,7 +171,7 @@ namespace SimpleQ
             Debug.WriteLine("Erfolgreich?: " + b);*/
         }
 
-        private static async void OpenQuestionPage(SurveyModel surveyModel)
+        public static async void OpenQuestionPage(SurveyModel surveyModel)
         {
             IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
 
@@ -239,6 +252,7 @@ namespace SimpleQ
             FreshIOC.Container.Register<IQuestionService, QuestionService>();
             FreshIOC.Container.Register<ISettingsService, SettingsService>();
             FreshIOC.Container.Register<IWebAPIService, WebAPIService>();
+            FreshIOC.Container.Register<IToastService, ToastService>();
         }
 
 		protected override async void OnStart ()
@@ -276,9 +290,15 @@ namespace SimpleQ
             OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540")
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
                 .HandleNotificationOpened(HandleNotificationOpened)
+                .HandleNotificationReceived(HandleNotificationReceived)
                 .EndInit();
 
             OneSignal.Current.IdsAvailable(IdsAvailable);
+        }
+
+        private void HandleNotificationReceived(OSNotification notification)
+        {
+            Debug.WriteLine("NO: Notification Received...", "Info");
         }
 
         private async void IdsAvailable(string userID, string pushToken)
@@ -305,19 +325,27 @@ namespace SimpleQ
         {
             Debug.WriteLine("NO: Notification Opened in App.xaml.cs ...", "Info");
             Dictionary<String, object> additionalData = result.notification.payload.additionalData;
-            Debug.WriteLine(additionalData["svyId"]);
+            Debug.WriteLine(additionalData["SvyId"]);
 
             IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
-            Debug.WriteLine(int.Parse(additionalData["svyId"].ToString()));
+            Debug.WriteLine(int.Parse(additionalData["SvyId"].ToString()));
             try
             {
-                SurveyModel surveyModel = await webAPIService.GetSurveyData(int.Parse(additionalData["svyId"].ToString()));
-
                 IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
-                Debug.WriteLine("T5");
-                questionService.AddQuestion(surveyModel);
+                if (additionalData.ContainsKey("Cancel") && Convert.ToBoolean(additionalData["Cancel"].ToString()))
+                {
+                    //Cancel Survey
+                    Debug.WriteLine("Cancel Survey with id: " + additionalData["SvyId"].ToString(), "Info");
+                    questionService.RemoveQuestion(int.Parse(additionalData["SvyId"].ToString()));
+                }
+                else
+                {
+                    IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
+                    LoadingQuestionPage page = (LoadingQuestionPage)FreshPageModelResolver.ResolvePageModel<LoadingQuestionPageModel>(int.Parse(additionalData["SvyId"].ToString()));
+                    LoadingQuestionPageModel pageModel = (LoadingQuestionPageModel)page.BindingContext;
+                    navService.PushPage(page, pageModel);
+                }
 
-                OpenQuestionPage(surveyModel);
             }
             catch (HttpRequestException e)
             {

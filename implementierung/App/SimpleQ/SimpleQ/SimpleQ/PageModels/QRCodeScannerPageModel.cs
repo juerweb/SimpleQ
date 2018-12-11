@@ -28,6 +28,7 @@ namespace SimpleQ.PageModels
         {
             ScanningResultCommand = new Command(OnScanningResult);
             IsScanning = true;
+            isRegistration = true;
         }
 
         public override void Init(object initData)
@@ -72,7 +73,18 @@ namespace SimpleQ.PageModels
                 {
                     Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
                     //Check if Code is in DB
-                    await CoreMethods.PushPageModel<LoadingPageModel>(new List<object> { int.Parse(parameter.ToString()), isRegistration });
+                    try
+                    {
+                        await CoreMethods.PushPageModel<LoadingPageModel>(new List<object> { int.Parse(parameter.ToString()), isRegistration });
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine("QR Code has not the right format...", "Info");
+
+                        this.dialogService.ShowErrorDialog(101);
+                        await CoreMethods.PopToRoot(false);
+                        return;
+                    }
                 }
                 else
                 {

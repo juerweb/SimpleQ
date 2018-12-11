@@ -10,7 +10,6 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-
             <StackLayout VerticalOptions="FillAndExpand">
                 <ListView ItemsSource="{Binding QuestionService.PublicQuestions}" SeparatorVisibility="None" SelectedItem="{Binding SelectedQuestion, Mode=TwoWay}" HasUnevenRows="True" IsVisible="{Binding QuestionService.IsPublicQuestionsEmpty, Converter={StaticResource InvertableBooleanConverter}, Mode=TwoWay}" IsRefreshing="{Binding IsRefreshing, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshCommand}">
                     <ListView.ItemTemplate>
@@ -19,7 +18,7 @@
                                 <ViewCell.ContextActions>
                                     <MenuItem CommandParameter="{Binding .}" Text="{ext:Translate Text=Delete}" IsDestructive="True" Command="{Binding Path=BindingContext.DeleteCommand, Source={x:Reference fpage}}"/>
                                 </ViewCell.ContextActions>
-                                <StackLayout Padding="15,10">
+                                <StackLayout Padding="10,10">
                                     <Label Text="{Binding CatName}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"></Label>
                                     <Label Text="{Binding SurveyDesc}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"></Label>
                                 </StackLayout>

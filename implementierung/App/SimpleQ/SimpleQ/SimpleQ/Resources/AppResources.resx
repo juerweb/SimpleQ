@@ -199,7 +199,7 @@
     <comment>NT</comment>
   </data>
   <data name="LogOut" xml:space="preserve">
-    <value>Abmelden</value>
+    <value>Abmelden von Fragen</value>
   </data>
   <data name="LoremIpsum" xml:space="preserve">
     <value>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</value>
@@ -267,7 +267,7 @@
     <value>Soll sich die App, nach dem Beantworten einer neuen Frage, wieder schließen?</value>
   </data>
   <data name="APIMainURL" xml:space="preserve">
-    <value>http://simpleq.at/api/mobile</value>
+    <value>https://dev.simpleq.at/api/mobile</value>
     <comment>NT</comment>
   </data>
   <data name="APIRegisterPlusURL" xml:space="preserve">
@@ -307,12 +307,28 @@
     <value>Neuer Gruppe beitreten</value>
   </data>
   <data name="SelectUnregisterGroups" xml:space="preserve">
-    <value>Wählen Sie bitte alle Gruppen aus, aus welchen Sie austreten möchten.</value>
+    <value>Wählen Sie bitte alle Gruppen aus, von welchen Sie keine Fragen mehr erhalten möchten.</value>
   </data>
   <data name="Error204" xml:space="preserve">
     <value>Es ist ein Fehler beim Beantworten der Frage aufgetreten!</value>
   </data>
   <data name="DebugMode" xml:space="preserve">
     <value>Debug-Modus?</value>
+  </data>
+  <data name="Error205" xml:space="preserve">
+    <value>Dieser Registrierungscode wird bereits in der App verwendet! Benützten Sie bitte einen anderen.</value>
+  </data>
+  <data name="Error102" xml:space="preserve">
+    <value>Die Frage kann nicht beantwortet werden, da sie bereits abgelaufen ist.</value>
+  </data>
+  <data name="CloseInterval" xml:space="preserve">
+    <value>1000</value>
+    <comment>NT</comment>
+  </data>
+  <data name="ShowMessageAfterAnswering" xml:space="preserve">
+    <value>Soll nach dem Beantworten einer Frage eine Nachricht angezeigt werden.</value>
+  </data>
+  <data name="SuccessfulAnsweringQuestion" xml:space="preserve">
+    <value>Frage wurde erfolgreich beantwortet</value>
   </data>
 </root>

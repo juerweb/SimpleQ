@@ -9,7 +9,7 @@ namespace SimpleQ.Validations
 {
     public static class SixDigitCodeValidation
     {
-        private const string sixDigitCodeRegex = @"^[0-9,A-z]{6}[0-9,A-z]+$";
+        private const string sixDigitCodeRegex = @"^[0-9]{6}[0-9]+$";
 
         public static Boolean IsValid(String code)
         {

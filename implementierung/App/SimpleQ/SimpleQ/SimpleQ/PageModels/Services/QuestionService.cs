@@ -104,6 +104,7 @@ namespace SimpleQ.PageModels.Services
             get => publicQuestions;
             set
             {
+                Debug.WriteLine("PublicQuestion setter Method");
                 publicQuestions = value;
                 OnPropertyChanged();
                 this.PublicQuestions.CollectionChanged += PublicQuestions_CollectionChanged;
@@ -189,13 +190,21 @@ namespace SimpleQ.PageModels.Services
             //simulationService.SetAnswerOfQuestion(question);
         }
 
+        public void RemoveQuestion(int id)
+        {
+            List<SurveyModel> surveys = this.Questions.Where(q => q.SurveyId == id).ToList();
+            if (surveys.Count > 0)
+            {
+                RemoveQuestion(surveys[0]);
+            }
+        }
+
         /// <summary>
         /// This method add a new question and checks if the catName of the question already exists.
         /// </summary>
         /// <param name="question">The question.</param>
         public async void AddQuestion(SurveyModel question)
         {
-            Debug.WriteLine("Add new Question...", "Info");
             List<SurveyModel> list;
             try
             {
@@ -205,25 +214,40 @@ namespace SimpleQ.PageModels.Services
             {
                 list = new List<SurveyModel>();
             }
-            
-            if (list.Count(sm => sm.SurveyId == question.SurveyId) == 0)
+
+            if (question.EndDate >= DateTime.Now)
             {
-                list.Add(question);
+                Debug.WriteLine("Add new Question...", "Info");
+
+                if (list.Count(sm => sm.SurveyId == question.SurveyId) == 0)
+                {
+                    list.Add(question);
+                    await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
+                }
+
+                Debug.WriteLine("Size of Questions before: " + Questions.Count());
+                this.Questions.Add(question);
+                Debug.WriteLine("Size of Questions after: " + Questions.Count());
+
+                if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.CatName) > 0))
+                {
+                    //catName does not exists
+                    Debug.WriteLine("Add new catName from QuestionService", "Info");
+
+                    App.MainMasterPageModel.AddCategorie(question.CatName);
+                }
+
+                this.SetCategorieFilter(AppResources.AllCategories);
+                await BlobCache.LocalMachine.Flush();
+            }
+            else
+            {
+                list.Remove(question);
                 await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
+                Debug.WriteLine("Question with the id " + question.SurveyId + " is in the past. Enddate: " + question.EndDate, "Info");
             }
-
-            this.Questions.Add(question);
-
-            if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.CatName) > 0))
-            {
-                //catName does not exists
-                Debug.WriteLine("Add new catName from QuestionService", "Info");
-
-                App.MainMasterPageModel.AddCategorie(question.CatName);
-            }
-
-            await BlobCache.LocalMachine.Flush();
         }
+
 
         /// <summary>
         /// This method sets the actual catName filter and furthermore the new public Collection with the questions in it.

@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
+using System.Linq;
 
 namespace SimpleQ.PageModels
 {
@@ -48,6 +49,9 @@ namespace SimpleQ.PageModels
             //Code Check
             List<object> objects = (List<object>)initData;
             string code = objects[0].ToString();
+
+            Debug.WriteLine("DebugMode: " + (Boolean)objects[1]);
+
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
                 Debug.WriteLine("RuntimePlatform is in (iOS, Android)...", "Info");
@@ -56,16 +60,30 @@ namespace SimpleQ.PageModels
                     RegistrationDataModel data = new RegistrationDataModel();
                     try
                     {
-                        if ((Boolean)objects[1])
+                        if (!Application.Current.Properties.ContainsKey("registrations"))
                         {
+                            Debug.WriteLine("New Registration...", "Info");
                             data.RegistrationData = await this.webAPIService.Register(code, Application.Current.Properties["userID"].ToString());
                             data.IsRegister = true;
                         }
                         else
                         {
+                            Debug.WriteLine("New Join Department...", "Info");
                             List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
-                            data.RegistrationData = await this.webAPIService.JoinDepartment(code, tmp[0].RegistrationData.PersId);
-                            data.IsRegister = false;
+                            if (tmp.Count(registration => registration.RegistrationData.CustCode + registration.RegistrationData.DepId == code) <= 0)
+                            {
+                                data.RegistrationData = await this.webAPIService.JoinDepartment(code, tmp[0].RegistrationData.PersId);
+                                data.IsRegister = false;
+                            }
+                            else
+                            {
+                                Debug.WriteLine("Code is not valid...", "Info");
+                                this.IsRunning = false;
+
+                                this.dialogService.ShowErrorDialog(205);
+                                await CoreMethods.PopToRoot(false);
+                                return;
+                            }
                         }
                     }
                     catch (System.Net.Http.HttpRequestException e)
@@ -115,7 +133,7 @@ namespace SimpleQ.PageModels
                     Debug.WriteLine("Code is valid...", "Info");
                     this.IsFirstStepTicked = true;
 
-                    RegistrationDataModel data = new RegistrationDataModel() { RegistrationData=new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Tina Company", PersId = 1 } };
+                    RegistrationDataModel data = new RegistrationDataModel() { RegistrationData=new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Development", PersId = 1, CustName="SimpleQ Company" } };
                     //Code Check
                     if (Application.Current.Properties.ContainsKey("registrations"))
                     {

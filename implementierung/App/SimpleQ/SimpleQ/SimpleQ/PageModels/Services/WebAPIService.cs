@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,7 +26,9 @@ namespace SimpleQ.PageModels.Services
 
             String key = streamReader.ReadToEnd();
 
-            httpClient.DefaultRequestHeaders.Add("auth-key", key);
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", key);
+
+            //httpClient.DefaultRequestHeaders.Add("auth-key", key);
         }
 
         
@@ -47,11 +50,15 @@ namespace SimpleQ.PageModels.Services
 
         public async Task<SurveyModel> GetSurveyData(int surveyID)
         {
-            HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIAnswerSurveyPlusURL + "?svyId=" + surveyID);
+            Debug.WriteLine("Link: " + AppResources.APIMainURL + AppResources.APIGetDataPlusURL + "?svyId=" + surveyID);
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIGetDataPlusURL + "?svyId=" + surveyID);
 
             Debug.WriteLine(responseMessage.StatusCode);
 
             String content = await responseMessage.Content.ReadAsStringAsync();
+
+            Debug.WriteLine("Content of GetSurveyData: " + content);
+
 
             if (responseMessage.IsSuccessStatusCode)
             {
