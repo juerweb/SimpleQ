@@ -177,8 +177,10 @@
 
         $.get(
             url,
-            function (id, groupCode) {
-                groups[id] = [groupName, 0, groupCode];
+            function (data) {
+                //let groupName = data.DepName;
+                let id = data.DepId;
+                groups[id] = [groupName, 0, data.RegCode];
                 let groupsUl = document.getElementById("gaGroups");
                 groupsUl.innerHTML +=
                     '<li>' +
@@ -257,7 +259,8 @@
                 url,
                 function (id) { }  //unnecessary     
             );
-            groups[id] = [text, memCount];
+            let groupCode = groups[id][2];
+            groups[id] = [text, memCount, groupCode];
             let aElem = document.getElementById(id).parentElement.children[1];
             aElem.innerHTML = text;
         }

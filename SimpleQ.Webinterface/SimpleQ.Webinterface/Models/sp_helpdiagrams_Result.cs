@@ -10,12 +10,13 @@
 namespace SimpleQ.Webinterface.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class FaqEntry
+    public partial class sp_helpdiagrams_Result
     {
-        public string FaqTitle { get; set; }
-        public string FaqContent { get; set; }
-        public bool IsMobile { get; set; }
+        public string Database { get; set; }
+        public string Name { get; set; }
+        public int ID { get; set; }
+        public string Owner { get; set; }
+        public int OwnerID { get; set; }
     }
 }
