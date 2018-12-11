@@ -13,13 +13,13 @@ namespace SimpleQ.Webinterface
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            logger.Debug("Auth entered");
+            logger.Debug("Authorization entered");
             base.OnAuthorization(filterContext);
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext context)
         {
-            logger.Debug("Unauthorized");
+            logger.Debug("Unauthorized request");
             if (context.HttpContext.Request.IsAjaxRequest())
             {
                 var urlHelper = new UrlHelper(context.RequestContext);

@@ -18,8 +18,6 @@ namespace SimpleQ.Webinterface.Models
         public string PreAnsText { get; set; }
         public int TypeId { get; set; }
     
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual AnswerType AnswerType { get; set; }
     }
 }

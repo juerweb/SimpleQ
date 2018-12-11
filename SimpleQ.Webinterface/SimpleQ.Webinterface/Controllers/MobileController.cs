@@ -264,6 +264,25 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
+        [HttpGet]
+        public IHttpActionResult LoadFaqEntries()
+        {
+            try
+            {
+                using (var db = new SimpleQDBEntities())
+                {
+                    var query = db.FaqEntries.Where(f => f.IsMobile).ToList();
+
+                    return Ok(query);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "[GET]LoadFaqEntries: Unexpected error");
+                return InternalServerError(ex);
+            } 
+        }
+
         [HttpPost]
         public IHttpActionResult AnswerSurvey([FromBody] SurveyVote sv)
         {

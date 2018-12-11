@@ -88,6 +88,7 @@
     var languageDict = {};
 
     $(function () {
+        //console.log("hallo");
         fillLangDict();
         loadAnswerTypes();
         loadDatesByCategory();
@@ -101,7 +102,7 @@
                 @:languageDict['@at.TypeId'] = '@rm.GetString(at.TypeDesc)';
             }
         }
-        console.log(languageDict);
+        //console.log(languageDict);
     }
 
     function loadSingleResultAsync() {
@@ -118,36 +119,47 @@
             },
             function (data) {
                 $("#multiResultPartial").html(data);
-                loadAnswerTypes();
+                //loadAnswerTypes();
             });
     }
 
     function loadAnswerTypes() {
         let id = document.getElementById("SurveyCategories").value;
         let url = '@Url.Action("LoadTypesByCategory", "SurveyResults", new { catId = "temp"})'.replace("temp", id);
-        $.get(
+
+        $.ajax({
             url,
-            function (data) {
+            type: "get",
+            async: false,
+            success: function (data) {
                 let elem = document.getElementById("AnswerTypes");
                 elem.innerHTML = "";
                 //console.log(data);
                 //console.log(data.length);
                 for (i = 0; i < data.length; i++) {
                     let typeId = data[i].TypeId;
-                    console.log(data[i]);
+                    //console.log(data[i]);
                     if (i == 0) {
                         elem.innerHTML += '<option value="' + typeId + '" selected>' + languageDict[typeId] + '</option>';
+                        //console.log("eingfügt");
                     } else {
                         elem.innerHTML += '<option value="' + typeId + '">' + languageDict[typeId] + '</option>';
                     }
                 }
+            }
             });
+
     }
 
     function loadDatesByCategory() {
+        //if (document.getElementById("AnswerTypes").value === "") {
+        //    return;
+        //}
         let catId = document.getElementById("SurveyCategories").value;
         let typeId = document.getElementById("AnswerTypes").value;
-        let url = '@Url.Action("LoadSurveyDates", "SurveyResults", new { catId = "temp", typeId = "temp1"})'.replace("temp", id).replace("temp1", typeId);
+        //console.log("type id:" + typeId);
+        let url = "@Url.Action("LoadSurveyDates", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId; 
+        //let url = '@Url.Action("LoadSurveyDates", "SurveyResults", new { catId = "temp"})'.replace("temp", catId + "&" + typeId);
         $.get(
             url,
             function (data) {

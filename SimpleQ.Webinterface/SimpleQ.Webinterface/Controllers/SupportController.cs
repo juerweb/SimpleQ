@@ -22,7 +22,7 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 var model = new SupportModel
                 {
-                    FaqEntries = db.FaqEntries.ToList()
+                    FaqEntries = db.FaqEntries.Where(f => !f.IsMobile).ToList()
                 };
 
                 ViewBag.emailConfirmed = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().EmailConfirmed;

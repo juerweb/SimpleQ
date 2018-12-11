@@ -25,7 +25,7 @@ namespace SimpleQ.Webinterface.Extensions
 
 
 
-        // Just for fun
+        
         public static HttpStatusCodeResult FourTwenty(string desc = null) => new HttpStatusCodeResult(420, "Get stoned");
         public static HttpStatusCodeResult SixSixSix(string desc = null) => new HttpStatusCodeResult(666, "Possessed");
     }
