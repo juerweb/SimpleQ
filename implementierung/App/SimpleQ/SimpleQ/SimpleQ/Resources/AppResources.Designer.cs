@@ -115,6 +115,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /getFaqData ähnelt.
+        /// </summary>
+        internal static string APIGetFaqDataPlusURL {
+            get {
+                return ResourceManager.GetString("APIGetFaqDataPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die /joinDepartment ähnelt.
         /// </summary>
         internal static string APIJoinDepartmentPlusURL {

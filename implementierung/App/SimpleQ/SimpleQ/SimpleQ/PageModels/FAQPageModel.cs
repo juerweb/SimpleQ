@@ -10,6 +10,8 @@ using System.Linq;
 using SimpleQ.Resources;
 using SimpleQ.Pages;
 using System.Diagnostics;
+using SimpleQ.PageModels.Services;
+using SimpleQ.Webinterface.Models;
 
 namespace SimpleQ.PageModels
 {
@@ -24,9 +26,9 @@ namespace SimpleQ.PageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public FAQPageModel(object param): this()
+        public FAQPageModel(IFaqService faqService): this()
         {
-
+            this.FaqService = faqService;
         }
 
         /// <summary>
@@ -59,10 +61,7 @@ namespace SimpleQ.PageModels
         /// The selected FAQ
         /// </summary>
         private FAQModel selectedFAQ;
-        /// <summary>
-        /// The faqs Collection
-        /// </summary>
-        private ObservableCollection<FAQModel> faqs;
+        private IFaqService faqService;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -102,6 +101,16 @@ namespace SimpleQ.PageModels
             set
             {
                 faqs = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public IFaqService FaqService
+        {
+            get => faqService;
+            set
+            {
+                faqService = value;
                 OnPropertyChanged();
             }
         }

@@ -68,6 +68,9 @@ namespace SimpleQ
 
             GoToRightPage();
             Debug.WriteLine(Xamarin.Forms.Font.Default);
+
+            IFaqService faqService = FreshIOC.Container.Resolve<IFaqService>();
+            faqService.LoadDataFromCache();
         }
 
         private async void SetDefaultProperties()
@@ -253,6 +256,7 @@ namespace SimpleQ
             FreshIOC.Container.Register<ISettingsService, SettingsService>();
             FreshIOC.Container.Register<IWebAPIService, WebAPIService>();
             FreshIOC.Container.Register<IToastService, ToastService>();
+            FreshIOC.Container.Register<IFaqService, FaqService>();
         }
 
 		protected override async void OnStart ()
