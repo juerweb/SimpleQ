@@ -154,7 +154,7 @@
     <value>bis</value>
   </data>
   <data name="typeSmall" xml:space="preserve">
-    <value>Typ</value>
+    <value>typ</value>
     <comment>small written type</comment>
   </data>
   <data name="groupAdministrationHeader" xml:space="preserve">
@@ -400,5 +400,20 @@
   </data>
   <data name="groupCode" xml:space="preserve">
     <value>Gruppencode</value>
+  </data>
+  <data name="left" xml:space="preserve">
+    <value>links</value>
+  </data>
+  <data name="right" xml:space="preserve">
+    <value>rechts</value>
+  </data>
+  <data name="singleQuestionEvaluation" xml:space="preserve">
+    <value>Einzelbefragungen</value>
+  </data>
+  <data name="survey" xml:space="preserve">
+    <value>Befragung</value>
+  </data>
+  <data name="trendEvaluation" xml:space="preserve">
+    <value>Trendauswertung</value>
   </data>
 </root>

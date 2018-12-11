@@ -2,40 +2,44 @@
 @using System.Resources;
 @using SimpleQ.Webinterface.Properties;
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
-@{ 
+@{
     ResourceManager rm = Resources.ResourceManager;
 }
 
 <div class="row pl-4 mt-1 ml-0 mr-0">
-    <h2>@Resources.surveyResultsHeader</h2>
-</div>
-
-<div class="row m-0 p-0 mr-0 ml-0">
-    @* Switch betwenn result of single survey of result of multiple ones *@
-    <div class="col-lg-6 pl-4 pr-4">
-        <div class="row">
-            <div class="col-6 pr-0">
+    <div class="col-3">
+        <h2>@Resources.surveyResultsHeader</h2>
+    </div>
+    <div class="col-9">
+        <div class="row ml-0 mr-0 pt-3">
+            <span class="col-4 text-right" id="leftToggleText" onclick="toggleResults()">@Resources.trendEvaluation</span>
+            <span class="col-4 bg-primary p-0" id="twoWayToggle" onclick="toggleResults()">
+                <svg id="circle" height="28" width="28">
+                    <circle cx="14" cy="14" r="13" stroke="black" fill="white" />
+                </svg>
+            </span>
+            <span class="col-4 text-left text-secondary" id="rightToggleText" onclick="toggleResults()">@Resources.singleQuestionEvaluation</span>
+            @*<div class="col-6 pr-0">
                 <button id="trendBtn" onclick="switchToMulti()" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
             </div>
             <div class="col-6 pl-0">
                 <button id="singleBtn" onclick="switchToSingle()" class="btn btn-secondary btn-block">Einzelumfrage</button>
-            </div>
+            </div>*@
         </div>
     </div>
-
 </div>
+<hr class="mt-1"/>
 <div class="row mt-1 ml-0 mr-0">
     <div class="col-md-4 pl-4 pr-4">
         <div id="singleResultOptions">
-            <label for="Surveys">Umfrage</label>
+            <label for="Surveys">@Resources.survey</label>
             @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control", onchange = "loadSingleResultAsync()" })
         </div>
         <div id="multiResultOptions">
             <label for="SurveyCategories">@Resources.surveyCategoryHeader</label>
             @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
             <label for="AnswerTypes">@Resources.answerTypeHeader</label>
-            <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()">
-            </select>
+            <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()"></select>
 
             <div class="row mt-2">
                 <div class="col-md-6">
@@ -86,13 +90,17 @@
 <script>
 
     var languageDict = {};
+    if (resultType == undefined) {
+        var resultType = "multi";
+    }
+    
 
     $(function () {
         //console.log("hallo");
         fillLangDict();
         loadAnswerTypes();
         loadDatesByCategory();
-        switchToMulti();
+        switchToMulti();    
     });
 
     function fillLangDict() {
@@ -103,6 +111,25 @@
             }
         }
         //console.log(languageDict);
+    }
+
+    function toggleResults() {
+        console.log(resultType);
+        if (resultType === "multi") {
+            switchToSingle();
+            $('#circle').animate({ right: 0 }, 800);   
+            $('#circle').css("right", 0);
+            $('#circle').css("left", "unset");
+            $('#rightToggleText').removeClass("text-secondary");
+            $('#leftToggleText').addClass("text-secondary");
+        } else {
+            switchToMulti();
+            $('#circle').animate({ left: 0 }, 800); 
+            $('#circle').css("left", 0);
+            $('#circle').css("right", "unset");
+            $('#leftToggleText').removeClass("text-secondary");
+            $('#rightToggleText').addClass("text-secondary");
+        }
     }
 
     function loadSingleResultAsync() {
@@ -158,17 +185,16 @@
         let catId = document.getElementById("SurveyCategories").value;
         let typeId = document.getElementById("AnswerTypes").value;
         //console.log("type id:" + typeId);
-        let url = "@Url.Action("LoadSurveyDates", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId; 
+        let url = "@Url.Action("LoadSurveyDates", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId;
         //let url = '@Url.Action("LoadSurveyDates", "SurveyResults", new { catId = "temp"})'.replace("temp", catId + "&" + typeId);
         $.get(
             url,
             function (data) {
                 document.getElementById("dateFrom").value = data.StartDate;
-                document.getElementById("dateTo").value = data.EndDate;    
+                document.getElementById("dateTo").value = data.EndDate;
             });
     }
 
-    var resultType = "multi";
 
     function switchToMulti() {
         resultType = "multi";

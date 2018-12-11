@@ -36,4 +36,13 @@
     width: 80%;
 }
 
+#twoWayToggle {
+    position:relative;
+    border-radius: 5px;
+}
+
+#circle {
+    position:absolute;
+    /*right: 100%;*/
+}
 

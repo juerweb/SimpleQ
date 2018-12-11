@@ -58,7 +58,7 @@
                 dropBoxValues.Add("bar", Resources.bar);
                 dropBoxValues.Add("listing", Resources.listing);
             }
-            <label for="chart1SelectMulti">@Resources.diagram@Resources.typeSmall 1</label>
+            <label for="chart1SelectMulti">@Resources.diagram@Resources.typeSmall @Resources.left</label>
             <select class="form-control" id="chart1SelectMulti" onchange="changeChartMulti('chart1SelectMulti','chart1Col','chart1')">
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)
@@ -77,7 +77,7 @@
             </select>
         </div>
         <div class="form-group">
-            <label for="chart2SelectMulti">@Resources.diagram@Resources.typeSmall 2</label>
+            <label for="chart2SelectMulti">@Resources.diagram@Resources.typeSmall @Resources.right</label>
             <select class="form-control" id="chart2SelectMulti" onchange="changeChartMulti('chart2SelectMulti','chart2Col','chart2')">
                 @{
                     foreach (KeyValuePair<string, string> elem in dropBoxValues)

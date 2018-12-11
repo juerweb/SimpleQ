@@ -421,6 +421,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die left ähnelt.
+        /// </summary>
+        public static string left {
+            get {
+                return ResourceManager.GetString("left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Likert-skale 3 ähnelt.
         /// </summary>
         public static string LikertSkale3 {
@@ -727,11 +736,29 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die right ähnelt.
+        /// </summary>
+        public static string right {
+            get {
+                return ResourceManager.GetString("right", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die save as template ähnelt.
         /// </summary>
         public static string SaveAsTemplate {
             get {
                 return ResourceManager.GetString("SaveAsTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die single survey evaluation ähnelt.
+        /// </summary>
+        public static string singleQuestionEvaluation {
+            get {
+                return ResourceManager.GetString("singleQuestionEvaluation", resourceCulture);
             }
         }
         
@@ -786,6 +813,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string subject {
             get {
                 return ResourceManager.GetString("subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die survey ähnelt.
+        /// </summary>
+        public static string survey {
+            get {
+                return ResourceManager.GetString("survey", resourceCulture);
             }
         }
         
@@ -867,6 +903,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string TrafficLight {
             get {
                 return ResourceManager.GetString("TrafficLight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die trend evaluation ähnelt.
+        /// </summary>
+        public static string trendEvaluation {
+            get {
+                return ResourceManager.GetString("trendEvaluation", resourceCulture);
             }
         }
         

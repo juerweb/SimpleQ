@@ -401,4 +401,19 @@
   <data name="groupCode" xml:space="preserve">
     <value>group code</value>
   </data>
+  <data name="left" xml:space="preserve">
+    <value>left</value>
+  </data>
+  <data name="right" xml:space="preserve">
+    <value>right</value>
+  </data>
+  <data name="singleQuestionEvaluation" xml:space="preserve">
+    <value>single survey evaluation</value>
+  </data>
+  <data name="survey" xml:space="preserve">
+    <value>survey</value>
+  </data>
+  <data name="trendEvaluation" xml:space="preserve">
+    <value>trend evaluation</value>
+  </data>
 </root>
