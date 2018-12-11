@@ -12,10 +12,12 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FaqEntry
+    public partial class sysdiagram
     {
-        public string FaqTitle { get; set; }
-        public string FaqContent { get; set; }
-        public bool IsMobile { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
