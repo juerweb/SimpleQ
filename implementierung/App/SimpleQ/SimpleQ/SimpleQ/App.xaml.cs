@@ -28,6 +28,9 @@ using Xamarin.Forms.Internals;
 using System.IO;
 using SimpleQ.Shared;
 using System.Net.Http;
+using NLog;
+using SimpleQ.Logging;
+using ILogger = SimpleQ.Logging.ILogger;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -71,7 +74,12 @@ namespace SimpleQ
 
             IFaqService faqService = FreshIOC.Container.Resolve<IFaqService>();
             faqService.LoadData();
-        }
+
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Warn("Hallo");
+
+            Debug.WriteLine("Path: " + Environment.SpecialFolder.Desktop);
+    }
 
         private async void SetDefaultProperties()
         {
