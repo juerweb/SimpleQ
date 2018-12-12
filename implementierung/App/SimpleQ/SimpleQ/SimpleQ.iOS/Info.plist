@@ -38,5 +38,7 @@
 	<array>
 		<string>remote-notification</string>
 	</array>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImages.launchimage</string>
 </dict>
 </plist>

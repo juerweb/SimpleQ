@@ -15,7 +15,7 @@ using System.Diagnostics;
 
 namespace SimpleQ.Droid
 {
-    [Activity(Label = "SimpleQ", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "SimpleQ", Icon = "@mipmap/ic_launcher_2", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private OSNotificationOpenedResult result = null;
