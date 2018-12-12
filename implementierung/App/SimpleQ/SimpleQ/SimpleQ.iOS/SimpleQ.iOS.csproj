@@ -101,7 +101,6 @@
     <Compile Include="MessageIOS.cs" />
     <Compile Include="NLogLogger.cs" />
     <Compile Include="NLogManager.cs" />
-    <Compile Include="VersionAndBuild_Android.cs" />
     <Compile Include="VersionAndBuild_iOS.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
