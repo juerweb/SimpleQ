@@ -49,6 +49,9 @@ namespace SimpleQ.Webinterface.Controllers
                 if (!db.Customers.Any(c => c.CustCode == CustCode))
                     return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
+                if (db.Surveys.Where(s => s.CustCode == CustCode).Count() == 0)
+                    return PartialView("_Error", new ErrorModel { Title = "No Surveys", Message = "You haven't created any surveys yet." });
+
                 Survey survey = db.Surveys
                     .Where(s => s.SvyId == svyId && s.CustCode == CustCode)
                     .FirstOrDefault();
@@ -114,6 +117,9 @@ namespace SimpleQ.Webinterface.Controllers
                 if (!db.Customers.Any(c => c.CustCode == CustCode))
                     return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
 
+                if (db.Surveys.Where(s => s.CustCode == CustCode).Count() == 0)
+                    return PartialView("_Error", new ErrorModel { Title = "No Surveys", Message = "You haven't created any surveys yet." });
+
                 var selectedSurveys = db.Surveys
                     .Where(s => s.CatId == req.CatId && s.TypeId == req.TypeId
                      && s.StartDate >= req.StartDate && s.StartDate <= req.EndDate
@@ -132,16 +138,16 @@ namespace SimpleQ.Webinterface.Controllers
                 if (type == null)
                     AddModelError("TypeId", "AnswerType does not exist.", ref err);
 
-                if (err) PartialView("_Error", new ErrorModel { Title = "Failed to load survey", Message = errString });
+                if (err) return PartialView("_Error", new ErrorModel { Title = "Failed to load survey", Message = errString });
 
                 MultiResultModel model;
-                if (selectedSurveys.Count() == 0)
+                if (selectedSurveys?.Count() == 0)
                 {
                     model = new MultiResultModel
                     {
                         CatName = catName,
 
-                        TypeName = type.TypeDesc,
+                        TypeName = type?.TypeDesc,
 
                         AvgAmount = 0,
 

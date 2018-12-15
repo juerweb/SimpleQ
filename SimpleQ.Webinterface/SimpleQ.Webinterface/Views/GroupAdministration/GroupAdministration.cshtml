@@ -5,76 +5,71 @@
 <div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>@Resources.groupAdministrationHeader</h2>
 </div>
-<div class="row mt-1 pl-3 ml-0 mr-0">
-    <div class="col-md-4 pr-0 border-right">
-        <h4 class="text-center">Gruppenauswahl</h4>
-        <div class="form-group mt-2 mb-1">
-            <label for="groups">@Resources.groups</label>
-            <div class="border border-dark">
-                <ul class="list-group ga-groups-ul pl-2" id="gaGroups">
-                    @foreach (Department d in Model.Departments)
-                    {
-                        <li>
-                            <input name="groups" type="radio" value="@d.DepName">
-                            @d.DepName
-                        </li>
-                    }
-                </ul>
+@using (Html.BeginForm("SendInvitations", "GroupAdministration"))
+{ 
+    <div class="row mt-1 pl-3 ml-0 mr-0">
+        <div id="col1" class="col-md-4 pr-0">
+            <h4 class="text-center">Gruppenauswahl</h4>
+            <div class="form-group mt-2 mb-1">
+                <label for="groups">@Resources.groups</label>
+                <div class="border border-dark">
+                    <ul class="list-group ga-groups-ul pl-2" id="gaGroups">
+                        @foreach (KeyValuePair< Department, int> kvp in Model.Departments)
+                        {
+                            <li>
+                                <input id="@kvp.Key.DepId" name="DepId" type="radio" value="@kvp.Key.DepId"> <a>@kvp.Key.DepName</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
             </div>
+            <span>Gewählte Gruppe: <b id="chosenGroup"></b></span>
+            <button type="button" class="btn btn-primary btn-block mt-3" id="showNewGroupModalBtn">Neue Gruppe erstellen</button>
         </div>
-        <span>Gewählte Gruppe: <b id="chosenGroup"></b></span>
-        <button type="button" class="btn btn-primary btn-block mt-3" id="showNewGroupModalBtn">Neue Gruppe erstellen</button>
-    </div>
-    <div class="col-md-3">
-        <h4 class="text-center">Aktionen</h4>
-        <label>Name</label>
-        <div class="row mr-0 ml-0" id="newCategoryDiv">
-            <div class="col-10 p-0">
-                <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text"/>
+        <div id="col2" class="col-md-3">
+            <h4 class="text-center">Aktionen</h4>
+            <label>Name</label>
+            <div class="row mr-0 ml-0">
+                <div class="col-10 p-0">
+                    <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text" />
+                </div>
+                <div class="col-2 p-0">
+                    <button type="button" class="btn btn-info btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>
+                </div>
             </div>
-            <div class="col-2 p-0">
-                <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>
+            <span>
+                <a>@Resources.count @Resources.Members:</a> <b id="countMembers">0</b><br />
+                <a>@Resources.groupCode:</a> <b id="groupCode"></b>
+            </span>
+
+
+            <button type="button" class="btn btn-danger btn-block mt-2" onclick="deleteSelectedGroup()"><span class="d-flex justify-content-between"><span>Gruppe löschen</span><i class="material-icons">&#xe92b;</i></span></button>
+            <hr />
+            <button type="button" class="btn btn-primary btn-block mt-2" onclick="openMailDiv()"><span class="d-flex justify-content-between"><span>Mitglieder einladen</span><i id="inviteMatesIcon" class="material-icons">&#xe0d0;</i></span></button>
+
+            <div id="mailAddressesBox" class="border border-dark mt-2">
+                <div class="row mt-1 mb-1 mr-0 ml-0">
+                    <div class="col-9 pr-0 pl-1"><input id="mailAddressInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addMailAddress" /></div>
+                    <div class="col-3 pl-0 pr-1"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addMailAddress()"><i class="material-icons">&#xe148;</i></button></div>
+                    <ul class="list-group w-100" id="mailAddressUL" name="Emails"></ul>
+
+                </div>
             </div>
+
         </div>
+        <div class="col-md-5 border-left" id="mailDiv">
+            <h4 class="text-center">Infos</h4>
 
+            <label>@Resources.subject</label>
+            <input class="form-control" type="text" placeholder="@Resources.invitationToSimpleQ" name="InvitationSubject" />
 
-        <button class="btn btn-primary btn-block mt-2"><span class="d-flex justify-content-between"><span>Mitglieder hinzufügen</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe0d0;</i></span></button>
-        <button class="btn btn-danger btn-block mt-2"><span class="d-flex justify-content-between"><span>Gruppe löschen</span><i id="openAddAnswerUpDownIcon" class="material-icons">	&#xe92b;</i></span></button>
-
+            <label class="mt-2 mb-0">@Resources.content</label>
+            <div id="textEditorDiv" class="textEditor"></div>
+            <button type="submit" class="btn btn-primary btn-block mt-2" onclick="sendMails()"><span class="d-flex justify-content-between"><span>Email versenden</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe0d0;</i></span></button>
+            <input id="hiddenP" name="InvitationText" style="display:none"/>
+        </div>
     </div>
-    <div class="col-md-5 pl-0 pr-0 border-left">
-        <h4 class="text-center">Infos</h4>
-        <table class="table table-striped">
-            <tbody>
-                <tr>
-                    <td>Name</td>
-                    <td>Testdeppen</td>
-                </tr>
-                <tr>
-                    <td>Beschreibung</td>
-                    <td>Die Deppen von Dienst</td>
-                </tr>
-                <tr>
-                    <td>Teilnahmequote</td>
-                    <td>84%</td>
-                </tr>
-                <tr>
-                    <td>Erstellungsdatum</td>
-                    <td id="countGroupMembers">24.12.1999</td>
-                </tr>
-                <tr>
-                    <td>Mitglieder</td>
-                    <td id="countGroupMembers">12</td>
-                </tr>
-                <tr>
-                    <td>Teilnahmequote</td>
-                    <td>84%</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
+}
 
 
 @* Down here its modal code *@
@@ -83,7 +78,8 @@
         <div class="modal-content">
 
             <div class="modal-header">
-                <h4 class="modal-title">New Group..</h4>
+                <h4 id="newGroupH" class="modal-title">New Group..</h4>
+                <h4 id="noGroupH" style="display:none" class="modal-title">You have no groups yet, please define your first one!</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
 
@@ -104,37 +100,31 @@
 </div>
 
 <script>
-    if (groups === 'undefined') {//because of ajax reload
-        let groups = {}; // key = department name, value = depId
-    } else {
-        groups = {};
-    }
+    let groups = {};
+    let chosen;
 
-    //if (typeof chosen === 'undefined') {
-        let chosen;
-    //}
 
     $(function () { // <-- Things to do at startup
-        let chosenDepId = 0;
-        //fill groups array
+
+        mailEditorStartup();
+
         @{
-            foreach(Department d in Model.Departments)
+            foreach(KeyValuePair<Department, int> kvp in Model.Departments)
             {
-                @:groups['@d.DepName'] = '@d.DepId';
-                @:if (chosen === '@d.DepName') { chosenDepId = '@d.DepId' };
+                @:groups['@kvp.Key.DepId'] = ['@kvp.Key.DepName', @kvp.Value, '@kvp.Key.CustCode@kvp.Key.DepId']; 
             }
         }
-
+        console.log(groups);
         //choose first group automatically
-        let radioBtnElem = document.getElementById("gaGroups").children[0].children[chosenDepId];
-        radioBtnElem.setAttribute("checked", "checked");
-        updateGroupNameInput(radioBtnElem.value); //fill into Textbox
-        document.getElementById("chosenGroup").innerHTML = radioBtnElem.value;
+        checkFirstElem();
 
-        $("input[type=radio]").change(function () {
-            let text = this.value;
+        $("#gaGroups").on("click", "input[type = radio]", function () {
+            handleCheckedAttributes(this);
+            let text = this.parentElement.children[1].innerHTML;
+            let id = this.value;
             updateGroupNameInput(text);
-            document.getElementById("chosenGroup").innerHTML = text;
+            updateMemberCount(id);
+            updateGroupCode(id);
         });
 
         $("#showNewGroupModalBtn").click(function () {
@@ -142,7 +132,32 @@
         });
     }); // <-- Things to to at startup END
 
-    
+    function checkFirstElem() {
+        if (Object.keys(groups).length > 0) {
+            let radioBtnElem = document.getElementById("gaGroups").children[0].children[0];
+            radioBtnElem.setAttribute("checked", "checked");
+            radioBtnElem.click();
+            updateGroupNameInput(radioBtnElem.parentElement.children[1].innerHTML); //fill into Textbox
+            updateMemberCount(radioBtnElem.value);
+            updateGroupCode(radioBtnElem.value);
+        }
+        else {
+            $("#newGroupModal").modal("show");
+            $("#newGroupH").hide();
+            $("#noGroupH").show();
+        }
+    }
+
+    function handleCheckedAttributes(elem) {
+        let list = document.getElementById("gaGroups").children;
+
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].children[0] !== elem) {
+                list[i].children[0].removeAttribute("checked");
+            }
+        }
+        elem.setAttribute("checked", "checked");
+    }
 
     function addNewGroup() {
         let groupName = document.getElementById("NewGroupTB").value;
@@ -152,33 +167,45 @@
             return;
         }
 
-        let keys = Object.keys(groups);
-        if (keys.includes(groupName)) {
+        let values = Object.values(groups);
+        if (values.includes(groupName)) {
             alert('@Resources.groupAlreadyExists');
             return;
         }
 
-        let groupsUl = document.getElementById("gaGroups");
-        groupsUl.innerHTML +=
-            '<li>' +
-                '<input name="groups" type="radio" value="' + groupName + '">' +
-                groupName +
-            '</li>';
-
-        $("input[type=radio][value=" + groupName + "]").prop("checked", true);
-
-        updateGroupNameInput(groupName);
-
         let url = '@Url.Action("Create", "GroupAdministration", new { depName = "temp"})'.replace("temp", groupName);
 
-        $.ajax({
-            url: url,
-            type: 'GET'
-        });
+        $.get(
+            url,
+            function (data) {
+                //let groupName = data.DepName;
+                let id = data.DepId;
+                groups[id] = [groupName, 0, data.RegCode];
+                let groupsUl = document.getElementById("gaGroups");
+                groupsUl.innerHTML +=
+                    '<li>' +
+                        '<input id="'+id+'" name="DepId" type="radio" value="' + id + '"><a>'+groupName+'</a>'+
+                    '</li>';
+                let elem = document.getElementById(id);
+                handleCheckedAttributes(elem);
+                updateGroupNameInput(groupName);
+                updateMemberCount(id);
+                updateGroupCode(id);
+            }
+        );
     }
 
     function updateGroupNameInput(groupName) {
         document.getElementById("groupNameInput").value = groupName;
+        document.getElementById("chosenGroup").innerHTML = groupName;
+    }
+
+    function updateMemberCount(id) {
+        document.getElementById("countMembers").innerHTML = groups[id][1];
+    }
+
+    function updateGroupCode(id) {
+        document.getElementById("groupCode").innerHTML = groups[id][2];
     }
 
     if (typeof tempTextGroups === 'undefined') {
@@ -210,23 +237,32 @@
         let text;
         if (canceled) {
             //text = tempTextGroups;
-            document.getElementById("groupNameInput").value=tempTextGroups;
+            document.getElementById("groupNameInput").value = tempTextGroups;
         } else {
+            let id;
+            let memCount;
             text = document.getElementById("groupNameInput").value;
-            let keys = Object.keys(groups);
-            if (keys.includes(text)) {
-                alert('@Resources.groupAlreadyExists');
-                return;
+
+            for (let key in groups) {
+                if (groups[key][0] === tempText) {
+                    id = key;
+                    memCount = groups[key][1];
+                }
+                if (groups[key][0] === text) {
+                    alert('@Resources.groupAlreadyExists');
+                    return;
+                }
             }
-
-
             let url = '@Url.Action("Modify", "GroupAdministration")'//, new {depId = "temp1", depName = "temp2"})'.replace("temp1", groups[tempTextGroups]).replace("temp2", text);
-            url += '?depId=' + groups[tempTextGroups] + '&depName=' + text;
-            $("#groupAdministrationWindow").load(url, function () {
-                chosen = text;
-            });
-
-            //updateGroups();
+            url += '?depId=' + id + '&depName=' + text;
+            $.get(
+                url,
+                function (id) { }  //unnecessary     
+            );
+            let groupCode = groups[id][2];
+            groups[id] = [text, memCount, groupCode];
+            let aElem = document.getElementById(id).parentElement.children[1];
+            aElem.innerHTML = text;
         }
         $("#groupNameInput").attr("readonly", true);
         $("#groupNameInput").addClass("withoutBorder");
@@ -236,10 +272,168 @@
         button.parentElement.parentElement.parentElement.parentElement.children[1].classList.remove("col-4");
         button.parentElement.parentElement.parentElement.parentElement.children[1].classList.add("col-2");
 
-        let edited = '<button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>';
+        let edited = '<button type="button" class="btn btn-info btn-block pb-0 pl-0 pr-0 leftNotRounded" onclick="editGroupName(this)"><i class="material-icons">&#xe150;</i></button>';
         tempTextGroups = "";
         button.parentElement.parentElement.parentElement.parentElement.children[1].innerHTML = edited;
+    }
 
+    function deleteSelectedGroup() {
+        let id = $("input:checked").attr('id');
+
+        let url = '@Url.Action("Delete", "GroupAdministration", new { depId = "temp"})'.replace("temp", id);
+        $.get(
+            url,
+            function (id) {} //unnecessary
+        );
+        delete groups[id];
+        document.getElementById(id).parentElement.remove();
+        checkFirstElem();
+    }
+
+    function mailEditorStartup() {
+        $("#mailDiv").hide();
+        $("#mailAddressesBox").hide();
+        $("#textEditorDiv").trumbowyg({
+            lang: '@Resources.textEditorLanguage'
+        });
+        $('#mailDiv').trumbowyg('html', "<p>@Resources.downloadAppHere</p><a href='#'>https://play.google.com/store/apps/details?id=com.ubisoft.accovenant</a>");
+    }
+
+    function openMailDiv() {
+        if ($("#mailDiv").is(":hidden")) {
+            $("#col1").removeClass("col-md-4").addClass("col-md-3");
+            $("#col2").removeClass("col-md-3").addClass("col-md-4");
+            $("#mailDiv").show('slide', { direction: 'left' }, 500);
+            $("#mailAddressesBox").show('slide', { direction: 'right' }, 500);
+
+            document.getElementById("inviteMatesIcon").innerHTML = "&#xe020;";
+        } else {
+            $("#col2").removeClass("col-md-4").addClass("col-md-3");
+            $("#col1").removeClass("col-md-3").addClass("col-md-4");
+            $("#mailDiv").hide('slide', { direction: 'left' }, 500);
+            $("#mailAddressesBox").hide('slide', { direction: 'right' }, 500);
+            document.getElementById("inviteMatesIcon").innerHTML = "&#xe0d0;";
+        }
+    }
+
+    let mailAddresses = [];
+
+    function addMailAddress() {
+        let ul = document.getElementById("mailAddressUL");
+        let inputElem = document.getElementById("mailAddressInput");
+        let input = inputElem.value;
+
+        if (!validateEmail(input)) {
+            alert('@Resources.invalidMailAddress');
+            inputElem.value = '';
+            return;
+        }
+
+        if (input === "") {
+            alert('@Resources.invalidInput');
+            return;
+        } else if (mailAddresses.includes(input)) {
+            alert('@Resources.invalidInput');
+            return;
+        }
+
+        mailAddresses.push(input);
+        let normal =
+            '<li class="row mr-0 ml-0 mt-2">' +
+            '    <div class="col-9 pr-0 pl-1">' +
+            '        <input class="form-control rightNotRounded withoutBorder" name="Emails" readonly type="text" value="' + input + '" />' +
+            '    </div>' +
+            '    <div class="col-3 pl-0 pr-1">' +
+            '       <span class="row ml-0 mr-0">' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editMailAddress(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           </span>' +
+            '           <span class="col-6 p-0">'  +
+            '               <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteMailAddress(this)"><i class="material-icons">&#xe92b;</i></button>' +
+            '           </span>' +
+            '       </span>' +
+            '    </div>' +
+            '</li>';
+
+        ul.innerHTML += normal;
+
+        inputElem.value = "";
+        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+    }
+
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function deleteMailAddress(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        for (i = 0; i < mailAddresses.length; i++) {
+            if (mailAddresses[i] === text) {
+                mailAddresses.splice(i, 1);
+                break;
+            }
+        }
+        button.parentElement.parentElement.parentElement.parentElement.remove();
+    }
+
+    function editMailAddress(button) {
+        let inputElem = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0];
+        $(inputElem).removeClass("withoutBorder").removeAttr("readonly");
+        let text = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0].value;
+        let edit =
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-success btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="saveMailAddress(this,false,\'' + text + '\')"><i class="material-icons">&#xe5ca;</i></button>' +
+            '           </span>' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-secondary btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="saveMailAddress(this,true,\'' + text + '\')"><i class="material-icons">&#xe5cd;</i></button>' +
+            '           </span>';
+        button.parentElement.parentElement.innerHTML = edit;
+    }
+
+    function saveMailAddress(button, canceled, tempText) {
+        let text;
+        let inputElem = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0];
+        if (canceled) {
+            text = tempText;
+        } else {
+            text = inputElem.value;
+            if (!validateEmail(text)) {
+                alert('@Resources.invalidMailAddress');
+                inputElem.value = tempText;
+                return;
+            }
+            if (mailAddresses.includes(text)) {
+                alert('@Resources.invalidInput');
+                return;
+            }
+            for (i = 0; i < mailAddresses.length; i++) {
+                if (mailAddresses[i] === tempText) {
+                    mailAddresses[i] = text;
+                    break;
+                }
+            }
+        }
+
+        let edited =
+            '<span class="col-6 p-0">' +
+            '   <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editMailAddress(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '</span>' +
+            '<span class="col-6 p-0">' +
+            '   <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteMailAddress(this)"><i class="material-icons">&#xe92b;</i></button>' +
+            '</span>';
+        tempText = "";
+
+        //take away input border and make it readonly
+        $(inputElem).addClass("withoutBorder");
+        $(inputElem).prop('readonly', true);
+        button.parentElement.parentElement.innerHTML = edited;
+    }
+
+    function sendMails() {
+        let hiddenElem = document.getElementById("hiddenP");
+        //hiddenElem.innerHTML = $("#textEditorDiv").trumbowyg('html');
+        hiddenElem.value = $("#textEditorDiv").trumbowyg('html');
     }
 
 </script>

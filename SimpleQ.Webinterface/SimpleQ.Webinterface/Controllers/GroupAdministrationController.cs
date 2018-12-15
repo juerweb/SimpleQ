@@ -59,14 +59,15 @@ namespace SimpleQ.Webinterface.Controllers
         {
             try
             {
+                //req = new GroupAdministrationModel
+                //{
+                //    DepId = 1,
+                //    Emails = new List<string> { "dev@simpleq.at", "lukas.schendlinger@a1.net" },
+                //    InvitationText = "sads ma BITTE NED BES"
+                //};
+
                 logger.Debug($"Requested to send invitations: {CustCode}");
                 bool err = false;
-                req = new GroupAdministrationModel
-                {
-                    DepId = 1,
-                    Emails = new List<string> { "dev@simpleq.at", "lukas.schendlinger@a1.net" },
-                    InvitationText = "sads ma BITTE NED BES"
-                };
 
                 if (req == null)
                     AddModelError("Model", "Model object must not be null.", ref err);

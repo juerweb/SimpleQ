@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="surveyCreationHeader" xml:space="preserve">
-    <value>Umfrage erstellen</value>
+    <value>Befragung erstellen</value>
   </data>
   <data name="surveyCategoryHeader" xml:space="preserve">
     <value>Umfragekategorie</value>
@@ -148,13 +148,13 @@
     <value>Datum</value>
   </data>
   <data name="surveyResultsHeader" xml:space="preserve">
-    <value>Umfrageauswertung</value>
+    <value>Befragungsauswertung</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>bis</value>
   </data>
   <data name="typeSmall" xml:space="preserve">
-    <value>Typ</value>
+    <value>typ</value>
     <comment>small written type</comment>
   </data>
   <data name="groupAdministrationHeader" xml:space="preserve">
@@ -170,7 +170,7 @@
     <value>Liniendiagramm</value>
   </data>
   <data name="radar" xml:space="preserve">
-    <value>Radardiagramm</value>
+    <value>Spinnennetzdiagramm</value>
   </data>
   <data name="listing" xml:space="preserve">
     <value>Auflistung (absolut,%)</value>
@@ -185,7 +185,7 @@
     <value>Prozent</value>
   </data>
   <data name="polarArea" xml:space="preserve">
-    <value>Polarkreisdiagramm</value>
+    <value>Polar-Area-Diagramm</value>
   </data>
   <data name="Dichotomous" xml:space="preserve">
     <value>Dichotom</value>
@@ -251,9 +251,9 @@
     <value>Ungültige Eingabe!</value>
   </data>
   <data name="surveyTemplateHeader" xml:space="preserve">
-    <value>Umfragetemplate (bisherige Umfragen)</value>
+    <value>Befragungstemplate (bisherige Umfragen)</value>
   </data>
-<data name="askedPeopleCount" xml:space="preserve">
+  <data name="askedPeopleCount" xml:space="preserve">
     <value>Anzahl der zu befragenden Personen</value>
   </data>
   <data name="badAskGroupCount" xml:space="preserve">
@@ -280,54 +280,140 @@
   <data name="groupAlreadyExists" xml:space="preserve">
     <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
   </data>
-  <data name="AccountSettings" xml:space="preserve">
-    <value>Kontoeinstellungen</value>
+  <data name="TemplateDescription" xml:space="preserve">
+    <value>Beim Anhaken, wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
   </data>
-  <data name="ActivatedModes" xml:space="preserve">
-    <value>Aktivierte Modi</value>
+  <data name="noTemplate" xml:space="preserve">
+    <value>kein Template</value>
   </data>
-  <data name="Street" xml:space="preserve">
-    <value>Straße</value>
+  <data name="cancel" xml:space="preserve">
+    <value>abbrechen</value>
   </data>
-  <data name="ApplicationSettings" xml:space="preserve">
-    <value>Anwendungseinstellungen</value>
+  <data name="content" xml:space="preserve">
+    <value>Inhalt</value>
   </data>
-  <data name="DataProtectionSettings" xml:space="preserve">
-    <value>Datenschutzeinstellungen</value>
+  <data name="downloadAppHere" xml:space="preserve">
+    <value>Die App kann man hier downloaden</value>
   </data>
-  <data name="MinimumGroupSize" xml:space="preserve">
-    <value>Minimale Gruppengröße</value>
+  <data name="invitationToSimpleQ" xml:space="preserve">
+    <value>Einladung zu SimpleQ</value>
   </data>
-  <data name="City" xml:space="preserve">
+  <data name="max" xml:space="preserve">
+    <value>maximal</value>
+  </data>
+  <data name="predictedPrice" xml:space="preserve">
+    <value>voraussichtlicher Preis</value>
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>Betreff</value>
+    <comment>for mail</comment>
+  </data>
+  <data name="textEditorLanguage" xml:space="preserve">
+    <value>de</value>
+  </data>
+  <data name="addMailAddress" xml:space="preserve">
+    <value>Email-Adresse hinzufügen</value>
+  </data>
+  <data name="invalidMailAddress" xml:space="preserve">
+    <value>Die Email-Adresse ist ungültig!</value>
+  </data>
+  <data name="addressData" xml:space="preserve">
+    <value>Adressdaten</value>
+  </data>
+  <data name="baseData" xml:space="preserve">
+    <value>Basisdaten</value>
+  </data>
+  <data name="billingPeriodInMonths" xml:space="preserve">
+    <value>Rechnungsperiode in Monaten</value>
+  </data>
+  <data name="city" xml:space="preserve">
     <value>Stadt</value>
   </data>
-  <data name="Country" xml:space="preserve">
+  <data name="confirmPassword" xml:space="preserve">
+    <value>Passwort bestätigen</value>
+  </data>
+  <data name="country" xml:space="preserve">
     <value>Land</value>
   </data>
-  <data name="Email" xml:space="preserve">
-    <value>Email </value>
+  <data name="customerName" xml:space="preserve">
+    <value>Kundenname</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
+  <data name="dataRetentionPeriodInMonths" xml:space="preserve">
+    <value>Datenspeicherungsfrist in Monaten</value>
   </data>
-  <data name="Number" xml:space="preserve">
-    <value>Telefonnummer</value>
+  <data name="email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="PostalCode" xml:space="preserve">
-    <value>PLZ</value>
+  <data name="finish" xml:space="preserve">
+    <value>Fertigstellen</value>
   </data>
-  <data name="DataStoragePeriod" xml:space="preserve">
-    <value>Datenaufbewahrung (in Monaten)</value>
-  </data>
-  <data name="Language" xml:space="preserve">
+  <data name="language" xml:space="preserve">
     <value>Sprache</value>
   </data>
-  <data name="Password" xml:space="preserve">
+  <data name="medium" xml:space="preserve">
+    <value>mittel</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="password" xml:space="preserve">
     <value>Passwort</value>
   </data>
-  <data name="PasswordConfirm" xml:space="preserve">
-    <value>Passwort bestätigen</value>
-  </data><data name="TemplateDescription" xml:space="preserve">
-    <value>Beim Anhaken, wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
+  <data name="paymentMethod" xml:space="preserve">
+    <value>Zahlungsmethode</value>
+  </data>
+  <data name="postCode" xml:space="preserve">
+    <value>Postleitzahl</value>
+  </data>
+  <data name="previous" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="specificData" xml:space="preserve">
+    <value>Spezifische Daten</value>
+  </data>
+  <data name="streetAndHousenumber" xml:space="preserve">
+    <value>Straße und Hausnummer</value>
+  </data>
+  <data name="strong" xml:space="preserve">
+    <value>stark</value>
+  </data>
+  <data name="weak" xml:space="preserve">
+    <value>schwach</value>
+  </data>
+  <data name="preferredBillingDay" xml:space="preserve">
+    <value>Bevorzugtes Zahlungsdatum im Monat</value>
+  </data>
+  <data name="customerCode" xml:space="preserve">
+    <value>Kunden-Code</value>
+  </data>
+  <data name="forgotPassword" xml:space="preserve">
+    <value>Passwort vergessen</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="startSurvey" xml:space="preserve">
+    <value>Befragung aussenden</value>
+  </data>
+  <data name="stayLoggedIn" xml:space="preserve">
+    <value>eingeloggt bleiben</value>
+  </data>
+  <data name="groupCode" xml:space="preserve">
+    <value>Gruppencode</value>
+  </data>
+  <data name="left" xml:space="preserve">
+    <value>links</value>
+  </data>
+  <data name="right" xml:space="preserve">
+    <value>rechts</value>
+  </data>
+  <data name="singleQuestionEvaluation" xml:space="preserve">
+    <value>Einzelbefragungen</value>
+  </data>
+  <data name="survey" xml:space="preserve">
+    <value>Befragung</value>
+  </data>
+  <data name="trendEvaluation" xml:space="preserve">
+    <value>Trendauswertung</value>
   </data>
 </root>

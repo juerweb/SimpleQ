@@ -19,14 +19,12 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort>44338</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>
-    </IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>
-    </IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>
-    </IISExpressUseClassicPipelineMode>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -309,6 +307,8 @@
     <Compile Include="Models\ViewModels\SurveyCreationModel.cs" />
     <Compile Include="Models\ViewModels\SurveyResultsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\ResourcesN.de.Designer.cs" />
+    <Compile Include="Properties\ResourcesN.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -317,6 +317,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\GroupAdministration.css" />
     <Content Include="Content\Images\Icons\favicon.ico" />
     <Content Include="Content\Images\Icons\favicon.png" />
     <Content Include="Content\Images\Icons\groupAdministration.png" />
@@ -325,8 +326,29 @@
     <Content Include="Content\Images\Icons\createSurvey.png" />
     <Content Include="Content\Images\Icons\support.png" />
     <Content Include="Content\Images\Icons\surveyResults.png" />
+    <Content Include="Content\Images\jquery-ui.min.css" />
+    <Content Include="Content\Images\loginBG1.jpg" />
+    <Content Include="Content\Images\loginBG10.jpg" />
+    <Content Include="Content\Images\loginBG11.jpg" />
+    <Content Include="Content\Images\loginBG2.jpg" />
+    <Content Include="Content\Images\loginBG3.jpg" />
+    <Content Include="Content\Images\loginBG4.jpg" />
+    <Content Include="Content\Images\loginBG5.jpg" />
+    <Content Include="Content\Images\loginBG6.jpg" />
+    <Content Include="Content\Images\loginBG7.jpg" />
+    <Content Include="Content\Images\loginBG8.jpg" />
+    <Content Include="Content\Images\loginBG9.jpg" />
     <Content Include="Content\Images\Logos\simpleQ.png" />
+    <Content Include="Content\Images\registrationBG.jpg" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\Layout.css" />
+    <Content Include="Content\Login.css" />
+    <Content Include="Content\SurveyCreation.css" />
     <Content Include="Content\SurveyResults.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -364,6 +386,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <EmbeddedResource Include="Properties\ResourcesN.de.resx" />
+    <EmbeddedResource Include="Properties\ResourcesN.resx" />
     <EntityDeploy Include="Models\SimpleQModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>SimpleQModel.Designer.cs</LastGenOutput>
@@ -388,13 +412,6 @@
     <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Scripts\jquery.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.3.0.js" />
-    <Content Include="Scripts\jquery.signalR-2.3.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -405,10 +422,114 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\qrious.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\texteditor\langs\ar.min.js" />
+    <Content Include="Scripts\texteditor\langs\bg.min.js" />
+    <Content Include="Scripts\texteditor\langs\by.min.js" />
+    <Content Include="Scripts\texteditor\langs\ca.min.js" />
+    <Content Include="Scripts\texteditor\langs\cs.min.js" />
+    <Content Include="Scripts\texteditor\langs\da.min.js" />
+    <Content Include="Scripts\texteditor\langs\de.min.js" />
+    <Content Include="Scripts\texteditor\langs\el.min.js" />
+    <Content Include="Scripts\texteditor\langs\es.min.js" />
+    <Content Include="Scripts\texteditor\langs\es_ar.min.js" />
+    <Content Include="Scripts\texteditor\langs\fa.min.js" />
+    <Content Include="Scripts\texteditor\langs\fi.min.js" />
+    <Content Include="Scripts\texteditor\langs\fr.min.js" />
+    <Content Include="Scripts\texteditor\langs\he.min.js" />
+    <Content Include="Scripts\texteditor\langs\hr.min.js" />
+    <Content Include="Scripts\texteditor\langs\hu.min.js" />
+    <Content Include="Scripts\texteditor\langs\id.min.js" />
+    <Content Include="Scripts\texteditor\langs\it.min.js" />
+    <Content Include="Scripts\texteditor\langs\ja.min.js" />
+    <Content Include="Scripts\texteditor\langs\ko.min.js" />
+    <Content Include="Scripts\texteditor\langs\lt.min.js" />
+    <Content Include="Scripts\texteditor\langs\mn.min.js" />
+    <Content Include="Scripts\texteditor\langs\my.min.js" />
+    <Content Include="Scripts\texteditor\langs\nl.min.js" />
+    <Content Include="Scripts\texteditor\langs\no_nb.min.js" />
+    <Content Include="Scripts\texteditor\langs\ph.min.js" />
+    <Content Include="Scripts\texteditor\langs\pl.min.js" />
+    <Content Include="Scripts\texteditor\langs\pt.min.js" />
+    <Content Include="Scripts\texteditor\langs\pt_br.min.js" />
+    <Content Include="Scripts\texteditor\langs\ro.min.js" />
+    <Content Include="Scripts\texteditor\langs\rs.min.js" />
+    <Content Include="Scripts\texteditor\langs\rs_latin.min.js" />
+    <Content Include="Scripts\texteditor\langs\ru.min.js" />
+    <Content Include="Scripts\texteditor\langs\sk.min.js" />
+    <Content Include="Scripts\texteditor\langs\sq.min.js" />
+    <Content Include="Scripts\texteditor\langs\sv.min.js" />
+    <Content Include="Scripts\texteditor\langs\th.min.js" />
+    <Content Include="Scripts\texteditor\langs\tr.min.js" />
+    <Content Include="Scripts\texteditor\langs\ua.min.js" />
+    <Content Include="Scripts\texteditor\langs\vi.min.js" />
+    <Content Include="Scripts\texteditor\langs\zh_cn.min.js" />
+    <Content Include="Scripts\texteditor\langs\zh_tw.min.js" />
+    <Content Include="Scripts\texteditor\plugins\allowtagsfrompaste\trumbowyg.allowtagsfrompaste.js" />
+    <Content Include="Scripts\texteditor\plugins\allowtagsfrompaste\trumbowyg.allowtagsfrompaste.min.js" />
+    <Content Include="Scripts\texteditor\plugins\base64\trumbowyg.base64.js" />
+    <Content Include="Scripts\texteditor\plugins\base64\trumbowyg.base64.min.js" />
+    <Content Include="Scripts\texteditor\plugins\cleanpaste\trumbowyg.cleanpaste.js" />
+    <Content Include="Scripts\texteditor\plugins\cleanpaste\trumbowyg.cleanpaste.min.js" />
+    <Content Include="Scripts\texteditor\plugins\colors\trumbowyg.colors.js" />
+    <Content Include="Scripts\texteditor\plugins\colors\trumbowyg.colors.min.js" />
+    <Content Include="Scripts\texteditor\plugins\colors\ui\trumbowyg.colors.css" />
+    <Content Include="Scripts\texteditor\plugins\colors\ui\trumbowyg.colors.min.css" />
+    <Content Include="Scripts\texteditor\plugins\emoji\trumbowyg.emoji.js" />
+    <Content Include="Scripts\texteditor\plugins\emoji\trumbowyg.emoji.min.js" />
+    <Content Include="Scripts\texteditor\plugins\emoji\ui\trumbowyg.emoji.css" />
+    <Content Include="Scripts\texteditor\plugins\emoji\ui\trumbowyg.emoji.min.css" />
+    <Content Include="Scripts\texteditor\plugins\fontfamily\trumbowyg.fontfamily.js" />
+    <Content Include="Scripts\texteditor\plugins\fontfamily\trumbowyg.fontfamily.min.js" />
+    <Content Include="Scripts\texteditor\plugins\fontsize\trumbowyg.fontsize.js" />
+    <Content Include="Scripts\texteditor\plugins\fontsize\trumbowyg.fontsize.min.js" />
+    <Content Include="Scripts\texteditor\plugins\highlight\trumbowyg.highlight.js" />
+    <Content Include="Scripts\texteditor\plugins\highlight\trumbowyg.highlight.min.js" />
+    <Content Include="Scripts\texteditor\plugins\highlight\ui\trumbowyg.highlight.css" />
+    <Content Include="Scripts\texteditor\plugins\highlight\ui\trumbowyg.highlight.min.css" />
+    <Content Include="Scripts\texteditor\plugins\history\trumbowyg.history.js" />
+    <Content Include="Scripts\texteditor\plugins\history\trumbowyg.history.min.js" />
+    <Content Include="Scripts\texteditor\plugins\insertaudio\trumbowyg.insertaudio.js" />
+    <Content Include="Scripts\texteditor\plugins\insertaudio\trumbowyg.insertaudio.min.js" />
+    <Content Include="Scripts\texteditor\plugins\lineheight\trumbowyg.lineheight.js" />
+    <Content Include="Scripts\texteditor\plugins\lineheight\trumbowyg.lineheight.min.js" />
+    <Content Include="Scripts\texteditor\plugins\mathml\trumbowyg.mathml.js" />
+    <Content Include="Scripts\texteditor\plugins\mathml\trumbowyg.mathml.min.js" />
+    <Content Include="Scripts\texteditor\plugins\mathml\ui\trumbowyg.mathml.css" />
+    <Content Include="Scripts\texteditor\plugins\mathml\ui\trumbowyg.mathml.min.css" />
+    <Content Include="Scripts\texteditor\plugins\mention\trumbowyg.mention.js" />
+    <Content Include="Scripts\texteditor\plugins\mention\trumbowyg.mention.min.js" />
+    <Content Include="Scripts\texteditor\plugins\mention\ui\trumbowyg.mention.css" />
+    <Content Include="Scripts\texteditor\plugins\mention\ui\trumbowyg.mention.min.css" />
+    <Content Include="Scripts\texteditor\plugins\noembed\trumbowyg.noembed.js" />
+    <Content Include="Scripts\texteditor\plugins\noembed\trumbowyg.noembed.min.js" />
+    <Content Include="Scripts\texteditor\plugins\pasteembed\trumbowyg.pasteembed.js" />
+    <Content Include="Scripts\texteditor\plugins\pasteembed\trumbowyg.pasteembed.min.js" />
+    <Content Include="Scripts\texteditor\plugins\pasteimage\trumbowyg.pasteimage.js" />
+    <Content Include="Scripts\texteditor\plugins\pasteimage\trumbowyg.pasteimage.min.js" />
+    <Content Include="Scripts\texteditor\plugins\preformatted\trumbowyg.preformatted.js" />
+    <Content Include="Scripts\texteditor\plugins\preformatted\trumbowyg.preformatted.min.js" />
+    <Content Include="Scripts\texteditor\plugins\resizimg\trumbowyg.resizimg.js" />
+    <Content Include="Scripts\texteditor\plugins\resizimg\trumbowyg.resizimg.min.js" />
+    <Content Include="Scripts\texteditor\plugins\ruby\trumbowyg.ruby.js" />
+    <Content Include="Scripts\texteditor\plugins\ruby\trumbowyg.ruby.min.js" />
+    <Content Include="Scripts\texteditor\plugins\table\trumbowyg.table.js" />
+    <Content Include="Scripts\texteditor\plugins\table\trumbowyg.table.min.js" />
+    <Content Include="Scripts\texteditor\plugins\table\ui\trumbowyg.table.css" />
+    <Content Include="Scripts\texteditor\plugins\table\ui\trumbowyg.table.min.css" />
+    <Content Include="Scripts\texteditor\plugins\template\trumbowyg.template.js" />
+    <Content Include="Scripts\texteditor\plugins\template\trumbowyg.template.min.js" />
+    <Content Include="Scripts\texteditor\plugins\upload\trumbowyg.upload.js" />
+    <Content Include="Scripts\texteditor\plugins\upload\trumbowyg.upload.min.js" />
+    <Content Include="Scripts\texteditor\trumbowyg.js" />
+    <Content Include="Scripts\texteditor\trumbowyg.min.js" />
+    <Content Include="Scripts\texteditor\ui\icons.svg" />
+    <Content Include="Scripts\texteditor\ui\trumbowyg.css" />
+    <Content Include="Scripts\texteditor\ui\trumbowyg.min.css" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
@@ -425,7 +546,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Support\Support.cshtml" />
     <Content Include="Views\SurveyResults\_SingleResult.cshtml" />
     <Content Include="Views\SurveyResults\_MultiResult.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
@@ -437,8 +557,6 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
@@ -461,6 +579,15 @@
     <Content Include="Views\Shared\_AccountLayout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\SurveyResults\_Error.cshtml" />
+    <Content Include="Views\Support\Support.cshtml" />
+    <Content Include="Scripts\texteditor\plugins\colors\ui\sass\trumbowyg.colors.scss" />
+    <Content Include="Scripts\texteditor\plugins\emoji\ui\sass\trumbowyg.emoji.scss" />
+    <Content Include="Scripts\texteditor\plugins\highlight\ui\sass\trumbowyg.highlight.scss" />
+    <Content Include="Scripts\texteditor\plugins\mathml\ui\sass\trumbowyg.mathml.scss" />
+    <Content Include="Scripts\texteditor\plugins\mention\ui\sass\trumbowyg.mention.scss" />
+    <Content Include="Scripts\texteditor\plugins\table\ui\sass\trumbowyg.table.scss" />
+    <Content Include="Scripts\texteditor\ui\sass\trumbowyg.scss" />
+    <Content Include="Scripts\qrious.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
