@@ -13,7 +13,7 @@ namespace SimpleQ.Tests.WebinterfaceTest
 {
     class Program
     {
-        const string SERVER = "https://localhost:44338";
+        const string SERVER = "https://dev.simpleq.at";
 
         static JsonSerializer ser = new JsonSerializer();
 
