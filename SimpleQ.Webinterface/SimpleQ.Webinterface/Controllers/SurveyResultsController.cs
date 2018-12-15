@@ -15,7 +15,9 @@ namespace SimpleQ.Webinterface.Controllers
     [CAuthorize]
     public class SurveyResultsController : Controller
     {
-        #region MVC-Actions
+        private string errString;
+
+        #region AJAX-Methods
         [HttpGet]
         public ActionResult Index()
         {
@@ -54,7 +56,7 @@ namespace SimpleQ.Webinterface.Controllers
                 if (survey == null)
                     AddModelError("svyId", "Survey not found.", ref err);
 
-                if (err) return Index();
+                if (err) return PartialView("_Error", new ErrorModel { Title = "Failed to load survey", Message = errString });
 
 
                 var model = new SingleResultModel
@@ -95,11 +97,11 @@ namespace SimpleQ.Webinterface.Controllers
             bool err = false;
             //SAMPLE DATA
             //req = new MultiResultModel
-            //{
             //    CatId = 4,
             //    TypeId = 2,
             //    StartDate = DateTime.Now.AddYears(-1),
             //    EndDate = DateTime.Now,
+            //{
             //};
 
             if (req == null)
@@ -130,7 +132,7 @@ namespace SimpleQ.Webinterface.Controllers
                 if (type == null)
                     AddModelError("TypeId", "AnswerType does not exist.", ref err);
 
-                if (err) return Index();
+                if (err) PartialView("_Error", new ErrorModel { Title = "Failed to load survey", Message = errString });
 
                 MultiResultModel model;
                 if (selectedSurveys.Count() == 0)
@@ -175,9 +177,7 @@ namespace SimpleQ.Webinterface.Controllers
                 return PartialView(viewName: "_MultiResult", model: model);
             }
         }
-        #endregion
 
-        #region AJAX-Methods
         [HttpGet]
         public ActionResult LoadTypesByCategory(int catId)
         {
@@ -296,7 +296,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         private void AddModelError(string key, string errorMessage, ref bool error)
         {
-            ModelState.AddModelError(key, errorMessage);
+            errString += $"{key}: {errorMessage}{Environment.NewLine}";
             error = true;
         }
 
