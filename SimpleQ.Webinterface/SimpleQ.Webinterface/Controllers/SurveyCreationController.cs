@@ -104,12 +104,15 @@ namespace SimpleQ.Webinterface.Controllers
                     }
                 }
 
-                foreach (var ans in req.TextAnswerOptions)
+                if (req.TextAnswerOptions != null)
                 {
-                    if (string.IsNullOrEmpty(ans))
+                    foreach (var ans in req.TextAnswerOptions)
                     {
-                        AddModelError("TextAnswerOptions", "AnswerOptions must not be empty.", ref err);
-                        break;
+                        if (string.IsNullOrEmpty(ans))
+                        {
+                            AddModelError("TextAnswerOptions", "AnswerOptions must not be empty.", ref err);
+                            break;
+                        }
                     }
                 }
 
