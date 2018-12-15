@@ -14,13 +14,13 @@
     </div>
     <div class="col-9">
         <div class="row ml-0 mr-0 pt-3">
-            <span class="col-4 text-right" id="leftToggleText" onclick="toggleResults()">@Resources.trendEvaluation</span>
-            <span class="col-4 bg-primary p-0" id="twoWayToggle" onclick="toggleResults()">
+            <span class="col-5 text-right" id="leftToggleText" style="font-weight:bold" onclick="toggleResults()">@Resources.trendEvaluation</span>
+            <span class="col-2 bg-primary p-0" id="twoWayToggle" onclick="toggleResults()">
                 <svg id="circle" height="28" width="28">
                     <circle cx="14" cy="14" r="13" stroke="black" fill="white" />
                 </svg>
             </span>
-            <span class="col-4 text-left text-secondary" id="rightToggleText" onclick="toggleResults()">@Resources.singleQuestionEvaluation</span>
+            <span class="col-5 text-left text-secondary" id="rightToggleText" onclick="toggleResults()">@Resources.singleQuestionEvaluation</span>
             @*<div class="col-6 pr-0">
                     <button id="trendBtn" onclick="switchToMulti()" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
                 </div>
@@ -122,6 +122,8 @@
             $('#circle').animate({ right: 0 }, 800);
             $('#circle').css("right", 0);
             $('#circle').css("left", "unset");
+            $('#rightToggleText').css("font-weight", "bold");
+            $('#leftToggleText').css("font-weight", "normal");
             $('#rightToggleText').removeClass("text-secondary");
             $('#leftToggleText').addClass("text-secondary");
         } else {
@@ -129,6 +131,8 @@
             $('#circle').animate({ left: 0 }, 800);
             $('#circle').css("left", 0);
             $('#circle').css("right", "unset");
+            $('#leftToggleText').css("font-weight", "bold");
+            $('#rightToggleText').css("font-weight", "normal");
             $('#leftToggleText').removeClass("text-secondary");
             $('#rightToggleText').addClass("text-secondary");
         }
@@ -139,8 +143,12 @@
     }
 
     function loadMultiResultAsync() {
+        console.log($("#SurveyCategories").val());
+        console.log($("#AnswerTypes").val());
+        console.log($("#dateFrom").val());
+        console.log($("#dateTo").val());
         $.post("@Url.Action("LoadMultiResult", "SurveyResults")",
-            {
+            {               
                 CatId: $("#SurveyCategories").val(),
                 TypeId: $("#AnswerTypes").val(),
                 StartDate: $("#dateFrom").val(),

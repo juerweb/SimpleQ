@@ -1,0 +1,59 @@
+﻿@using System.Resources
+@using SimpleQ.Webinterface.Properties
+@model SimpleQ.Webinterface.Models.ViewModels.SupportModel
+
+<div class="row pl-4 mt-1 ml-0 mr-0">
+    <h2>Support</h2>
+</div>
+<div class="row mt-1 ml-0 mr-0">
+    <div class="col-md-6">
+        <h4 class="text-center">Häufige Fragestellungen</h4>
+        <div class="tab-content mt-5" id="faq-tab-content">
+            <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
+                <div class="accordion" id="accordion-tab-1">
+                    @{
+                        int i = 1;
+                        foreach (var c in Model.FaqEntries)
+                        {
+                            <div class="card">
+                                <div class="card-header" id="accordion-tab-@i-heading-@i">
+                                    <h5>
+                                        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-@i-content-@i" aria-expanded="true" aria-controls="accordion-tab-@i-content-@i">@c.FaqTitle</button>
+                                    </h5>
+                                </div>
+                                <div class="collapse" id="accordion-tab-@i-content-@i" aria-labelledby="accordion-tab-@i-heading-@i" data-parent="#accordion-tab-1">
+                                    <div class="card-body">
+                                        <p>@c.FaqContent</p>
+                                    </div>
+                                </div>
+                            </div>
+                            i++;
+                        }
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h4 class="text-center">Stelle eine Frage</h4>
+        @using (Html.BeginForm("AskQuestion", "Support", FormMethod.Post))
+        {
+            <div class="form-group mt-2">
+                @Html.LabelFor(m => m.QuestionCatgeory, "Fragekategorie")
+                @Html.DropDownListFor(m => m.QuestionCatgeory, new SelectList(new[] { "1", "2", "3" }), new { @class = "form-control mr-0" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.QuestionText, "Fragestellung")
+                @Html.TextAreaFor(m => m.QuestionText, new { @class = "form-control mr-0", required = "required" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Email, "Email")
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0", required="required" })
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-block mt-3">Frage stellen</button>
+            </div>
+        }
+    </div>
+</div>

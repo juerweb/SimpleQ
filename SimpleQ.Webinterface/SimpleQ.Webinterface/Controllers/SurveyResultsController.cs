@@ -104,7 +104,7 @@ namespace SimpleQ.Webinterface.Controllers
 
             if (req == null)
                 AddModelError("Model", "Model object must not be null.", ref err);
-            if (req.StartDate >= req.EndDate)
+            if (req.StartDate > req.EndDate)
                 AddModelError("StartDate", "StartDate must be smaller than EndDate.", ref err);
 
             using (var db = new SimpleQDBEntities())

@@ -48,3 +48,8 @@
     border-style: solid;
     border-radius: 4px!important;
 }
+
+.groups-ul-settings {
+    height: 240px;
+    overflow-y: scroll;
+}

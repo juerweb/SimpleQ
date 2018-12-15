@@ -1,19 +1,210 @@
-﻿@using SimpleQ.Webinterface.Models;
+﻿@using System.Resources
+@using SimpleQ.Webinterface.Properties
+@using SimpleQ.Webinterface.Models;
 @model SimpleQ.Webinterface.Models.ViewModels.SettingsModel
 
-<h2>Einstellungen</h2>
+<div class="row pl-4 mt-1 ml-0 mr-0">
+    <h2>@ResourcesN.Settings</h2>
+</div>
+<div class="row m-0 p-0 mr-0 ml-0">
+    @* Switch betwenn result of single survey of result of multiple ones *@
+    <div class="col-lg-6 pl-4 pr-4">
+        <div class="row">
+            <div class="col-4 pr-0">
+                <button id="accountSettings" onclick="switchToAccountSettings()" class="btn btn-primary btn-block">Kontoeinstellungen</button>
+            </div>
+            <div class="col-4 pl-0">
+                <button id="appSettings" onclick="switchToAppSettings()" class="btn btn-secondary btn-block">Anwendungseinstellungen</button>
+            </div>
+            <div class="col-4 pl-0">
+                <button id="billSettings" onclick="switchToBillSettings()" class="btn btn-secondary btn-block">Rechnungsübersicht</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-1 ml-0 mr-0" id="acc">
+    <div class="col-md-4">
+        <h4 class="text-center">@ResourcesN.AccountSettings</h4>
+        <div class="form-group mt-2">
+            @using (Html.BeginForm("UpdateCustomer", "Settings", FormMethod.Post))
+            {
+            @*<label for="name">@ResourcesN.Name</label>*@
+            @Html.LabelFor(m => m.Name, ResourcesN.Name);
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control mr-0" });
+            @Html.LabelFor(m => m.Street, ResourcesN.Street);
+            @Html.TextBoxFor(m => m.Street, new { @class = "form-control mr-0" });
+            @Html.LabelFor(m => m.City, ResourcesN.City);
+            @Html.TextBoxFor(m => m.City, new { @class = "form-control mr-0" });
+            @Html.LabelFor(m => m.Plz, ResourcesN.PostalCode);
+            @Html.TextBoxFor(m => m.Plz, new { @class = "form-control mr-0" });
+            @Html.LabelFor(m => m.Country, ResourcesN.Country);
+            @Html.TextBoxFor(m => m.Country, new { @class = "form-control mr-0" });
+            @Html.LabelFor(m => m.LanguageCode, ResourcesN.Language);
+            @*@Html.TextBoxFor(m => m.LanguageCode, new { @class = "form-control mr-0" });*@
+            @Html.DropDownListFor(m => m.LanguageCode, new SelectList(new[] { "DE", "EN" }), new { @class = "form-control mr-0" })
+            @Html.LabelFor(m => m.Email, ResourcesN.Email);
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
+            @Html.LabelFor(m => m.DataStoragePeriod, ResourcesN.DataStoragePeriod);
+            @Html.TextBoxFor(m => m.DataStoragePeriod, new { @class = "form-control mr-0" });
+            @Html.LabelFor(m => m.PaymentMethods);
+            @Html.DropDownListFor(m => m.PaymentMethods, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });
+            //@Html.LabelFor(m => m.LanguageCode, "Abrechnungszeitraum");
+            //@Html.DropDownListFor(m => m.LanguageCode, new SelectList(new[] { 3, 6, 9, 12 }), new { @class = "form-control mr-0" })
+            <input type="submit" value="Speichern" class="btn btn-primary btn-block mt-3" />
+            }
+            <br />
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h4 class="text-center">@ResourcesN.Password</h4>
+        <div class="form-group mt-2">
+            <label for="password">@ResourcesN.Password</label>
+            <input type="password" id="password" class="form-control mr-0" minlength="8" required placeholder="@ResourcesN.MinPasswordLength" />
+            <label for="passwordConfirm">@ResourcesN.PasswordConfirm</label>
+            <input type="password" id="passwordConfirm" class="form-control mr-0" minlength="8" required placeholder="@ResourcesN.ConfirmPassword" />
+            <button class="btn btn-primary btn-block mt-3" onclick="checkPassword()">@ResourcesN.ChangePassword</button>
+        </div>
 
-<div class="row ml-0 mr-0">
-    <div class="col-6 p-0">
-        <div class="border border-primary">
-            <span class="card-header p-1 row ml-0 mr-0 border border-primary border-left-0 border-right-0 border-top-0">
-                <span class="col-2 text-center">Bill Nr</span>
-                <span class="col-6 text-center">Billing Date</span>
-                <span class="col-4 text-center">Price</span>
-            </span>
-            <div id="accordion">
-                @foreach (var billWrapper in Model.Bills)
-                {
+    </div>
+
+</div>
+<div class="row mt-1 ml-0 mr-0" id="app">
+    <div class="col-md-4">
+        <h4 class="text-center">@ResourcesN.MinimumGroupSize</h4>
+        <div class="form-group mt-2">
+            <label for="minimumGroupSize">@ResourcesN.MinimumGroupSize</label>
+            <input type="number" class="form-control mr-0" id="minimumGroupSize" value="@Model.MinGroupSize">
+            <button type="button" class="btn btn-primary btn-block mt-3" onclick="changeMinimumGroupSize()" disabled id="changeMinimumGroupSize">Speichern</button>
+        </div>
+        @using (Html.BeginForm("ChangeAnswerTypes", "Settings", FormMethod.Post))
+        {
+        <h4 class="text-center">@ResourcesN.ApplicationSettings</h4>
+        <div class="form-group mt-2 mb-1">
+            <label for="groups">@ResourcesN.ActivatedModes</label>
+            <div class="border border-dark">
+                <ul class="list-group groups-ul pl-2" id="modes">
+                    @{
+                    foreach (var c in Model.ActivatedAnswerTypes)
+                    {
+                    <li>
+                        <label>
+                            <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" checked />@c.TypeDesc
+                        </label>
+                    </li>
+                    }
+                    foreach (var c in Model.DeactivatedAnswerTypes)
+                    {
+                    <li>
+                        <label>
+                            <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" />@c.TypeDesc
+                        </label>
+                    </li>
+                    }
+                    }
+
+                </ul>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block mt-3" id="save">@ResourcesN.Save</button>
+        }
+    </div>
+    <div class="col-md-4">
+        <h4 class="text-center">@Resources.surveyCategoryHeader</h4>
+        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Kategorien</span></span></button>
+        <div id="answerBox" class="border border-dark mt-2">
+            <div class="row mt-1 mb-1 mr-0 ml-0">
+                <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addNewCategory" /></div>
+                <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>
+                <ul class="list-group groups-ul-settings" style="width:100%" id="answerUL" name="TextAnswerOptions">
+                    @{
+                    foreach (var c in Model.Categories)
+                    {
+                    <li class="list-group-item">
+                        <span class="d-flex justify-content-between">
+                            <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.CatName" />
+                            <span>
+                                <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>
+                                <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>
+                            </span>
+                        </span>
+                    </li>
+                    }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <h4 class="text-center">@ResourcesN.Template</h4>
+        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Templates</span></span></button>
+        <div id="answerBox" class="border border-dark mt-2">
+            <div class="row mt-1 mb-1 mr-0 ml-0">
+                <ul class="list-group groups-ul-settings" style="width:100%" id="answerULT" name="TextAnswerOptions">
+                    @*
+                    <li class="list-group-item">
+                        <span class="d-flex justify-content-between">
+                            <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="Nice" />
+                            <span>
+                                <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe5cd;</i></button>
+                            </span>
+                        </span>
+                    </li>*@
+                    @{
+                    foreach (var c in Model.Templates)
+                    {
+                    <li class="list-group-item">
+                        <span class="d-flex justify-content-between">
+                            <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.SvyText" />
+                            <span>
+                                <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe5cd;</i></button>
+                            </span>
+                        </span>
+                    </li>
+                    }
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-1 ml-0 mr-0" id="bi">
+    <div class="col-md-4">
+        <h4 class="text-center">Abrechnungszeitraum</h4>
+        <div class="form-group mt-2">
+            <label for="zeitraum">Abrechnungszeitraum (in Monaten)</label>
+            <select id="zeitraum" class="form-control mr-0" name="zeitraum">
+                <option value="3">3</option>
+                <option value="6">6</option>
+                <option value="9">9</option>
+                <option value="12">12</option>
+            </select>
+            <label for="tag">Abrechnungstag 1-31</label>
+            <input id="abrechnungstag" type="number" name="tag" class="form-control" min="1" max="31" value="15">
+            <button class="btn btn-primary btn-block mt-3" onclick="changeAbrechnung()">Speichern</button>
+        </div>
+        <h4 class="text-center">Offene Gesamtsumme</h4>
+        <div class="form-group mt-2">
+            <label for="betrag">Betrag</label>
+            <input type="text" disabled name="betrag" class="form-control mr-0" value="EUR 20.44" />
+            <label for="anzUmfragenAbrechn">Anzahl Umfragen im akt. Abrechnungszeitraum</label>
+            <input type="text" disabled name="anzUmfragenAbrechn" class="form-control mr-0" value="14" />
+            <label for="anzBeantwFragen">Anzahl beantwortete Fragen im akt. Abrechnungszeitraum</label>
+            <input type="text" disabled name="anzBeantwFragen" class="form-control mr-0" value="67" />
+        </div>
+        <button class="btn btn-danger btn-block mt-3">Abo kündigen</button>
+    </div>
+    <div class="col-md-8">
+        <h4 class="text-center">Abrechnungszeitraum</h4>
+        <div class="form-group mt-2">
+            <div class="border border-primary">
+                <span class="card-header p-1 row ml-0 mr-0 border border-primary border-left-0 border-right-0 border-top-0">
+                    <span class="col-2 text-center">Bill Nr</span>
+                    <span class="col-6 text-center">Billing Date</span>
+                    <span class="col-4 text-center">Price</span>
+                </span>
+                <div id="accordion">
+                    @foreach (var billWrapper in Model.Bills)
+                    {
                     Bill bill = billWrapper.Bill;
                     var surveys = billWrapper.Surveys;
                     <span class="card-header p-1 row ml-0 mr-0">
@@ -36,13 +227,13 @@
                             <tbody>
                                 @foreach (var surveyWrapper in surveys)
                                 {
-                                    Survey svy = surveyWrapper.Survey;
-                                    <tr>
-                                        <td class="pt-0 pb-0 pl-1 pr-1">@svy.StartDate.ToShortDateString()</td>
-                                        <td class="pt-0 pb-0 pl-1 pr-1">@svy.SvyText</td>
-                                        <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.NumberOfAnswers</td>
-                                        <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.SurveyPrice.ToString("C")</td>
-                                    </tr>
+                                Survey svy = surveyWrapper.Survey;
+                                <tr>
+                                    <td class="pt-0 pb-0 pl-1 pr-1">@svy.StartDate.ToShortDateString()</td>
+                                    <td class="pt-0 pb-0 pl-1 pr-1">@svy.SvyText</td>
+                                    <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.NumberOfAnswers</td>
+                                    <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.SurveyPrice.ToString("C")</td>
+                                </tr>
                                 }
                                 <tr class="bg-primary text-white">
                                     <td class="pt-0 pb-0 pl-1 pr-1"></td>
@@ -54,17 +245,624 @@
                         </table>
                         <a class="ml-2"><b>*</b>... Amount of people answered</a>
                     </div>
-                }
+                    }
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-6">
-
+    <div class="modal" tabindex="-1" role="dialog" id="passwordModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">@ResourcesN.PasswordError</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>@ResourcesN.PasswordErrorMsg</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@ResourcesN.Close</button>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="modal" tabindex="-1" role="dialog" id="AnswerTypeDialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Aktivierte Modi</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Templates, die deaktivierte Modi verwenden werden vorübergehend deaktiviert.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@ResourcesN.Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<script>
-    $(function () {
-        $("#accordion").accordion();
+    <script>
+        var dictionary = {};
+        var dictionary2 = {};
+
+        var survCats = [];
+/**/
+/**/
+/**/
+@{
+        foreach (var c in Model.Categories)
+        {
+            @:dictionary[@c.CatId] = "@c.CatName";
+/**/
+/**/
+/**/
+/**/
+                                                                                        }
+    }
+/**/
+/**/
+/**/
+/**/
+@{
+        foreach (var c in Model.Templates)
+        {
+            @:dictionary2[@c.SvyId] = "@c.SvyText";
+            /**/
+            /**/
+            /**/
+            /**/
+                                        }
+    }
+        /**/
+        console.log(dictionary);
+        umlaute();
+
+
+        var changed = false;
+        var checkedAnswers = [];
+        //var answers = [];
+
+        switchToAccountSettings();
+
+        function switchToAccountSettings() {
+            $("#accountSettings").removeClass("btn-secondary").addClass("btn-primary");
+            $("#billSettings").removeClass("btn-primary").addClass("btn-secondary");
+            $("#appSettings").removeClass("btn-primary").addClass("btn-secondary");
+            $("#app").hide();
+            $("#bi").hide();
+            $("#acc").show();
+        }
+
+        function switchToAppSettings() {
+            $("#accountSettings").removeClass("btn-primary").addClass("btn-secondary");
+            $("#billSettings").removeClass("btn-primary").addClass("btn-secondary");
+            $("#appSettings").removeClass("btn-secondary").addClass("btn-primary");
+            $("#acc").hide();
+            $("#bi").hide();
+            $("#app").show();
+        }
+
+        function switchToBillSettings() {
+            $("#accountSettings").removeClass("btn-primary").addClass("btn-secondary");
+            $("#appSettings").removeClass("btn-primary").addClass("btn-secondary");
+            $("#billSettings").removeClass("btn-secondary").addClass("btn-primary");
+            $("#acc").hide();
+            $("#app").hide();
+            $("#bi").show();
+        }
+
+
+        function changeAbrechnung() {
+            let zeitraum = $("#zeitraum option:selected").text();
+            let tag = $("#abrechnungstag").val();
+            /**/
+            let url1 = "@Url.Action("ChangeAccountingPeriod", "Settings")?period=" + zeitraum;
+        /**/
+        $.ajax({
+            url: url1,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("changeAccountingPeriod Ok");
+                },
+                404: function () {
+                    alert("changeAccountingPeriod 404");
+                },
+                500: function () {
+                    alert("changeAccountingPeriod 500");
+                }
+            }
+        });
+        /**/
+        let url2 = "@Url.Action("ChangeAccountingDay", "Settings")?day=" + tag;
+        /**/
+        $.ajax({
+            url: url2,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("ChangeAccountingDay Ok");
+                },
+                404: function () {
+                    alert("ChangeAccountingDay 404");
+                },
+                500: function () {
+                    alert("ChangeAccountingDay 500");
+                }
+            }
+        });
+
+    }
+
+    function answerChecked() {
+        checkedAnswers = [];
+        var listItems = document.getElementById('modes').getElementsByTagName('li');
+        for (i = 0; i < listItems.length; i++) {
+            if (listItems[i].getElementsByTagName('input')[0].checked) {
+                checkedAnswers.push(listItems[i].getElementsByTagName('span')[0].textContent);
+                console.log(listItems[i].getElementsByTagName('span')[0].textContent);
+            }
+        }
+        $("#save").prop('disabled', true);
+    }
+
+    $("#save").on("click", function () {
+        $("#AnswerTypeDialog").modal();
     });
-</script>
+
+    function checkboxChange() {
+        $("#save").prop('disabled', false);
+    }
+
+    $("#minimumGroupSize").on("input", function () {
+        $("#changeMinimumGroupSize").prop('disabled', false);
+    });
+
+    function changeMinimumGroupSize() {
+        let val = $("#minimumGroupSize").val();
+        /**/
+        let url = "@Url.Action("ChangeMinGroup", "Settings")?size=" + val;
+        /**/
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("changeMinimumGroupSize Ok");
+                },
+                404: function () {
+                    alert("changeMinimumGroupSize 404");
+                },
+                500: function () {
+                    alert("changeMinimumGroupSize 500");
+                }
+            }
+        });
+        $("#changeMinimumGroupSize").prop('disabled', true);
+    }
+
+    function checkPassword() {
+        let val1 = $("#password").val();
+        let val2 = $("#passwordConfirm").val();
+
+        if (val1 == val2 && val1 != "" && val2 != "") {
+            $.ajax({
+                type: "POST",
+                /**/
+                url: "@Url.Action("ChangePassword", "Settings")",
+        /**/
+        data: { "password": val1 },
+        statusCode: {
+            200: function () {
+                console.log("passwort gesetzt");
+            },
+            404: function () {
+                console.log("passwort 404");
+            },
+            500: function () {
+                console.log("passwort 500");
+            }
+        }
+    });
+} else {
+    //alert("Passwort stimmt nicht überein!");
+    $("#passwordModal").modal();
+}
+$("#password").val("");
+$("#passwordConfirm").val("");
+}
+
+function openAddAnswerBox() {
+var answerBox = document.getElementById("answerBox");
+var answerType = document.getElementById("AnswerTypeCB");
+var value = answerType.value;
+if (value >= 6 && value <= 9) {
+    if (survCats.length === 0) {
+        $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+    }
+    answerBox.innerHTML =
+        '<div class="row mt-1 mb-1 mr-0 ml-0">' +
+        /**/
+        '        <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>' +
+        /**/
+        '        <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
+        '        <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions"></ul>' +
+        '</div >';
+    if (survCats.length > 0) {
+        let ul = document.getElementById("answerUL");
+        for (i = 0; i < survCats.length; i++) {
+            let normal =
+                '<li class="list-group-item">' +
+                '   <span class="d-flex justify-content-between">' +
+                '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + survCats[i] + '" />' +
+                '       <span>' +
+                '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+                '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+                '       </span>' +
+                '   </span>' +
+                '</li>';
+            ul.innerHTML += normal;
+        }
+    }
+} else {
+    if (firstAnswer !== "" && secondAnswer !== "") {
+        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+    } else {
+        $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+    }
+    answerBox.innerHTML =
+        '<div class="m-2">' +
+        '    <label>First Answer</label>' +
+        '    <input id="dichotomAnswer1" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + firstAnswer + '" class="form-control" />' +
+        '    <label>Second Answer</label>' +
+        '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + secondAnswer + '" class="form-control" />' +
+        '</div>';
+}
+
+$("#answerBox").show();
+}
+
+function openAddAnswer() {
+console.log("he");
+document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe5ce;";
+if ($("#answerBox").is(":hidden")) {
+    console.log("gay");
+    openAddAnswerBox();
+} else if ($("#answerBox").is(":visible")) {
+    $("#answerBox").hide();
+    document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe313;";
+}
+console.log("uuu");
+}
+
+function dichotomAnswerChanged(inputId) {
+firstAnswer = document.getElementById("dichotomAnswer1").value;
+secondAnswer = document.getElementById("dichotomAnswer2").value;
+if (firstAnswer !== "" && secondAnswer !== "") {
+    $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+} else {
+    $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+}
+}
+
+function addAnswerTemplates() {
+let ul = document.getElementById("answerULT");
+let input = document.getElementById("answerInputT").value;
+let id;
+if (input === "") {
+    /**/
+    alert('@Resources.invalidInput');
+        /**/
+        return;
+    } else if (survCats.includes(input)) {
+        /**/
+        alert('@Resources.invalidInput');
+        /**/
+        return;
+    }
+    /**/
+@*let url = "@Url.Action("AddCategory", "Settings")?catName=" + encodeURIComponent(input);
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
+            },
+            success: function(data) {
+                id = data;
+            }
+        });*@
+        /**/
+
+
+        //survCats.push(input);
+        dictionary2[id] = input;
+        let normal =
+            '<li class="list-group-item">' +
+            '   <span class="d-flex justify-content-between">' +
+            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>' +
+            '   </span>' +
+            '</li>';
+        ul.innerHTML += normal;
+        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+        umlaute();
+    }
+
+    function isEmpty(obj) {
+        return Object.keys(obj).length === 0;
+    }
+
+    function umlaute() {
+        for (var keys in dictionary) {
+            if (dictionary.hasOwnProperty(keys)) {
+                dictionary[keys] = dictionary[keys].replace("&#246;", "o");
+                dictionary[keys] = dictionary[keys].replace("&#214;", "O");
+                dictionary[keys] = dictionary[keys].replace("&#252;", "u");
+                dictionary[keys] = dictionary[keys].replace("&#220;", "U");
+                dictionary[keys] = dictionary[keys].replace("&#228;", "a");
+                dictionary[keys] = dictionary[keys].replace("&#196;", "A");
+            }
+        }
+        for (var keys in dictionary) {
+            if (dictionary2.hasOwnProperty(keys)) {
+                dictionary2[keys] = dictionary2[keys].replace("&#246;", "o");
+                dictionary2[keys] = dictionary2[keys].replace("&#214;", "O");
+                dictionary2[keys] = dictionary2[keys].replace("&#252;", "u");
+                dictionary2[keys] = dictionary2[keys].replace("&#220;", "U");
+                dictionary2[keys] = dictionary2[keys].replace("&#228;", "a");
+                dictionary2[keys] = dictionary2[keys].replace("&#196;", "A");
+            }
+        }
+    }
+
+    function addAnswer() {
+        let ul = document.getElementById("answerUL");
+        let input = document.getElementById("answerInput").value;
+        let id;
+        let check = true;
+        for (var keys in dictionary) {
+            if (dictionary.hasOwnProperty(keys)) {
+                if (dictionary[keys] == input) {
+                    check = false;
+                }
+            }
+        }
+        if (input === "") {
+            /**/
+            alert('@Resources.invalidInput');
+        /**/
+        return;
+    } else if (!check) {
+        /**/
+        alert('@Resources.invalidInput');
+        /**/
+        return;
+    }
+
+    /**/
+    let url = "@Url.Action("AddCategory", "Settings")?catName=" + encodeURIComponent(input);
+        /**/
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
+            },
+            success: function (data) {
+                id = data;
+            }
+        });
+
+
+        //survCats.push(input);
+        dictionary[id] = input;
+        let normal =
+            '<li class="list-group-item">' +
+            '   <span class="d-flex justify-content-between">' +
+            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>' +
+            '   </span>' +
+            '</li>';
+        ul.innerHTML += normal;
+        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+    }
+
+    function deleteAnswerTemplate(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        console.log(text);
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        text = text.replace("ö", "o");
+        text = text.replace("ü", "u");
+        text = text.replace("ä", "a");
+        let key = getKeyByValue(dictionary2, text);
+        delete dictionary2[key];
+        /**/
+        let url = "@Url.Action("DeleteTemplate", "Settings")?svyId=" + key;
+        /**/
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("amkkkk");
+                },
+                404: function () {
+
+                },
+                500: function () {
+
+                }
+            }
+        });
+        button.parentElement.parentElement.parentElement.remove();
+        console.log(dictionary2);
+    }
+
+
+    function deleteAnswer(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        //for (i = 0; i < survCats.length; i++) {
+        //    if (survCats[i] === text) {
+        //        survCats.splice(i, 1);
+        //        break;
+        //    }
+        //}
+        text = text.replace("ö", "o");
+        text = text.replace("ü", "u");
+        text = text.replace("ä", "a");
+        console.log(text);
+        console.log(dictionary);
+        let key = getKeyByValue(dictionary, text);
+        delete dictionary[key];
+        /**/
+        let url = "@Url.Action("DeleteCategory", "Settings")?catId=" + key;
+        /**/
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("deleteCategory OK");
+                },
+                404: function () {
+                    alert("deleteCategory 404");
+                },
+                500: function () {
+                    alert("deleteCategory 500");
+                }
+            }
+        });
+        button.parentElement.parentElement.parentElement.remove();
+        console.log(dictionary);
+
+    }
+
+    function editAnswer(button) {
+        let text = button.parentElement.parentElement.children[0].value;
+        let edit =
+            '       <input type="text" class="" name="TextAnswerOptions" value="' + text + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-success ml-2 pb-0" onclick="saveAnswer(this,false,\'' + text + '\')"><i class="material-icons">&#xe5ca;</i></button>' +
+            '           <button type="button" class="btn btn-secondary ml-2 pb-0" onclick="saveAnswer(this,true,\'' + text + '\')"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>';
+        button.parentElement.parentElement.innerHTML = edit;
+        umlaute();
+    }
+
+    function getKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
+    }
+
+    function saveAnswer(button, canceled, tempText) {
+        let text;
+        if (canceled) {
+            text = tempText;
+        } else {
+            text = button.parentElement.parentElement.children[0].value;
+            if (Object.values(dictionary).includes(text)) {
+                /**/
+                alert('@Resources.invalidInput');
+        /**/
+        return;
+    }
+    //for (i = 0; i < survCats.length; i++) {
+    //    if (survCats[i] === tempText) {
+    //        survCats[i] = text;
+    //        break;
+    //    }
+    //}
+    let key = getKeyByValue(dictionary, tempText);
+    dictionary[key] = text;
+    /**/
+    let url = "@Url.Action("ModifyCategory", "Settings")?catId=" + key + "&catName=" + encodeURIComponent(text);
+        /**/
+        $.ajax({
+            url: url,
+            type: 'GET',
+            statusCode: {
+                200: function () {
+                    console.log("addCategory Ok");
+                },
+                404: function () {
+                    alert("addCategory 404");
+                },
+                500: function () {
+                    alert("addCategory 500");
+                }
+            }
+        });
+    }
+
+    let edited =
+        '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + text + '" />' +
+        '       <span>' +
+        '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+        '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+        '       </span>';
+    tempText = "";
+    button.parentElement.parentElement.innerHTML = edited;
+    console.log(dictionary);
+    umlaute();
+}
+
+function saveUmfr() {
+    if (survCats.length > 0) {
+        console.log(survCats);
+    } else {
+        console.log("nix do amk");
+    }
+
+}
+
+$(document).ready(function () {
+    $("#app").hide();
+
+});
+    </script>
+
+
