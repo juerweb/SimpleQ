@@ -47,8 +47,8 @@ namespace SimpleQ.Webinterface.Controllers
                         }
 
                         var person = new Person { DeviceId = deviceId };
-                        db.People.Add(person);
-                        db.SaveChanges();
+                        //db.People.Add(person);
+                        //db.SaveChanges();
                         dep.People.Add(person);
                         db.SaveChanges();
                         logger.Debug("Mobile registration successful");
