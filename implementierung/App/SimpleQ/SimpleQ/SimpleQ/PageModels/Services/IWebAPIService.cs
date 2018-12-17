@@ -1,5 +1,6 @@
 ﻿using SimpleQ.Models;
 using SimpleQ.Shared;
+using SimpleQ.Webinterface.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,6 +16,7 @@ namespace SimpleQ.PageModels.Services
         Task<Boolean> Unregister(String persId, String custCode);
         Task<Boolean> AnswerSurvey(SurveyVote surveyVote);
         Task<SurveyModel> GetSurveyData(int surveyID);
+        Task<List<FaqEntry>> GetFaqEntries();
 
     }
 }

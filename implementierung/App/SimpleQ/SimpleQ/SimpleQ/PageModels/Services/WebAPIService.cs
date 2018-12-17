@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -10,6 +11,7 @@ using Newtonsoft.Json;
 using SimpleQ.Models;
 using SimpleQ.Resources;
 using SimpleQ.Shared;
+using SimpleQ.Webinterface.Models;
 
 namespace SimpleQ.PageModels.Services
 {
@@ -46,6 +48,28 @@ namespace SimpleQ.PageModels.Services
             Debug.WriteLine(responseMessage.StatusCode);
 
             return responseMessage.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        public async Task<List<FaqEntry>> GetFaqEntries()
+        {
+
+            Debug.WriteLine(AppResources.APIMainURL + AppResources.APIGetFaqDataPlusURL);
+
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(AppResources.APIMainURL + AppResources.APIGetFaqDataPlusURL);
+
+            String content = await responseMessage.Content.ReadAsStringAsync();
+
+            Debug.WriteLine(responseMessage.StatusCode);
+            Debug.WriteLine(content);
+
+            if (responseMessage.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return JsonConvert.DeserializeObject<List<FaqEntry>>(content);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<SurveyModel> GetSurveyData(int surveyID)

@@ -157,7 +157,7 @@
     <value>Fehler</value>
   </data>
   <data name="EmailAdress" xml:space="preserve">
-    <value>admin@juerweb.com</value>
+    <value>support@simpleq.at</value>
     <comment>NT</comment>
   </data>
   <data name="EmailUs" xml:space="preserve">
@@ -185,13 +185,13 @@
     <value>Sprache</value>
   </data>
   <data name="LinkToContactForm" xml:space="preserve">
-    <value>https://www.google.at</value>
+    <value>https://www.simpleq.at</value>
   </data>
   <data name="LinkToSupportWebsite" xml:space="preserve">
-    <value>https://support.google.com/</value>
+    <value>https://www.simpleq.at</value>
   </data>
   <data name="LinkToWebsite" xml:space="preserve">
-    <value>https://www.google.at/</value>
+    <value>https://www.simpleq.at</value>
     <comment>NT</comment>
   </data>
   <data name="LogoResourcename" xml:space="preserve">
@@ -272,15 +272,19 @@
   </data>
   <data name="APIRegisterPlusURL" xml:space="preserve">
     <value>/register</value>
+    <comment>NT</comment>
   </data>
   <data name="APIAnswerSurveyPlusURL" xml:space="preserve">
     <value>/answerSurvey</value>
+    <comment>NT</comment>
   </data>
   <data name="APIUnregisterPlusURL" xml:space="preserve">
     <value>/unregister</value>
+    <comment>NT</comment>
   </data>
   <data name="APIGetDataPlusURL" xml:space="preserve">
     <value>/getSurveyData</value>
+    <comment>NT</comment>
   </data>
   <data name="KeyResourcename" xml:space="preserve">
     <value>SimpleQ.Resources.private.key</value>
@@ -293,9 +297,11 @@
   </data>
   <data name="APIJoinDepartmentPlusURL" xml:space="preserve">
     <value>/joinDepartment</value>
+    <comment>NT</comment>
   </data>
   <data name="APILeaveDepartmentPlusURL" xml:space="preserve">
     <value>/leaveDepartment</value>
+    <comment>NT</comment>
   </data>
   <data name="Error202" xml:space="preserve">
     <value>Es konnte keine Verbindung zum Server hergestellt werden. Bitte überprüfen Sie ihre Internetverbindung!</value>
@@ -330,5 +336,8 @@
   </data>
   <data name="SuccessfulAnsweringQuestion" xml:space="preserve">
     <value>Frage wurde erfolgreich beantwortet</value>
+  </data>
+  <data name="APIGetFaqDataPlusURL" xml:space="preserve">
+    <value>/getFaqData</value>
   </data>
 </root>

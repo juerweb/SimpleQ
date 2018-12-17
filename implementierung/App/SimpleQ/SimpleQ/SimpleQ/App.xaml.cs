@@ -28,6 +28,9 @@ using Xamarin.Forms.Internals;
 using System.IO;
 using SimpleQ.Shared;
 using System.Net.Http;
+using NLog;
+using SimpleQ.Logging;
+using ILogger = SimpleQ.Logging.ILogger;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -68,7 +71,15 @@ namespace SimpleQ
 
             GoToRightPage();
             Debug.WriteLine(Xamarin.Forms.Font.Default);
-        }
+
+            IFaqService faqService = FreshIOC.Container.Resolve<IFaqService>();
+            faqService.LoadData();
+
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Warn("Hallo");
+
+            Debug.WriteLine("Path: " + Environment.SpecialFolder.Desktop);
+    }
 
         private async void SetDefaultProperties()
         {
@@ -253,6 +264,7 @@ namespace SimpleQ
             FreshIOC.Container.Register<ISettingsService, SettingsService>();
             FreshIOC.Container.Register<IWebAPIService, WebAPIService>();
             FreshIOC.Container.Register<IToastService, ToastService>();
+            FreshIOC.Container.Register<IFaqService, FaqService>();
         }
 
 		protected override async void OnStart ()

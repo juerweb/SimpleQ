@@ -115,6 +115,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die /getFaqData ähnelt.
+        /// </summary>
+        internal static string APIGetFaqDataPlusURL {
+            get {
+                return ResourceManager.GetString("APIGetFaqDataPlusURL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die /joinDepartment ähnelt.
         /// </summary>
         internal static string APIJoinDepartmentPlusURL {
@@ -277,7 +286,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die admin@juerweb.com ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die support@simpleq.at ähnelt.
         /// </summary>
         internal static string EmailAdress {
             get {
@@ -430,7 +439,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.google.at ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.simpleq.at ähnelt.
         /// </summary>
         internal static string LinkToContactForm {
             get {
@@ -439,7 +448,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die https://support.google.com/ ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.simpleq.at ähnelt.
         /// </summary>
         internal static string LinkToSupportWebsite {
             get {
@@ -448,7 +457,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.google.at/ ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://www.simpleq.at ähnelt.
         /// </summary>
         internal static string LinkToWebsite {
             get {

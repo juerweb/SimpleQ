@@ -112,31 +112,37 @@ namespace SimpleQ.PageModels
                                 //Android or iOS App
                                 Debug.WriteLine("Unregister Command executed on iOS or Android...", "Info");
                                 Boolean success;
-                                if (isCheckedModel.AnswerOption.IsRegister)
-                                {
-                                    success = await this.webAPIService.Unregister(isCheckedModel.AnswerOption.RegistrationData.PersId.ToString(), isCheckedModel.AnswerOption.RegistrationData.CustCode);
-                                }
-                                else
-                                {
-                                   success = await this.webAPIService.LeaveDepartment(isCheckedModel.AnswerOption.RegistrationData.PersId, isCheckedModel.AnswerOption.RegistrationData.DepId, isCheckedModel.AnswerOption.RegistrationData.CustCode);
-                                }
+
+                                success = await this.webAPIService.LeaveDepartment(isCheckedModel.AnswerOption.RegistrationData.PersId, isCheckedModel.AnswerOption.RegistrationData.DepId, isCheckedModel.AnswerOption.RegistrationData.CustCode);
 
                                 if (success)
                                 {
                                     IsChecked.Remove(isCheckedModel);
                                     if (IsChecked.Count == 0)
                                     {
-                                        Application.Current.Properties.Remove("registrations");
-                                        try
+
+                                        success = await this.webAPIService.Unregister(isCheckedModel.AnswerOption.RegistrationData.PersId.ToString(), isCheckedModel.AnswerOption.RegistrationData.CustCode);
+
+                                        if (success)
                                         {
-                                            await BlobCache.LocalMachine.InvalidateObject<List<SurveyModel>>("Questions");
-                                            await BlobCache.LocalMachine.Flush();
-                                            this.questionService.RemoveQuestions();
+                                            Application.Current.Properties.Remove("registrations");
+                                            try
+                                            {
+                                                await BlobCache.LocalMachine.InvalidateObject<List<SurveyModel>>("Questions");
+                                                await BlobCache.LocalMachine.Flush();
+                                                this.questionService.RemoveQuestions();
+                                            }
+                                            catch (Exception e)
+                                            {
+                                                Debug.WriteLine("Exception was occured: " + e.InnerException, "Exception");
+                                            }
                                         }
-                                        catch (Exception e)
+                                        else
                                         {
-                                            Debug.WriteLine("Exception was occured: " + e.InnerException, "Exception");
+                                            Debug.WriteLine("Problem during the Unregister", "Error");
+                                            this.dialogService.ShowErrorDialog(203);
                                         }
+
                                     }
                                     else
                                     {
