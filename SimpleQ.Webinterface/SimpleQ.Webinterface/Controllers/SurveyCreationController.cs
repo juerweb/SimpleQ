@@ -256,6 +256,26 @@ namespace SimpleQ.Webinterface.Controllers
                 return Convert.ToDouble(db.fn_CalcPricePerClick(amount, CustCode ?? ""));
             }
         }
+
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public void Test()
+        //{
+        //    using (var client = new WebClient())
+        //    {
+        //        var obj = new
+        //        {
+        //            app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
+        //            include_player_ids = new string[] { "null" },
+        //            contents = new { en = "New survey" },
+        //            content_available = true,
+        //            data = new { Cancel = false, SvyId = 19 }
+        //        };
+        //        client.Headers.Add("Authorization", "Basic ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+        //        client.Headers.Add("Content-Type", "application/json");
+        //        client.UploadString(new Uri("https://onesignal.com/api/v1/notifications", UriKind.Absolute), JsonConvert.SerializeObject(obj));
+        //    }
+        //}
         #endregion
 
         #region Helpers
@@ -330,23 +350,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     logger.Debug($"Survey {svyId} - DepAmounts after correction: {string.Join(";", depAmounts.Select(x => x.Key + "=" + x.Value))}");
 
-                    //var proxy = new WebProxy()
-                    //{
-                    //    Address = new Uri($"{"),
-                    //    BypassProxyOnLocal = false,
-                    //    UseDefaultCredentials = false,
-
-                    //    // *** These creds are given to the proxy server, not the web server ***
-                    //    Credentials = new NetworkCredential("u94442159", "123SimpleQ...")
-                    //};
-
-                    // Now create a client handler which uses that proxy
-                    var httpClientHandler = new HttpClientHandler()
-                    {
-                        Proxy = proxy,
-                    };
-
-                    using (var client = new HttpClient(httpClientHandler))
+                    using (var client = new HttpClient())
                     {
                         foreach (var kv in depAmounts)
                         {
@@ -367,20 +371,16 @@ namespace SimpleQ.Webinterface.Controllers
                                     {
                                         // SEND SURVEY
                                         logger.Debug($"Beginning to send survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
-                                        //client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
                                         var obj = new
                                         {
-                                            //app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
-                                            //include_player_ids = new string[] { p.DeviceId },
-                                            //contents = new { en = "New survey" },
-                                            //content_available = true,
-                                            //data = new { Cancel = false, SvyId = svyId }
-                                            x = 2,
-                                            y = "a"
+                                            app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
+                                            include_player_ids = new string[] { p.DeviceId },
+                                            contents = new { en = "New survey" },
+                                            content_available = true,
+                                            data = new { Cancel = false, SvyId = svyId }
                                         };
-                                        var response = client.PostAsJsonAsync("https://jsonplaceholder.typicode.com/posts", obj).Result;
-                                        //task.Wait();
-                                        //var response = task.Result;
+                                        var response = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj).Result;
 
                                         if (!response.IsSuccessStatusCode)
                                         {
@@ -389,58 +389,13 @@ namespace SimpleQ.Webinterface.Controllers
                                         }
 
                                         logger.Debug($"Survey sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");
+                                        i++;
                                     }
                                     catch (AggregateException ex)
                                     {
-                                        if (ex.InnerException is TaskCanceledException)
-                                        {
-                                            var tcex = ex.InnerException as TaskCanceledException;
-                                            logger.Debug($"{tcex.Message}, {tcex.HResult}");
-                                            logger.Error(tcex, $"TaskCanceled while sending survey (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId}, CancellationRequested: {tcex.CancellationToken.IsCancellationRequested})");
-                                        }
                                         logger.Error(ex, $"Error while sending survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
                                         throw ex;
                                     }
-
-                                    //try
-                                    //{
-                                    //    var httpWebRequest = (HttpWebRequest)WebRequest.Create("https://onesignal.com/api/v1/notifications");
-                                    //    httpWebRequest.PreAuthenticate = true;
-                                    //    httpWebRequest.KeepAlive = true;
-                                    //    httpWebRequest.Headers.Add("Authorization", "Basic ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
-                                    //    httpWebRequest.ContentType = "application/json";
-                                    //    httpWebRequest.Method = "POST";
-
-                                    //    using (var streamWriter = new StreamWriter(httpWebRequest.GetRequestStream()))
-                                    //    {
-                                    //        var obj = new
-                                    //        {
-                                    //            app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
-                                    //            include_player_ids = new string[] { p.DeviceId },
-                                    //            contents = new { en = "New survey" },
-                                    //            content_available = true,
-                                    //            data = new { Cancel = false, SvyId = svyId }
-                                    //        };
-
-                                    //        var json = JsonConvert.SerializeObject(obj);
-
-                                    //        streamWriter.Write(json);
-                                    //        streamWriter.Flush();
-                                    //        streamWriter.Close();
-                                    //    }
-
-                                    //    var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
-                                    //    using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-                                    //    {
-                                    //        var result = streamReader.ReadToEnd();
-                                    //    }
-                                    //    i++;
-                                    //}
-                                    //catch (Exception ex)
-                                    //{
-                                    //    logger.Error(ex, $"Error while sending survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
-                                    //    throw ex;
-                                    //}
                                 });
                             logger.Debug($"(SvyId {svyId}) Surveys sent to Department {kv.Key}: {i} == {kv.Value}");
                         }
