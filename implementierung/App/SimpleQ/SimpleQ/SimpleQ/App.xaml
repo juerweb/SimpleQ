@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SimpleQ.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <!--Default Colors for the whole App-->
+            <Color x:Key="launcher_background">#FFFFFF</Color>
+            <Color x:Key="colorPrimary">#006bc9</Color>
+            <Color x:Key="colorPrimaryDark">#004197</Color>
+            <Color x:Key="colorAccent">#FF4081</Color>
+            <Color x:Key="colorBorder">#000000</Color>
+            <Color x:Key="colorWarning">#ff4444</Color>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

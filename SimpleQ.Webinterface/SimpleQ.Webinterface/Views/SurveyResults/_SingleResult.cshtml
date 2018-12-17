@@ -1,0 +1,108 @@
+﻿@using SimpleQ.Webinterface.App_LocalResources
+@model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel
+@*@{
+
+    Dictionary<string, int> votes = new Dictionary<string, int>(); //temporary in place of ajax all
+    votes.Add("ORF1", 12);
+    votes.Add("ORF2", 8);
+    votes.Add("ATV", 8);
+    votes.Add("Puls 4", 7);
+    votes.Add("Pro 7", 9);
+    votes.Add("RTL", 3);
+    votes.Add("RTL II", 2);
+    votes.Add("ORF3", 4);
+    votes.Add("DMAX", 10);
+    votes.Add("Super RTL", 0);
+    votes.Add("Nickelodeon", 6);
+    votes.Add("ZDF", 15);
+    votes.Add("ARD", 2);
+}*@
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="groups">Teilgenommene Gruppen</label>
+            <div class="border border-dark">
+                <ul class="list-group groups-ul pl-2" id="groups">
+                    @for (var i = 0; i < Model.DepartmentNames.Count; i++)
+                    {
+                        <li>
+                            @Model.DepartmentNames[i]
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 pl-4 pr-4">
+        <div class="form-group">
+            @{
+                Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
+                dropBoxValues.Add("bar", Resources.bar);
+                dropBoxValues.Add("radar", Resources.radar);
+                dropBoxValues.Add("doughnut", Resources.doughnut);
+                dropBoxValues.Add("listing", Resources.listing);
+                dropBoxValues.Add("polarArea", Resources.polarArea);
+            }
+            <label for="chart1select">@Resources.diagram@Resources.typeSmall 1</label>
+            <select class="form-control" id="chart1SelectSingle" onchange="changeChartSingle('chart1SelectSingle', 'chart1Col', 'chart1'); updateSelect1(this);">
+                @{
+                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
+                    {
+                        if (elem.Key == "bar")
+                        {
+                            <option value="@elem.Key" selected>@elem.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@elem.Key">@elem.Value</option>
+                        }
+                    }
+                }
+
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="chart2SelectSingle">@Resources.diagram@Resources.typeSmall 2</label>
+            <select class="form-control" id="chart2SelectSingle" onchange="changeChartSingle('chart2SelectSingle','chart2Col','chart2')">
+                @{
+                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
+                    {
+                        if (elem.Key == "doughnut")
+                        {
+                            <option value="@elem.Key" selected>@elem.Value</option>
+                        }
+                        else
+                        {
+                            <option value="@elem.Key">@elem.Value</option>
+                        }
+                    }
+                }
+
+            </select>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    var dict = []; // create an empty array
+
+        @foreach (KeyValuePair<string,int> kvp in Model.Votes)
+        {
+            @:dict.push({
+                @:key:"@kvp.Key" 
+            @:,
+                @:value: "@kvp.Value"
+            @:}); 
+        }
+
+        $("#chart1SelectSingle").change();
+        $("#chart2SelectSingle").change();
+
+    function updateSelect1(elem) {
+        //alert(elem.value);
+        //$("#chart1Select option[selected='true']").hide();
+    }
+
+</script>

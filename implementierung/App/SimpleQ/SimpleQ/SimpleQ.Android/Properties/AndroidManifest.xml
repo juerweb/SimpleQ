@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="4" android:versionName="0.3.1" package="at.simpleQ.SimpleQ" android:installLocation="auto">
+	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="26" />
+	<uses-permission android:name="android.permission.CAMERA" />
+	<uses-permission android:name="android.permission.FLASHLIGHT" />
+	<permission android:name="at.simpleQ.SimpleQ.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="at.simpleQ.SimpleQ.permission.C2D_MESSAGE" />
+	<application android:label="SimpleQ" android:icon="@mipmap/ic_launcher_2">
+		<receiver android:name="com.onesignal.GcmBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
+			<intent-filter>
+				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				<category android:name="at.simpleQ.SimpleQ" />
+			</intent-filter>
+		</receiver>
+	</application>
+</manifest>

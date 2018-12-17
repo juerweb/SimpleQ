@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="About" xml:space="preserve">
+    <value>Über SimpleQ</value>
+  </data>
+  <data name="Abstract" xml:space="preserve">
+    <value>Übersicht</value>
+  </data>
+  <data name="AllCategories" xml:space="preserve">
+    <value>Alle Kategorien</value>
+  </data>
+  <data name="Answer" xml:space="preserve">
+    <value>Antwort</value>
+  </data>
+  <data name="AppInformation" xml:space="preserve">
+    <value>App Informationen</value>
+  </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>Sprache ändern</value>
+  </data>
+  <data name="CheckCode" xml:space="preserve">
+    <value>Code wird überprüft</value>
+  </data>
+  <data name="Contact" xml:space="preserve">
+    <value>Kontakt</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Kontaktieren Sie unseren Support</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Copyright © 2018 by SimpleQ</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="DialogErrorCode" xml:space="preserve">
+    <value>Fehlercode</value>
+  </data>
+  <data name="DialogErrorTitle" xml:space="preserve">
+    <value>Fehler</value>
+  </data>
+  <data name="EmailAdress" xml:space="preserve">
+    <value>support@simpleq.at</value>
+    <comment>NT</comment>
+  </data>
+  <data name="EmailUs" xml:space="preserve">
+    <value>Schreiben Sie uns eine E-Mail</value>
+  </data>
+  <data name="Error101" xml:space="preserve">
+    <value>Der QR-Code entspricht nicht dem richtigen Format. Verwenden Sie bitte einen anderen QR-Code.</value>
+  </data>
+  <data name="Error201" xml:space="preserve">
+    <value>Der eingegebene Registrierungscode ist nicht im System registriert. Verwenden Sie bitte einen anderen Registrierungscode.</value>
+  </data>
+  <data name="ExtendedHelp" xml:space="preserve">
+    <value>Erweiterte Hilfe</value>
+  </data>
+  <data name="ExtendedHelpInternet" xml:space="preserve">
+    <value>Erweiterte Hilfe (Internet)</value>
+  </data>
+  <data name="FAQ" xml:space="preserve">
+    <value>FAQ</value>
+  </data>
+  <data name="Help" xml:space="preserve">
+    <value>Hilfe</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Sprache</value>
+  </data>
+  <data name="LinkToContactForm" xml:space="preserve">
+    <value>https://www.simpleq.at</value>
+  </data>
+  <data name="LinkToSupportWebsite" xml:space="preserve">
+    <value>https://www.simpleq.at</value>
+  </data>
+  <data name="LinkToWebsite" xml:space="preserve">
+    <value>https://www.simpleq.at</value>
+    <comment>NT</comment>
+  </data>
+  <data name="LogoResourcename" xml:space="preserve">
+    <value>SimpleQ.Resources.Images.logo.png</value>
+    <comment>NT</comment>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Abmelden von Fragen</value>
+  </data>
+  <data name="LoremIpsum" xml:space="preserve">
+    <value>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</value>
+    <comment>NT</comment>
+  </data>
+  <data name="ManuelCodeEntry" xml:space="preserve">
+    <value>Alternative: Geben Sie den Code manuell ein</value>
+  </data>
+  <data name="NameOfApp" xml:space="preserve">
+    <value>SimpleQ</value>
+    <comment>NT</comment>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="NothingIn" xml:space="preserve">
+    <value>Keine Elemente in dieser Kategorie</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>+43 00000000000</value>
+  </data>
+  <data name="PhoneUs" xml:space="preserve">
+    <value>Rufen Sie uns an</value>
+  </data>
+  <data name="RecallData" xml:space="preserve">
+    <value>Daten abrufen</value>
+  </data>
+  <data name="Register" xml:space="preserve">
+    <value>Anmelden</value>
+  </data>
+  <data name="RegisterScanHelpText" xml:space="preserve">
+    <value>Scannen Sie den QR-Code, welchen Sie von Ihrem Unternehmen erhalten haben.</value>
+  </data>
+  <data name="SelectALanguage" xml:space="preserve">
+    <value>Wählen sie eine neue Sprache aus.</value>
+  </data>
+  <data name="SendAnswer" xml:space="preserve">
+    <value>Antwort senden</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="RegisterCode" xml:space="preserve">
+    <value>Registrierungscode</value>
+  </data>
+  <data name="StartScan" xml:space="preserve">
+    <value>Scan starten 📷</value>
+  </data>
+  <data name="UpdateInterval" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="VisitUs" xml:space="preserve">
+    <value>Besuchen Sie unsere Website</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="ReallySure" xml:space="preserve">
+    <value>Sind Sie sich wirklich sicher?</value>
+  </data>
+  <data name="GeneralSettings" xml:space="preserve">
+    <value>Allgemeine Einstellungen</value>
+  </data>
+  <data name="CloseAppAfterNotification" xml:space="preserve">
+    <value>Soll sich die App, nach dem Beantworten einer neuen Frage, wieder schließen?</value>
+  </data>
+  <data name="APIMainURL" xml:space="preserve">
+    <value>https://dev.simpleq.at/api/mobile</value>
+    <comment>NT</comment>
+  </data>
+  <data name="APIRegisterPlusURL" xml:space="preserve">
+    <value>/register</value>
+    <comment>NT</comment>
+  </data>
+  <data name="APIAnswerSurveyPlusURL" xml:space="preserve">
+    <value>/answerSurvey</value>
+    <comment>NT</comment>
+  </data>
+  <data name="APIUnregisterPlusURL" xml:space="preserve">
+    <value>/unregister</value>
+    <comment>NT</comment>
+  </data>
+  <data name="APIGetDataPlusURL" xml:space="preserve">
+    <value>/getSurveyData</value>
+    <comment>NT</comment>
+  </data>
+  <data name="KeyResourcename" xml:space="preserve">
+    <value>SimpleQ.Resources.private.key</value>
+  </data>
+  <data name="DontKnow" xml:space="preserve">
+    <value>Weiß nicht</value>
+  </data>
+  <data name="Menu" xml:space="preserve">
+    <value>Menü</value>
+  </data>
+  <data name="APIJoinDepartmentPlusURL" xml:space="preserve">
+    <value>/joinDepartment</value>
+    <comment>NT</comment>
+  </data>
+  <data name="APILeaveDepartmentPlusURL" xml:space="preserve">
+    <value>/leaveDepartment</value>
+    <comment>NT</comment>
+  </data>
+  <data name="Error202" xml:space="preserve">
+    <value>Es konnte keine Verbindung zum Server hergestellt werden. Bitte überprüfen Sie ihre Internetverbindung!</value>
+  </data>
+  <data name="Error203" xml:space="preserve">
+    <value>Es ist ein Fehler bei der Aufhebung der Registrierung aufgetreten. Bitte versuchen Sie es erneut!</value>
+  </data>
+  <data name="JoinDepartment" xml:space="preserve">
+    <value>Neuer Gruppe beitreten</value>
+  </data>
+  <data name="SelectUnregisterGroups" xml:space="preserve">
+    <value>Wählen Sie bitte alle Gruppen aus, von welchen Sie keine Fragen mehr erhalten möchten.</value>
+  </data>
+  <data name="Error204" xml:space="preserve">
+    <value>Es ist ein Fehler beim Beantworten der Frage aufgetreten!</value>
+  </data>
+  <data name="DebugMode" xml:space="preserve">
+    <value>Debug-Modus?</value>
+  </data>
+  <data name="Error205" xml:space="preserve">
+    <value>Dieser Registrierungscode wird bereits in der App verwendet! Benützten Sie bitte einen anderen.</value>
+  </data>
+  <data name="Error102" xml:space="preserve">
+    <value>Die Frage kann nicht beantwortet werden, da sie bereits abgelaufen ist.</value>
+  </data>
+  <data name="CloseInterval" xml:space="preserve">
+    <value>1000</value>
+    <comment>NT</comment>
+  </data>
+  <data name="ShowMessageAfterAnswering" xml:space="preserve">
+    <value>Soll nach dem Beantworten einer Frage eine Nachricht angezeigt werden.</value>
+  </data>
+  <data name="SuccessfulAnsweringQuestion" xml:space="preserve">
+    <value>Frage wurde erfolgreich beantwortet</value>
+  </data>
+  <data name="APIGetFaqDataPlusURL" xml:space="preserve">
+    <value>/getFaqData</value>
+  </data>
+</root>
