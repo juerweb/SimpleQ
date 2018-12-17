@@ -157,7 +157,7 @@
     <value>Fehler</value>
   </data>
   <data name="EmailAdress" xml:space="preserve">
-    <value>admin@juerweb.com</value>
+    <value>support@simpleq.at</value>
     <comment>NT</comment>
   </data>
   <data name="EmailUs" xml:space="preserve">
@@ -185,13 +185,13 @@
     <value>Sprache</value>
   </data>
   <data name="LinkToContactForm" xml:space="preserve">
-    <value>https://www.google.at</value>
+    <value>https://www.simpleq.at</value>
   </data>
   <data name="LinkToSupportWebsite" xml:space="preserve">
-    <value>https://support.google.com/</value>
+    <value>https://www.simpleq.at</value>
   </data>
   <data name="LinkToWebsite" xml:space="preserve">
-    <value>https://www.google.at/</value>
+    <value>https://www.simpleq.at</value>
     <comment>NT</comment>
   </data>
   <data name="LogoResourcename" xml:space="preserve">

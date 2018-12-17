@@ -17,8 +17,8 @@
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                     <ColumnDefinition Width="6*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Label Text="{Binding Question.GivenAnswers[0].AnsText}" Grid.Column="0"></Label>
-                <Label Text="{Binding Path=Question.GivenAnswers, Converter={StaticResource LastItemConverter}}" Grid.Column="1" HorizontalOptions="EndAndExpand"></Label>
+                <Label Text="{Binding BeginText}" Grid.Column="0"></Label>
+                <Label Text="{Binding EndText}" Grid.Column="1" HorizontalOptions="EndAndExpand"></Label>
             </Grid>
             <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" Margin="10,5,10,0"></Button>
         </StackLayout>

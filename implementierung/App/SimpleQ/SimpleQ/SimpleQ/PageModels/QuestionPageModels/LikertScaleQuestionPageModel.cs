@@ -11,6 +11,7 @@ using System.Runtime.CompilerServices;
 using Xamarin.Forms;
 using System.Reactive.Linq;
 using SimpleQ.Shared;
+using System.Linq;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -72,6 +73,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
                     break;
             }
 
+            BeginText = this.Question.GivenAnswers.Where(ga => ga.FirstPosition == true).ToList()[0].AnsText;
+            EndText = this.Question.GivenAnswers[this.Question.GivenAnswers.Count() - 1].AnsText;
+
         }
         #endregion
 
@@ -81,6 +85,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private int currentValue;
         private double gradation;
+        private String beginText;
+        private String endText;
 
         #endregion
 
@@ -110,6 +116,26 @@ namespace SimpleQ.PageModels.QuestionPageModels
                 OnPropertyChanged();
             }
         }
+
+        public string BeginText
+        {
+            get => beginText;
+            set
+            {
+                beginText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string EndText
+        {
+            get => endText;
+            set
+            {
+                endText = value;
+                OnPropertyChanged();
+            }
+        }
         #endregion
 
         #region Commands
@@ -128,7 +154,21 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         private void QuestionAnswered()
         {
-            base.QuestionAnswered(this.Question.GivenAnswers[currentValue]);
+            AnswerOption current;
+            if (currentValue == 1)
+            {
+                current = this.Question.GivenAnswers.Where(ga => ga.FirstPosition == true).ToList()[0];
+            }
+            else if (currentValue == this.Question.GivenAnswers.Count())
+            {
+                current = this.Question.GivenAnswers[this.Question.GivenAnswers.Count() - 1];
+            }
+            else
+            {
+                current = this.Question.GivenAnswers.Where(ga => ga.AnsText == currentValue.ToString()).ToList()[0];
+            }
+            Debug.WriteLine(current.AnsText);
+            base.QuestionAnswered(current);
         }
         #endregion
 
