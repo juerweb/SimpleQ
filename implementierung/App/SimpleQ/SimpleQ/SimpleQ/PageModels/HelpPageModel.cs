@@ -36,6 +36,7 @@ namespace SimpleQ.PageModels
             MenuItems.Add(new MenuItemModel(AppResources.FAQ, new FAQPageModel(), "ic_help_black_18.png"));
             MenuItems.Add(new MenuItemModel(AppResources.ExtendedHelpInternet, new ExtendedHelpPageModel(), "ic_public_black_18.png"));
             MenuItems.Add(new MenuItemModel(AppResources.About, new AboutPageModel(), "ic_info_black_18.png"));
+            MenuItems.Add(new MenuItemModel(AppResources.OpenSourceLicense, new OpenSourceLicensePageModel(), "ic_info_black_18.png"));
         }
 
 
