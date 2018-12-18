@@ -3,8 +3,8 @@
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\BaseQuestionType.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Bill.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Customer.cs
-..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Department.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\DataConstraint.cs
+..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Department.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\FaqEntry.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\PaymentMethod.cs
 ..\..\SimpleQ.Webinterface\SimpleQ.Webinterface\Models\Person.cs
