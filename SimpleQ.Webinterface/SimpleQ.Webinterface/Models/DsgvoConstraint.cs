@@ -12,10 +12,9 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FaqEntry
+    public partial class DsgvoConstraint
     {
-        public string FaqTitle { get; set; }
-        public string FaqContent { get; set; }
-        public bool IsMobile { get; set; }
+        public string ConstrName { get; set; }
+        public int ConstrValue { get; set; }
     }
 }

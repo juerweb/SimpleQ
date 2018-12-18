@@ -385,7 +385,7 @@ namespace SimpleQ.Webinterface.Controllers
                                         if (!response.IsSuccessStatusCode)
                                         {
                                             logger.Debug($"Failed sending survey (StatusCode: {response.StatusCode}, Content: {response.Content})");
-                                            throw new ApplicationException();
+                                            //throw new ApplicationException();
                                         }
 
                                         logger.Debug($"Survey sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");

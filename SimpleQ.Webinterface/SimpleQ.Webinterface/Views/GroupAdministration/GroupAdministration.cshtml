@@ -58,7 +58,7 @@
 
         </div>
         <div class="col-md-5 border-left" id="mailDiv">
-            <h4 class="text-center">Infos</h4>
+
 
             <label>@Resources.subject</label>
             <input class="form-control" type="text" placeholder="@Resources.invitationToSimpleQ" name="InvitationSubject" />
@@ -130,6 +130,17 @@
         $("#showNewGroupModalBtn").click(function () {
             $("#newGroupModal").modal("show");
         });
+
+        $(document).keypress( //wait for enter press and dont call submit on enter
+            function (event) {
+                if (event.which == '13') {
+                    event.preventDefault();
+                    if ($("#mailAddressInput").is(":focus")) {
+                        addMailAddress();
+                    }
+                }
+            }
+        );
     }); // <-- Things to to at startup END
 
     function checkFirstElem() {
@@ -424,9 +435,7 @@
             '</span>';
         tempText = "";
 
-        //take away input border and make it readonly
-        $(inputElem).addClass("withoutBorder");
-        $(inputElem).prop('readonly', true);
+        button.parentElement.parentElement.parentElement.parentElement.children[0].innerHTML = '<input class="form-control rightNotRounded withoutBorder" name="Email" readonly type="text" value="' + text + '" />';
         button.parentElement.parentElement.innerHTML = edited;
     }
 
