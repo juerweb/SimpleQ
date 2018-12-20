@@ -32,7 +32,8 @@ namespace SimpleQ.Webinterface.Controllers
                     SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
                     Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList(),
                     AnswerTypes = db.Surveys.Where(s => s.CustCode == CustCode).Select(s => s.AnswerType)
-                        .Where(a => a.BaseId != (int)BaseQuestionTypes.OpenQuestion).Distinct().ToList()
+                        .Where(a => a.BaseId != (int)BaseQuestionTypes.OpenQuestion).Distinct().ToList(),
+                    SurveyTexts = db.Surveys.Select(s => s.SvyText).ToList()
                 };
 
                 ViewBag.emailConfirmed = cust.EmailConfirmed;
@@ -99,18 +100,21 @@ namespace SimpleQ.Webinterface.Controllers
         {
             bool err = false;
             //SAMPLE DATA
-            //req = new MultiResultModel
-            //    CatId = 4,
-            //    TypeId = 2,
-            //    StartDate = DateTime.Now.AddYears(-1),
-            //    EndDate = DateTime.Now,
-            //{
-            //};
+            req = new MultiResultModel
+            {
+                CatId = 4,
+                TypeId = 2,
+                StartDate = DateTime.Now.AddYears(-1),
+                EndDate = DateTime.Now,
+                SurveyText = "Ist der Chef leiwand?"//"Finden Sie der Chef ist ein Arschloch?"
+            };
 
             if (req == null)
                 AddModelError("Model", "Model object must not be null.", ref err);
             if (req.StartDate > req.EndDate)
-                AddModelError("StartDate", "StartDate must be smaller than EndDate.", ref err);
+                AddModelError("StartDate", "Start date must be smaller than end date.", ref err);
+            if(string.IsNullOrEmpty(req.SurveyText))
+                AddModelError("SurveyText", "Survey text must not be empty.", ref err);
 
             using (var db = new SimpleQDBEntities())
             {
@@ -123,6 +127,7 @@ namespace SimpleQ.Webinterface.Controllers
                 var selectedSurveys = db.Surveys
                     .Where(s => s.CatId == req.CatId && s.TypeId == req.TypeId
                      && s.StartDate >= req.StartDate && s.StartDate <= req.EndDate
+                     && s.SvyText.Trim().ToLower() == req.SurveyText.Trim().ToLower()
                      && s.CustCode == CustCode);
 
                 string catName = db.SurveyCategories
@@ -228,6 +233,31 @@ namespace SimpleQ.Webinterface.Controllers
                     StartDate = query.Select(s => s.StartDate).Min().ToString("yyyy-MM-dd"),
                     EndDate = query.Select(s => s.StartDate).Max().ToString("yyyy-MM-dd")
                 }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult LoadSurveyTexts(int catId, int typeId, DateTime startDate, DateTime endDate)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                {
+                    return Http.NotFound("Customer not found");
+                }
+
+                var query = db.Surveys
+                    .Where(s => s.CatId == catId 
+                        && s.TypeId == typeId 
+                        && s.StartDate == startDate
+                        && s.EndDate == endDate
+                        && s.CustCode == CustCode)
+                    .Select(s => s.SvyText);
+
+                if (query.Count() == 0)
+                    return Http.NotFound("No surveys found");
+
+                return Json(new { SurveyTexts = query.ToList() }, JsonRequestBehavior.AllowGet);
             }
         }
         #endregion

@@ -217,9 +217,17 @@ namespace SimpleQ.Webinterface.Controllers
                                         contents = new { en = "Cancel survey" },
                                         data = new { Cancel = true, SvyId = svyId }
                                     };
-                                    var task = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj);
-                                    task.Wait();
-                                    var response = task.Result;
+                                    var response = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj).Result;
+
+                                    if (!response.IsSuccessStatusCode)
+                                    {
+                                        logger.Error($"Failed sending survey (StatusCode: {response.StatusCode}, Content: {response.Content})");
+                                    }
+                                    else
+                                    {
+                                        logger.Debug($"Survey sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");
+                                    }
+
                                     System.Diagnostics.Debug.Write("RESPONSE:");
                                     System.Diagnostics.Debug.WriteLine(response.StatusCode);
                                     System.Diagnostics.Debug.WriteLine(response.Content);
@@ -384,17 +392,17 @@ namespace SimpleQ.Webinterface.Controllers
 
                                         if (!response.IsSuccessStatusCode)
                                         {
-                                            logger.Debug($"Failed sending survey (StatusCode: {response.StatusCode}, Content: {response.Content})");
-                                            throw new ApplicationException();
+                                            logger.Error($"Failed sending survey (StatusCode: {response.StatusCode}, Content: {response.Content})");
                                         }
-
-                                        logger.Debug($"Survey sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");
-                                        i++;
+                                        else
+                                        {
+                                            logger.Debug($"Survey sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");
+                                            i++;
+                                        }
                                     }
                                     catch (AggregateException ex)
                                     {
                                         logger.Error(ex, $"Error while sending survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
-                                        throw ex;
                                     }
                                 });
                             logger.Debug($"(SvyId {svyId}) Surveys sent to Department {kv.Key}: {i} == {kv.Value}");
