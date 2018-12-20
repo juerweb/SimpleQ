@@ -242,7 +242,8 @@ go
 create table FaqEntry
 (
     FaqTitle varchar(128) primary key,
-    FaqContent varchar(max) not null
+    FaqContent varchar(max) not null,
+    IsMobile bit not null
 );
 go
 
@@ -667,8 +668,10 @@ go
 begin transaction;
 insert into DataConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 
-insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.'); -- Nur Testwert
-insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque tú eres un culo muy grande.'); -- Nur Testwert
+insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.', 0); -- Nur Testwert
+insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque tú eres un culo muy grande.', 0); -- Nur Testwert
+insert into FaqEntry values ('Nothing', 'lasts forever, even cold november rain', 1); -- Nur Testwert
+insert into FaqEntry values ('So close', 'no matter how far', 1); -- Nur Testwert
 
 insert into PaymentMethod values (1, 'OnAccount');
 
