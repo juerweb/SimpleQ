@@ -19,6 +19,7 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         #region View to Controller
         public int CatId { get; set; }
         public int TypeId { get; set; }
+        public string SurveyText { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         #endregion
