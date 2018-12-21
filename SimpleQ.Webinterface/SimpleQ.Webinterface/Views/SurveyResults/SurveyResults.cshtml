@@ -8,11 +8,13 @@
     ResourceManager rm = Resources.ResourceManager;
 }
 
-<div class="row pl-4 mt-1 ml-0 mr-0">
-    <div class="col-3">
-        <h2>@Resources.surveyResultsHeader</h2>
+<div class="row mt-1 ml-0 mr-0">
+    <div class="col-5 pl-4 pr-4">
+        <label for="SurveyCategories">@Resources.surveyCategoryHeader</label>
+        @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
+        @*<h2>@Resources.surveyResultsHeader</h2>*@
     </div>
-    <div class="col-9">
+    <div class="col-7">
         <div class="row ml-0 mr-0 pt-3">
             <span class="col-4 text-right" id="leftToggleText" onclick="toggleResults()">@Resources.trendEvaluation</span>
             <span class="col-4 bg-primary p-0" id="twoWayToggle" onclick="toggleResults()">
@@ -30,29 +32,39 @@
         </div>
     </div>
 </div>
-<hr class="mt-1" />
+@*<hr class="mt-1" />*@
 <div class="row mt-1 ml-0 mr-0">
-    <div class="col-md-4 pl-4 pr-4">
+    <div class="col-md-5 pl-4 pr-4">
         <div id="singleResultOptions">
             <label for="Surveys">@Resources.survey</label>
             @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control", onchange = "loadSingleResultAsync()" })
         </div>
         <div id="multiResultOptions">
-            <label for="SurveyCategories">@Resources.surveyCategoryHeader</label>
-            @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
-            <label for="AnswerTypes">@Resources.answerTypeHeader</label>
-            <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()"></select>
+            @*<label for="SurveyCategories">@Resources.surveyCategoryHeader</label>
+            @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })*@
+            <div class="row mr-0 ml-0 mt-2">
+                <div class="col-lg-6 p-0">
+                    <label for="AnswerTypes">@Resources.answerTypeHeader</label>
+                </div>
+                <div class="col-lg-6 p-0">
+                    <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()"></select>
+                </div>
+            </div>
+            @*<label for="AnswerTypes">@Resources.answerTypeHeader</label>
+            <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()"></select>*@
+            <label class="mb-0">Passende Befragungen</label>
+            <select class="form-control" id="Surveys" name="Surveys" onchange="loadMultiResultAsync()"></select>
 
             <div class="row mt-2">
                 <div class="col-md-6">
                     <div class="form-group mb-0">
-                        <label for="timeFrom">@Resources.from</label>
+                        <label for="timeFrom" class="mb-0">@Resources.from</label>
                         <input type="date" class="form-control" id="dateFrom" value="@DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd")" onchange="loadMultiResultAsync()">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group mb-0">
-                        <label for="timeTwo">@Resources.to</label>
+                        <label for="timeTwo" class="mb-0">@Resources.to</label>
                         <input type="date" class="form-control" id="dateTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="loadMultiResultAsync()">
                     </div>
                 </div>
@@ -60,9 +72,9 @@
         </div>
     </div>
 
-    <div class="col-md-8" id="singleResultPartial">
+    <div class="col-md-7" id="singleResultPartial">
     </div>
-    <div class="col-md-8" id="multiResultPartial">
+    <div class="col-md-7" id="multiResultPartial">
     </div>
 </div>
 <hr />
@@ -98,6 +110,8 @@
 
 
     $(function () {
+        document.getElementById("header").innerHTML = "@Resources.surveyResultsHeader"; //set Header
+
         //console.log("hallo");
         fillLangDict();
         loadAnswerTypes();

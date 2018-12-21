@@ -1,4 +1,5 @@
-﻿
+﻿@using System.Resources;
+@using SimpleQ.Webinterface.Properties;
 
 <!DOCTYPE html>
 <html>
@@ -120,10 +121,13 @@
 </head>
 <body>
     <div class="row border-bottom border-dark ml-0 mr-0">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <img src="../../Content/Images/Logos/simpleq.png" style="max-height: 100px;" class="img-fluid" />
         </div>
-        <div class="col-md-6 d-flex justify-content-end align-items-center">
+        <div class="col-md-4 text-center d-flex flex-column">
+            <h1 class="mt-auto" id="header">Überschrift</h1>
+        </div>
+        <div class="col-md-4 d-flex justify-content-end align-items-center">
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
             <div class="mr-4">
                 <span class="row">
@@ -136,9 +140,9 @@
                 <span class="row" id="verion" style="font-size:medium">
                     Version: 2.3.4.5
                 </span>
-                
+
             </div>
-            
+
         </div>
     </div>
     <div class="row m-0">
@@ -162,7 +166,7 @@
                             <a class="btn btn-light btn-block" href='@Url.Action("Index", "SurveyResults")'>
                                 <span class="row d-flex">
                                     <span class="col-8 align-self-center p-0">
-                                        Befragungsauswertung
+                                        @Resources.surveyResultsHeader
                                     </span>
                                     <span class="col-4">
                                         <img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid navbar-img" />
@@ -248,7 +252,7 @@
                                 <li class="settingsOption mt-1"><button type="button" href="#" class="btn btn-primary btn-block">Rechnung</button></li>
                                 <li class="settingsOption mt-1"><button type="button" href="#" class="btn btn-primary btn-block">Konto</button></li>
                             </ul>
-                        </li>                        
+                        </li>
                         <li class="p-0 mt-1 d-flex justify-content-center">
                             <a href='@Url.Action("Index", "Support")'>
                                 <img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-hidden-img" />
@@ -256,7 +260,7 @@
                         </li>
                         <li class="p-0 mt-2 d-flex justify-content-center">
                             <button class="btn btn-light pb-0 border border-primary" onclick="showNavbar()">
-                                <i class="material-icons">&#xe01f;</i>                               
+                                <i class="material-icons">&#xe01f;</i>
                             </button>
                         </li>
                     </ul>
