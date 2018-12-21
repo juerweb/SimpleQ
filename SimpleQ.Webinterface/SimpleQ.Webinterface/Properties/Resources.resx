@@ -416,4 +416,10 @@
   <data name="trendEvaluation" xml:space="preserve">
     <value>trend evaluation</value>
   </data>
+  <data name="settings" xml:space="preserve">
+    <value>settings</value>
+  </data>
+  <data name="support" xml:space="preserve">
+    <value>support</value>
+  </data>
 </root>

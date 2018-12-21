@@ -754,6 +754,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die settings ähnelt.
+        /// </summary>
+        public static string settings {
+            get {
+                return ResourceManager.GetString("settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die single survey evaluation ähnelt.
         /// </summary>
         public static string singleQuestionEvaluation {
@@ -813,6 +822,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string subject {
             get {
                 return ResourceManager.GetString("subject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die support ähnelt.
+        /// </summary>
+        public static string support {
+            get {
+                return ResourceManager.GetString("support", resourceCulture);
             }
         }
         

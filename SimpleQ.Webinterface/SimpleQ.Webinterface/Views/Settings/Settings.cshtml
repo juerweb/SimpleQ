@@ -3,9 +3,7 @@
 @using SimpleQ.Webinterface.Models;
 @model SimpleQ.Webinterface.Models.ViewModels.SettingsModel
 
-<div class="row pl-4 mt-1 ml-0 mr-0">
-    <h2>@ResourcesN.Settings</h2>
-</div>
+
 <div class="row m-0 p-0 mr-0 ml-0">
     @* Switch betwenn result of single survey of result of multiple ones *@
     <div class="col-lg-6 pl-4 pr-4">
@@ -320,18 +318,22 @@
                                         }
     }
         /**/
-        console.log(dictionary);
-        umlaute();
+        
 
 
         var changed = false;
         var checkedAnswers = [];
         //var answers = [];
 
-        switchToAccountSettings();
+        //switchToAccountSettings();
 
         $(function () {
+            document.getElementById("header").innerHTML = "@Resources.settings"; //set Header
             $("#accordion").accordion();
+            console.log(dictionary);
+            umlaute();
+            switchToAccountSettings();
+            
         });
 
         function switchToAccountSettings() {

@@ -2,9 +2,7 @@
 @using SimpleQ.Webinterface.Models;
 @model SimpleQ.Webinterface.Models.ViewModels.GroupAdministrationModel
 
-<div class="row pl-4 mt-1 ml-0 mr-0">
-    <h2>@Resources.groupAdministrationHeader</h2>
-</div>
+
 @using (Html.BeginForm("SendInvitations", "GroupAdministration"))
 { 
     <div class="row mt-1 pl-3 ml-0 mr-0">
@@ -105,6 +103,7 @@
 
 
     $(function () { // <-- Things to do at startup
+        document.getElementById("header").innerHTML = "@Resources.groupAdministrationHeader"; //set Header
 
         mailEditorStartup();
 

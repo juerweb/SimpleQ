@@ -12,7 +12,6 @@
 {
     <div class="row mt-1 ml-0 mr-0">
         <div class="col-md-7 pl-4">
-            <h2>@Resources.surveyCreationHeader</h2>
 
             <label class="mt-2">@Resources.surveyTemplateHeader</label>
             <select class="form-control" id="surveyTemplateCB" onchange="surveyTemplateSelectionChanged()">
@@ -146,6 +145,8 @@
     let secondAnswer = "";
 
     $(function () {
+        document.getElementById("header").innerHTML = "@Resources.surveyCreationHeader"; //set Header
+
         $("#newCategoryDiv").hide();
         $("#answerBox").hide();
         $('[data-toggle="tooltip"]').tooltip();

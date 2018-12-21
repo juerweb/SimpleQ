@@ -121,7 +121,7 @@
     <value>Befragung erstellen</value>
   </data>
   <data name="surveyCategoryHeader" xml:space="preserve">
-    <value>Umfragekategorie</value>
+    <value>Fragekategorie</value>
   </data>
   <data name="answerTypeHeader" xml:space="preserve">
     <value>Beantwortungsform</value>
@@ -158,7 +158,7 @@
     <comment>small written type</comment>
   </data>
   <data name="groupAdministrationHeader" xml:space="preserve">
-    <value>Group Administration</value>
+    <value>Gruppenverwaltung</value>
   </data>
   <data name="bar" xml:space="preserve">
     <value>Säulendiagramm</value>
@@ -415,5 +415,11 @@
   </data>
   <data name="trendEvaluation" xml:space="preserve">
     <value>Trendauswertung</value>
+  </data>
+  <data name="settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="support" xml:space="preserve">
+    <value>Support</value>
   </data>
 </root>
