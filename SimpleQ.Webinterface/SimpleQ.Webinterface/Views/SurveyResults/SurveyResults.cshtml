@@ -8,21 +8,23 @@
     ResourceManager rm = Resources.ResourceManager;
 }
 
-<div class="row mt-1 ml-0 mr-0">
+<div class="row ml-0 mr-0">
     <div class="col-5 pl-4 pr-4">
-        <label for="SurveyCategories">@Resources.surveyCategoryHeader</label>
-        @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
-        @*<h2>@Resources.surveyResultsHeader</h2>*@
+        <div id="surveyCategorySelection">
+            <label class="mb-0 mt-1" for="SurveyCategories">@Resources.surveyCategoryHeader</label>
+            @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "surveyCategoryChanged()" })
+            @*<h2>@Resources.surveyResultsHeader</h2>*@
+        </div>
     </div>
-    <div class="col-7">
+    <div class="col-7 pl-0 pr-0 border border-primary twoWayToggleBorder">
         <div class="row ml-0 mr-0 pt-3">
-            <span class="col-4 text-right" id="leftToggleText" onclick="toggleResults()">@Resources.trendEvaluation</span>
+            <span class="col-4 text-right pl-0" id="leftToggleText" onclick="toggleResults()">@Resources.trendEvaluation</span>
             <span class="col-4 bg-primary p-0" id="twoWayToggle" onclick="toggleResults()">
                 <svg id="circle" height="28" width="28">
                     <circle cx="14" cy="14" r="13" stroke="black" fill="white" />
                 </svg>
             </span>
-            <span class="col-4 text-left text-secondary" id="rightToggleText" onclick="toggleResults()">@Resources.singleQuestionEvaluation</span>
+            <span class="col-4 text-left text-secondary pr-0" id="rightToggleText" onclick="toggleResults()">@Resources.singleQuestionEvaluation</span>
             @*<div class="col-6 pr-0">
                     <button id="trendBtn" onclick="switchToMulti()" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
                 </div>
@@ -33,7 +35,7 @@
     </div>
 </div>
 @*<hr class="mt-1" />*@
-<div class="row mt-1 ml-0 mr-0">
+<div class="row mt-3 ml-0 mr-0">
     <div class="col-md-5 pl-4 pr-4">
         <div id="singleResultOptions">
             <label for="Surveys">@Resources.survey</label>
@@ -42,18 +44,18 @@
         <div id="multiResultOptions">
             @*<label for="SurveyCategories">@Resources.surveyCategoryHeader</label>
             @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })*@
-            <div class="row mr-0 ml-0 mt-2">
-                <div class="col-lg-6 p-0">
-                    <label for="AnswerTypes">@Resources.answerTypeHeader</label>
+            <div class="row mr-0 ml-0 mt-1">
+                <div class="col-lg-5 pl-0 pr-2 d-flex flex-row-reverse">
+                    <label class="m-0 align-self-center" for="AnswerTypes">@Resources.answerTypeHeader</label>
                 </div>
-                <div class="col-lg-6 p-0">
-                    <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()"></select>
+                <div class="col-lg-7 p-0">
+                    <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="answerTypeChanged()"></select>
                 </div>
             </div>
             @*<label for="AnswerTypes">@Resources.answerTypeHeader</label>
             <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()"></select>*@
-            <label class="mb-0">Passende Befragungen</label>
-            <select class="form-control" id="Surveys" name="Surveys" onchange="loadMultiResultAsync()"></select>
+            <label class="mb-0 mt-2">Passende Befragungen</label>
+            <select class="form-control" id="SurveyTexts" name="SurveyTexts" onchange="surveyTextChanged()"></select>
 
             <div class="row mt-2">
                 <div class="col-md-6">
@@ -115,6 +117,7 @@
         //console.log("hallo");
         fillLangDict();
         loadAnswerTypes();
+        loadSurveys();
         loadDatesByCategory();
         switchToMulti();
     });
@@ -148,6 +151,24 @@
         }
     }
 
+    function surveyCategoryChanged() {
+        loadAnswerTypes();
+        loadSurveys();
+        loadDatesByCategory();
+        loadMultiResultAsync();
+    }
+
+    function answerTypeChanged() {
+        loadSurveys();
+        loadDatesByCategory();
+        loadMultiResultAsync();
+    }
+
+    function surveyTextChanged() {
+        loadDatesByCategory();
+        loadMultiResultAsync();
+    }
+
     function loadSingleResultAsync() {
         $("#singleResultPartial").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + $("#Surveys").val());
     }
@@ -158,7 +179,8 @@
                 CatId: $("#SurveyCategories").val(),
                 TypeId: $("#AnswerTypes").val(),
                 StartDate: $("#dateFrom").val(),
-                EndDate: $("#dateTo").val()
+                EndDate: $("#dateTo").val(),
+                SurveyText: $("#SurveyTexts").val()
             },
             function (data) {
                 $("#multiResultPartial").html(data);
@@ -195,20 +217,11 @@
     }
 
     function loadDatesByCategory() {
-        //if (document.getElementById("AnswerTypes").value === "") {
-        //    return;
-        //}
         let catId = document.getElementById("SurveyCategories").value;
         let typeId = document.getElementById("AnswerTypes").value;
-        //console.log("type id:" + typeId);
-        let url = "@Url.Action("LoadSurveyDates", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId;
-        //let url = '@Url.Action("LoadSurveyDates", "SurveyResults", new { catId = "temp"})'.replace("temp", catId + "&" + typeId);
-        //$.get(
-        //    url,
-        //    function (data) {
-        //        document.getElementById("dateFrom").value = data.StartDate;
-        //        document.getElementById("dateTo").value = data.EndDate;
-        //    });
+        let surveyText = document.getElementById("SurveyTexts").value;
+
+        let url = "@Url.Action("LoadSurveyDates", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId + "&svyText=" + surveyText;
         $.ajax({
             url,
             type: "get",
@@ -220,9 +233,34 @@
         });
     }
 
+    function loadSurveys() {
+        let catId = document.getElementById("SurveyCategories").value;
+        let typeId = document.getElementById("AnswerTypes").value;     
+        let url = "@Url.Action("LoadSurveys", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId;
+        
+        $.ajax({
+            url,
+            type: "get",
+            async: false,
+            success: function (data) {
+                let elem = document.getElementById("SurveyTexts");
+                elem.innerHTML = "";
+                console.log(data);
+                for (i = 0; i < data.SurveyTexts.length; i++) {
+                    console.log(data.SurveyTexts[i]);
+                    if (i == 0) {
+                        elem.innerHTML += '<option value="' + data.SurveyTexts[i] + '" selected>' + data.SurveyTexts[i] + '</option>';
+                    } else {
+                        elem.innerHTML += '<option value="' + data.SurveyTexts[i] + '">' + data.SurveyTexts[i] + '</option>';
+                    }
+                }
+            }
+        });
+    }
 
     function switchToMulti() {
         resultType = "multi";
+        $("#surveyCategorySelection").show();
         $("#singleResultOptions").hide();
         $("#multiResultOptions").show();
         $("#singleResultPartial").hide();
@@ -233,6 +271,7 @@
 
     function switchToSingle() {
         resultType = "single";
+        $("#surveyCategorySelection").hide();
         $("#multiResultOptions").hide();
         $("#singleResultOptions").show();
         $("#multiResultPartial").hide();

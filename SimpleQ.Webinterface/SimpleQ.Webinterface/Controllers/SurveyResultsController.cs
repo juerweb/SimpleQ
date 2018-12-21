@@ -100,14 +100,14 @@ namespace SimpleQ.Webinterface.Controllers
         {
             bool err = false;
             //SAMPLE DATA
-            req = new MultiResultModel
-            {
-                CatId = 4,
-                TypeId = 2,
-                StartDate = DateTime.Now.AddYears(-1),
-                EndDate = DateTime.Now,
-                SurveyText = "Ist der Chef leiwand?"//"Finden Sie der Chef ist ein Arschloch?"
-            };
+            //req = new MultiResultModel
+            //{
+            //    CatId = 4,
+            //    TypeId = 2,
+            //    StartDate = DateTime.Now.AddYears(-1),
+            //    EndDate = DateTime.Now,
+            //    SurveyText = "Ist der Chef leiwand?"//"Finden Sie der Chef ist ein Arschloch?"
+            //};
 
             if (req == null)
                 AddModelError("Model", "Model object must not be null.", ref err);
@@ -215,7 +215,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult LoadSurveyDates(int catId, int typeId)
+        public ActionResult LoadSurveyDates(int catId, int typeId, string svyText)
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -224,7 +224,7 @@ namespace SimpleQ.Webinterface.Controllers
                     return Http.NotFound("Customer not found");
                 }
 
-                var query = db.Surveys.Where(s => s.CatId == catId && s.TypeId == typeId && s.CustCode == CustCode);
+                var query = db.Surveys.Where(s => s.CatId == catId && s.TypeId == typeId && s.CustCode == CustCode && s.SvyText.ToLower().Trim() == svyText.ToLower().Trim());
                 if (query.Count() == 0)
                     return Http.NotFound("No surveys found");
 
@@ -237,7 +237,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult LoadSurveyTexts(int catId, int typeId, DateTime startDate, DateTime endDate)
+        public ActionResult LoadSurveys(int catId, int typeId)
         {
             using (var db = new SimpleQDBEntities())
             {
@@ -246,18 +246,26 @@ namespace SimpleQ.Webinterface.Controllers
                     return Http.NotFound("Customer not found");
                 }
 
-                var query = db.Surveys
-                    .Where(s => s.CatId == catId 
-                        && s.TypeId == typeId 
-                        && s.StartDate == startDate
-                        && s.EndDate == endDate
-                        && s.CustCode == CustCode)
+                var list = db.Surveys
+                    .Where(s => s.CatId == catId
+                        && s.TypeId == typeId
+                        && s.CustCode == CustCode).ToList()
                     .Select(s => s.SvyText);
 
-                if (query.Count() == 0)
+                if (list.Count() == 0)
                     return Http.NotFound("No surveys found");
 
-                return Json(new { SurveyTexts = query.ToList() }, JsonRequestBehavior.AllowGet);
+                List<string> strings = new List<string>();
+                foreach(string s in list.ToList())
+                {
+                    if (!strings.Contains(s))
+                    {
+                        strings.Add(s);
+                    }
+                }
+
+                return Json(new { SurveyTexts = strings }, JsonRequestBehavior.AllowGet);
+                //return Json(list, JsonRequestBehavior.AllowGet);
             }
         }
         #endregion

@@ -330,6 +330,10 @@
 
         switchToAccountSettings();
 
+        $(function () {
+            $("#accordion").accordion();
+        });
+
         function switchToAccountSettings() {
             $("#accountSettings").removeClass("btn-secondary").addClass("btn-primary");
             $("#billSettings").removeClass("btn-primary").addClass("btn-secondary");

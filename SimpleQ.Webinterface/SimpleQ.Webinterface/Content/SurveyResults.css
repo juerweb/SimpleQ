@@ -41,6 +41,11 @@
     border-radius: 5px;
 }
 
+.twoWayToggleBorder{
+    border-top: none!important;
+    border-right: none!important;
+}
+
 #circle {
     position:absolute;
     /*right: 100%;*/
