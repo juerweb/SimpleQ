@@ -73,6 +73,7 @@ namespace SimpleQ.Webinterface.Controllers
         #region Helpers
         private void AddModelError(string key, string errorMessage, ref bool error)
         {
+            logger.Debug($"Model error: {key}: {errorMessage}");
             ModelState.AddModelError(key, errorMessage);
             error = true;
         }

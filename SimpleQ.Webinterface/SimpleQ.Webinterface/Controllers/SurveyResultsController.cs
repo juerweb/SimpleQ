@@ -17,7 +17,7 @@ namespace SimpleQ.Webinterface.Controllers
     {
         private string errString;
 
-        #region AJAX-Methods
+        #region MVC-Actions
         [HttpGet]
         public ActionResult Index()
         {
@@ -40,7 +40,9 @@ namespace SimpleQ.Webinterface.Controllers
                 return View("SurveyResults", model);
             }
         }
+        #endregion
 
+        #region AJAX-Methods
         [HttpGet]
         public ActionResult LoadSingleResult(int svyId)
         {
@@ -113,7 +115,7 @@ namespace SimpleQ.Webinterface.Controllers
                 AddModelError("Model", "Model object must not be null.", ref err);
             if (req.StartDate > req.EndDate)
                 AddModelError("StartDate", "Start date must be smaller than end date.", ref err);
-            if(string.IsNullOrEmpty(req.SurveyText))
+            if (string.IsNullOrEmpty(req.SurveyText))
                 AddModelError("SurveyText", "Survey text must not be empty.", ref err);
 
             using (var db = new SimpleQDBEntities())
@@ -215,28 +217,6 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult LoadSurveyDates(int catId, int typeId, string svyText)
-        {
-            using (var db = new SimpleQDBEntities())
-            {
-                if (!db.Customers.Any(c => c.CustCode == CustCode))
-                {
-                    return Http.NotFound("Customer not found");
-                }
-
-                var query = db.Surveys.Where(s => s.CatId == catId && s.TypeId == typeId && s.CustCode == CustCode && s.SvyText.ToLower().Trim() == svyText.ToLower().Trim());
-                if (query.Count() == 0)
-                    return Http.NotFound("No surveys found");
-
-                return Json(new
-                {
-                    StartDate = query.Select(s => s.StartDate).Min().ToString("yyyy-MM-dd"),
-                    EndDate = query.Select(s => s.StartDate).Max().ToString("yyyy-MM-dd")
-                }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        [HttpGet]
         public ActionResult LoadSurveys(int catId, int typeId)
         {
             using (var db = new SimpleQDBEntities())
@@ -256,7 +236,7 @@ namespace SimpleQ.Webinterface.Controllers
                     return Http.NotFound("No surveys found");
 
                 List<string> strings = new List<string>();
-                foreach(string s in list.ToList())
+                foreach (string s in list.ToList())
                 {
                     if (!strings.Contains(s))
                     {
@@ -265,7 +245,28 @@ namespace SimpleQ.Webinterface.Controllers
                 }
 
                 return Json(new { SurveyTexts = strings }, JsonRequestBehavior.AllowGet);
-                //return Json(list, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult LoadSurveyDates(int catId, int typeId, string svyText)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                {
+                    return Http.NotFound("Customer not found");
+                }
+
+                var query = db.Surveys.Where(s => s.CatId == catId && s.TypeId == typeId && s.CustCode == CustCode && s.SvyText.ToLower().Trim() == svyText.ToLower().Trim());
+                if (query.Count() == 0)
+                    return Http.NotFound("No surveys found");
+
+                return Json(new
+                {
+                    StartDate = query.Select(s => s.StartDate).Min().ToString("yyyy-MM-dd"),
+                    EndDate = query.Select(s => s.StartDate).Max().ToString("yyyy-MM-dd")
+                }, JsonRequestBehavior.AllowGet);
             }
         }
         #endregion
@@ -340,6 +341,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         private void AddModelError(string key, string errorMessage, ref bool error)
         {
+            //logger.Debug($"Model error: {key}: {errorMessage}");
             errString += $"{key}: {errorMessage}{Environment.NewLine}";
             error = true;
         }
