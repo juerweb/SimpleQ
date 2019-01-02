@@ -432,7 +432,7 @@ namespace SimpleQ.Webinterface.Controllers
                 logger.Debug("Starting to select votes from survey grouped");
                 var list = new List<KeyValuePair<string, List<int>>>();
                 var query = selectedSurveys.SelectMany(s => s.AnswerOptions).ToList();
-                logger.Debug($"{query.Count()} answer options selected. (SurveyText: {selectedSurveys.Select(s => s.SvyText).First()}, CustCode: {CustCode}");
+                logger.Debug($"{query.Count()} answer options selected. (SurveyText: {selectedSurveys.Select(s => s.SvyText).FirstOrDefault()}, CustCode: {CustCode}");
 
                 if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion)
                 {

@@ -24,6 +24,7 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 ViewBag.confirmed = confirmed == 1;
                 logger.Trace($"Loading login page {(confirmed == 1 ? " after confirmation" : "")}");
+                Response.AppendHeader("spn", "sam, dean, castiel and jack were here");
                 return View("Login");
             }
             catch (Exception ex)
@@ -43,6 +44,7 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     ViewBag.PaymentMethods = db.PaymentMethods.ToList();
                     logger.Trace("Loading registration page.");
+                    Response.AppendHeader("get-stoned", "its always 420 somewhere");
                     return View("Register");
                 }
             }

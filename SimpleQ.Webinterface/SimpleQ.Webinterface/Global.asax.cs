@@ -1,4 +1,5 @@
 ﻿using MigraDoc.Rendering;
+using NLog;
 using PdfSharp.Pdf;
 using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
@@ -20,6 +21,8 @@ namespace SimpleQ.Webinterface
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         private static bool surveySchedulerStarted = false;
         private static readonly object lck1 = new object();
 
@@ -31,147 +34,250 @@ namespace SimpleQ.Webinterface
 
         protected void Application_Start()
         {
-            GlobalFilters.Filters.Add(new RequireHttpsAttribute());
+            try
+            {
+                logger.Debug("Starting application");
+                GlobalFilters.Filters.Add(new RequireHttpsAttribute());
 
-            AreaRegistration.RegisterAllAreas();
-            GlobalConfiguration.Configure(WebApiConfig.Register);
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
+                AreaRegistration.RegisterAllAreas();
+                GlobalConfiguration.Configure(WebApiConfig.Register);
+                FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+                RouteConfig.RegisterRoutes(RouteTable.Routes);
+                BundleConfig.RegisterBundles(BundleTable.Bundles);
+                AntiForgeryConfig.UniqueClaimTypeIdentifier = ClaimTypes.NameIdentifier;
 
-            StartSurveyScheduler();
-            RestoreQueuedSurveys();
-            StartExceededSurveyScheduler();
-            StartCreateBillsScheduler();
+                logger.Debug("Starting schedulers");
+                StartSurveyScheduler();
+                RestoreQueuedSurveys();
+                StartExceededSurveyScheduler();
+                StartCreateBillsScheduler();
+                logger.Debug("Application started successfully");
+            }
+            catch (Exception ex)
+            {
+                logger.Fatal(ex, "Unexpected error while starting application");
+                throw ex;
+            }
         }
 
         private void StartSurveyScheduler()
         {
-            lock (lck1)
+            try
             {
-                if (surveySchedulerStarted) return;
-                surveySchedulerStarted = true;
-            }
-
-            HostingEnvironment.QueueBackgroundWorkItem(ct =>
-            {
-                while (true)
+                logger.Debug("Starting survey scheduler");
+                lock (lck1)
                 {
-                    // Sleep bis zur nächsten Mitternacht
-                    Thread.Sleep((int)Literal.NextMidnight.TotalMilliseconds);
-                    using (var db = new SimpleQDBEntities())
+                    if (surveySchedulerStarted)
                     {
-                        // Alle heutigen Umfragen schedulen
-                        db.Surveys.Where(s => s.StartDate.Date == DateTime.Today).ToList().ForEach(s =>
-                        {
-                            Controllers.SurveyCreationController.ScheduleSurvey(s.SvyId, s.StartDate - DateTime.Now, s.CustCode);
-                        });
+                        logger.Debug("Survey scheduler running already");
+                        return;
                     }
+
+                    surveySchedulerStarted = true;
                 }
-            });
+
+                HostingEnvironment.QueueBackgroundWorkItem(ct =>
+                {
+                    try
+                    {
+                        while (true)
+                        {
+                            // Sleep bis zur nächsten Mitternacht
+                            logger.Debug($"Survey scheduler sleeping for {Literal.NextMidnight.ToString(@"hh\:mm\:ss\.fff")}");
+                            Thread.Sleep((int)Literal.NextMidnight.TotalMilliseconds);
+                            using (var db = new SimpleQDBEntities())
+                            {
+                                // Alle heutigen Umfragen schedulen
+                                var query = db.Surveys.Where(s => s.StartDate.Date == DateTime.Today).ToList();
+                                query.ForEach(s =>
+                                {
+                                    Controllers.SurveyCreationController.ScheduleSurvey(s.SvyId, s.StartDate - DateTime.Now, s.CustCode);
+                                });
+                                logger.Debug($"{query.Count} surveys scheduled for today successfully");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex, "StartSurveyScheduler->QueueBackgroundWorkItem: Scheduling surveys failed unexpectedly");
+                        throw ex;
+                    }
+                });
+
+                logger.Debug("Survey scheduler started successfully");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "StartSurveyScheduler: Unexpected error");
+                throw ex;
+            }
         }
 
         private void RestoreQueuedSurveys()
         {
-            using (var db = new SimpleQDBEntities())
+            try
             {
-                // Alle Umfragen welche bis zur nächsten Mitternacht (+ 1h Toleranz) starten schedulen
-                db.Surveys.Where(s => !s.Sent).ToList()
-                    .Where(s => s.StartDate - DateTime.Now < Literal.NextMidnight.Add(TimeSpan.FromHours(1)))
-                    .ToList().ForEach(s =>
+                logger.Debug("Starting to restore queued surveys");
+                using (var db = new SimpleQDBEntities())
                 {
-                    Controllers.SurveyCreationController.ScheduleSurvey(s.SvyId, s.StartDate - DateTime.Now, s.CustCode);
-                });
+                    // Alle Umfragen welche bis zur nächsten Mitternacht (+ 1h Toleranz) starten schedulen
+                    var query = db.Surveys.Where(s => !s.Sent).ToList()
+                        .Where(s => s.StartDate - DateTime.Now < Literal.NextMidnight.Add(TimeSpan.FromHours(1)))
+                        .ToList();
+                    query.ForEach(s =>
+                    {
+                        Controllers.SurveyCreationController.ScheduleSurvey(s.SvyId, s.StartDate - DateTime.Now, s.CustCode);
+                    });
+                    logger.Debug($"{query.Count} surveys restored successfully");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "RestoreQueuedSurveys: Unexpected error");
+                throw ex;
             }
         }
 
         private void StartExceededSurveyScheduler()
         {
-            lock (lck2)
+            try
             {
-                if (exceededSurveySchedulerStarted) return;
-                exceededSurveySchedulerStarted = true;
-            }
-
-            HostingEnvironment.QueueBackgroundWorkItem(ct =>
-            {
-                while (true)
+                logger.Debug("Starting exceeded survey data scheduler");
+                lock (lck2)
                 {
-                    // Sleep bis um 03:00 AM
-                    Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
-                    using (var db = new SimpleQDBEntities())
+                    if (exceededSurveySchedulerStarted)
                     {
-                        db.sp_CheckExceededSurveyData();
+                        logger.Debug("Exceeded survey data scheduler running already");
+                        return;
                     }
+
+                    exceededSurveySchedulerStarted = true;
                 }
-            });
+                HostingEnvironment.QueueBackgroundWorkItem(ct =>
+                {
+                    try
+                    {
+                        while (true)
+                        {
+                            // Sleep bis um 03:00 AM
+                            logger.Debug($"Exceeded survey data scheduler sleeping for {Literal.NextMidnight.Add(TimeSpan.FromHours(3)).ToString(@"hh\:mm\:ss\.fff")}");
+                            Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
+                            using (var db = new SimpleQDBEntities())
+                            {
+                                var result = db.sp_CheckExceededSurveyData();
+                                logger.Debug($"{result.FirstOrDefault()} surveys deleted successfully.");
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex, "StartExceededSurveyScheduler->QueueBackgroundWorkItem: Check for exceeded survey data failed unexpectedly");
+                        throw ex;
+                    }
+                });
+
+                logger.Debug("Exceeded survey data scheduler started successfully");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "StartExceededSurveyScheduler: Unexpected error");
+                throw ex;
+            }
         }
 
         private void StartCreateBillsScheduler()
         {
-            lock (lck3)
+            try
             {
-                if (createBillsSchedulerStarted) return;
-                createBillsSchedulerStarted = true;
-            }
-
-            HostingEnvironment.QueueBackgroundWorkItem(ct =>
-            {
-                while (true)
+                logger.Debug("Starting create bills scheduler");
+                lock (lck3)
                 {
-                    // Sleep bis um 03:00 AM
-                    Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
-                    using (var db = new SimpleQDBEntities())
+                    if (createBillsSchedulerStarted)
                     {
-                        db.sp_CreateBills().ToList();
-                        var bills = db.Bills.Where(b => !b.Paid).ToList();
+                        logger.Debug("Create bills scheduler running already");
+                        return;
+                    }
 
-                        foreach (Bill clinton in bills)
+                    createBillsSchedulerStarted = true;
+                }
+
+                HostingEnvironment.QueueBackgroundWorkItem(ct =>
+                {
+                    try
+                    {
+                        while (true)
                         {
-                            var lastBillDate = db.Bills.Where(b => b.CustCode == clinton.CustCode)
-                                .OrderByDescending(b => b.BillDate)
-                                .Select(b => b.BillDate)
-                                .Skip(1)
-                                .FirstOrDefault();
-
-                            var surveys = db.Surveys
-                                .Where(s => s.CustCode == clinton.CustCode
-                                        && s.StartDate <= clinton.BillDate
-                                        && s.EndDate > lastBillDate)
-                                .OrderBy(s => s.StartDate)
-                                .ToArray();
-
-                            var stream = new MemoryStream();
-                            if (Pdf.CreateBill(ref stream, clinton, surveys, HostingEnvironment.MapPath("~/Content/Images/Logos/simpleQ.png"), lastBillDate))
+                        // Sleep bis um 03:00 AM
+                        logger.Debug($"Create bills scheduler sleeping for {Literal.NextMidnight.Add(TimeSpan.FromHours(3)).ToString(@"hh\:mm\:ss\.fff")}");
+                            Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
+                            using (var db = new SimpleQDBEntities())
                             {
+                                var result = db.sp_CreateBills();
+                                logger.Debug($"{result.Count()} bills created");
+                                var bills = db.Bills.Where(b => !b.Paid).ToList();
+                                logger.Debug($"{bills.Count} bills loaded for sending");
 
-                                var body = $"Dear sir or madam!{Environment.NewLine}{Environment.NewLine}" +
-                                    $"Enclosed you will find your most recent bill.{Environment.NewLine}" +
-                                    $"We stay at your entire disposal for further questions.{Environment.NewLine}" +
-                                    $"{Environment.NewLine}{Environment.NewLine}" +
-                                    $"Sincerely{Environment.NewLine}" +
-                                    $"Your SimpleQ team";
+                                foreach (Bill clinton in bills)
+                                {
+                                    var lastBillDate = db.Bills.Where(b => b.CustCode == clinton.CustCode)
+                                        .OrderByDescending(b => b.BillDate)
+                                        .Select(b => b.BillDate)
+                                        .Skip(1)
+                                        .FirstOrDefault();
+                                    logger.Debug($"Last bill date of customer {clinton.CustCode}: {lastBillDate.ToString("yyyy-MM-dd")}");
 
-                                if (Email.Send("payment@simpleq.at", clinton.Customer.CustEmail, "SimpleQ Bill", body, false,
-                                    new System.Net.Mail.Attachment(stream, $"SimpleQ_Bill_{clinton.BillDate.ToString("yyyy-MM-dd")}.pdf", "application/pdf")))
-                                {
-                                    clinton.Sent = true;
-                                    db.SaveChanges();
+                                    var surveys = db.Surveys
+                                        .Where(s => s.CustCode == clinton.CustCode
+                                                && s.StartDate <= clinton.BillDate
+                                                && s.EndDate > lastBillDate)
+                                        .OrderBy(s => s.StartDate)
+                                        .ToArray();
+                                    logger.Debug($"Surveys to bill for customer {clinton.CustCode}: {surveys.Length}");
+
+                                    var stream = new MemoryStream();
+                                    if (Pdf.CreateBill(ref stream, clinton, surveys, HostingEnvironment.MapPath("~/Content/Images/Logos/simpleQ.png"), lastBillDate))
+                                    {
+                                        logger.Debug($"Pdf document for bill {clinton.BillId} created successfully");
+                                        var body = $"Dear sir or madam!{Environment.NewLine}{Environment.NewLine}" +
+                                            $"Enclosed you will find your most recent bill.{Environment.NewLine}" +
+                                            $"We stay at your entire disposal for further questions.{Environment.NewLine}" +
+                                            $"{Environment.NewLine}{Environment.NewLine}" +
+                                            $"Sincerely{Environment.NewLine}" +
+                                            $"Your SimpleQ team";
+
+                                        if (Email.Send("payment@simpleq.at", clinton.Customer.CustEmail, "SimpleQ Bill", body, false,
+                                            new System.Net.Mail.Attachment(stream, $"SimpleQ_Bill_{clinton.BillDate.ToString("yyyy-MM-dd")}.pdf", "application/pdf")))
+                                        {
+                                            clinton.Sent = true;
+                                            db.SaveChanges();
+                                            logger.Debug($"Bill {clinton.BillId} sent successfully");
+                                        }
+                                        else
+                                        {
+                                            logger.Error($"Failed to send bill {clinton.BillId}");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        logger.Error($"Failed to create pdf document for bill {clinton.BillId}");
+                                    }
                                 }
-                                else
-                                {
-                                    // Logging
-                                }
-                            }
-                            else
-                            {
-                                // Logging
                             }
                         }
                     }
-                }
-            });
+                    catch (Exception ex)
+                    {
+                        logger.Error(ex, "StartCreateBillsScheduler->QueueBackgroundWorkItem: Creating/sending bill failed");
+                        throw ex;
+                    }
+                });
+                logger.Debug("Create bills scheduler started successfully");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "StartCreateBillsScheduler: Unexpected error");
+                throw ex;
+            }
         }
     }
 }

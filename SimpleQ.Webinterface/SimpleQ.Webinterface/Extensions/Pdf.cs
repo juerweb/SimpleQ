@@ -2,6 +2,7 @@
 using MigraDoc.DocumentObjectModel;
 using MigraDoc.DocumentObjectModel.Tables;
 using MigraDoc.Rendering;
+using NLog;
 using PdfSharp.Pdf;
 using SimpleQ.Webinterface.Models;
 using System;
@@ -15,10 +16,13 @@ namespace SimpleQ.Webinterface.Extensions
 {
     public static class Pdf
     {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         public static bool CreateBill(ref MemoryStream stream, Bill bill, Survey[] surveys, string imgPath, DateTime lastBillDate)
         {
             try
             {
+                logger.Debug($"Starting bill creation (BillId: {bill.BillId}, CustCode: {bill.CustCode})");
                 var doc = new Document();
                 doc.Info.Title = "SimpleQ Bill";
                 doc.Info.Subject = "Auto generated bill document";
@@ -103,8 +107,8 @@ namespace SimpleQ.Webinterface.Extensions
 
                 if (sum != bill.BillPrice)
                 {
-                    Debug.WriteLine($"!!!:{sum} == {bill.BillPrice}");
-                    // logging WARN
+                    //Debug.WriteLine($"!!!:{sum} != {bill.BillPrice}");
+                    logger.Warn($"Possible error calculating bill price. Sum: {sum} != BillPrice: {bill.BillPrice} (BillId: {bill.BillId}, CustCode: {bill.CustCode})");
                 }
 
                 var total = table.AddRow();
@@ -132,11 +136,12 @@ namespace SimpleQ.Webinterface.Extensions
                 renderer.PdfDocument.Save(stream, false);
                 renderer.PdfDocument.Close();
 
+                logger.Debug("Bill created successfullly");
                 return true;
             }
             catch (Exception ex)
             {
-                // Logging!
+                logger.Error(ex, "CreateBill: Creating bill failed");
                 return false;
             }
         }
