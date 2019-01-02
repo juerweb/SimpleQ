@@ -137,6 +137,20 @@ namespace SimpleQ.Webinterface.Controllers
                     db.Customers.Add(cust);
                     db.SaveChanges();
 
+                    int maxId()
+                    {
+                        db.SaveChanges();
+                        return db.SurveyCategories
+                            .Where(c => c.CustCode == custCode)
+                            .Select(c => c.CatId)
+                            .DefaultIfEmpty(0)
+                            .Max();
+                    }
+
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = maxId() + 1, CustCode = custCode, CatName = "Employee satisfaction", Deactivated = false });
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = maxId() + 1, CustCode = custCode, CatName = "Workplace design", Deactivated = false });
+                    db.SaveChanges();
+                    
                     logger.Info($"Customer registered: {custCode}");
 
                     var authToken = db.sp_GenerateAuthToken(cust.CustCode).First();
