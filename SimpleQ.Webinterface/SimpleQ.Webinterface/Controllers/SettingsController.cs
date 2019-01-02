@@ -61,6 +61,10 @@ namespace SimpleQ.Webinterface.Controllers
                         bills.Add(new SettingsModel.BillWrapper { Bill = bill, Surveys = surveys });
                     }
 
+                    var last = cust.Bills.Select(b => b.BillDate).DefaultIfEmpty().Max();
+                    var currentSurveys = db.Surveys.Where(s => s.StartDate >= last && s.CustCode == CustCode);
+                    var currentVoteAmount = db.Votes.Where(v => v.VoteDate >= last && v.AnswerOptions.All(a => a.Survey.CustCode == CustCode)).Count();   //currentSurveys.SelectMany(s => s.AnswerOptions.SelectMany(a => a.Votes)).Count();
+
                     var model = new SettingsModel
                     {
                         MinGroupSize = cust.MinGroupSize,
@@ -78,7 +82,10 @@ namespace SimpleQ.Webinterface.Controllers
                         LanguageCode = cust.LanguageCode,
                         DataStoragePeriod = cust.DataStoragePeriod,
                         PaymentMethodId = cust.PaymentMethodId,
-                        Bills = bills
+                        Bills = bills,
+                        OutstandingBalance = decimal.ToDouble(cust.CostBalance),
+                        CurrentSurveyAmount = currentSurveys.Count(),
+                        CurrentVoteAmount = currentVoteAmount
                     };
 
                     ViewBag.emailConfirmed = cust.EmailConfirmed;

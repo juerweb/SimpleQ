@@ -207,8 +207,8 @@ namespace SimpleQ.Webinterface
                     {
                         while (true)
                         {
-                        // Sleep bis um 03:00 AM
-                        logger.Debug($"Create bills scheduler sleeping for {Literal.NextMidnight.Add(TimeSpan.FromHours(3)).ToString(@"hh\:mm\:ss\.fff")}");
+                            // Sleep bis um 03:00 AM
+                            logger.Debug($"Create bills scheduler sleeping for {Literal.NextMidnight.Add(TimeSpan.FromHours(3)).ToString(@"hh\:mm\:ss\.fff")}");
                             Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromHours(3)).TotalMilliseconds);
                             using (var db = new SimpleQDBEntities())
                             {
