@@ -13,9 +13,6 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using System.Security.Claims;
 using NLog;
-using System.Threading.Tasks;
-using System.Net;
-using System.IO;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -392,34 +389,36 @@ namespace SimpleQ.Webinterface.Controllers
         #region Helpers
         internal static void ScheduleSurvey(int svyId, TimeSpan timeout, string custCode)
         {
-            logger.Debug($"Survey scheduling started (SvyId: {svyId}, CustCode: {custCode})");
-            lock (queuedSurveys)
+            try
             {
-                if (!queuedSurveys.Add(svyId))
-                {
-                    logger.Debug($"Survey {svyId} already scheduled.");
-                    return;
-                }
-            }
-
-            HostingEnvironment.QueueBackgroundWorkItem(ct =>
-            {
-                logger.Debug($"Survey {svyId} scheduled successfully. Sleeping for {timeout.TotalMilliseconds}ms");
-                if (timeout.TotalMilliseconds > 0)
-                    Thread.Sleep((int)timeout.TotalMilliseconds);
-
+                logger.Debug($"Survey scheduling started (SvyId: {svyId}, CustCode: {custCode})");
                 lock (queuedSurveys)
                 {
-                    if (!queuedSurveys.Contains(svyId))
+                    if (!queuedSurveys.Add(svyId))
                     {
-                        logger.Debug($"Survey {svyId} removed during sleep phase. Exiting");
+                        logger.Debug($"Survey {svyId} already scheduled.");
                         return;
                     }
                 }
 
-                using (var db = new SimpleQDBEntities())
+                HostingEnvironment.QueueBackgroundWorkItem(ct =>
                 {
-                    Random rnd = new Random();
+                    logger.Debug($"Survey {svyId} scheduled successfully. Sleeping for {timeout.TotalMilliseconds}ms");
+                    if (timeout.TotalMilliseconds > 0)
+                        Thread.Sleep((int)timeout.TotalMilliseconds);
+
+                    lock (queuedSurveys)
+                    {
+                        if (!queuedSurveys.Contains(svyId))
+                        {
+                            logger.Debug($"Survey {svyId} removed during sleep phase. Exiting");
+                            return;
+                        }
+                    }
+
+                    using (var db = new SimpleQDBEntities())
+                    {
+                        Random rnd = new Random();
 
                     // Anzahl an zu befragenden Personen
                     int amount = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Amount;
@@ -432,98 +431,112 @@ namespace SimpleQ.Webinterface.Controllers
 
                     // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
                     int totalPeople = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Departments.SelectMany(d => d.People).Distinct().Count();
-                    logger.Debug($"Survey {svyId} - totalPeople: {totalPeople}");
+                        logger.Debug($"Survey {svyId} - totalPeople: {totalPeople}");
 
-                    db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Departments.ToList().ForEach(dep =>
-                    {
+                        db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Departments.ToList().ForEach(dep =>
+                        {
                         // Anzahl an Personen in der aktuellen Abteilung (mit DepId = id)
                         int currPeople = dep.People.Distinct().Count();
                         // Abteilung überspringen, wenn keine Leute darin
                         if (currPeople == 0)
-                            return;
+                                return;
 
                         // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
                         int toAsk = (int)Math.Round(amount * (currPeople / (double)totalPeople));
 
-                        depAmounts.Add(dep.DepId, toAsk);
-                    });
+                            depAmounts.Add(dep.DepId, toAsk);
+                        });
 
-                    logger.Debug($"Survey {svyId} - DepAmounts before correction: {string.Join(";", depAmounts.Select(x => x.Key + "=" + x.Value))}");
+                        logger.Debug($"Survey {svyId} - DepAmounts before correction: {string.Join(";", depAmounts.Select(x => x.Key + "=" + x.Value))}");
 
 
                     // Solange Gesamtanzahl der zu Befragenden zu klein, die Anzahl einer zufälligen Abteilung erhöhen
                     while (depAmounts.Values.Sum() < amount)
-                        depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]++;
+                            depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]++;
 
                     // Solange Gesamtanzahl der zu Befragenden zu groß, die Anzahl einer zufälligen Abteilung verringern
                     while (depAmounts.Values.Sum() > amount)
-                        depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]--;
+                            depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]--;
 
-                    logger.Debug($"Survey {svyId} - DepAmounts after correction: {string.Join(";", depAmounts.Select(x => x.Key + "=" + x.Value))}");
+                        logger.Debug($"Survey {svyId} - DepAmounts after correction: {string.Join(";", depAmounts.Select(x => x.Key + "=" + x.Value))}");
 
-                    using (var client = new HttpClient())
-                    {
-                        foreach (var kv in depAmounts)
+                        using (var client = new HttpClient())
                         {
-                            int i = 0;
-                            db.Departments
-                                .Where(d => d.DepId == kv.Key && d.CustCode == custCode)
-                                .SelectMany(d => d.People)
-                                .ToList()
-                                .Where(p => !alreadyAsked.Contains(p.PersId))
-                                .OrderBy(p => rnd.Next())
-                                .Take(kv.Value)
-                                .ToList()
-                                .ForEach(p =>
-                                {
-                                    alreadyAsked.Add(p.PersId);
-
-                                    try
+                            foreach (var kv in depAmounts)
+                            {
+                                int i = 0;
+                                db.Departments
+                                    .Where(d => d.DepId == kv.Key && d.CustCode == custCode)
+                                    .SelectMany(d => d.People)
+                                    .ToList()
+                                    .Where(p => !alreadyAsked.Contains(p.PersId))
+                                    .OrderBy(p => rnd.Next())
+                                    .Take(kv.Value)
+                                    .ToList()
+                                    .ForEach(p =>
                                     {
+                                        alreadyAsked.Add(p.PersId);
+
+                                        try
+                                        {
                                         // SEND SURVEY
                                         logger.Debug($"Beginning to send survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
-                                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
-                                        var obj = new
-                                        {
-                                            app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
-                                            include_player_ids = new string[] { p.DeviceId },
-                                            contents = new { en = "New survey" },
-                                            content_available = true,
-                                            data = new { Cancel = false, SvyId = svyId }
-                                        };
-                                        var response = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj).Result;
+                                            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                                            var obj = new
+                                            {
+                                                app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
+                                                include_player_ids = new string[] { p.DeviceId },
+                                                contents = new { en = "New survey" },
+                                                content_available = true,
+                                                data = new { Cancel = false, SvyId = svyId }
+                                            };
+                                            var response = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj).Result;
 
-                                        if (!response.IsSuccessStatusCode)
-                                        {
-                                            logger.Error($"Failed sending survey (StatusCode: {response.StatusCode}, Content: {response.Content})");
+                                            if (!response.IsSuccessStatusCode)
+                                            {
+                                                logger.Error($"Failed sending survey (StatusCode: {response.StatusCode}, Content: {response.Content})");
+                                            }
+                                            else
+                                            {
+                                                logger.Debug($"Survey sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");
+                                                i++;
+                                            }
                                         }
-                                        else
+                                        catch (AggregateException ex)
                                         {
-                                            logger.Debug($"Survey sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");
-                                            i++;
+                                            logger.Error(ex, $"Error while sending survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
                                         }
-                                    }
-                                    catch (AggregateException ex)
-                                    {
-                                        logger.Error(ex, $"Error while sending survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
-                                    }
-                                });
-                            logger.Debug($"(SvyId {svyId}) Surveys sent to Department {kv.Key}: {i} == {kv.Value}");
+                                    });
+                                logger.Debug($"(SvyId {svyId}) Surveys sent to Department {kv.Key}: {i} == {kv.Value}");
+                            }
                         }
-                    }
-                    logger.Debug($"(SvyId {svyId}) Total surveys sent: {alreadyAsked.Count}");
+                        logger.Debug($"(SvyId {svyId}) Total surveys sent: {alreadyAsked.Count}");
 
-                    db.Surveys.Where(s => s.SvyId == svyId).First().Sent = true;
-                    db.SaveChanges();
-                }
-            });
+                        db.Surveys.Where(s => s.SvyId == svyId).First().Sent = true;
+                        db.SaveChanges();
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "ScheduleSurvey: Unexpected error");
+                throw ex;
+            }
         }
 
         private void AddModelError(string key, string errorMessage, ref bool error)
         {
-            logger.Debug($"Model error: {key}: {errorMessage}");
-            ModelState.AddModelError(key, errorMessage);
-            error = true;
+            try
+            {
+                logger.Debug($"Model error: {key}: {errorMessage}");
+                ModelState.AddModelError(key, errorMessage);
+                error = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "AddModelError: Unexpected error");
+                throw ex;
+            }
         }
 
         private string CustCode

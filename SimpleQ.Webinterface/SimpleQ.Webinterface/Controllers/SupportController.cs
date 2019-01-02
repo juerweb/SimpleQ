@@ -73,9 +73,17 @@ namespace SimpleQ.Webinterface.Controllers
         #region Helpers
         private void AddModelError(string key, string errorMessage, ref bool error)
         {
-            logger.Debug($"Model error: {key}: {errorMessage}");
-            ModelState.AddModelError(key, errorMessage);
-            error = true;
+            try
+            {
+                logger.Debug($"Model error: {key}: {errorMessage}");
+                ModelState.AddModelError(key, errorMessage);
+                error = true;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "AddModelError: Unexpected error");
+                throw ex;
+            }
         }
 
         private string CustCode => HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
