@@ -28,6 +28,9 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public List<AnswerType> DeactivatedAnswerTypes { get; set; }
         public List<Survey> Templates { get; set; }
         public List<BillWrapper> Bills { get; set; }
+        public double OutstandingBalance { get; set; }
+        public int CurrentSurveyAmount { get; set; }
+        public int CurrentVoteAmount { get; set; }
         #endregion
 
         #region Any direction

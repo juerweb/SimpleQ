@@ -44,7 +44,7 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     ViewBag.PaymentMethods = db.PaymentMethods.ToList();
                     logger.Trace("Loading registration page.");
-                    Response.AppendHeader("get-stoned", "its always 420 somewhere");
+                    Response.AppendHeader("get-stoned", "it's always 4:20 somewhere");
                     return View("Register");
                 }
             }
@@ -152,6 +152,7 @@ namespace SimpleQ.Webinterface.Controllers
                     db.SaveChanges();
                     
                     logger.Info($"Customer registered: {custCode}");
+                    Response.AppendHeader("msg", "so close, no matter how far");
 
                     var authToken = db.sp_GenerateAuthToken(cust.CustCode).First();
 
@@ -425,6 +426,7 @@ namespace SimpleQ.Webinterface.Controllers
                     cust.Departments.Clear();
 
                     db.SaveChanges();
+                    Response.AppendHeader("msg", "cause nothin' lasts forever even cold november rain");
                     logger.Info($"Customer unregistered {custCode}");
 
                     return Http.Ok();
