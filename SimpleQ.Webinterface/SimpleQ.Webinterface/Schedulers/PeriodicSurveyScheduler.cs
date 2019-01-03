@@ -1,4 +1,5 @@
-﻿using SimpleQ.Webinterface.Extensions;
+﻿using NLog;
+using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Enums;
 using System;
@@ -11,6 +12,7 @@ namespace SimpleQ.Webinterface.Schedulers
 {
     public class PeriodicSurveyScheduler : Scheduler
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         protected override string Name => "periodic survey scheduler";
 
         protected override void Schedule()

@@ -19,7 +19,7 @@ namespace SimpleQ.Webinterface.Controllers
     [CAuthorize]
     public class GroupAdministrationController : Controller
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region MVC-Actions
         [HttpGet]

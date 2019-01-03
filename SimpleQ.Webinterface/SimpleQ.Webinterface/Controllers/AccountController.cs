@@ -14,7 +14,7 @@ namespace SimpleQ.Webinterface.Controllers
 {
     public class AccountController : Controller
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region MVC-Actions
         [HttpGet]

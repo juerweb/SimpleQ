@@ -11,7 +11,7 @@ namespace SimpleQ.Webinterface.Controllers
     [RequireAuth]
     public class MobileController : ApiController
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         [HttpGet]
         public IHttpActionResult Register(string regCode, string deviceId)

@@ -1,4 +1,5 @@
-﻿using SimpleQ.Webinterface.Extensions;
+﻿using NLog;
+using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ namespace SimpleQ.Webinterface.Schedulers
 {
     public class SurveyScheduler : Scheduler
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
         protected override string Name => "survey scheduler";
 
         protected override void Schedule()

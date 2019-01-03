@@ -18,7 +18,7 @@ namespace SimpleQ.Webinterface
 {
     public class MvcApplication : System.Web.HttpApplication
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         private static Scheduler surveyScheduler = new SurveyScheduler();
         private static Scheduler exceededSurveyDataScheduler = new ExceededSurveyDataScheduler();

@@ -9,11 +9,10 @@ namespace SimpleQ.Webinterface.Schedulers
 {
     public abstract class Scheduler
     {
-        protected static Logger _logger;
+        private Logger logger = LogManager.GetCurrentClassLogger();
+
         protected bool schedulerStarted = false;
         protected readonly object lck = new object();
-
-        protected Logger logger => _logger ?? (_logger = LogManager.GetLogger(GetType().FullName));
         protected abstract string Name { get; }
 
         public void Start()
