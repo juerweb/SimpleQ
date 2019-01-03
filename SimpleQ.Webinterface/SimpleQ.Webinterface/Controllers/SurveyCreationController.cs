@@ -94,6 +94,13 @@ namespace SimpleQ.Webinterface.Controllers
                     req.Survey.StartDate = req.StartDate.Date.Add(req.StartTime);
                     req.Survey.EndDate = req.EndDate.Date.Add(req.EndTime);
                     req.Survey.Sent = false;
+                    req.Survey.Period = req.Period?.Ticks;
+
+                    if (req.Period.Value < TimeSpan.FromDays(1))
+                        AddModelError("Period", "Period must be at least 1 day.", ref err);
+
+                    if (req.Survey.StartDate.Add(req.Period.Value) < req.Survey.EndDate)
+                        AddModelError("Period", "Period must be bigger than the survey's duration.", ref err);
 
                     if (req.Survey.StartDate >= req.Survey.EndDate)
                         AddModelError("Survey.StartDate", "StartDate must be earlier than EndDate.", ref err);
@@ -186,8 +193,8 @@ namespace SimpleQ.Webinterface.Controllers
                 TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
                 logger.Debug($"Timeout until sending survey {req.Survey.SvyId}: {timeout.ToString(@"hh\:mm\:ss\.fff")}");
 
-                // Umfrage nur schedulen wenn sie bis zur nächsten Mitternacht (+1h Toleranz) startet
-                if (timeout < Literal.NextMidnight.Add(TimeSpan.FromHours(1)))
+                // Umfrage nur schedulen wenn sie vor 00:00 startet (+10min Toleranz)
+                if (timeout < Literal.NextMidnight.Add(TimeSpan.FromMinutes(10)))
                 {
                     logger.Debug($"Scheduling survey {req.Survey.SvyId}");
                     ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);

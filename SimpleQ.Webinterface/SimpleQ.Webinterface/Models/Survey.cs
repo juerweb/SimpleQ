@@ -32,6 +32,7 @@ namespace SimpleQ.Webinterface.Models
         public int TypeId { get; set; }
         public bool Template { get; set; }
         public bool Sent { get; set; }
+        public Nullable<long> Period { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnswerOption> AnswerOptions { get; set; }

@@ -25,8 +25,6 @@ namespace SimpleQ.Webinterface.Models
         public Nullable<System.DateTime> VoteDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
     }
 }

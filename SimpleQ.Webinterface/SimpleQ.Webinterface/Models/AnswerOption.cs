@@ -25,12 +25,8 @@ namespace SimpleQ.Webinterface.Models
         public string AnsText { get; set; }
         public Nullable<bool> FirstPosition { get; set; }
     
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual Survey Survey { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Vote> Votes { get; set; }
     }
 }

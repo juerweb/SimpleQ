@@ -150,7 +150,7 @@ namespace SimpleQ.Webinterface.Controllers
                     db.SurveyCategories.Add(new SurveyCategory { CatId = maxId() + 1, CustCode = custCode, CatName = "Employee satisfaction", Deactivated = false });
                     db.SurveyCategories.Add(new SurveyCategory { CatId = maxId() + 1, CustCode = custCode, CatName = "Workplace design", Deactivated = false });
                     db.SaveChanges();
-                    
+
                     logger.Info($"Customer registered: {custCode}");
                     Response.AppendHeader("msg", "so close, no matter how far");
 
@@ -446,11 +446,11 @@ namespace SimpleQ.Webinterface.Controllers
             try
             {
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, cust.CustCode),
-                new Claim(ClaimTypes.Name, cust.CustName),
-                new Claim(ClaimTypes.Email, cust.CustEmail)
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, cust.CustCode),
+                    new Claim(ClaimTypes.Name, cust.CustName),
+                    new Claim(ClaimTypes.Email, cust.CustEmail)
+                };
 
                 var identity = new ClaimsIdentity(claims, "ApplicationCookie");
 

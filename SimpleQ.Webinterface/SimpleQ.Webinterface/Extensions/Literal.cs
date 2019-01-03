@@ -29,5 +29,10 @@ namespace SimpleQ.Webinterface.Extensions
 
             return new string(chars.OrderBy(c => rnd.Next()).Take(count).ToArray());
         }
+
+        public static DateTime Tomorrow()
+        {
+            return DateTime.Today.AddDays(1);
+        }
     }
 }
