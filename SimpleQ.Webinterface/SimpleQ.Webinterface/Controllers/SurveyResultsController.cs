@@ -14,7 +14,7 @@ using NLog;
 namespace SimpleQ.Webinterface.Controllers
 {
     [CAuthorize]
-    public class SurveyResultsController : Controller
+    public class SurveyResultsController : BaseController
     {
         private string errString;
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -477,7 +477,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
-        private void AddModelError(string key, string errorMessage, ref bool error)
+        protected override void AddModelError(string key, string errorMessage, ref bool error)
         {
             try
             {
@@ -489,22 +489,6 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 logger.Error(ex, "AddModelError: Unexpected error");
                 throw ex;
-            }
-        }
-
-        private string CustCode
-        {
-            get
-            {
-                try
-                {
-                    return HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, "CustCode: Unexpected error");
-                    throw ex;
-                }
             }
         }
         #endregion

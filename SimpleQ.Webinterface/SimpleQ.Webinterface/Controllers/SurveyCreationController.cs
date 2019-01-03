@@ -17,7 +17,7 @@ using NLog;
 namespace SimpleQ.Webinterface.Controllers
 {
     [CAuthorize]
-    public class SurveyCreationController : Controller
+    public class SurveyCreationController : BaseController
     {
         private static readonly HashSet<int> queuedSurveys = new HashSet<int>();
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -536,37 +536,6 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 logger.Error(ex, "ScheduleSurvey: Unexpected error");
                 throw ex;
-            }
-        }
-
-        private void AddModelError(string key, string errorMessage, ref bool error)
-        {
-            try
-            {
-                logger.Debug($"Model error: {key}: {errorMessage}");
-                ModelState.AddModelError(key, errorMessage);
-                error = true;
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "AddModelError: Unexpected error");
-                throw ex;
-            }
-        }
-
-        private string CustCode
-        {
-            get
-            {
-                try
-                {
-                    return HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, "CustCode: Unexpected error");
-                    throw ex;
-                }
             }
         }
 

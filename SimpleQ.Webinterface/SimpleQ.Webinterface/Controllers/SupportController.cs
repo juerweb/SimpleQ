@@ -13,7 +13,7 @@ using System.Web.Mvc;
 namespace SimpleQ.Webinterface.Controllers
 {
     [CAuthorize]
-    public class SupportController : Controller
+    public class SupportController : BaseController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -97,39 +97,6 @@ namespace SimpleQ.Webinterface.Controllers
                 var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
                 logger.Error(ex, "[POST]AskQuestion: Unexpected error");
                 return View("Error", model);
-            }
-        }
-        #endregion
-
-        #region Helpers
-        private void AddModelError(string key, string errorMessage, ref bool error)
-        {
-            try
-            {
-                logger.Debug($"Model error: {key}: {errorMessage}");
-                ModelState.AddModelError(key, errorMessage);
-                error = true;
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "AddModelError: Unexpected error");
-                throw ex;
-            }
-        }
-
-        private string CustCode
-        {
-            get
-            {
-                try
-                {
-                    return HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, "CustCode: Unexpected error");
-                    throw ex;
-                }
             }
         }
         #endregion

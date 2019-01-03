@@ -15,7 +15,7 @@ using System.Web.Mvc;
 namespace SimpleQ.Webinterface.Controllers
 {
     [CAuthorize]
-    public class SettingsController : Controller
+    public class SettingsController : BaseController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -602,38 +602,7 @@ namespace SimpleQ.Webinterface.Controllers
         #endregion
 
         #region Helpers
-        private void AddModelError(string key, string errorMessage, ref bool error)
-        {
-            try
-            {
-                logger.Debug($"Model error: {key}: {errorMessage}");
-                ModelState.AddModelError(key, errorMessage);
-                error = true;
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "AddModelError: Unexpected error");
-                throw ex;
-            }
-        }
-
         private ArgumentNullException ANEx(string paramName) => new ArgumentNullException(paramName);
-
-        private string CustCode
-        {
-            get
-            {
-                try
-                {
-                    return HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, "CustCode: Unexpected error");
-                    throw ex;
-                }
-            }
-        }
         #endregion
     }
 }

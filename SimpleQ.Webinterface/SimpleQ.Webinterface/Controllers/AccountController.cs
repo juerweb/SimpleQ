@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace SimpleQ.Webinterface.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -480,13 +480,6 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
-        private void AddModelError(string key, string errorMessage, ref bool error)
-        {
-            logger.Debug($"Model error: {key}: {errorMessage}");
-            ModelState.AddModelError(key, errorMessage);
-            error = true;
-        }
-
         private IAuthenticationManager AuthManager
         {
             get
@@ -502,6 +495,8 @@ namespace SimpleQ.Webinterface.Controllers
                 }
             }
         }
+
+        protected override string CustCode => null;
         #endregion
     }
 }

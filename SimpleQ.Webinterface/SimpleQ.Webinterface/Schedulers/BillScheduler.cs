@@ -13,7 +13,7 @@ namespace SimpleQ.Webinterface.Schedulers
 {
     public class BillScheduler : Scheduler
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         protected override string Name => "bill scheduler";
 
         protected override void Schedule()

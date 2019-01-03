@@ -12,7 +12,7 @@ namespace SimpleQ.Webinterface.Schedulers
 {
     public class ExceededSurveyDataScheduler : Scheduler
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         protected override string Name => "exceeded survey data scheduler";
 
         protected override void Schedule()

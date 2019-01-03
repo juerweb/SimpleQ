@@ -17,7 +17,7 @@ using NLog;
 namespace SimpleQ.Webinterface.Controllers
 {
     [CAuthorize]
-    public class GroupAdministrationController : Controller
+    public class GroupAdministrationController : BaseController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -239,39 +239,6 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 logger.Error(ex, "[GET]Delete: Unexpected error");
                 return Http.InternalServerError("Something went wrong. Please try again later.");
-            }
-        }
-        #endregion
-
-        #region Helpers
-        private void AddModelError(string key, string errorMessage, ref bool error)
-        {
-            try
-            {
-                logger.Debug($"Model error: {key}: {errorMessage}");
-                ModelState.AddModelError(key, errorMessage);
-                error = true;
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "AddModelError: Unexpected error");
-                throw ex;
-            }
-        }
-
-        private string CustCode
-        {
-            get
-            {
-                try
-                {
-                    return HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
-                }
-                catch (Exception ex)
-                {
-                    logger.Error(ex, "CustCode: Unexpected error");
-                    throw ex;
-                }
             }
         }
         #endregion
