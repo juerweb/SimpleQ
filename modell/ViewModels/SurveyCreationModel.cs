@@ -23,6 +23,7 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public TimeSpan EndTime { get; set; }
         public List<int> SelectedDepartments { get; set; }
         public List<string> TextAnswerOptions { get; set; }
+        public TimeSpan? Period { get; set; }
         #endregion
     }
 }
