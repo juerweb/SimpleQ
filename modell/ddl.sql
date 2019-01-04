@@ -228,7 +228,7 @@ create table Chooses
 go
 
 
--- DSGVO-spezifische Bestimmung
+-- Datenspezifische Bestimmung
 -- NICHT KUNDENSPEZIFISCH
 create table DataConstraint
 (

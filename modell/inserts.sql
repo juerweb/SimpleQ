@@ -31,11 +31,11 @@ insert into SurveyCategory values (1, '420420', 'Politische Fragen', 0);
 insert into SurveyCategory values (2, '420420', 'Persönliche Fragen', 0);
 insert into SurveyCategory values (3, '420420', 'Unnötige Fragen', 0);
 
-insert into Survey values (1, '420420', 'Sind Sie politisch interessiert?', '2018-08-24', '2019-08-24', 5, null, 1, 0, 0, null) -- SvyId 1
-insert into Survey values (2, '420420', 'Sind Sie foisch?', '2018-08-24', '2019-08-24', 5, null, 1, 0, 0, null) -- SvyId 2
-insert into Survey values (2, '420420', 'Le gusta café?', '2018-08-24', '2019-08-24', 5, null, 2, 0, 0, null); -- SvyId 3
-insert into Survey values (3, '420420', 'Was halten Sie von Nico Srnka?', '2018-08-24', '2019-08-24', 5, null, 7, 0, 0, null) -- SvyId 4
-insert into Survey values (3, '420420', 'Beschreiben Sie Nico Srnka in einem Wort', '2018-08-24', '2019-08-24', 5, null, 4, 0, 0, null) -- SvyId 5
+insert into Survey values (1, '420420', 'Sind Sie politisch interessiert?', '2018-08-24', '2019-08-24', 5, null, 1, 0, 1, null) -- SvyId 1
+insert into Survey values (2, '420420', 'Sind Sie foisch?', '2018-08-24', '2019-08-24', 5, null, 1, 0, 1, null) -- SvyId 2
+insert into Survey values (2, '420420', 'Le gusta café?', '2018-08-24', '2019-08-24', 5, null, 2, 0, 1, null); -- SvyId 3
+insert into Survey values (3, '420420', 'Was halten Sie von Nico Srnka?', '2018-08-24', '2019-08-24', 5, null, 7, 0, 1, null) -- SvyId 4
+insert into Survey values (3, '420420', 'Beschreiben Sie Nico Srnka in einem Wort', '2018-08-24', '2019-08-24', 5, null, 4, 0, 1, null) -- SvyId 5
 
 insert into Asking values (1, 1, '420420');
 insert into Asking values (1, 2, '420420');
@@ -118,13 +118,11 @@ insert into Chooses values (19, 8);
 
 insert into Vote values ('Topf3', null); -- VoteId 20
 insert into Chooses values (20, 8);
-commit;
-go
 
 -- ++++++++ TRENDANALYSE-TESTDATEN ++++++++
 insert into SurveyCategory values (4, '420420', 'Chef-Beliebtheitsfragen', 0);
 
-insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-01', '2018-07-15', 5, null, 2, 1, 0, null); -- SvyId 6
+insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-01', '2018-07-15', 5, null, 2, 1, 1, null); -- SvyId 6
 insert into Asking values (6, 1, '420420');
 insert into Asking values (6, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 6 nötig (YesNoDontKnow) => AnsIds 15, 16, 17
@@ -137,7 +135,7 @@ insert into Chooses values (23, 16);
 insert into Vote values (null, null) -- VoteId 24;
 insert into Chooses values (24, 17);
 
-insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-16', '2018-07-31', 5, null, 2, 0, 0, null); -- SvyId 7
+insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-07-16', '2018-07-31', 5, null, 2, 0, 1, null); -- SvyId 7
 insert into Asking values (7, 1, '420420');
 insert into Asking values (7, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 7 nötig (YesNoDontKnow) => AnsIds 18, 19, 20
@@ -150,7 +148,7 @@ insert into Chooses values (27, 19);
 insert into Vote values (null, null) -- VoteId 28;
 insert into Chooses values (28, 20);
 
-insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-08-01', '2018-08-15', 5, null, 2, 0, 0, null); -- SvyId 8
+insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-08-01', '2018-08-15', 5, null, 2, 0, 1, null); -- SvyId 8
 insert into Asking values (8, 1, '420420');
 insert into Asking values (8, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 8 nötig (YesNoDontKnow) => AnsIds 21, 22, 23
@@ -167,7 +165,7 @@ insert into Chooses values (33, 23);
 insert into Vote values (null, null) -- VoteId 34;
 insert into Chooses values (34, 23);
 
-insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-08-16', '2018-08-31', 5, null, 2, 0, 0, null); -- SvyId 9
+insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-08-16', '2018-08-31', 5, null, 2, 0, 1, null); -- SvyId 9
 insert into Asking values (9, 1, '420420');
 insert into Asking values (9, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 9 nötig (YesNoDontKnow) => AnsIds 24, 25, 26
@@ -184,7 +182,7 @@ insert into Chooses values (39, 25);
 insert into Vote values (null, null) -- VoteId 40;
 insert into Chooses values (40, 26);
 
-insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-09-01', '2018-09-15', 5, null, 2, 0, 0, null); -- SvyId 10
+insert into Survey values (4, '420420', 'Finden Sie der Chef ist ein Arschloch?', '2018-09-01', '2018-09-15', 5, null, 2, 0, 1, null); -- SvyId 10
 insert into Asking values (10, 1, '420420');
 insert into Asking values (10, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 10 nötig (YesNoDontKnow) => AnsIds 27, 28, 29
@@ -201,7 +199,7 @@ insert into Chooses values (45, 28);
 insert into Vote values (null, null) -- VoteId 46;
 insert into Chooses values (46, 29);
 
-insert into Survey values (4, '420420', 'Ist der Chef leiwand?', '2018-11-01', '2018-11-15', 5, null, 2, 0, 0, null); -- SvyId 11
+insert into Survey values (4, '420420', 'Ist der Chef leiwand?', '2018-11-01', '2018-11-15', 5, null, 2, 0, 1, null); -- SvyId 11
 insert into Asking values (11, 1, '420420');
 insert into Asking values (11, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 11 nötig (YesNoDontKnow) => AnsIds 30, 31, 32
@@ -218,7 +216,7 @@ insert into Chooses values (51, 31);
 insert into Vote values (null, null) -- VoteId 52;
 insert into Chooses values (52, 31);
 
-insert into Survey values (4, '420420', 'Ist der Chef leiwand?', '2018-11-15', '2018-11-30', 5, null, 2, 0, 0, null); -- SvyId 12
+insert into Survey values (4, '420420', 'Ist der Chef leiwand?', '2018-11-15', '2018-11-30', 5, null, 2, 0, 1, null); -- SvyId 12
 insert into Asking values (12, 1, '420420');
 insert into Asking values (12, 2, '420420');
 -- Wegen Trigger kein insert into AnswerOptions(...) für Svy 12 nötig (YesNoDontKnow) => AnsIds 33, 34, 35
@@ -234,29 +232,117 @@ insert into Vote values (null, null) -- VoteId 57;
 insert into Chooses values (57, 34);
 insert into Vote values (null, null) -- VoteId 58;
 insert into Chooses values (58, 34);
+commit;
 
-update Survey set [Sent] = 1;
+
+
+begin transaction;
+insert into Customer values ('180517', 'castiel gmbh.', 'jack@castiel.com', 'asdfjklö', null, null, 1, 'stairway', '0000', 'to', 'heaven', 'EN', 24, 1, (select getdate()), 1, 3, 0, null, null, 10);
+
+insert into Bill values('180517', 50, (select dateadd(month, -3, (select getdate()))), 1, 1);
+insert into Bill values('180517', 60, (select dateadd(month, -2, (select getdate()))), 1, 1);
+insert into Bill values('180517', 90, (select dateadd(month, -1, (select getdate()))), 1, 1);
+
+insert into Department values (1, 'Angel', '180517');
+insert into Department values (2, 'Nephilim', '180517');
+
+insert into Person values (null); -- PersId 6
+insert into Person values (null); -- PersId 7
+insert into Person values (null); -- PersId 8
+
+insert into Employs values (1, '180517', 6);
+insert into Employs values (1, '180517', 7);
+insert into Employs values (2, '180517', 8);
+
+insert into SurveyCategory values (1, '180517', 'Supernatural questions', 0);
+
+insert into Survey values (1, '180517', 'Is Jack Kline stronger than Lucifer?', '2018-05-18', '2018-07-18', 3, null, 5, 0, 1, null); -- SvyId 13
+insert into Asking values (13, 1, '180517');
+insert into Asking values (13, 2, '180517');
+insert into AnswerOption values (13, 'Yes', null); -- AnsId 36
+insert into AnswerOption values (13, 'Definitely', null); -- AnsId 37
+
+insert into Vote values (null, null); -- VoteId 59
+insert into Chooses values (59, 36);
+insert into Vote values (null, null); -- VoteId 60
+insert into Chooses values (60, 37);
+insert into Vote values (null, null); -- VoteId 61
+insert into Chooses values (61, 37);
+
+insert into Survey values (1, '180517', 'Is Lucifer a bitch?', '2018-12-24', '2019-01-04', 3, null, 13, 0, 1, null); -- SvyId 14
+insert into Asking values (14, 1, '180517');
+insert into Asking values (14, 2, '180517');
+-- Due to trigger AnswerOptions (38, 39, 40, 41) are created automatically for SvyId 14 (LikertScale6)
+insert into AnswerOption values (14, 'A little', 1); -- AnsId 42
+insert into AnswerOption values (14, 'Totally', 0); -- AnsId 43
+
+insert into Vote values (null, null); -- VoteId 62
+insert into Chooses values (62, 43);
+insert into Vote values (null, null); -- VoteId 63
+insert into Chooses values (63, 43);
+insert into Vote values (null, null); -- VoteId 64
+insert into Chooses values (64, 41);
+insert into Vote values (null, null); -- VoteId 65
+insert into Chooses values (65, 40);
+insert into Vote values (null, null); -- VoteId 66
+insert into Chooses values (66, 40);
+
+insert into Survey values (1, '180517', 'Do you like the Chevy Impala?', '2018-12-26', '2018-12-27', 3, null, 3, 0, 1, null); -- SvyId 15
+insert into Asking values (15, 1, '180517');
+insert into Asking values (15, 2, '180517');
+-- Due to trigger no insert into AnswerOptions necessary for SvyId 15 (TrafficLight) => AnsIds 44, 45, 46
+
+insert into Vote values (null, null); -- VoteId 67
+insert into Chooses values (67, 44);
+insert into Vote values (null, null); -- VoteId 68
+insert into Chooses values (68, 44);
+insert into Vote values (null, null); -- VoteId 69
+insert into Chooses values (69, 44);
+insert into Vote values (null, null); -- VoteId 70
+insert into Chooses values (70, 45);
+
+insert into Survey values (1, '180517', 'Do you like the Chevy Impala?', '2019-01-29', '2019-01-30', 3, null, 3, 0, 1, null); -- SvyId 16
+insert into Asking values (16, 1, '180517');
+insert into Asking values (16, 2, '180517');
+-- Due to trigger no insert into AnswerOptions necessary for SvyId 16 (TrafficLight) => AnsIds 47, 48, 49
+
+insert into Vote values (null, null); -- VoteId 71
+insert into Chooses values (71, 47);
+insert into Vote values (null, null); -- VoteId 72
+insert into Chooses values (72, 47);
+insert into Vote values (null, null); -- VoteId 73
+insert into Chooses values (73, 47);
+insert into Vote values (null, null); -- VoteId 74
+insert into Chooses values (74, 48);
+
+insert into Survey values (1, '180517', 'Do you like the Chevy Impala?', '2019-01-01', '2019-01-02', 3, null, 3, 1, 1, null); -- SvyId 17
+insert into Asking values (17, 1, '180517');
+insert into Asking values (17, 2, '180517');
+-- Due to trigger no insert into AnswerOptions necessary for SvyId 17 (TrafficLight) => AnsIds 50, 51, 52
+
+insert into Vote values (null, null); -- VoteId 75
+insert into Chooses values (75, 50);
+insert into Vote values (null, null); -- VoteId 76
+insert into Chooses values (76, 50);
+insert into Vote values (null, null); -- VoteId 77
+insert into Chooses values (77, 50);
+insert into Vote values (null, null); -- VoteId 78
+insert into Chooses values (78, 50);
+commit;
+
+
+begin transaction;
+insert into Survey values (1, '420420', 'Sind Sie ein Kommunist?', (select dateadd(day, -3, (select getdate()))), (select dateadd(day, -2, (select getdate()))), 10, null, 3, 1, 1, 2592000000000); -- SvyId 18
+insert into Asking values (18, 1, '420420');
+insert into Asking values (18, 2, '420420');
+-- Due to trigger AnswerOption (53) is created automatically for SvyId 18 (LikertScale3)
+insert into AnswerOption values (18, 'Rot bis in den Tot', 1);
+insert into AnswerOption values (18, 'Soiuz nerushimyj respublik svobodnykh', 0); 
+commit;
+
 
 --select * from Person;
 --select * from Employs order by persId;
 --select * from Customer;
 --select * from AnswerOption;
 --select * from Survey;
-
--- Test survey creation
---delete from Employs where persId = 3 and depid = 2;
---insert into person values(null);
---insert into employs values (2, '420420', 6);
---insert into employs values (2, '420420', 1)
---insert into employs values (2, '420420', 2);
-
--- Test stored procedure
---begin transaction;
---update Survey set StartDate = '2018-03-01' where SvyId = 2
---exec sp_CheckExceededSurveyData;
---select * from Survey;
---select * from Asking;
---select * from AnswerOption;
---select * from Chooses;
---select * from Vote;
---rollback;

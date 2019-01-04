@@ -54,6 +54,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="dev.simpleq.at_private_key.key">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="dev.simpleq.at_ssl_certificate.cer">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
     <None Include="private.key">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

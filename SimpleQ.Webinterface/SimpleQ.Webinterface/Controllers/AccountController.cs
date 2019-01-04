@@ -1,5 +1,6 @@
 ﻿using Microsoft.Owin.Security;
 using NLog;
+using SimpleQ.Webinterface.Attributes;
 using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -58,7 +60,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Customer cust, string confirmPassword, int day)
+        public async Task<ActionResult> Register(Customer cust, string confirmPassword, int day)
         {
             try
             {
@@ -135,11 +137,11 @@ namespace SimpleQ.Webinterface.Controllers
                     logger.Debug($"AccountingDate for {custCode}: {cust.AccountingDate}");
 
                     db.Customers.Add(cust);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     int maxId()
                     {
-                        db.SaveChanges();
+                        db.SaveChangesAsync();
                         return db.SurveyCategories
                             .Where(c => c.CustCode == custCode)
                             .Select(c => c.CatId)
@@ -149,7 +151,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     db.SurveyCategories.Add(new SurveyCategory { CatId = maxId() + 1, CustCode = custCode, CatName = "Employee satisfaction", Deactivated = false });
                     db.SurveyCategories.Add(new SurveyCategory { CatId = maxId() + 1, CustCode = custCode, CatName = "Workplace design", Deactivated = false });
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     logger.Info($"Customer registered: {custCode}");
                     Response.AppendHeader("msg", "so close, no matter how far");
@@ -259,6 +261,7 @@ namespace SimpleQ.Webinterface.Controllers
             try
             {
                 logger.Debug("Logout requested");
+                Session.Abandon();
                 SignOut();
                 logger.Debug("Logged out successfully");
                 return RedirectToAction("Login");
@@ -496,7 +499,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
-        protected override string CustCode => null;
+        protected override string CustCode => throw new NotSupportedException();
         #endregion
     }
 }

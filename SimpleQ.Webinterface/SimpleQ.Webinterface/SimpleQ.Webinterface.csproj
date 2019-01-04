@@ -202,6 +202,7 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Attributes\CAuthorizeAttribute.cs" />
+    <Compile Include="Attributes\NoCacheAttribute.cs" />
     <Compile Include="Attributes\RequireAuthAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />

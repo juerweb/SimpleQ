@@ -32,6 +32,7 @@ namespace SimpleQ.Webinterface.Schedulers
 
                     query.ForEach(s =>
                     {
+                        logger.Debug($"Survey to create new: {s.SvyId}");
                         var newSvy = db.Surveys
                             .AsNoTracking()
                             .Include("Departments")
@@ -54,17 +55,20 @@ namespace SimpleQ.Webinterface.Schedulers
                         newSvy.Departments.Clear();
                         newSvy.AnswerOptions.Clear();
 
-                        int totalPeople = db.Departments.ToList().Where(d => departments.Select(dep => dep.DepId).Contains(d.DepId))
+                        int totalPeople = db.Departments.ToList().Where(d => departments.Select(dep => dep.DepId).Contains(d.DepId) && d.CustCode == newSvy.CustCode)
                             .SelectMany(d => d.People).Distinct().Count();
                         if (newSvy.Amount > totalPeople)
                             newSvy.Amount = totalPeople;
+                        logger.Debug($"Total people amount: {totalPeople} (CustCode: {newSvy.CustCode}, SvyText: {newSvy.SvyText})");
 
                         db.Surveys.Add(newSvy);
                         db.SaveChanges();
+                        logger.Debug($"Survey successfully created. SvyId: {newSvy.SvyId}");
 
-                        departments.RemoveAll(d => !db.Departments.Select(dep => dep.DepId).Contains(d.DepId));
-                        departments.ForEach(d => db.Departments.Where(dep => dep.DepId == d.DepId).FirstOrDefault()?.Surveys.Add(newSvy));
+                        departments.RemoveAll(d => !db.Departments.Any(dep => dep.DepId == d.DepId && dep.CustCode == d.CustCode));
+                        departments.ForEach(d => db.Departments.Where(dep => dep.DepId == d.DepId && dep.CustCode == d.CustCode).FirstOrDefault()?.Surveys.Add(newSvy));
                         db.SaveChanges();
+                        logger.Debug($"Departments added successfully for SvyId: {newSvy.SvyId}");
 
                         var baseId = db.AnswerTypes.Where(a => a.TypeId == newSvy.TypeId).FirstOrDefault().BaseId;
                         if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion)
@@ -82,7 +86,9 @@ namespace SimpleQ.Webinterface.Schedulers
                             logger.Debug($"Answer options set successfully for SvyId: {newSvy.SvyId}");
                         }
                         db.SaveChanges();
+                        logger.Debug($"{newSvy.SvyId} created successfully");
                     });
+                    logger.Debug($"{query.Count()} surveys created successfully");
                 }
             }
             catch (Exception ex)
