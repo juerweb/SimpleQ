@@ -237,7 +237,7 @@ commit;
 
 
 begin transaction;
-insert into Customer values ('180517', 'castiel gmbh.', 'jack@castiel.com', 'asdfjklö', null, null, 1, 'stairway', '0000', 'to', 'heaven', 'EN', 24, 1, (select getdate()), 1, 3, 0, null, null, 10);
+insert into Customer values ('180517', 'castiel gmbh.', 'jack@castiel.com', 'jackkline', null, null, 1, 'stairway', '0000', 'to', 'heaven', 'EN', 24, 1, (select getdate()), 1, 3, 0, null, null, 10);
 
 insert into Bill values('180517', 50, (select dateadd(month, -3, (select getdate()))), 1, 1);
 insert into Bill values('180517', 60, (select dateadd(month, -2, (select getdate()))), 1, 1);
@@ -256,7 +256,7 @@ insert into Employs values (2, '180517', 8);
 
 insert into SurveyCategory values (1, '180517', 'Supernatural questions', 0);
 
-insert into Survey values (1, '180517', 'Is Jack Kline stronger than Lucifer?', '2018-05-18', '2018-07-18', 3, null, 5, 0, 1, null); -- SvyId 13
+insert into Survey values (1, '180517', 'Is Jack stronger than Lucifer?', '2018-05-18', '2018-07-18', 3, null, 5, 0, 1, null); -- SvyId 13
 insert into Asking values (13, 1, '180517');
 insert into Asking values (13, 2, '180517');
 insert into AnswerOption values (13, 'Yes', null); -- AnsId 36

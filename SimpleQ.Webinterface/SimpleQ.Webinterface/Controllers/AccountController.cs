@@ -20,6 +20,14 @@ namespace SimpleQ.Webinterface.Controllers
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region MVC-Actions
+        public ActionResult Index()
+        {
+            if (AuthManager.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault() != null)
+                return RedirectToAction("Index", "SurveyCreation");
+            else
+                return RedirectToAction("Login");
+        }
+
         [HttpGet]
         public ActionResult Login(int? confirmed)
         {
@@ -401,7 +409,7 @@ namespace SimpleQ.Webinterface.Controllers
             try
             {
                 logger.Debug("Unregister requested.");
-                if(custCode != base.CustCode)
+                if (custCode != AuthManager.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value)
                 {
                     logger.Debug($"Unregister failed. Invalid customer code {custCode}");
                     return Http.Forbidden("Invalid customer code");
