@@ -3,6 +3,7 @@ using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -13,6 +14,7 @@ using System.IO;
 using System.Net.Mime;
 using System.Security.Claims;
 using NLog;
+using System.Threading.Tasks;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -23,14 +25,14 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region MVC-Actions
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             try
             {
                 logger.Debug($"Loading group administration: {CustCode}");
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
+                    if (await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync() == null)
                     {
                         logger.Warn($"Loading failed. Customer not found: {CustCode}");
                         return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
@@ -38,10 +40,10 @@ namespace SimpleQ.Webinterface.Controllers
 
                     var model = new GroupAdministrationModel
                     {
-                        Departments = db.Departments.Where(d => d.CustCode == CustCode).ToDictionary(d => d, d => d.People.Count())
+                        Departments = await db.Departments.Where(d => d.CustCode == CustCode).ToDictionaryAsync(d => d, d => d.People.Count())
                     };
 
-                    ViewBag.emailConfirmed = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().EmailConfirmed;
+                    ViewBag.emailConfirmed = (await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync()).EmailConfirmed;
                     logger.Debug("Group administration loaded successfully");
                     return View("GroupAdministration", model);
                 }
@@ -55,7 +57,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult SendInvitations(GroupAdministrationModel req)
+        public async Task<ActionResult> SendInvitations(GroupAdministrationModel req)
         {
             try
             {
@@ -77,19 +79,19 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Sending invitation e-mails failed. Customer not found: {CustCode}");
                         return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
                     }
 
-                    if (db.Departments.Where(d => d.DepId == req.DepId && d.CustCode == CustCode).Count() == 0)
+                    if (await db.Departments.Where(d => d.DepId == req.DepId && d.CustCode == CustCode).CountAsync() == 0)
                         AddModelError("DepId", "Department not found.", ref err);
 
                     if (err)
                     {
                         logger.Debug("SendInvitations validation failed. Exiting action");
-                        return Index();
+                        return await Index();
                     }
 
 
@@ -104,13 +106,13 @@ namespace SimpleQ.Webinterface.Controllers
                         Name = "QR Code"
                     };
 
-                    if (Email.Send("invitation@simpleq.at", req.Emails.ToArray(), req.InvitationSubject,
-                        $"REGISTRATION CODE: {CustCode}{req.DepId}{Environment.NewLine}{req.InvitationText}",
+                    if (await Email.Send("invitation@simpleq.at", req.Emails.ToArray(), req.InvitationSubject,
+                        $"REGISTRATION CODE: {CustCode}{req.DepId}{Environment.NewLine}{Environment.NewLine}{req.InvitationText}",
                         true,
                         new Attachment(new MemoryStream(b), contentType)))
                     {
                         logger.Debug($"Invitation e-mails sent successfully for: {CustCode}");
-                        return Index();
+                        return await Index();
                     }
                     else
                     {
@@ -131,7 +133,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region AJAX-Methods
         [HttpGet]
-        public ActionResult Create(string depName)
+        public async Task<ActionResult> Create(string depName)
         {
             try
             {
@@ -144,7 +146,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
+                    if (await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync() == null)
                     {
                         logger.Warn($"Group creation failed. Customer not found: {CustCode}");
                         return Http.NotFound("Customer not found.");
@@ -154,12 +156,12 @@ namespace SimpleQ.Webinterface.Controllers
 
                     var dep = new Department
                     {
-                        DepId = (query.Count() == 0) ? 1 : query.Max(d => d.DepId) + 1,
+                        DepId = (await query.CountAsync() == 0) ? 1 : await query.MaxAsync(d => d.DepId) + 1,
                         DepName = depName,
                         CustCode = CustCode
                     };
                     db.Departments.Add(dep);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Group created successfully");
 
                     return Json(new { dep.DepId, RegCode = $"{CustCode}{dep.DepId}" }, JsonRequestBehavior.AllowGet);
@@ -173,7 +175,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult Modify(int depId, string depName)
+        public async Task<ActionResult> Modify(int depId, string depName)
         {
             try
             {
@@ -186,10 +188,10 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                         logger.Warn($"Group modification failed. Customer not found: {CustCode}");
 
-                    var dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault();
+                    var dep = await db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefaultAsync();
                     if (dep == null)
                     {
                         logger.Debug("Group modification failed. Department not found");
@@ -197,7 +199,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
 
                     dep.DepName = depName;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Group modified successfully");
 
                     return Http.Ok();
@@ -211,17 +213,17 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult Delete(int depId)
+        public async Task<ActionResult> Delete(int depId)
         {
             try
             {
                 logger.Debug($"Group delete requested: {CustCode} (DepId: {depId})");
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                         logger.Warn($"Group deleting failed. Customer not found: {CustCode}");
 
-                    var dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault();
+                    var dep = await db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefaultAsync();
                     if (dep == null)
                     {
                         logger.Debug("Group deleting failed. Department not found.");
@@ -229,7 +231,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
 
                     db.Departments.Remove(dep);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Group deleted successfully");
 
                     return Http.Ok();

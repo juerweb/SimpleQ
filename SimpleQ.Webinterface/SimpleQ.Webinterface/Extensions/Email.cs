@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace SimpleQ.Webinterface.Extensions
@@ -11,12 +12,12 @@ namespace SimpleQ.Webinterface.Extensions
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static bool Send(string from, string to, string subject, string body, bool isHtml = false, params Attachment[] attachments)
+        public static async Task<bool> Send(string from, string to, string subject, string body, bool isHtml = false, params Attachment[] attachments)
         {
-            return Send(from, new string[] { to }, subject, body, isHtml, attachments);
+            return await Send(from, new string[] { to }, subject, body, isHtml, attachments);
         }
 
-        public static bool Send(string from, string[] to, string subject, string body, bool isHtml = false, params Attachment[] attachments)
+        public static async Task<bool> Send(string from, string[] to, string subject, string body, bool isHtml = false, params Attachment[] attachments)
         {
             try
             {
@@ -39,7 +40,7 @@ namespace SimpleQ.Webinterface.Extensions
                     EnableSsl = true
                 };
 
-                client.Send(msg);
+                await client.SendMailAsync(msg);
                 logger.Debug("E-mail sent successfully");
 
                 return true;

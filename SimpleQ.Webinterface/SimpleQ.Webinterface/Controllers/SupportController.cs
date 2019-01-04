@@ -4,9 +4,9 @@ using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System.Net.Mail;
-using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -19,7 +19,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region MVC-Actions
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             try
             {
@@ -28,10 +28,10 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     var model = new SupportModel
                     {
-                        FaqEntries = db.FaqEntries.Where(f => !f.IsMobile).ToList()
+                        FaqEntries = await db.FaqEntries.Where(f => !f.IsMobile).ToListAsync()
                     };
 
-                    ViewBag.emailConfirmed = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().EmailConfirmed;
+                    ViewBag.emailConfirmed = (await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync()).EmailConfirmed;
                     logger.Debug("Support page loaded successfully");
 
                     return View("Support", model);
@@ -46,7 +46,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult AskQuestion(SupportModel req)
+        public async Task<ActionResult> AskQuestion(SupportModel req)
         {
             //req = new SupportModel();
             //req.Email = "test@kontaktfunktion.gabi";
@@ -73,17 +73,17 @@ namespace SimpleQ.Webinterface.Controllers
                 if (err)
                 {
                     logger.Debug("AskQuestion validation failed. Exiting method");
-                    return Index();
+                    return await Index();
                 }
 
 
                 req.QuestionText = $"FROM: {req.Email}{Environment.NewLine}{req.QuestionText}";
 
 
-                if (Email.Send("contactform@simpleq.at", "support@simpleq.at", "SIMPLEQ SUPPORT: " + req.QuestionCatgeory, req.QuestionText))
+                if (await Email.Send("contactform@simpleq.at", "support@simpleq.at", "SIMPLEQ SUPPORT: " + req.QuestionCatgeory, req.QuestionText))
                 {
                     logger.Debug("Support e-mail sent successfully");
-                    return Index();
+                    return await Index();
                 }
                 else
                 {

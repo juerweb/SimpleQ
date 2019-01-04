@@ -1,14 +1,13 @@
-﻿using MigraDoc.Rendering;
-using NLog;
+﻿using NLog;
 using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,14 +20,14 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region MVC-Actions
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             try
             {
                 logger.Debug($"Loading settings: {CustCode}");
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Warn($"Loading failed. Customer not found: {CustCode}");
@@ -36,19 +35,19 @@ namespace SimpleQ.Webinterface.Controllers
                     }
 
                     var bills = new List<SettingsModel.BillWrapper>();
-                    foreach (var bill in db.Bills.Where(b => b.CustCode == CustCode).OrderByDescending(b => b.BillDate))
+                    foreach (var bill in await db.Bills.Where(b => b.CustCode == CustCode).OrderByDescending(b => b.BillDate).ToListAsync())
                     {
-                        var lastBillDate = db.Bills.Where(b => b.CustCode == bill.CustCode)
+                        var lastBillDate = await db.Bills.Where(b => b.CustCode == bill.CustCode)
                             .OrderByDescending(b => b.BillDate)
                             .Select(b => b.BillDate)
                             .Skip(1)
-                            .FirstOrDefault();
+                            .FirstOrDefaultAsync();
 
-                        var surveys = db.Surveys.Where(s => s.CustCode == bill.CustCode
+                        var surveys = (await db.Surveys.Where(s => s.CustCode == bill.CustCode
                                                         && s.StartDate <= bill.BillDate
                                                         && s.EndDate > lastBillDate)
                                                 .OrderBy(s => s.StartDate)
-                                                .AsEnumerable()
+                                                .ToListAsync())
                                                 .Select(s => new { s, n = s.AnswerOptions.SelectMany(a => a.Votes).Distinct().Where(v => v.VoteDate > lastBillDate).Count() })
                                                 .Select(x => new SettingsModel.SurveyWrapper
                                                 {
@@ -59,11 +58,11 @@ namespace SimpleQ.Webinterface.Controllers
                                                 })
                                                 .ToList();
                         bills.Add(new SettingsModel.BillWrapper { Bill = bill, Surveys = surveys });
-                    }
+                    };
 
                     var last = cust.Bills.Select(b => b.BillDate).DefaultIfEmpty().Max();
-                    var currentSurveys = db.Surveys.Where(s => s.StartDate >= last && s.CustCode == CustCode);
-                    var currentVoteAmount = db.Votes.Where(v => v.VoteDate >= last && v.AnswerOptions.All(a => a.Survey.CustCode == CustCode)).Count();   //currentSurveys.SelectMany(s => s.AnswerOptions.SelectMany(a => a.Votes)).Count();
+                    var currentSurveyAmount = await db.Surveys.Where(s => s.StartDate >= last && s.CustCode == CustCode).CountAsync();
+                    var currentVoteAmount = await db.Votes.Where(v => v.VoteDate >= last && v.AnswerOptions.All(a => a.Survey.CustCode == CustCode)).CountAsync();   //currentSurveys.SelectMany(s => s.AnswerOptions.SelectMany(a => a.Votes)).Count();
 
                     var model = new SettingsModel
                     {
@@ -84,7 +83,7 @@ namespace SimpleQ.Webinterface.Controllers
                         PaymentMethodId = cust.PaymentMethodId,
                         Bills = bills,
                         OutstandingBalance = decimal.ToDouble(cust.CostBalance),
-                        CurrentSurveyAmount = currentSurveys.Count(),
+                        CurrentSurveyAmount = currentSurveyAmount,
                         CurrentVoteAmount = currentVoteAmount
                     };
 
@@ -102,7 +101,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeAnswerTypes(SettingsModel req)
+        public async Task<ActionResult> ChangeAnswerTypes(SettingsModel req)
         {
             try
             {
@@ -114,7 +113,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Warn($"Changing answer types failed. Customer not found: {CustCode}");
@@ -126,7 +125,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     foreach (var typeId in req.CheckedAnswerTypes.Distinct())
                     {
-                        if (db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault() == null)
+                        if (await db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefaultAsync() == null)
                         {
                             AddModelError("CheckedAnswerTypes", "AnswerType does not exist.", ref err);
                             break;
@@ -136,25 +135,25 @@ namespace SimpleQ.Webinterface.Controllers
                     if (err)
                     {
                         logger.Debug("ChangeAnswerTypes validation failed. Exiting action.");
-                        return Index();
+                        return await Index();
                     }
 
-                    var uncheckedAnswerTypes = db.AnswerTypes.Select(a => a.TypeId).Except(req.CheckedAnswerTypes).ToList();
+                    var uncheckedAnswerTypes = await db.AnswerTypes.Select(a => a.TypeId).Except(req.CheckedAnswerTypes).ToListAsync();
 
-                    uncheckedAnswerTypes.ForEach(typeId =>
+                    foreach (var typeId in uncheckedAnswerTypes)
                     {
-                        cust.AnswerTypes.Remove(db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault());
-                    });
+                        cust.AnswerTypes.Remove(await db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefaultAsync());
+                    };
 
-                    req.CheckedAnswerTypes.ForEach(typeId =>
+                    foreach (var typeId in req.CheckedAnswerTypes)
                     {
-                        cust.AnswerTypes.Add(db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefault());
-                    });
+                        cust.AnswerTypes.Add(await db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefaultAsync());
+                    };
 
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Answer types changed successfully.");
 
-                    return Index();
+                    return await Index();
                 }
             }
             catch (Exception ex)
@@ -166,7 +165,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateCustomer(SettingsModel req)
+        public async Task<ActionResult> UpdateCustomer(SettingsModel req)
         {
             try
             {
@@ -180,7 +179,7 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     try
                     {
-                        var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                        var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
                         if (cust == null)
                         {
                             logger.Warn($"Updating customer failed. Customer not found: {CustCode}");
@@ -197,7 +196,7 @@ namespace SimpleQ.Webinterface.Controllers
                         cust.Country = req.Country ?? throw ANEx("Country");
                         cust.LanguageCode = req.LanguageCode ?? throw ANEx("LanguageCode");
 
-                        if (db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).Count() == 0)
+                        if (await db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).CountAsync() == 0)
                             AddModelError("PaymentMethodId", "PaymentMethod does not exist.", ref err);
 
                         if (req.DataStoragePeriod <= 0)
@@ -206,22 +205,22 @@ namespace SimpleQ.Webinterface.Controllers
                         if (err)
                         {
                             logger.Debug("Update customer validation failed. Exiting action.");
-                            return Index();
+                            return await Index();
                         }
 
                         cust.DataStoragePeriod = req.DataStoragePeriod;
                         cust.PaymentMethodId = req.PaymentMethodId;
 
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                         logger.Debug("Updated customer successfully");
 
-                        return Index();
+                        return await Index();
                     }
                     catch (ArgumentNullException ex)
                     {
                         AddModelError(ex.ParamName, $"{ex.ParamName} must not be null.", ref err);
                         logger.Debug("Update customer validation failed. Exiting action.");
-                        return Index();
+                        return await Index();
                     }
                 }
             }
@@ -236,18 +235,18 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region AJAX-Methods
         [HttpGet]
-        public ActionResult ChangeMinGroup(int size)
+        public async Task<ActionResult> ChangeMinGroup(int size)
         {
             try
             {
                 logger.Debug($"ChangeMinGroup requested: {CustCode} (Size: {size})");
                 using (var db = new SimpleQDBEntities())
                 {
-                    int minAllowed = db.DataConstraints.Where(c => c.ConstrName == "MIN_GROUP_SIZE").FirstOrDefault().ConstrValue;
+                    int minAllowed = (await db.DataConstraints.Where(c => c.ConstrName == "MIN_GROUP_SIZE").FirstOrDefaultAsync()).ConstrValue;
                     if (size < minAllowed)
                         return Http.Conflict($"Size less than allowed ({minAllowed}).");
 
-                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Warn($"Changing Min Group failed. Customer not found: {CustCode}");
@@ -256,7 +255,7 @@ namespace SimpleQ.Webinterface.Controllers
 
 
                     cust.MinGroupSize = size;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Changed Min Group successfully.");
 
                     return Http.Ok();
@@ -270,7 +269,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult AddCategory(string catName)
+        public async Task<ActionResult> AddCategory(string catName)
         {
             try
             {
@@ -283,7 +282,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
+                    if (await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync() == null)
                     {
                         logger.Warn($"Adding category failed. Customer not found: {CustCode}");
                         return Http.NotFound("Customer not found.");
@@ -293,12 +292,12 @@ namespace SimpleQ.Webinterface.Controllers
 
                     var cat = new SurveyCategory
                     {
-                        CatId = (query.Count() == 0) ? 1 : query.Max(c => c.CatId) + 1,
+                        CatId = (await query.CountAsync() == 0) ? 1 : await query.MaxAsync(c => c.CatId) + 1,
                         CatName = catName,
                         CustCode = CustCode
                     };
                     db.SurveyCategories.Add(cat);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Category added successfully.");
 
                     return Content($"{cat.CatId}", "text/plain");
@@ -312,7 +311,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult ModifyCategory(int catId, string catName)
+        public async Task<ActionResult> ModifyCategory(int catId, string catName)
         {
             try
             {
@@ -325,13 +324,13 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Modifying category failed. Customer not found: {CustCode}");
                         return Http.NotFound("Customer not found");
                     }
 
-                    var cat = db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode).FirstOrDefault();
+                    var cat = await db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cat == null)
                     {
                         logger.Debug("Modifying category failed. Category not found");
@@ -340,7 +339,7 @@ namespace SimpleQ.Webinterface.Controllers
 
 
                     cat.CatName = catName;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Modifed category successfully.");
 
                     return Http.Ok();
@@ -354,27 +353,27 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult DeleteCategory(int catId)
+        public async Task<ActionResult> DeleteCategory(int catId)
         {
             try
             {
                 logger.Debug($"DeleteCategory requested: {CustCode} (CatId: {catId})");
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Deleting category failed. Customer not found: {CustCode}");
                         return Http.NotFound("Customer not found");
                     }
 
-                    var cat = db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode).FirstOrDefault();
+                    var cat = await db.SurveyCategories.Where(c => c.CatId == catId && c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cat == null)
                     {
                         logger.Debug("Modifying category failed. Category not found");
                         return Http.NotFound("Category not found.");
                     }
 
-                    if (db.Surveys.Where(s => s.CatId == catId && s.CustCode == CustCode).Count() != 0)
+                    if (await db.Surveys.Where(s => s.CatId == catId && s.CustCode == CustCode).CountAsync() != 0)
                     {
                         logger.Debug("Category will be deactivated due to still existing surveys.");
                         cat.Deactivated = true;
@@ -384,7 +383,7 @@ namespace SimpleQ.Webinterface.Controllers
                         db.SurveyCategories.Remove(cat);
                     }
 
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Category deleted/deactivated successfully");
 
                     return Http.Ok();
@@ -398,20 +397,20 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult DeleteTemplate(int svyId)
+        public async Task<ActionResult> DeleteTemplate(int svyId)
         {
             try
             {
                 logger.Debug($"Delete template requested: {CustCode} (SvyId: {svyId})");
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Deleting template failed. Customer not found: {CustCode}");
                         return Http.NotFound("Customer not found");
                     }
 
-                    var template = db.Surveys.Where(s => s.SvyId == svyId && s.Template && s.CustCode == CustCode).FirstOrDefault();
+                    var template = await db.Surveys.Where(s => s.SvyId == svyId && s.Template && s.CustCode == CustCode).FirstOrDefaultAsync();
                     if (template == null)
                     {
                         logger.Debug("Deleting template failed. Template not found");
@@ -419,7 +418,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
 
                     template.Template = false;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Template deleted successfully.");
 
                     return Http.Ok();
@@ -433,7 +432,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangePassword(string password)
+        public async Task<ActionResult> ChangePassword(string password)
         {
             try
             {
@@ -446,7 +445,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Warn($"Changing password failed. Customer not found: {CustCode}");
@@ -454,7 +453,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
 
                     cust.CustPwdTmp = password;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Password changed successfully");
 
                     return Http.Ok();
@@ -468,7 +467,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult ChangeAccountingPeriod(int period)
+        public async Task<ActionResult> ChangeAccountingPeriod(int period)
         {
             try
             {
@@ -481,7 +480,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Warn($"Changing accounting period failed. Customer not found: {CustCode}");
@@ -489,7 +488,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
 
                     cust.AccountingPeriod = period;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug("Accounting period changed successfully.");
 
                     return Http.Ok();
@@ -504,7 +503,7 @@ namespace SimpleQ.Webinterface.Controllers
 
 
         [HttpGet]
-        public ActionResult ChangeAccountingDay(int day)
+        public async Task<ActionResult> ChangeAccountingDay(int day)
         {
             try
             {
@@ -520,7 +519,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Warn($"Changing accounting period failed. Customer not found: {CustCode}");
@@ -529,7 +528,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     var old = cust.AccountingDate;
                     cust.AccountingDate = new DateTime(old.Year, old.Month, day);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     logger.Debug($"Accounting day changed successfully: {cust.AccountingDate}");
 
@@ -541,43 +540,42 @@ namespace SimpleQ.Webinterface.Controllers
                 logger.Error(ex, "[GET]ChangeAccountingDay: Unexpected error");
                 return Http.InternalServerError("Something went wrong. Please try again later.");
             }
-
         }
 
         [HttpGet]
-        public ActionResult DownloadBill(int billId)
+        public async Task<ActionResult> DownloadBill(int billId)
         {
             try
             {
                 logger.Debug($"Download bill requested: {CustCode} (BillId: {billId})");
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Downloading bill failed. Customer not found: {CustCode}");
                         return Http.NotFound("Customer not found");
                     }
 
 
-                    var bill = db.Bills.Where(b => b.BillId == billId && b.CustCode == CustCode).FirstOrDefault();
+                    var bill = await db.Bills.Where(b => b.BillId == billId && b.CustCode == CustCode).FirstOrDefaultAsync();
                     if (bill == null)
                     {
                         logger.Debug("Downloading bill failed. Bill not found");
                         return Http.NotFound("Bill not found");
                     }
 
-                    var lastBillDate = db.Bills.Where(b => b.CustCode == bill.CustCode)
+                    var lastBillDate = await db.Bills.Where(b => b.CustCode == bill.CustCode)
                                     .OrderByDescending(b => b.BillDate)
                                     .Select(b => b.BillDate)
                                     .Skip(1)
-                                    .FirstOrDefault();
+                                    .FirstOrDefaultAsync();
 
-                    var surveys = db.Surveys
+                    var surveys = await db.Surveys
                         .Where(s => s.CustCode == bill.CustCode
                                 && s.StartDate <= bill.BillDate
                                 && s.EndDate > lastBillDate)
                         .OrderBy(s => s.StartDate)
-                        .ToArray();
+                        .ToArrayAsync();
 
                     var stream = new MemoryStream();
 

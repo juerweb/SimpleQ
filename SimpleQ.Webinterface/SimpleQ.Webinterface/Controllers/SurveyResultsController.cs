@@ -4,6 +4,7 @@ using SimpleQ.Webinterface.Models.ViewModels;
 using SimpleQ.Webinterface.Models.Enums;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -21,14 +22,14 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region MVC-Actions
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             try
             {
                 logger.Debug("Loading survey results.");
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Warn($"Loading failed. Customer not found: {CustCode}");
@@ -38,10 +39,10 @@ namespace SimpleQ.Webinterface.Controllers
                     var model = new SurveyResultsModel
                     {
                         SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
-                        Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList(),
-                        AnswerTypes = db.Surveys.Where(s => s.CustCode == CustCode).Select(s => s.AnswerType)
-                            .Where(a => a.BaseId != (int)BaseQuestionTypes.OpenQuestion).Distinct().ToList(),
-                        SurveyTexts = db.Surveys.Select(s => s.SvyText).ToList()
+                        Surveys = await db.Surveys.Where(s => s.CustCode == CustCode).ToListAsync(),
+                        AnswerTypes = await db.Surveys.Where(s => s.CustCode == CustCode).Select(s => s.AnswerType)
+                            .Where(a => a.BaseId != (int)BaseQuestionTypes.OpenQuestion).Distinct().ToListAsync(),
+                        SurveyTexts = await db.Surveys.Select(s => s.SvyText).ToListAsync()
                     };
 
                     ViewBag.emailConfirmed = cust.EmailConfirmed;
@@ -61,7 +62,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region AJAX-Methods
         [HttpGet]
-        public ActionResult LoadSingleResult(int svyId)
+        public async Task<ActionResult> LoadSingleResult(int svyId)
         {
             try
             {
@@ -69,21 +70,21 @@ namespace SimpleQ.Webinterface.Controllers
                 bool err = false;
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Loading single result failed. Customer not found: {CustCode}");
                         return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
                     }
 
-                    if (db.Surveys.Where(s => s.CustCode == CustCode).Count() == 0)
+                    if (await db.Surveys.Where(s => s.CustCode == CustCode).CountAsync() == 0)
                     {
                         logger.Debug($"Loading single result failed. No existing surveys for Customer: {CustCode}");
                         return PartialView("_Error", new ErrorModel { Title = "No Surveys", Message = "You haven't created any surveys yet." });
                     }
 
-                    Survey survey = db.Surveys
+                    Survey survey = await db.Surveys
                         .Where(s => s.SvyId == svyId && s.CustCode == CustCode)
-                        .FirstOrDefault();
+                        .FirstOrDefaultAsync();
 
                     if (survey == null)
                         AddModelError("svyId", "Survey not found.", ref err);
@@ -99,28 +100,29 @@ namespace SimpleQ.Webinterface.Controllers
                     {
                         Survey = survey,
 
-                        CatName = db.SurveyCategories
+                        CatName = await db.SurveyCategories
                             .Where(c => c.CatId == survey.CatId && c.CustCode == CustCode)
                             .Select(c => c.CatName)
-                            .FirstOrDefault(),
+                            .FirstOrDefaultAsync(),
 
-                        TypeName = db.AnswerTypes
+                        TypeName = await db.AnswerTypes
                             .Where(a => a.TypeId == survey.TypeId)
                             .Select(a => a.TypeDesc)
-                            .FirstOrDefault(),
+                            .FirstOrDefaultAsync(),
 
-                        DepartmentNames = db.Surveys
+                        DepartmentNames = await db.Surveys
                             .Where(s => s.SvyId == survey.SvyId)
                             .SelectMany(s => s.Departments)
                             .Select(d => d.DepName)
-                            .ToList(),
+                            .ToListAsync(),
 
                         Votes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? SelectVotesFromSurvey(survey) : null,
 
-                        FreeTextVotes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? db.Votes
+                        FreeTextVotes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ?
+                            await db.Votes
                             .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
                             .Select(v => v.VoteText)
-                            .ToList()
+                            .ToListAsync()
                             : null
                     };
 
@@ -137,7 +139,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult LoadMultiResult(MultiResultModel req)
+        public async Task<ActionResult> LoadMultiResult(MultiResultModel req)
         {
             try
             {
@@ -162,13 +164,13 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Loading multi result failed. Customer not found: {CustCode}");
                         return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
                     }
 
-                    if (db.Surveys.Where(s => s.CustCode == CustCode).Count() == 0)
+                    if (await db.Surveys.Where(s => s.CustCode == CustCode).CountAsync() == 0)
                     {
                         logger.Debug($"Loading single result failed. No existing surveys for Customer: {CustCode}");
                         return PartialView("_Error", new ErrorModel { Title = "No Surveys", Message = "You haven't created any surveys yet." });
@@ -182,18 +184,18 @@ namespace SimpleQ.Webinterface.Controllers
 
                     logger.Debug($"{selectedSurveys.Count()} surveys selected for multi result. (SurveyText: {req.SurveyText}, CustCode: {CustCode}");
 
-                    string catName = db.SurveyCategories
+                    string catName = await db.SurveyCategories
                                 .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
                                 .Select(c => c.CatName)
-                                .FirstOrDefault();
+                                .FirstOrDefaultAsync();
                     logger.Debug($"Category name for CatId {req.CatId} of Customer {CustCode}: {req.CatName}");
                     if (catName == null)
                         AddModelError("CatId", "Category not found.", ref err);
 
 
-                    var type = db.AnswerTypes
+                    var type = await db.AnswerTypes
                                 .Where(a => a.TypeId == req.TypeId && a.BaseId != (int)BaseQuestionTypes.OpenQuestion)
-                                .FirstOrDefault();
+                                .FirstOrDefaultAsync();
                     if (type == null)
                         AddModelError("TypeId", "AnswerType does not exist.", ref err);
 
@@ -204,7 +206,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
 
                     MultiResultModel model;
-                    if (selectedSurveys?.Count() == 0)
+                    if (await selectedSurveys.CountAsync() == 0)
                     {
                         logger.Debug("Creating empty multi result model.");
                         model = new MultiResultModel
@@ -231,17 +233,17 @@ namespace SimpleQ.Webinterface.Controllers
 
                             TypeName = type.TypeDesc,
 
-                            AvgAmount = (selectedSurveys.Sum(s => s.Amount) / (double)selectedSurveys.Count()),
+                            AvgAmount = (await selectedSurveys.SumAsync(s => s.Amount) / (double)await selectedSurveys.CountAsync()),
 
-                            DepartmentNames = selectedSurveys
+                            DepartmentNames = await selectedSurveys
                                 .SelectMany(s => s.Departments)
                                 .Select(d => d.DepName)
                                 .Distinct()
-                                .ToList(),
+                                .ToListAsync(),
 
-                            SurveyDates = selectedSurveys.Select(s => s.StartDate).ToList(),
+                            SurveyDates = await selectedSurveys.Select(s => s.StartDate).ToListAsync(),
 
-                            Votes = SelectVotesFromSurveyGrouped(selectedSurveys, type.BaseId)
+                            Votes = await SelectVotesFromSurveyGrouped(selectedSurveys, type.BaseId)
                         };
                     }
 
@@ -425,14 +427,14 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
-        private List<KeyValuePair<string, List<int>>> SelectVotesFromSurveyGrouped(IQueryable<Survey> selectedSurveys, int baseId)
+        private async Task<List<KeyValuePair<string, List<int>>>> SelectVotesFromSurveyGrouped(IQueryable<Survey> selectedSurveys, int baseId)
         {
             try
             {
                 logger.Debug("Starting to select votes from survey grouped");
                 var list = new List<KeyValuePair<string, List<int>>>();
-                var query = selectedSurveys.SelectMany(s => s.AnswerOptions).ToList();
-                logger.Debug($"{query.Count()} answer options selected. (SurveyText: {selectedSurveys.Select(s => s.SvyText).FirstOrDefault()}, CustCode: {CustCode}");
+                var query = await selectedSurveys.SelectMany(s => s.AnswerOptions).ToListAsync();
+                logger.Debug($"{query.Count()} answer options selected. (SurveyText: {await selectedSurveys.Select(s => s.SvyText).FirstOrDefaultAsync()}, CustCode: {CustCode}");
 
                 if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion)
                 {
@@ -455,16 +457,15 @@ namespace SimpleQ.Webinterface.Controllers
 
                 logger.Debug($"List with answer option texts created. ({list.Count} entries)");
 
-                selectedSurveys.ToList()
-                    .ForEach(s =>
-                    {
-                        s.AnswerOptions
-                            .ToList()
-                            .ForEach(a =>
-                            {
-                                list.Where(kv => kv.Key == a.AnsText).First().Value.Add(a.Votes.Count());
-                            });
-                    });
+                await selectedSurveys.ForEachAsync(s =>
+                {
+                    s.AnswerOptions
+                        .ToList()
+                        .ForEach(a =>
+                        {
+                            list.Where(kv => kv.Key == a.AnsText).First().Value.Add(a.Votes.Count());
+                        });
+                });
 
                 logger.Debug("Votes selected successfully");
 

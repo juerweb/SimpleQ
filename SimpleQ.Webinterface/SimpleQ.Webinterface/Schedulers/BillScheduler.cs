@@ -58,8 +58,9 @@ namespace SimpleQ.Webinterface.Schedulers
                                 $"Sincerely{Environment.NewLine}" +
                                 $"Your SimpleQ team";
 
+
                             if (Email.Send("payment@simpleq.at", clinton.Customer.CustEmail, "SimpleQ Bill", body, false,
-                                new System.Net.Mail.Attachment(stream, $"SimpleQ_Bill_{clinton.BillDate.ToString("yyyy-MM-dd")}.pdf", "application/pdf")))
+                                new System.Net.Mail.Attachment(stream, $"SimpleQ_Bill_{clinton.BillDate.ToString("yyyy-MM-dd")}.pdf", "application/pdf")).Result)
                             {
                                 clinton.Sent = true;
                                 db.SaveChanges();

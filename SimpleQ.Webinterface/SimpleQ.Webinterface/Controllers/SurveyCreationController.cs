@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading;
 using System.Web;
@@ -11,8 +12,8 @@ using SimpleQ.Webinterface.Models.Enums;
 using SimpleQ.Webinterface.Extensions;
 using System.Net.Http;
 using Newtonsoft.Json;
-using System.Security.Claims;
 using NLog;
+using System.Threading.Tasks;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -24,14 +25,14 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region MVC-Actions
         [HttpGet]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             try
             {
                 logger.Debug("Loading survey creation");
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Warn($"Loading failed. Customer not found: {CustCode}");
@@ -43,7 +44,7 @@ namespace SimpleQ.Webinterface.Controllers
                         SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
                         AnswerTypes = cust.AnswerTypes.ToList(),
                         Departments = cust.Departments.Select(d => new { Department = d, Amount = d.People.Count }).ToDictionary(x => x.Department, x => x.Amount),
-                        SurveyTemplates = db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToList()
+                        SurveyTemplates = await db.Surveys.Where(s => s.CustCode == CustCode && s.Template).ToListAsync()
                     };
 
                     ViewBag.emailConfirmed = cust.EmailConfirmed;
@@ -60,7 +61,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpPost]
-        public ActionResult New(SurveyCreationModel req)
+        public async Task<ActionResult> New(SurveyCreationModel req)
         {
             try
             {
@@ -78,13 +79,13 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault() == null)
+                    if (await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync() == null)
                     {
                         logger.Warn($"Creating new survey failed. Customer not found: {CustCode}");
                         return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
                     }
 
-                    if (!db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault().EmailConfirmed)
+                    if (!(await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync()).EmailConfirmed)
                     {
                         logger.Debug($"Creating new survey failed. Email not confirmed: {CustCode}");
                         return View("Error", new ErrorModel { Title = "Confirm your e-mail", Message = "Please confirm your e-mail address before creating surveys." });
@@ -96,10 +97,10 @@ namespace SimpleQ.Webinterface.Controllers
                     req.Survey.Sent = false;
                     req.Survey.Period = req.Period?.Ticks;
 
-                    if (req.Period.Value < TimeSpan.FromDays(1))
+                    if (req.Period.HasValue && req.Period.Value < TimeSpan.FromDays(1))
                         AddModelError("Period", "Period must be at least 1 day.", ref err);
 
-                    if (req.Survey.StartDate.Add(req.Period.Value) < req.Survey.EndDate)
+                    if (req.Period.HasValue && req.Survey.StartDate.Add(req.Period.Value) < req.Survey.EndDate)
                         AddModelError("Period", "Period must be bigger than the survey's duration.", ref err);
 
                     if (req.Survey.StartDate >= req.Survey.EndDate)
@@ -108,13 +109,13 @@ namespace SimpleQ.Webinterface.Controllers
                     if (req.Survey.Amount <= 0)
                         AddModelError("Survey.Amount", "Amount must be at least 1.", ref err);
 
-                    if (db.SurveyCategories.Where(c => c.CatId == req.Survey.CatId && c.CustCode == CustCode).FirstOrDefault() == null)
+                    if (await db.SurveyCategories.Where(c => c.CatId == req.Survey.CatId && c.CustCode == CustCode).FirstOrDefaultAsync() == null)
                         AddModelError("Survey.CatId", "Category not found.", ref err);
 
-                    if (db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefault() == null)
+                    if (await db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefaultAsync() == null)
                         AddModelError("Survey.TypeId", "AnswerType does not exist.", ref err);
 
-                    var baseId = db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefault().BaseId;
+                    var baseId = (await db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefaultAsync()).BaseId;
                     if (baseId != (int)BaseQuestionTypes.FixedAnswerQuestion && baseId != (int)BaseQuestionTypes.OpenQuestion
                         && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() == 0))
                         AddModelError("TextAnswerOptions", "There must be submitted some AnswerOptions.", ref err);
@@ -129,7 +130,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     foreach (var depId in req.SelectedDepartments)
                     {
-                        if (db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault() == null)
+                        if (await db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefaultAsync() == null)
                         {
                             AddModelError("SelectedDepartments", "Department not found.", ref err);
                             break;
@@ -151,26 +152,26 @@ namespace SimpleQ.Webinterface.Controllers
                     if (err)
                     {
                         logger.Debug("Creating new survey failed due to model validation failure. Exiting action");
-                        return Index();
+                        return await Index();
                     }
 
 
-                    int totalPeople = db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
-                        .SelectMany(d => d.People).Distinct().Count();
+                    int totalPeople = await db.Departments.Where(d => req.SelectedDepartments.Contains(d.DepId) && d.CustCode == CustCode)
+                        .SelectMany(d => d.People).Distinct().CountAsync();
                     if (req.Survey.Amount > totalPeople)
                         req.Survey.Amount = totalPeople;
 
                     logger.Debug($"Total people amount: {totalPeople} (CustCode: {CustCode}, SvyText: {req.Survey.SvyText})");
 
                     db.Surveys.Add(req.Survey);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug($"Survey successfully created. SvyId: {req.Survey.SvyId}");
 
-                    req.SelectedDepartments.ForEach(depId =>
+                    foreach (var depId in req.SelectedDepartments)
                     {
-                        req.Survey.Departments.Add(db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefault());
-                    });
-                    db.SaveChanges();
+                        req.Survey.Departments.Add(await db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefaultAsync());
+                    };
+                    await db.SaveChangesAsync();
                     logger.Debug($"Departments added successfully for SvyId: {req.Survey.SvyId}");
 
                     if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion)
@@ -187,7 +188,7 @@ namespace SimpleQ.Webinterface.Controllers
                         });
                         logger.Debug($"Answer options set successfully for SvyId: {req.Survey.SvyId}");
                     }
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                 }
 
                 TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
@@ -201,7 +202,7 @@ namespace SimpleQ.Webinterface.Controllers
                 }
 
                 logger.Debug("Creating new survey finished successfully");
-                return Index();
+                return await Index();
             }
             catch (Exception ex)
             {
@@ -214,25 +215,25 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region AJAX-Methods
         [HttpGet]
-        public ActionResult LoadTemplate(int svyId)
+        public async Task<ActionResult> LoadTemplate(int svyId)
         {
             try
             {
                 logger.Debug($"Requested loading survey template (CustCode: {CustCode}, SvyId: {svyId})");
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Loading template failed. Customer not found: {CustCode}");
                         return Http.NotFound("Customer not found");
                     }
 
                     db.Configuration.LazyLoadingEnabled = false;
-                    var survey = db.Surveys
+                    var survey = await db.Surveys
                         .Include("Departments")
                         .Include("AnswerOptions")
                         .Where(s => s.SvyId == svyId && s.CustCode == CustCode && s.Template)
-                        .FirstOrDefault();
+                        .FirstOrDefaultAsync();
 
                     if (survey == null)
                     {
@@ -269,20 +270,20 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult CancelSurvey(int svyId)
+        public async Task<ActionResult> CancelSurvey(int svyId)
         {
             try
             {
                 logger.Debug($"Requested to cancel survey {svyId}");
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Cancelling survey failed. Customer not found: {CustCode}");
                         return Http.NotFound("Customer not found");
                     }
 
-                    var survey = db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode).FirstOrDefault();
+                    var survey = await db.Surveys.Where(s => s.SvyId == svyId && s.CustCode == CustCode).FirstOrDefaultAsync();
                     if (survey == null)
                     {
                         logger.Debug($"Cancelling survey failed. Survey not found: {svyId}");
@@ -292,16 +293,16 @@ namespace SimpleQ.Webinterface.Controllers
                     if (survey.Sent)
                     {
                         logger.Debug("Survey already sent. Sending cancellation request");
-                        survey.Departments.Where(c => c.CustCode == CustCode).ToList().ForEach(dep =>
+                        using (var client = new HttpClient())
                         {
-                            dep.People.ToList().ForEach(p =>
+                            foreach (var dep in survey.Departments.Where(c => c.CustCode == CustCode).ToList())
                             {
-                                using (var client = new HttpClient())
+                                foreach (var p in dep.People.ToList())
                                 {
                                     try
                                     {
-                                    // SEND SURVEY
-                                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                                        // SEND SURVEY
+                                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
                                         var obj = new
                                         {
                                             app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
@@ -309,7 +310,7 @@ namespace SimpleQ.Webinterface.Controllers
                                             contents = new { en = "Cancel survey" },
                                             data = new { Cancel = true, SvyId = svyId }
                                         };
-                                        var response = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj).Result;
+                                        var response = await client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj);
 
                                         if (!response.IsSuccessStatusCode)
                                         {
@@ -325,8 +326,8 @@ namespace SimpleQ.Webinterface.Controllers
                                         logger.Error(ex, $"Error while sending survey to app (SvyId: {svyId}, CustCode: {CustCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
                                     }
                                 }
-                            });
-                        });
+                            }
+                        }
                     }
                     else
                     {
@@ -336,8 +337,8 @@ namespace SimpleQ.Webinterface.Controllers
                             queuedSurveys.Remove(svyId);
                         }
                     }
-                    db.sp_DeleteSurvey(svyId);
-                    db.SaveChanges();
+                    await Task.Run(() => db.sp_DeleteSurvey(svyId));
+                    await db.SaveChangesAsync();
 
                     logger.Debug($"Survey cancelled successfully: {svyId}");
                     return Http.Ok();
@@ -352,14 +353,14 @@ namespace SimpleQ.Webinterface.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public double LoadPricePerClick(int amount)
+        public async Task<double> LoadPricePerClick(int amount)
         {
             try
             {
                 logger.Trace($"Requested to load price per click for amount: {amount}");
                 using (var db = new SimpleQDBEntities())
                 {
-                    var price = Convert.ToDouble(db.fn_CalcPricePerClick(amount, CustCode ?? ""));
+                    var price = Convert.ToDouble(await Task.Run(() => db.fn_CalcPricePerClick(amount, CustCode ?? "")));
 
                     logger.Trace($"Price per click for {amount} people: ");
                     return price;
@@ -408,7 +409,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
                 }
 
-                HostingEnvironment.QueueBackgroundWorkItem(ct =>
+                HostingEnvironment.QueueBackgroundWorkItem(async ct =>
                 {
                     try
                     {
@@ -430,7 +431,7 @@ namespace SimpleQ.Webinterface.Controllers
                             Random rnd = new Random();
 
                             // Anzahl an zu befragenden Personen
-                            int amount = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Amount;
+                            int amount = (await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync()).Amount;
 
                             // Bereits befragte Personen (zwecks Verhinderung v. Mehrfachbefragungen)
                             HashSet<int> alreadyAsked = new HashSet<int>();
@@ -439,19 +440,19 @@ namespace SimpleQ.Webinterface.Controllers
                             Dictionary<int, int> depAmounts = new Dictionary<int, int>();
 
                             // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
-                            int totalPeople = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Departments.SelectMany(d => d.People).Distinct().Count();
+                            int totalPeople = (await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync()).Departments.SelectMany(d => d.People).Distinct().Count();
                             logger.Debug($"Survey {svyId} - totalPeople: {totalPeople}");
 
-                            db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault().Departments.ToList().ForEach(dep =>
+                            (await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync()).Departments.ToList().ForEach(dep =>
                             {
-                            // Anzahl an Personen in der aktuellen Abteilung (mit DepId = id)
-                            int currPeople = dep.People.Distinct().Count();
-                            // Abteilung überspringen, wenn keine Leute darin
-                            if (currPeople == 0)
+                                // Anzahl an Personen in der aktuellen Abteilung (mit DepId = id)
+                                int currPeople = dep.People.Distinct().Count();
+                                // Abteilung überspringen, wenn keine Leute darin
+                                if (currPeople == 0)
                                     return;
 
-                            // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
-                            int toAsk = (int)Math.Round(amount * (currPeople / (double)totalPeople));
+                                // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
+                                int toAsk = (int)Math.Round(amount * (currPeople / (double)totalPeople));
 
                                 depAmounts.Add(dep.DepId, toAsk);
                             });
@@ -469,60 +470,64 @@ namespace SimpleQ.Webinterface.Controllers
 
                             logger.Debug($"Survey {svyId} - DepAmounts after correction: {string.Join(";", depAmounts.Select(x => x.Key + "=" + x.Value))}");
 
+                            int totalSent = 0;
                             using (var client = new HttpClient())
                             {
                                 foreach (var kv in depAmounts)
                                 {
-                                    int i = 0;
-                                    db.Departments
+                                    int sent = 0;
+                                    var query = (await db.Departments
                                         .Where(d => d.DepId == kv.Key && d.CustCode == custCode)
                                         .SelectMany(d => d.People)
-                                        .ToList()
+                                        .ToListAsync())
                                         .Where(p => !alreadyAsked.Contains(p.PersId))
                                         .OrderBy(p => rnd.Next())
                                         .Take(kv.Value)
-                                        .ToList()
-                                        .ForEach(p =>
-                                        {
-                                            alreadyAsked.Add(p.PersId);
+                                        .ToList();
 
-                                            try
-                                            {
+                                    foreach (var p in query)
+                                    {
+                                        alreadyAsked.Add(p.PersId);
+
+                                        try
+                                        {
                                             // SEND SURVEY
                                             logger.Debug($"Beginning to send survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
-                                                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
-                                                var obj = new
-                                                {
-                                                    app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
-                                                    include_player_ids = new string[] { p.DeviceId },
-                                                    contents = new { en = "New survey" },
-                                                    content_available = true,
-                                                    data = new { Cancel = false, SvyId = svyId }
-                                                };
-                                                var response = client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj).Result;
-
-                                                if (!response.IsSuccessStatusCode)
-                                                {
-                                                    logger.Error($"Failed sending survey (StatusCode: {response.StatusCode}, Content: {response.Content})");
-                                                }
-                                                else
-                                                {
-                                                    logger.Debug($"Survey sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");
-                                                    i++;
-                                                }
-                                            }
-                                            catch (AggregateException ex)
+                                            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
+                                            var obj = new
                                             {
-                                                logger.Error(ex, $"Error while sending survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
+                                                app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
+                                                include_player_ids = new string[] { p.DeviceId },
+                                                contents = new { en = "New survey" },
+                                                content_available = true,
+                                                data = new { Cancel = false, SvyId = svyId }
+                                            };
+                                            var response = await client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj);
+
+                                            if (!response.IsSuccessStatusCode)
+                                            {
+                                                logger.Error($"Failed sending survey {svyId} (StatusCode: {response.StatusCode}, Content: {response.Content})");
                                             }
-                                        });
-                                    logger.Debug($"(SvyId {svyId}) Surveys sent to Department {kv.Key}: {i} == {kv.Value}");
+                                            else
+                                            {
+                                                logger.Debug($"Survey {svyId} sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");
+                                                sent++;
+                                            }
+                                        }
+                                        catch (AggregateException ex)
+                                        {
+                                            logger.Error(ex, $"Error while sending survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
+                                        }
+                                    }
+                                    logger.Debug($"(SvyId {svyId}) Surveys sent to Department {kv.Key}: Sent:{sent} Expected:{kv.Value}");
+                                    totalSent += sent;
                                 }
                             }
-                            logger.Debug($"(SvyId {svyId}) Total surveys sent: {alreadyAsked.Count}");
+                            logger.Debug($"(SvyId {svyId}) Total surveys sent: {totalSent}");
 
-                            db.Surveys.Where(s => s.SvyId == svyId).First().Sent = true;
-                            db.SaveChanges();
+
+                            (await db.Surveys.Where(s => s.SvyId == svyId).FirstAsync()).Sent = totalSent != 0;
+                            await db.SaveChangesAsync();
                         }
                     }
                     catch (Exception ex)
