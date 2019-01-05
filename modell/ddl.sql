@@ -178,6 +178,7 @@ create table Survey
 	TypeId int not null references AnswerType,
 	Template bit not null default 0,
 	[Sent] bit not null default 0,
+	Period bigint null default null,
     foreign key (CatId, CustCode) references SurveyCategory,
 	check (StartDate < EndDate)
 );
@@ -227,7 +228,7 @@ create table Chooses
 go
 
 
--- DSGVO-spezifische Bestimmung
+-- Datenspezifische Bestimmung
 -- NICHT KUNDENSPEZIFISCH
 create table DataConstraint
 (
@@ -541,7 +542,8 @@ begin
 										 datediff(month, s.EndDate, getdate())
 										) >= c.DataStoragePeriod
 							   and Template = 0
-							   and [Sent] = 1;
+							   and [Sent] = 1
+							   and Period is null;
 	
 	open c;
 	fetch c into @svyId;
