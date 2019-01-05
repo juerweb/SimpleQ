@@ -22,10 +22,10 @@
                             <resx:SixDigitCodeBehavior x:Name="SixDigitCodeBehavior"></resx:SixDigitCodeBehavior>
                         </Entry.Behaviors>
                     </Entry>
-                    <StackLayout Orientation="Horizontal">
+                    <!--<StackLayout Orientation="Horizontal">
                         <controls:Checkbox VerticalOptions="Center" IsChecked="{Binding DebugMode}"></controls:Checkbox>
                         <Label Text="{resx:Translate Text=DebugMode}"></Label>
-                    </StackLayout>
+                    </StackLayout>-->
 
                     <Button Command="{Binding ManualCodeEntryCommand}" CommandParameter="{Binding}" Text="{resx:Translate Text=Register}" IsEnabled="{Binding Source={x:Reference SixDigitCodeBehavior}, Path=IsValid}"></Button>
                 </StackLayout>
