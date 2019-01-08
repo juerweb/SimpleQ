@@ -6,7 +6,7 @@
              Title="{ext:Translate Text=OpenSourceLicense}">
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding OpenSourceLicenses}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+            <ListView ItemsSource="{Binding OpenSourceLicenses}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" RowHeight="120">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

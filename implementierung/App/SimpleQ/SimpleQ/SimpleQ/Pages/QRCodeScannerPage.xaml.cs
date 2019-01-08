@@ -15,6 +15,13 @@ namespace SimpleQ.Pages
 		public QRCodeScannerPage ()
 		{
 			InitializeComponent ();
-		}
+
+            TimeSpan ts = new TimeSpan(0, 0, 0, 3, 0);
+            Device.StartTimer(ts, () => {
+                if (scannerView.IsScanning)
+                    scannerView.AutoFocus();
+                return true;
+            });
+        }
 	}
 }
