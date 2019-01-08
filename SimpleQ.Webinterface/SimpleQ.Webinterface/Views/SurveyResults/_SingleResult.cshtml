@@ -102,19 +102,36 @@
 
 <script>
 
+    
     var dict = []; // create an empty array
-
-        @foreach (KeyValuePair<string,int> kvp in Model.Votes)
+    var freeTextAnswers = [];
+    @{
+        if(Model.Votes != null)
         {
+            foreach (KeyValuePair<string, int> kvp in Model.Votes)
+            {
             @:dict.push({
-                @:key:"@kvp.Key"
+                @:key: "@kvp.Key"
             @:,
                 @:value: "@kvp.Value"
             @:});
+            }
+            @:$("#chart1SelectSingle").change();
+            @:$("#chart2SelectSingle").change();
         }
+        else
+        {
+            @:freeText = false;
+            @:freeTextAnswers = [];
+            foreach (string answer in Model.FreeTextVotes)
+            {
+                @:freeTextAnswers.push("@answer");
+                @:showFreeTextAnsers();
+            }
+        }
+    }
 
-        $("#chart1SelectSingle").change();
-        $("#chart2SelectSingle").change();
+        
 
     function updateSelect1(elem) {
         //alert(elem.value);

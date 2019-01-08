@@ -7,7 +7,33 @@
 
     ResourceManager rm = Resources.ResourceManager;
 }
-
+<div class="row ml-0 mr-0">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Befragung</th>
+                <th>Anzahl</th>
+                <th>Befragungskategorie</th>
+                <th>Antwortform</th>
+                <th>Zeitraum</th>
+                <th>Beantwortungsform</th>
+                <th>Gruppen</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Is die Sekretärin schoaf?</td>
+                <td>3</td>
+                <td>Sekretärinenfrog</td>
+                <td>Ja/Nein</td>
+                <td>01.01.2018-12.01.2018</td>
+                <td>Heisln, Kreidln, Neger, Ungarn</td>
+                <td><button class="btn btn-primary">Auswerten</button></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <div class="row ml-0 mr-0">
     <div class="col-5 pl-4 pr-4">
         <div id="surveyCategorySelection">
@@ -104,7 +130,7 @@
 </div>
 
 <script>
-
+    var freeText = false;
     var languageDict = {};
     if (resultType == undefined) {
         var resultType = "multi";
@@ -171,6 +197,11 @@
 
     function loadSingleResultAsync() {
         $("#singleResultPartial").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + $("#Surveys").val());
+        
+        if (freeText) {
+            $("#chart1SelectSingle").hide();
+            $("#chart2SelectSingle").hide();
+        }
     }
 
     function loadMultiResultAsync() {
@@ -470,6 +501,18 @@
         }
         $("#" + chart).append("<table class='table table-bordered'><thead><tr><th>@Resources.answer</th><th>@Resources.count</th><th>@Resources.percent</th></tr></thead><tbody>" + injection + "</tbody></table>");
     }
+
+    function showFreeTextAnsers() {
+        document.getElementById("chart1Col").innerHTML = "";
+        document.getElementById("chart2Col").innerHTML = "";
+        let injection;
+        for (i = 0; i < freeTextAnswers.length; i++) {
+            injection += "<tr><td>" + freeTextAnswers[i] + "</td></tr>";
+        }
+        $("#chart1Col").append("<table class='table table-bordered'><thead><tr><th>@Resources.answer</th></tr></thead><tbody>" + injection + "</tbody></table>");
+        
+    }
+
 
     //modal things
     //   |    Everything down here

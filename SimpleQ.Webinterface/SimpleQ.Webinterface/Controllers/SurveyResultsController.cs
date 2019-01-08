@@ -85,7 +85,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     Votes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? SelectVotesFromSurvey(survey) : null,
 
-                    FreeTextVotes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? db.Votes
+                    FreeTextVotes = (survey.AnswerType.BaseId == (int)BaseQuestionTypes.OpenQuestion) ? db.Votes
                         .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
                         .Select(v => v.VoteText)
                         .ToList()
