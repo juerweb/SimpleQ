@@ -134,9 +134,31 @@
         </div>
         <div class="col-md-5 p-0">
             <h3 class="text-center">@Resources.surveyPreviewHeader</h3>
-
         </div>
+    </div>
 
+    <div class="modal" id="noGroupsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Please define groups first!</h4>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <label>You have no groups yet, switch to group administration and create your first one!</label>
+                    <label for="NewGroupTB">Name of the group</label>
+                    <input id="NewGroupTB" type="text" class="form-control" />
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <a type="button" href='@Url.Action("Index", "GroupAdministration")' class="btn btn-primary" data-dismiss="modal" onclick="addNewGroup()">To group administration</a>
+                </div>
+
+            </div>
+        </div>
     </div>
 }
 <script>
@@ -145,6 +167,10 @@
     let secondAnswer = "";
 
     $(function () {
+        if (document.getElementById("groups").innerHTML == "") {
+            $("#noGroupsModal").show();
+        }
+
         document.getElementById("header").innerHTML = "@Resources.surveyCreationHeader"; //set Header
 
         $("#newCategoryDiv").hide();

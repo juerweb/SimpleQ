@@ -51,3 +51,9 @@
     /*right: 100%;*/
 }
 
+.smallCellPadding td {
+    padding-top: 0.1em!important;
+    padding-bottom: 0.1em!important;
+}
+
+
