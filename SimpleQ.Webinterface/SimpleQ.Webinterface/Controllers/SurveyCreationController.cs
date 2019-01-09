@@ -128,7 +128,7 @@ namespace SimpleQ.Webinterface.Controllers
                         && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2))
                         AddModelError("TextAnswerOptions", "There must be submitted exactly two AnswerOptions.", ref err);
 
-                    foreach (var depId in req.SelectedDepartments)
+                    foreach (var depId in req.SelectedDepartments ?? new List<int>())
                     {
                         if (await db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefaultAsync() == null)
                         {
@@ -139,7 +139,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     if (req.TextAnswerOptions != null)
                     {
-                        foreach (var ans in req.TextAnswerOptions)
+                        foreach (var ans in req.TextAnswerOptions ?? new List<string>())
                         {
                             if (string.IsNullOrEmpty(ans))
                             {

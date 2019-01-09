@@ -149,7 +149,7 @@ namespace SimpleQ.Webinterface.Controllers
                     db.Customers.Add(cust);
                     await db.SaveChangesAsync();
 
-                    async Task<int> maxId()
+                    async Task<int> maxCatId()
                     {
                         await db.SaveChangesAsync();
                         return await db.SurveyCategories
@@ -159,8 +159,19 @@ namespace SimpleQ.Webinterface.Controllers
                             .MaxAsync();
                     }
 
-                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxId() + 1, CustCode = custCode, CatName = "Employee satisfaction", Deactivated = false });
-                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxId() + 1, CustCode = custCode, CatName = "Workplace design", Deactivated = false });
+                    async Task<int> maxDepId()
+                    {
+                        await db.SaveChangesAsync();
+                        return await db.Departments
+                            .Where(d => d.CustCode == custCode)
+                            .Select(d => d.DepId)
+                            .DefaultIfEmpty(0)
+                            .MaxAsync();
+                    }
+
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = "Employee satisfaction", Deactivated = false });
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = "Workplace design", Deactivated = false });
+                    db.Departments.Add(new Department { DepId = await maxDepId() + 1, CustCode = custCode, DepName = "Everyone" });
                     await db.SaveChangesAsync();
 
                     logger.Info($"Customer registered: {custCode}");
