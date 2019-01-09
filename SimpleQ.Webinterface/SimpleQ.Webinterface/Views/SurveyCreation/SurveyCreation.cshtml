@@ -86,7 +86,7 @@
                             {
                                 maxCount += kvp.Value;
                                 <li>
-                                    <input type="checkbox" checked="checked" name="SelectedDepartments" value="@kvp.Key.DepId"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
+                                    <input type="checkbox" checked="checked" name="SelectedDepartments" value="@kvp.Key.DepId" onchange="groupClicked(this)"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
                                 </li>
                             }
                         }
@@ -97,12 +97,12 @@
             <label class="mt-2">@Resources.askedPeopleCount</label>
             <div class="row">
                 <span class="col-md-6">
-                    <input id="countInput" class="form-control" type="number" value="0" name="Survey.Amount" oninput="changeSpanColor(); checkCount(); changePrice(this);" />
+                    <input id="countInput" class="form-control" type="number" min="0" value="0" name="Survey.Amount" oninput="changeSpanColor(); checkCount(); changePrice(this);" />
                 </span>
                 <span class="col-md-6">
                     <a>@Resources.predictedPrice: <b id="minPrice">0</b> @Resources.to @Resources.max <b id="maxPrice">0</b><b>€</b></a>
                 </span>
-            </div>            
+            </div>
             <span class="row colorSpan pl-4 pr-4 mt-2">
                 <span id="colorSpan1" class="col-4"></span>
                 <span id="colorSpan2" class="col-4"></span>
@@ -113,7 +113,7 @@
             <span class="row mt-3">
                 <span class="col-md">
                     <label for="QuestionFromDatePicker">@Resources.questionTimeDateHeader @Resources.from</label>
-                    <input id="QuestionFromDatePicker" type="date" class="form-control" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+                    <input id="QuestionFromDatePicker" type="date" class="form-control" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                     <label for="QuestionToDatePicker" class="mt-2">@Resources.questionTimeDateHeader @Resources.to</label>
                     <input id="QuestionToDatePicker" type="date" class="form-control" name="EndDate" value="@DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")" />
                 </span>
@@ -124,6 +124,12 @@
                     <input id="QuestimeToTimePicker" type="time" class="form-control" name="EndTime" value="12:00" />
                 </span>
             </span>
+
+            <button type="button" class="btn btn-light btn-block mt-2 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="Klick to repeat a question certain times automatically"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>Periodische Befragung...</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+
+            <div id="periodicSurveyDiv" class="collapse">
+                Lorem ipsum dolor text....
+            </div>
 
             <div class="mt-2">
                 @Html.CheckBox("Survey.Template")
@@ -165,7 +171,8 @@
     let answers = [];
     let firstAnswer = "";
     let secondAnswer = "";
-
+    var groups = [];
+    var maxCount = 0;
 
     $(function () {
         if (document.getElementById("groups").innerHTML == "") {
@@ -195,7 +202,21 @@
             openHideAnswerBox();
         });
 
+        addGroups();
     });
+
+
+    function addGroups() {
+        @{ 
+            foreach (KeyValuePair<Department, int> kvp in Model.Departments)
+            {
+                @:groups.push({ id: @kvp.Key.DepId, count: @kvp.Value});
+            }
+            @:maxCount = @maxCount;
+        }
+        document.getElementById("countInput").value = maxCount; //set maximum as start value (all groups selected)
+        changeSpanColor();
+    }
 
 
     function cancelAddCategory() {
@@ -316,7 +337,7 @@
         }
         answerTypeSelectionChanged();
 
-        document.getElementById("countInput").value = 0;
+        document.getElementById("countInput").value = maxCount;
     }
 
 
@@ -504,10 +525,37 @@
     }
 
 
+    function groupClicked(elem) {
+        if (elem.checked) {
+            for (let i = 0; i < groups.length; i++) {
+                if (groups[i].id == elem.value) {
+                    maxCount += groups[i].count;
+                    let input = document.getElementById("countInput");
+                    let temp = input.value;
+                    input.value = parseInt(temp)+groups[i].count;
+                    break;
+                }
+            }
+        } else {
+            for (let i = 0; i < groups.length; i++) {
+                if (groups[i].id == elem.value) {
+                    maxCount -= groups[i].count;
+                    checkCount();
+                    break;
+                }
+            }
+        }
+        changeSpanColor();
+    }
+
+
     function checkCount() {
         let input = document.getElementById("countInput");
-        if (input.value > @maxCount) {
-            alert("You can not ask more people than the selected groups have!");
+        if (input.value > maxCount) {
+            input.value = maxCount;
+        }
+
+        if (input.value < 0) {
             input.value = 0;
         }
     }
@@ -576,6 +624,20 @@
                 document.getElementById("maxPrice").innerHTML = (inputElem.value * price).toFixed(2);
             }
         );
+    }
+
+
+    function toggleUpDownIcon() {
+        //console.log($("#periodicSurveyDiv").hasClass("show"));
+        if (!$("#periodicSurveyDiv").hasClass("show")) {
+            //console.log("dere");
+            document.getElementById("periodicUpDownIcon").innerHTML = "&#xe5ce;";
+            //$("#periodicUpDownIcon").innerHTML = "&#xe5ce;";
+        } else {
+            //console.log("rere");
+            document.getElementById("periodicUpDownIcon").innerHTML = "&#xe313;";
+            //$("#periodicUpDownIcon").innerHTML = "&#xe313;";
+        }
     }
 
 </script>
