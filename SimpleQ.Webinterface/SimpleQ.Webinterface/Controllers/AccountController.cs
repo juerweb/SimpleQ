@@ -20,6 +20,7 @@ namespace SimpleQ.Webinterface.Controllers
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region MVC-Actions
+        [HttpGet]
         public ActionResult Index()
         {
             if (AuthManager.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault() != null)
