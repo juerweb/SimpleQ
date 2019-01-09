@@ -71,7 +71,7 @@
                 </select>
             </div>
 
-            <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+            <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer" data-toggle="tooltip" title="Klick here to insert answers!"><span class="d-flex justify-content-between"><span>Answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
             <div id="answerBox" class="border border-dark mt-2">
 
             </div>
@@ -130,7 +130,7 @@
                 @*<input type="checkbox" checked="checked" onclick="" name="Survey.Template">*@
                 <span data-toggle="tooltip" title="@Resources.TemplateDescription">@Resources.SaveAsTemplate</span>
             </div>
-            <button type="submit" class="btn btn-primary btn-block mb-5">@Resources.startSurvey</button>
+            <button type="submit" id="sumbitBtn" class="btn btn-primary btn-block mb-5">@Resources.startSurvey</button>
         </div>
         <div class="col-md-5 p-0">
             <h3 class="text-center">@Resources.surveyPreviewHeader</h3>
@@ -166,6 +166,7 @@
     let firstAnswer = "";
     let secondAnswer = "";
 
+
     $(function () {
         if (document.getElementById("groups").innerHTML == "") {
             $("#noGroupsModal").show();
@@ -196,11 +197,13 @@
 
     });
 
+
     function cancelAddCategory() {
         $("#newCategoryDiv").hide();
         document.getElementById("newCategoryTB").value = "";
         $("#openAddCategoryBtn").prop("disabled", false);
     }
+
 
     function openHideAnswerBox() {
         document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe5ce;";
@@ -211,6 +214,7 @@
             document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe313;";
         }
     }
+
 
     function surveyTemplateSelectionChanged() {
         let surveyTemplateCB = document.getElementById("surveyTemplateCB");
@@ -299,6 +303,7 @@
 
     }
 
+
     function clearAll() {
         document.getElementById("question").value = "";
         document.getElementById('categoryDropdown').options[0].selected = true;
@@ -320,11 +325,13 @@
         let answerType = document.getElementById("AnswerTypeCB");
         let value = answerType.value;
         if (value > 4) {
+            $("#sumbitBtn").attr("disabled", true);
             $("#openAddAnswer").show();
         } else {
             $("#openAddAnswer").hide();
         }
         $("#answerBox").hide();
+
     }
 
     function openAddAnswerBox(){
@@ -361,6 +368,7 @@
                 '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + secondAnswer + '" class="form-control" />' +
                 '</div>';
             $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+            $("#sumbitBtn").attr("disabled", false);
         } else {
             answerBox.innerHTML =
                 '<div class="m-2">' +
@@ -370,17 +378,10 @@
                 '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" class="form-control" />' +
                 '</div>';
             $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+            $("#sumbitBtn").attr("disabled", true);
         }
     }
 
-    function answersULChanged() {
-        let elem = document.getElementById("answerUL");
-        if (elem.hasChildNodes()) {
-            $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
-        } else {
-            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
-        }
-    }
 
     function insertAnswers() {        
         let ul = document.getElementById("answerUL");
@@ -400,15 +401,19 @@
         }
     }
 
+
     function dichotomAnswerChanged(inputId) {
         firstAnswer = document.getElementById("dichotomAnswer1").value;
         secondAnswer = document.getElementById("dichotomAnswer2").value;
         if (firstAnswer !== "" && secondAnswer !== "") {
             $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+            $("#sumbitBtn").attr("disabled", false);
         } else {
             $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+            $("#sumbitBtn").attr("disabled", true);
         }
     }
+
 
     function addAnswer() {
         let ul = document.getElementById("answerUL");
@@ -438,7 +443,9 @@
 
         inputElem.value = "";
         $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+        $("#sumbitBtn").attr("disabled", false);
     }
+
 
     function deleteAnswer(button) {
         let text = button.parentElement.parentElement.children[0].value;
@@ -451,8 +458,10 @@
         button.parentElement.parentElement.parentElement.remove();
         if (answers.length === 0) {
             $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+            $("#sumbitBtn").attr("disabled", true);
         }
     }
+
 
     function editAnswer(button) {
         let text = button.parentElement.parentElement.children[0].value;
@@ -464,6 +473,7 @@
             '       </span>';
         button.parentElement.parentElement.innerHTML = edit;
     }
+
 
     function saveAnswer(button, canceled,tempText) {
         let text;
@@ -493,6 +503,7 @@
         button.parentElement.parentElement.innerHTML = edited;
     }
 
+
     function checkCount() {
         let input = document.getElementById("countInput");
         if (input.value > @maxCount) {
@@ -500,6 +511,7 @@
             input.value = 0;
         }
     }
+
 
     function changeSpanColor() {
         let input = document.getElementById("countInput");
@@ -523,6 +535,7 @@
             //$("#countTextLabel").innerHTML = "Große Gruppe .. sehr genaue Auswertung möglich..";
         }
     }
+
 
     function addCategory() {
         let input = document.getElementById("newCategoryTB").value;
@@ -552,6 +565,7 @@
             }
         );
     }
+
 
     function changePrice(inputElem) {
 
