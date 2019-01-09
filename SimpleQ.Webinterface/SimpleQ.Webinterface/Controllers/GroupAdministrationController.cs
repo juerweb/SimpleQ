@@ -226,8 +226,14 @@ namespace SimpleQ.Webinterface.Controllers
                     var dep = await db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefaultAsync();
                     if (dep == null)
                     {
-                        logger.Debug("Group deleting failed. Department not found.");
+                        logger.Debug("Group deleting failed. Department not found");
                         return Http.NotFound("Department not found.");
+                    }
+
+                    if(dep.People.Count() != 0)
+                    {
+                        logger.Debug("Group deleting failed. Has to be empty");
+                        return Http.Conflict("Department has to be empty.");
                     }
 
                     db.Departments.Remove(dep);
