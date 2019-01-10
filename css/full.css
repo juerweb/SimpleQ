@@ -194,28 +194,48 @@ p {
 }
 
 .aFrage1 {
-    background-image: url(../images/deviceImages/frage.PNG);
-    background-size: cover;
+    background-image: url(../images/deviceImages/frage1.PNG);
+    background-size: inherit;
 }
 
 .aFrage2 {
-    background-image: url(../images/deviceImages/frage.PNG);
-    background-size: cover;
+    background-image: url(../images/deviceImages/frage2.PNG);
+    background-size: inherit;
 }
 
 .aFrage3 {
-    background-image: url(../images/deviceImages/ampel.PNG);
-    background-size: cover;
+    background-image: url(../images/deviceImages/frage3.PNG);
+    background-size: inherit;
+}
+
+.aFrage4 {
+    background-image: url(../images/deviceImages/frage4.PNG);
+    background-size: inherit;
+}
+
+.aFrage41 {
+    background-image: url(../images/deviceImages/frage41.PNG);
+    background-size: inherit;
+}
+
+.aFrage42 {
+    background-image: url(../images/deviceImages/frage42.PNG);
+    background-size: inherit;
 }
 
 .aFrage5 {
-    background-image: url(../images/deviceImages/textfrage.PNG);
-    background-size: cover;
+    background-image: url(../images/deviceImages/frage5.PNG);
+    background-size: inherit;
 }
 
 .aFrage51 {
-    background-image: url(../images/deviceImages/mehrfachantwort.PNG);
-    background-size: cover;
+    background-image: url(../images/deviceImages/frage51.PNG);
+    background-size: inherit;
+}
+
+.aFrage5Ans {
+    background-image: url(../images/deviceImages/frage5Ans.PNG);
+    background-size: inherit;
 }
 
 .aSurvey {
@@ -226,9 +246,29 @@ p {
     background-image: url();
 }
 
+.aleer{
+    background-image: url(../images/deviceImages/leer.PNG);
+    background-size: inherit;
+}
+
+.avoll{
+    background-image: url(../images/deviceImages/voll.PNG);
+    background-size: inherit;
+}
+
+#aReturn {
+    display: none;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 46px;
+    height: 46px;
+    cursor: pointer;
+}
+
 #aHomeFrage1 {
     position: absolute;
-    top: 70px;
+    top: 65px;
     left: 9px;
     width: 200px;
     height: 50px;
@@ -248,25 +288,25 @@ p {
     position: absolute;
     top: 184px;
     left: 9px;
-    width: 200px;
+    width: 250px;
     height: 50px;
     cursor: pointer;
 }
 
 #aHomeFrage4 {
     position: absolute;
-    top: 227px;
+    top: 307px;
     left: 9px;
-    width: 200px;
-    height: 85px;
+    width: 240px;
+    height: 55px;
     cursor: pointer;
 }
 
 #aHomeFrage5 {
     position: absolute;
-    top: 316px;
+    top: 240px;
     left: 9px;
-    width: 200px;
+    width: 220px;
     height: 53px;
     cursor: pointer;
 }
@@ -274,18 +314,26 @@ p {
 #aFrage1Ja {
     display: none;
     position: absolute;
-    top: 110px;
-    left: 2px;
-    width: 170px;
+    top: 170px;
+    left: 8px;
+    width: 300px;
     height: 40px;
     cursor: pointer;
 }
-
-#aFrage1Nein {
+#aFrage2M {
     display: none;
     position: absolute;
-    top: 110px;
-    left: 180px;
+    top: 120px;
+    left: 15px;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+}
+#aFrage2W {
+    display: none;
+    position: absolute;
+    top: 120px;
+    left: 160px;
     width: 140px;
     height: 40px;
     cursor: pointer;
@@ -294,9 +342,69 @@ p {
 #aFrage3Ja {
     display: none;
     position: absolute;
-    top: 110px;
-    left: 1px;
-    width: 115px;
+    top: 120px;
+    left: 8px;
+    width: 90px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage4S {
+    display: none;
+    position: absolute;
+    top: 540px;
+    left: 8px;
+    width: 300px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage4A {
+    display: none;
+    position: absolute;
+    top: 140px;
+    left: 5px;
+    width: 27px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage4A2 {
+    display: none;
+    position: absolute;
+    top: 182px;
+    left: 5px;
+    width: 27px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage4A3 {
+    display: none;
+    position: absolute;
+    top: 224px;
+    left: 5px;
+    width: 27px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage4A4 {
+    display: none;
+    position: absolute;
+    top: 266px;
+    left: 5px;
+    width: 27px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage4A5 {
+    display: none;
+    position: absolute;
+    top: 308px;
+    left: 5px;
+    width: 27px;
     height: 30px;
     cursor: pointer;
 }
@@ -304,27 +412,31 @@ p {
 #aFrage3Nein {
     display: none;
     position: absolute;
-    top: 110px;
-    left: 115px;
-    width: 115px;
-    height: 30px;
+    top: 120px;
+    left: 113px;
+    width: 90px;
+    height: 40px;
     cursor: pointer;
+}
+
+.hideBlock{
+    display:none;
 }
 
 #aFrage3Ka {
     display: none;
     position: absolute;
-    top: 110px;
-    left: 231px;
-    width: 115px;
-    height: 30px;
+    top: 120px;
+    left: 215px;
+    width: 90px;
+    height: 40px;
     cursor: pointer;
 }
 
 #aFrage5T {
     display: none;
     position: absolute;
-    top: 105px;
+    top: 115px;
     left: 2px;
     width: 315px;
     height: 40px;
@@ -334,30 +446,10 @@ p {
 #aFrage5A {
     display: none;
     position: absolute;
-    top: 195px;
+    top: 170px;
     left: 20px;
-    width: 350px;
-    height: 40px;
-    cursor: pointer;
-}
-
-#aFrage5B {
-    display: none;
-    position: absolute;
-    top: 245px;
-    left: 20px;
-    width: 350px;
-    height: 40px;
-    cursor: pointer;
-}
-
-#aFrage5C {
-    display: none;
-    position: absolute;
-    top: 280px;
-    left: 20px;
-    width: 350px;
-    height: 40px;
+    width: 280px;
+    height: 245px;
     cursor: pointer;
 }
 
@@ -374,22 +466,13 @@ p {
 #aFrage5S {
     display: none;
     position: absolute;
-    top: 155px;
-    left: 1px;
+    top: 170px;
+    left: 11px;
     width: 315px;
-    height: 46px;
+    height: 42px;
     cursor: pointer;
 }
 
-#aReturn {
-    display: none;
-    position: absolute;
-    top: 25px;
-    left: 3px;
-    width: 46px;
-    height: 46px;
-    cursor: pointer;
-}
 
 
 
