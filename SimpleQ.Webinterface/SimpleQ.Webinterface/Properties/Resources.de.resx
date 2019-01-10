@@ -251,7 +251,7 @@
     <value>Ungültige Eingabe!</value>
   </data>
   <data name="surveyTemplateHeader" xml:space="preserve">
-    <value>Befragungstemplate (bisherige Umfragen)</value>
+    <value>Befragungstemplate (bisherige Befragungen)</value>
   </data>
   <data name="askedPeopleCount" xml:space="preserve">
     <value>Anzahl der zu befragenden Personen</value>
@@ -421,5 +421,38 @@
   </data>
   <data name="support" xml:space="preserve">
     <value>Support</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="defineGroupsModalInfo" xml:space="preserve">
+    <value>Sie haben noch keine Gruppen, gehen Sie zur Gruppenverwaltung und erstellen Sie Ihre erste.</value>
+  </data>
+  <data name="evaluate" xml:space="preserve">
+    <value>Auswerten</value>
+  </data>
+  <data name="periodicQuestionTooltip" xml:space="preserve">
+    <value>Klicken Sie hier, wenn Sie eine frage automatisiert mehrere male hintereinander stellen wollen</value>
+  </data>
+  <data name="pleaseDefineGroupsFirst" xml:space="preserve">
+    <value>Sie müssen erst eine Gruppe erstellen!</value>
+  </data>
+  <data name="singleButtonTooltip" xml:space="preserve">
+    <value>Klicken Sie hier, um sich die Ergebnisse je Befragung einzeln anzusehen</value>
+  </data>
+  <data name="singleEvaluation" xml:space="preserve">
+    <value>Einzelauswertung</value>
+  </data>
+  <data name="singleOrTrendEvaluation" xml:space="preserve">
+    <value>Einzel oder Trendauswertung?</value>
+  </data>
+  <data name="timespan" xml:space="preserve">
+    <value>Zeitraum</value>
+  </data>
+  <data name="toGroupAdministration" xml:space="preserve">
+    <value>zur Gruppenverwaltung</value>
+  </data>
+  <data name="trendButtonTooltip" xml:space="preserve">
+    <value>Hier kommen Sie zur zusammengefassen Auswertung aller Ergebnisse, um zu beobachten wie sich Ihre Ergebnisse entwickelt haben.</value>
   </data>
 </root>
