@@ -125,7 +125,7 @@
                 </span>
             </span>
 
-            <button type="button" class="btn btn-light btn-block mt-2 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="Klick to repeat a question certain times automatically"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>Periodische Befragung...</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+            <button type="button" class="btn btn-light btn-block mt-2 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="@Resources.periodicQuestionTooltip"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>Periodische Befragung...</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
 
             <div id="periodicSurveyDiv" class="collapse">
                 Lorem ipsum dolor text....
@@ -148,19 +148,17 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h4 class="modal-title">Please define groups first!</h4>
+                    <h4 class="modal-title">@Resources.pleaseDefineGroupsFirst</h4>
                 </div>
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <label>You have no groups yet, switch to group administration and create your first one!</label>
-                    <label for="NewGroupTB">Name of the group</label>
-                    <input id="NewGroupTB" type="text" class="form-control" />
+                    <label>@Resources.defineGroupsModalInfo</label>
                 </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    <a type="button" href='@Url.Action("Index", "GroupAdministration")' class="btn btn-primary" data-dismiss="modal" onclick="addNewGroup()">To group administration</a>
+                    <a type="button" href='@Url.Action("Index", "GroupAdministration")' class="btn btn-primary" data-dismiss="modal" onclick="addNewGroup()">@Resources.toGroupAdministration</a>
                 </div>
 
             </div>

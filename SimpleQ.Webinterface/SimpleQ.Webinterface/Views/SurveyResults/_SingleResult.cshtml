@@ -1,5 +1,5 @@
 ﻿@using SimpleQ.Webinterface.Properties;
-@model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel
+@model List<SimpleQ.Webinterface.Models.ViewModels.SingleResultModel>
 @*@model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel*@
 @*@{
 
@@ -18,39 +18,36 @@
         votes.Add("ZDF", 15);
         votes.Add("ARD", 2);
     }*@
+<div class="row mr-0 ml-0">
+    <div class="col-1">
+        <button type="button" id="previousSurveyButton" class="btn btn-light btn-block border" onclick="showPreviousSurvey()"> < </button>
+    </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="groups">Teilgenommene Gruppen</label>
-            <div class="border border-dark">
-                <ul class="list-group groups-ul pl-2" id="groups">
-                    @*@{ List<string> l = new List<string>();
-                        l.Add("HR");
-                        l.Add("Produktion");
-                        l.Add("Einkauf");
-                        l.Add("department 4");
-                        l.Add("testdep4");
-                        l.Add("alddaaa");
-                        .Add("neu");
-                            }
-                        @for (var i = 0; i < l.Count; i++)
+    <div class="col-10">
+        <h3 id="singleResultDate" class="text-center"></h3>
+    </div>
+
+    <div class="col-1">
+        <button type="button" id="nextSurveyButton" class="btn btn-light btn-block border" onclick="showNextSurvey()"> > </button>
+    </div>
+</div>
+<div class="row mr-0 ml-0">
+    @*<div class="col-md-4">
+            <div class="form-group">
+                <label for="groups">Teilgenommene Gruppen</label>
+                <div class="border border-dark">
+                    <ul class="list-group groups-ul pl-2" id="groups">
+                        @for (var i = 0; i < Model.DepartmentNames.Count; i++)
                         {
                             <li>
-                                @l[i]
+                                @Model.DepartmentNames[i]
                             </li>
-                        }*@
-                    @for (var i = 0; i < Model.DepartmentNames.Count; i++)
-                    {
-                        <li>
-                            @Model.DepartmentNames[i]
-                        </li>
-                    }
-                </ul>
+                        }
+                    </ul>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-8 pl-4 pr-4">
+        </div>*@   
+    <div class="col-md-6">
         <div class="form-group">
             @{
                 Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
@@ -61,77 +58,99 @@
                 dropBoxValues.Add("polarArea", Resources.polarArea);
             }
             <label for="chart1select">@Resources.diagram@Resources.typeSmall @Resources.left</label>
-            <select class="form-control" id="chart1SelectSingle" onchange="changeChartSingle('chart1SelectSingle', 'chart1Col', 'chart1'); updateSelect1(this);">
-                @{
-                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
-                    {
-                        if (elem.Key == "bar")
-                        {
-                            <option value="@elem.Key" selected>@elem.Value</option>
-                        }
-                        else
-                        {
-                            <option value="@elem.Key">@elem.Value</option>
-                        }
-                    }
-                }
 
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="chart2SelectSingle">@Resources.diagram@Resources.typeSmall @Resources.right</label>
-            <select class="form-control" id="chart2SelectSingle" onchange="changeChartSingle('chart2SelectSingle','chart2Col','chart2')">
-                @{
-                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
-                    {
-                        if (elem.Key == "doughnut")
-                        {
-                            <option value="@elem.Key" selected>@elem.Value</option>
+            <div class="row mr-0 ml-0">
+                <div class="col-10 pr-0">
+                    <select class="form-control" id="chart1SelectSingle" onchange="changeChartSingle('chart1SelectSingle', 'chart1Col', 'chart1'); updateSelect1(this);">
+                        @{
+                            foreach (KeyValuePair<string, string> elem in dropBoxValues)
+                            {
+                                if (elem.Key == "bar")
+                                {
+                                    <option value="@elem.Key" selected>@elem.Value</option>
+                                }
+                                else
+                                {
+                                    <option value="@elem.Key">@elem.Value</option>
+                                }
+                            }
                         }
-                        else
-                        {
-                            <option value="@elem.Key">@elem.Value</option>
-                        }
-                    }
-                }
 
-            </select>
+                    </select>
+                </div>
+                <div class="col-2 pl-0">
+                    <button class="btn btn-light btn-block border pb-0" onclick="zoomChart('chart1SelectSingle')"><i class="material-icons">&#xe56b;</i></button>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="chart2SelectSingle">@Resources.diagram@Resources.typeSmall @Resources.right</label>
+            <div class="row mr-0 ml-0">
+                <div class="col-10 pr-0">
+                    <select class="form-control" id="chart2SelectSingle" onchange="changeChartSingle('chart2SelectSingle','chart2Col','chart2')">
+                        @{
+                            foreach (KeyValuePair<string, string> elem in dropBoxValues)
+                            {
+                                if (elem.Key == "doughnut")
+                                {
+                                    <option value="@elem.Key" selected>@elem.Value</option>
+                                }
+                                else
+                                {
+                                    <option value="@elem.Key">@elem.Value</option>
+                                }
+                            }
+                        }
+
+                    </select>
+                </div>
+                <div class="col-2 pl-0">
+                    <button class="btn btn-light btn-block border pb-0" onclick="zoomChart('chart2SelectSingle')"><i class="material-icons">&#xe56b;</i></button>
+                </div>
+            </div>
+        </div>
+    </div>    
 </div>
 
 <script>
 
-    
-    var dict = []; // create an empty array
+    var dicts = [];
+    //var dict = []; // create an empty array
     var freeTextAnswers = [];
     @{
-        if(Model.Votes != null)
+        for(int i = 0; i < Model.Count; i++)
         {
-            foreach (KeyValuePair<string, int> kvp in Model.Votes)
+            @:dicts.push({dict: [], date: "@Model[i].StartDate.ToShortDateString() - @Model[i].EndDate.ToShortDateString()"});
+            if(Model[i].Votes != null)
             {
-            @:dict.push({
-                @:key: "@kvp.Key"
-            @:,
-                @:value: "@kvp.Value"
-            @:});
+                foreach (KeyValuePair<string, int> kvp in Model[i].Votes)
+                {
+
+                @:dicts[@i].dict.push({
+                    @:key: "@kvp.Key"
+                @:,
+                    @:value: "@kvp.Value"
+                @:});
+                }
+                @:$("#chart1SelectSingle").change();
+                @:$("#chart2SelectSingle").change();
             }
-            @:$("#chart1SelectSingle").change();
-            @:$("#chart2SelectSingle").change();
-        }
-        else
-        {
-            @:freeText = false;
-            @:freeTextAnswers = [];
-            foreach (string answer in Model.FreeTextVotes)
+            else
             {
-                @:freeTextAnswers.push("@answer");
-                @:showFreeTextAnsers();
+                @:freeText = false;
+                @:freeTextAnswers = [];
+                foreach (string answer in Model[i].FreeTextVotes)
+                {
+                    @:dicts[@i].dict.push("@answer");
+                    @:showFreeTextAnsers();
+                }
             }
-        }
+            }
     }
 
-        
+
 
     function updateSelect1(elem) {
         //alert(elem.value);

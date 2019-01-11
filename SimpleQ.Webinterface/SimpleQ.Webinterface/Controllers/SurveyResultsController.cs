@@ -114,6 +114,10 @@ namespace SimpleQ.Webinterface.Controllers
                             SvyId = s.SvyId,
 
                             SvyText = s.SvyText,
+                            
+                            StartDate = s.StartDate,
+
+                            EndDate = s.EndDate,
 
                             Period = TimeSpan.FromTicks(s.Period ?? 0L),
 
