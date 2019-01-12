@@ -6,7 +6,7 @@
              Title="{ext:Translate Text=OpenSourceLicense}">
     <ContentPage.Content>
         <StackLayout>
-            <ListView ItemsSource="{Binding OpenSourceLicenses}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" RowHeight="120">
+            <ListView ItemsSource="{Binding OpenSourceLicenses}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" HasUnevenRows="True" RowHeight="-1">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -15,7 +15,7 @@
                                 <Label Text="{Binding Description}" Style="{DynamicResource BodyStyle}"/>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Version}" Style="{DynamicResource BodyStyle}" HorizontalOptions="Start"/>
-                                    <Label Text="{Binding License}" Style="{DynamicResource BodyStyle}" HorizontalOptions="EndAndExpand"/>
+                                    <Label Text="{Binding License}" Style="{DynamicResource BodyStyle}" HorizontalOptions="EndAndExpand" Margin="0, 0, 10, 0"/>
                                 </StackLayout>
                             </StackLayout>
                         </ViewCell>

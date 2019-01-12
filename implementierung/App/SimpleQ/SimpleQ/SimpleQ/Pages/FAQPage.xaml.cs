@@ -16,6 +16,8 @@ namespace SimpleQ.Pages
 		public FAQPage ()
 		{
 			InitializeComponent ();
+
+
 		}
     }
 }
