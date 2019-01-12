@@ -50,6 +50,12 @@ namespace SimpleQ
 		{
 
             Debug.WriteLine("NO: App started...", "Info");
+
+            #if PRESENTATION
+            Debug.WriteLine("App is running in Presentation Mode...");
+            Console.WriteLine("App is running in Presentation Mode...");
+            #endif
+
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
 
