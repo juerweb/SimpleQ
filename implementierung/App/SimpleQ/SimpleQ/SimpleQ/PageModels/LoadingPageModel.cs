@@ -132,6 +132,7 @@ namespace SimpleQ.PageModels
                 {
                     Debug.WriteLine("Code is valid...", "Info");
                     this.IsFirstStepTicked = true;
+                    await questionService.LoadData();
 
                     RegistrationDataModel data = new RegistrationDataModel() { RegistrationData=new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Development", PersId = 1, CustName="SimpleQ Company" } };
                     //Code Check

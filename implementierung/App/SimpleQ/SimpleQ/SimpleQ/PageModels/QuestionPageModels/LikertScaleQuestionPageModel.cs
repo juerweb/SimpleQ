@@ -37,7 +37,8 @@ namespace SimpleQ.PageModels.QuestionPageModels
         /// </summary>
         public LikertScaleQuestionPageModel()
         {
-
+            BeginText = "";
+            EndText = "";
         }
 
 
