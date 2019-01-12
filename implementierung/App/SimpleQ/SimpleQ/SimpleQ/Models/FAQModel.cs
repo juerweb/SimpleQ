@@ -29,7 +29,7 @@ namespace SimpleQ.Models
         /// </summary>
         public FAQModel()
         {
-            this.IsActive = Device.RuntimePlatform == Device.iOS;
+            this.IsActive = (Device.RuntimePlatform == Device.iOS);
         }
         #endregion
 
@@ -54,7 +54,12 @@ namespace SimpleQ.Models
             get => isActive;
             set
             {
-                if (Device.RuntimePlatform != Device.iOS)
+                if (value)
+                {
+                    isActive = value;
+                    OnPropertyChanged();
+                }
+                else if (Device.RuntimePlatform != Device.iOS)
                 {
                     isActive = value;
                     OnPropertyChanged();
