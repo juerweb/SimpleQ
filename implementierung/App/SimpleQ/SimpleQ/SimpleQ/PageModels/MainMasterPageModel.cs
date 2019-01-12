@@ -28,7 +28,7 @@ namespace SimpleQ.PageModels
         {
             Debug.WriteLine("Constructor of MainMasterPageModel...", "Info");
             MenuItems = new ObservableCollection<MenuItemListModel>();
-            this.MenuItems.Add(new MenuItemListModel(ItemType.Categorie.ToString()));
+            this.MenuItems.Add(new MenuItemListModel(ItemType.Filter.ToString()));
             this.MenuItems.Add(new MenuItemListModel(ItemType.Navigation.ToString()));
 
             //Generate CodeValidationModel from Application Properties

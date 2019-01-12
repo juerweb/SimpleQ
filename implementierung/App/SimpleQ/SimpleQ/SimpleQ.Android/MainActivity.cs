@@ -30,6 +30,10 @@ namespace SimpleQ.Droid
 
             OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540").HandleNotificationOpened(HandleNotificationOpened).EndInit();
 
+
+            this.Window.AddFlags(WindowManagerFlags.Fullscreen);
+            this.Window.AddFlags(WindowManagerFlags.KeepScreenOn);
+
             ZXing.Net.Mobile.Forms.Android.Platform.Init();
             UserDialogs.Init(this);
 
