@@ -53,11 +53,6 @@ namespace SimpleQ
             ILogger logger = DependencyService.Get<ILogManager>().GetLog();
             logger.Info("App started.");
 
-            #if PRESENTATION
-            Debug.WriteLine("App is running in Presentation Mode.");
-            Console.WriteLine("App is running in Presentation Mode.");
-            logger.Info("App is running in Presentation Mode.");
-            #endif
 
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
