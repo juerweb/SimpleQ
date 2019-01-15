@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,6 +26,8 @@ namespace SimpleQ.UWP
             ZXing.Net.Mobile.Forms.WindowsUniversal.ZXingScannerViewRenderer.Init();
 
             LoadApplication(new SimpleQ.App());
+
+            Debug.WriteLine(Windows.Storage.ApplicationData.Current.LocalFolder.Path);
         }
     }
 }

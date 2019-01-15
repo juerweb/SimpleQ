@@ -192,6 +192,9 @@
     <PackageReference Include="NLog">
       <Version>4.5.11</Version>
     </PackageReference>
+    <PackageReference Include="NLog.WindowsEventLog">
+      <Version>4.5.11</Version>
+    </PackageReference>
     <PackageReference Include="Plugin.Multilingual">
       <Version>1.0.2</Version>
     </PackageReference>

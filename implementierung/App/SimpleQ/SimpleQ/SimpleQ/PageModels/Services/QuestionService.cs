@@ -13,6 +13,7 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Newtonsoft.Json;
+using SimpleQ.Logging;
 
 namespace SimpleQ.PageModels.Services
 {
@@ -40,7 +41,7 @@ namespace SimpleQ.PageModels.Services
         /// </summary>
         public QuestionService()
         {
-            Debug.WriteLine("Constructor of QuestionService...", "Info");
+            //Debug.WriteLine("Constructor of QuestionService...", "Info");
             questions = new ObservableCollection<SurveyModel>();
             this.PublicQuestions = Questions;
 
@@ -104,7 +105,7 @@ namespace SimpleQ.PageModels.Services
             get => publicQuestions;
             set
             {
-                Debug.WriteLine("PublicQuestion setter Method");
+                //Debug.WriteLine("PublicQuestion setter Method");
                 publicQuestions = value;
                 OnPropertyChanged();
                 this.PublicQuestions.CollectionChanged += PublicQuestions_CollectionChanged;
@@ -132,7 +133,7 @@ namespace SimpleQ.PageModels.Services
         /// <param name="question">The question.</param>
         public async Task<Boolean> QuestionAnswered(SurveyModel question)
         {
-            Debug.WriteLine("Question Service with question from type: " + question.GetType(), "Info");
+            //Debug.WriteLine("Question Service with question from type: " + question.GetType(), "Info");
 
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
@@ -141,9 +142,9 @@ namespace SimpleQ.PageModels.Services
                 List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
                 question.SurveyVote.CustCode = tmp[0].RegistrationData.CustCode;
 
-                Debug.WriteLine("Answer Question with CustCode: " + question.SurveyVote.CustCode);
-                Debug.WriteLine("Answer Question with VoteText: " + question.SurveyVote.VoteText);
-                Debug.WriteLine("Answer Question with a Count of ChosenAnswerOptions of: " + question.SurveyVote.ChosenAnswerOptions.Count);
+                //Debug.WriteLine("Answer Question with CustCode: " + question.SurveyVote.CustCode);
+                //Debug.WriteLine("Answer Question with VoteText: " + question.SurveyVote.VoteText);
+                //Debug.WriteLine("Answer Question with a Count of ChosenAnswerOptions of: " + question.SurveyVote.ChosenAnswerOptions.Count);
 
                 Boolean success = false;
                 try
@@ -153,7 +154,9 @@ namespace SimpleQ.PageModels.Services
                 catch (System.Net.Http.HttpRequestException e)
                 {
                     Application.Current.Properties["IsValidCodeAvailable"] = false;
-                    Debug.WriteLine("WebException during the Validation", "Error");
+                    Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+                    logger.Error("WebException during the Validation.");
+                    //Debug.WriteLine("WebException during the Validation", "Error");
 
                     this.dialogService.ShowErrorDialog(202);
                 }
@@ -181,7 +184,7 @@ namespace SimpleQ.PageModels.Services
 
         public async void RemoveQuestion(SurveyModel question)
         {
-            Debug.WriteLine("Remove Question with the id: " + question.SurveyId, "Info");
+            //Debug.WriteLine("Remove Question with the id: " + question.SurveyId, "Info");
 
             this.Questions.Remove(question);
 
@@ -217,7 +220,7 @@ namespace SimpleQ.PageModels.Services
 
             if (question.EndDate >= DateTime.Now)
             {
-                Debug.WriteLine("Add new Question...", "Info");
+                //Debug.WriteLine("Add new Question...", "Info");
 
                 if (list.Count(sm => sm.SurveyId == question.SurveyId) == 0)
                 {
@@ -225,14 +228,14 @@ namespace SimpleQ.PageModels.Services
                     await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
                 }
 
-                Debug.WriteLine("Size of Questions before: " + Questions.Count());
+                //Debug.WriteLine("Size of Questions before: " + Questions.Count());
                 this.Questions.Add(question);
-                Debug.WriteLine("Size of Questions after: " + Questions.Count());
+                //Debug.WriteLine("Size of Questions after: " + Questions.Count());
 
                 if (!(App.MainMasterPageModel.MenuItems[0].Count(menuItem => menuItem.Title == question.CatName) > 0))
                 {
                     //catName does not exists
-                    Debug.WriteLine("Add new catName from QuestionService", "Info");
+                    //Debug.WriteLine("Add new catName from QuestionService", "Info");
 
                     App.MainMasterPageModel.AddCategorie(question.CatName);
                 }
@@ -244,7 +247,8 @@ namespace SimpleQ.PageModels.Services
             {
                 list.Remove(question);
                 await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
-                Debug.WriteLine("Question with the id " + question.SurveyId + " is in the past. Enddate: " + question.EndDate, "Info");
+                Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+                logger.Warn("Question with the id " + question.SurveyId + " is in the past. Enddate: " + question.EndDate);
             }
         }
 
@@ -268,26 +272,21 @@ namespace SimpleQ.PageModels.Services
 
         public void MoveQuestion(SurveyModel question)
         {
-            Debug.WriteLine("Test0");
             if (questions.Contains(question))
             {
-                Debug.WriteLine("Test1");
                 this.questions.Remove(question);
 
                 if (PublicQuestions.Contains(question))
                 {
-                    Debug.WriteLine("Test2");
                     PublicQuestions.Remove(question);
                 }
-
-                Debug.WriteLine("Test3");
                 this.answeredQuestions.Add(question);
             }
         }
 
         private void PublicQuestions_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            Debug.WriteLine("PubliQuestions Changed... Actual count of elements: " + PublicQuestions.Count, "Info");
+            //Debug.WriteLine("PubliQuestions Changed... Actual count of elements: " + PublicQuestions.Count, "Info");
             IsPublicQuestionsEmpty = PublicQuestions.Count <= 0;
         }
 

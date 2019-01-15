@@ -168,7 +168,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
             {
                 current = this.Question.GivenAnswers.Where(ga => ga.AnsText == currentValue.ToString()).ToList()[0];
             }
-            Debug.WriteLine(current.AnsText);
+            //Debug.WriteLine(current.AnsText);
             base.QuestionAnswered(current);
         }
         #endregion

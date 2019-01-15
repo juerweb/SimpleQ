@@ -139,7 +139,7 @@ namespace SimpleQ.PageModels
                 {
                     selectedItem = value;
                     OnPropertyChanged();
-                    Debug.WriteLine(selectedItem.Url);
+                    //Debug.WriteLine(selectedItem.Url);
                     OpenLink(selectedItem.Url);
                     selectedItem = null;
                     OnPropertyChanged();
@@ -155,7 +155,7 @@ namespace SimpleQ.PageModels
         #region Methods
         private void OpenLink(String url)
         {
-            Debug.WriteLine(url);
+            //Debug.WriteLine(url);
             Device.OpenUri(new Uri(url));
         }
         #endregion

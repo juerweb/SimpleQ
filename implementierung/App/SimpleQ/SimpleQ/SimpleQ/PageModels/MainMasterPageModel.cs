@@ -26,7 +26,7 @@ namespace SimpleQ.PageModels
         #region Constructor(s)
         public MainMasterPageModel(): base()
         {
-            Debug.WriteLine("Constructor of MainMasterPageModel...", "Info");
+            //Debug.WriteLine("Constructor of MainMasterPageModel...", "Info");
             MenuItems = new ObservableCollection<MenuItemListModel>();
             this.MenuItems.Add(new MenuItemListModel(ItemType.Filter.ToString()));
             this.MenuItems.Add(new MenuItemListModel(ItemType.Navigation.ToString()));
@@ -81,7 +81,7 @@ namespace SimpleQ.PageModels
         #region Methods
         protected override void CreateMenuPage(string menuPageTitle, string menuIcon = null)
         {
-            Debug.WriteLine("Create Menu Page...", "Info");
+            //Debug.WriteLine("Create Menu Page...", "Info");
 
             MainMasterPage mainMasterPage = new MainMasterPage();
             mainMasterPage.BindingContext = this;
@@ -105,7 +105,7 @@ namespace SimpleQ.PageModels
                 }
                 
             }*/
-            Debug.WriteLine("Add new Page");
+            //Debug.WriteLine("Add new Page");
 
             _pages.Add(title, navigationContainer);
 
@@ -144,7 +144,7 @@ namespace SimpleQ.PageModels
             if (selectedItem != null)
             {
 
-                Debug.WriteLine("Navigate to new page: " + selectedItem.Title, "Info");
+                //Debug.WriteLine("Navigate to new page: " + selectedItem.Title, "Info");
 
                 IsPresented = false;
 
@@ -169,7 +169,7 @@ namespace SimpleQ.PageModels
         {
             if (MenuItems[0].Count(mi => mi.Title == title) == 1)
             {
-                Debug.WriteLine("Set new catName to: " + title, "Info");
+                //Debug.WriteLine("Set new catName to: " + title, "Info");
 
                 this.SelectedItem = MenuItems[0].Where(mi => mi.Title == title).ToList()[0];
             }

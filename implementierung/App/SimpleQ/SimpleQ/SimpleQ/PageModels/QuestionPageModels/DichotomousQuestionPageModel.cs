@@ -87,7 +87,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
             switch (answer)
             {
                 case DichotomousAnswer.Option1:
-                    Debug.WriteLine(this.Question.GivenAnswers[0]);
+                    //Debug.WriteLine(this.Question.GivenAnswers[0]);
                     base.QuestionAnswered(this.Question.GivenAnswers[0]);
                     break;
                 case DichotomousAnswer.Option2:
