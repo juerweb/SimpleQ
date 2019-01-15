@@ -46,7 +46,7 @@
                                         }
                                     }
                                 </td>
-                                <td><button class="btn btn-primary" onclick="evaluateResults(this.parentElement.parentElement,this.parentElement.parentElement.children[0].innerHTML, @srw.Amount)">@Resources.evaluate</button></td>
+                                <td><button class="btn btn-primary" onclick="evaluateResults(this.parentElement.parentElement,this.parentElement.parentElement.children[0].innerHTML, @srw.Amount, @srw.AnswerType.TypeId)">@Resources.evaluate</button></td>
                             </tr>
                         }
                     }
@@ -115,7 +115,7 @@
 <div class="mt-2" id="singleResultPartial"></div>
 <div class="mt-2" id="multiResultPartial"></div>
 
-<div class="row pr-2 pl-2 ml-0 mr-0">
+<div id="chartRow" class="row pr-2 pl-2 ml-0 mr-0">
     <div class="col-md-6 chartCol" id="chart1Col">
         <canvas id="chart1"></canvas>
     </div>
@@ -124,11 +124,14 @@
     </div>
 </div>
 
+<div id="freeTextDiv">
+
+</div>
+
 <!-- The Modal -->
 <div id="zoomModal" class="myModal">
-
     <!-- Modal content -->
-    <div class="myModal-content">
+    <div id="myModalContent" class="myModal-content">
         <button class="btn btn-danger btn-block mt-2" onclick="closeZoomModal()">@Resources.close</button>
         <div id="zoomModalContent">
             <canvas id="chart1" width="800" height="500"></canvas>
@@ -155,11 +158,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Modal footer -->
-            @*<div class="modal-footer">
-                <a type="button" href='@Url.Action("Index", "GroupAdministration")' class="btn btn-primary" data-dismiss="modal" onclick="addNewGroup()">To group administration</a>
-            </div>*@
 
         </div>
     </div>
@@ -199,21 +197,12 @@
         //switchToMulti();
     });
 
-    @*function fillLangDict() {
-        @{
-            foreach(AnswerType at in Model.AnswerTypes)
-            {
-                @:languageDict['@at.TypeId'] = '@rm.GetString(at.TypeDesc)';
-            }
-        }
-        //console.log(languageDict);
-    }*@
 
-    function evaluateResults(elem, svyText, amount) {
+    function evaluateResults(elem, svyText, amount, typeId) {
         selectedSingleSurveyId = 0;
         actualSvyText = svyText;
         actualTableElement = elem;        
-        if (amount > 1) {
+        if (amount > 1 && typeId !== 4) {
             $("#singleOrMultiModal").show();
         } else {
             loadSingleResultAsync();
@@ -261,10 +250,8 @@
     function loadSingleResultAsync() {
         //console.log(actualSvyText);
         let url = "@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyText=" + encodeURI(actualSvyText);
-        //if (freeText) {
-        //    $("#chart1SelectSingle").hide();
-        //    $("#chart2SelectSingle").hide();
-        //}
+
+
         $.ajax({
             url,
             success: function (data) {
@@ -277,6 +264,16 @@
                 updateSingleResultDate();
                 $("#multiResultPartial").hide();
                 $("#singleResultPartial").show();
+                if (freeText) {
+                    $("#singleChartOptions").hide();
+                    $("#chartRow").hide();
+                    showFreeTextAnsers();
+                    $("#freeTextDiv").show();
+                } else {
+                    $("#singleChartOptions").show();
+                    $("#chartRow").show();
+                    $("#freeTextDiv").hide();
+                }
             }
         });
     }
@@ -295,6 +292,8 @@
                 $("#multiResultPartial").html(data);
                 $("#singleResultPartial").hide();
                 $("#multiResultPartial").show();
+                $("#chartRow").show();
+                $("#freeTextDiv").hide();
             }
         });
     }
@@ -593,14 +592,13 @@
 
 
     function showFreeTextAnsers() {
-        document.getElementById("chart1Col").innerHTML = "";
-        document.getElementById("chart2Col").innerHTML = "";
-        let injection;
-        for (i = 0; i < freeTextAnswers.length; i++) {
-            injection += "<tr><td>" + freeTextAnswers[i] + "</td></tr>";
+        let id = selectedSingleSurveyId;
+        let injection = "";
+        for (i = 0; i < dicts[id].dict.length; i++) {
+            injection += '<tr><td>' + dicts[id].dict[i] + '</td></tr>';
         }
-        $("#chart1Col").append("<table class='table table-bordered'><thead><tr><th>@Resources.answer</th></tr></thead><tbody>" + injection + "</tbody></table>");
 
+        document.getElementById("freeTextDiv").innerHTML = "<table class='table table-bordered'><thead><tr><th>@Resources.answer</th></tr></thead><tbody>" + injection + "</tbody></table>";
     }
 
 
@@ -626,12 +624,21 @@
         var modal = document.getElementById('zoomModal');
         modal.style.display = "block";
     }
+
+
     //modal things
     //   |    Everything down here
     //   v
     
     $(document).ready(function () {
-        $("#zoomModalContent").click(function () {
+
+        $("#zoomModal").click(function (event) {
+            if (event.target.id === "zoomModal") {
+                closeZoomModal();
+            }
+        });      
+
+        $("#zoomModalContent").click(function (event) {
             if (event.target.id === "dateRightModalBtn") { //for multiResult listing (to be able to switch dates)
                 dateIndex += 1;
                 createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex, "dateLeftModalBtn", "dateRightModalBtn");

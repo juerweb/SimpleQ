@@ -31,7 +31,7 @@
         <button type="button" id="nextSurveyButton" class="btn btn-light btn-block border" onclick="showNextSurvey()"> > </button>
     </div>
 </div>
-<div class="row mr-0 ml-0">
+<div class="row mr-0 ml-0" id="singleChartOptions">
     @*<div class="col-md-4">
             <div class="form-group">
                 <label for="groups">Teilgenommene Gruppen</label>
@@ -61,7 +61,7 @@
 
             <div class="row mr-0 ml-0">
                 <div class="col-10 pr-0">
-                    <select class="form-control" id="chart1SelectSingle" onchange="changeChartSingle('chart1SelectSingle', 'chart1Col', 'chart1'); updateSelect1(this);">
+                    <select class="form-control" id="chart1SelectSingle" onchange="changeChartSingle('chart1SelectSingle', 'chart1Col', 'chart1');">
                         @{
                             foreach (KeyValuePair<string, string> elem in dropBoxValues)
                             {
@@ -117,14 +117,14 @@
 <script>
 
     var dicts = [];
-    //var dict = []; // create an empty array
-    var freeTextAnswers = [];
+
     @{
         for(int i = 0; i < Model.Count; i++)
         {
-            @:dicts.push({dict: [], date: "@Model[i].StartDate.ToShortDateString() - @Model[i].EndDate.ToShortDateString()"});
+            @:dicts.push({ dict: [], date: "@Model[i].StartDate.ToShortDateString() - @Model[i].EndDate.ToShortDateString()" });
             if(Model[i].Votes != null)
             {
+                @:freeText = false;
                 foreach (KeyValuePair<string, int> kvp in Model[i].Votes)
                 {
 
@@ -139,22 +139,13 @@
             }
             else
             {
-                @:freeText = false;
+                @:freeText = true;
                 @:freeTextAnswers = [];
                 foreach (string answer in Model[i].FreeTextVotes)
                 {
                     @:dicts[@i].dict.push("@answer");
-                    @:showFreeTextAnsers();
                 }
             }
             }
     }
-
-
-
-    function updateSelect1(elem) {
-        //alert(elem.value);
-        //$("#chart1Select option[selected='true']").hide();
-    }
-
 </script>
