@@ -1,54 +1,77 @@
 ﻿@using System.Resources
 @using SimpleQ.Webinterface.Properties
-@using SimpleQ.Webinterface.Models;
 @model SimpleQ.Webinterface.Models.ViewModels.SettingsModel
 
-
-<div class="row m-0 p-0 mr-0 ml-0">
-    @* Switch betwenn result of single survey of result of multiple ones *@
-    <div class="col-lg-6 pl-4 pr-4">
-        <div class="row">
-            <div class="col-4 pr-0">
-                <button id="accountSettings" onclick="switchToAccountSettings()" class="btn btn-primary btn-block">Kontoeinstellungen</button>
-            </div>
-            <div class="col-4 pl-0">
-                <button id="appSettings" onclick="switchToAppSettings()" class="btn btn-secondary btn-block">Anwendungseinstellungen</button>
-            </div>
-            <div class="col-4 pl-0">
-                <button id="billSettings" onclick="switchToBillSettings()" class="btn btn-secondary btn-block">Rechnungsübersicht</button>
-            </div>
-        </div>
+<div id="changesOk" class="alert alert-success" style="display:none">
+    <strong>@ResourcesN.ChangesOk</strong>
+</div>
+<div id="changespw404" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.PasswordChange404</strong>
+</div>
+<div id="changespw500" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.PasswordChange500</strong>
+</div>
+<div id="minimumGroupSize404" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.minimumGroupSize404</strong>
+</div>
+<div id="minimumGroupSize500" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.minimumGroupSize500</strong>AddCategory 404
+</div>
+<div id="addCategory404" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.AddCategory404</strong>
+</div>
+<div id="addCategory500" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.AddCategory500</strong>
+</div>
+<div id="deleteTemplate404" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.deleteTemplate404</strong>
+</div>
+<div id="deleteTemplate500" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.deleteTemplate500</strong>
+</div>
+<div id="changeAbrechnung404" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.changeAbrechnung404</strong>
+</div>
+<div id="changeAbrechnung500" class="alert alert-danger" style="display:none">
+    <strong>@ResourcesN.changeAbrechnung500</strong>
+</div>
+<div class="row pl-4 mt-1 ml-0 mr-0">
+    <h2>@ResourcesN.Settings</h2>
+</div>
+<div class="row m-0 p-0 mr-0 ml-3">
+    <div class="btn-group">
+        <button id="accountSettings" onclick="switchToAccountSettings()" class="btn btn-primary btn-block mt-0">Kontoeinstellungen</button>
+        <button id="appSettings" onclick="switchToAppSettings()" class="btn btn-secondary btn-block mt-0">Anwendungseinstellungen</button>
+        <button id="billSettings" onclick="switchToBillSettings()" class="btn btn-secondary btn-block mt-0">Rechnungsübersicht</button>
     </div>
 </div>
+
 <div class="row mt-1 ml-0 mr-0" id="acc">
     <div class="col-md-4">
         <h4 class="text-center">@ResourcesN.AccountSettings</h4>
         <div class="form-group mt-2">
             @using (Html.BeginForm("UpdateCustomer", "Settings", FormMethod.Post))
             {
-            @*<label for="name">@ResourcesN.Name</label>*@
-            @Html.LabelFor(m => m.Name, ResourcesN.Name);
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control mr-0" });
-            @Html.LabelFor(m => m.Street, ResourcesN.Street);
-            @Html.TextBoxFor(m => m.Street, new { @class = "form-control mr-0" });
-            @Html.LabelFor(m => m.City, ResourcesN.City);
-            @Html.TextBoxFor(m => m.City, new { @class = "form-control mr-0" });
-            @Html.LabelFor(m => m.Plz, ResourcesN.PostalCode);
-            @Html.TextBoxFor(m => m.Plz, new { @class = "form-control mr-0" });
-            @Html.LabelFor(m => m.Country, ResourcesN.Country);
-            @Html.TextBoxFor(m => m.Country, new { @class = "form-control mr-0" });
-            @Html.LabelFor(m => m.LanguageCode, ResourcesN.Language);
-            @*@Html.TextBoxFor(m => m.LanguageCode, new { @class = "form-control mr-0" });*@
-            @Html.DropDownListFor(m => m.LanguageCode, new SelectList(new[] { "DE", "EN" }), new { @class = "form-control mr-0" })
-            @Html.LabelFor(m => m.Email, ResourcesN.Email);
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
-            @Html.LabelFor(m => m.DataStoragePeriod, ResourcesN.DataStoragePeriod);
-            @Html.TextBoxFor(m => m.DataStoragePeriod, new { @class = "form-control mr-0" });
-            @Html.LabelFor(m => m.PaymentMethods);
-            @Html.DropDownListFor(m => m.PaymentMethods, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });
-            //@Html.LabelFor(m => m.LanguageCode, "Abrechnungszeitraum");
-            //@Html.DropDownListFor(m => m.LanguageCode, new SelectList(new[] { 3, 6, 9, 12 }), new { @class = "form-control mr-0" })
-            <input type="submit" value="Speichern" class="btn btn-primary btn-block mt-3" />
+                @*<label for="name">@ResourcesN.Name</label>*@
+                @Html.LabelFor(m => m.Name, ResourcesN.Name);
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Street, ResourcesN.Street);
+                @Html.TextBoxFor(m => m.Street, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.City, ResourcesN.City);
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Plz, ResourcesN.PostalCode);
+                @Html.TextBoxFor(m => m.Plz, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.Country, ResourcesN.Country);
+                @Html.TextBoxFor(m => m.Country, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.LanguageCode, ResourcesN.Language);
+                @Html.DropDownListFor(m => m.LanguageCode, new SelectList(new[] { "DE", "EN" }), new { @class = "form-control mr-0" })
+                @Html.LabelFor(m => m.Email, ResourcesN.Email);
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.DataStoragePeriod, ResourcesN.DataStoragePeriod);
+                @Html.TextBoxFor(m => m.DataStoragePeriod, new { @class = "form-control mr-0" });
+                @Html.LabelFor(m => m.PaymentMethods);
+                @Html.DropDownListFor(m => m.PaymentMethods, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });
+                <input type="submit" value="Speichern" class="btn btn-primary btn-block mt-3" />
             }
             <br />
         </div>
@@ -75,36 +98,36 @@
             <button type="button" class="btn btn-primary btn-block mt-3" onclick="changeMinimumGroupSize()" disabled id="changeMinimumGroupSize">Speichern</button>
         </div>
         @using (Html.BeginForm("ChangeAnswerTypes", "Settings", FormMethod.Post))
-        {
-        <h4 class="text-center">@ResourcesN.ApplicationSettings</h4>
-        <div class="form-group mt-2 mb-1">
-            <label for="groups">@ResourcesN.ActivatedModes</label>
-            <div class="border border-dark">
-                <ul class="list-group groups-ul pl-2" id="modes">
-                    @{
-                    foreach (var c in Model.ActivatedAnswerTypes)
-                    {
-                    <li>
-                        <label>
-                            <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" checked />@c.TypeDesc
-                        </label>
-                    </li>
-                    }
-                    foreach (var c in Model.DeactivatedAnswerTypes)
-                    {
-                    <li>
-                        <label>
-                            <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" />@c.TypeDesc
-                        </label>
-                    </li>
-                    }
-                    }
+            {
+            <h4 class="text-center">@ResourcesN.ApplicationSettings</h4>
+            <div class="form-group mt-2 mb-1">
+                <label for="groups">@ResourcesN.ActivatedModes</label>
+                <div class="border border-dark">
+                    <ul class="list-group groups-ul pl-2" id="modes">
+                        @{
+                            foreach (var c in Model.ActivatedAnswerTypes)
+                            {
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" checked />@c.TypeDesc
+                                    </label>
+                                </li>
+                            }
+                            foreach (var c in Model.DeactivatedAnswerTypes)
+                            {
+                                <li>
+                                    <label>
+                                        <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" />@c.TypeDesc
+                                    </label>
+                                </li>
+                            }
+                        }
 
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block mt-3" id="save">@ResourcesN.Save</button>
-        }
+            <button type="submit" class="btn btn-primary btn-block mt-3" id="save">@ResourcesN.Save</button>
+                            }
     </div>
     <div class="col-md-4">
         <h4 class="text-center">@Resources.surveyCategoryHeader</h4>
@@ -115,18 +138,18 @@
                 <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>
                 <ul class="list-group groups-ul-settings" style="width:100%" id="answerUL" name="TextAnswerOptions">
                     @{
-                    foreach (var c in Model.Categories)
-                    {
-                    <li class="list-group-item">
-                        <span class="d-flex justify-content-between">
-                            <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.CatName" />
-                            <span>
-                                <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>
-                                <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>
-                            </span>
-                        </span>
-                    </li>
-                    }
+                        foreach (var c in Model.Categories)
+                        {
+                            <li class="list-group-item">
+                                <span class="d-flex justify-content-between">
+                                    <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.CatName" />
+                                    <span>
+                                        <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>
+                                        <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>
+                                    </span>
+                                </span>
+                            </li>
+                        }
                     }
                 </ul>
             </div>
@@ -138,27 +161,18 @@
         <div id="answerBox" class="border border-dark mt-2">
             <div class="row mt-1 mb-1 mr-0 ml-0">
                 <ul class="list-group groups-ul-settings" style="width:100%" id="answerULT" name="TextAnswerOptions">
-                    @*
-                    <li class="list-group-item">
-                        <span class="d-flex justify-content-between">
-                            <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="Nice" />
-                            <span>
-                                <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe5cd;</i></button>
-                            </span>
-                        </span>
-                    </li>*@
                     @{
-                    foreach (var c in Model.Templates)
-                    {
-                    <li class="list-group-item">
-                        <span class="d-flex justify-content-between">
-                            <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.SvyText" />
-                            <span>
-                                <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe5cd;</i></button>
-                            </span>
-                        </span>
-                    </li>
-                    }
+                        foreach (var c in Model.Templates)
+                        {
+                            <li class="list-group-item">
+                                <span class="d-flex justify-content-between">
+                                    <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.SvyText" />
+                                    <span>
+                                        <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe5cd;</i></button>
+                                    </span>
+                                </span>
+                            </li>
+                        }
                     }
                 </ul>
             </div>
@@ -191,191 +205,105 @@
         </div>
         <button class="btn btn-danger btn-block mt-3">Abo kündigen</button>
     </div>
-    <div class="col-md-8">
-        <h4 class="text-center">Abrechnungszeitraum</h4>
-        <div class="form-group mt-2">
-            <div class="border border-primary">
-                <span class="card-header p-1 row ml-0 mr-0 border border-primary border-left-0 border-right-0 border-top-0">
-                    <span class="col-2 text-center">Bill Nr</span>
-                    <span class="col-6 text-center">Billing Date</span>
-                    <span class="col-4 text-center">Price</span>
-                </span>
-                <div id="accordion">
-                    @foreach (var billWrapper in Model.Bills)
-                    {
-                    Bill bill = billWrapper.Bill;
-                    var surveys = billWrapper.Surveys;
-                    <span class="card-header p-1 row ml-0 mr-0">
-                        <span class="col-2 text-center">@bill.BillId</span>
-                        <span class="col-6 text-center">@bill.BillDate.ToShortDateString()</span>
-                        <span class="col-4 text-center">@bill.BillPrice.ToString("C")</span>
-                    </span>
-                    //<h4 class="card-header p-1">@bill.BillId | @bill.BillDate.ToShortDateString() | @bill.BillPrice.ToString("C")</h4>
-
-                    <div class="card-body p-0" style="font-size:small">
-                        <table class="table table-striped table-bordered mb-0">
-                            <thead>
-                                <tr>
-                                    <th class="pt-0 pb-0 pl-1 pr-1">Date</th>
-                                    <th class="pt-0 pb-0 pl-1 pr-1">Question</th>
-                                    <th class="pt-0 pb-0 pl-1 pr-1">*</th>
-                                    <th class="pt-0 pb-0 pl-1 pr-1">Price</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var surveyWrapper in surveys)
-                                {
-                                Survey svy = surveyWrapper.Survey;
-                                <tr>
-                                    <td class="pt-0 pb-0 pl-1 pr-1">@svy.StartDate.ToShortDateString()</td>
-                                    <td class="pt-0 pb-0 pl-1 pr-1">@svy.SvyText</td>
-                                    <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.NumberOfAnswers</td>
-                                    <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.SurveyPrice.ToString("C")</td>
-                                </tr>
-                                }
-                                <tr class="bg-primary text-white">
-                                    <td class="pt-0 pb-0 pl-1 pr-1"></td>
-                                    <td class="pt-0 pb-0 pl-1 pr-1">Result</td>
-                                    <td class="pt-0 pb-0 pl-1 pr-1"></td>
-                                    <td class="pt-0 pb-0 pl-1 pr-1">@bill.BillPrice.ToString("C")</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <a class="ml-2"><b>*</b>... Amount of people answered</a>
-                    </div>
-                    }
-                </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="passwordModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">@ResourcesN.PasswordError</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>@ResourcesN.PasswordErrorMsg</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@ResourcesN.Close</button>
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" role="dialog" id="passwordModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">@ResourcesN.PasswordError</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>@ResourcesN.PasswordErrorMsg</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@ResourcesN.Close</button>
-                </div>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="AnswerTypeDialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Aktivierte Modi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Templates, die deaktivierte Modi verwenden werden vorübergehend deaktiviert.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@ResourcesN.Close</button>
             </div>
         </div>
     </div>
-    <div class="modal" tabindex="-1" role="dialog" id="AnswerTypeDialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Aktivierte Modi</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Templates, die deaktivierte Modi verwenden werden vorübergehend deaktiviert.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@ResourcesN.Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
+<script>
+    var dictionary = {};
+    var dictionary2 = {};
 
-    <script>
-        var dictionary = {};
-        var dictionary2 = {};
-
-        var survCats = [];
-/**/
-/**/
-/**/
-@{
+    var survCats = [];
+    @{
         foreach (var c in Model.Categories)
         {
             @:dictionary[@c.CatId] = "@c.CatName";
-/**/
-/**/
-/**/
-/**/
-                                                                                        }
+                                                                                            }
     }
-/**/
-/**/
-/**/
-/**/
-@{
+    @{
         foreach (var c in Model.Templates)
         {
             @:dictionary2[@c.SvyId] = "@c.SvyText";
-            /**/
-            /**/
-            /**/
-            /**/
-                                        }
+                                            }
     }
-        /**/
-        
+    umlaute();
 
+    var changed = false;
+    var checkedAnswers = [];
 
-        var changed = false;
-        var checkedAnswers = [];
-        //var answers = [];
+    switchToAccountSettings();
 
-        //switchToAccountSettings();
+    function switchToAccountSettings(){
+        $("#accountSettings").removeClass("btn-secondary").addClass("btn-primary");
+        $("#billSettings").removeClass("btn-primary").addClass("btn-secondary");
+        $("#appSettings").removeClass("btn-primary").addClass("btn-secondary");
+        $( "#app" ).hide();
+        $("#bi").hide();
+        $("#acc").show();
+    }
 
-        $(function () {
-            document.getElementById("header").innerHTML = "@Resources.settings"; //set Header
-            $("#accordion").accordion();
-            console.log(dictionary);
-            umlaute();
-            switchToAccountSettings();
-            
-        });
+    function switchToAppSettings(){
+        $("#accountSettings").removeClass("btn-primary").addClass("btn-secondary");
+        $("#billSettings").removeClass("btn-primary").addClass("btn-secondary");
+        $("#appSettings").removeClass("btn-secondary").addClass("btn-primary");
+        $( "#acc" ).hide();
+        $("#bi").hide();
+        $("#app").show();
+    }
 
-        function switchToAccountSettings() {
-            $("#accountSettings").removeClass("btn-secondary").addClass("btn-primary");
-            $("#billSettings").removeClass("btn-primary").addClass("btn-secondary");
-            $("#appSettings").removeClass("btn-primary").addClass("btn-secondary");
-            $("#app").hide();
-            $("#bi").hide();
-            $("#acc").show();
-        }
+    function switchToBillSettings(){
+        $("#accountSettings").removeClass("btn-primary").addClass("btn-secondary");
+        $("#appSettings").removeClass("btn-primary").addClass("btn-secondary");
+        $("#billSettings").removeClass("btn-secondary").addClass("btn-primary");
+        $( "#acc" ).hide();
+        $("#app").hide();
+        $("#bi").show();
+    }
 
-        function switchToAppSettings() {
-            $("#accountSettings").removeClass("btn-primary").addClass("btn-secondary");
-            $("#billSettings").removeClass("btn-primary").addClass("btn-secondary");
-            $("#appSettings").removeClass("btn-secondary").addClass("btn-primary");
-            $("#acc").hide();
-            $("#bi").hide();
-            $("#app").show();
-        }
-
-        function switchToBillSettings() {
-            $("#accountSettings").removeClass("btn-primary").addClass("btn-secondary");
-            $("#appSettings").removeClass("btn-primary").addClass("btn-secondary");
-            $("#billSettings").removeClass("btn-secondary").addClass("btn-primary");
-            $("#acc").hide();
-            $("#app").hide();
-            $("#bi").show();
-        }
-
-
-        function changeAbrechnung() {
-            let zeitraum = $("#zeitraum option:selected").text();
-            let tag = $("#abrechnungstag").val();
-            /**/
-            let url1 = "@Url.Action("ChangeAccountingPeriod", "Settings")?period=" + zeitraum;
-        /**/
+    function changeAbrechnung(){
+        let zeitraum = $("#zeitraum option:selected").text();
+        let tag = $("#abrechnungstag").val();
+        let url1 = "@Url.Action("ChangeAccountingPeriod", "Settings")?period=" + zeitraum;
         $.ajax({
             url: url1,
             type: 'GET',
             statusCode: {
                 200: function () {
                     console.log("changeAccountingPeriod Ok");
+                    $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
                     alert("changeAccountingPeriod 404");
@@ -385,25 +313,28 @@
                 }
             }
         });
-        /**/
         let url2 = "@Url.Action("ChangeAccountingDay", "Settings")?day=" + tag;
-        /**/
         $.ajax({
             url: url2,
             type: 'GET',
             statusCode: {
                 200: function () {
                     console.log("ChangeAccountingDay Ok");
+                    $('#changesOk').css("display", "block");
+                    $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
                     alert("ChangeAccountingDay 404");
+                    $('#changeAbrechnung404').css("display", "block");
+                    $('#changeAbrechnung404').delay(1000).fadeOut();
                 },
                 500: function () {
                     alert("ChangeAccountingDay 500");
+                    $('#changeAbrechnung500').css("display", "block");
+                    $('#changeAbrechnung500').delay(1000).fadeOut();
                 }
             }
         });
-
     }
 
     function answerChecked() {
@@ -418,7 +349,7 @@
         $("#save").prop('disabled', true);
     }
 
-    $("#save").on("click", function () {
+    $("#save").on("click", function(){
         $("#AnswerTypeDialog").modal();
     });
 
@@ -432,21 +363,26 @@
 
     function changeMinimumGroupSize() {
         let val = $("#minimumGroupSize").val();
-        /**/
         let url = "@Url.Action("ChangeMinGroup", "Settings")?size=" + val;
-        /**/
         $.ajax({
             url: url,
             type: 'GET',
             statusCode: {
                 200: function () {
                     console.log("changeMinimumGroupSize Ok");
+                    //$("#changesOK").modal();
+                    $('#changesOk').css("display", "block");
+                    $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
                     alert("changeMinimumGroupSize 404");
+                    $('#minimumGroupSize404').css("display", "block");
+                    $("#minimumGroupSize404").delay(1000).fadeOut();
                 },
                 500: function () {
-                    alert("changeMinimumGroupSize 500");
+                    $("#minimumGroupSize500").modal();
+                    $('#minimumGroupSize500').css("display", "block");
+                    $("#minimumGroupSize500").delay(1000).fadeOut();
                 }
             }
         });
@@ -460,162 +396,111 @@
         if (val1 == val2 && val1 != "" && val2 != "") {
             $.ajax({
                 type: "POST",
-                /**/
                 url: "@Url.Action("ChangePassword", "Settings")",
-        /**/
-        data: { "password": val1 },
-        statusCode: {
-            200: function () {
-                console.log("passwort gesetzt");
-            },
-            404: function () {
-                console.log("passwort 404");
-            },
-            500: function () {
-                console.log("passwort 500");
-            }
-        }
-    });
-} else {
-    //alert("Passwort stimmt nicht überein!");
-    $("#passwordModal").modal();
-}
-$("#password").val("");
-$("#passwordConfirm").val("");
-}
-
-function openAddAnswerBox() {
-var answerBox = document.getElementById("answerBox");
-var answerType = document.getElementById("AnswerTypeCB");
-var value = answerType.value;
-if (value >= 6 && value <= 9) {
-    if (survCats.length === 0) {
-        $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
-    }
-    answerBox.innerHTML =
-        '<div class="row mt-1 mb-1 mr-0 ml-0">' +
-        /**/
-        '        <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>' +
-        /**/
-        '        <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
-        '        <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions"></ul>' +
-        '</div >';
-    if (survCats.length > 0) {
-        let ul = document.getElementById("answerUL");
-        for (i = 0; i < survCats.length; i++) {
-            let normal =
-                '<li class="list-group-item">' +
-                '   <span class="d-flex justify-content-between">' +
-                '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + survCats[i] + '" />' +
-                '       <span>' +
-                '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-                '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
-                '       </span>' +
-                '   </span>' +
-                '</li>';
-            ul.innerHTML += normal;
-        }
-    }
-} else {
-    if (firstAnswer !== "" && secondAnswer !== "") {
-        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
-    } else {
-        $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
-    }
-    answerBox.innerHTML =
-        '<div class="m-2">' +
-        '    <label>First Answer</label>' +
-        '    <input id="dichotomAnswer1" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + firstAnswer + '" class="form-control" />' +
-        '    <label>Second Answer</label>' +
-        '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + secondAnswer + '" class="form-control" />' +
-        '</div>';
-}
-
-$("#answerBox").show();
-}
-
-function openAddAnswer() {
-console.log("he");
-document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe5ce;";
-if ($("#answerBox").is(":hidden")) {
-    console.log("gay");
-    openAddAnswerBox();
-} else if ($("#answerBox").is(":visible")) {
-    $("#answerBox").hide();
-    document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe313;";
-}
-console.log("uuu");
-}
-
-function dichotomAnswerChanged(inputId) {
-firstAnswer = document.getElementById("dichotomAnswer1").value;
-secondAnswer = document.getElementById("dichotomAnswer2").value;
-if (firstAnswer !== "" && secondAnswer !== "") {
-    $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
-} else {
-    $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
-}
-}
-
-function addAnswerTemplates() {
-let ul = document.getElementById("answerULT");
-let input = document.getElementById("answerInputT").value;
-let id;
-if (input === "") {
-    /**/
-    alert('@Resources.invalidInput');
-        /**/
-        return;
-    } else if (survCats.includes(input)) {
-        /**/
-        alert('@Resources.invalidInput');
-        /**/
-        return;
-    }
-    /**/
-@*let url = "@Url.Action("AddCategory", "Settings")?catName=" + encodeURIComponent(input);
-        $.ajax({
-            url: url,
-            type: 'GET',
-            statusCode: {
-                200: function () {
-                    console.log("amkkkk");
-                },
-                404: function () {
-
-                },
-                500: function () {
-
+                data: {"password": val1},
+                statusCode: {
+                    200: function () {
+                        console.log("passwort gesetzt");
+                        //$("#changesOK").modal();
+                        $('#changesOk').css("display", "block");
+                        $('#changesOk').delay(1000).fadeOut();
+                    },
+                    404: function () {
+                        console.log("passwort 404");
+                        $('#changespw404').css("display", "block");
+                        $("#changespw404").delay(1000).fadeOut();
+                    },
+                    500: function () {
+                        console.log("passwort 500");
+                        $('#changespw500').css("display", "block");
+                        $("#changespw500").delay(1000).fadeOut();
+                    }
                 }
-            },
-            success: function(data) {
-                id = data;
+            });
+        } else {
+            //alert("Passwort stimmt nicht überein!");
+            $("#passwordModal").modal();
+        }
+        $("#password").val("");
+        $("#passwordConfirm").val("");
+    }
+
+    function openAddAnswerBox() {
+        var answerBox = document.getElementById("answerBox");
+        var answerType = document.getElementById("AnswerTypeCB");
+        var value = answerType.value;
+        if (value >= 6 && value <= 9) {
+            if (survCats.length === 0) {
+                $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
             }
-        });*@
-        /**/
+            answerBox.innerHTML =
+                '<div class="row mt-1 mb-1 mr-0 ml-0">' +
+                '        <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>' +
+                '        <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
+                '        <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions"></ul>' +
+                '</div >';
+            if (survCats.length > 0) {
+                let ul = document.getElementById("answerUL");
+                for (i = 0; i < survCats.length; i++) {
+                    let normal =
+                        '<li class="list-group-item">' +
+                        '   <span class="d-flex justify-content-between">' +
+                        '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + survCats[i] + '" />' +
+                        '       <span>' +
+                        '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+                        '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+                        '       </span>' +
+                        '   </span>' +
+                        '</li>';
+                    ul.innerHTML += normal;
+                }
+            }
+        } else {
+            if (firstAnswer !== "" && secondAnswer !== "") {
+                $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+            } else {
+                $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+            }
+            answerBox.innerHTML =
+                '<div class="m-2">' +
+                '    <label>First Answer</label>' +
+                '    <input id="dichotomAnswer1" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + firstAnswer + '" class="form-control" />' +
+                '    <label>Second Answer</label>' +
+                '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + secondAnswer + '" class="form-control" />' +
+                '</div>';
+        }
 
+        $("#answerBox").show();
+    }
 
-        //survCats.push(input);
-        dictionary2[id] = input;
-        let normal =
-            '<li class="list-group-item">' +
-            '   <span class="d-flex justify-content-between">' +
-            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
-            '       <span>' +
-            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe5cd;</i></button>' +
-            '       </span>' +
-            '   </span>' +
-            '</li>';
-        ul.innerHTML += normal;
-        $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
-        umlaute();
+    function openAddAnswer() {
+        console.log("he");
+        document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe5ce;";
+        if ($("#answerBox").is(":hidden")) {
+            console.log("gay");
+            openAddAnswerBox();
+        } else if ($("#answerBox").is(":visible")) {
+            $("#answerBox").hide();
+            document.getElementById("openAddAnswerUpDownIcon").innerHTML = "&#xe313;";
+        }
+        console.log("uuu");
+    }
+
+    function dichotomAnswerChanged(inputId) {
+        firstAnswer = document.getElementById("dichotomAnswer1").value;
+        secondAnswer = document.getElementById("dichotomAnswer2").value;
+        if (firstAnswer !== "" && secondAnswer !== "") {
+            $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+        } else {
+            $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
+        }
     }
 
     function isEmpty(obj) {
         return Object.keys(obj).length === 0;
     }
 
-    function umlaute() {
+    function umlaute(){
         for (var keys in dictionary) {
             if (dictionary.hasOwnProperty(keys)) {
                 dictionary[keys] = dictionary[keys].replace("&#246;", "o");
@@ -626,7 +511,7 @@ if (input === "") {
                 dictionary[keys] = dictionary[keys].replace("&#196;", "A");
             }
         }
-        for (var keys in dictionary) {
+        for (var keys in dictionary2) {
             if (dictionary2.hasOwnProperty(keys)) {
                 dictionary2[keys] = dictionary2[keys].replace("&#246;", "o");
                 dictionary2[keys] = dictionary2[keys].replace("&#214;", "O");
@@ -645,50 +530,46 @@ if (input === "") {
         let check = true;
         for (var keys in dictionary) {
             if (dictionary.hasOwnProperty(keys)) {
-                if (dictionary[keys] == input) {
+                if(dictionary[keys] == input){
                     check = false;
                 }
             }
         }
         if (input === "") {
-            /**/
             alert('@Resources.invalidInput');
-        /**/
-        return;
-    } else if (!check) {
-        /**/
-        alert('@Resources.invalidInput');
-        /**/
-        return;
-    }
+            return;
+        } else if (!check) {
+            alert('@Resources.invalidInput');
+            return;
+        }
 
-    /**/
-    let url = "@Url.Action("AddCategory", "Settings")?catName=" + encodeURIComponent(input);
-        /**/
+        let url = "@Url.Action("AddCategory", "Settings")?catName=" + encodeURIComponent(input);
         $.ajax({
             url: url,
             type: 'GET',
             statusCode: {
                 200: function () {
-                    console.log("amkkkk");
+                    console.log("AddCategory ok");
+                    $('#changesOk').css("display", "block");
+                    $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-
+                    console.log("AddCategory 404");
+                    $('#addCategory404').css("display", "block");
+                    $('#addCategory404').delay(1000).fadeOut();
                 },
                 500: function () {
-
+                    console.log("AddCategory 500");
+                    $('#addCategory500').css("display", "block");
+                    $('#addCategory500').delay(1000).fadeOut();
                 }
             },
-            success: function (data) {
-                id = data;
+            success: function(data) {
+                dictionary[data] = input;
             }
         });
-
-
-        //survCats.push(input);
-        dictionary[id] = input;
         let normal =
-            '<li class="list-group-item">' +
+        '<li class="list-group-item">' +
             '   <span class="d-flex justify-content-between">' +
             '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
             '       <span>' +
@@ -703,61 +584,39 @@ if (input === "") {
 
     function deleteAnswerTemplate(button) {
         let text = button.parentElement.parentElement.children[0].value;
-        console.log(text);
-        //for (i = 0; i < survCats.length; i++) {
-        //    if (survCats[i] === text) {
-        //        survCats.splice(i, 1);
-        //        break;
-        //    }
-        //}
-        //for (i = 0; i < survCats.length; i++) {
-        //    if (survCats[i] === text) {
-        //        survCats.splice(i, 1);
-        //        break;
-        //    }
-        //}
         text = text.replace("ö", "o");
         text = text.replace("ü", "u");
         text = text.replace("ä", "a");
         let key = getKeyByValue(dictionary2, text);
         delete dictionary2[key];
-        /**/
         let url = "@Url.Action("DeleteTemplate", "Settings")?svyId=" + key;
-        /**/
         $.ajax({
             url: url,
             type: 'GET',
             statusCode: {
                 200: function () {
-                    console.log("amkkkk");
+                    console.log("DeleteTemplate OK");
+                    $('#changesOk').css("display", "block");
+                    $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-
+                    console.log("DeleteTemplate 404");
+                    $('#deleteTemplate404').css("display", "block");
+                    $('#deleteTemplate404').delay(1000).fadeOut();
                 },
                 500: function () {
-
+                    console.log("DeleteTemplate 500");
+                    $('#deleteTemplate500').css("display", "block");
+                    $('#deleteTemplate500').delay(1000).fadeOut();
                 }
             }
         });
         button.parentElement.parentElement.parentElement.remove();
-        console.log(dictionary2);
     }
 
 
     function deleteAnswer(button) {
         let text = button.parentElement.parentElement.children[0].value;
-        //for (i = 0; i < survCats.length; i++) {
-        //    if (survCats[i] === text) {
-        //        survCats.splice(i, 1);
-        //        break;
-        //    }
-        //}
-        //for (i = 0; i < survCats.length; i++) {
-        //    if (survCats[i] === text) {
-        //        survCats.splice(i, 1);
-        //        break;
-        //    }
-        //}
         text = text.replace("ö", "o");
         text = text.replace("ü", "u");
         text = text.replace("ä", "a");
@@ -765,15 +624,15 @@ if (input === "") {
         console.log(dictionary);
         let key = getKeyByValue(dictionary, text);
         delete dictionary[key];
-        /**/
         let url = "@Url.Action("DeleteCategory", "Settings")?catId=" + key;
-        /**/
         $.ajax({
             url: url,
             type: 'GET',
             statusCode: {
                 200: function () {
                     console.log("deleteCategory OK");
+                    $('#changesOk').css("display", "block");
+                    $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
                     alert("deleteCategory 404");
@@ -784,8 +643,6 @@ if (input === "") {
             }
         });
         button.parentElement.parentElement.parentElement.remove();
-        console.log(dictionary);
-
     }
 
     function editAnswer(button) {
@@ -811,64 +668,51 @@ if (input === "") {
         } else {
             text = button.parentElement.parentElement.children[0].value;
             if (Object.values(dictionary).includes(text)) {
-                /**/
                 alert('@Resources.invalidInput');
-        /**/
-        return;
-    }
-    //for (i = 0; i < survCats.length; i++) {
-    //    if (survCats[i] === tempText) {
-    //        survCats[i] = text;
-    //        break;
-    //    }
-    //}
-    let key = getKeyByValue(dictionary, tempText);
-    dictionary[key] = text;
-    /**/
-    let url = "@Url.Action("ModifyCategory", "Settings")?catId=" + key + "&catName=" + encodeURIComponent(text);
-        /**/
-        $.ajax({
-            url: url,
-            type: 'GET',
-            statusCode: {
-                200: function () {
-                    console.log("addCategory Ok");
-                },
-                404: function () {
-                    alert("addCategory 404");
-                },
-                500: function () {
-                    alert("addCategory 500");
-                }
+                return;
             }
-        });
+            let key = getKeyByValue(dictionary, tempText);
+            dictionary[key] = text;
+            let url = "@Url.Action("ModifyCategory", "Settings")?catId=" + key + "&catName=" + encodeURIComponent(text);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                statusCode: {
+                    200: function () {
+                        console.log("addCategory Ok");
+                    },
+                    404: function () {
+                        alert("addCategory 404");
+                    },
+                    500: function () {
+                        alert("addCategory 500");
+                    }
+                }
+            });
+        }
+
+        let edited =
+            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + text + '" />' +
+            '       <span>' +
+            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '       </span>';
+        tempText = "";
+        button.parentElement.parentElement.innerHTML = edited;
+        umlaute();
     }
 
-    let edited =
-        '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + text + '" />' +
-        '       <span>' +
-        '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-        '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
-        '       </span>';
-    tempText = "";
-    button.parentElement.parentElement.innerHTML = edited;
-    console.log(dictionary);
-    umlaute();
-}
+    function saveUmfr() {
+        if (survCats.length > 0) {
+            console.log(survCats);
+        } else {
+            console.log("nix do amk");
+        }
 
-function saveUmfr() {
-    if (survCats.length > 0) {
-        console.log(survCats);
-    } else {
-        console.log("nix do amk");
     }
 
-}
+    $( document ).ready(function() {
+        $("#app").hide();
 
-$(document).ready(function () {
-    $("#app").hide();
-
-});
-    </script>
-
-
+    });
+</script>

@@ -201,4 +201,37 @@
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
+  <data name="ChangesOk" xml:space="preserve">
+    <value>Änderungen übernommen</value>
+  </data>
+  <data name="minimumGroupSize404" xml:space="preserve">
+    <value>Minimale Gruppengröße Fehlercode 404</value>
+  </data>
+  <data name="minimumGroupSize500" xml:space="preserve">
+    <value>Minimale Gruppengröße Fehlercode 500</value>
+  </data>
+  <data name="PasswordChange404" xml:space="preserve">
+    <value>Passwort setzen Fehlercode: 404</value>
+  </data>
+  <data name="PasswordChange500" xml:space="preserve">
+    <value>Passwort setzen Fehlercode: 500</value>
+  </data>
+  <data name="AddCategory404" xml:space="preserve">
+    <value>Kategorie hinzufügen Fehlercode: 404</value>
+  </data>
+  <data name="AddCategory500" xml:space="preserve">
+    <value>Kategorie hinzufügen Fehlercode: 500</value>
+  </data>
+  <data name="changeAbrechnung404" xml:space="preserve">
+    <value>Abrechnungszeitraum ändern Fehlercode: 404</value>
+  </data>
+  <data name="changeAbrechnung500" xml:space="preserve">
+    <value>Abrechnungszeitraum ändern Fehlercode: 500</value>
+  </data>
+  <data name="deleteTemplate404" xml:space="preserve">
+    <value>Template löschen Fehlercode:404</value>
+  </data>
+  <data name="deleteTemplate500" xml:space="preserve">
+    <value>Template löschen Fehlercode: 500</value>
+  </data>
 </root>

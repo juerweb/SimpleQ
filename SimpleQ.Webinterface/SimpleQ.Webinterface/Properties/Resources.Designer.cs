@@ -196,6 +196,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die close ähnelt.
+        /// </summary>
+        public static string close {
+            get {
+                return ResourceManager.GetString("close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die confirm password ähnelt.
         /// </summary>
         public static string confirmPassword {
@@ -259,6 +268,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die You have no groups yet, switch to group administration and create your first one! ähnelt.
+        /// </summary>
+        public static string defineGroupsModalInfo {
+            get {
+                return ResourceManager.GetString("defineGroupsModalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die diagram ähnelt.
         /// </summary>
         public static string diagram {
@@ -309,6 +327,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string email {
             get {
                 return ResourceManager.GetString("email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die evaluate ähnelt.
+        /// </summary>
+        public static string evaluate {
+            get {
+                return ResourceManager.GetString("evaluate", resourceCulture);
             }
         }
         
@@ -619,6 +646,24 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Klick to repeat a question certain times automatically ähnelt.
+        /// </summary>
+        public static string periodicQuestionTooltip {
+            get {
+                return ResourceManager.GetString("periodicQuestionTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please define groups first! ähnelt.
+        /// </summary>
+        public static string pleaseDefineGroupsFirst {
+            get {
+                return ResourceManager.GetString("pleaseDefineGroupsFirst", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die polar-area ähnelt.
         /// </summary>
         public static string polarArea {
@@ -759,6 +804,33 @@ namespace SimpleQ.Webinterface.Properties {
         public static string settings {
             get {
                 return ResourceManager.GetString("settings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die If you click here, you can look on the results of every servy each. ähnelt.
+        /// </summary>
+        public static string singleButtonTooltip {
+            get {
+                return ResourceManager.GetString("singleButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die single-evaluation ähnelt.
+        /// </summary>
+        public static string singleEvaluation {
+            get {
+                return ResourceManager.GetString("singleEvaluation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die single- or trend-evaluation? ähnelt.
+        /// </summary>
+        public static string singleOrTrendEvaluation {
+            get {
+                return ResourceManager.GetString("singleOrTrendEvaluation", resourceCulture);
             }
         }
         
@@ -907,11 +979,29 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die timespan ähnelt.
+        /// </summary>
+        public static string timespan {
+            get {
+                return ResourceManager.GetString("timespan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die to ähnelt.
         /// </summary>
         public static string to {
             get {
                 return ResourceManager.GetString("to", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die to group-administration ähnelt.
+        /// </summary>
+        public static string toGroupAdministration {
+            get {
+                return ResourceManager.GetString("toGroupAdministration", resourceCulture);
             }
         }
         
@@ -925,7 +1015,16 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die trend evaluation ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die If you click this button, you can see a summarized view of all surveys ähnelt.
+        /// </summary>
+        public static string trendButtonTooltip {
+            get {
+                return ResourceManager.GetString("trendButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die trend-evaluation ähnelt.
         /// </summary>
         public static string trendEvaluation {
             get {

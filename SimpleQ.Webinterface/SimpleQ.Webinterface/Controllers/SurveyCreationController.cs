@@ -95,12 +95,13 @@ namespace SimpleQ.Webinterface.Controllers
                     req.Survey.StartDate = req.StartDate.Date.Add(req.StartTime);
                     req.Survey.EndDate = req.EndDate.Date.Add(req.EndTime);
                     req.Survey.Sent = false;
-                    req.Survey.Period = req.Period?.Ticks;
+                    TimeSpan? period = req.Period.HasValue ? (TimeSpan?)(req.IsWeek == true ? TimeSpan.FromDays(req.Period.Value * 7) : TimeSpan.FromDays(req.Period.Value)) : null;
+                    req.Survey.Period = period?.Ticks;
 
-                    if (req.Period.HasValue && req.Period.Value < TimeSpan.FromDays(1))
+                    if (req.Period.HasValue & period.Value < TimeSpan.FromDays(1))
                         AddModelError("Period", "Period must be at least 1 day.", ref err);
 
-                    if (req.Period.HasValue && req.Survey.StartDate.Add(req.Period.Value) < req.Survey.EndDate)
+                    if (req.Period.HasValue && req.Survey.StartDate.Add(period.Value) < req.Survey.EndDate)
                         AddModelError("Period", "Period must be bigger than the survey's duration.", ref err);
 
                     if (req.Survey.StartDate >= req.Survey.EndDate)

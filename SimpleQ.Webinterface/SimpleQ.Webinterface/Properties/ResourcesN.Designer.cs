@@ -79,6 +79,24 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Category error 404.
+        /// </summary>
+        public static string AddCategory404 {
+            get {
+                return ResourceManager.GetString("AddCategory404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Category error 500.
+        /// </summary>
+        public static string AddCategory500 {
+            get {
+                return ResourceManager.GetString("AddCategory500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Application settings.
         /// </summary>
         public static string ApplicationSettings {
@@ -88,11 +106,38 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change Bill date error 404.
+        /// </summary>
+        public static string changeAbrechnung404 {
+            get {
+                return ResourceManager.GetString("changeAbrechnung404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Bill date error 500.
+        /// </summary>
+        public static string changeAbrechnung500 {
+            get {
+                return ResourceManager.GetString("changeAbrechnung500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to change password.
         /// </summary>
         public static string ChangePassword {
             get {
                 return ResourceManager.GetString("ChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changes were made.
+        /// </summary>
+        public static string ChangesOk {
+            get {
+                return ResourceManager.GetString("ChangesOk", resourceCulture);
             }
         }
         
@@ -151,6 +196,24 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete template error 404.
+        /// </summary>
+        public static string deleteTemplate404 {
+            get {
+                return ResourceManager.GetString("deleteTemplate404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete template error 500.
+        /// </summary>
+        public static string deleteTemplate500 {
+            get {
+                return ResourceManager.GetString("deleteTemplate500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -174,6 +237,24 @@ namespace SimpleQ.Webinterface.Properties {
         public static string MinimumGroupSize {
             get {
                 return ResourceManager.GetString("MinimumGroupSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum group size error 404.
+        /// </summary>
+        public static string minimumGroupSize404 {
+            get {
+                return ResourceManager.GetString("minimumGroupSize404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum group size error 500.
+        /// </summary>
+        public static string minimumGroupSize500 {
+            get {
+                return ResourceManager.GetString("minimumGroupSize500", resourceCulture);
             }
         }
         
@@ -210,6 +291,24 @@ namespace SimpleQ.Webinterface.Properties {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password change error 404.
+        /// </summary>
+        public static string PasswordChange404 {
+            get {
+                return ResourceManager.GetString("PasswordChange404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password change error 500.
+        /// </summary>
+        public static string PasswordChange500 {
+            get {
+                return ResourceManager.GetString("PasswordChange500", resourceCulture);
             }
         }
         

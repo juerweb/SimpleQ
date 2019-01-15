@@ -31,6 +31,7 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public double OutstandingBalance { get; set; }
         public int CurrentSurveyAmount { get; set; }
         public int CurrentVoteAmount { get; set; }
+        public List<Survey> PeriodicSurveys { get; set; }
         #endregion
 
         #region Any direction

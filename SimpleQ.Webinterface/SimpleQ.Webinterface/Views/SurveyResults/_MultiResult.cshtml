@@ -2,42 +2,8 @@
 @model SimpleQ.Webinterface.Models.ViewModels.MultiResultModel
 
 
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="groups">Antwortmöglichkeiten</label>
-            <div class="border border-dark">
-                <ul class="list-group groups-ul pl-2" id="answers">
-                    @{
-                        foreach (KeyValuePair<string, List<int>> kvp in Model.Votes)
-                        {
-                            <li>
-                                <input type="checkbox" checked="checked" onclick="answerChecked()"><span>@kvp.Key</span>
-                            </li>
-                        }
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class=" col-md-4">
-        <div class="form-group">
-            <label for="groups">Gruppen</label>
-            <div class="border border-dark">
-                <ul class="list-group groups-ul pl-2" id="groups">
-                    @for (var i = 0; i < Model.DepartmentNames.Count; i++)
-                    {
-                        <li>
-                            @Model.DepartmentNames[i]
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4 pl-3 pr-3">
+<div class="row mr-0 ml-0">
+    <div class="col-md-6 pl-3">
         <div class="form-group">
             @{
                 Dictionary<string, string> dropBoxValues = new Dictionary<string, string>();
@@ -46,49 +12,69 @@
                 dropBoxValues.Add("listing", Resources.listing);
             }
             <label for="chart1SelectMulti">@Resources.diagram@Resources.typeSmall @Resources.left</label>
-            <select class="form-control" id="chart1SelectMulti" onchange="changeChartMulti('chart1SelectMulti','chart1Col','chart1')">
-                @{
-                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
-                    {
-                        if (elem.Key == "line")
-                        {
-                            <option value="@elem.Key" selected>@elem.Value</option>
+            <div class="row mr-0 ml-0">
+                <div class="col-10 pr-0">
+                    <select class="form-control" id="chart1SelectMulti" onchange="changeChartMulti('chart1SelectMulti','chart1Col','chart1')">
+                        @{
+                            foreach (KeyValuePair<string, string> elem in dropBoxValues)
+                            {
+                                if (elem.Key == "line")
+                                {
+                                    <option value="@elem.Key" selected>@elem.Value</option>
+                                }
+                                else
+                                {
+                                    <option value="@elem.Key">@elem.Value</option>
+                                }
+                            }
                         }
-                        else
-                        {
-                            <option value="@elem.Key">@elem.Value</option>
-                        }
-                    }
-                }
 
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="chart2SelectMulti">@Resources.diagram@Resources.typeSmall @Resources.right</label>
-            <select class="form-control" id="chart2SelectMulti" onchange="changeChartMulti('chart2SelectMulti','chart2Col','chart2')">
-                @{
-                    foreach (KeyValuePair<string, string> elem in dropBoxValues)
-                    {
-                        if (elem.Key == "bar")
-                        {
-                            <option value="@elem.Key" selected>@elem.Value</option>
-                        }
-                        else
-                        {
-                            <option value="@elem.Key">@elem.Value</option>
-                        }
-                    }
-                }
-
-            </select>
+                    </select>
+                </div>
+                <div class="col-2 pl-0">
+                    <button class="btn btn-light btn-block border pb-0" onclick="zoomChart('chart1SelectMulti')"><i class="material-icons">&#xe56b;</i></button>
+                </div>
+            </div>
+            
         </div>
     </div>
+    <div class="col-md-6 pr-3">
+        <div class="form-group">
+            <label for="chart2SelectMulti">@Resources.diagram@Resources.typeSmall @Resources.right</label>
+            <div class="row mr-0 ml-0">
+                <div class="col-10 pr-0">
+                    <select class="form-control" id="chart2SelectMulti" onchange="changeChartMulti('chart2SelectMulti','chart2Col','chart2')">
+                        @{
+                            foreach (KeyValuePair<string, string> elem in dropBoxValues)
+                            {
+                                if (elem.Key == "bar")
+                                {
+                                    <option value="@elem.Key" selected>@elem.Value</option>
+                                }
+                                else
+                                {
+                                    <option value="@elem.Key">@elem.Value</option>
+                                }
+                            }
+                        }
+
+                    </select>
+                </div>
+                <div class="col-2 pl-0">
+                    <button class="btn btn-light btn-block border pb-0" onclick="zoomChart('chart2SelectMulti')"><i class="material-icons">&#xe56b;</i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+       
 </div>
 
 <script>
 
     $(function () {
-        answerChecked();
+        changeChartMulti('chart1SelectMulti', 'chart1Col', 'chart1');
+        changeChartMulti('chart2SelectMulti', 'chart2Col', 'chart2');
+        //answerChecked();
     });
 
     var checkedAnswers = [];

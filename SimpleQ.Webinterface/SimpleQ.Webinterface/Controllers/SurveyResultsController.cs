@@ -115,7 +115,9 @@ namespace SimpleQ.Webinterface.Controllers
 
                             SvyText = s.SvyText,
 
-                            Period = TimeSpan.FromTicks(s.Period ?? 0L),
+                            StartDate = s.StartDate,
+
+                            EndDate = s.EndDate,
 
                             Votes = (s.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? SelectVotesFromSurvey(s) : null,
 

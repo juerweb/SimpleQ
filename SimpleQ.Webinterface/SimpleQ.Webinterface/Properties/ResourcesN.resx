@@ -195,4 +195,37 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="ChangesOk" xml:space="preserve">
+    <value>Changes were made</value>
+  </data>
+  <data name="minimumGroupSize404" xml:space="preserve">
+    <value>Minimum group size error 404</value>
+  </data>
+  <data name="minimumGroupSize500" xml:space="preserve">
+    <value>Minimum group size error 500</value>
+  </data>
+  <data name="PasswordChange404" xml:space="preserve">
+    <value>Password change error 404</value>
+  </data>
+  <data name="PasswordChange500" xml:space="preserve">
+    <value>Password change error 500</value>
+  </data>
+  <data name="AddCategory404" xml:space="preserve">
+    <value>Add Category error 404</value>
+  </data>
+  <data name="AddCategory500" xml:space="preserve">
+    <value>Add Category error 500</value>
+  </data>
+  <data name="changeAbrechnung404" xml:space="preserve">
+    <value>Change Bill date error 404</value>
+  </data>
+  <data name="changeAbrechnung500" xml:space="preserve">
+    <value>Change Bill date error 500</value>
+  </data>
+  <data name="deleteTemplate404" xml:space="preserve">
+    <value>Delete template error 404</value>
+  </data>
+  <data name="deleteTemplate500" xml:space="preserve">
+    <value>Delete template error 500</value>
+  </data>
 </root>

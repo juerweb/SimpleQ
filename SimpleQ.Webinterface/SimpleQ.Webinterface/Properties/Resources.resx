@@ -414,12 +414,45 @@
     <value>survey</value>
   </data>
   <data name="trendEvaluation" xml:space="preserve">
-    <value>trend evaluation</value>
+    <value>trend-evaluation</value>
   </data>
   <data name="settings" xml:space="preserve">
     <value>settings</value>
   </data>
   <data name="support" xml:space="preserve">
     <value>support</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>close</value>
+  </data>
+  <data name="defineGroupsModalInfo" xml:space="preserve">
+    <value>You have no groups yet, switch to group administration and create your first one!</value>
+  </data>
+  <data name="evaluate" xml:space="preserve">
+    <value>evaluate</value>
+  </data>
+  <data name="periodicQuestionTooltip" xml:space="preserve">
+    <value>Klick to repeat a question certain times automatically</value>
+  </data>
+  <data name="pleaseDefineGroupsFirst" xml:space="preserve">
+    <value>Please define groups first!</value>
+  </data>
+  <data name="singleButtonTooltip" xml:space="preserve">
+    <value>If you click here, you can look on the results of every servy each.</value>
+  </data>
+  <data name="singleEvaluation" xml:space="preserve">
+    <value>single-evaluation</value>
+  </data>
+  <data name="singleOrTrendEvaluation" xml:space="preserve">
+    <value>single- or trend-evaluation?</value>
+  </data>
+  <data name="timespan" xml:space="preserve">
+    <value>timespan</value>
+  </data>
+  <data name="toGroupAdministration" xml:space="preserve">
+    <value>to group-administration</value>
+  </data>
+  <data name="trendButtonTooltip" xml:space="preserve">
+    <value>If you click this button, you can see a summarized view of all surveys</value>
   </data>
 </root>

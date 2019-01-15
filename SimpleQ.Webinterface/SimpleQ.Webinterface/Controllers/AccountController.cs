@@ -251,12 +251,12 @@ namespace SimpleQ.Webinterface.Controllers
                 {
                     if (!await db.Customers.AnyAsync(c => c.CustCode == custCode))
                     {
-                        AddModelError("custCode", "Invalid customer code.", ref err);
+                        AddModelError("custCode", "Invalid customer code or password.", ref err);
                         logger.Debug($"Login failed. Invalid customer code: {custCode}");
                     }
                     else if (!await db.Customers.AnyAsync(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)))
                     {
-                        AddModelError("password", "Invalid password.", ref err);
+                        AddModelError("password", "Invalid password or password.", ref err);
                         logger.Debug($"Login failed. Invalid password for {custCode}: {password}");
                     }
 

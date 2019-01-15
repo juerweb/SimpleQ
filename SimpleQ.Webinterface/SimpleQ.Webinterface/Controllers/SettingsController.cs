@@ -84,7 +84,8 @@ namespace SimpleQ.Webinterface.Controllers
                         Bills = bills,
                         OutstandingBalance = decimal.ToDouble(cust.CostBalance),
                         CurrentSurveyAmount = currentSurveyAmount,
-                        CurrentVoteAmount = currentVoteAmount
+                        CurrentVoteAmount = currentVoteAmount,
+                        PeriodicSurveys = db.Surveys.Where(s => s.CustCode == CustCode && s.Period != null).ToList()
                     };
 
                     ViewBag.emailConfirmed = cust.EmailConfirmed;
@@ -594,6 +595,40 @@ namespace SimpleQ.Webinterface.Controllers
             catch (Exception ex)
             {
                 logger.Error(ex, "[GET]DownloadBill: Unexpected error");
+                return Http.InternalServerError("Something went wrong. Please try again later.");
+            }
+        }
+
+        [HttpDelete]
+        public async Task<ActionResult> DeletePeriodic(int svyId)
+        {
+            try
+            {
+                logger.Debug($"Deleting periodic survey requested: {CustCode} (SvyId: {svyId})");
+                using (var db = new SimpleQDBEntities())
+                {
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
+                    {
+                        logger.Warn($"Deleting periodic survey failed. Customer not found: {CustCode}");
+                        return Http.NotFound("Customer not found");
+                    }
+
+                    var svy = await db.Surveys.Where(s => s.SvyId == svyId && s.Period != null).FirstOrDefaultAsync();
+                    if(svy != null)
+                    {
+                        logger.Debug("Deleting periodic survey. Survey not found");
+                        return Http.NotFound("Survey not found");
+                    }
+
+                    svy.Period = null;
+                    await db.SaveChangesAsync();
+
+                    return Http.Ok/*e gut*/();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "[DELETE]DeletePerodic: Unexpected error");
                 return Http.InternalServerError("Something went wrong. Please try again later.");
             }
         }
