@@ -7,18 +7,18 @@
 {
     <div class="alert alert-success">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-        <strong>E-Mail bestätigt!</strong> Sie können sich nun einloggen.
+        <strong>@Resources.emailConfirmed!</strong> @Resources.youCanNowLogin.
     </div>
 }
 
-<a class="btn btn-primary" href="@Url.Action("Register", "Account")">Go to registration</a>
+<a class="btn btn-primary" href="@Url.Action("Register", "Account")">@Resources.goToRegistration</a>
 <br /><br />
 @using (Html.BeginForm("Login", "Account"))
 {
     <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
         <div class="form-group">
             @Html.Label("custCode", Resources.customerCode)
-            @Html.TextBox("custCode", "", new { @class = "form-control" })
+            @Html.TextBox("custCode", "", new { @class = "form-control", data_toggle = "tooltip", title = Resources.custCodeTooltip })
             @Html.ValidationMessage("custCode")
         </div>
 
@@ -48,10 +48,10 @@
 <div id="resetPwdDiv" style="display: none">
     <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
         <div class="form-group">
-            <label for="resCustCode">Kunden-Code</label>
+            <label for="resCustCode">@Resources.customerCode</label>
             <input id="resCustCode" class="form-control" />
         </div>
-        <button type="button" class="btn btn-primary" id="sendResetBtn">Reset-Link senden</button>
+        <button type="button" class="btn btn-primary" id="sendResetBtn">@Resources.sendResetLink</button>
         <br />
         <span id="msg"></span>
     </div>

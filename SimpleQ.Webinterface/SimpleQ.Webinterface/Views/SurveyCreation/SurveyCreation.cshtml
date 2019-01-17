@@ -5,8 +5,8 @@
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyCreationModel
 
 @{
-    Survey survey = new Survey();
     int maxCount = 0;
+    ResourceManager rm = Resources.ResourceManager;
 }
 @using (Html.BeginForm("New", "SurveyCreation"))
 {
@@ -26,7 +26,7 @@
             </select>
 
             <label class="mt-2" for="question">@Resources.questionHeader</label>
-            <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText">
+            <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText" oninput="checkIfSurveyTextEmpty(this)">
 
 
             <label class="mt-2">@Resources.surveyCategoryHeader</label>
@@ -54,7 +54,6 @@
                 <label for="AnswerTypeCB">@Resources.answerTypeHeader</label>
                 <select class="form-control" id="AnswerTypeCB" onchange="answerTypeSelectionChanged()" name="Survey.TypeId">
                     @{
-                        ResourceManager rm = Resources.ResourceManager;
                         foreach (AnswerType at in Model.AnswerTypes)
                         {
                             if (at.TypeId == 1)
@@ -71,7 +70,7 @@
                 </select>
             </div>
 
-            <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer" data-toggle="tooltip" title="Klick here to insert answers!"><span class="d-flex justify-content-between"><span>Answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+            <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer" data-toggle="tooltip" title="@Resources.answersButtonTooltip"><span class="d-flex justify-content-between"><span>@Resources.answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
             <div id="answerBox" class="border border-dark mt-2">
 
             </div>
@@ -128,7 +127,19 @@
             <button type="button" class="btn btn-light btn-block mt-2 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="@Resources.periodicQuestionTooltip"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>Periodische Befragung...</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
 
             <div id="periodicSurveyDiv" class="collapse">
-                Lorem ipsum dolor text....
+                <div class="row mr-0 ml-0 mt-2">
+                    <div class="col-4">
+                        <label>Periodendauer</label>
+                        <input id="countInput" class="form-control" type="number" min="0" value="" name='Period' onchange="insertHiddenCheckBox()"/>
+                    </div>
+                    <div class="col-8">
+                        <label>Einheit</label>
+                        <select class="form-control" id="daysOrWeekCB" name="IsWeek" onchange="insertHiddenCheckBox()">
+                            <option value="false" selected>@rm.GetString("days")</option>
+                            <option value="true" selected>@rm.GetString("weeks")</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
             <div class="mt-2">
@@ -136,7 +147,7 @@
                 @*<input type="checkbox" checked="checked" onclick="" name="Survey.Template">*@
                 <span data-toggle="tooltip" title="@Resources.TemplateDescription">@Resources.SaveAsTemplate</span>
             </div>
-            <button type="submit" id="sumbitBtn" class="btn btn-primary btn-block mb-5">@Resources.startSurvey</button>
+            <button type="submit" id="submitBtn" class="btn btn-primary btn-block mb-5" disabled>@Resources.startSurvey</button>
         </div>
         <div class="col-md-5 p-0">
             <h3 class="text-center">@Resources.surveyPreviewHeader</h3>
@@ -172,7 +183,11 @@
     var groups = [];
     var maxCount = 0;
 
+    let svyTextFilled = false;
+    let answersFilled = true;
+
     $(function () {
+
         if (document.getElementById("groups").innerHTML == "") {
             $("#noGroupsModal").show();
         }
@@ -204,6 +219,27 @@
     });
 
 
+    function checkIfSurveyTextEmpty(inputElem) {
+        if (inputElem.value !== "") {
+            svyTextFilled = true;
+            updateButtonEnabled();
+        } else {
+            svyTextFilled = false;
+            updateButtonEnabled();
+        }
+    }
+
+    function updateButtonEnabled() {
+        if (svyTextFilled && answersFilled) {
+            $("#submitBtn").attr("disabled", false);
+            console.log("yesyes");
+        } else {
+            $("#submitBtn").attr("disabled", true);
+            console.log("nonono");
+        }
+    }
+
+
     function addGroups() {
         @{ 
             foreach (KeyValuePair<Department, int> kvp in Model.Departments)
@@ -212,7 +248,9 @@
             }
             @:maxCount = @maxCount;
         }
-        document.getElementById("countInput").value = maxCount; //set maximum as start value (all groups selected)
+        let input = document.getElementById("countInput");
+        input.value = maxCount; //set maximum as start value (all groups selected)
+        changePrice(input);
         changeSpanColor();
     }
 
@@ -344,7 +382,8 @@
         let answerType = document.getElementById("AnswerTypeCB");
         let value = answerType.value;
         if (value > 4) {
-            $("#sumbitBtn").attr("disabled", true);
+            answersFilled = false;
+            updateButtonEnabled();
             $("#openAddAnswer").show();
         } else {
             $("#openAddAnswer").hide();
@@ -362,9 +401,9 @@
                 $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
             }
             answerBox.innerHTML =
-                '<div class="row mt-1 mb-1 mr-0 ml-0">' +
-                '        <div class="col-9 pr-0"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>' +
-                '        <div class="col-3 pl-0"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
+                '<div class="row mt-1 mb-2 mr-0 ml-0">' +
+                '        <div class="col-9 pr-0 pl-1"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>' +
+                '        <div class="col-3 pl-0 pr-1"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
                 '        <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions"></ul>' +
                 '</div >';
             if (answers.length > 0) {
@@ -387,7 +426,8 @@
                 '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" value="' + secondAnswer + '" class="form-control" />' +
                 '</div>';
             $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
-            $("#sumbitBtn").attr("disabled", false);
+            answersFilled = true;
+            updateButtonEnabled();
         } else {
             answerBox.innerHTML =
                 '<div class="m-2">' +
@@ -397,7 +437,8 @@
                 '    <input id="dichotomAnswer2" type="text" onchange="dichotomAnswerChanged()" name="TextAnswerOptions" class="form-control" />' +
                 '</div>';
             $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
-            $("#sumbitBtn").attr("disabled", true);
+            answersFilled = false;
+            updateButtonEnabled();
         }
     }
 
@@ -426,10 +467,12 @@
         secondAnswer = document.getElementById("dichotomAnswer2").value;
         if (firstAnswer !== "" && secondAnswer !== "") {
             $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
-            $("#sumbitBtn").attr("disabled", false);
+            answersFilled = true;
+            updateButtonEnabled();
         } else {
             $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
-            $("#sumbitBtn").attr("disabled", true);
+            answersFilled = false;
+            updateButtonEnabled();
         }
     }
 
@@ -449,32 +492,53 @@
 
         answers.push(input);
         let normal =
-        '<li class="list-group-item">' +
-            '   <span class="d-flex justify-content-between">' +
-            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
-            '       <span>' +
-            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+            '<li class="row mr-0 ml-0 mt-2">' +
+            '    <div class="col-9 pr-0 pl-1">' +
+            '        <input class="form-control rightNotRounded withoutBorder" name="Emails" readonly type="text" value="' + input + '" />' +
+            '    </div>' +
+            '    <div class="col-3 pl-0 pr-1">' +
+            '       <span class="row ml-0 mr-0">' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           </span>' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+            '           </span>' +
             '       </span>' +
-            '   </span>' +
+            '    </div>' +
             '</li>';
+
+
+        //answers.push(input);
+        //let normal =
+        //'<li class="list-group-item">' +
+        //    '   <span class="d-flex justify-content-between">' +
+        //    '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
+        //    '       <span>' +
+        //    '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+        //    '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+        //    '       </span>' +
+        //    '   </span>' +
+        //    '</li>';
         ul.innerHTML += normal;
 
         inputElem.value = "";
         $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
-        $("#sumbitBtn").attr("disabled", false);
+        answersFilled = true;
+        updateButtonEnabled();
     }
 
 
     function deleteAnswer(button) {
-        let text = button.parentElement.parentElement.children[0].value;
+        let text = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0].value;
+        console.log(text);
         for (i = 0; i < answers.length; i++) {
             if (answers[i] === text) {
                 answers.splice(i, 1);
                 break;
             }
         }
-        button.parentElement.parentElement.parentElement.remove();
+        button.parentElement.parentElement.parentElement.parentElement.remove();
         if (answers.length === 0) {
             $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
             $("#sumbitBtn").attr("disabled", true);
@@ -483,13 +547,26 @@
 
 
     function editAnswer(button) {
-        let text = button.parentElement.parentElement.children[0].value;
+        //let text = button.parentElement.parentElement.children[0].value;
+        //let edit =
+        //    '       <input type="text" class="" name="TextAnswerOptions" value="' + text + '" />' +
+        //    '       <span>' +
+        //    '           <button type="button" class="btn btn-success ml-2 pb-0" onclick="saveAnswer(this,false,\'' + text +'\')"><i class="material-icons">&#xe5ca;</i></button>' +
+        //    '           <button type="button" class="btn btn-secondary ml-2 pb-0" onclick="saveAnswer(this,true,\'' + text +'\')"><i class="material-icons">&#xe5cd;</i></button>' +
+        //    '       </span>';
+        //button.parentElement.parentElement.innerHTML = edit;
+
+
+        let inputElem = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0];
+        $(inputElem).removeClass("withoutBorder").removeAttr("readonly");
+        let text = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0].value;
         let edit =
-            '       <input type="text" class="" name="TextAnswerOptions" value="' + text + '" />' +
-            '       <span>' +
-            '           <button type="button" class="btn btn-success ml-2 pb-0" onclick="saveAnswer(this,false,\'' + text +'\')"><i class="material-icons">&#xe5ca;</i></button>' +
-            '           <button type="button" class="btn btn-secondary ml-2 pb-0" onclick="saveAnswer(this,true,\'' + text +'\')"><i class="material-icons">&#xe5cd;</i></button>' +
-            '       </span>';
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-success btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="saveAnswer(this,false,\'' + text +'\')"><i class="material-icons">&#xe5ca;</i></button>' +
+            '           </span>' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-secondary btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="saveAnswer(this,true,\'' + text +'\')"><i class="material-icons">&#xe5cd;</i></button>' +
+            '           </span>';
         button.parentElement.parentElement.innerHTML = edit;
     }
 
@@ -512,13 +589,28 @@
             }
         }
 
+        let inputElem = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0];
+        //let edited =
+        //    '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + text + '" />' +
+        //    '       <span>' +
+        //    '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+        //    '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+        //    '       </span>';
+        //tempText = "";
+        //button.parentElement.parentElement.innerHTML = edited;
+
         let edited =
-            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + text + '" />' +
-            '       <span>' +
-            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
-            '       </span>';
+            '<span class="col-6 p-0">' +
+            '   <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '</span>' +
+            '<span class="col-6 p-0">' +
+            '   <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+            '</span>';
         tempText = "";
+
+        //take away input border and make it readonly
+        $(inputElem).addClass("withoutBorder");
+        $(inputElem).prop('readonly', true);
         button.parentElement.parentElement.innerHTML = edited;
     }
 

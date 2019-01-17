@@ -1,23 +1,7 @@
 ﻿@using SimpleQ.Webinterface.Properties;
 @model List<SimpleQ.Webinterface.Models.ViewModels.SingleResultModel>
-@*@model SimpleQ.Webinterface.Models.ViewModels.SingleResultModel*@
-@*@{
 
-        Dictionary<string, int> votes = new Dictionary<string, int>(); //temporary in place of ajax all
-        votes.Add("ORF1", 12);
-        votes.Add("ORF2", 8);
-        votes.Add("ATV", 8);
-        votes.Add("Puls 4", 7);
-        votes.Add("Pro 7", 9);
-        votes.Add("RTL", 3);
-        votes.Add("RTL II", 2);
-        votes.Add("ORF3", 4);
-        votes.Add("DMAX", 10);
-        votes.Add("Super RTL", 0);
-        votes.Add("Nickelodeon", 6);
-        votes.Add("ZDF", 15);
-        votes.Add("ARD", 2);
-    }*@
+
 <div class="row mr-0 ml-0">
     <div class="col-1">
         <button type="button" id="previousSurveyButton" class="btn btn-light btn-block border" onclick="showPreviousSurvey()"> < </button>
@@ -32,21 +16,7 @@
     </div>
 </div>
 <div class="row mr-0 ml-0" id="singleChartOptions">
-    @*<div class="col-md-4">
-            <div class="form-group">
-                <label for="groups">Teilgenommene Gruppen</label>
-                <div class="border border-dark">
-                    <ul class="list-group groups-ul pl-2" id="groups">
-                        @for (var i = 0; i < Model.DepartmentNames.Count; i++)
-                        {
-                            <li>
-                                @Model.DepartmentNames[i]
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>*@   
+
     <div class="col-md-6">
         <div class="form-group">
             @{
@@ -121,7 +91,7 @@
     @{
         for(int i = 0; i < Model.Count; i++)
         {
-            @:dicts.push({ dict: [], date: "@Model[i].StartDate.ToShortDateString() - @Model[i].EndDate.ToShortDateString()" });
+            @:dicts.push({ dict: [], date: "@Model[i].StartDate.ToShortDateString() - @Model[i].EndDate.ToShortDateString()", svyText: "@Model[i].SvyText"});
             if(Model[i].Votes != null)
             {
                 @:freeText = false;
