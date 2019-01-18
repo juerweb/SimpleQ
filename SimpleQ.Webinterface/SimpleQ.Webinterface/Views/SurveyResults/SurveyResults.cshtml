@@ -700,6 +700,7 @@
     //   v
 
     function changeChartMulti(selector, chartCol, chart) {
+        document.getElementById("actualSvyText").innerHTML = multiSvyText;
 
         if ((document.getElementById(selector).value === "listing")) {
             if (chartCol === "zoomModalContent") {

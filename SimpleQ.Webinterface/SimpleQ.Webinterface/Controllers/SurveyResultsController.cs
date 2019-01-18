@@ -212,6 +212,8 @@ namespace SimpleQ.Webinterface.Controllers
                         logger.Debug("Creating empty multi result model.");
                         model = new MultiResultModel
                         {
+                            SvyText = "",
+
                             SurveyDates = new List<DateTime>(),
 
                             Votes = new List<KeyValuePair<string, List<int>>>()
@@ -220,8 +222,11 @@ namespace SimpleQ.Webinterface.Controllers
                     else
                     {
                         logger.Debug("Loading data for multi result model");
+                        List<string> svyTexts = await selectedSurveys.Select(s => s.SvyText).ToListAsync();
                         model = new MultiResultModel
                         {
+                            SvyText = svyTexts.First(),
+
                             SurveyDates = await selectedSurveys.Select(s => s.StartDate).ToListAsync(),
 
                             Votes = await SelectVotesFromSurveyGrouped(selectedSurveys, type.BaseId)
