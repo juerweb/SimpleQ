@@ -19,12 +19,12 @@ namespace SimpleQ.UWP
             var consoleTarget = new ConsoleTarget();
             config.AddTarget("console", consoleTarget);
 
-            var consoleRule = new LoggingRule("*", LogLevel.Trace, consoleTarget);
+            var consoleRule = new LoggingRule("*", LogLevel.Warn, consoleTarget);
             config.LoggingRules.Add(consoleRule);
 
             var fileTarget = new FileTarget();
             string folder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            fileTarget.FileName = Path.Combine(folder, "Log.txt");
+            fileTarget.FileName = Path.Combine(folder, "logfile.txt");
             config.AddTarget("file", fileTarget);
 
             var fileRule = new LoggingRule("*", LogLevel.Warn, fileTarget);

@@ -178,6 +178,7 @@ create table Survey
 	TypeId int not null references AnswerType,
 	Template bit not null default 0,
 	[Sent] bit not null default 0,
+	Period bigint null default null,
     foreign key (CatId, CustCode) references SurveyCategory,
 	check (StartDate < EndDate)
 );
@@ -227,7 +228,7 @@ create table Chooses
 go
 
 
--- DSGVO-spezifische Bestimmung
+-- Datenspezifische Bestimmung
 -- NICHT KUNDENSPEZIFISCH
 create table DataConstraint
 (
@@ -242,7 +243,8 @@ go
 create table FaqEntry
 (
     FaqTitle varchar(128) primary key,
-    FaqContent varchar(max) not null
+    FaqContent varchar(max) not null,
+    IsMobile bit not null
 );
 go
 
@@ -540,7 +542,8 @@ begin
 										 datediff(month, s.EndDate, getdate())
 										) >= c.DataStoragePeriod
 							   and Template = 0
-							   and [Sent] = 1;
+							   and [Sent] = 1
+							   and Period is null;
 	
 	open c;
 	fetch c into @svyId;
@@ -667,8 +670,10 @@ go
 begin transaction;
 insert into DataConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 
-insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.'); -- Nur Testwert
-insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque tú eres un culo muy grande.'); -- Nur Testwert
+insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.', 0); -- Nur Testwert
+insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque tú eres un culo muy grande.', 0); -- Nur Testwert
+insert into FaqEntry values ('Nothing', 'lasts forever, even cold november rain', 1); -- Nur Testwert
+insert into FaqEntry values ('So close', 'no matter how far', 1); -- Nur Testwert
 
 insert into PaymentMethod values (1, 'OnAccount');
 

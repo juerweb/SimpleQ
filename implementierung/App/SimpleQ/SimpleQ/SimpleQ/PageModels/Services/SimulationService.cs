@@ -57,19 +57,19 @@ namespace SimpleQ.PageModels.Services
             questions.Add(new SurveyModel(7, "Was ist Ihre Lieblingsfarbe?", "Polytomous UM Test", SurveyType.PolytomousUMQuestion, DateTime.Now.AddYears(2), answerTypes));
 
             answerTypes = new List<AnswerOption>();
-            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Gut", SvyId = 8 });
-            answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Mittel", SvyId = 8 });
-            answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Schlecht", SvyId = 8 });
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Gut", SvyId = 8, FirstPosition=true });
+            answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Mittel", SvyId = 8, FirstPosition = false });
+            answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Schlecht", SvyId = 8, FirstPosition=null });
 
             questions.Add(new SurveyModel(8, "Wie fühlen Sie sich?", "Likert Scale 3 Test", SurveyType.LikertScale3Question, DateTime.Now.AddYears(2), answerTypes));
 
             answerTypes = new List<AnswerOption>();
-            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Sehr Gut", SvyId = 9 });
-            answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Gut", SvyId = 9 });
-            answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Ausreichend", SvyId = 9 });
-            answerTypes.Add(new AnswerOption() { AnsId = 3, AnsText = "Schlecht", SvyId = 9 });
-            answerTypes.Add(new AnswerOption() { AnsId = 4, AnsText = "Sehr Schlecht", SvyId = 9 });
-            answerTypes.Add(new AnswerOption() { AnsId = 5, AnsText = "Sehr Sehr Schlecht", SvyId = 9 });
+            answerTypes.Add(new AnswerOption() { AnsId = 0, AnsText = "Sehr Gut", SvyId = 9, FirstPosition=true});
+            answerTypes.Add(new AnswerOption() { AnsId = 1, AnsText = "Gut", SvyId = 9, FirstPosition = false });
+            answerTypes.Add(new AnswerOption() { AnsId = 2, AnsText = "Ausreichend", SvyId = 9, FirstPosition = false });
+            answerTypes.Add(new AnswerOption() { AnsId = 3, AnsText = "Schlecht", SvyId = 9, FirstPosition = false });
+            answerTypes.Add(new AnswerOption() { AnsId = 4, AnsText = "Sehr Schlecht", SvyId = 9, FirstPosition = false });
+            answerTypes.Add(new AnswerOption() { AnsId = 5, AnsText = "Sehr Sehr Schlecht", SvyId = 9, FirstPosition = null });
 
             questions.Add(new SurveyModel(9, "Wie fühlen Sie sich?", "Likert Scale 6 Test", SurveyType.LikertScale6Question, DateTime.Now.AddYears(2), answerTypes));
         }

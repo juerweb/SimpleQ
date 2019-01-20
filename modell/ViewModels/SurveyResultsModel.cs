@@ -11,6 +11,7 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public List<Survey> Surveys { get; set; }
         public List<SurveyCategory> SurveyCategories { get; set; }
         public List<AnswerType> AnswerTypes { get; set; }
+        public List<string> SurveyTexts { get; set; }
         #endregion
 
         #region View to Controller

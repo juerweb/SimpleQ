@@ -1,0 +1,401 @@
+﻿Day;User;Project;Project Code;Client;Time Entry;Tags;Time;Issue Id;Link
+2018-03-30;Jürgen Weber;SimpleQ Diplomprojekt;;;"Besprechung mit AG: Vorstellung der Idee; Unklarheiten besprechen und klären";;2:00:00;;
+2018-06-20;Jürgen Weber;SimpleQ Diplomprojekt;;;"Besprechung mit Betreuer Mag. Reis: Überarbeitung Diplomantragsschrift; Überarbeitung der individuellen Themenstellungen";;0:50:00;;
+2018-07-07;Jürgen Weber;SimpleQ Diplomprojekt;;;"Besprechung Planung: Scrum Kennzahlen festgelegt; User Stories angelegt; Organisatorisches besprochen.";;2:00:00;;
+2018-07-07;Jürgen Weber;SimpleQ Diplomprojekt;;;Repository einrichten;"Priority: Medium;Type: Feature";1:30:00;#9;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/9"")"
+2018-07-07;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Sprint Planung;;2:30:00;;
+2018-07-09;Lukas Schendlinger;SimpleQ Diplomprojekt;;;MVC lernen;Type: Feature;6:20:00;;
+2018-07-10;Lukas Schendlinger;SimpleQ Diplomprojekt;;;MVC lernen;Type: Feature;1:50:00;;
+2018-07-11;Lukas Schendlinger;SimpleQ Diplomprojekt;;;MVC lernen;Type: Feature;0:24:00;;
+2018-07-14;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Designing webinterface mockup;;0:05:00;;
+2018-07-15;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Designing webinterface mockup;;0:14:00;;
+2018-07-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Datenmodel design;Type: Feature;2:50:00;;
+2018-07-16;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Designing webinterface mockup;;1:25:00;;
+2018-07-17;Jürgen Weber;SimpleQ Diplomprojekt;;;Repository angepasst: Ordnerstruktur geändert und Dateien verschoben.;;0:30:00;;
+2018-07-17;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Datenmodel design;Type: Feature;3:00:00;;
+2018-07-17;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Designing webinterface mockup;;1:54:00;;
+2018-07-19;Nico Srnka;SimpleQ Diplomprojekt;;;bpmn;BPMN;1:00:00;;
+2018-07-25;Jürgen Weber;SimpleQ Diplomprojekt;;;Mockup: Erstellung;;0:51:00;;
+2018-07-25;Jürgen Weber;SimpleQ Diplomprojekt;;;Mockup: Ideen für das Mockup für die App gesammelt und skizziert;;0:15:00;;
+2018-07-25;Jürgen Weber;SimpleQ Diplomprojekt;;;"Repository angepasst: Issues verschoben; Organisatorische Angelegenheiten";;0:15:00;;
+2018-07-26;Jürgen Weber;SimpleQ Diplomprojekt;;;"Mockup: Bearbeitung; Organisatorisches: Glossar erweitern";;2:45:00;;
+2018-07-27;Jürgen Weber;SimpleQ Diplomprojekt;;;Xamarin: Lernen und Ausprobieren;;1:00:00;;
+2018-07-28;Jürgen Weber;SimpleQ Diplomprojekt;;;Review & Retrospective & Planning Meeting;;0:40:00;;
+2018-07-28;Jürgen Weber;SimpleQ Diplomprojekt;;;"Organisatorisches: Pull Request durchgeführt; Ordnerstrukturen angepasst; Wiki bearbeitet";;0:18:00;;
+2018-07-28;Nico Srnka;SimpleQ Diplomprojekt;;;bpmn;BPMN;2:00:00;;
+2018-07-30;Jürgen Weber;SimpleQ Diplomprojekt;;;Überarbeitung des Mockups für die App;"Time: S;Type: Bug";0:17:00;#24;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/24"")"
+2018-07-31;Jürgen Weber;SimpleQ Diplomprojekt;;;Einarbeitung: Xamarin.Forms;"Time: S;Type: Feature";4:13:00;#25;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/25"")"
+2018-08-01;Jürgen Weber;SimpleQ Diplomprojekt;;;Grundgerüst der App aufbauen;"Time: S;Type: Feature";2:58:00;#20;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/20"")"
+2018-08-02;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Besprechung Andi;Besprechung;0:30:00;;
+2018-08-03;Jürgen Weber;SimpleQ Diplomprojekt;;;Grundgerüst der App aufbauen;"Time: S;Type: Feature";3:48:00;#20;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/20"")"
+2018-08-03;Jürgen Weber;SimpleQ Diplomprojekt;;;Anmeldebildschirm implementieren;"Time: M;Type: Feature";1:19:00;#21;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/21"")"
+2018-08-06;Jürgen Weber;SimpleQ Diplomprojekt;;;Anmeldebildschirm implementieren;"Time: M;Type: Feature";6:06:00;#21;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/21"")"
+2018-08-07;Jürgen Weber;SimpleQ Diplomprojekt;;;Anmeldebildschirm implementieren;"Time: M;Type: Feature";3:49:00;#21;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/21"")"
+2018-08-08;Jürgen Weber;SimpleQ Diplomprojekt;;;Anmeldebildschirm implementieren;"Time: M;Type: Feature";1:49:00;#21;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/21"")"
+2018-08-08;Jürgen Weber;SimpleQ Diplomprojekt;;;Automatisches Überspringen der RegistrierungsPage;"Time: M;Type: Feature";1:18:00;#27;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/27"")"
+2018-08-08;Jürgen Weber;SimpleQ Diplomprojekt;;;Die Grundstrukturen für Tests für die App hinzugefügt. Tests für den SimulationService geschrieben.;;0:15:00;;
+2018-08-09;Jürgen Weber;SimpleQ Diplomprojekt;;;Master Detail Navigation Implementierung;"Time: S;Type: Feature";3:23:00;#28;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/28"")"
+2018-08-10;Jürgen Weber;SimpleQ Diplomprojekt;;;Master Detail Navigation Implementierung;"Time: S;Type: Feature";3:51:00;#28;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/28"")"
+2018-08-13;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der Einstellungsseite;"Time: S;Type: Feature";4:56:00;#30;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/30"")"
+2018-08-13;Jürgen Weber;SimpleQ Diplomprojekt;;;Master Detail Navigation Implementierung;"Time: S;Type: Feature";1:27:00;#28;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/28"")"
+2018-08-15;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der Einstellungsseite;"Time: S;Type: Feature";2:24:00;#30;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/30"")"
+2018-08-15;Jürgen Weber;SimpleQ Diplomprojekt;;;Falsche Sprachendatei wird verwendet;"Time: M;Type: Bug";2:06:00;#32;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/32"")"
+2018-08-15;Nico Srnka;SimpleQ Diplomprojekt;;;bpmn;BPMN;1:00:00;;
+2018-08-16;Jürgen Weber;SimpleQ Diplomprojekt;;;Erstellung einer Hilfesseite in der App;"Time: M;Type: Feature";1:43:00;#33;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/33"")"
+2018-08-16;Jürgen Weber;SimpleQ Diplomprojekt;;;Falsche Sprachendatei wird verwendet;"Time: M;Type: Bug";0:46:00;#32;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/32"")"
+2018-08-17;Jürgen Weber;SimpleQ Diplomprojekt;;;Erstellung einer Hilfesseite in der App;"Time: M;Type: Feature";2:20:00;#33;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/33"")"
+2018-08-17;Jürgen Weber;SimpleQ Diplomprojekt;;;Falsche Darstellung des Accordion unter Android;"Time: M;Type: Bug";1:50:00;#34;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/34"")"
+2018-08-19;Jürgen Weber;SimpleQ Diplomprojekt;;;Besprechung Intern: Erklärung und Einführung in ein Versionierungssystem;"Besprechung;Versionierungssystem";0:36:00;;
+2018-08-20;Jürgen Weber;SimpleQ Diplomprojekt;;;Erstellung der CQPS;"Time: M;Type: Feature";4:11:00;#36;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/36"")"
+2018-08-20;Jürgen Weber;SimpleQ Diplomprojekt;;;Falsche Darstellung des Accordion unter Android;"Time: M;Type: Bug";0:19:00;#34;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/34"")"
+2018-08-21;Jürgen Weber;SimpleQ Diplomprojekt;;;Erstellung der CQPS;"Time: M;Type: Feature";3:59:00;#36;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/36"")"
+2018-08-21;Jürgen Weber;SimpleQ Diplomprojekt;;;Behavior Bug auf der OWQPage;"Time: M;Type: Bug";1:14:00;#38;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/38"")"
+2018-08-21;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Model in DB erstellen; API Methoden im Code definieren";Type: Feature;3:49:00;;
+2018-08-22;Jürgen Weber;SimpleQ Diplomprojekt;;;Erstellung einer Datencaches in der App;"Time: M;Type: Feature";2:07:00;#42;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/42"")"
+2018-08-22;Jürgen Weber;SimpleQ Diplomprojekt;;;Erstellung der CQPS;"Time: M;Type: Feature";1:17:00;#36;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/36"")"
+2018-08-22;Jürgen Weber;SimpleQ Diplomprojekt;;;Interaktivität der CQPS implementieren;"Time: S;Type: Feature";1:05:00;#45;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/45"")"
+2018-08-22;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;5:00:00;;
+2018-08-22;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:41:00;;
+2018-08-23;Jürgen Weber;SimpleQ Diplomprojekt;;;Erstellung einer Datencaches in der App;"Time: M;Type: Feature";2:36:00;#42;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/42"")"
+2018-08-23;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Login und Registration für Mobil-App implementieren und Testprogramm für Mobil-Funktionen erstellen + Login-Test implementieren;Type: Feature;2:09:00;;
+2018-08-23;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Model anpassen/korrigieren;Type: Feature;1:23:00;;
+2018-08-23;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:51:00;;
+2018-08-25;Jürgen Weber;SimpleQ Diplomprojekt;;;"Besprechung Intern: Abklärung mit Backend von Server; Weiteres Vorgehen";Besprechung;0:52:00;;
+2018-08-25;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Login und Registration implementieren bzw. anpassen und testen;;2:44:00;;
+2018-08-25;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Umfragebeantwortung implementieren und testen;;2:07:00;;
+2018-08-25;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Sprint Planung für Sprint 3;;1:45:00;;
+2018-08-25;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Datenmodel anpassen + sp für alte Umfragen löschen;;0:41:00;;
+2018-08-25;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Sprint planung (sprint 3);Besprechung;1:36:00;;
+2018-08-26;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Razor Syntax erlernen;;0:40:00;;
+2018-08-27;Jürgen Weber;SimpleQ Diplomprojekt;;;Erstellung einer Datencaches in der App;"Time: M;Type: Feature";7:29:00;#42;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/42"")"
+2018-08-28;Jürgen Weber;SimpleQ Diplomprojekt;;;Erstellung einer Datencaches in der App;"Time: M;Type: Feature";5:05:00;#42;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/42"")"
+2018-08-28;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:31:00;;
+2018-08-28;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Razor Syntax erlernen;;0:58:00;;
+2018-08-29;Jürgen Weber;SimpleQ Diplomprojekt;;;Einarbeitung: Benachrichtungen in Xamarin.Forms;"Time: M;Type: Feature";2:54:00;#22;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/22"")"
+2018-08-29;Lukas Schendlinger;SimpleQ Diplomprojekt;;;SurveyCreationController implementieren + Model update;;1:46:00;;
+2018-08-29;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Hub-Methoden testen und ggf. Fehler korrigieren;;1:21:00;;
+2018-08-29;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:06:00;;
+2018-08-30;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der Benachrichtigungen;"Time: L;Type: Feature";1:42:00;#23;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/23"")"
+2018-08-30;Jürgen Weber;SimpleQ Diplomprojekt;;;Einarbeitung: Benachrichtungen in Xamarin.Forms;"Time: M;Type: Feature";0:49:00;#22;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/22"")"
+2018-08-30;Lukas Schendlinger;SimpleQ Diplomprojekt;;;SurveyCreationController testen;;1:32:00;;
+2018-08-30;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:35:00;;
+2018-08-31;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der Benachrichtigungen;"Time: L;Type: Feature";2:39:00;#23;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/23"")"
+2018-09-01;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Organisatorisches;;0:20:00;;
+2018-09-02;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Organisatorisches;;0:30:00;;
+2018-09-03;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der Benachrichtigungen;"Time: L;Type: Feature";3:09:00;#23;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/23"")"
+2018-09-03;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Globalization erlernen;Time: M;1:57:00;;
+2018-09-04;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der Benachrichtigungen;"Time: L;Type: Feature";2:16:00;#23;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/23"")"
+2018-09-04;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;5:00:00;;
+2018-09-04;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:15:00;;
+2018-09-06;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:31:00;;
+2018-09-07;Jürgen Weber;SimpleQ Diplomprojekt;;;Besprechung Intern: Sprintende #3;"Besprechung;Besprechung Intern;Sprint";0:55:00;;
+2018-09-07;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Sprint Planung;;0:45:00;;
+2018-09-07;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:27:00;;
+2018-09-09;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der Benachrichtigungen;"Time: L;Type: Feature";4:03:00;#23;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/23"")"
+2018-09-09;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:10:00;;
+2018-09-10;Jürgen Weber;SimpleQ Diplomprojekt;;;Abmelden Funktion in der App implementieren;"Time: S;Type: Feature";0:44:00;#73;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/73"")"
+2018-09-10;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Model und SurveyCreationController an festgelegte Änderungen anpassen;;3:28:00;;
+2018-09-10;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:24:00;;
+2018-09-11;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Migration SignalR auf WebApi;;4:56:00;;
+2018-09-11;Lukas Schendlinger;SimpleQ Diplomprojekt;;;ViewModels erstellen und abstimmen von Anforderungen zwischen Back- und Frontend;;1:38:00;;
+2018-09-11;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;3:01:00;;
+2018-09-11;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;5:13:00;;
+2018-09-12;Jürgen Weber;SimpleQ Diplomprojekt;;;Änderung der Länge des Registrierungscode in der App;"Time: S;Type: Feature";0:26:00;#75;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/75"")"
+2018-09-12;Lukas Schendlinger;SimpleQ Diplomprojekt;;;SurveyResultsController - SingleResult-Action erstellen und testen;;2:14:00;;
+2018-09-12;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Definition Antworttypen/Antwortmöglichkeiten;;0:37:00;;
+2018-09-12;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:09:00;;
+2018-09-13;Lukas Schendlinger;SimpleQ Diplomprojekt;;;DA Antrag schreiben/korrigieren;;0:30:00;;
+2018-09-13;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Befragungsarten mit Auftraggeber abklären;;0:21:00;;
+2018-09-13;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:55:00;;
+2018-09-14;Jürgen Weber;SimpleQ Diplomprojekt;;;Einstellungsseite ergänzen;"Time: S;Type: Feature";1:53:00;#81;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/81"")"
+2018-09-14;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der Benachrichtigungen;"Time: L;Type: Feature";1:27:00;#23;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/23"")"
+2018-09-14;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Refactoring Weninterface Code;Type: Feature;0:20:00;;
+2018-09-15;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der API-Abfragen durch einen Simulationsdienst;"Time: M;Type: Feature";1:45:00;#76;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/76"")"
+2018-09-15;Jürgen Weber;SimpleQ Diplomprojekt;;;Einstellungsseite ergänzen;"Time: S;Type: Feature";0:51:00;#81;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/81"")"
+2018-09-15;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Model aufgrund der festgelegten Befragungsarten redesignen;;6:07:00;;
+2018-09-15;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Antrag ausbessern;;0:31:00;;
+2018-09-15;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;2:00:00;;
+2018-09-15;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:23:00;;
+2018-09-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Controller bzgl. geändertem Model anpassen;;2:51:00;;
+2018-09-16;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:31:00;;
+2018-09-16;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Organisatorisches;;0:20:00;;
+2018-09-17;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:57:00;;
+2018-09-18;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der API-Abfragen durch einen Simulationsdienst;"Time: M;Type: Feature";1:45:00;#76;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/76"")"
+2018-09-18;Jürgen Weber;SimpleQ Diplomprojekt;;;Besprechung bzgl. Antragformular;Besprechung;0:56:00;;
+2018-09-18;Lukas Schendlinger;SimpleQ Diplomprojekt;;;MobileController testen;;1:16:00;;
+2018-09-18;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;3:21:00;;
+2018-09-18;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;3:20:00;;
+2018-09-19;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Erstellung einer API-Methode zum Abruf der Umfragedaten; Erstellung und Implementierung von Testprogrammen";;3:18:00;;
+2018-09-19;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Testen bisheriger Controller-Methoden;;1:27:00;;
+2018-09-19;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Inkorrektes Einfügen in Beziehungstabelle beheben.;Type: Bug;0:59:00;;
+2018-09-19;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:44:00;;
+2018-09-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;WebAPI dokumentieren;;0:33:00;;
+2018-09-20;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:04:00;;
+2018-09-22;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Model update (PricePerClick-Spalte in Customer); MultiResultsView und -Controller erstellen und testen";;3:20:00;;
+2018-09-22;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;0:36:00;;
+2018-09-23;Lukas Schendlinger;SimpleQ Diplomprojekt;;;WebAPI Client Authentication und HTTPS einrichten;;2:31:00;;
+2018-09-23;Lukas Schendlinger;SimpleQ Diplomprojekt;;;SurveyCreationModel und -Controller: TextAnswerOptions integrieren;;1:11:00;;
+2018-09-23;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Dokumentation für WebAPI; ViewModels und Datenmodell aktualisieren";;0:22:00;;
+2018-09-23;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:17:00;;
+2018-09-24;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:24:00;;
+2018-09-25;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der API-Abfragen durch einen Simulationsdienst;"Time: M;Type: Feature";2:21:00;#76;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/76"")"
+2018-09-25;Lukas Schendlinger;SimpleQ Diplomprojekt;;;MultiResultModel redesign;;1:38:00;;
+2018-09-25;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Aktualisiertes Model testen;;1:15:00;;
+2018-09-25;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;3:07:00;;
+2018-09-25;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;4:50:00;;
+2018-09-27;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:11:00;;
+2018-09-28;Jürgen Weber;SimpleQ Diplomprojekt;;;Besprechung Intern: Sprintende #4;"Besprechung;Besprechung Intern";0:37:00;;
+2018-09-28;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:07:00;;
+2018-09-28;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Organisatorisches;;0:39:00;;
+2018-09-29;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Mergen und 1und1 Server einrichten;;3:53:00;;
+2018-09-29;Nico Srnka;SimpleQ Diplomprojekt;;;User Storys;;1:13:00;;
+2018-09-29;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:25:00;;
+2018-09-30;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der API-Abfragen durch einen Simulationsdienst;"Time: M;Type: Feature;US: 21";0:59:00;#76;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/76"")"
+2018-09-30;Jürgen Weber;SimpleQ Diplomprojekt;;;Problem mit den Benachrichtigungen;"Time: L;Type: Bug;US: 3";0:26:00;#80;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/80"")"
+2018-09-30;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:04:00;;
+2018-10-01;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:37:00;;
+2018-10-02;Jürgen Weber;SimpleQ Diplomprojekt;;;Neue Fragearten in der App erstellen;"Time: M;Type: Feature;US: 21";1:29:00;#77;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/77"")"
+2018-10-02;Jürgen Weber;SimpleQ Diplomprojekt;;;Dimplomschrift: Infrastruktur einrichten und einen ersten Testbuild durchführen;"Diplomschrift;Einrichtung";1:20:00;;
+2018-10-02;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Nico bei Einrichtung d. Webinterfaceprojekt helfen;;2:00:00;;
+2018-10-02;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;3:52:00;;
+2018-10-04;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:31:00;;
+2018-10-05;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Razor Syntax erlernen;;1:05:00;;
+2018-10-06;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"SurveyCreationModel und -Controller: DateTime auftrennen; Template-Surveys integrieren (auch in DB)";;0:54:00;;
+2018-10-06;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Controller dokumentieren;;0:46:00;;
+2018-10-06;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Model dokumentieren;;0:36:00;;
+2018-10-06;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;3:00:00;;
+2018-10-07;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;0:44:00;;
+2018-10-08;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:59:00;;
+2018-10-09;Jürgen Weber;SimpleQ Diplomprojekt;;;Neue Fragearten in der App erstellen;"Time: M;Type: Feature;US: 21";2:51:00;#77;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/77"")"
+2018-10-09;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Mergen und Abstimmen zw. Back- und Front-End;;1:25:00;;
+2018-10-09;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Besprechung mit Projektbetreuer Prof. Reis;;0:50:00;;
+2018-10-09;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Merging; WebAPI-Dokumentation vervollständigen";;0:50:00;;
+2018-10-09;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;3:44:00;;
+2018-10-09;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;5:25:00;;
+2018-10-10;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Besprechungsprotokoll;;0:19:00;;
+2018-10-10;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Organisatorisches;;0:27:00;;
+2018-10-12;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;3:45:00;;
+2018-10-12;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:31:00;;
+2018-10-13;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Besprechung Andi;Besprechung;2:00:00;;
+2018-10-13;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:10:00;;
+2018-10-16;Jürgen Weber;SimpleQ Diplomprojekt;;;Neue Fragearten in der App erstellen;"Time: M;Type: Feature;US: 21";3:47:00;#77;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/77"")"
+2018-10-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Model anpassen bzgl m:n zw. Department und Person;;2:39:00;;
+2018-10-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Abstimmen und WebServer-Config;;1:50:00;;
+2018-10-16;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;4:28:00;;
+2018-10-16;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;3:55:00;;
+2018-10-18;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:36:00;;
+2018-10-19;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Konkurrenzanalyse;Diplomschrift;0:15:00;;
+2018-10-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Effizienteres Warten auf Umfrageaussendung realisieren;;2:01:00;;
+2018-10-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;WebAPI-Methoden Join und Leave für Gruppe;;1:14:00;;
+2018-10-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Aktualisiertes Model testen;;1:05:00;;
+2018-10-23;Jürgen Weber;SimpleQ Diplomprojekt;;;Neue Fragearten in der App erstellen;"Time: M;Type: Feature;US: 21";1:30:00;#77;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/77"")"
+2018-10-23;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Projekt deployen; OneSignal einrichten";;1:35:00;;
+2018-10-23;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Webserver einrichten;;0:22:00;;
+2018-10-23;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;5:45:00;;
+2018-10-23;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Organisatorisches;;6:27:00;;
+2018-10-23;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:34:00;;
+2018-10-25;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:02:00;;
+2018-10-26;Nico Srnka;SimpleQ Diplomschrift;;;vertriebshomepage;;3:06:00;;
+2018-10-26;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;2:29:00;;
+2018-10-28;Jürgen Weber;SimpleQ Diplomprojekt;;;Neue Fragearten in der App erstellen;"Time: M;Type: Feature;US: 21";2:11:00;#77;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/77"")"
+2018-10-28;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;3:02:00;;
+2018-10-28;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Schreiben;Diplomschrift;2:03:00;;
+2018-10-29;Jürgen Weber;SimpleQ Diplomprojekt;;;Anzeigefehler auf der RegisterPage;"Time: S;Type: Bug;US: 2";1:12:00;#103;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/103"")"
+2018-10-29;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der tatsächlichen API in der App;"Time: S;Type: Feature;US: 2";0:48:00;#108;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/108"")"
+2018-10-29;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:46:00;;
+2018-10-29;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Schreiben;Diplomschrift;0:41:00;;
+2018-10-30;Jürgen Weber;SimpleQ Diplomschrift;;;Entwicklungsmöglichkeiten für Mobile Apps.;;2:14:00;;
+2018-10-30;Nico Srnka;SimpleQ Diplomschrift;;;Diplomschrift;;1:29:00;;
+2018-10-30;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Schreiben;Diplomschrift;0:23:00;;
+2018-10-31;Nico Srnka;SimpleQ Diplomschrift;;;Diplomschrift;;1:34:00;;
+2018-11-01;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der tatsächlichen API in der App;"Time: S;Type: Feature;US: 2";2:43:00;#108;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/108"")"
+2018-11-01;Nico Srnka;SimpleQ Diplomschrift;;;Diplomschrift;;1:06:00;;
+2018-11-03;Lukas Schendlinger;SimpleQ Diplomprojekt;;;GroupAdministration und Survey-Cancelling implementieren;;0:50:00;;
+2018-11-04;Nico Srnka;SimpleQ Diplomprojekt;;;User Storys;;2:05:00;;
+2018-11-04;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;1:57:00;;
+2018-11-04;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:08:00;;
+2018-11-05;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der tatsächlichen API in der App;"Time: S;Type: Feature;US: 2";0:38:00;#108;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/108"")"
+2018-11-05;Nico Srnka;SimpleQ Diplomprojekt;;;User Storys;;1:43:00;;
+2018-11-05;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:11:00;;
+2018-11-06;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der tatsächlichen API in der App;"Time: S;Type: Feature;US: 2";1:35:00;#108;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/108"")"
+2018-11-06;Jürgen Weber;SimpleQ Diplomprojekt;;;Änderung der RegisterPage in der App;"Time: S;Type: Feature;US: 2";1:10:00;#115;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/115"")"
+2018-11-06;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Datenbedarf von Config/Support mit Frontend abstimmen; Erstellen von Config-ViewModel; Besprechung mit Betreuer Prof. Reis";;1:50:00;;
+2018-11-06;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Projekt korrekt deployen; Helfen bei Fehlerbeseitigung bei Nico";;1:45:00;;
+2018-11-06;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Besprechungsprotokolle vervollständigen; Kruki bei Fehlerbeseitigung helfen";;0:37:00;;
+2018-11-06;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;10:33:00;;
+2018-11-06;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;4:41:00;;
+2018-11-07;Jürgen Weber;SimpleQ Diplomprojekt;;;Implementierung der tatsächlichen API in der App;"Time: S;Type: Feature;US: 2";1:35:00;#108;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/108"")"
+2018-11-07;Jürgen Weber;SimpleQ Diplomprojekt;;;Bedienkomfort der App erhöhen;"Time: S;Type: Feature;US: 21";1:26:00;#117;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/117"")"
+2018-11-07;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Settings Controller und ViewModel implementieren;;1:41:00;;
+2018-11-07;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:46:00;;
+2018-11-08;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Organisatorisches;;1:27:00;;
+2018-11-10;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Support-Controller und -ViewModel implementieren;;1:05:00;;
+2018-11-10;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Gruppenverwaltungs-/Settings-/Support-Controller testen;;0:52:00;;
+2018-11-10;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Support-Controller und -ViewModel dokumentieren;;0:20:00;;
+2018-11-13;Jürgen Weber;SimpleQ Diplomprojekt;;;Bedienkomfort der App erhöhen;"Time: S;Type: Feature;US: 21";1:34:00;#117;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/117"")"
+2018-11-13;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Settings-Controller anpassen;;0:47:00;;
+2018-11-13;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Bugfix: SurveyCreation/LoadTemplate-Exception;;0:44:00;;
+2018-11-13;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;6:40:00;;
+2018-11-13;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:39:00;;
+2018-11-14;Jürgen Weber;SimpleQ Diplomprojekt;;;Laden des Caches verbessern;"Time: S;Type: Feature;US: 3";1:16:00;#123;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/123"")"
+2018-11-14;Jürgen Weber;SimpleQ Diplomprojekt;;;Änderung der RegisterPage in der App;"Time: S;Type: Feature;US: 2";0:14:00;#115;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/115"")"
+2018-11-14;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:43:00;;
+2018-11-15;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;2:05:00;;
+2018-11-15;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:57:00;;
+2018-11-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Alle Actions Exception-Safe machen;;1:39:00;;
+2018-11-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Bugfix: Model anpassen da AnswerTypes für jeden Customer seperat (de-)aktiviert werden müssen;;0:59:00;;
+2018-11-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;LoadTemplate-Bug beheben;;0:49:00;;
+2018-11-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;SurveyCategories deaktivierbar machen + trigger für löschen;;0:37:00;;
+2018-11-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Settings-Controller lt. besprochenen Anforderungen anpassen;;0:16:00;;
+2018-11-16;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:01:00;;
+2018-11-17;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Alle Actions Exception-Safe machen;;4:33:00;;
+2018-11-17;Lukas Schendlinger;SimpleQ Diplomprojekt;;;sp_CheckExceededSurveyData() jeden Tag um 03:00 aufrufen lassen (Scheduler);;0:08:00;;
+2018-11-18;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Alle Actions testen;;4:24:00;;
+2018-11-18;Lukas Schendlinger;SimpleQ Diplomprojekt;;;sp_CreateBills zur Rechnungserstellung erstellen + tr_ChoosesIns um CostBalance-Aufbuchung erweitern;;1:31:00;;
+2018-11-18;Lukas Schendlinger;SimpleQ Diplomprojekt;;;trigger für einfügen/update von votes;;0:29:00;;
+2018-11-18;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:41:00;;
+2018-11-18;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Schreiben;Diplomschrift;0:50:00;;
+2018-11-18;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Managing Paypal;;0:09:00;;
+2018-11-19;Jürgen Weber;SimpleQ Diplomprojekt;;;Bedienkomfort der App erhöhen;"Time: S;Type: Feature;US: 2";1:09:00;#126;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/126"")"
+2018-11-19;Jürgen Weber;SimpleQ Diplomprojekt;;;Automatisches Entfernen von Fragen nach dem Abmelden;"Time: S;Type: Feature;US: 2";0:25:00;#128;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/128"")"
+2018-11-20;Jürgen Weber;SimpleQ Diplomprojekt;;;Anzeigen von mehreren gleichzeitig empfangenen Benachrichtigungen;"Time: M;Type: Feature;US: 3";1:03:00;#130;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/130"")"
+2018-11-20;Jürgen Weber;SimpleQ Diplomprojekt;;;Cancel Surveys;"Time: L;Type: Feature;US: 11";0:32:00;#106;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/106"")"
+2018-11-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"PartialViews auf ""normale"" Views umbauen (jeder Tab wird einzeln geladen); Besprechung mit Prof. Reis";;2:10:00;;
+2018-11-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Nico bei Aufruf der Actions helfen;;1:42:00;;
+2018-11-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Heutige Änderungen im Wiki dokumentieren;;0:32:00;;
+2018-11-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Besprechungsprotokoll schreiben;;0:31:00;;
+2018-11-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Bugfix: Duplicate-Key in Umfrageauswertung (AnswerOption-Name); Return von neuer ID bei Gruppen- und Kategorienerstellung";;0:23:00;;
+2018-11-20;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;5:00:00;;
+2018-11-20;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;4:33:00;;
+2018-11-21;Jürgen Weber;SimpleQ Diplomprojekt;;;Cancel Surveys;"Time: L;Type: Feature;US: 11";0:30:00;#106;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/106"")"
+2018-11-21;Jürgen Weber;SimpleQ Diplomprojekt;;;Änderung der RegisterPage in der App;"Time: S;Type: Feature;US: 2";0:13:00;#115;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/115"")"
+2018-11-21;Jürgen Weber;SimpleQ Diplomprojekt;;;Ladescreen anzeigen solange Daten über Frage abgefragt werden;"Time: S;Type: Feature;US: 3";0:12:00;#139;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/139"")"
+2018-11-21;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"OneSignal-API aufrufen und testen; GroupAdministration Invitations + QR-Code verschicken";;3:07:00;;
+2018-11-21;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Settings-Controller anpassen;;0:49:00;;
+2018-11-21;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"SurveyCreation LikertSkala abstufungen einfügen; AnswerOptions prüfen";;0:35:00;;
+2018-11-21;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;3:30:00;;
+2018-11-21;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;3:10:00;;
+2018-11-21;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Mathematische Preisfunktion aufstellen;;0:55:00;;
+2018-11-21;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Besprechung Andi;Besprechung;0:43:00;;
+2018-11-22;Jürgen Weber;SimpleQ Diplomprojekt;;;App stürzt nach Einlesen des Barcodes ab;"Time: S;Type: Bug;US: 2";0:50:00;#145;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/145"")"
+2018-11-22;Jürgen Weber;SimpleQ Diplomprojekt;;;Cancel Surveys;"Time: L;Type: Feature;US: 11";0:43:00;#106;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/106"")"
+2018-11-22;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Mathematische Preisfunktion aufstellen;;0:39:00;;
+2018-11-24;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Webinterface-Login implementieren;;3:29:00;;
+2018-11-24;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Price-Per-Click-Function implementieren; periodische Rechnungserstellung und -aussendung realisieren";;3:05:00;;
+2018-11-25;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Registration implementieren;;2:27:00;;
+2018-11-25;Lukas Schendlinger;SimpleQ Diplomprojekt;;;ValidationMessages für Views einbauen;;1:04:00;;
+2018-11-25;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;1:16:00;;
+2018-11-26;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:11:00;;
+2018-11-27;Jürgen Weber;SimpleQ Diplomprojekt;;;Versuche mit Toast Notifications durchführen;"Time: S;Type: Feature;US: 21";2:00:00;#147;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/147"")"
+2018-11-27;Jürgen Weber;SimpleQ Diplomprojekt;;;Ladescreen anzeigen solange Daten über Frage abgefragt werden;"Time: S;Type: Feature;US: 3";0:54:00;#139;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/139"")"
+2018-11-27;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;5:30:00;;
+2018-11-28;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:33:00;;
+2018-11-29;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Login und Registration für Kunden implementieren;;0:42:00;;
+2018-11-29;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:30:00;;
+2018-11-30;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Login und Registration für Kunden implementieren;;4:05:00;;
+2018-12-01;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Webinterface-Login testen; WebApi-Authorization implementieren";;3:33:00;;
+2018-12-01;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:18:00;;
+2018-12-02;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Webserver einrichten;;3:30:00;;
+2018-12-02;Lukas Schendlinger;SimpleQ Diplomprojekt;;;WebAPI-Authorization einrichten;;2:52:00;;
+2018-12-02;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;3:59:00;;
+2018-12-03;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:40:00;;
+2018-12-04;Jürgen Weber;SimpleQ Diplomprojekt;;;Problem beim Ändern der Sprache beheben;"Time: M;Type: Bug;US: 23";2:07:00;#148;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/148"")"
+2018-12-04;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Besprechung mit Team;;1:50:00;;
+2018-12-04;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"Bugfixes; Authorization mit Mobile; kurze Besprechung mit Prof. Reis";;1:40:00;;
+2018-12-04;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;4:00:00;;
+2018-12-04;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;5:11:00;;
+2018-12-05;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:16:00;;
+2018-12-06;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"LoadTypesByCategory; RegCode bei CategoryCreation returnen; Bugfixes";;1:44:00;;
+2018-12-06;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Speziellen Preis für bestimmte Kunden ermöglichen;;0:42:00;;
+2018-12-06;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:51:00;;
+2018-12-07;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Logging einbauen;;2:53:00;;
+2018-12-08;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Rechnungserstellung und -versendung abschließen;;4:50:00;;
+2018-12-08;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;1:16:00;;
+2018-12-09;Jürgen Weber;SimpleQ Diplomprojekt;;;Problem beim Ändern der Sprache beheben;"Time: M;Type: Bug;US: 23";2:10:00;#148;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/148"")"
+2018-12-09;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"SurveyCreationController::LoadSurveyDates(int;int) erstellen";;0:29:00;;
+2018-12-09;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;4:00:00;;
+2018-12-09;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;2:22:00;;
+2018-12-10;Jürgen Weber;SimpleQ Diplomprojekt;;;Problem mit dem Ausklappen des Accordion auf der FAQPage;"Time: S;Type: Bug;US: 22";0:13:00;#102;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/102"")"
+2018-12-10;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;1:00:00;;
+2018-12-11;Jürgen Weber;SimpleQ Diplomprojekt;;;FAQs für die App;"Time: M;Type: Feature;US: 22";1:47:00;#154;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/154"")"
+2018-12-11;Jürgen Weber;SimpleQ Diplomprojekt;;;Realisierung eines Loggers in der App;"Time: M;Type: Feature;US: 2";1:09:00;#158;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/158"")"
+2018-12-11;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"FaqEntries-Mobile; Logging";;2:33:00;;
+2018-12-11;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Logging;;1:44:00;;
+2018-12-11;Nico Srnka;SimpleQ Diplomprojekt;;;webinterface;;4:00:00;;
+2018-12-11;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;5:03:00;;
+2018-12-11;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Logo bearbeiten;Type: Feature;0:18:00;;
+2018-12-12;Jürgen Weber;SimpleQ Diplomprojekt;;;Realisierung eines Loggers in der App;"Time: M;Type: Feature;US: 2";2:00:00;#158;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/158"")"
+2018-12-12;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Implementing basic webinterface design;Type: Feature;0:22:00;;
+2018-12-14;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Mit nico mergen ENDLICH;;0:14:00;;
+2018-12-15;Lukas Schendlinger;SimpleQ Diplomprojekt;;;"bugfixes; merging; publishing";;2:41:00;;
+2018-12-16;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Bugfixing;;3:32:00;;
+2018-12-17;Jürgen Weber;SimpleQ Diplomprojekt;;;Testen des Prototyps;"Time: S;Type: Maintenance;US: 18";1:22:00;#161;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/161"")"
+2018-12-17;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Bugfixing - survey senden: Proxy im web.config einstellen;;3:15:00;;
+2018-12-18;Jürgen Weber;SimpleQ Diplomprojekt;;;Liste aller Open source licenses;"Time: S;Type: Feature;US: 22";1:07:00;#160;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/160"")"
+2018-12-18;Jürgen Weber;SimpleQ Diplomprojekt;;;Fehlerbehebungen durchgeführt;;1:05:00;;
+2018-12-18;Jürgen Weber;SimpleQ Diplomprojekt;;;Präsentation eines Prototyps;"Besprechung;Demo;Prototyps";0:40:00;;
+2018-12-18;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Bugfixing;;1:00:00;;
+2018-12-18;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Präsentation mit Prof. Reis <3;;0:45:00;;
+2018-12-18;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Webinterface Bugfixing;Type: Bug;4:10:00;;
+2018-12-18;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Auswertung Bugfix;"Time: S;Type: Bug";0:09:00;;
+2018-12-20;Lukas Schendlinger;SimpleQ Diplomprojekt;;;SurveyResults: Trendanalyse - Filtern nach Fragestellung;;0:44:00;;
+2018-12-20;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;3:05:00;;
+2018-12-20;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Webinterface change multi result view;Type: Feature;0:11:00;;
+2018-12-21;Jürgen Weber;SimpleQ Diplomprojekt;;;Weihnactsrelase vorbereiten;;1:00:00;;
+2018-12-21;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;SimpleQ change Results layout;Type: Feature;2:53:00;;
+2018-12-21;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;SimpleQ change Header Layout;Type: Feature;0:33:00;;
+2018-12-22;Jürgen Weber;SimpleQ Diplomprojekt;;;Besprechung mit AG: Abnahme des Prototyps;Besprechung;2:00:00;;
+2018-12-22;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Besprechung mit AG;;1:59:00;;
+2018-12-22;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Logging;;0:41:00;;
+2018-12-22;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Publishen;;0:27:00;;
+2018-12-22;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Bugfixing - Invitation E-Mail;;0:07:00;;
+2018-12-29;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Schreiben über das Bezahlkonzept;;1:52:00;;
+2018-12-30;Nico Srnka;SimpleQ Diplomprojekt;;;website;website;3:53:00;;
+2018-12-30;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Schreiben über das Bezahlkonzept;;2:12:00;;
+2018-12-31;Nico Srnka;SimpleQ Diplomschrift;;;Implementierung;Diplomschrift;1:45:00;;
+2018-12-31;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Schreiben über das Bezahlkonzept;;0:57:00;;
+2019-01-01;Jürgen Weber;SimpleQ Diplomschrift;;;Übetragung in Latex;Diplomschrift;1:42:00;;
+2019-01-01;Nico Srnka;SimpleQ Diplomschrift;;;Implementierung;Diplomschrift;0:38:00;;
+2019-01-02;Jürgen Weber;SimpleQ Diplomschrift;;;Übetragung in Latex;Diplomschrift;4:50:00;;
+2019-01-02;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Logging;;2:41:00;;
+2019-01-02;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Publishen;;1:11:00;;
+2019-01-02;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Settings - offenen Gesamtbetrag laden;;0:49:00;;
+2019-01-02;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Standardmäßige Kategorien einbauen;;0:20:00;;
+2019-01-02;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Business Model Canvas erstellen;;1:16:00;;
+2019-01-03;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Periodische Befragungen ermöglichen;;3:04:00;;
+2019-01-03;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Redesign schedulers;;1:23:00;;
+2019-01-03;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Controller refactoring;;0:34:00;;
+2019-01-03;Tobias Krukenfellner;SimpleQ Diplomschrift;;;Über Business Model Canvas schreiben;;1:55:00;;
+2019-01-04;Jürgen Weber;SimpleQ Diplomschrift;;;Mobile Betriebssysteme;Diplomschrift;2:28:00;;
+2019-01-04;Jürgen Weber;SimpleQ Diplomschrift;;;Ausbesserungen;Diplomschrift;1:35:00;;
+2019-01-04;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Async Actions;;2:51:00;;
+2019-01-04;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Testen mit 2. Customer;;1:52:00;;
+2019-01-04;Lukas Schendlinger;SimpleQ Diplomprojekt;;;SSL Zertifikat für Mobil-Authentifizierung;;0:57:00;;
+2019-01-04;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Redirect wenn bereits eingeloggt;;0:25:00;;
+2019-01-04;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Database backup scheduler;;0:24:00;;
+2019-01-05;Lukas Schendlinger;SimpleQ Diplomschrift;;;BPMN-Diagramm erstellen;;3:37:00;;
+2019-01-05;Nico Srnka;SimpleQ Diplomschrift;;;itil;;0:52:00;;
+2019-01-06;Jürgen Weber;SimpleQ Diplomprojekt;;;Screenshots erstellt und bearbeitet;;2:00:00;;
+2019-01-08;Jürgen Weber;SimpleQ Diplomprojekt;;;Problem mit der Höhe einer ListView;"Time: M;Type: Bug";1:12:00;#174;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/174"")"
+2019-01-08;Jürgen Weber;SimpleQ Diplomprojekt;;;Problem mit QR Code Scanner beheben.;"Time: S;Type: Bug;US: 2";0:55:00;#175;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/175"")"
+2019-01-08;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Dokumentieren;;2:36:00;;
+2019-01-08;Nico Srnka;SimpleQ Diplomprojekt;;;website steuerbares smartphone;website;4:00:00;;
+2019-01-08;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Change whole results design;Time: L;3:19:00;;
+2019-01-08;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Show freetext answers implementation;Time: M;1:29:00;;
+2019-01-09;Lukas Schendlinger;SimpleQ Diplomprojekt;;;Rework - Umfrageauswertung;;1:13:00;;
+2019-01-09;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Insert usability to survey creation;Time: S;2:34:00;;
+2019-01-09;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Change whole results design;Time: L;0:38:00;;
+2019-01-10;Lukas Schendlinger;SimpleQ Diplomschrift;;;Datenmodell beschreiben;;2:16:00;;
+2019-01-10;Nico Srnka;SimpleQ Diplomprojekt;;;website finishen;website;2:05:00;;
+2019-01-10;Nico Srnka;SimpleQ Diplomprojekt;;;Nachtrag Schule;;2:00:00;;
+2019-01-10;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;Change results design;Time: L;4:24:00;;
+2019-01-11;Jürgen Weber;SimpleQ Diplomprojekt;;;Apple Developer Programm einrichten;Apple;1:30:00;;
+2019-01-11;Lukas Schendlinger;SimpleQ Diplomschrift;;;Datenbanksysteme beschreiben;;3:16:00;;
+2019-01-11;Nico Srnka;SimpleQ Diplomprojekt;;;website finishen;website;1:37:00;;
+2019-01-11;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;add freetext evaluation;"Time: M;Type: Feature";1:01:00;;
+2019-01-11;Tobias Krukenfellner;SimpleQ Diplomprojekt;;;fix modal bug;"Time: S;Type: Bug";0:34:00;;
+2019-01-12;Jürgen Weber;SimpleQ Diplomprojekt;;;Realisierung eines Loggers in der App;"Time: M;Type: Feature;US: 2";1:32:00;#158;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/158"")"
+2019-01-12;Jürgen Weber;SimpleQ Diplomprojekt;;;Problem mit der Höhe einer ListView;"Time: M;Type: Bug;US: 22";0:47:00;#174;"=HYPERLINK(""https://github.com/juerweb/SimpleQ/issues/174"")"
+2019-01-12;Lukas Schendlinger;SimpleQ Diplomschrift;;;Verwendungsablauf beschreiben;;3:09:00;;
+2019-01-12;Lukas Schendlinger;SimpleQ Diplomschrift;;;Backupstrategien beschreiben;;0:39:00;;
+2019-01-12;Lukas Schendlinger;SimpleQ Diplomschrift;;;Datenbanktechnologien beschreiben;;0:32:00;;

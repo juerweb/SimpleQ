@@ -14,6 +14,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
 using System.Linq;
+using SimpleQ.Logging;
 
 namespace SimpleQ.PageModels
 {
@@ -39,7 +40,7 @@ namespace SimpleQ.PageModels
         public override async void Init(object initData)
         {
             base.Init(initData);
-            Debug.WriteLine("LoadingPageModel initalised with InitData: " + initData, "Info");
+            //Debug.WriteLine("LoadingPageModel initalised with InitData: " + initData, "Info");
 
             this.IsRunning = true;
 
@@ -50,10 +51,12 @@ namespace SimpleQ.PageModels
             List<object> objects = (List<object>)initData;
             string code = objects[0].ToString();
 
-            Debug.WriteLine("DebugMode: " + (Boolean)objects[1]);
+            //Debug.WriteLine("DebugMode: " + (Boolean)objects[1]);
 
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
+                Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+                logger.Info("RuntimePlatform is in (iOS, Android).");
                 Debug.WriteLine("RuntimePlatform is in (iOS, Android)...", "Info");
                 if (Application.Current.Properties["userID"] != null)
                 {
@@ -62,13 +65,15 @@ namespace SimpleQ.PageModels
                     {
                         if (!Application.Current.Properties.ContainsKey("registrations"))
                         {
-                            Debug.WriteLine("New Registration...", "Info");
+                            logger.Info("New registration.");
+                            //Debug.WriteLine("New Registration...", "Info");
                             data.RegistrationData = await this.webAPIService.Register(code, Application.Current.Properties["userID"].ToString());
                             data.IsRegister = true;
                         }
                         else
                         {
-                            Debug.WriteLine("New Join Department...", "Info");
+                            //Debug.WriteLine("New Join Department...", "Info");
+                            logger.Info("New join department.");
                             List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
                             if (tmp.Count(registration => registration.RegistrationData.CustCode + registration.RegistrationData.DepId == code) <= 0)
                             {
@@ -77,7 +82,8 @@ namespace SimpleQ.PageModels
                             }
                             else
                             {
-                                Debug.WriteLine("Code is not valid...", "Info");
+                                //Debug.WriteLine("Code is not valid...", "Info");
+                                logger.Info("Code is not valid.");
                                 this.IsRunning = false;
 
                                 this.dialogService.ShowErrorDialog(205);
@@ -89,7 +95,8 @@ namespace SimpleQ.PageModels
                     catch (System.Net.Http.HttpRequestException e)
                     {
                         Application.Current.Properties["IsValidCodeAvailable"] = false;
-                        Debug.WriteLine("WebException during the Validation", "Error");
+                        //Debug.WriteLine("WebException during the Validation", "Error");
+                        logger.Error("WebException during the Validation.");
                         this.IsRunning = false;
 
                         this.dialogService.ShowErrorDialog(202);
@@ -108,12 +115,14 @@ namespace SimpleQ.PageModels
                         {
                             Application.Current.Properties["registrations"] = JsonConvert.SerializeObject(new List <RegistrationDataModel> { data });
                         }
-                        Debug.WriteLine("Code is valid...", "Info");
+                        //Debug.WriteLine("Code is valid...", "Info");
+                        logger.Info("Code is valid.");
                         this.IsFirstStepTicked = true;
                     }
                     else
                     {
-                        Debug.WriteLine("Code is not valid...", "Info");
+                        //Debug.WriteLine("Code is not valid...", "Info");
+                        logger.Warn("Code is not valid.");
                         this.IsRunning = false;
 
                         this.dialogService.ShowErrorDialog(201);
@@ -130,8 +139,9 @@ namespace SimpleQ.PageModels
 
                 if (codeValidationModel.IsValid)
                 {
-                    Debug.WriteLine("Code is valid...", "Info");
+                    //Debug.WriteLine("Code is valid...", "Info");
                     this.IsFirstStepTicked = true;
+                    await questionService.LoadData();
 
                     RegistrationDataModel data = new RegistrationDataModel() { RegistrationData=new RegistrationData() { CustCode = "1", DepId = 1, DepName = "Development", PersId = 1, CustName="SimpleQ Company" } };
                     //Code Check
@@ -148,7 +158,7 @@ namespace SimpleQ.PageModels
                 }
                 else
                 {
-                    Debug.WriteLine("Code is not valid...", "Info");
+                    //Debug.WriteLine("Code is not valid...", "Info");
                     this.IsRunning = false;
 
                     this.dialogService.ShowErrorDialog(201);
@@ -167,11 +177,11 @@ namespace SimpleQ.PageModels
                 if (objects.Count > 2 && (Boolean)objects[2])
                 {
                     await questionService.LoadData();
-                    Debug.WriteLine("Requested Data in Debug Mode...", "Info");
+                    //Debug.WriteLine("Requested Data in Debug Mode...", "Info");
                 }
                 else
                 {
-                    Debug.WriteLine("No Data Request because not in Debug Mode...", "Info");
+                    //Debug.WriteLine("No Data Request because not in Debug Mode...", "Info");
                 }
             }
 
