@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using FreshMvvm;
 using SimpleQ.Extensions;
+using SimpleQ.Logging;
 using SimpleQ.PageModels.Commands;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Pages;
@@ -31,7 +32,7 @@ namespace SimpleQ.PageModels
 
         public RegisterPageModel()
         {
-            Debug.WriteLine("Constructor of RegisterPageModel...", "Info");
+            //Debug.WriteLine("Constructor of RegisterPageModel...", "Info");
             OpenScannerCommand = new Command(OnOpenScanner);
             ManualCodeEntryCommand = new Command(OnManualCodeEntry);
             this.Behavior = new SixDigitCodeBehavior();
@@ -125,7 +126,9 @@ namespace SimpleQ.PageModels
 
         public void OnManualCodeEntry()
         {
-            Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
+            //Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("ManualCodeEntryCommand executed.");
             string code = this.RegisterCode;
             this.RegisterCode = "";
             CoreMethods.PushPageModel<LoadingPageModel>(new List<object> { code, this.isRegistration, this.DebugMode });
@@ -133,7 +136,9 @@ namespace SimpleQ.PageModels
 
         public void OnOpenScanner()
         {
-            Debug.WriteLine("OpenScannerCommand executed", "Info");
+            //Debug.WriteLine("OpenScannerCommand executed", "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("OpenScannerCommand executed.");
             CoreMethods.PushPageModel<QRCodeScannerPageModel>(this.isRegistration);
         }
         #endregion

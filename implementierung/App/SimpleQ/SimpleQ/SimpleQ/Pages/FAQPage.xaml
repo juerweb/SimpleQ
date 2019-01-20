@@ -4,15 +4,18 @@
              xmlns:ext="clr-namespace:SimpleQ.Extensions"
              x:Class="SimpleQ.Pages.FAQPage"
              Title="{ext:Translate Text=FAQ}">
+    <ContentPage.Resources>
+        <ext:TrueConverter x:Key="TrueConverter"></ext:TrueConverter>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
             <StackLayout VerticalOptions="FillAndExpand">
-                <ListView ItemsSource="{Binding FaqService.FaqEntries}" SeparatorVisibility="None" SelectedItem="{Binding SelectedFAQ, Mode=TwoWay}" x:Name="FAQListView" HasUnevenRows="True">
+                <ListView ItemsSource="{Binding FaqService.FaqEntries}" SeparatorVisibility="None" SelectedItem="{Binding SelectedFAQ, Mode=TwoWay}" x:Name="FAQListView" HasUnevenRows="True" RowHeight="-1">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <StackLayout Padding="10,10">
-                                    <Label Text="{Binding Entry.FaqTitle}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center" FontAttributes="Bold"></Label>
+                                    <Label Text="{Binding Entry.FaqTitle}" VerticalOptions="Center" FontAttributes="Bold"></Label>
                                     <StackLayout IsVisible="{Binding IsActive}">
                                         <Label Text="{Binding Entry.FaqContent}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"></Label>
                                     </StackLayout>

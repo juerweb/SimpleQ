@@ -15,6 +15,7 @@ using Xamarin.Forms;
 using SimpleQ.Shared;
 using System.Linq;
 using System.Threading.Tasks;
+using SimpleQ.Logging;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -93,8 +94,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
             set
             {
                 question = value;
-
-                Debug.WriteLine("QuestionChanged: " + question, "Info");
+                //Debug.WriteLine("QuestionChanged: " + question, "Info");
                 OnPropertyChanged();
             }
         }
@@ -135,8 +135,10 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private async void QuestionAnswered()
         {
             Debug.WriteLine(String.Format("User answered the question with the id {0}...", Question.SurveyId), "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("User answered the question with the id " + Question.SurveyId);
 
-            Debug.WriteLine("QS: " + this.questionService);
+            //Debug.WriteLine("QS: " + this.questionService);
             Boolean success;
             if (this.questionService == null)
             {
@@ -163,14 +165,16 @@ namespace SimpleQ.PageModels.QuestionPageModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Exception thrown " + e.StackTrace, "Exception");
+                logger.Error("Exception thrown " + e.StackTrace);
+                //Debug.WriteLine("Exception thrown " + e.StackTrace, "Exception");
             }
 
             try
             {
                 Boolean CloseAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
-                Debug.WriteLine("isItAStartQuestion: " + isItAStartQuestion, "Info");
-                Debug.WriteLine("CloseAppAfterNotification: " + CloseAppAfterNotification, "Info");
+                //Debug.WriteLine("isItAStartQuestion: " + isItAStartQuestion, "Info");
+                logger.Info("Is it a start question? " + isItAStartQuestion);
+                //Debug.WriteLine("CloseAppAfterNotification: " + CloseAppAfterNotification, "Info");
                 if (CloseAppAfterNotification && isItAStartQuestion)
                 {
                     if (ShowMessageAfterAnswering)
@@ -178,9 +182,9 @@ namespace SimpleQ.PageModels.QuestionPageModels
                         await Task.Delay(int.Parse(AppResources.CloseInterval));
                     }
 
-                    Debug.WriteLine("Before Closer...", "Info");
+                    //Debug.WriteLine("Before Closer...", "Info");
                     ICloseApplication closer = DependencyService.Get<ICloseApplication>();
-                    Debug.WriteLine("Closer: " + closer, "Info");
+                    //Debug.WriteLine("Closer: " + closer, "Info");
                     closer?.CloseApplication();
                 }
                 else

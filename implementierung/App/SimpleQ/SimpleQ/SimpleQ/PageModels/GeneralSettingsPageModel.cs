@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
 using System.Reactive.Linq;
+using SimpleQ.Logging;
 
 namespace SimpleQ.PageModels
 {
@@ -63,7 +64,7 @@ namespace SimpleQ.PageModels
                 OnPropertyChanged();
                 BlobCache.UserAccount.InvalidateObject<Boolean>("CloseAppAfterNotification");
                 BlobCache.UserAccount.InsertObject<Boolean>("CloseAppAfterNotification", closeAppAfterNotification);
-                Debug.WriteLine("ShowFrontPageAfterNotification changed...", "Info");
+                //Debug.WriteLine("ShowFrontPageAfterNotification changed...", "Info");
             } 
         }
 
@@ -76,7 +77,7 @@ namespace SimpleQ.PageModels
                 OnPropertyChanged();
                 BlobCache.UserAccount.InvalidateObject<Boolean>("ShowMessageAfterAnswering");
                 BlobCache.UserAccount.InsertObject<Boolean>("ShowMessageAfterAnswering", showMessageAfterAnswering);
-                Debug.WriteLine("ShowMessageAfterAnswering changed...", "Info");
+                //Debug.WriteLine("ShowMessageAfterAnswering changed...", "Info");
             } 
         }
 
@@ -95,7 +96,9 @@ namespace SimpleQ.PageModels
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error: " + e.StackTrace, "Error");
+                Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+                logger.Error("Error was occured: " + e.StackTrace);
+                //Debug.WriteLine("Error: " + e.StackTrace, "Error");
             }
         }
         #endregion

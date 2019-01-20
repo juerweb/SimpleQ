@@ -340,4 +340,7 @@
   <data name="APIGetFaqDataPlusURL" xml:space="preserve">
     <value>/getFaqData</value>
   </data>
+  <data name="OpenSourceLicense" xml:space="preserve">
+    <value>Open source Lizenzen</value>
+  </data>
 </root>

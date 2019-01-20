@@ -538,6 +538,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open source Lizenzen ähnelt.
+        /// </summary>
+        internal static string OpenSourceLicense {
+            get {
+                return ResourceManager.GetString("OpenSourceLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die +43 00000000000 ähnelt.
         /// </summary>
         internal static string PhoneNumber {

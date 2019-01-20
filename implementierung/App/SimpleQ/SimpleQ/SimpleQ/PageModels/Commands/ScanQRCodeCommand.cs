@@ -1,4 +1,6 @@
-﻿using SimpleQ.Validations;
+﻿using NLog;
+using SimpleQ.Logging;
+using SimpleQ.Validations;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -22,7 +24,9 @@ namespace SimpleQ.PageModels.Commands
 
         public void Execute(object parameter)
         {
-            Debug.WriteLine("Execute ScanQRCodeCommand", "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Execute ScanQRCodeCommand.");
+            //Debug.WriteLine("Execute ScanQRCodeCommand", "Info");
             pageModel = (RegisterPageModel)parameter;
 
             //Start QR Code Reader
@@ -43,7 +47,9 @@ namespace SimpleQ.PageModels.Commands
                 Device.BeginInvokeOnMainThread(async () =>
                 {
                     //await pageModel.NavigationService.PopModalAsync();
-                    Debug.WriteLine("QR Code found. Code is " + result.Text, "Info");
+                    Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+                    logger.Info("QR Code found. Code is ." + result.Text);
+                    //Debug.WriteLine("QR Code found. Code is " + result.Text, "Info");
 
                     //Live-Check
                     if (SixDigitCodeValidation.IsValid(result.Text))
@@ -51,6 +57,7 @@ namespace SimpleQ.PageModels.Commands
                         //pageModel.Model.RegisterCode = int.Parse(result.Text);
                         //pageModel.CheckingCode();
                         Debug.WriteLine("Live-Check: QR-Code is valid.", "Info");
+                        logger.Info("Live-Check: QR-Code is valid.");
                     }
                     else
                     {
