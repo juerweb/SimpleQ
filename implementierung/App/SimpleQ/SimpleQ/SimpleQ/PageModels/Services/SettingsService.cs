@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Reactive.Linq;
 using Xamarin.Forms;
 using System.Diagnostics;
+using SimpleQ.Logging;
 
 namespace SimpleQ.PageModels.Services
 {
@@ -15,14 +16,15 @@ namespace SimpleQ.PageModels.Services
         {
             try
             {
-                Debug.WriteLine("KeyFound...");
+                //Debug.WriteLine("KeyFound...");
                 T test = await BlobCache.UserAccount.GetObject<T>(name);
-                Debug.WriteLine("KeyFound...");
+                //Debug.WriteLine("KeyFound...");
                 return test;
             }
             catch (KeyNotFoundException ex)
             {
-                Debug.WriteLine("KeyNotFound...");
+                Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+                logger.Error("Settings Key with the name " + name + " not found.");
                 return default(T);
             }
 

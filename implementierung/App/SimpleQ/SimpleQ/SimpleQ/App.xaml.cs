@@ -50,6 +50,10 @@ namespace SimpleQ
 		{
 
             Debug.WriteLine("NO: App started...", "Info");
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("App started.");
+
+
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
 
@@ -74,15 +78,12 @@ namespace SimpleQ
 
             IFaqService faqService = FreshIOC.Container.Resolve<IFaqService>();
             faqService.LoadData();
-
-            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
-            logger.Warn("Hallo");
-
-            Debug.WriteLine("Path: " + Environment.SpecialFolder.Desktop);
     }
 
         private async void SetDefaultProperties()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Set default Properties.");
             try
             {
                 Boolean closeAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
@@ -108,14 +109,17 @@ namespace SimpleQ
 
         public static void GoToRightPage()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
             if (Application.Current.Properties.ContainsKey("registrations"))
             {
+                logger.Info("Code is valid now.");
                 Debug.WriteLine("Code is valid now...", "Info");
                 NavigateToMainPageModel();
             }
             else
             {
                 //Code is not available => RegisterPage
+                logger.Info("Property 'CodeValidationModel' is not available.");
                 Debug.WriteLine("Property 'CodeValidationModel' is not available...", "Info");
                 NavigateToRegisterPageModel();
             }
@@ -123,6 +127,8 @@ namespace SimpleQ
 
         private static void NavigateToRegisterPageModel()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Navigate to RegisterPageModel.");
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
 
@@ -136,6 +142,8 @@ namespace SimpleQ
 
         private static async void NavigateToMainPageModel()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Navigate to MainPageModel.");
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
 
@@ -158,7 +166,7 @@ namespace SimpleQ
             MainMasterPageModel.AddPage(AppResources.Help, new HelpPageModel(), "ic_help_black_18.png");
             MainMasterPageModel.Init("Menu");
 
-            Console.WriteLine("1234: Load Data from Cache");
+            //Console.WriteLine("1234: Load Data from Cache");
             IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
             await questionService.LoadDataFromCache();
 
@@ -184,6 +192,8 @@ namespace SimpleQ
 
         public static async void OpenQuestionPage(SurveyModel surveyModel)
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Open questionpage with the question id: " + surveyModel.SurveyId);
             IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
 
             switch (surveyModel.TypeDesc)
@@ -256,6 +266,8 @@ namespace SimpleQ
 
         private void SetupIOC()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Setup the services.");
             FreshIOC.Container.Register<IUserDialogs>(UserDialogs.Instance);
             FreshIOC.Container.Register<IDialogService, DialogService>();
             FreshIOC.Container.Register<ISimulationService, SimulationService>();
@@ -269,6 +281,8 @@ namespace SimpleQ
 
 		protected override async void OnStart ()
 		{
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Configure the AppCenter.");
             // Handle when your app starts
             AppCenter.Start("android=d9823947-9138-4821-9dca-44c4750cb47e;" +
                   "uwp={Your UWP App secret here};" +
@@ -294,11 +308,15 @@ namespace SimpleQ
 
         private void SetupBlobCache()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Setup BlobCache.");
             BlobCache.ApplicationName = "com.simpleQ.SimpleQ";
         }
 
         private void SetupOneSignal()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Setup OneSignal.");
             OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540")
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
                 .HandleNotificationOpened(HandleNotificationOpened)
@@ -311,17 +329,23 @@ namespace SimpleQ
         private void HandleNotificationReceived(OSNotification notification)
         {
             Debug.WriteLine("NO: Notification Received...", "Info");
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Notification Received.");
         }
 
         private async void IdsAvailable(string userID, string pushToken)
         {
             Debug.WriteLine("Ids of OneSignal available...", "Info");
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Ids of OneSignal available.");
             Application.Current.Properties["userID"] = userID;
             await Application.Current.SavePropertiesAsync();
         }
 
         private void GetKeyFromFile()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Get key from file.");
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(WebAPIService)).Assembly;
             Stream stream = assembly.GetManifestResourceStream("SimpleQ.Resources.private.key");
 
@@ -335,6 +359,8 @@ namespace SimpleQ
         // Method must be static or this object should be marked as DontDestroyOnLoad
         private static async void HandleNotificationOpened(OSNotificationOpenedResult result)
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Handle Notification Opened.");
             Debug.WriteLine("NO: Notification Opened in App.xaml.cs ...", "Info");
             Dictionary<String, object> additionalData = result.notification.payload.additionalData;
             Debug.WriteLine(additionalData["SvyId"]);
@@ -362,6 +388,7 @@ namespace SimpleQ
             catch (HttpRequestException e)
             {
                 Debug.WriteLine("WebException during the GetSurveyData", "Error");
+                logger.Equals("WebException during the GetSurveyData.");
                 IDialogService dialogService = FreshIOC.Container.Resolve<IDialogService>();
 
                 dialogService.ShowErrorDialog(202);

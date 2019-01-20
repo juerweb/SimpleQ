@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
 using System.Reactive.Linq;
+using SimpleQ.Logging;
 
 namespace SimpleQ.PageModels
 {
@@ -97,7 +98,9 @@ namespace SimpleQ.PageModels
         #region Methods
         private async void UnregisterCommandExecuted()
         {
-            Debug.WriteLine("Unregister Command Executed...", "Info");
+            //Debug.WriteLine("Unregister Command Executed...", "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("UnregisterCommand executed.");
             if (await dialogService.ShowReallySureDialog())
             {
                 ObservableCollection<IsCheckedModel<RegistrationDataModel>> saveCollection = new ObservableCollection<IsCheckedModel<RegistrationDataModel>>(IsChecked);
@@ -110,7 +113,7 @@ namespace SimpleQ.PageModels
                             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
                             {
                                 //Android or iOS App
-                                Debug.WriteLine("Unregister Command executed on iOS or Android...", "Info");
+                                //Debug.WriteLine("Unregister Command executed on iOS or Android...", "Info");
                                 Boolean success;
 
                                 success = await this.webAPIService.LeaveDepartment(isCheckedModel.AnswerOption.RegistrationData.PersId, isCheckedModel.AnswerOption.RegistrationData.DepId, isCheckedModel.AnswerOption.RegistrationData.CustCode);
@@ -134,12 +137,14 @@ namespace SimpleQ.PageModels
                                             }
                                             catch (Exception e)
                                             {
-                                                Debug.WriteLine("Exception was occured: " + e.InnerException, "Exception");
+                                                logger.Error("Exception was occured: " + e.InnerException);
+                                                //Debug.WriteLine("Exception was occured: " + e.InnerException, "Exception");
                                             }
                                         }
                                         else
                                         {
-                                            Debug.WriteLine("Problem during the Unregister", "Error");
+                                            //Debug.WriteLine("Problem during the Unregister", "Error");
+                                            logger.Error("Problem during the unregister process with the error code: 203");
                                             this.dialogService.ShowErrorDialog(203);
                                         }
 
@@ -156,14 +161,15 @@ namespace SimpleQ.PageModels
                                 }
                                 else
                                 {
-                                    Debug.WriteLine("Problem during the Unregister", "Error");
+                                    //Debug.WriteLine("Problem during the Unregister", "Error");
+                                    logger.Error("Problem during the unregister process with the error code: 203");
                                     this.dialogService.ShowErrorDialog(203);
                                 }
                             }
                             else
                             {
                                 //UWP App
-                                Debug.WriteLine("Unregister Command executed on UWP", "Info");
+                                //Debug.WriteLine("Unregister Command executed on UWP", "Info");
                                 IsChecked.Remove(isCheckedModel);
                                 if (IsChecked.Count == 0)
                                 {
@@ -182,14 +188,15 @@ namespace SimpleQ.PageModels
                         }
                         catch (System.Net.Http.HttpRequestException e)
                         {
-                            Debug.WriteLine("WebException during the Unregister", "Error");
+                            //Debug.WriteLine("WebException during the Unregister", "Error");
+                            logger.Error("Problem during the unregister process with the error code: 202");
                             this.dialogService.ShowErrorDialog(202);
                             return;
                         }
                         await Application.Current.SavePropertiesAsync();
                     }
                 }
-                Debug.WriteLine("Go to right Page in UnregisterPageModel...", "Info");
+                //Debug.WriteLine("Go to right Page in UnregisterPageModel...", "Info");
                 App.GoToRightPage();
             }
         }

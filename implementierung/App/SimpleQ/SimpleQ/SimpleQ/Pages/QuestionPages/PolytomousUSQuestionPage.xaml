@@ -6,7 +6,7 @@
     <ContentPage.Content>
         <StackLayout>
             <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}" Margin="10,10,10,0"></Label>
-            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Style="{DynamicResource BodyStyle}" Margin="10,5,10,0" FontAttributes="Bold"></Label>
+            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Margin="10,5,10,0" FontAttributes="Bold"></Label>
 
             <Picker ItemsSource="{Binding Question.GivenAnswers}" SelectedItem="{Binding SelectedAnswer, Mode=TwoWay}" ItemDisplayBinding="{Binding AnsText}" Margin="10,0,10,0"></Picker>
             <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsQuestionAnswered}" Margin="10,5,10,0"></Button>

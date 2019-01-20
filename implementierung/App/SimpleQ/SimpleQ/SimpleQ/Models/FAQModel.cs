@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.Models
 {
@@ -28,7 +29,7 @@ namespace SimpleQ.Models
         /// </summary>
         public FAQModel()
         {
-            this.IsActive = false;
+            this.IsActive = (Device.RuntimePlatform == Device.iOS);
         }
         #endregion
 
@@ -53,8 +54,16 @@ namespace SimpleQ.Models
             get => isActive;
             set
             {
-                isActive = value;
-                OnPropertyChanged();
+                if (value)
+                {
+                    isActive = value;
+                    OnPropertyChanged();
+                }
+                else if (Device.RuntimePlatform != Device.iOS)
+                {
+                    isActive = value;
+                    OnPropertyChanged();
+                }
             }
         }
 

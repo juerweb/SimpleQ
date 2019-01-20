@@ -36,7 +36,7 @@ namespace SimpleQ.PageModels
         public override async void Init(object initData)
         {
             base.Init(initData);
-            Debug.WriteLine("LoadingPageModel initalised with InitData: " + initData, "Info");
+            //Debug.WriteLine("LoadingPageModel initalised with InitData: " + initData, "Info");
 
             LoadQuestion(int.Parse(initData.ToString()));
 
@@ -70,11 +70,11 @@ namespace SimpleQ.PageModels
         #region Methods
         private async void LoadQuestion(int id)
         {
-            Debug.WriteLine("LoadQuestion");
+            //Debug.WriteLine("LoadQuestion");
             this.IsRunning = true;
             IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
             SurveyModel surveyModel = await webAPIService.GetSurveyData(id);
-            Debug.WriteLine("SurveyModel: " + surveyModel);
+            //Debug.WriteLine("SurveyModel: " + surveyModel);
             this.IsRunning = false;
             if (surveyModel.EndDate >= DateTime.Now)
             {
@@ -85,12 +85,12 @@ namespace SimpleQ.PageModels
             }
             else
             {
-                Debug.WriteLine("Survey with the id: " + surveyModel.SurveyId + " is in the past with enddate: " + surveyModel.EndDate, "Error");
+                //Debug.WriteLine("Survey with the id: " + surveyModel.SurveyId + " is in the past with enddate: " + surveyModel.EndDate, "Error");
                 IDialogService dialogService = FreshIOC.Container.Resolve<IDialogService>();
 
                 dialogService.ShowErrorDialog(102);
             }
-            Debug.WriteLine("LoadQuestion End");
+            //Debug.WriteLine("LoadQuestion End");
         }
         #endregion
 

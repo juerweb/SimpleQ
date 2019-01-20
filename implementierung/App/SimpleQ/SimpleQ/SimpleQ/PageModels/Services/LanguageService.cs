@@ -47,7 +47,7 @@ namespace SimpleQ.PageModels.Services
                 {
                     //Set Device Language to Default Language of App
                     current = CrossMultilingual.Current.DeviceCultureInfo;
-                    Debug.WriteLine("Current Device Culture Info" + current.TwoLetterISOLanguageName);
+                    //Debug.WriteLine("Current Device Culture Info" + current.TwoLetterISOLanguageName);
                     if (!IsLanguageSupported(current.TwoLetterISOLanguageName))
                     {
                         current = SupportedLanguages[0];
