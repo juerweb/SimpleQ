@@ -14,6 +14,29 @@ header.masthead {
     background-position: center;
 }
 
+.parallax {
+    /* The image used */
+    background-image: url("../images/parallax.jpg");
+    /* Set a specific height */
+    min-height: 450px;
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.parallax2 {
+    /* The image used */
+    background-image: url("../images/para2.jpg");
+    /* Set a specific height */
+    min-height: 450px;
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 /*
     //////////////////////////////////////////
     ////////////////SECTIONS//////////////////
@@ -64,15 +87,20 @@ section.about {
 
 section.konzept {
     padding-top: 40px;
-    padding-bottom: 50px;
+    
     position: relative;
-    padding: 50px 0;
+    
 }
 
 section.team-section {
     padding-top: 50px;
     padding-bottom: 50px;
 }
+
+#para {
+    padding-top: 180px;
+}
+
 /*
     //////////////////////////////////////////
     /////////////BORDERS / PADDINGS///////////
@@ -183,8 +211,8 @@ p {
     //////////////////////////////////////////
 */
 
-.yellowTemp{
-    color:lightgreen !important;
+.yellowTemp {
+    color: lightgreen !important;
 }
 
 .aStart {
@@ -245,12 +273,12 @@ p {
     background-image: url();
 }
 
-.aleer{
+.aleer {
     background-image: url(../images/deviceImages/leer.PNG);
     background-size: inherit;
 }
 
-.avoll{
+.avoll {
     background-image: url(../images/deviceImages/voll.PNG);
     background-size: inherit;
 }
@@ -319,6 +347,7 @@ p {
     height: 40px;
     cursor: pointer;
 }
+
 #aFrage2M {
     display: none;
     position: absolute;
@@ -328,6 +357,7 @@ p {
     height: 40px;
     cursor: pointer;
 }
+
 #aFrage2W {
     display: none;
     position: absolute;
@@ -418,8 +448,8 @@ p {
     cursor: pointer;
 }
 
-.hideBlock{
-    display:none;
+.hideBlock {
+    display: none;
 }
 
 #aFrage3Ka {
