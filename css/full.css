@@ -63,10 +63,10 @@ section.about {
 }
 
 section.konzept {
-    padding-top: 50px;
+    padding-top: 40px;
     padding-bottom: 50px;
     position: relative;
-    padding: 80px 0;
+    padding: 50px 0;
 }
 
 section.team-section {
@@ -133,7 +133,7 @@ section.team-section {
     font-size: 5rem;
     font-weight: bold;
     color: white;
-    text-shadow: 0 3px 0 black;
+    text-shadow: 0 4px 0 black;
 }
 
 @media screen and (max-width: 400px) {
@@ -157,9 +157,8 @@ section.team-section {
 */
 
 .grayBack {
-    background-color: #F3F3F3;
+    background-color: #fafafa;
 }
-
 
 .androidbildschirm {
     background-image: url("../images/androidmockup.jpeg");
