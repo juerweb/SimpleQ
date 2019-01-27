@@ -55,7 +55,7 @@ namespace SimpleQ.Webinterface.Controllers
                         await db.SaveChangesAsync();
                         logger.Debug("Mobile registration successful");
 
-                        return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName, CustName = cust.CustName });
+                        return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName, CustName = cust.CustName, AuthToken = person.AuthToken });
                     }
                     catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException)
                     {

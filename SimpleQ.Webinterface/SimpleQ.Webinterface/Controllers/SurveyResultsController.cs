@@ -210,6 +210,8 @@ namespace SimpleQ.Webinterface.Controllers
                         logger.Debug("Creating empty multi result model.");
                         model = new MultiResultModel
                         {
+                            SvyText = svyText,
+
                             SurveyDates = new List<DateTime>(),
 
                             Votes = new List<KeyValuePair<string, List<int>>>()

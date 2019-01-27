@@ -14,11 +14,11 @@ insert into Bill values('420420', 420.00, (select dateadd(month, -3, (select get
 insert into Department values (1, 'development', '420420');
 insert into Department values (2, 'putzkleschn', '420420');
 
-insert into Person values (null); -- PersId 1
-insert into Person values (null); -- PersId 2
-insert into Person values (null); -- PersId 3
-insert into Person values (null); -- PersId 4
-insert into Person values (null); -- PersId 5
+insert into Person values (null, null); -- PersId 1
+insert into Person values (null, null); -- PersId 2
+insert into Person values (null, null); -- PersId 3
+insert into Person values (null, null); -- PersId 4
+insert into Person values (null, null); -- PersId 5
 
 insert into Employs values (1, '420420', 1);
 insert into Employs values (1, '420420', 2);
@@ -246,9 +246,9 @@ insert into Bill values('180517', 90, (select dateadd(month, -1, (select getdate
 insert into Department values (1, 'Angel', '180517');
 insert into Department values (2, 'Nephilim', '180517');
 
-insert into Person values (null); -- PersId 6
-insert into Person values (null); -- PersId 7
-insert into Person values (null); -- PersId 8
+insert into Person values (null, null); -- PersId 6
+insert into Person values (null, null); -- PersId 7
+insert into Person values (null, null); -- PersId 8
 
 insert into Employs values (1, '180517', 6);
 insert into Employs values (1, '180517', 7);
