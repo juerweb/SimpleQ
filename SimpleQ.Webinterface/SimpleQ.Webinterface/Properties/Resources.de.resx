@@ -455,4 +455,31 @@
   <data name="trendButtonTooltip" xml:space="preserve">
     <value>Hier kommen Sie zur zusammengefassen Auswertung aller Ergebnisse, um zu beobachten wie sich Ihre Ergebnisse entwickelt haben.</value>
   </data>
+  <data name="custCodeTooltip" xml:space="preserve">
+    <value>Geben Sie den Kundencode ein, den Sie in der Ihrer Bestätigungsemail bekommen haben</value>
+  </data>
+  <data name="days" xml:space="preserve">
+    <value>Tage</value>
+  </data>
+  <data name="emailConfirmed" xml:space="preserve">
+    <value>Email-Adresse bestätigt</value>
+  </data>
+  <data name="goToRegistration" xml:space="preserve">
+    <value>Zur Registrierung</value>
+  </data>
+  <data name="sendResetLink" xml:space="preserve">
+    <value>Reset-Link senden</value>
+  </data>
+  <data name="weeks" xml:space="preserve">
+    <value>Wochen</value>
+  </data>
+  <data name="youCanNowLogin" xml:space="preserve">
+    <value>Sie können sich jetzt einloggen</value>
+  </data>
+  <data name="answers" xml:space="preserve">
+    <value>Antwortmöglichkeiten</value>
+  </data>
+  <data name="answersButtonTooltip" xml:space="preserve">
+    <value>Klicken Sie hier, um Antwortmöglichkeiten hinzuzufügen.</value>
+  </data>
 </root>

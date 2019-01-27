@@ -10,7 +10,7 @@
     ResourceManager rm = Resources.ResourceManager;
 }
 <div class="row ml-0 mr-0">
-    <div style="overflow-x:auto; width:100%;">
+    <div style="overflow-x:auto; width:100%;" class="m-3">
         <table id="resultsTable" class="table table-bordered table-striped smallCellPadding small w-100" >
             <thead>
                 <tr>
@@ -112,6 +112,10 @@
     </div>
 </div>*@
 
+<div>
+    <h2 class="text-center" id="actualSvyText"></h2>
+</div>
+
 <div class="mt-2" id="singleResultPartial"></div>
 <div class="mt-2" id="multiResultPartial"></div>
 
@@ -140,8 +144,9 @@
     </div>
 </div>
 
+
 <div class="modal" id="singleOrMultiModal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">@Resources.singleOrTrendEvaluation</h4>
@@ -151,10 +156,10 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-                        <button type="button" class="btn btn-primary btn-block" onclick="loadSingleResultAsync(); $('#singleOrMultiModal').hide();" data-toggle="tooltip" title="@Resources.singleButtonTooltip">@Resources.singleEvaluation</button>
+                        <button type="button" class="btn btn-primary btn-block" onclick="loadSingleResultAsync();" data-dismiss="modal" data-toggle="tooltip" title="@Resources.singleButtonTooltip">@Resources.singleEvaluation</button>
                     </div>
                     <div class="col-6">
-                        <button type="button" class="btn btn-primary btn-block" onclick="loadMultiResultAsync(); $('#singleOrMultiModal').hide();" data-toggle="tooltip" title="@Resources.trendButtonTooltip">@Resources.trendEvaluation</button>
+                        <button type="button" class="btn btn-primary btn-block" onclick="loadMultiResultAsync();" data-dismiss="modal" data-toggle="tooltip" title="@Resources.trendButtonTooltip">@Resources.trendEvaluation</button>
                     </div>
                 </div>
             </div>
@@ -203,7 +208,7 @@
         actualSvyText = svyText;
         actualTableElement = elem;        
         if (amount > 1 && typeId !== 4) {
-            $("#singleOrMultiModal").show();
+            $("#singleOrMultiModal").modal({ backdrop: true });
         } else {
             loadSingleResultAsync();
         }
@@ -321,6 +326,7 @@
 
 
     function updateSingleResultDate() {
+        document.getElementById("actualSvyText").innerHTML = dicts[selectedSingleSurveyId].svyText;
         document.getElementById("singleResultDate").innerHTML = dicts[selectedSingleSurveyId].date;
     }
 
@@ -694,6 +700,7 @@
     //   v
 
     function changeChartMulti(selector, chartCol, chart) {
+        document.getElementById("actualSvyText").innerHTML = multiSvyText;
 
         if ((document.getElementById(selector).value === "listing")) {
             if (chartCol === "zoomModalContent") {

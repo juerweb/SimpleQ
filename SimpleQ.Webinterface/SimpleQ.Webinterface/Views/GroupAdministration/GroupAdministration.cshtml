@@ -366,7 +366,7 @@
     }
 
     function deleteMailAddress(button) {
-        let text = button.parentElement.parentElement.children[0].value;
+        let text = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0].value;
         for (i = 0; i < mailAddresses.length; i++) {
             if (mailAddresses[i] === text) {
                 mailAddresses.splice(i, 1);

@@ -93,9 +93,11 @@
 
     var multiDict = []; // create an empty array
     var multiLabels = [];
+    var multiSvyText = "@Model.SvyText";
     var temp = [];
+    
     @foreach (KeyValuePair<string, List<int>> kvp in Model.Votes)
-    {
+    {       
         @:temp = [];
         foreach(int i in kvp.Value)
         {

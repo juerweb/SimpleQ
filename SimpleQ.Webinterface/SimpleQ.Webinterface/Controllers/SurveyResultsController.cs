@@ -119,6 +119,8 @@ namespace SimpleQ.Webinterface.Controllers
 
                             EndDate = s.EndDate,
 
+                            Period = TimeSpan.FromTicks(s.Period ?? 0L),
+
                             Votes = (s.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? SelectVotesFromSurvey(s) : null,
 
                             FreeTextVotes = (s.AnswerType.BaseId == (int)BaseQuestionTypes.OpenQuestion)
@@ -210,7 +212,7 @@ namespace SimpleQ.Webinterface.Controllers
                         logger.Debug("Creating empty multi result model.");
                         model = new MultiResultModel
                         {
-                            SvyText = svyText,
+                            SvyText = "",
 
                             SurveyDates = new List<DateTime>(),
 
@@ -222,6 +224,9 @@ namespace SimpleQ.Webinterface.Controllers
                         logger.Debug("Loading data for multi result model");
                         model = new MultiResultModel
                         {
+
+                            SvyText = svyText,
+
                             SurveyDates = await selectedSurveys.Select(s => s.StartDate).ToListAsync(),
 
                             Votes = await SelectVotesFromSurveyGrouped(selectedSurveys, type.BaseId)
