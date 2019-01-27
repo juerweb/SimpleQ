@@ -511,7 +511,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Likert-skale 3.
+        ///   Looks up a localized string similar to Likert-skale (3 items).
         /// </summary>
         public static string LikertSkale3 {
             get {
@@ -520,7 +520,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Likert-skale 4.
+        ///   Looks up a localized string similar to Likert-skale (4 items).
         /// </summary>
         public static string LikertSkale4 {
             get {
@@ -529,7 +529,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Likert-skale 5.
+        ///   Looks up a localized string similar to Likert-skale (5 items).
         /// </summary>
         public static string LikertSkale5 {
             get {
@@ -538,7 +538,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Likert-skale 6.
+        ///   Looks up a localized string similar to Likert-skale (6 items).
         /// </summary>
         public static string LikertSkale6 {
             get {
@@ -547,7 +547,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Likert-skale 7.
+        ///   Looks up a localized string similar to Likert-skale (7 items).
         /// </summary>
         public static string LikertSkale7 {
             get {
@@ -556,7 +556,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Likert-skale 8.
+        ///   Looks up a localized string similar to Likert-skale (8 items).
         /// </summary>
         public static string LikertSkale8 {
             get {
@@ -565,7 +565,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Likert-skale 9.
+        ///   Looks up a localized string similar to Likert-skale (9 items).
         /// </summary>
         public static string LikertSkale9 {
             get {
@@ -1123,7 +1123,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes-no.
+        ///   Looks up a localized string similar to Yes/No.
         /// </summary>
         public static string YesNo {
             get {
@@ -1132,7 +1132,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes-no-dont know.
+        ///   Looks up a localized string similar to Yes/No/Don&apos;t know.
         /// </summary>
         public static string YesNoDontKnow {
             get {

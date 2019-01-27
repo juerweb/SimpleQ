@@ -148,25 +148,25 @@
     <value>groups</value>
   </data>
   <data name="LikertSkale3" xml:space="preserve">
-    <value>Likert-skale 3</value>
+    <value>Likert-skale (3 items)</value>
   </data>
   <data name="LikertSkale4" xml:space="preserve">
-    <value>Likert-skale 4</value>
+    <value>Likert-skale (4 items)</value>
   </data>
   <data name="LikertSkale5" xml:space="preserve">
-    <value>Likert-skale 5</value>
+    <value>Likert-skale (5 items)</value>
   </data>
   <data name="LikertSkale6" xml:space="preserve">
-    <value>Likert-skale 6</value>
+    <value>Likert-skale (6 items)</value>
   </data>
   <data name="LikertSkale7" xml:space="preserve">
-    <value>Likert-skale 7</value>
+    <value>Likert-skale (7 items)</value>
   </data>
   <data name="LikertSkale8" xml:space="preserve">
-    <value>Likert-skale 8</value>
+    <value>Likert-skale (8 items)</value>
   </data>
   <data name="LikertSkale9" xml:space="preserve">
-    <value>Likert-skale 9</value>
+    <value>Likert-skale (9 items)</value>
   </data>
   <data name="line" xml:space="preserve">
     <value>line</value>
@@ -230,10 +230,10 @@
     <comment>small written type</comment>
   </data>
   <data name="YesNo" xml:space="preserve">
-    <value>Yes-no</value>
+    <value>Yes/No</value>
   </data>
   <data name="YesNoDontKnow" xml:space="preserve">
-    <value>Yes-no-dont know</value>
+    <value>Yes/No/Don't know</value>
   </data>
   <data name="add" xml:space="preserve">
     <value>add</value>

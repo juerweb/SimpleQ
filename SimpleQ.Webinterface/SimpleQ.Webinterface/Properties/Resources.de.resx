@@ -191,25 +191,25 @@
     <value>Dichotom</value>
   </data>
   <data name="LikertSkale3" xml:space="preserve">
-    <value>Likertskala 3</value>
+    <value>Likertskala (3 Abstufungen)</value>
   </data>
   <data name="LikertSkale4" xml:space="preserve">
-    <value>Likertskala 4</value>
+    <value>Likertskala (4 Abstufungen)</value>
   </data>
   <data name="LikertSkale5" xml:space="preserve">
-    <value>Likertskala 5</value>
+    <value>Likertskala (5 Abstufungen)</value>
   </data>
   <data name="LikertSkale6" xml:space="preserve">
-    <value>Likertskala 6</value>
+    <value>Likertskala (6 Abstufungen)</value>
   </data>
   <data name="LikertSkale7" xml:space="preserve">
-    <value>Likertskala 7</value>
+    <value>Likertskala (7 Abstufungen)</value>
   </data>
   <data name="LikertSkale8" xml:space="preserve">
-    <value>Likertskala 8</value>
+    <value>Likertskala (8 Abstufungen)</value>
   </data>
   <data name="LikertSkale9" xml:space="preserve">
-    <value>Likertskala 9</value>
+    <value>Likertskala (9 Abstufungen)</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Offene Antwort (Textantwort)</value>
@@ -227,13 +227,13 @@
     <value>Viele Antwortmöglichkeiten, eine Auswahl (ungeordnet)</value>
   </data>
   <data name="TrafficLight" xml:space="preserve">
-    <value>Ampelsystem(rot,gelb,grün)</value>
+    <value>Ampelsystem (rot,gelb,grün)</value>
   </data>
   <data name="YesNo" xml:space="preserve">
     <value>Ja/Nein</value>
   </data>
   <data name="YesNoDontKnow" xml:space="preserve">
-    <value>Ja/Nein/Weis nicht</value>
+    <value>Ja/Nein/Weiß nicht</value>
   </data>
   <data name="add" xml:space="preserve">
     <value>hinzufügen</value>
@@ -281,7 +281,7 @@
     <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
   </data>
   <data name="TemplateDescription" xml:space="preserve">
-    <value>Beim Anhaken, wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
+    <value>Beim Anhaken wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
   </data>
   <data name="noTemplate" xml:space="preserve">
     <value>kein Template</value>
