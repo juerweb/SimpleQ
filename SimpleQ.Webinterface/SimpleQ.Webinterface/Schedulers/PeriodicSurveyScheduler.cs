@@ -20,11 +20,16 @@ namespace SimpleQ.Webinterface.Schedulers
             try
             {
                 // Sleep bis um 23:00
-                logger.Debug($"Survey scheduler sleeping for {Literal.NextMidnight.Subtract(TimeSpan.FromHours(1)).ToString(@"hh\:mm\:ss\.fff")}");
                 if ((int)Literal.NextMidnight.Subtract(TimeSpan.FromHours(1)).TotalMilliseconds < 0)
+                {
+                    logger.Debug($"Survey scheduler sleeping for {Literal.NextMidnight.Add(TimeSpan.FromDays(1)).Subtract(TimeSpan.FromHours(1)).ToString(@"hh\:mm\:ss\.fff")}");
                     Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromDays(1)).Subtract(TimeSpan.FromHours(1)).TotalMilliseconds);
+                }
                 else
+                {
+                    logger.Debug($"Survey scheduler sleeping for {Literal.NextMidnight.Subtract(TimeSpan.FromHours(1)).ToString(@"hh\:mm\:ss\.fff")}");
                     Thread.Sleep((int)Literal.NextMidnight.Subtract(TimeSpan.FromHours(1)).TotalMilliseconds);
+                }
 
                 using (var db = new SimpleQDBEntities())
                 {
