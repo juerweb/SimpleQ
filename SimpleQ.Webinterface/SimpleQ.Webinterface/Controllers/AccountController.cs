@@ -440,18 +440,21 @@ namespace SimpleQ.Webinterface.Controllers
                     var surveys = await db.Surveys.Where(s => s.CustCode == custCode).ToListAsync();
                     foreach (var s in surveys)
                     {
-                        await Task.Run(() => db.sp_DeleteSurvey(s.SvyId));
+                        db.Votes.RemoveRange((await db.Votes.ToListAsync()).Where(v => s.AnswerOptions.Any(a => a.Votes.Any(vo => vo.VoteId == v.VoteId))));
+                        db.AnswerOptions.RemoveRange(s.AnswerOptions);
+                        s.Departments.Clear();
+                        db.Surveys.Remove(s);
                     }
-
-                    cust.SurveyCategories.Clear();
-                    cust.AnswerTypes.Clear();
-                    cust.Bills.Clear();
-                    db.People.RemoveRange(cust.Departments.SelectMany(d => d.People));
-                    cust.Departments.Clear();
-
-                    db.Customers.Remove(cust);
-
                     await db.SaveChangesAsync();
+
+                    db.SurveyCategories.RemoveRange(db.SurveyCategories.Where(c => c.CustCode == custCode));
+                    cust.AnswerTypes.Clear();
+                    db.Bills.RemoveRange(db.Bills.Where(b => b.CustCode == custCode));
+                    db.People.RemoveRange(cust.Departments.SelectMany(d => d.People));
+                    db.Departments.RemoveRange(db.Departments.Where(d => d.CustCode == custCode));
+                    db.Customers.Remove(cust);
+                    await db.SaveChangesAsync();
+
                     Response.AppendHeader("msg", "cause nothin' lasts forever even cold november rain");
                     logger.Info($"Customer unregistered {custCode}");
 

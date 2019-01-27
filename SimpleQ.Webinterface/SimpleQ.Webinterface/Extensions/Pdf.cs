@@ -19,7 +19,7 @@ namespace SimpleQ.Webinterface.Extensions
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static bool CreateBill(ref MemoryStream stream, Bill bill, Survey[] surveys, string imgPath, DateTime lastBillDate)
+        public static bool CreateBill(ref MemoryStream stream, Customer cust, Bill bill, Survey[] surveys, string imgPath, DateTime lastBillDate)
         {
             try
             {
@@ -45,19 +45,34 @@ namespace SimpleQ.Webinterface.Extensions
                 title.AddText(BackendResources.Bill);
                 title.AddLineBreak();
 
-                var content = section.AddParagraph();
-                content.AddFormattedText(BackendResources.Date, TextFormat.Bold);
-                content.AddText($": {bill.BillDate.ToString(BackendResources.DateFormat)}");
-                content.AddLineBreak();
+                var custData = section.AddParagraph();
+                custData.AddFormattedText(BackendResources.Beneficiary, TextFormat.Bold);
+                custData.AddLineBreak();
+                custData.AddText(cust.CustName);
+                custData.AddLineBreak();
+                custData.AddText(cust.Street);
+                custData.AddLineBreak();
+                custData.AddText($"{cust.Plz} {cust.City}");
+                custData.AddLineBreak();
+                custData.AddText(cust.Country);
+                custData.AddLineBreak();
+                custData.AddText(cust.CustEmail);
+                custData.AddLineBreak();
+                custData.AddLineBreak();
 
-                content.AddFormattedText(BackendResources.CustomerCode, TextFormat.Bold);
-                content.AddText($": {bill.CustCode}");
-                content.AddLineBreak();
+                var infos = section.AddParagraph();
+                infos.AddFormattedText(BackendResources.CustomerCode, TextFormat.Bold);
+                infos.AddText($": {bill.CustCode}");
+                infos.AddLineBreak();
 
-                content.AddFormattedText(BackendResources.BillNumber, TextFormat.Bold);
-                content.AddText($": {bill.BillId}");
-                content.AddLineBreak();
-                content.AddLineBreak();
+                infos.AddFormattedText(BackendResources.BillNumber, TextFormat.Bold);
+                infos.AddText($": {bill.BillId}");
+
+                var datePar = section.AddParagraph();
+                datePar.Format.Alignment = ParagraphAlignment.Right;
+                datePar.AddText(bill.BillDate.ToString(BackendResources.DateFormat));
+                datePar.AddLineBreak();
+                datePar.AddLineBreak();
 
                 var table = section.AddTable();
                 table.Format.Font.Size = 8;
@@ -95,7 +110,7 @@ namespace SimpleQ.Webinterface.Extensions
                     if (svy.EndDate <= bill.BillDate)
                         row[1].AddParagraph($"{startDate.ToString(BackendResources.DateFormat)} {BackendResources.To} {svy.EndDate.ToString(BackendResources.DateFormat)}");
                     else
-                        row[1].AddParagraph($"{startDate.ToString(BackendResources.Date)} {BackendResources.To} {BackendResources.Present}");
+                        row[1].AddParagraph($"{startDate.ToString(BackendResources.DateFormat)} {BackendResources.To} {bill.BillDate.ToString(BackendResources.DateFormat)}");
 
                     var amount = svy.AnswerOptions.SelectMany(a => a.Votes).Distinct().Where(v => v.VoteDate > lastBillDate).Count();
                     row[2].AddParagraph($"{amount}");
@@ -106,7 +121,7 @@ namespace SimpleQ.Webinterface.Extensions
                     i++;
                 }
 
-                if (sum != bill.BillPrice)
+                if (Math.Round(sum, 2) != Math.Round(bill.BillPrice, 2))
                 {
                     //Debug.WriteLine($"!!!:{sum} != {bill.BillPrice}");
                     logger.Warn($"Possible error calculating bill price. Sum: {sum} != BillPrice: {bill.BillPrice} (BillId: {bill.BillId}, CustCode: {bill.CustCode})");
@@ -118,16 +133,31 @@ namespace SimpleQ.Webinterface.Extensions
                 total.BottomPadding = 2;
                 total.VerticalAlignment = VerticalAlignment.Center;
 
-                total[0].MergeRight = 3;
+                total[0].MergeRight = 2;
                 total[0].AddParagraph().AddFormattedText(BackendResources.TotalCost, TextFormat.Bold);
-                total[4].AddParagraph().AddFormattedText($"€ {Math.Round(bill.BillPrice, 2)}", TextFormat.Bold);
+                total[3].MergeRight = 1;
 
-                var footer = section.AddParagraph();
-                footer.AddLineBreak();
-                footer.AddLineBreak();
-                footer.AddText(BackendResources.BestRegards);
-                footer.AddLineBreak();
-                footer.AddText(BackendResources.YourSimpleQTeam);
+                var par = total[3].AddParagraph();
+                par.Format.Alignment = ParagraphAlignment.Center;
+                par.AddFormattedText($"€ {Math.Round(bill.BillPrice, 2)}", TextFormat.Bold);
+
+                var servicePeriod = section.AddParagraph();
+                servicePeriod.AddLineBreak();
+                servicePeriod.AddFormattedText($"{BackendResources.ServicePeriod}: ", TextFormat.Bold);
+                var minDate = surveys.Min(s => s.StartDate).ToString(BackendResources.DateFormat);
+                servicePeriod.AddText($"{minDate} {BackendResources.To} {bill.BillDate.ToString(BackendResources.DateFormat)}");
+
+                var greeting = section.AddParagraph();
+                greeting.AddLineBreak();
+                greeting.AddLineBreak();
+                greeting.AddText(BackendResources.BestRegards);
+                greeting.AddLineBreak();
+                greeting.AddText(BackendResources.YourSimpleQTeam);
+
+                section.PageSetup.DifferentFirstPageHeaderFooter = true;
+                var footer = section.Footers.FirstPage.AddParagraph();
+                footer.Format.Alignment = ParagraphAlignment.Center;
+                footer.AddText(BackendResources.LegalHint);
 
                 var renderer = new PdfDocumentRenderer(false, PdfFontEmbedding.Always)
                 {

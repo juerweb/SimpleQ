@@ -97,6 +97,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Beneficiary.
+        /// </summary>
+        internal static string Beneficiary {
+            get {
+                return ResourceManager.GetString("Beneficiary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Best regards,.
         /// </summary>
         internal static string BestRegards {
@@ -444,6 +453,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Hint: Exempted from value-added tax – small entrepreneur pursuant to § 6 Abs. 1 Z 27 UStG.
+        /// </summary>
+        internal static string LegalHint {
+            get {
+                return ResourceManager.GetString("LegalHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There must be submitted data..
         /// </summary>
         internal static string ModelNull {
@@ -573,6 +591,15 @@ namespace SimpleQ.Webinterface.Properties {
         internal static string RegistrationEmailSubject {
             get {
                 return ResourceManager.GetString("RegistrationEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service period.
+        /// </summary>
+        internal static string ServicePeriod {
+            get {
+                return ResourceManager.GetString("ServicePeriod", resourceCulture);
             }
         }
         

@@ -228,4 +228,10 @@
   <data name="deleteTemplate500" xml:space="preserve">
     <value>Delete template error 500</value>
   </data>
+  <data name="deletePeriodic404" xml:space="preserve">
+    <value>Delete periodic error 404</value>
+  </data>
+  <data name="deletePeriodic500" xml:space="preserve">
+    <value>Delete Periodic error 500</value>
+  </data>
 </root>

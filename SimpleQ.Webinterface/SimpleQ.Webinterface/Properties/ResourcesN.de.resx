@@ -234,4 +234,10 @@
   <data name="deleteTemplate500" xml:space="preserve">
     <value>Template löschen Fehlercode: 500</value>
   </data>
+  <data name="deletePeriodic404" xml:space="preserve">
+    <value>Periodische Umfrage löschen Fehlercode 404</value>
+  </data>
+  <data name="deletePeriodic500" xml:space="preserve">
+    <value>Periodische Umfrage löschen Fehlercode 500</value>
+  </data>
 </root>

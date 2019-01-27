@@ -48,7 +48,7 @@ namespace SimpleQ.Webinterface.Schedulers
                         logger.Debug($"Surveys to bill for customer {clinton.CustCode}: {surveys.Length}");
 
                         var stream = new MemoryStream();
-                        if (Pdf.CreateBill(ref stream, clinton, surveys, HostingEnvironment.MapPath("~/Content/Images/Logos/simpleQ.png"), lastBillDate))
+                        if (Pdf.CreateBill(ref stream, clinton.Customer, clinton, surveys, HostingEnvironment.MapPath("~/Content/Images/Logos/simpleQ.png"), lastBillDate))
                         {
                             logger.Debug($"Pdf document for bill {clinton.BillId} created successfully");
                             var body = $"Dear sir or madam!{Environment.NewLine}{Environment.NewLine}" +

@@ -196,6 +196,24 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete periodic error 404.
+        /// </summary>
+        public static string deletePeriodic404 {
+            get {
+                return ResourceManager.GetString("deletePeriodic404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Periodic error 500.
+        /// </summary>
+        public static string deletePeriodic500 {
+            get {
+                return ResourceManager.GetString("deletePeriodic500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete template error 404.
         /// </summary>
         public static string deleteTemplate404 {

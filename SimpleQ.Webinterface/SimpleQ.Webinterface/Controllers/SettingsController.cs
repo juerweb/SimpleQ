@@ -181,71 +181,62 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    try
+                    var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
+                    if (cust == null)
                     {
-                        var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
-                        if (cust == null)
-                        {
-                            logger.Warn($"Updating customer failed. Customer not found: {CustCode}");
-                            return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
-                        }
-
-                        if (string.IsNullOrEmpty(req.Name))
-                            AddModelError("CustName", BackendResources.NameEmpty, ref err);
-
-                        if (string.IsNullOrEmpty(req.Email))
-                            AddModelError("CustEmail", BackendResources.EmailEmpty, ref err);
-
-                        if (string.IsNullOrEmpty(req.Street))
-                            AddModelError("Street", BackendResources.StreetEmpty, ref err);
-
-                        if (string.IsNullOrEmpty(req.Plz))
-                            AddModelError("Plz", BackendResources.PlzEmpty, ref err);
-
-                        if (string.IsNullOrEmpty(req.City))
-                            AddModelError("City", BackendResources.CityEmpty, ref err);
-
-                        if (string.IsNullOrEmpty(req.Country))
-                            AddModelError("Country", BackendResources.CountryEmpty, ref err);
-
-                        if (string.IsNullOrEmpty(req.LanguageCode))
-                            AddModelError("LanguageCode", BackendResources.LangCodeEmpty, ref err);
-
-                        if (req.DataStoragePeriod <= 0)
-                            AddModelError("DataStoragePeriod", BackendResources.DataStoragePeriodInvalid, ref err);
-
-                        if (await db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).CountAsync() == 0)
-                            AddModelError("PaymentMethodId", BackendResources.PaymentMethodInvalid, ref err);
-
-                        if (err)
-                        {
-                            logger.Debug("Update customer validation failed. Exiting action.");
-                            return await Index();
-                        }
-
-                        var prevEmail = cust.CustEmail;
-
-                        cust.CustName = req.Name;
-                        cust.CustEmail = req.Email;
-                        cust.Street = req.Street;
-                        cust.Plz = req.Plz;
-                        cust.City = req.City;
-                        cust.Country = req.Country;
-                        cust.LanguageCode = req.LanguageCode;
-                        cust.DataStoragePeriod = req.DataStoragePeriod;
-                        cust.PaymentMethodId = req.PaymentMethodId;
-
-                        await db.SaveChangesAsync();
-                        logger.Debug("Updated customer successfully");
-
-                        return await Index();
+                        logger.Warn($"Updating customer failed. Customer not found: {CustCode}");
+                        return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                     }
-                    catch (ArgumentNullException ex)
+
+                    if (string.IsNullOrEmpty(req.Name))
+                        AddModelError("CustName", BackendResources.NameEmpty, ref err);
+
+                    if (string.IsNullOrEmpty(req.Email))
+                        AddModelError("CustEmail", BackendResources.EmailEmpty, ref err);
+
+                    if (string.IsNullOrEmpty(req.Street))
+                        AddModelError("Street", BackendResources.StreetEmpty, ref err);
+
+                    if (string.IsNullOrEmpty(req.Plz))
+                        AddModelError("Plz", BackendResources.PlzEmpty, ref err);
+
+                    if (string.IsNullOrEmpty(req.City))
+                        AddModelError("City", BackendResources.CityEmpty, ref err);
+
+                    if (string.IsNullOrEmpty(req.Country))
+                        AddModelError("Country", BackendResources.CountryEmpty, ref err);
+
+                    if (string.IsNullOrEmpty(req.LanguageCode))
+                        AddModelError("LanguageCode", BackendResources.LangCodeEmpty, ref err);
+
+                    if (req.DataStoragePeriod <= 0)
+                        AddModelError("DataStoragePeriod", BackendResources.DataStoragePeriodInvalid, ref err);
+
+                    if (await db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).CountAsync() == 0)
+                        AddModelError("PaymentMethodId", BackendResources.PaymentMethodInvalid, ref err);
+
+                    if (err)
                     {
-                        AddModelError(ex.ParamName, ex.Message, ref err);
                         logger.Debug("Update customer validation failed. Exiting action.");
                         return await Index();
                     }
+
+                    var prevEmail = cust.CustEmail;
+
+                    cust.CustName = req.Name;
+                    cust.CustEmail = req.Email;
+                    cust.Street = req.Street;
+                    cust.Plz = req.Plz;
+                    cust.City = req.City;
+                    cust.Country = req.Country;
+                    cust.LanguageCode = req.LanguageCode;
+                    cust.DataStoragePeriod = req.DataStoragePeriod;
+                    cust.PaymentMethodId = req.PaymentMethodId;
+
+                    await db.SaveChangesAsync();
+                    logger.Debug("Updated customer successfully");
+
+                    return await Index();
                 }
             }
             catch (Exception ex)
@@ -603,7 +594,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     var stream = new MemoryStream();
 
-                    if (Pdf.CreateBill(ref stream, bill, surveys, HttpContext.Server.MapPath("~/Content/Images/Logos/simpleQ.png"), lastBillDate))
+                    if (Pdf.CreateBill(ref stream, bill.Customer, bill, surveys, HttpContext.Server.MapPath("~/Content/Images/Logos/simpleQ.png"), lastBillDate))
                     {
                         logger.Debug("Bill created successfully.");
                         return File(stream, "application/pdf");
@@ -637,7 +628,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
 
                     var svy = await db.Surveys.Where(s => s.SvyId == svyId && s.Period != null).FirstOrDefaultAsync();
-                    if(svy != null)
+                    if (svy == null)
                     {
                         logger.Debug("Stopping periodic survey. Survey not found");
                         return Http.NotFound("Survey not found");
