@@ -59,5 +59,431 @@ namespace SimpleQ.Webinterface.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Accounting period must either 1, 3, 6 or 12 months..
+        /// </summary>
+        internal static string AccountingPeriodInvalid {
+            get {
+                return ResourceManager.GetString("AccountingPeriodInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to At least one answer type does not exist..
+        /// </summary>
+        internal static string AnswerTypeDoesNotExist {
+            get {
+                return ResourceManager.GetString("AnswerTypeDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There must be selected at least one answer type..
+        /// </summary>
+        internal static string AnswerTypesNull {
+            get {
+                return ResourceManager.GetString("AnswerTypesNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to City must not be empty..
+        /// </summary>
+        internal static string CityEmpty {
+            get {
+                return ResourceManager.GetString("CityEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sending failed due to internal error(s)..
+        /// </summary>
+        internal static string ConfirmationSendingFailedMsg {
+            get {
+                return ResourceManager.GetString("ConfirmationSendingFailedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to send confirmation e-mail.
+        /// </summary>
+        internal static string ConfirmationSendingFailedTitle {
+            get {
+                return ResourceManager.GetString("ConfirmationSendingFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Country must not be empty..
+        /// </summary>
+        internal static string CountryEmpty {
+            get {
+                return ResourceManager.GetString("CountryEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid customer code or password..
+        /// </summary>
+        internal static string CustCodeOrPwdInvalid {
+            get {
+                return ResourceManager.GetString("CustCodeOrPwdInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current customer was not found..
+        /// </summary>
+        internal static string CustomerNotFoundMsg {
+            get {
+                return ResourceManager.GetString("CustomerNotFoundMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer not found.
+        /// </summary>
+        internal static string CustomerNotFoundTitle {
+            get {
+                return ResourceManager.GetString("CustomerNotFoundTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Data storage period must be at least 1 month..
+        /// </summary>
+        internal static string DataStoragePeriodInvalid {
+            get {
+                return ResourceManager.GetString("DataStoragePeriodInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid day value..
+        /// </summary>
+        internal static string DayInvalid {
+            get {
+                return ResourceManager.GetString("DayInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong. Please try again later..
+        /// </summary>
+        internal static string DefaultErrorMsg {
+            get {
+                return ResourceManager.GetString("DefaultErrorMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Group not found..
+        /// </summary>
+        internal static string DepNotFound {
+            get {
+                return ResourceManager.GetString("DepNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There must be specified at least one email address..
+        /// </summary>
+        internal static string EmailAdressesEmpty {
+            get {
+                return ResourceManager.GetString("EmailAdressesEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email does already exist..
+        /// </summary>
+        internal static string EmailAlreadyExists {
+            get {
+                return ResourceManager.GetString("EmailAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email must not be empty..
+        /// </summary>
+        internal static string EmailEmpty {
+            get {
+                return ResourceManager.GetString("EmailEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sending failed due to internal error(s)..
+        /// </summary>
+        internal static string EmailSendingFailedMessage {
+            get {
+                return ResourceManager.GetString("EmailSendingFailedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to send email.
+        /// </summary>
+        internal static string EmailSendingFailedTitle {
+            get {
+                return ResourceManager.GetString("EmailSendingFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This password reset link is not valid anymore..
+        /// </summary>
+        internal static string ExpiredPasswordResetMsg {
+            get {
+                return ResourceManager.GetString("ExpiredPasswordResetMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Expired reset link.
+        /// </summary>
+        internal static string ExpiredPasswordResetTitle {
+            get {
+                return ResourceManager.GetString("ExpiredPasswordResetTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dear Sir or Madam!\r\n
+        ///\r\n
+        ///To reset your email click the following link: {Url}\r\n
+        ///The link is valid for 15 minutes.\r\n
+        ///\r\n\r\n
+        ///Best regards,\r\n
+        ///Your SimpleQ team.
+        /// </summary>
+        internal static string ForgotPasswordEmailMessage {
+            get {
+                return ResourceManager.GetString("ForgotPasswordEmailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SimpleQ password reset.
+        /// </summary>
+        internal static string ForgotPasswordEmailSubject {
+            get {
+                return ResourceManager.GetString("ForgotPasswordEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You got invited to participate in surveys provided by SimpleQ!\r\n
+        ///\r\n
+        ///Please scan the attached QR code with your SimpleQ app.\r\n
+        ///Alternatively you can enter the following registration code in your app: {RegCode}\r\n
+        ///\r\n\r\n
+        ///Best regards,\r\n
+        ///Your SimpleQ team.
+        /// </summary>
+        internal static string GroupInvitationEmailMessage {
+            get {
+                return ResourceManager.GetString("GroupInvitationEmailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your registration code: {RegCode}\r\n
+        ///Message:\r\n
+        ///{CustomMessage}.
+        /// </summary>
+        internal static string GroupInvitationEmailMessageCustom {
+            get {
+                return ResourceManager.GetString("GroupInvitationEmailMessageCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SimpleQ invitation.
+        /// </summary>
+        internal static string GroupInvitationEmailSubject {
+            get {
+                return ResourceManager.GetString("GroupInvitationEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sending failed due to internal error(s)..
+        /// </summary>
+        internal static string GroupInvitationSendingFailedMsg {
+            get {
+                return ResourceManager.GetString("GroupInvitationSendingFailedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to send invitation e-mails.
+        /// </summary>
+        internal static string GroupInvitationSendingFailedTitle {
+            get {
+                return ResourceManager.GetString("GroupInvitationSendingFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This email confirmation link is not valid..
+        /// </summary>
+        internal static string InvalidConfirmationLinkMsg {
+            get {
+                return ResourceManager.GetString("InvalidConfirmationLinkMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid confirmation link.
+        /// </summary>
+        internal static string InvalidConfirmationLinkTitle {
+            get {
+                return ResourceManager.GetString("InvalidConfirmationLinkTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This password reset link is not valid..
+        /// </summary>
+        internal static string InvalidPasswordResetMsg {
+            get {
+                return ResourceManager.GetString("InvalidPasswordResetMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid reset link.
+        /// </summary>
+        internal static string InvalidPasswordResetTitle {
+            get {
+                return ResourceManager.GetString("InvalidPasswordResetTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language must not be empty..
+        /// </summary>
+        internal static string LangCodeEmpty {
+            get {
+                return ResourceManager.GetString("LangCodeEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There must be submitted data..
+        /// </summary>
+        internal static string ModelNull {
+            get {
+                return ResourceManager.GetString("ModelNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name must not be empty..
+        /// </summary>
+        internal static string NameEmpty {
+            get {
+                return ResourceManager.GetString("NameEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment method does not exist..
+        /// </summary>
+        internal static string PaymentMethodInvalid {
+            get {
+                return ResourceManager.GetString("PaymentMethodInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ZIP code must not be empty..
+        /// </summary>
+        internal static string PlzEmpty {
+            get {
+                return ResourceManager.GetString("PlzEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entered passwords do not match..
+        /// </summary>
+        internal static string PwdDontMatch {
+            get {
+                return ResourceManager.GetString("PwdDontMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password must be at least 8 characters long..
+        /// </summary>
+        internal static string PwdTooShort {
+            get {
+                return ResourceManager.GetString("PwdTooShort", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select a question category..
+        /// </summary>
+        internal static string QuestionCategoryEmpty {
+            get {
+                return ResourceManager.GetString("QuestionCategoryEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The question text must not be empty..
+        /// </summary>
+        internal static string QuestionTextEmpty {
+            get {
+                return ResourceManager.GetString("QuestionTextEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to SimpleQ!\r\n
+        ///\r\n
+        ///Please confirm your e-mail address now.\r\n
+        ///Hence just click the following confirmation link: {Url}\r\n
+        ///Your customer code: {CustCode}\r\n
+        ///\r\n\r\n
+        ///Best regards,\r\n
+        ///Your SimpleQ team.
+        /// </summary>
+        internal static string RegistrationEmailMessage {
+            get {
+                return ResourceManager.GetString("RegistrationEmailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SimpleQ email confirmation.
+        /// </summary>
+        internal static string RegistrationEmailSubject {
+            get {
+                return ResourceManager.GetString("RegistrationEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Street must not be empty..
+        /// </summary>
+        internal static string StreetEmpty {
+            get {
+                return ResourceManager.GetString("StreetEmpty", resourceCulture);
+            }
+        }
     }
 }

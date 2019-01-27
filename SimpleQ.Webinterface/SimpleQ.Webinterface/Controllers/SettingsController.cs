@@ -2,6 +2,7 @@
 using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
+using SimpleQ.Webinterface.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -31,7 +32,7 @@ namespace SimpleQ.Webinterface.Controllers
                     if (cust == null)
                     {
                         logger.Warn($"Loading failed. Customer not found: {CustCode}");
-                        return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+                        return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                     }
 
                     var bills = new List<SettingsModel.BillWrapper>();
@@ -85,7 +86,9 @@ namespace SimpleQ.Webinterface.Controllers
                         OutstandingBalance = decimal.ToDouble(cust.CostBalance),
                         CurrentSurveyAmount = currentSurveyAmount,
                         CurrentVoteAmount = currentVoteAmount,
-                        PeriodicSurveys = db.Surveys.Where(s => s.CustCode == CustCode && s.Period != null).ToList()
+                        PeriodicSurveys = db.Surveys.Where(s => s.CustCode == CustCode && s.Period != null).ToList(),
+                        AccountingDay = cust.AccountingDate.Day,
+                        AccountingPeriod = cust.AccountingPeriod
                     };
 
                     ViewBag.emailConfirmed = cust.EmailConfirmed;
@@ -95,7 +98,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]Index: Unexpected error");
                 return View("Error", model);
             }
@@ -110,7 +113,7 @@ namespace SimpleQ.Webinterface.Controllers
                 bool err = false;
 
                 if (req == null)
-                    AddModelError("Model", "Model object must not be null.", ref err);
+                    AddModelError("Model", BackendResources.ModelNull, ref err);
 
                 using (var db = new SimpleQDBEntities())
                 {
@@ -118,17 +121,17 @@ namespace SimpleQ.Webinterface.Controllers
                     if (cust == null)
                     {
                         logger.Warn($"Changing answer types failed. Customer not found: {CustCode}");
-                        return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+                        return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                     }
 
                     if (req.CheckedAnswerTypes == null)
-                        AddModelError("CheckedAnswerTypes", "AnswerTypes must not be null.", ref err);
+                        AddModelError("CheckedAnswerTypes", BackendResources.AnswerTypesNull, ref err);
 
                     foreach (var typeId in req.CheckedAnswerTypes.Distinct())
                     {
                         if (await db.AnswerTypes.Where(a => a.TypeId == typeId).FirstOrDefaultAsync() == null)
                         {
-                            AddModelError("CheckedAnswerTypes", "AnswerType does not exist.", ref err);
+                            AddModelError("CheckedAnswerTypes", BackendResources.AnswerTypeDoesNotExist, ref err);
                             break;
                         }
                     }
@@ -159,7 +162,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[POST]ChangeAnswerRequest: Unexpected error");
                 return View("Error", model);
             }
@@ -174,7 +177,7 @@ namespace SimpleQ.Webinterface.Controllers
                 bool err = false;
 
                 if (req == null)
-                    AddModelError("Model", "Model object must not be null.", ref err);
+                    AddModelError("Model", BackendResources.ModelNull, ref err);
 
                 using (var db = new SimpleQDBEntities())
                 {
@@ -184,24 +187,35 @@ namespace SimpleQ.Webinterface.Controllers
                         if (cust == null)
                         {
                             logger.Warn($"Updating customer failed. Customer not found: {CustCode}");
-                            return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+                            return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                         }
 
-                        var prevEmail = cust.CustEmail;
+                        if (string.IsNullOrEmpty(req.Name))
+                            AddModelError("CustName", BackendResources.NameEmpty, ref err);
 
-                        cust.CustName = req.Name ?? throw ANEx("CustName");
-                        cust.CustEmail = req.Email ?? throw ANEx("CustEmail");
-                        cust.Street = req.Street ?? throw ANEx("Street");
-                        cust.Plz = req.Plz ?? throw ANEx("Plz");
-                        cust.City = req.City ?? throw ANEx("City");
-                        cust.Country = req.Country ?? throw ANEx("Country");
-                        cust.LanguageCode = req.LanguageCode ?? throw ANEx("LanguageCode");
+                        if (string.IsNullOrEmpty(req.Email))
+                            AddModelError("CustEmail", BackendResources.EmailEmpty, ref err);
 
-                        if (await db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).CountAsync() == 0)
-                            AddModelError("PaymentMethodId", "PaymentMethod does not exist.", ref err);
+                        if (string.IsNullOrEmpty(req.Street))
+                            AddModelError("Street", BackendResources.StreetEmpty, ref err);
+
+                        if (string.IsNullOrEmpty(req.Plz))
+                            AddModelError("Plz", BackendResources.PlzEmpty, ref err);
+
+                        if (string.IsNullOrEmpty(req.City))
+                            AddModelError("City", BackendResources.CityEmpty, ref err);
+
+                        if (string.IsNullOrEmpty(req.Country))
+                            AddModelError("Country", BackendResources.CountryEmpty, ref err);
+
+                        if (string.IsNullOrEmpty(req.LanguageCode))
+                            AddModelError("LanguageCode", BackendResources.LangCodeEmpty, ref err);
 
                         if (req.DataStoragePeriod <= 0)
-                            AddModelError("DataStoragePeriod", "DataStoragePeriod must be greater than 0.", ref err);
+                            AddModelError("DataStoragePeriod", BackendResources.DataStoragePeriodInvalid, ref err);
+
+                        if (await db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).CountAsync() == 0)
+                            AddModelError("PaymentMethodId", BackendResources.PaymentMethodInvalid, ref err);
 
                         if (err)
                         {
@@ -209,6 +223,15 @@ namespace SimpleQ.Webinterface.Controllers
                             return await Index();
                         }
 
+                        var prevEmail = cust.CustEmail;
+
+                        cust.CustName = req.Name;
+                        cust.CustEmail = req.Email;
+                        cust.Street = req.Street;
+                        cust.Plz = req.Plz;
+                        cust.City = req.City;
+                        cust.Country = req.Country;
+                        cust.LanguageCode = req.LanguageCode;
                         cust.DataStoragePeriod = req.DataStoragePeriod;
                         cust.PaymentMethodId = req.PaymentMethodId;
 
@@ -219,7 +242,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
                     catch (ArgumentNullException ex)
                     {
-                        AddModelError(ex.ParamName, $"{ex.ParamName} must not be null.", ref err);
+                        AddModelError(ex.ParamName, ex.Message, ref err);
                         logger.Debug("Update customer validation failed. Exiting action.");
                         return await Index();
                     }
@@ -227,7 +250,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[POST]UpdateCustomer: Unexpected error");
                 return View("Error", model);
             }
@@ -600,42 +623,43 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> DeletePeriodic(int svyId)
+        public async Task<ActionResult> StopPeriodic(int svyId)
         {
             try
             {
-                logger.Debug($"Deleting periodic survey requested: {CustCode} (SvyId: {svyId})");
+                logger.Debug($"Stopping periodic survey requested: {CustCode} (SvyId: {svyId})");
                 using (var db = new SimpleQDBEntities())
                 {
                     if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
-                        logger.Warn($"Deleting periodic survey failed. Customer not found: {CustCode}");
+                        logger.Warn($"Stopping periodic survey failed. Customer not found: {CustCode}");
                         return Http.NotFound("Customer not found");
                     }
 
                     var svy = await db.Surveys.Where(s => s.SvyId == svyId && s.Period != null).FirstOrDefaultAsync();
                     if(svy != null)
                     {
-                        logger.Debug("Deleting periodic survey. Survey not found");
+                        logger.Debug("Stopping periodic survey. Survey not found");
                         return Http.NotFound("Survey not found");
                     }
 
                     svy.Period = null;
                     await db.SaveChangesAsync();
 
+                    logger.Debug("Periodic survey stopped successfully");
                     return Http.Ok/*e gut*/();
                 }
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "[DELETE]DeletePerodic: Unexpected error");
+                logger.Error(ex, "[DELETE]StopPerodic: Unexpected error");
                 return Http.InternalServerError("Something went wrong. Please try again later.");
             }
         }
         #endregion
 
         #region Helpers
-        private ArgumentNullException ANEx(string paramName) => new ArgumentNullException(paramName);
+        private ArgumentNullException ANEx(string paramName, string msg) => new ArgumentNullException(paramName, msg);
         #endregion
     }
 }

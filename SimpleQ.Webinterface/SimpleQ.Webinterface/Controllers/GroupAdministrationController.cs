@@ -1,6 +1,7 @@
 ﻿using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
+using SimpleQ.Webinterface.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -35,7 +36,7 @@ namespace SimpleQ.Webinterface.Controllers
                     if (await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync() == null)
                     {
                         logger.Warn($"Loading failed. Customer not found: {CustCode}");
-                        return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+                        return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                     }
 
                     var model = new GroupAdministrationModel
@@ -50,7 +51,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]Index: Unexpected error");
                 return View("Error", model);
             }
@@ -72,21 +73,21 @@ namespace SimpleQ.Webinterface.Controllers
                 bool err = false;
 
                 if (req == null)
-                    AddModelError("Model", "Model object must not be null.", ref err);
+                    AddModelError("Model", BackendResources.ModelNull, ref err);
 
                 if (req.Emails == null || req.Emails.Count == 0)
-                    AddModelError("Emails", "Email addreses must not be empty.", ref err);
+                    AddModelError("Emails", BackendResources.EmailAdressesEmpty, ref err);
 
                 using (var db = new SimpleQDBEntities())
                 {
                     if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Sending invitation e-mails failed. Customer not found: {CustCode}");
-                        return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+                        return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                     }
 
                     if (await db.Departments.Where(d => d.DepId == req.DepId && d.CustCode == CustCode).CountAsync() == 0)
-                        AddModelError("DepId", "Department not found.", ref err);
+                        AddModelError("DepId", BackendResources.DepNotFound, ref err);
 
                     if (err)
                     {
@@ -106,10 +107,21 @@ namespace SimpleQ.Webinterface.Controllers
                         Name = "QR Code"
                     };
 
-                    if (await Email.Send("invitation@simpleq.at", req.Emails.ToArray(), req.InvitationSubject,
-                        $"REGISTRATION CODE: {CustCode}{req.DepId}{Environment.NewLine}{Environment.NewLine}{req.InvitationText}",
-                        true,
-                        new Attachment(new MemoryStream(b), contentType)))
+                    string subject = "";
+                    string body = "";
+
+                    if (string.IsNullOrWhiteSpace(req.InvitationSubject))
+                        subject = BackendResources.GroupInvitationEmailSubject;
+
+                    if (string.IsNullOrWhiteSpace(req.InvitationText))
+                        body = BackendResources.GroupInvitationEmailMessage
+                            .Replace("{RegCode}", $"{CustCode}{req.DepId}");
+                    else
+                        body = BackendResources.GroupInvitationEmailMessageCustom
+                            .Replace("{RegCode}", $"{CustCode}{req.DepId}")
+                            .Replace("{CustomMessage}", req.InvitationText);
+
+                    if (await Email.Send("invitation@simpleq.at", req.Emails.ToArray(), subject, body, true, new Attachment(new MemoryStream(b), contentType)))
                     {
                         logger.Debug($"Invitation e-mails sent successfully for: {CustCode}");
                         return await Index();
@@ -117,14 +129,14 @@ namespace SimpleQ.Webinterface.Controllers
                     else
                     {
                         logger.Error($"Failed to send invitation e-mails for: {CustCode}");
-                        var model = new ErrorModel { Title = "Unable to send e-mail", Message = "Sending failed due to internal error(s)." };
+                        var model = new ErrorModel { Title = BackendResources.GroupInvitationSendingFailedTitle, Message = BackendResources.GroupInvitationSendingFailedMsg };
                         return View("Error", model);
                     }
                 }
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[POST]SendInvitations: Unexpected error");
                 return View("Error", model);
             }

@@ -2,6 +2,7 @@
 using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
+using SimpleQ.Webinterface.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -39,7 +40,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]Index: Unexpected error");
                 return View("Error", model);
             }
@@ -59,16 +60,16 @@ namespace SimpleQ.Webinterface.Controllers
                 bool err = false;
 
                 if (req == null)
-                    AddModelError("Model", "Model object must not be null.", ref err);
+                    AddModelError("Model", BackendResources.ModelNull, ref err);
 
                 if (string.IsNullOrEmpty(req.Email))
-                    AddModelError("Email", "Email must not be null.", ref err);
+                    AddModelError("Email", BackendResources.EmailEmpty, ref err);
 
                 if (string.IsNullOrEmpty(req.QuestionText))
-                    AddModelError("QuestionText", "QuestionText must not be null.", ref err);
+                    AddModelError("QuestionText", BackendResources.QuestionTextEmpty, ref err);
 
                 if (string.IsNullOrEmpty(req.QuestionCatgeory))
-                    AddModelError("QuestionCatgeory", "QuestionCatgeory must not be null.", ref err);
+                    AddModelError("QuestionCatgeory", BackendResources.QuestionCategoryEmpty, ref err);
 
                 if (err)
                 {
@@ -88,13 +89,13 @@ namespace SimpleQ.Webinterface.Controllers
                 else
                 {
                     logger.Error($"Support e-mail sending failed for: {CustCode}");
-                    var model = new ErrorModel { Title = "Unable to send e-mail", Message = "Sending failed due to internal error(s)." };
+                    var model = new ErrorModel { Title = BackendResources.EmailSendingFailedTitle, Message = BackendResources.EmailSendingFailedMessage };
                     return View("Error", model);
                 }
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[POST]AskQuestion: Unexpected error");
                 return View("Error", model);
             }
