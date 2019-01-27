@@ -39,7 +39,7 @@
         {
             <div class="form-group mt-2">
                 @Html.LabelFor(m => m.QuestionCatgeory, "Fragekategorie")
-                @Html.DropDownListFor(m => m.QuestionCatgeory, new SelectList(new[] { "1", "2", "3" }), new { @class = "form-control mr-0" })
+                @Html.DropDownListFor(m => m.QuestionCatgeory, new SelectList(new[] { "Frage zum Produkt", "Frage zur Bezahlung", "Sonstige Frage" }), new { @class = "form-control mr-0" })
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.QuestionText, "Fragestellung")
