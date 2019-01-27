@@ -12,5 +12,6 @@ namespace SimpleQ.Shared
         public int PersId { get; set; }
         public int DepId { get; set; }
         public string DepName { get; set; }
+        public string AuthToken { get; set; }
     }
 }
