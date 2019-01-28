@@ -98,7 +98,7 @@ namespace SimpleQ.Webinterface.Controllers
                     TimeSpan? period = req.Period.HasValue ? (TimeSpan?)(req.IsWeek == true ? TimeSpan.FromDays(req.Period.Value * 7) : TimeSpan.FromDays(req.Period.Value)) : null;
                     req.Survey.Period = period?.Ticks;
 
-                    if (req.Period.HasValue & period.Value < TimeSpan.FromDays(1))
+                    if (req.Period.HasValue && period.Value < TimeSpan.FromDays(1))
                         AddModelError("Period", "Period must be at least 1 day.", ref err);
 
                     if (req.Period.HasValue && req.Survey.StartDate.Add(period.Value) < req.Survey.EndDate)

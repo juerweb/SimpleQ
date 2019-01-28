@@ -4,6 +4,60 @@
 @using System.Resources;
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyCreationModel
 
+<style>
+    .kleinerFont {
+        font-size: 16px;
+    }
+
+    .kleinerAbstand {
+        margin-top: -14px;
+    }
+
+    .kleinerkleinerFont {
+        font-size: 14px;
+    }
+
+    .kleinerkleinerkleinerFont {
+        font-size: 12px;
+    }
+
+    #antwort1 {
+        position: absolute;
+        top: 65px;
+        left: 9px;
+        width: 150px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    #antwort2 {
+        position: absolute;
+        top: 65px;
+        left: 50px;
+        width: 150px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    #links {
+        position: absolute;
+        top: 65px;
+        left: 50px;
+        width: 60px;
+        height: 40px;
+        cursor: pointer;
+    }
+
+    #rechts {
+        position: absolute;
+        top: 65px;
+        left: 50px;
+        width: 60px;
+        height: 40px;
+        cursor: pointer;
+    }
+</style>
+
 @{
     int maxCount = 0;
     ResourceManager rm = Resources.ResourceManager;
@@ -130,7 +184,7 @@
                 <div class="row mr-0 ml-0 mt-2">
                     <div class="col-4">
                         <label>Periodendauer</label>
-                        <input id="countInput" class="form-control" type="number" min="0" value="" name='Period' onchange="insertHiddenCheckBox()"/>
+                        <input id="countInput" class="form-control" type="number" min="0" value="" name='Period' onchange="insertHiddenCheckBox()" />
                     </div>
                     <div class="col-8">
                         <label>Einheit</label>
@@ -150,7 +204,19 @@
             <button type="submit" id="submitBtn" class="btn btn-primary btn-block mb-5" disabled>@Resources.startSurvey</button>
         </div>
         <div class="col-md-5 p-0">
-            <h3 class="text-center">@Resources.surveyPreviewHeader</h3>
+            @*<h3 class="text-center">@Resources.surveyPreviewHeader</h3>*@
+            <div class="device-container ml-5 pl-5 mt-4">
+                <div class="device-mockup galaxy_s5 portrait white">
+                    <div class="device" style="height:730px; width:360px;">
+                        <div id="androidHandy" class="screen" style="background-color:white;">
+                            <img src="../../Content/Images/Device/header.png" width="315" height="65" />
+                            <p id="timePhone" style="font-size:13px; color:white; position:absolute; left:278px; top:0px;"></p>
+                        </div>
+                        <div class="button">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -175,7 +241,7 @@
             </div>
         </div>
     </div>
-}
+                            }
 <script>
     let answers = [];
     let firstAnswer = "";
@@ -241,7 +307,7 @@
 
 
     function addGroups() {
-        @{ 
+        @{
             foreach (KeyValuePair<Department, int> kvp in Model.Departments)
             {
                 @:groups.push({ id: @kvp.Key.DepId, count: @kvp.Value});
@@ -287,7 +353,7 @@
         $.get(
             url,
             function (survey) {
-            
+
             document.getElementById("question").value = survey.SvyText; //Fill Question input
 
             let ddl = document.getElementById('categoryDropdown'); //change to Surveycategory from Template
@@ -317,19 +383,19 @@
                     for (i = 0; i < survey.AnswerOptions.length; i++) {
                         answers.push(survey.AnswerOptions[i].AnsText);
                     }
-                    if (survey.TypeId >= 6 && survey.TypeId <= 9) {                       
+                    if (survey.TypeId >= 6 && survey.TypeId <= 9) {
                         insertAnswers();
                         answersULChanged();
                     } else {
                         if (survey.AnswerOptions.length > 1) {
                             firstAnswer = answers[0];
                             secondAnswer = answers[answers.length - 1];
-                            insertDichotomInputs();                          
-                        }                       
+                            insertDichotomInputs();
+                        }
                     }
-                   
-                } 
-                
+
+                }
+
 
             let depIds = [];
             for (i = 0; i < survey.Departments.length; i++) {
@@ -355,9 +421,8 @@
 
                 let countInput = document.getElementById("countInput");
                 countInput.value = survey.Amount;
-
+                insertIntoPhone();
         });
-
     }
 
 
@@ -396,7 +461,7 @@
         var answerBox = document.getElementById("answerBox");
         var answerType = document.getElementById("AnswerTypeCB");
         var value = answerType.value;
-        if (value >= 6 && value <= 9) {          
+        if (value >= 6 && value <= 9) {
             if (answers.length === 0) {
                 $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
             }
@@ -443,7 +508,7 @@
     }
 
 
-    function insertAnswers() {        
+    function insertAnswers() {
         let ul = document.getElementById("answerUL");
         ul.innerHTML = "";
         for (i = 0; i < answers.length; i++) {
@@ -463,6 +528,7 @@
 
 
     function dichotomAnswerChanged(inputId) {
+        insertIntoPhone();
         firstAnswer = document.getElementById("dichotomAnswer1").value;
         secondAnswer = document.getElementById("dichotomAnswer2").value;
         if (firstAnswer !== "" && secondAnswer !== "") {
@@ -727,6 +793,107 @@
             //console.log("rere");
             document.getElementById("periodicUpDownIcon").innerHTML = "&#xe313;";
             //$("#periodicUpDownIcon").innerHTML = "&#xe313;";
+        }
+    }
+
+    $('#categoryDropdown').add("#AnswerTypeCB").on('change', insertIntoPhone);
+    $("#question").change(function () {
+        insertIntoPhone();
+    });
+
+    var dt = new Date();
+    var time = dt.getHours() + ":" + dt.getMinutes();
+    $("#timePhone").html(time);
+    setInterval(function () {
+        var dt = new Date();
+        var time = dt.getHours() + ":" + checkTime(dt.getMinutes());
+        $("#timePhone").html(time);
+    }, 10000);
+
+    $('#dichotomAnswer1').on('input', function () {
+        insertIntoPhone();
+        console.log("oha");
+    });
+
+    $('#dichotomAnswer2').on('input', function () {
+        insertIntoPhone();
+    });
+
+    function getOffset(el) {
+        const rect = el.getBoundingClientRect();
+        return {
+            left: rect.left + window.scrollX,
+            top: rect.top + window.scrollY
+        };
+    }
+
+    function checkTime(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+
+    function insertIntoPhone() {
+        $("#androidHandy").empty();
+        console.log($("#AnswerTypeCB option:selected").val());
+        $("#androidHandy").append("<img src='../../Content/Images/Device/header.png' width='315' height='65'/>");
+        $("#androidHandy").append("<p id='timePhone' style='font-size:13px; color:white; position:absolute; left:278px; top:0px;'>" + time + "</p>");
+        let type = $("#AnswerTypeCB option:selected").val();
+        if (type == 1) {
+            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<img class='kleinerAbstand' src='../../Content/Images/Device/yes_no.png' width='310' height='50'/>");
+        } else if (type == 2) {
+            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<img class='kleinerAbstand' src='../../Content/Images/Device/yes_no_maybe.png' width='310' height='50'/>");
+        } else if (type == 3) {
+            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<img class='kleinerAbstand' src='../../Content/Images/Device/ampel.png' width='310' height='50'/>");
+        } else if (type == 4) {
+            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<input type='text' class='form-control '  />");
+        } else if (type == 5) {
+            let val1 = $("#dichotomAnswer1").val();
+            let val2 = $("#dichotomAnswer2").val();
+            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<img id='dichotom' class='kleinerAbstand' src='../../Content/Images/Device/dichotom.png' width='310' height='50'/>");
+            $("#androidHandy").append("<div id='antwort1'><p style='text-align: center; padding-top: 5px;' id='a1text'></p></div>");
+            $("#androidHandy").append("<div id='antwort2'><p style='text-align: center; padding-top: 5px;' id='a2text'></p></div>");
+            let pos = $("#dichotom").position();
+            $("#antwort1").css("left", pos.left);
+            $("#antwort1").css("top", pos.top - 8);
+            $("#antwort2").css("left", pos.left + 160);
+            $("#antwort2").css("top", pos.top - 8);
+            if (val1 != undefined && val2 != undefined) {
+                $("#a1text").text(val1);
+                $("#a2text").text(val2);
+            } else {
+                // $( "#androidHandy" ).append( "<a href='#' class='btn btn-outline-secondary btn-md ml-5'>"+ "A1" + "</a><a href='#' class='btn btn-outline-secondary btn-md ml-2'>"+ "A2" + "</a>" );
+            }
+        } else if (type == 10 || type == 11 || type == 12 || type == 13 || type == 14 || type == 15 || type == 16) {
+            let val1 = $("#dichotomAnswer1").val();
+            let val2 = $("#dichotomAnswer2").val();
+            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<img id='lik' class='kleinerAbstand' src='../../Content/Images/Device/lik.png' width='310' height='50'/>");
+            $("#androidHandy").append("<div id='links'><p class='kleinerkleinerkleinerFont' style='text-align: center; padding-top: 5px;' id='a1textl'></p></div>");
+            $("#androidHandy").append("<div id='rechts'><p class='kleinerkleinerkleinerFont' style='text-align: center; padding-top: 5px;' id='a2textr'></p></div>");
+            let pos = $("#lik").position();
+            $("#links").css("left", pos.left);
+            $("#links").css("top", pos.top + 20);
+            $("#rechts").css("left", pos.left + 245);
+            $("#rechts").css("top", pos.top + 20);
+            if (val1 != undefined && val2 != undefined) {
+                $("#a1textl").text(val1);
+                $("#a2textr").text(val2);
+            } else {
+                // $( "#androidHandy" ).append( "<a href='#' class='btn btn-outline-secondary btn-md ml-5'>"+ "A1" + "</a><a href='#' class='btn btn-outline-secondary btn-md ml-2'>"+ "A2" + "</a>" );
+            }
         }
     }
 

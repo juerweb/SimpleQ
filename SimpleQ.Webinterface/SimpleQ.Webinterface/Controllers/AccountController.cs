@@ -16,6 +16,7 @@ using System.Web.Mvc;
 
 namespace SimpleQ.Webinterface.Controllers
 {
+    [Globalization]
     public class AccountController : BaseController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();

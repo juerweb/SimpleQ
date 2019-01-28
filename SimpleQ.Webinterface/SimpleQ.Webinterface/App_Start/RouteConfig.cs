@@ -15,8 +15,8 @@ namespace SimpleQ.Webinterface
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}",
-                defaults: new { controller = "Account", action = "Index" }
+                url: "{language}/{controller}/{action}",
+                defaults: new { controller = "Account", action = "Index", language = "de" }
             );
         }
     }
