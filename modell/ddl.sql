@@ -62,7 +62,7 @@ create table Customer
 go
 
 -- Unique-Constraint für Customer.AuthToken
-create unique nonclustered index idx_AuthToken_NotNull
+create unique nonclustered index idx_Customer_AuthToken
 on Customer(AuthToken)
 where AuthToken is not null;
 go
@@ -96,8 +96,15 @@ go
 create table Person
 (
 	PersId int identity primary key,
-    DeviceId varchar(max) null
+    DeviceId varchar(max) null,
+    AuthToken char(64) null
 );
+go
+
+-- Unique-Constraint für Customer.AuthToken
+create unique nonclustered index idx_Person_AuthToken
+on Person(AuthToken)
+where AuthToken is not null;
 go
 
 -- In Abteilung angestellte Personen
@@ -287,6 +294,34 @@ begin
 end
 go
 
+
+-- Generiert das Authentifikations-Token für den Mobil-User
+create trigger tr_PersonIns
+on Person
+after insert as
+begin
+    declare @token char(64);
+    declare @persId int;
+    declare c cursor local for select persId from inserted;
+
+    open c;
+    fetch c into @persId;
+    while(@@FETCH_STATUS = 0)
+    begin
+        set @token = (select convert(char(64), newid()));
+        while (exists(select * from Person where AuthToken = @token))
+        begin
+            set @token = (select convert(char(64), newid()));
+        end
+        
+        update Person set AuthToken = @token where PersId = @persId;
+
+        fetch c into @persId;
+    end
+    close c;
+    deallocate c;
+end
+go
 
 
 -- Hasht das Passwort und setzt das im Klartext Eingegebene NULL, aktiviert standardmäßig alle AnswerTypes für den neuen Kunden
@@ -671,7 +706,7 @@ begin transaction;
 insert into DataConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 
 insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.', 0); -- Nur Testwert
-insert into FaqEntry values ('Porqué no te callas?', 'No quiero callarme porque tú eres un culo muy grande.', 0); -- Nur Testwert
+insert into FaqEntry values ('Por qué no te callas?', 'Sólo no quiero callarme.', 0); -- Nur Testwert
 insert into FaqEntry values ('Nothing', 'lasts forever, even cold november rain', 1); -- Nur Testwert
 insert into FaqEntry values ('So close', 'no matter how far', 1); -- Nur Testwert
 

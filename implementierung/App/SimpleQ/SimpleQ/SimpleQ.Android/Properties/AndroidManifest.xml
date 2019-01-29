@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="5" android:versionName="0.4.1" package="at.simpleq.app" android:installLocation="auto">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionName="0.5.2" package="at.simpleq.app" android:installLocation="auto" android:versionCode="7">
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="26" />
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-permission android:name="android.permission.FLASHLIGHT" />

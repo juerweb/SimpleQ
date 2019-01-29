@@ -8,17 +8,17 @@ begin transaction;
 insert into Customer values ('420420', 'inge gmbh.', 'g@b.i', 'asdfjklö', null, null, 1, 'Haasenplatz', '420', 'Guntramsdorf', 'España', 'DE', 24, 3, (select getdate()), 1, 5, 0, null, null, 0);
 
 --insert into Bill values('420420', 420.00, (select dateadd(month, -9, (select getdate()))), 1, 1);
-insert into Bill values('420420', 104.20, (select dateadd(month, -6, (select getdate()))), 1, 1);
-insert into Bill values('420420', 420.00, (select dateadd(month, -3, (select getdate()))), 1, 1);
+insert into Bill values('420420', 0.50, (select dateadd(month, -6, convert(date,'2019-01-26'))), 1, 1);
+insert into Bill values('420420', 5.25, (select dateadd(month, -3, convert(date,'2019-01-26'))), 1, 1);
 
 insert into Department values (1, 'development', '420420');
 insert into Department values (2, 'putzkleschn', '420420');
 
-insert into Person values (null); -- PersId 1
-insert into Person values (null); -- PersId 2
-insert into Person values (null); -- PersId 3
-insert into Person values (null); -- PersId 4
-insert into Person values (null); -- PersId 5
+insert into Person values (null, null); -- PersId 1
+insert into Person values (null, null); -- PersId 2
+insert into Person values (null, null); -- PersId 3
+insert into Person values (null, null); -- PersId 4
+insert into Person values (null, null); -- PersId 5
 
 insert into Employs values (1, '420420', 1);
 insert into Employs values (1, '420420', 2);
@@ -237,18 +237,17 @@ commit;
 
 
 begin transaction;
-insert into Customer values ('180517', 'castiel gmbh.', 'jack@castiel.com', 'jackkline', null, null, 1, 'stairway', '0000', 'to', 'heaven', 'EN', 24, 1, (select getdate()), 1, 3, 0, null, null, 10);
+insert into Customer values ('180517', 'castiel gmbh.', 'jack@castiel.com', 'jackkline', null, null, 1, 'stairway', '0000', 'to', 'heaven', 'EN', 24, 6, (select getdate()), 1, 3, 0, null, null, 10);
 
-insert into Bill values('180517', 50, (select dateadd(month, -3, (select getdate()))), 1, 1);
-insert into Bill values('180517', 60, (select dateadd(month, -2, (select getdate()))), 1, 1);
-insert into Bill values('180517', 90, (select dateadd(month, -1, (select getdate()))), 1, 1);
+insert into Bill values('180517', 0.34, (select dateadd(month, -7, convert(date,'2019-01-26'))), 1, 1);
+insert into Bill values('180517', 1.35, (select dateadd(month, -1, convert(date,'2019-01-26'))), 1, 1);
 
 insert into Department values (1, 'Angel', '180517');
 insert into Department values (2, 'Nephilim', '180517');
 
-insert into Person values (null); -- PersId 6
-insert into Person values (null); -- PersId 7
-insert into Person values (null); -- PersId 8
+insert into Person values (null, null); -- PersId 6
+insert into Person values (null, null); -- PersId 7
+insert into Person values (null, null); -- PersId 8
 
 insert into Employs values (1, '180517', 6);
 insert into Employs values (1, '180517', 7);
