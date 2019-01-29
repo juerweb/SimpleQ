@@ -147,6 +147,7 @@
     <Content Include="ic_phone_black_18.png" />
     <Content Include="ic_public_black_18.png" />
     <Content Include="ic_question_answer_black_18.png" />
+    <Content Include="ic_security_black_18.png" />
     <Content Include="ic_settings_black_18.png" />
     <Content Include="ic_work_black_48.png" />
     <Content Include="Properties\Default.rd.xml" />

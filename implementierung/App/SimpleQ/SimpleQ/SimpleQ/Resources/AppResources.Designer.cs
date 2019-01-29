@@ -448,6 +448,15 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die https://simpleq.at/Dokumente/Datenschutzerkl%C3%A4rung.html ähnelt.
+        /// </summary>
+        internal static string LinkToPrivacyPolicy {
+            get {
+                return ResourceManager.GetString("LinkToPrivacyPolicy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die https://www.simpleq.at ähnelt.
         /// </summary>
         internal static string LinkToSupportWebsite {
@@ -538,7 +547,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Open source Lizenzen ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Open-source Lizenzen ähnelt.
         /// </summary>
         internal static string OpenSourceLicense {
             get {
@@ -561,6 +570,15 @@ namespace SimpleQ.Resources {
         internal static string PhoneUs {
             get {
                 return ResourceManager.GetString("PhoneUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Datenschutzerklärung ähnelt.
+        /// </summary>
+        internal static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
             }
         }
         
@@ -655,7 +673,7 @@ namespace SimpleQ.Resources {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Scan starten 📷 ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Scan starten ähnelt.
         /// </summary>
         internal static string StartScan {
             get {
