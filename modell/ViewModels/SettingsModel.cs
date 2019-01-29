@@ -43,7 +43,6 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         public string Plz { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public string LanguageCode { get; set; }
         public int DataStoragePeriod { get; set; }
         public int PaymentMethodId { get; set; }
         #endregion

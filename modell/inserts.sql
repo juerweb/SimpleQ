@@ -338,6 +338,7 @@ insert into Asking values (18, 2, '420420');
 insert into AnswerOption values (18, 'Rot bis in den Tot', 1);
 insert into AnswerOption values (18, 'Soiuz nerushimyj respublik svobodnykh', 0); 
 commit;
+go
 
 
 --select * from Person;
