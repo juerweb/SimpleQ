@@ -1,4 +1,5 @@
 ﻿using NLog;
+using SimpleQ.Webinterface.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace SimpleQ.Webinterface.Controllers
 {
+    [Globalization]
     public abstract class BaseController : Controller
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();

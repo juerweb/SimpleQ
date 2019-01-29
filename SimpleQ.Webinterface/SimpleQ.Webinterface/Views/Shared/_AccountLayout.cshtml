@@ -25,7 +25,23 @@
         <div class="text-center mt-2">
             <a href="@Url.Action("Login", "Account")"><img src="../../Content/Images/Logos/simpleq.png" style="max-height: 100px;" class="img-fluid mx-auto" /></a>
         </div>
+
+        <select class="form-control float-right" id="lang_select" onchange="lang_change()" style="width: 5rem">
+            <option value="de">DE</option>
+            <option value="en">EN</option>
+            @*<option value="es">ES</option>*@
+        </select>
         @RenderBody()
     </div>
+    <script>
+        $(function () {
+            $("#lang_select").val(window.location.pathname.split("/")[1]);
+        });
+
+        function lang_change() {
+            let lang = $("#lang_select").val();
+            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + "/" + lang);
+        }
+    </script>
 </body>
 </html>

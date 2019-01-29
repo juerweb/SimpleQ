@@ -134,16 +134,20 @@
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
             <div class="mr-4">
                 <span class="row">
-                    <a href="@Url.Action("Logout", "Account")" class="btn btn-danger btn-block" id="logout">
+                    <select class="form-control mr-2" id="lang_select" onchange="lang_change()" style="width: 5rem">
+                        <option value="de">DE</option>
+                        <option value="en">EN</option>
+                        @*<option value="es">ES</option>*@
+                    </select>
+                    <a href="@Url.Action("Logout", "Account")" class="btn btn-danger btn-block" id="logout" style="width: 8rem;">
                         <span class="d-flex justify-content-between">
                             <span>Logout</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe8ac;</i>
                         </span>
                     </a>
                 </span>
-                <span class="row" id="verion" style="font-size:medium">
-                    Version: 2.3.4.5
-                </span>
-
+                @*<span class="row text-left" id="verion" style="font-size:medium;">
+                            Version: 2.3.4.5
+                </span>*@
             </div>
 
         </div>
@@ -286,5 +290,16 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(function () {
+            $("#lang_select").val(window.location.pathname.split("/")[1]);
+        });
+
+        function lang_change() {
+            let lang = $("#lang_select").val();
+            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + "/" + lang);
+        }
+    </script>
 </body>
 </html>
