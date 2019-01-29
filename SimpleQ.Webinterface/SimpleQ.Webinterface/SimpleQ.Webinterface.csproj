@@ -19,7 +19,8 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort>44338</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>
     </IISExpressAnonymousAuthentication>

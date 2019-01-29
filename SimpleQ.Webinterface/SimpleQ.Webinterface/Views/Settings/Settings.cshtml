@@ -86,8 +86,6 @@
                 @Html.TextBoxFor(m => m.Plz, new { @class = "form-control mr-0" });
                 @Html.LabelFor(m => m.Country, ResourcesN.Country);
                 @Html.TextBoxFor(m => m.Country, new { @class = "form-control mr-0" });
-                @Html.LabelFor(m => m.LanguageCode, ResourcesN.Language);
-                @Html.DropDownListFor(m => m.LanguageCode, new SelectList(new[] { "DE", "EN" }), new { @class = "form-control mr-0" })
                 @Html.LabelFor(m => m.Email, ResourcesN.Email);
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
                 @Html.LabelFor(m => m.DataStoragePeriod, ResourcesN.DataStoragePeriod);
@@ -256,7 +254,7 @@
         <h4 class="text-center">@ResourcesN.OutstandingAmount</h4>
         <div class="form-group mt-2">
             <label for="betrag">@ResourcesN.Amount</label>
-            <input type="text" disabled name="betrag" class="form-control mr-0" value="@Model.OutstandingBalance" />
+            <input type="text" disabled name="betrag" class="form-control mr-0" value="@Model.OutstandingBalance.ToString("0.00")" />
             <label for="anzUmfragenAbrechn">@ResourcesN.CurrSurveyAmount</label>
             <input type="text" disabled name="anzUmfragenAbrechn" class="form-control mr-0" value="@Model.CurrentSurveyAmount" />
             <label for="anzBeantwFragen">@ResourcesN.CurrAnswerAmount</label>
@@ -281,7 +279,7 @@
                         <span class="card-header p-1 row ml-0 mr-0">
                             <span class="col-2 text-center">@bill.BillId</span>
                             <span class="col-6 text-center">@bill.BillDate.ToShortDateString()</span>
-                            <span class="col-4 text-center">@bill.BillPrice.ToString("C")</span>
+                            <span class="col-4 text-center">&euro; @bill.BillPrice.ToString("0.00")</span>
                         </span>
                         //<h4 class="card-header p-1">@bill.BillId | @bill.BillDate.ToShortDateString() | @bill.BillPrice.ToString("C")</h4>
 
@@ -303,14 +301,14 @@
                                             <td class="pt-0 pb-0 pl-1 pr-1">@svy.StartDate.ToShortDateString()</td>
                                             <td class="pt-0 pb-0 pl-1 pr-1">@svy.SvyText</td>
                                             <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.NumberOfAnswers</td>
-                                            <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.SurveyPrice.ToString("C")</td>
+                                            <td class="pt-0 pb-0 pl-1 pr-1">&euro; @surveyWrapper.SurveyPrice.ToString("0.00")</td>
                                         </tr>
                                     }
                                     <tr class="bg-primary text-white">
                                         <td class="pt-0 pb-0 pl-1 pr-1"></td>
                                         <td class="pt-0 pb-0 pl-1 pr-1">Result</td>
                                         <td class="pt-0 pb-0 pl-1 pr-1"></td>
-                                        <td class="pt-0 pb-0 pl-1 pr-1">@bill.BillPrice.ToString("C")</td>
+                                        <td class="pt-0 pb-0 pl-1 pr-1">&euro; @bill.BillPrice.ToString("0.00")</td>
                                     </tr>
                                 </tbody>
                             </table>

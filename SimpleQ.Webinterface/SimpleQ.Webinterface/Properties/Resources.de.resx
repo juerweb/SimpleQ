@@ -173,7 +173,7 @@
     <value>Spinnennetzdiagramm</value>
   </data>
   <data name="listing" xml:space="preserve">
-    <value>Auflistung (absolut,%)</value>
+    <value>Auflistung (absolut, %)</value>
   </data>
   <data name="answer" xml:space="preserve">
     <value>Antwort</value>
@@ -227,7 +227,7 @@
     <value>Viele Antwortmöglichkeiten, eine Auswahl (ungeordnet)</value>
   </data>
   <data name="TrafficLight" xml:space="preserve">
-    <value>Ampelsystem (rot,gelb,grün)</value>
+    <value>Ampelsystem (rot, gelb, grün)</value>
   </data>
   <data name="YesNo" xml:space="preserve">
     <value>Ja/Nein</value>
@@ -242,13 +242,13 @@
     <value>Kategorie hinzufügen</value>
   </data>
   <data name="newCategoryName" xml:space="preserve">
-    <value>Kategoriebezeichnung ...</value>
+    <value>Kategoriebezeichnung</value>
   </data>
   <data name="addAnswer" xml:space="preserve">
-    <value>Antwort hinzufügen..</value>
+    <value>Antwort hinzufügen</value>
   </data>
   <data name="invalidInput" xml:space="preserve">
-    <value>Ungültige Eingabe!</value>
+    <value>Ungültige Eingabe</value>
   </data>
   <data name="surveyTemplateHeader" xml:space="preserve">
     <value>Befragungstemplate (bisherige Befragungen)</value>
@@ -257,13 +257,13 @@
     <value>Anzahl der zu befragenden Personen</value>
   </data>
   <data name="badAskGroupCount" xml:space="preserve">
-    <value>für eine gute Auswertung wäre eine größere Gruppe von Nöten</value>
+    <value>Für aussagekräftige Resultate wäre eine höhere Gruppengröße vonnöten</value>
   </data>
   <data name="goodAskGroupCount" xml:space="preserve">
-    <value>gute Größe für eine Sinnvolle Auswertung</value>
+    <value>Angebrachte Gruppengröße für eine sinnvolle Auswertung</value>
   </data>
   <data name="middleAskGroupCount" xml:space="preserve">
-    <value>Anzahl der Befragten ist ok, könnte aber größer sein</value>
+    <value>Gruppengröße in Ordnung</value>
   </data>
   <data name="SaveAsTemplate" xml:space="preserve">
     <value>als Template speichern</value>
@@ -278,7 +278,7 @@
     <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
   </data>
   <data name="groupAlreadyExists" xml:space="preserve">
-    <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
+    <value>Es existiert bereits eine Kategorie mit diesem Namen</value>
   </data>
   <data name="TemplateDescription" xml:space="preserve">
     <value>Beim Anhaken wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
@@ -293,7 +293,7 @@
     <value>Inhalt</value>
   </data>
   <data name="downloadAppHere" xml:space="preserve">
-    <value>Die App kann man hier downloaden</value>
+    <value>Die App kann hier heruntergeladen werden</value>
   </data>
   <data name="invitationToSimpleQ" xml:space="preserve">
     <value>Einladung zu SimpleQ</value>
@@ -315,7 +315,7 @@
     <value>Email-Adresse hinzufügen</value>
   </data>
   <data name="invalidMailAddress" xml:space="preserve">
-    <value>Die Email-Adresse ist ungültig!</value>
+    <value>Die Email-Adresse ist ungültig</value>
   </data>
   <data name="addressData" xml:space="preserve">
     <value>Adressdaten</value>
@@ -426,16 +426,16 @@
     <value>Schließen</value>
   </data>
   <data name="defineGroupsModalInfo" xml:space="preserve">
-    <value>Sie haben noch keine Gruppen. Bitte öffnen Sie die Gruppenverwaltung und erstellen Sie Ihre Erste</value>
+    <value>Sie haben noch keine Gruppen. Bitte erstellen Sie eine Gruppe in der Gruppenverwaltung.</value>
   </data>
   <data name="evaluate" xml:space="preserve">
     <value>Auswerten</value>
   </data>
   <data name="periodicQuestionTooltip" xml:space="preserve">
-    <value>Klicken Sie hier, wenn Sie eine frage automatisiert mehrere male hintereinander stellen wollen</value>
+    <value>Klicken Sie hier, wenn Sie eine Frage automatisch mehrere Male hintereinander stellen wollen</value>
   </data>
   <data name="pleaseDefineGroupsFirst" xml:space="preserve">
-    <value>Sie müssen erst eine Gruppe erstellen!</value>
+    <value>Bitte erstellen Sie zuerst eine Gruppe</value>
   </data>
   <data name="singleButtonTooltip" xml:space="preserve">
     <value>Klicken Sie hier, um sich die Ergebnisse je Befragung einzeln anzusehen</value>
@@ -480,7 +480,7 @@
     <value>Antwortmöglichkeiten</value>
   </data>
   <data name="answersButtonTooltip" xml:space="preserve">
-    <value>Klicken Sie hier, um Antwortmöglichkeiten hinzuzufügen.</value>
+    <value>Klicken Sie hier um Antwortmöglichkeiten hinzuzufügen.</value>
   </data>
   <data name="Actions" xml:space="preserve">
     <value>Aktionen</value>
@@ -592,5 +592,26 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Gruppe löschen</value>
+  </data>
+  <data name="DiagramTypeLeft" xml:space="preserve">
+    <value>Diagrammtyp links</value>
+  </data>
+  <data name="DiagramTypeRight" xml:space="preserve">
+    <value>Diagrammtyp rechts</value>
+  </data>
+  <data name="InviteMembers" xml:space="preserve">
+    <value>Mitglieder einladen</value>
+  </data>
+  <data name="PeriodicSurvey" xml:space="preserve">
+    <value>Periodische Befragung...</value>
+  </data>
+  <data name="PleaseConfirmYourEmail" xml:space="preserve">
+    <value>Bitte bestätigen Sie umgehend Ihre Email-Adresse </value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Achtung</value>
   </data>
 </root>

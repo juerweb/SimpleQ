@@ -160,7 +160,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Small group, to get good results create a bigger one.
+        ///   Looks up a localized string similar to For meaningful results a bigger group would be necessary.
         /// </summary>
         public static string badAskGroupCount {
             get {
@@ -349,11 +349,20 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have not created any groups yet, switch to group administration and create your first one.
+        ///   Looks up a localized string similar to You have not created any groups yet, create your first one in group administration.
         /// </summary>
         public static string defineGroupsModalInfo {
             get {
                 return ResourceManager.GetString("defineGroupsModalInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete group.
+        /// </summary>
+        public static string DeleteGroup {
+            get {
+                return ResourceManager.GetString("DeleteGroup", resourceCulture);
             }
         }
         
@@ -363,6 +372,24 @@ namespace SimpleQ.Webinterface.Properties {
         public static string diagram {
             get {
                 return ResourceManager.GetString("diagram", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Left diagram type.
+        /// </summary>
+        public static string DiagramTypeLeft {
+            get {
+                return ResourceManager.GetString("DiagramTypeLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Right diagram type.
+        /// </summary>
+        public static string DiagramTypeRight {
+            get {
+                return ResourceManager.GetString("DiagramTypeRight", resourceCulture);
             }
         }
         
@@ -493,7 +520,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to From.
+        ///   Looks up a localized string similar to from.
         /// </summary>
         public static string from {
             get {
@@ -502,7 +529,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appropriate size for meaningful results.
+        ///   Looks up a localized string similar to Appropriate group size for meaningful results.
         /// </summary>
         public static string goodAskGroupCount {
             get {
@@ -511,7 +538,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To registration.
+        ///   Looks up a localized string similar to Go to registration.
         /// </summary>
         public static string goToRegistration {
             get {
@@ -637,6 +664,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invite members.
+        /// </summary>
+        public static string InviteMembers {
+            get {
+                return ResourceManager.GetString("InviteMembers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
         public static string language {
@@ -745,7 +781,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Max.
+        ///   Looks up a localized string similar to max.
         /// </summary>
         public static string max {
             get {
@@ -763,7 +799,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Members.
+        ///   Looks up a localized string similar to members.
         /// </summary>
         public static string Members {
             get {
@@ -772,7 +808,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group size is OK, although increasing would be beneficial for more meaningful results.
+        ///   Looks up a localized string similar to Sufficient group size.
         /// </summary>
         public static string middleAskGroupCount {
             get {
@@ -934,11 +970,29 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Periodic survey....
+        /// </summary>
+        public static string PeriodicSurvey {
+            get {
+                return ResourceManager.GetString("PeriodicSurvey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please confirm your email address before logging in.
         /// </summary>
         public static string PleaseConfirmBefore {
             get {
                 return ResourceManager.GetString("PleaseConfirmBefore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confirm your email address.
+        /// </summary>
+        public static string PleaseConfirmYourEmail {
+            get {
+                return ResourceManager.GetString("PleaseConfirmYourEmail", resourceCulture);
             }
         }
         
@@ -1294,7 +1348,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Survey Results.
+        ///   Looks up a localized string similar to Survey results.
         /// </summary>
         public static string surveyResultsHeader {
             get {
@@ -1357,7 +1411,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To login.
+        ///   Looks up a localized string similar to Go to login.
         /// </summary>
         public static string ToLogin {
             get {
@@ -1407,6 +1461,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string Unit {
             get {
                 return ResourceManager.GetString("Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
         

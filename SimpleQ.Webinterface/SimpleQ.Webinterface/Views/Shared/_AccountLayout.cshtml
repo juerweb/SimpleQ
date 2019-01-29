@@ -35,12 +35,19 @@
     </div>
     <script>
         $(function () {
-            $("#lang_select").val(window.location.pathname.split("/")[1]);
+            if (localStorage["__simpleq-curr-lang"] == undefined) {
+                localStorage["__simpleq-curr-lang"] = navigator.language.split("-")[0];
+            }
+
+            $("#lang_select").val(localStorage["__simpleq-curr-lang"]);
+            if (window.location.pathname.split("/")[1] != localStorage["__simpleq-curr-lang"])
+                lang_change();
         });
 
         function lang_change() {
             let lang = $("#lang_select").val();
-            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + lang + "/" + window.location.pathname.split("/", 3)[2]);
+            localStorage["__simpleq-curr-lang"] = lang;
+            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + lang + "/" + window.location.pathname.split("/", 4)[2] + "/" + window.location.pathname.split("/", 4)[3] || "");
         }
     </script>
 </body>

@@ -13,7 +13,8 @@ namespace SimpleQ.Webinterface.Attributes
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            string language = (string)filterContext.RouteData.Values["language"] ?? "nl";
+            string language = (string)filterContext.RouteData.Values["language"] ?? "de";
+            language = (language == "en") ? "en-GB" : language;
 
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(language);
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language);

@@ -105,9 +105,6 @@ namespace SimpleQ.Webinterface.Controllers
                 if (string.IsNullOrEmpty(cust.Country))
                     AddModelError("Country", BackendResources.CountryEmpty, ref err);
 
-                if (string.IsNullOrEmpty(cust.LanguageCode))
-                    AddModelError("LanguageCode", BackendResources.LangCodeEmpty, ref err);
-
                 if (cust.DataStoragePeriod <= 0)
                     AddModelError("DataStoragePeriod", BackendResources.DataStoragePeriodInvalid, ref err);
 

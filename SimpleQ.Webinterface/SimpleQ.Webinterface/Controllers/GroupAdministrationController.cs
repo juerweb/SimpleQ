@@ -242,10 +242,22 @@ namespace SimpleQ.Webinterface.Controllers
                         return Http.NotFound("Department not found.");
                     }
 
-                    if(dep.People.Count() != 0)
+                    if (dep.People.Count() != 0)
                     {
                         logger.Debug("Group deleting failed. Has to be empty");
                         return Http.Conflict("Department has to be empty.");
+                    }
+
+                    if (dep.Surveys.Any(s => s.EndDate >= DateTime.Now))
+                    {
+                        logger.Debug("Group deleting failed. There are still running surveys");
+                        return Http.Conflict("There are still running surveys.");
+                    }
+
+
+                    foreach (var s in dep.Surveys.ToList())
+                    {
+                        dep.Surveys.Remove(s);
                     }
 
                     db.Departments.Remove(dep);

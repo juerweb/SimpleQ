@@ -48,7 +48,6 @@ create table Customer
 	Plz varchar(16) not null,
 	City varchar(max) not null,
 	Country varchar(max) not null,
-	LanguageCode char(3) not null,
 	DataStoragePeriod int not null check(DataStoragePeriod > 0), -- in Monaten
 	AccountingPeriod int not null check(AccountingPeriod in (1, 3, 6, 12)), -- in Monaten
     AccountingDate date not null,
@@ -431,7 +430,9 @@ begin
         open c;
         fetch c into @svyId, @typeId;
 
-        delete from AnswerOption where SvyId = @svyId;
+        delete from AnswerOption
+        where SvyId = @svyId
+        and AnsText in (select PreAnsText from PredefinedAnswerOption);
 
         while(@@FETCH_STATUS = 0)
         begin

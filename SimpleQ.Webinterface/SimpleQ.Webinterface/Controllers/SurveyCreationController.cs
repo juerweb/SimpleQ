@@ -10,6 +10,7 @@ using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using SimpleQ.Webinterface.Models.Enums;
 using SimpleQ.Webinterface.Extensions;
+using SimpleQ.Webinterface.Properties;
 using System.Net.Http;
 using Newtonsoft.Json;
 using NLog;
@@ -36,7 +37,7 @@ namespace SimpleQ.Webinterface.Controllers
                     if (cust == null)
                     {
                         logger.Warn($"Loading failed. Customer not found: {CustCode}");
-                        return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+                        return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                     }
 
                     var model = new SurveyCreationModel
@@ -54,7 +55,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]Index: Unexpected error");
                 return View("Error", model);
             }
@@ -69,26 +70,26 @@ namespace SimpleQ.Webinterface.Controllers
                 bool err = false;
 
                 if (req == null)
-                    AddModelError("Model", "Model object must not be null.", ref err);
+                    AddModelError("Model", BackendResources.ModelNull, ref err);
                 if (req.Survey == null)
-                    AddModelError("Survey", "Survey must not be null.", ref err);
-                if (req.Survey.SvyText == null)
-                    AddModelError("Survey.SvyText", "SvyText must not be null.", ref err);
+                    AddModelError("Survey", BackendResources.SurveyNull, ref err);
+                if (string.IsNullOrEmpty(req.Survey.SvyText))
+                    AddModelError("Survey.SvyText", BackendResources.SurveyTextEmpty, ref err);
                 if (req.SelectedDepartments == null || req.SelectedDepartments.Count() == 0)
-                    AddModelError("SelectedDepartments", "SelectedDepartments object must not be null or empty.", ref err);
+                    AddModelError("SelectedDepartments", BackendResources.SelectedDepartmentsEmpty, ref err);
 
                 using (var db = new SimpleQDBEntities())
                 {
                     if (await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync() == null)
                     {
                         logger.Warn($"Creating new survey failed. Customer not found: {CustCode}");
-                        return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+                        return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                     }
 
                     if (!(await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync()).EmailConfirmed)
                     {
                         logger.Debug($"Creating new survey failed. Email not confirmed: {CustCode}");
-                        return View("Error", new ErrorModel { Title = "Confirm your e-mail", Message = "Please confirm your e-mail address before creating surveys." });
+                        return View("Error", new ErrorModel { Title = BackendResources.ConfirmYourEmailTitle, Message = BackendResources.ConfirmYourEmailMsg });
                     }
 
                     req.Survey.CustCode = CustCode;
@@ -99,41 +100,41 @@ namespace SimpleQ.Webinterface.Controllers
                     req.Survey.Period = period?.Ticks;
 
                     if (req.Period.HasValue && period.Value < TimeSpan.FromDays(1))
-                        AddModelError("Period", "Period must be at least 1 day.", ref err);
+                        AddModelError("Period", BackendResources.PeriodAtLeast1Day, ref err);
 
                     if (req.Period.HasValue && req.Survey.StartDate.Add(period.Value) < req.Survey.EndDate)
-                        AddModelError("Period", "Period must be bigger than the survey's duration.", ref err);
+                        AddModelError("Period", BackendResources.PeriodMustBiggerThanDuration, ref err);
 
                     if (req.Survey.StartDate >= req.Survey.EndDate)
-                        AddModelError("Survey.StartDate", "StartDate must be earlier than EndDate.", ref err);
+                        AddModelError("Survey.StartDate", BackendResources.StartDateMustEarlierEndDate, ref err);
 
                     if (req.Survey.Amount <= 0)
-                        AddModelError("Survey.Amount", "Amount must be at least 1.", ref err);
+                        AddModelError("Survey.Amount", BackendResources.AmountMustAtLeast1, ref err);
 
                     if (await db.SurveyCategories.Where(c => c.CatId == req.Survey.CatId && c.CustCode == CustCode).FirstOrDefaultAsync() == null)
-                        AddModelError("Survey.CatId", "Category not found.", ref err);
+                        AddModelError("Survey.CatId", BackendResources.CategoryNotFound, ref err);
 
                     if (await db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefaultAsync() == null)
-                        AddModelError("Survey.TypeId", "AnswerType does not exist.", ref err);
+                        AddModelError("Survey.TypeId", BackendResources.AnswerTypeNotExist, ref err);
 
                     var baseId = (await db.AnswerTypes.Where(a => a.TypeId == req.Survey.TypeId).FirstOrDefaultAsync()).BaseId;
                     if (baseId != (int)BaseQuestionTypes.FixedAnswerQuestion && baseId != (int)BaseQuestionTypes.OpenQuestion
                         && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() == 0))
-                        AddModelError("TextAnswerOptions", "There must be submitted some AnswerOptions.", ref err);
+                        AddModelError("TextAnswerOptions", BackendResources.SubmitAnswerOptions, ref err);
 
                     if (baseId == (int)BaseQuestionTypes.DichotomousQuestion
                         && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2))
-                        AddModelError("TextAnswerOptions", "There must be submitted exactly two AnswerOptions.", ref err);
+                        AddModelError("TextAnswerOptions", BackendResources.Submit2AnswerOptions, ref err);
 
                     if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion
                         && (req.TextAnswerOptions == null || req.TextAnswerOptions.Count() != 2))
-                        AddModelError("TextAnswerOptions", "There must be submitted exactly two AnswerOptions.", ref err);
+                        AddModelError("TextAnswerOptions", BackendResources.Submit2AnswerOptions, ref err);
 
                     foreach (var depId in req.SelectedDepartments ?? new List<int>())
                     {
                         if (await db.Departments.Where(d => d.DepId == depId && d.CustCode == CustCode).FirstOrDefaultAsync() == null)
                         {
-                            AddModelError("SelectedDepartments", "Department not found.", ref err);
+                            AddModelError("SelectedDepartments", BackendResources.DepNotFound, ref err);
                             break;
                         }
                     }
@@ -144,7 +145,7 @@ namespace SimpleQ.Webinterface.Controllers
                         {
                             if (string.IsNullOrEmpty(ans))
                             {
-                                AddModelError("TextAnswerOptions", "AnswerOptions must not be empty.", ref err);
+                                AddModelError("TextAnswerOptions", BackendResources.AnswerOptionsNotEmpty, ref err);
                                 break;
                             }
                         }
@@ -207,7 +208,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[POST]New: Unexpected error");
                 return View("Error", model);
             }

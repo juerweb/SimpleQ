@@ -139,7 +139,7 @@
     <value>Doughnut</value>
   </data>
   <data name="from" xml:space="preserve">
-    <value>From</value>
+    <value>from</value>
   </data>
   <data name="groupAdministrationHeader" xml:space="preserve">
     <value>Group administration</value>
@@ -217,7 +217,7 @@
     <value>Preview</value>
   </data>
   <data name="surveyResultsHeader" xml:space="preserve">
-    <value>Survey Results</value>
+    <value>Survey results</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>to</value>
@@ -257,19 +257,19 @@
     <value>Amount of asked people</value>
   </data>
   <data name="badAskGroupCount" xml:space="preserve">
-    <value>Small group, to get good results create a bigger one</value>
+    <value>For meaningful results a bigger group would be necessary</value>
   </data>
   <data name="goodAskGroupCount" xml:space="preserve">
-    <value>Appropriate size for meaningful results</value>
+    <value>Appropriate group size for meaningful results</value>
   </data>
   <data name="middleAskGroupCount" xml:space="preserve">
-    <value>Group size is OK, although increasing would be beneficial for more meaningful results</value>
+    <value>Sufficient group size</value>
   </data>
   <data name="SaveAsTemplate" xml:space="preserve">
     <value>Save as template</value>
   </data>
   <data name="Members" xml:space="preserve">
-    <value>Members</value>
+    <value>members</value>
   </data>
   <data name="edit" xml:space="preserve">
     <value>Edit</value>
@@ -299,7 +299,7 @@
     <value>Invitation to SimpleQ</value>
   </data>
   <data name="max" xml:space="preserve">
-    <value>Max</value>
+    <value>max</value>
   </data>
   <data name="predictedPrice" xml:space="preserve">
     <value>Predicted price</value>
@@ -426,7 +426,7 @@
     <value>Close</value>
   </data>
   <data name="defineGroupsModalInfo" xml:space="preserve">
-    <value>You have not created any groups yet, switch to group administration and create your first one</value>
+    <value>You have not created any groups yet, create your first one in group administration</value>
   </data>
   <data name="evaluate" xml:space="preserve">
     <value>Evaluate</value>
@@ -465,7 +465,7 @@
     <value>Email address confirmed</value>
   </data>
   <data name="goToRegistration" xml:space="preserve">
-    <value>To registration</value>
+    <value>Go to registration</value>
   </data>
   <data name="sendResetLink" xml:space="preserve">
     <value>Send reset link</value>
@@ -564,7 +564,7 @@
     <value>Street or street number invalid</value>
   </data>
   <data name="ToLogin" xml:space="preserve">
-    <value>To login</value>
+    <value>Go to login</value>
   </data>
   <data name="Unit" xml:space="preserve">
     <value>Unit</value>
@@ -592,5 +592,26 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete group</value>
+  </data>
+  <data name="DiagramTypeLeft" xml:space="preserve">
+    <value>Left diagram type</value>
+  </data>
+  <data name="DiagramTypeRight" xml:space="preserve">
+    <value>Right diagram type</value>
+  </data>
+  <data name="InviteMembers" xml:space="preserve">
+    <value>Invite members</value>
+  </data>
+  <data name="PeriodicSurvey" xml:space="preserve">
+    <value>Periodic survey...</value>
+  </data>
+  <data name="PleaseConfirmYourEmail" xml:space="preserve">
+    <value>Please confirm your email address</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
   </data>
 </root>

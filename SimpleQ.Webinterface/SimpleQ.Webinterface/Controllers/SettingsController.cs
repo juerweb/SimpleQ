@@ -79,7 +79,6 @@ namespace SimpleQ.Webinterface.Controllers
                         Plz = cust.Plz,
                         City = cust.City,
                         Country = cust.Country,
-                        LanguageCode = cust.LanguageCode,
                         DataStoragePeriod = cust.DataStoragePeriod,
                         PaymentMethodId = cust.PaymentMethodId,
                         Bills = bills,
@@ -206,9 +205,6 @@ namespace SimpleQ.Webinterface.Controllers
                     if (string.IsNullOrEmpty(req.Country))
                         AddModelError("Country", BackendResources.CountryEmpty, ref err);
 
-                    if (string.IsNullOrEmpty(req.LanguageCode))
-                        AddModelError("LanguageCode", BackendResources.LangCodeEmpty, ref err);
-
                     if (req.DataStoragePeriod <= 0)
                         AddModelError("DataStoragePeriod", BackendResources.DataStoragePeriodInvalid, ref err);
 
@@ -229,7 +225,6 @@ namespace SimpleQ.Webinterface.Controllers
                     cust.Plz = req.Plz;
                     cust.City = req.City;
                     cust.Country = req.Country;
-                    cust.LanguageCode = req.LanguageCode;
                     cust.DataStoragePeriod = req.DataStoragePeriod;
                     cust.PaymentMethodId = req.PaymentMethodId;
 

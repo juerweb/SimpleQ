@@ -19,7 +19,7 @@ namespace SimpleQ.Webinterface.Schedulers
         {
             try
             {
-                logger.Debug($"Starting {Name}");
+                logger.Trace($"Starting {Name}");
                 lock (lck)
                 {
                     if (schedulerStarted)
@@ -45,7 +45,7 @@ namespace SimpleQ.Webinterface.Schedulers
                     logger.Fatal($"{Name} crashed");
 #pragma warning restore CS0162 // Unreachable code detected
                 });
-                logger.Debug($"{Name} started successfully");
+                logger.Trace($"{Name} started successfully");
             }
             catch (Exception ex)
             {
