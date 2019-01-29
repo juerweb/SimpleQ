@@ -48,7 +48,6 @@ create table Customer
 	Plz varchar(16) not null,
 	City varchar(max) not null,
 	Country varchar(max) not null,
-	LanguageCode char(3) not null,
 	DataStoragePeriod int not null check(DataStoragePeriod > 0), -- in Monaten
 	AccountingPeriod int not null check(AccountingPeriod in (1, 3, 6, 12)), -- in Monaten
     AccountingDate date not null,
@@ -431,7 +430,9 @@ begin
         open c;
         fetch c into @svyId, @typeId;
 
-        delete from AnswerOption where SvyId = @svyId;
+        delete from AnswerOption
+        where SvyId = @svyId
+        and AnsText in (select PreAnsText from PredefinedAnswerOption);
 
         while(@@FETCH_STATUS = 0)
         begin
@@ -707,8 +708,11 @@ insert into DataConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 
 insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.', 0); -- Nur Testwert
 insert into FaqEntry values ('Por qué no te callas?', 'Sólo no quiero callarme.', 0); -- Nur Testwert
-insert into FaqEntry values ('Nothing', 'lasts forever, even cold november rain', 1); -- Nur Testwert
-insert into FaqEntry values ('So close', 'no matter how far', 1); -- Nur Testwert
+
+insert into FaqEntry values('Wie beantworte ich eine Frage?', 'Sie müssen auf die entsprechende Benachrichtigung klicken. Danach öffnet sich die entsprechende Fragestellung und Sie können abhänig von dem Fragetyp die Frage einfach beantworten. Die App schließt sich nach erfolgreicher Beantwortung automatisch.', 1)
+insert into FaqEntry values('Wie kann ich aus einer Gruppe/Abteilung austreten?', 'Sie müssen über das Menü auf der linken Seite den Button Einstellungen betätigen. Danach können sie nach einem Klick auf den Button mit dem Namen "Abmelden von Fragen" die entsprechende Gruppe/Abteilung auswählen, von welcher Sie keine Fragen mehr erhalten möchten.', 1)
+insert into FaqEntry values('Wie kann ich die Sprache ändern?', 'Sie müssen über das Menü auf der linken Seite den Button Einstellungen betätigen. Danach können sie nach einem Klick auf den Button mit dem Namen "Sprache" die entsprechende Sprache auswählen.', 1)
+
 
 insert into PaymentMethod values (1, 'OnAccount');
 
