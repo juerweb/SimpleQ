@@ -1,6 +1,9 @@
 ﻿@using SimpleQ.Webinterface.Properties;
+@using System.Resources;
 @model SimpleQ.Webinterface.Models.ViewModels.MultiResultModel
-
+@{
+    ResourceManager rm = Resources.ResourceManager;
+}
 
 <div class="row mr-0 ml-0">
     <div class="col-md-6 pl-3">
@@ -97,15 +100,30 @@
     var temp = [];
     
     @foreach (KeyValuePair<string, List<int>> kvp in Model.Votes)
-    {       
+    {
+        string str;
+        try
+        {
+            str = rm.GetString(kvp.Key);
+        }
+        catch (MissingManifestResourceException)
+        {
+            str = kvp.Key;
+        }
+
+        if (string.IsNullOrEmpty(str))
+        {
+            str = kvp.Key;
+        }
+
         @:temp = [];
-        foreach(int i in kvp.Value)
+        foreach (int i in kvp.Value)
         {
             @:temp.push(@i);
         }
 
          @:multiDict.push({
-                @:key:"@kvp.Key"
+                @:key:"@Html.Raw(str)"
             @:,
                 @:value: temp
             @:});

@@ -287,7 +287,7 @@
     <value>kein Template</value>
   </data>
   <data name="cancel" xml:space="preserve">
-    <value>abbrechen</value>
+    <value>Abbrechen</value>
   </data>
   <data name="content" xml:space="preserve">
     <value>Inhalt</value>
@@ -426,7 +426,7 @@
     <value>Schließen</value>
   </data>
   <data name="defineGroupsModalInfo" xml:space="preserve">
-    <value>Sie haben noch keine Gruppen, gehen Sie zur Gruppenverwaltung und erstellen Sie Ihre erste.</value>
+    <value>Sie haben noch keine Gruppen. Bitte öffnen Sie die Gruppenverwaltung und erstellen Sie Ihre Erste</value>
   </data>
   <data name="evaluate" xml:space="preserve">
     <value>Auswerten</value>
@@ -474,12 +474,123 @@
     <value>Wochen</value>
   </data>
   <data name="youCanNowLogin" xml:space="preserve">
-    <value>Sie können sich jetzt einloggen</value>
+    <value>Sie können sich jetzt einloggen.</value>
   </data>
   <data name="answers" xml:space="preserve">
     <value>Antwortmöglichkeiten</value>
   </data>
   <data name="answersButtonTooltip" xml:space="preserve">
     <value>Klicken Sie hier, um Antwortmöglichkeiten hinzuzufügen.</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Aktionen</value>
+  </data>
+  <data name="CityInvalid" xml:space="preserve">
+    <value>Ort ungültig</value>
+  </data>
+  <data name="ConfirmationLinkSentTo" xml:space="preserve">
+    <value>Email-Bestätigungslink gesendet an:</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Erstellen</value>
+  </data>
+  <data name="CreateNewGroup" xml:space="preserve">
+    <value>Neue Gruppe erstellen</value>
+  </data>
+  <data name="EmailAddressInvalid" xml:space="preserve">
+    <value>Die angegebene Email-Adresse ist ungültig</value>
+  </data>
+  <data name="EmailSendingFailed" xml:space="preserve">
+    <value>Email konnte derzeit nicht gesendet werden\nBitte später erneut versuchen</value>
+  </data>
+  <data name="EmailSent" xml:space="preserve">
+    <value>Email gesendet</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Gruppenname</value>
+  </data>
+  <data name="GroupSelection" xml:space="preserve">
+    <value>Gruppenauswahl</value>
+  </data>
+  <data name="InvalidCustCode" xml:space="preserve">
+    <value>Ungültiger Kunden-Code</value>
+  </data>
+  <data name="InvalidLink" xml:space="preserve">
+    <value>Ungültiger Link</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>Passwort ungültig</value>
+  </data>
+  <data name="NameMustNotBeEmpty" xml:space="preserve">
+    <value>Der Kundenname darf nicht leer sein</value>
+  </data>
+  <data name="NewGroup" xml:space="preserve">
+    <value>Neue Gruppe</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Passwort geändert</value>
+  </data>
+  <data name="PasswordMedium" xml:space="preserve">
+    <value>Passwort mittel</value>
+  </data>
+  <data name="PasswordsDontMatch" xml:space="preserve">
+    <value>Die eingegebenen Passwörter stimmen nicht überein</value>
+  </data>
+  <data name="PasswordStrong" xml:space="preserve">
+    <value>Passwort stark</value>
+  </data>
+  <data name="PasswordWeak" xml:space="preserve">
+    <value>Passwort schwach</value>
+  </data>
+  <data name="Period" xml:space="preserve">
+    <value>Periodendauer</value>
+  </data>
+  <data name="PleaseConfirmBefore" xml:space="preserve">
+    <value>Bitte bestätigen Sie Ihre Email-Adresse bevor Sie sich einloggen.</value>
+  </data>
+  <data name="PlzInvalid" xml:space="preserve">
+    <value>Postleitzahl ungültig</value>
+  </data>
+  <data name="RegisteredSuccessfully" xml:space="preserve">
+    <value>Erfolgreich registriert</value>
+  </data>
+  <data name="SavePassword" xml:space="preserve">
+    <value>Passwort speichern</value>
+  </data>
+  <data name="SelectedGroup" xml:space="preserve">
+    <value>Gewählte Gruppe:</value>
+  </data>
+  <data name="StreetInvalid" xml:space="preserve">
+    <value>Straße oder Hausnr. ungültig</value>
+  </data>
+  <data name="ToLogin" xml:space="preserve">
+    <value>Zum Login</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Einheit</value>
+  </data>
+  <data name="YourCustCode" xml:space="preserve">
+    <value>Ihr Kunden-Code:</value>
+  </data>
+  <data name="DontKnow" xml:space="preserve">
+    <value>Weiß nicht</value>
+  </data>
+  <data name="FreeText" xml:space="preserve">
+    <value>Freitext</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Grün</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Rot</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Gelb</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
   </data>
 </root>

@@ -190,13 +190,13 @@
     <value>Password error</value>
   </data>
   <data name="PasswordErrorMsg" xml:space="preserve">
-    <value>Passwords don't match</value>
+    <value>Passwords do not match</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
   <data name="ChangesOk" xml:space="preserve">
-    <value>Changes were made</value>
+    <value>Changes successful</value>
   </data>
   <data name="minimumGroupSize404" xml:space="preserve">
     <value>Minimum group size error 404</value>
@@ -233,5 +233,116 @@
   </data>
   <data name="deletePeriodic500" xml:space="preserve">
     <value>Delete periodic error 500</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="AmountAnswers" xml:space="preserve">
+    <value>Amount of answers</value>
+  </data>
+  <data name="AskAQuestion" xml:space="preserve">
+    <value>Ask a question</value>
+  </data>
+  <data name="AskQuestion" xml:space="preserve">
+    <value>Send question</value>
+  </data>
+  <data name="BillDate" xml:space="preserve">
+    <value>Bill date</value>
+  </data>
+  <data name="BillingDay" xml:space="preserve">
+    <value>Billing day</value>
+  </data>
+  <data name="BillingPeriod" xml:space="preserve">
+    <value>Billing period</value>
+  </data>
+  <data name="BillNumber" xml:space="preserve">
+    <value>Bill number</value>
+  </data>
+  <data name="BillOverview" xml:space="preserve">
+    <value>Bill overview</value>
+  </data>
+  <data name="Bills" xml:space="preserve">
+    <value>Bills</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="CurrAnswerAmount" xml:space="preserve">
+    <value>Amount of answers in the current billing period</value>
+  </data>
+  <data name="CurrSurveyAmount" xml:space="preserve">
+    <value>Amount of surveys in the current billing period</value>
+  </data>
+  <data name="CustCode" xml:space="preserve">
+    <value>Customer code</value>
+  </data>
+  <data name="DataWillBeDeleted" xml:space="preserve">
+    <value>Your entire data (including survey results) will be deleted permanently!</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="DownloadBill" xml:space="preserve">
+    <value>Download bill</value>
+  </data>
+  <data name="Faq" xml:space="preserve">
+    <value>Frequently asked questions</value>
+  </data>
+  <data name="InMonths" xml:space="preserve">
+    <value>months</value>
+  </data>
+  <data name="OtherQuestion" xml:space="preserve">
+    <value>Other question</value>
+  </data>
+  <data name="OutstandingAmount" xml:space="preserve">
+    <value>Outstanding amount</value>
+  </data>
+  <data name="PaymentQuestion" xml:space="preserve">
+    <value>Payment question</value>
+  </data>
+  <data name="PeriodicSurveys" xml:space="preserve">
+    <value>Periodic surveys</value>
+  </data>
+  <data name="PleaseEnterLoginData" xml:space="preserve">
+    <value>Please enter your login data:</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Cost</value>
+  </data>
+  <data name="ProductQuestion" xml:space="preserve">
+    <value>Product question</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="QuestionCategory" xml:space="preserve">
+    <value>Question category</value>
+  </data>
+  <data name="Survey" xml:space="preserve">
+    <value>Survey</value>
+  </data>
+  <data name="TemplatesGetDeactivated" xml:space="preserve">
+    <value>Templates using deactivated modi will get deactivated temporarily.</value>
+  </data>
+  <data name="Unregister" xml:space="preserve">
+    <value>Unregister</value>
+  </data>
+  <data name="unregister403" xml:space="preserve">
+    <value>Unregister failed. Customer code or password invalid.</value>
+  </data>
+  <data name="unregister404" xml:space="preserve">
+    <value>Unregister failed. Customer not found.</value>
+  </data>
+  <data name="unregister409" xml:space="preserve">
+    <value>Unregister failed. Open bills have to be paid before.</value>
+  </data>
+  <data name="unregister500" xml:space="preserve">
+    <value>Unregister failed. Please try again later.</value>
+  </data>
+  <data name="WarningCAP" xml:space="preserve">
+    <value>WARNING:</value>
   </data>
 </root>

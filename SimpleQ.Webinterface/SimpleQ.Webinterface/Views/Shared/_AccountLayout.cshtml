@@ -40,7 +40,7 @@
 
         function lang_change() {
             let lang = $("#lang_select").val();
-            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + "/" + lang);
+            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + lang + "/" + window.location.pathname.split("/", 3)[2]);
         }
     </script>
 </body>

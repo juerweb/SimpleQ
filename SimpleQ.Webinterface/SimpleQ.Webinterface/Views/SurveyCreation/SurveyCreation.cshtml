@@ -183,11 +183,11 @@
             <div id="periodicSurveyDiv" class="collapse">
                 <div class="row mr-0 ml-0 mt-2">
                     <div class="col-4">
-                        <label>Periodendauer</label>
+                        <label>@Resources.Period</label>
                         <input id="countInput" class="form-control" type="number" min="0" value="" name='Period' onchange="insertHiddenCheckBox()" />
                     </div>
                     <div class="col-8">
-                        <label>Einheit</label>
+                        <label>@Resources.Unit</label>
                         <select class="form-control" id="daysOrWeekCB" name="IsWeek" onchange="insertHiddenCheckBox()">
                             <option value="false" selected>@rm.GetString("days")</option>
                             <option value="true" selected>@rm.GetString("weeks")</option>

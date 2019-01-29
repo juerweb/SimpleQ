@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<a class="btn btn-primary" href="@Url.Action("Login", "Account")">Zum Login</a>
+<a class="btn btn-primary" href="@Url.Action("Login", "Account")">@Resources.ToLogin</a>
 <br /><br />
 @using (Html.BeginForm("Register", "Account"))
 {
@@ -50,7 +50,7 @@
         </div>
 
         <div id="addressData">
-            <h3>Adressdaten</h3>
+            <h3>@Resources.addressData</h3>
             <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
                 <div class="form-group">
                     @Html.LabelFor(c => c.Street, Resources.streetAndHousenumber, new { @class = "ml-2" })
@@ -94,7 +94,7 @@
         </div>
 
         <div id="specificData">
-            <h3>Spezifische Daten</h3>
+            <h3>@Resources.specificData</h3>
             <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
                 <div class="form-group">
                     @Html.LabelFor(c => c.DataStoragePeriod, Resources.dataRetentionPeriodInMonths, new { @class = "ml-2" })
@@ -150,21 +150,21 @@
             let password1TB = document.getElementById("password1");
             let password2TB = document.getElementById("password2");
             if (custNameTB.value == "") {
-                alert("Der Kundenname darf nicht leer sein!");
+                alert("@Resources.NameMustNotBeEmpty");
                 return;
             }
             if (!validateEmail(mailTB.value)) {
-                alert("Die angegebene Email-Adresse ist nicht gültig!");
+                alert("@Resources.EmailAddressInvalid");
                 return;
             }
 
             if (password1TB.value !== password2TB.value) {
-                alert("Die Passwörter sind nicht gleich!");
+                alert("@Resources.PasswordsDontMatch");
                 return;
             }
 
             if (password1TB.value.length < 6) {
-                alert("Das Passwort ist nicht zulässig!");
+                alert("@Resources.InvalidPassword");
                 return;
             }
 
@@ -177,16 +177,16 @@
             let countryTB = document.getElementById("country");
 
             if (street.value == "" || !hasNumber(street.value)) {
-                alert("Strasse bzw Hausnummer unültig");
+                alert("@Resources.StreetInvalid");
                 return;
             }
             if (isNaN(parseInt(plzTB.value, 10))) {
-                alert("Die angegebene Postleitzahl ist nicht gültig!");
+                alert("@Resources.PlzInvalid");
                 return;
             }
 
             if (town.value == "") {
-                alert("Der angegebene Ort ist nicht gültig!");
+                alert("@Resources.CityInvalid");
                 return;
             }
 
@@ -220,7 +220,7 @@
 
         if (pw.length < 8) {
             input.style.borderColor = "red";
-            strengh.innerHTML = "Passwort unzulässig";
+            strengh.innerHTML = "@Resources.InvalidPassword";
         } else {
             if (pw.length > 9) {
                 length = 1;
@@ -237,13 +237,13 @@
             let sum = length + digits + upper;
 
             if (sum == 3) {
-                strengh.innerHTML = "Passwort stark";
+                strengh.innerHTML = "@Resources.PasswordStrong";
                 input.style.borderColor = "green";
             } else if (sum == 2) {
-                strengh.innerHTML = "Passwort mittel";
+                strengh.innerHTML = "@Resources.PasswordMedium";
                 input.style.borderColor = "orange";
             } else {
-                strengh.innerHTML = "Passwort schwach";
+                strengh.innerHTML = "@Resources.PasswordWeak";
                 input.style.borderColor = "red";
             }
         }

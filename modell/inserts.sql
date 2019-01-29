@@ -331,7 +331,7 @@ commit;
 
 
 begin transaction;
-insert into Survey values (1, '420420', 'Sind Sie ein Kommunist?', (select dateadd(day, -2, (select getdate()))), (select dateadd(day, -1, (select getdate()))), 10, null, 3, 1, 1, 2592000000000); -- SvyId 18
+insert into Survey values (1, '420420', 'Sind Sie ein Kommunist?', (select dateadd(day, -2, (select getdate()))), (select dateadd(day, -1, (select getdate()))), 5, null, 10, 1, 1, 2592000000000); -- SvyId 18
 insert into Asking values (18, 1, '420420');
 insert into Asking values (18, 2, '420420');
 -- Due to trigger AnswerOption (53) is created automatically for SvyId 18 (LikertScale3)

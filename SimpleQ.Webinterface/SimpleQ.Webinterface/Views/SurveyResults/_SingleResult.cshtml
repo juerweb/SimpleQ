@@ -1,6 +1,9 @@
 ﻿@using SimpleQ.Webinterface.Properties;
+@using System.Resources;
 @model List<SimpleQ.Webinterface.Models.ViewModels.SingleResultModel>
-
+@{
+    ResourceManager rm = Resources.ResourceManager;
+}
 
 <div class="row mr-0 ml-0">
     <div class="col-1">
@@ -81,7 +84,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 
 <script>
@@ -97,9 +100,23 @@
                 @:freeText = false;
                 foreach (KeyValuePair<string, int> kvp in Model[i].Votes)
                 {
+                    string str;
+                    try
+                    {
+                        str = rm.GetString(kvp.Key);
+                    }
+                    catch (MissingManifestResourceException)
+                    {
+                        str = kvp.Key;
+                    }
+
+                    if(string.IsNullOrEmpty(str))
+                    {
+                        str = kvp.Key;
+                    }
 
                 @:dicts[@i].dict.push({
-                    @:key: "@kvp.Key"
+                    @:key: "@Html.Raw(str)"
                 @:,
                     @:value: "@kvp.Value"
                 @:});

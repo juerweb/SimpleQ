@@ -118,9 +118,7 @@
                 return false;
             }
         }
-
     </script>
-
 </head>
 <body>
     <div class="row border-bottom border-dark ml-0 mr-0">
@@ -128,7 +126,7 @@
             <img src="../../Content/Images/Logos/simpleq.png" style="max-height: 100px;" class="img-fluid" />
         </div>
         <div class="col-md-4 text-center d-flex flex-column">
-            <h1 class="mt-auto" id="header">Überschrift</h1>
+            <h1 class="mt-auto" id="header"></h1>
         </div>
         <div class="col-md-4 d-flex justify-content-end align-items-center">
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
@@ -161,7 +159,7 @@
                             <a class="btn btn-light btn-block" href='@Url.Action("Index", "SurveyCreation")'>
                                 <span class="row d-flex">
                                     <span class="col-9 align-self-center font-size-responsive p-0">
-                                        Befragung starten
+                                        @Resources.surveyCategoryHeader
                                     </span>
                                     <span class="col-3 pl-1 pr-1">
                                         <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />
@@ -185,7 +183,7 @@
                             <a class="btn btn-light btn-block" href='@Url.Action("Index", "GroupAdministration")'>
                                 <span class="row d-flex">
                                     <span class="col-9 align-self-center font-size-responsive p-0">
-                                        Gruppenverwaltung
+                                        @Resources.groupAdministrationHeader
                                     </span>
                                     <span class="col-3 pl-1 pr-1">
                                         <img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid navbar-img" />
@@ -197,7 +195,7 @@
                             <a class="btn btn-light btn-block" href='@Url.Action("Index", "Settings")'>
                                 <span class="row d-flex">
                                     <span class="col-9 align-self-center font-size-responsive p-0">
-                                        Einstellungen
+                                        @Resources.settings
                                     </span>
                                     <span class="col-3 pl-1 pr-1">
                                         <img src="../../Content/Images/Icons/settings.png" class="img-fluid navbar-img" />
@@ -209,7 +207,7 @@
                             <a class="btn btn-light btn-block" href='@Url.Action("Index", "Support")' style="overflow-wrap: break-word;">
                                 <span class="row d-flex">
                                     <span class="col-9 align-self-center font-size-responsive p-0">
-                                        Support
+                                        @Resources.support
                                     </span>
                                     <span class="col-3 pl-1 pr-1">
                                         <img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />
@@ -295,7 +293,7 @@
 
         function lang_change() {
             let lang = $("#lang_select").val();
-            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + "/" + lang);
+            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + lang + "/" + window.location.pathname.split("/", 3)[2]);
         }
     </script>
 </body>

@@ -1,8 +1,9 @@
-﻿@{
+﻿@using SimpleQ.Webinterface.Properties
+@{
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<h5>Erfolgreich registriert</h5>
-Ihr Kunden-Code: @ViewBag.custCode<br />
-Email-Bestätigungslink gesendet an: @ViewBag.email<br />
-Bitte bestätigen Sie Ihre Email-Adresse bevor Sie sich einloggen.
+<h5>@Resources.RegisteredSuccessfully</h5>
+@Resources.YourCustCode @ViewBag.custCode<br />
+@Resources.ConfirmationLinkSentTo @ViewBag.email<br />
+@Resources.PleaseConfirmBefore
