@@ -246,7 +246,7 @@
     <value>Registrierungscode</value>
   </data>
   <data name="StartScan" xml:space="preserve">
-    <value>Scan starten 📷</value>
+    <value>Scan starten</value>
   </data>
   <data name="UpdateInterval" xml:space="preserve">
     <value>1</value>
@@ -341,6 +341,12 @@
     <value>/getFaqData</value>
   </data>
   <data name="OpenSourceLicense" xml:space="preserve">
-    <value>Open source Lizenzen</value>
+    <value>Open-source Lizenzen</value>
+  </data>
+  <data name="LinkToPrivacyPolicy" xml:space="preserve">
+    <value>https://simpleq.at/Dokumente/Datenschutzerkl%C3%A4rung.html</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Datenschutzerklärung</value>
   </data>
 </root>
