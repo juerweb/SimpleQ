@@ -394,12 +394,12 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dear Sir or Madam!\r\n
-        ///\r\n
-        ///To reset your email click the following link: {Url}\r\n
-        ///The link is valid for 15 minutes.\r\n
-        ///\r\n\r\n
-        ///Best regards,\r\n
+        ///   Looks up a localized string similar to Dear Sir or Madam!
+        ///
+        ///To reset your email click the following link: {Url}
+        ///The link is valid for 15 minutes.
+        ///
+        ///Best regards,
         ///Your SimpleQ team.
         /// </summary>
         internal static string ForgotPasswordEmailMessage {
@@ -418,12 +418,12 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You got invited to participate in surveys provided by SimpleQ!\r\n
-        ///\r\n
-        ///Please scan the attached QR code with your SimpleQ app.\r\n
-        ///Alternatively you can enter the following registration code in your app: {RegCode}\r\n
-        ///\r\n\r\n
-        ///Best regards,\r\n
+        ///   Looks up a localized string similar to You got invited to participate in surveys provided by SimpleQ!
+        ///
+        ///Please scan the attached QR code with your SimpleQ app.
+        ///Alternatively you can enter the following registration code in your app: {RegCode}
+        ///
+        ///Best regards,
         ///Your SimpleQ team.
         /// </summary>
         internal static string GroupInvitationEmailMessage {
@@ -433,8 +433,8 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your registration code: {RegCode}\r\n
-        ///Message:\r\n
+        ///   Looks up a localized string similar to Your registration code: {RegCode}
+        ///Message:
         ///{CustomMessage}.
         /// </summary>
         internal static string GroupInvitationEmailMessageCustom {
@@ -669,13 +669,13 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to SimpleQ!\r\n
-        ///\r\n
-        ///Please confirm your e-mail address now.\r\n
-        ///Hence just click the following confirmation link: {Url}\r\n
-        ///Your customer code: {CustCode}\r\n
-        ///\r\n\r\n
-        ///Best regards,\r\n
+        ///   Looks up a localized string similar to Welcome to SimpleQ!
+        ///
+        ///Please confirm your e-mail address now.
+        ///Hence just click the following confirmation link: {Url}
+        ///Your customer code: {CustCode}
+        ///
+        ///Best regards,
         ///Your SimpleQ team.
         /// </summary>
         internal static string RegistrationEmailMessage {

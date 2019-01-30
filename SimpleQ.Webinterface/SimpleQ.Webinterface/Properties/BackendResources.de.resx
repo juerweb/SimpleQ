@@ -229,12 +229,12 @@
     <value>Umfrage konnte nicht geladen werden</value>
   </data>
   <data name="ForgotPasswordEmailMessage" xml:space="preserve">
-    <value>Sehr geehrte Damen und Herren!\r\n
-\r\n
-Um Ihr Passwort zurückzusetzen, klicken sie einfach auf folgenden Link: {Url}\r\n
-Dieser Link ist 15 Minuten lang gültig.\r\n
-\r\n\r\n
-Mit freundlichen Grüßen\r\n
+    <value>Sehr geehrte Damen und Herren!
+
+Um Ihr Passwort zurückzusetzen, klicken sie einfach auf folgenden Link: {Url}
+Dieser Link ist 15 Minuten lang gültig.
+
+Mit freundlichen Grüßen
 Ihr SimpleQ-Team</value>
   </data>
   <data name="ForgotPasswordEmailSubject" xml:space="preserve">
@@ -250,8 +250,8 @@ Mit freundlichen Grüßen\r\n
 Ihr SimpleQ-Team</value>
   </data>
   <data name="GroupInvitationEmailMessageCustom" xml:space="preserve">
-    <value>Ihr Registrierungscode: {RegCode}\r\n
-Nachricht:\r\n
+    <value>Ihr Registrierungscode: {RegCode}
+Nachricht:
 {CustomMessage}</value>
   </data>
   <data name="GroupInvitationEmailSubject" xml:space="preserve">
@@ -330,13 +330,13 @@ Nachricht:\r\n
     <value>Der Fragetext darf nicht leer sein.</value>
   </data>
   <data name="RegistrationEmailMessage" xml:space="preserve">
-    <value>Herzlich Willkommen bei SimpleQ!\r\n
-\r\n
-Bitte bestätigen Sie nun Ihre Email-Adresse\r\n
-Hierzu einfach auf folgenden Bestätigungslink klicken: {Url}\r\n
-Ihr Kunden-Code lautet: {CustCode}\r\n
-\r\n\r\n
-Mit freundlichen Grüßen\r\n
+    <value>Herzlich Willkommen bei SimpleQ!
+
+Bitte bestätigen Sie nun Ihre Email-Adresse
+Hierzu einfach auf folgenden Bestätigungslink klicken: {Url}
+Ihr Kunden-Code lautet: {CustCode}
+
+Mit freundlichen Grüßen
 Ihr SimpleQ-Team</value>
   </data>
   <data name="RegistrationEmailSubject" xml:space="preserve">
