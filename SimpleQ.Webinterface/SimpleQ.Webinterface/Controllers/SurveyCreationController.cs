@@ -11,6 +11,7 @@ using SimpleQ.Webinterface.Models.ViewModels;
 using SimpleQ.Webinterface.Models.Enums;
 using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Properties;
+using SimpleQ.Webinterface.Schedulers;
 using System.Net.Http;
 using Newtonsoft.Json;
 using NLog;
@@ -21,7 +22,6 @@ namespace SimpleQ.Webinterface.Controllers
     [CAuthorize]
     public class SurveyCreationController : BaseController
     {
-        private static readonly HashSet<int> queuedSurveys = new HashSet<int>();
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region MVC-Actions
@@ -193,14 +193,12 @@ namespace SimpleQ.Webinterface.Controllers
                     await db.SaveChangesAsync();
                 }
 
-                TimeSpan timeout = req.Survey.StartDate - DateTime.Now;
-                logger.Debug($"Timeout until sending survey {req.Survey.SvyId}: {timeout.ToString(@"hh\:mm\:ss\.fff")}");
-
-                // Umfrage nur schedulen wenn sie vor 00:00 startet (+10min Toleranz)
-                if (timeout < Literal.NextMidnight.Add(TimeSpan.FromMinutes(10)))
+                // Only queue survey if starting before 00:10
+                if (req.Survey.StartDate < Literal.NextMidnight.Add(TimeSpan.FromMinutes(10)))
                 {
                     logger.Debug($"Scheduling survey {req.Survey.SvyId}");
-                    ScheduleSurvey(req.Survey.SvyId, timeout, CustCode);
+                    var success = await SurveyQueue.EnqueueSurvey(req.Survey.SvyId, req.Survey.StartDate, CustCode);
+                    logger.Debug($"Survey {req.Survey.SvyId} {(success ? "" : "not")} scheduled {(success ? "successfully" : "")}");
                 }
 
                 logger.Debug("Creating new survey finished successfully");
@@ -334,10 +332,7 @@ namespace SimpleQ.Webinterface.Controllers
                     else
                     {
                         logger.Debug("Survey not sent yet. Removing from queue");
-                        lock (queuedSurveys)
-                        {
-                            queuedSurveys.Remove(svyId);
-                        }
+                        await SurveyQueue.DequeueSurvey(svyId);
                     }
                     await Task.Run(() => db.sp_DeleteSurvey(svyId));
                     await db.SaveChangesAsync();
@@ -397,155 +392,6 @@ namespace SimpleQ.Webinterface.Controllers
         #endregion
 
         #region Helpers
-        internal static void ScheduleSurvey(int svyId, TimeSpan timeout, string custCode)
-        {
-            try
-            {
-                logger.Debug($"Survey scheduling started (SvyId: {svyId}, CustCode: {custCode})");
-                lock (queuedSurveys)
-                {
-                    if (!queuedSurveys.Add(svyId))
-                    {
-                        logger.Debug($"Survey {svyId} already scheduled.");
-                        return;
-                    }
-                }
-
-                HostingEnvironment.QueueBackgroundWorkItem(async ct =>
-                {
-                    try
-                    {
-                        logger.Debug($"Survey {svyId} scheduled successfully. Sleeping for {timeout.TotalMilliseconds}ms");
-                        if (timeout.TotalMilliseconds > 0)
-                            Thread.Sleep((int)timeout.TotalMilliseconds);
-
-                        lock (queuedSurveys)
-                        {
-                            if (!queuedSurveys.Contains(svyId))
-                            {
-                                logger.Debug($"Survey {svyId} removed during sleep phase. Exiting");
-                                return;
-                            }
-                        }
-
-                        using (var db = new SimpleQDBEntities())
-                        {
-                            Random rnd = new Random();
-
-                            // Anzahl an zu befragenden Personen
-                            int amount = (await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync()).Amount;
-
-                            // Bereits befragte Personen (zwecks Verhinderung v. Mehrfachbefragungen)
-                            HashSet<int> alreadyAsked = new HashSet<int>();
-
-                            // DepIDs mit den errechneten Anzahlen v. zu befragenden Personen
-                            Dictionary<int, int> depAmounts = new Dictionary<int, int>();
-
-                            // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
-                            int totalPeople = (await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync()).Departments.SelectMany(d => d.People).Distinct().Count();
-                            logger.Debug($"Survey {svyId} - totalPeople: {totalPeople}");
-
-                            (await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync()).Departments.ToList().ForEach(dep =>
-                            {
-                                // Anzahl an Personen in der aktuellen Abteilung (mit DepId = id)
-                                int currPeople = dep.People.Distinct().Count();
-                                // Abteilung überspringen, wenn keine Leute darin
-                                if (currPeople == 0)
-                                    return;
-
-                                // GEWICHTETE Anzahl an zu befragenden Personen in der aktuellen Abteilung
-                                int toAsk = (int)Math.Round(amount * (currPeople / (double)totalPeople));
-
-                                depAmounts.Add(dep.DepId, toAsk);
-                            });
-
-                            logger.Debug($"Survey {svyId} - DepAmounts before correction: {string.Join(";", depAmounts.Select(x => x.Key + "=" + x.Value))}");
-
-
-                            // Solange Gesamtanzahl der zu Befragenden zu klein, die Anzahl einer zufälligen Abteilung erhöhen
-                            while (depAmounts.Values.Sum() < amount)
-                                depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]++;
-
-                            // Solange Gesamtanzahl der zu Befragenden zu groß, die Anzahl einer zufälligen Abteilung verringern
-                            while (depAmounts.Values.Sum() > amount)
-                                depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]--;
-
-                            logger.Debug($"Survey {svyId} - DepAmounts after correction: {string.Join(";", depAmounts.Select(x => x.Key + "=" + x.Value))}");
-
-                            int totalSent = 0;
-                            using (var client = new HttpClient())
-                            {
-                                foreach (var kv in depAmounts)
-                                {
-                                    int sent = 0;
-                                    var query = (await db.Departments
-                                        .Where(d => d.DepId == kv.Key && d.CustCode == custCode)
-                                        .SelectMany(d => d.People)
-                                        .ToListAsync())
-                                        .Where(p => !alreadyAsked.Contains(p.PersId))
-                                        .OrderBy(p => rnd.Next())
-                                        .Take(kv.Value)
-                                        .ToList();
-
-                                    foreach (var p in query)
-                                    {
-                                        alreadyAsked.Add(p.PersId);
-
-                                        try
-                                        {
-                                            // SEND SURVEY
-                                            logger.Debug($"Beginning to send survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
-                                            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
-                                            var obj = new
-                                            {
-                                                app_id = "68b8996a-f664-4130-9854-9ed7f70d5540",
-                                                include_player_ids = new string[] { p.DeviceId },
-                                                contents = new { en = "New survey" },
-                                                content_available = true,
-                                                data = new { Cancel = false, SvyId = svyId }
-                                            };
-                                            var response = await client.PostAsJsonAsync("https://onesignal.com/api/v1/notifications", obj);
-
-                                            if (!response.IsSuccessStatusCode)
-                                            {
-                                                logger.Error($"Failed sending survey {svyId} (StatusCode: {response.StatusCode}, Content: {response.Content})");
-                                            }
-                                            else
-                                            {
-                                                logger.Debug($"Survey {svyId} sent successfully (StatusCode: {response.StatusCode}, Content: {response.Content})");
-                                                sent++;
-                                            }
-                                        }
-                                        catch (AggregateException ex)
-                                        {
-                                            logger.Error(ex, $"Error while sending survey to app (SvyId: {svyId}, CustCode: {custCode}, PersId: {p.PersId}, DeviceId: {p.DeviceId})");
-                                        }
-                                    }
-                                    logger.Debug($"(SvyId {svyId}) Surveys sent to Department {kv.Key}: Sent:{sent} Expected:{kv.Value}");
-                                    totalSent += sent;
-                                }
-                            }
-                            logger.Debug($"(SvyId {svyId}) Total surveys sent: {totalSent}");
-
-
-                            (await db.Surveys.Where(s => s.SvyId == svyId).FirstAsync()).Sent = totalSent != 0;
-                            await db.SaveChangesAsync();
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Error(ex, "ScheduleSurvey->QueueBackgroundWorkItem: Unexpected error");
-                        throw ex;
-                    }
-                });
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex, "ScheduleSurvey: Unexpected error");
-                throw ex;
-            }
-        }
-
         private ArgumentNullException ANEx(string paramName) => new ArgumentNullException(paramName);
         #endregion
     }

@@ -17,7 +17,18 @@ namespace SimpleQ.Webinterface.Extensions
             }
         }
 
-        public static TimeSpan NextMidnight
+        public static DateTime Tomorrow
+        {
+            get => DateTime.Today.AddDays(1);
+        }
+
+        // equal
+        public static DateTime NextMidnight
+        {
+            get => DateTime.Now.AddDays(1).Date;
+        }
+
+        public static TimeSpan UntilNextMidnight
         {
             get => DateTime.Now.AddDays(1).Date - DateTime.Now;
         }
@@ -28,11 +39,6 @@ namespace SimpleQ.Webinterface.Extensions
             var rnd = new Random();
 
             return new string(chars.OrderBy(c => rnd.Next()).Take(count).ToArray());
-        }
-
-        public static DateTime Tomorrow()
-        {
-            return DateTime.Today.AddDays(1);
         }
     }
 }

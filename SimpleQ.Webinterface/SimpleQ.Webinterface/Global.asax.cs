@@ -20,10 +20,7 @@ namespace SimpleQ.Webinterface
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        private static Scheduler surveyScheduler = new SurveyScheduler();
-        private static Scheduler exceededSurveyDataScheduler = new ExceededSurveyDataScheduler();
-        private static Scheduler billScheduler = new BillScheduler();
-        private static Scheduler periodicSurveyScheduler = new PeriodicSurveyScheduler();
+        private static JobScheduler jobScheduler = new JobScheduler();
 
         protected void Application_Start()
         {
@@ -41,10 +38,7 @@ namespace SimpleQ.Webinterface
                 RestoreQueuedSurveys();
 
                 logger.Debug("Starting schedulers");
-                surveyScheduler.Start();
-                exceededSurveyDataScheduler.Start();
-                billScheduler.Start();
-                periodicSurveyScheduler.Start();
+                jobScheduler.Start().Wait();
                 logger.Debug("Application started successfully");
             }
             catch (Exception ex)
@@ -54,8 +48,6 @@ namespace SimpleQ.Webinterface
             }
         }
 
-        
-
         private void RestoreQueuedSurveys()
         {
             try
@@ -63,16 +55,19 @@ namespace SimpleQ.Webinterface
                 logger.Debug("Starting to restore queued surveys");
                 using (var db = new SimpleQDBEntities())
                 {
-                    // Alle Umfragen welche vor 00:00 starten schedulen (+10min Toleranz)
+                    // Schedule each survey starting before 00:10
                     var query = db.Surveys.Where(s => !s.Sent)
                         .ToList()
-                        .Where(s => s.StartDate - DateTime.Now < Literal.NextMidnight.Add(TimeSpan.FromMinutes(10)))
+                        .Where(s => s.StartDate < Literal.NextMidnight.Add(TimeSpan.FromMinutes(10)))
                         .ToList();
-                    query.ForEach(s =>
+                    int count = 0;
+                    
+                    foreach (var s in query)
                     {
-                        Controllers.SurveyCreationController.ScheduleSurvey(s.SvyId, s.StartDate - DateTime.Now, s.CustCode);
-                    });
-                    logger.Debug($"{query.Count} surveys restored successfully");
+                        var success = SurveyQueue.EnqueueSurvey(s.SvyId, s.StartDate, s.CustCode).Result;
+                        count += success ? 1 : 0;
+                    }
+                    logger.Debug($"{count} surveys restored successfully");
                 }
             }
             catch (Exception ex)

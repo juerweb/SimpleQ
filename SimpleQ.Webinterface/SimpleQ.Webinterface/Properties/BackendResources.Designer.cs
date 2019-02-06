@@ -151,6 +151,30 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dear Sir or Madam!
+        ///
+        ///Enclosed you will find your most recent bill.
+        ///For further questions please contact support@simpleq.at.
+        ///
+        ///Sincerely,
+        ///Your SimpleQ team.
+        /// </summary>
+        internal static string BillEmailMessage {
+            get {
+                return ResourceManager.GetString("BillEmailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SimpleQ Bill.
+        /// </summary>
+        internal static string BillEmailSubject {
+            get {
+                return ResourceManager.GetString("BillEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bill number.
         /// </summary>
         internal static string BillNumber {
@@ -399,7 +423,7 @@ namespace SimpleQ.Webinterface.Properties {
         ///To reset your email click the following link: {Url}
         ///The link is valid for 15 minutes.
         ///
-        ///Best regards,
+        ///Sincerely,
         ///Your SimpleQ team.
         /// </summary>
         internal static string ForgotPasswordEmailMessage {
@@ -418,12 +442,13 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You got invited to participate in surveys provided by SimpleQ!
+        ///   Looks up a localized string similar to Dear customer,
+        ///you got invited to participate in surveys provided by SimpleQ!
         ///
         ///Please scan the attached QR code with your SimpleQ app.
         ///Alternatively you can enter the following registration code in your app: {RegCode}
         ///
-        ///Best regards,
+        ///Sincerely,
         ///Your SimpleQ team.
         /// </summary>
         internal static string GroupInvitationEmailMessage {
@@ -675,7 +700,7 @@ namespace SimpleQ.Webinterface.Properties {
         ///Hence just click the following confirmation link: {Url}
         ///Your customer code: {CustCode}
         ///
-        ///Best regards,
+        ///Sincerely,
         ///Your SimpleQ team.
         /// </summary>
         internal static string RegistrationEmailMessage {

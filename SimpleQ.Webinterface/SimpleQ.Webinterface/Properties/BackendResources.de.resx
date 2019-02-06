@@ -241,12 +241,13 @@ Ihr SimpleQ-Team</value>
     <value>SimpleQ-Passwort zurücksetzen</value>
   </data>
   <data name="GroupInvitationEmailMessage" xml:space="preserve">
-    <value>Sie wurden eingeladen an SimpleQ-Umfragen Ihrer Organisation teilzunehmen!\r\n
-\r\n
-Bitte scannen Sie den QR-Code im Anhang mit Ihrer SimpleQ-App.\r\n
-Alternativ dazu können Sie einfach folgenden Code in Ihrer App eingeben: {RegCode}\r\n
-\r\n\r\n
-Mit freundlichen Grüßen\r\n
+    <value>Sehr geehrter Kunde,
+Sie wurden eingeladen an SimpleQ-Umfragen Ihrer Organisation teilzunehmen!
+
+Bitte scannen Sie den QR-Code im Anhang mit Ihrer SimpleQ-App.
+Alternativ dazu können Sie einfach folgenden Code in Ihrer App eingeben: {RegCode}
+
+Mit freundlichen Grüßen
 Ihr SimpleQ-Team</value>
   </data>
   <data name="GroupInvitationEmailMessageCustom" xml:space="preserve">
@@ -386,5 +387,17 @@ Ihr SimpleQ-Team</value>
   </data>
   <data name="YourSimpleQTeam" xml:space="preserve">
     <value>Ihr SimpleQ-Team</value>
+  </data>
+  <data name="BillEmailMessage" xml:space="preserve">
+    <value>Sehr geehrte Damen und Herren!
+
+Anbei erhalten Sie Ihre neueste Rechnung
+Bei weiteren Fragen wenden Sie sich bitte an support@simpleq.at.
+
+Mit freundlichen Grüßen,
+Ihr SimpleQ-Team</value>
+  </data>
+  <data name="BillEmailSubject" xml:space="preserve">
+    <value>SimpleQ Rechnung</value>
   </data>
 </root>

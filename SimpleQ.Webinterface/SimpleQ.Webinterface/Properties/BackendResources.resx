@@ -234,19 +234,20 @@
 To reset your email click the following link: {Url}
 The link is valid for 15 minutes.
 
-Best regards,
+Sincerely,
 Your SimpleQ team</value>
   </data>
   <data name="ForgotPasswordEmailSubject" xml:space="preserve">
     <value>SimpleQ password reset</value>
   </data>
   <data name="GroupInvitationEmailMessage" xml:space="preserve">
-    <value>You got invited to participate in surveys provided by SimpleQ!
+    <value>Dear customer,
+you got invited to participate in surveys provided by SimpleQ!
 
 Please scan the attached QR code with your SimpleQ app.
 Alternatively you can enter the following registration code in your app: {RegCode}
 
-Best regards,
+Sincerely,
 Your SimpleQ team</value>
   </data>
   <data name="GroupInvitationEmailMessageCustom" xml:space="preserve">
@@ -336,7 +337,7 @@ Please confirm your e-mail address now.
 Hence just click the following confirmation link: {Url}
 Your customer code: {CustCode}
 
-Best regards,
+Sincerely,
 Your SimpleQ team</value>
   </data>
   <data name="RegistrationEmailSubject" xml:space="preserve">
@@ -386,5 +387,17 @@ Your SimpleQ team</value>
   </data>
   <data name="YourSimpleQTeam" xml:space="preserve">
     <value>Your SimpleQ team</value>
+  </data>
+  <data name="BillEmailMessage" xml:space="preserve">
+    <value>Dear Sir or Madam!
+
+Enclosed you will find your most recent bill.
+For further questions please contact support@simpleq.at.
+
+Sincerely,
+Your SimpleQ team</value>
+  </data>
+  <data name="BillEmailSubject" xml:space="preserve">
+    <value>SimpleQ Bill</value>
   </data>
 </root>
