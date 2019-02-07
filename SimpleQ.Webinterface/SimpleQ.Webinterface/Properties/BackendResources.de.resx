@@ -400,4 +400,13 @@ Ihr SimpleQ-Team</value>
   <data name="BillEmailSubject" xml:space="preserve">
     <value>SimpleQ Rechnung</value>
   </data>
+  <data name="EmployeeSatisfaction" xml:space="preserve">
+    <value>Mitarbeiterzufriedenheit</value>
+  </data>
+  <data name="Everyone" xml:space="preserve">
+    <value>Jeder</value>
+  </data>
+  <data name="WorkplaceDesign" xml:space="preserve">
+    <value>Arbeitsplatzgestaltung</value>
+  </data>
 </root>

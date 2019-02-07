@@ -382,11 +382,29 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee satisfaction.
+        /// </summary>
+        internal static string EmployeeSatisfaction {
+            get {
+                return ResourceManager.GetString("EmployeeSatisfaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everyone.
+        /// </summary>
+        internal static string Everyone {
+            get {
+                return ResourceManager.GetString("Everyone", resourceCulture);
             }
         }
         
@@ -841,6 +859,15 @@ namespace SimpleQ.Webinterface.Properties {
         internal static string TotalCost {
             get {
                 return ResourceManager.GetString("TotalCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workplace design.
+        /// </summary>
+        internal static string WorkplaceDesign {
+            get {
+                return ResourceManager.GetString("WorkplaceDesign", resourceCulture);
             }
         }
         

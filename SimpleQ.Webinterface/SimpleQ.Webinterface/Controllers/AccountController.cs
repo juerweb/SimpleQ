@@ -167,9 +167,9 @@ namespace SimpleQ.Webinterface.Controllers
                             .MaxAsync();
                     }
 
-                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = "Employee satisfaction", Deactivated = false });
-                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = "Workplace design", Deactivated = false });
-                    db.Departments.Add(new Department { DepId = await maxDepId() + 1, CustCode = custCode, DepName = "Everyone" });
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = BackendResources.EmployeeSatisfaction, Deactivated = false });
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = BackendResources.WorkplaceDesign, Deactivated = false });
+                    db.Departments.Add(new Department { DepId = await maxDepId() + 1, CustCode = custCode, DepName = BackendResources.Everyone });
                     await db.SaveChangesAsync();
 
                     logger.Info($"Customer registered: {custCode}");
