@@ -323,6 +323,7 @@
     </Compile>
     <Compile Include="Schedulers\BillJob.cs" />
     <Compile Include="Schedulers\ExceededSurveyDataJob.cs" />
+    <Compile Include="Schedulers\KeepAlive.cs" />
     <Compile Include="Schedulers\PeriodicSurveyJob.cs" />
     <Compile Include="Schedulers\JobScheduler.cs" />
     <Compile Include="Schedulers\SurveyJob.cs" />
