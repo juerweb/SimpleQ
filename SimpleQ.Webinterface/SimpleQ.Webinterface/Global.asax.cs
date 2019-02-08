@@ -79,7 +79,7 @@ namespace SimpleQ.Webinterface
                     // Schedule each survey starting before 00:10
                     var query = db.Surveys.Where(s => !s.Sent)
                         .ToList()
-                        .Where(s => s.StartDate < Literal.NextMidnight.Add(TimeSpan.FromMinutes(10)))
+                        .Where(s => s.StartDate < Helper.NextDateTime(00, 10))
                         .ToList();
                     int count = 0;
 

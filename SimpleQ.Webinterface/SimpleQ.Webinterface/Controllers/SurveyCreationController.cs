@@ -194,7 +194,7 @@ namespace SimpleQ.Webinterface.Controllers
                 }
 
                 // Only queue survey if starting before 00:10
-                if (req.Survey.StartDate < Literal.NextMidnight.Add(TimeSpan.FromMinutes(10)))
+                if (req.Survey.StartDate < Helper.NextDateTime(00, 10))
                 {
                     logger.Debug($"Scheduling survey {req.Survey.SvyId}");
                     var success = await SurveyQueue.EnqueueSurvey(req.Survey.SvyId, req.Survey.StartDate, CustCode);

@@ -27,7 +27,7 @@ namespace SimpleQ.Webinterface.Schedulers
                     var query = (await db.Surveys
                         .Where(s => s.Period != null)
                         .ToListAsync())
-                        .Where(s => (s.StartDate + TimeSpan.FromTicks(s.Period.Value)).Date <= Literal.Tomorrow)
+                        .Where(s => (s.StartDate + TimeSpan.FromTicks(s.Period.Value)).Date <= Helper.Tomorrow)
                         .ToList();
 
                     foreach (var s in query)
@@ -39,14 +39,14 @@ namespace SimpleQ.Webinterface.Schedulers
                             .Include("AnswerOptions")
                             .Where(svy => svy.SvyId == s.SvyId).FirstAsync();
 
-                        if ((newSvy.StartDate + TimeSpan.FromTicks(s.Period.Value)).Date == Literal.Tomorrow)
+                        if ((newSvy.StartDate + TimeSpan.FromTicks(s.Period.Value)).Date == Helper.Tomorrow)
                         {
                             newSvy.StartDate += TimeSpan.FromTicks(newSvy.Period.Value);
                             newSvy.EndDate += TimeSpan.FromTicks(newSvy.Period.Value);
                         }
                         else
                         {
-                            newSvy.StartDate = Literal.Tomorrow
+                            newSvy.StartDate = Helper.Tomorrow
                                 .AddHours(newSvy.StartDate.Hour)
                                 .AddMinutes(newSvy.StartDate.Minute)
                                 .AddSeconds(newSvy.StartDate.Second);

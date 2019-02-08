@@ -300,7 +300,7 @@
     <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\SurveyCreationController.cs" />
     <Compile Include="Controllers\SurveyResultsController.cs" />
-    <Compile Include="Extensions\Literal.cs" />
+    <Compile Include="Extensions\Helper.cs" />
     <Compile Include="Extensions\Http.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

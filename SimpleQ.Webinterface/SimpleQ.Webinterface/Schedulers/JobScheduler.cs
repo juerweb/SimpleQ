@@ -28,14 +28,14 @@ namespace SimpleQ.Webinterface.Schedulers
                 scheduler = await StdSchedulerFactory.GetDefaultScheduler();
                 await scheduler.Start();
 
-                var startTime = Literal.NextMidnight.AddHours(-1) < DateTime.Now
-                    ? Literal.NextMidnight.AddDays(1).AddHours(-1)
-                    : Literal.NextMidnight.AddHours(-1); // 23:00, either today or tomorrow depending on current time
+                //var startTime = Literal.NextMidnight.AddHours(-1) < DateTime.Now
+                //    ? Literal.NextMidnight.AddDays(1).AddHours(-1)
+                //    : Literal.NextMidnight.AddHours(-1); // 23:00, either today or tomorrow depending on current time
                 IJobDetail periodicJob = JobBuilder.Create<PeriodicSurveyJob>().WithIdentity(PERIODIC_NAME).Build();
                 ITrigger periodicTrigger = TriggerBuilder.Create()
                     .WithIdentity(PERIODIC_NAME)
                     //.StartNow()
-                    .StartAt(startTime) // start at 23:00
+                    .StartAt(Helper.NextDateTime(23, 00)) // start at 23:00
                     .WithSimpleSchedule(x => x.WithIntervalInHours(24).RepeatForever()) // daily
                     .Build();
                 if (await Available(PERIODIC_NAME))
@@ -49,7 +49,7 @@ namespace SimpleQ.Webinterface.Schedulers
                 ITrigger surveyTrigger = TriggerBuilder.Create()
                     .WithIdentity(SURVEY_NAME)
                     //.StartAt(DateTime.Now.AddSeconds(10))
-                    .StartAt(Literal.NextMidnight.AddMinutes(10)) // start at 00:10
+                    .StartAt(Helper.NextDateTime(00, 10)) // start at 00:10
                     .WithSimpleSchedule(x => x.WithIntervalInHours(24).RepeatForever()) // daily
                     .Build();
                 if (await Available(SURVEY_NAME))
@@ -63,7 +63,7 @@ namespace SimpleQ.Webinterface.Schedulers
                 ITrigger exceededTrigger = TriggerBuilder.Create()
                     .WithIdentity(EXCEEDED_NAME)
                     //.StartNow()
-                    .StartAt(Literal.NextMidnight.AddHours(3)) // start at 03:00
+                    .StartAt(Helper.NextDateTime(03, 00)) // start at 03:00
                     .WithSimpleSchedule(x => x.WithIntervalInHours(24).RepeatForever()) // daily
                     .Build();
                 if (await Available(EXCEEDED_NAME))
@@ -77,7 +77,7 @@ namespace SimpleQ.Webinterface.Schedulers
                 ITrigger billTrigger = TriggerBuilder.Create()
                     .WithIdentity(BILL_NAME)
                     //.StartNow()
-                    .StartAt(Literal.NextMidnight.AddHours(4).AddMinutes(20)) // start at 04:20
+                    .StartAt(Helper.NextDateTime(04, 20)) // start at 04:20
                     .WithSimpleSchedule(x => x.WithIntervalInHours(24).RepeatForever()) // daily
                     .Build();
                 if (await Available(BILL_NAME))
