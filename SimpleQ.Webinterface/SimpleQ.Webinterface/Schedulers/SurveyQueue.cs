@@ -39,7 +39,7 @@ namespace SimpleQ.Webinterface.Schedulers
                     {
                         if (!queuedSurveys.ContainsKey(svyId))
                         {
-                            logger.Debug($"Survey {svyId} removed during sleep phase. Exiting");
+                            logger.Debug($"Survey {svyId} cancelled during sleep phase. Exiting");
                             return;
                         }
                     }
@@ -48,8 +48,21 @@ namespace SimpleQ.Webinterface.Schedulers
                     {
                         Random rnd = new Random();
 
+                        var survey = await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync();
+                        if (survey == null)
+                        {
+                            logger.Debug($"Survey {svyId} has been deleted during sleep phase. Exiting");
+                            return;
+                        }
+
+                        if (survey.Sent)
+                        {
+                            logger.Debug($"Survey {svyId} has been sent already. Exiting");
+                            return;
+                        }
+
                         // Anzahl an zu befragenden Personen
-                        int amount = (await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync()).Amount;
+                        int amount = survey.Amount;
 
                         // Bereits befragte Personen (zwecks Verhinderung v. Mehrfachbefragungen)
                         HashSet<int> alreadyAsked = new HashSet<int>();
@@ -58,10 +71,10 @@ namespace SimpleQ.Webinterface.Schedulers
                         Dictionary<int, int> depAmounts = new Dictionary<int, int>();
 
                         // Gesamtanzahl an Personen von allen ausgewählten Abteilungen ermitteln
-                        int totalPeople = (await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync()).Departments.SelectMany(d => d.People).Distinct().Count();
+                        int totalPeople = survey.Departments.SelectMany(d => d.People).Distinct().Count();
                         logger.Debug($"Survey {svyId} - totalPeople: {totalPeople}");
 
-                        (await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync()).Departments.ToList().ForEach(dep =>
+                        survey.Departments.ToList().ForEach(dep =>
                         {
                             // Anzahl an Personen in der aktuellen Abteilung (mit DepId = id)
                             int currPeople = dep.People.Distinct().Count();
@@ -144,7 +157,7 @@ namespace SimpleQ.Webinterface.Schedulers
                         logger.Debug($"(SvyId {svyId}) Total surveys sent: {totalSent}");
 
 
-                        (await db.Surveys.Where(s => s.SvyId == svyId).FirstAsync()).Sent = totalSent != 0;
+                        survey.Sent = totalSent != 0;
                         await db.SaveChangesAsync();
 
                         if (totalSent != 0)
