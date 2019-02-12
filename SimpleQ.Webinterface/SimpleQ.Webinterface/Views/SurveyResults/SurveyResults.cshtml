@@ -192,7 +192,11 @@
         $('[data-toggle="tooltip"]').tooltip(); 
 
 
-        document.getElementById("header").innerHTML = "@Resources.surveyResultsHeader"; //set Header
+        //document.getElementById("header").innerHTML = "@Resources.surveyResultsHeader"; //set Header
+
+        let tops = document.getElementsByClassName("header");
+        tops[0].innerHTML = "@Resources.surveyResultsHeader";
+        tops[1].innerHTML = "@Resources.surveyResultsHeader";
 
         //console.log("hallo");
         //fillLangDict();

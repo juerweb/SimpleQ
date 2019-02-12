@@ -14,18 +14,22 @@
         <div id="baseData">
             <h3>Basisdaten</h3>
             <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
+                <div id="customerNameEmpty" class="alert alert-danger w-100" style="display:none"><strong>Das Feld "Kundenname" darf nicht leer sein!</strong></div>
+                <div id="customerNameHasNumbers" class="alert alert-danger w-100" style="display:none"><strong>Das Feld "Kundenname" darf keine Zahl enthalten!</strong></div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.CustName, Resources.customerName, new { @class = "ml-2" })
                     @Html.TextBoxFor(c => c.CustName, new { @class = "form-control", required = "required", id = "custName" })
                     @Html.ValidationMessageFor(c => c.CustName)
                 </div>
 
+                <div id="mailAddressNotValid" class="alert alert-danger w-100" style="display:none"><strong>Die eingegebene Email Adresse ist nicht gültig!</strong></div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.CustEmail, Resources.email, new { @class = "ml-2" })
                     @Html.TextBoxFor(c => c.CustEmail, new { @class = "form-control", required = "required", id = "mail" })
                     @Html.ValidationMessageFor(c => c.CustEmail)
                 </div>
-
+                <div id="passwordsNotMatch" class="alert alert-danger w-100" style="display:none"><strong>Die eingegebenen Passwörter stimmen nicht überein!</strong></div>
+                <div id="passwordNotStrongEnough" class="alert alert-danger w-100" style="display:none"><strong>Das eingegebene Passwort ist nicht ausreichend Sicher!</strong></div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.CustPwdTmp, Resources.password, new { @class = "ml-2" })
                     @Html.PasswordFor(c => c.CustPwdTmp, new { @class = "form-control", required = "required", id = "password1", oninput = "checkPw(this)" })
@@ -53,17 +57,20 @@
             <h3>Adressdaten</h3>
             <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
                 <div class="form-group">
+                    <div id="streetOrHouseNumberInvalid" class="alert alert-danger w-100" style="display:none"><strong>Straße bzw. Hausnummer ungültig!</strong></div>
                     @Html.LabelFor(c => c.Street, Resources.streetAndHousenumber, new { @class = "ml-2" })
                     @Html.TextBoxFor(c => c.Street, new { @class = "form-control", required = "required", id = "street" })
                     @Html.ValidationMessageFor(c => c.Street)
                 </div>
 
+                <div id="postCodeInvalid" class="alert alert-danger w-100" style="display:none"><strong>Die eingegebene Postleitzahl ist ungültig!</strong></div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.Plz, Resources.postCode, new { @class = "ml-2" })
                     @Html.TextBoxFor(c => c.Plz, new { @class = "form-control", required = "required", id = "plz" })
                     @Html.ValidationMessageFor(c => c.Plz)
                 </div>
 
+                <div id="townNotValid" class="alert alert-danger w-100" style="display:none"><strong>Das Feld "Stadt" darf nicht Leer sein!</strong></div>
                 <div class="form-group">
                     @Html.LabelFor(c => c.City, Resources.city, new { @class = "ml-2" })
                     @Html.TextBoxFor(c => c.City, new { @class = "form-control", required = "required", id = "town" })
@@ -103,14 +110,16 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(c => c.AccountingPeriod, Resources.billingPeriodInMonths, new { @class = "ml-2" })
+                    @Html.LabelFor(c => c.AccountingPeriod, Resources.billingPeriodInMonths, new { @class = "ml-2" }) 
+                    <button class="btn btn-outline-primary border-0 rounded-circle p-0" data-toggle="tooltip" title="Passendes Tooltip fia des... luki sei hockn"><i class="material-icons" style=" vertical-align: middle;">&#xe88f;</i></button>
                     @Html.DropDownListFor(c => c.AccountingPeriod, new SelectList(new[] { 1, 3, 6, 12 }), new { @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(c => c.AccountingPeriod)
                 </div>
 
                 <div class="form-group">
                     @Html.Label("day", Resources.preferredBillingDay, new { @class = "ml-2" })
-                    @Html.TextBox("day", "", new { @class = "form-control", @type = "number", @min = "0", @step = "0.01", @value = "0", required = "required" })
+                    <button class="btn btn-outline-primary border-0 rounded-circle p-0" data-toggle="tooltip" title="Passendes Tooltip fia des... luki sei hockn"><i class="material-icons" style="vertical-align: middle;">&#xe88f;</i></button>
+                    @Html.TextBox("day", "", new { @class = "form-control", @type = "number", @min = "0", @max = "31", @step = "1", @value = "0", required = "required" })
                     @Html.ValidationMessage("day")
                     @*@Html.LabelFor(c => c.AccountingDate, Resources.preferredBillingDay, new { @class = "ml-2" })
                     @Html.EditorFor(model => model.AccountingDate, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "0.01", @value = "0" } })
@@ -138,9 +147,11 @@
 
 <script>
     $(function () {
+        $('[data-toggle="tooltip"]').tooltip(); 
+
         $("body").css("background-image", "url('../../Content/Images/registrationBG.jpg')");
         $("#addressData").hide();
-        $("#specificData").hide();
+        $("#specificData").hide();       
     });
 
     function toNextView() {
@@ -149,22 +160,37 @@
             let mailTB = document.getElementById("mail");
             let password1TB = document.getElementById("password1");
             let password2TB = document.getElementById("password2");
+
             if (custNameTB.value == "") {
-                alert("Der Kundenname darf nicht leer sein!");
+                $("#customerNameEmpty").show();
+                $("#customerNameEmpty").delay(3500).fadeOut();
+                //alert("Der Kundenname darf nicht leer sein!");
                 return;
             }
+
+            if (/\d/.test(custNameTB.value)) {
+                $("#customerNameHasNumbers").show();
+                $("#customerNameHasNumbers").delay(3500).fadeOut();
+            }
+
             if (!validateEmail(mailTB.value)) {
-                alert("Die angegebene Email-Adresse ist nicht gültig!");
+                $("#mailAddressNotValid").show();
+                $("#mailAddressNotValid").delay(3500).fadeOut();
+                //alert("Die angegebene Email-Adresse ist nicht gültig!");
                 return;
             }
 
             if (password1TB.value !== password2TB.value) {
-                alert("Die Passwörter sind nicht gleich!");
+                $("#passwordsNotMatch").show();
+                $('#passwordsNotMatch').delay(3500).fadeOut();
+                //alert("Die Passwörter sind nicht gleich!");
                 return;
             }
 
             if (password1TB.value.length < 6) {
-                alert("Das Passwort ist nicht zulässig!");
+                $("#passwordNotStrongEnough").show();
+                $('#passwordNotStrongEnough').delay(3500).fadeOut();
+                //alert("Das Passwort ist nicht zulässig!");
                 return;
             }
 
@@ -177,16 +203,22 @@
             let countryTB = document.getElementById("country");
 
             if (street.value == "" || !hasNumber(street.value)) {
-                alert("Strasse bzw Hausnummer unültig");
+                $("#streetOrHouseNumberInvalid").show();
+                $("#streetOrHouseNumberInvalid").delay(3500).fadeOut();
+                //alert("Strasse bzw Hausnummer unültig");
                 return;
             }
             if (isNaN(parseInt(plzTB.value, 10))) {
-                alert("Die angegebene Postleitzahl ist nicht gültig!");
+                $("#postCodeInvalid").show();
+                $("#postCodeInvalid").delay(3500).fadeOut();
+                //alert("Die angegebene Postleitzahl ist nicht gültig!");
                 return;
             }
 
             if (town.value == "") {
-                alert("Der angegebene Ort ist nicht gültig!");
+                $("#townNotValid").show();
+                $("#townNotValid").delay(3500).fadeOut();
+                //alert("Der angegebene Ort ist nicht gültig!");
                 return;
             }
 

@@ -7,7 +7,7 @@
 { 
     <div class="row mt-1 pl-3 ml-0 mr-0">
         <div id="col1" class="col-md-4 pr-0">
-            <h4 class="text-center">Gruppenauswahl</h4>
+            @*<h4 class="text-center">Gruppenauswahl</h4>*@
             <div class="form-group mt-2 mb-1">
                 <label for="groups">@Resources.groups</label>
                 <div class="border border-dark">
@@ -25,8 +25,8 @@
             <button type="button" class="btn btn-primary btn-block mt-3" id="showNewGroupModalBtn">Neue Gruppe erstellen</button>
         </div>
         <div id="col2" class="col-md-3">
-            <h4 class="text-center">Aktionen</h4>
-            <label>Name</label>
+            @*<h4 class="text-center">Aktionen</h4>*@
+            <label class="mt-2">Name</label>
             <div class="row mr-0 ml-0">
                 <div class="col-10 p-0">
                     <input class="form-control rightNotRounded withoutBorder" id="groupNameInput" readonly type="text" />
@@ -62,7 +62,7 @@
         <div class="col-md-5 border-left" id="mailDiv">
             @*<h4 class="text-center">Infos</h4>*@
 
-            <label>@Resources.subject</label>
+            <label class="mt-2">@Resources.subject</label>
             <input class="form-control" type="text" placeholder="@Resources.invitationToSimpleQ" name="InvitationSubject" />
 
             <label class="mt-2 mb-0">@Resources.content</label>
@@ -107,7 +107,9 @@
 
 
     $(function () { // <-- Things to do at startup
-        document.getElementById("header").innerHTML = "@Resources.groupAdministrationHeader"; //set Header
+        let tops = document.getElementsByClassName("header");
+        tops[0].innerHTML = "@Resources.groupAdministrationHeader";
+        tops[1].innerHTML = "@Resources.groupAdministrationHeader";
 
         mailEditorStartup();
 

@@ -84,6 +84,8 @@
 
 
             <label class="mt-2">@Resources.surveyCategoryHeader</label>
+            <div id="categoryAlreadyExists" class="alert alert-danger w-100" style="display:none"><strong>@Resources.categoryAlreadyExists</strong></div>
+            <div id="categoryInvalidInput" class="alert alert-danger w-100" style="display:none"><strong>@Resources.invalidInput</strong></div>
             <div class="row mr-0 ml-0">
                 <div class="col-11 p-0">
                     @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories.OrderBy(sc => sc.CatName), "CatId", "CatName"), new { @id = "categoryDropdown", @class = "form-control rightNotRounded" })
@@ -184,7 +186,7 @@
                 <div class="row mr-0 ml-0 mt-2">
                     <div class="col-4">
                         <label>Periodendauer</label>
-                        <input id="countInput" class="form-control" type="number" min="0" value="" name='Period' onchange="insertHiddenCheckBox()" />
+                        <input class="form-control" type="number" min="0" value="" name='Period' onchange="insertHiddenCheckBox()" />
                     </div>
                     <div class="col-8">
                         <label>Einheit</label>
@@ -251,6 +253,7 @@
 
     let svyTextFilled = false;
     let answersFilled = true;
+    let countBiggerZero = true;
 
     $(function () {
 
@@ -258,7 +261,11 @@
             $("#noGroupsModal").show();
         }
 
-        document.getElementById("header").innerHTML = "@Resources.surveyCreationHeader"; //set Header
+        //document.getElementById("header").innerHTML = "@Resources.surveyCreationHeader"; //set Header
+
+        let tops = document.getElementsByClassName("header");
+        tops[0].innerHTML = "@Resources.surveyCreationHeader";
+        tops[1].innerHTML = "@Resources.surveyCreationHeader";
 
         $("#newCategoryDiv").hide();
         $("#answerBox").hide();
@@ -296,12 +303,12 @@
     }
 
     function updateButtonEnabled() {
-        if (svyTextFilled && answersFilled) {
+        if (svyTextFilled && answersFilled && countBiggerZero) {
             $("#submitBtn").attr("disabled", false);
-            console.log("yesyes");
+            //console.log("yesyes");
         } else {
             $("#submitBtn").attr("disabled", true);
-            console.log("nonono");
+            //console.log("nonono");
         }
     }
 
@@ -714,6 +721,13 @@
         if (input.value < 0) {
             input.value = 0;
         }
+
+        if (input.value == 0) {
+            countBiggerZero = false;
+        } else {
+            countBiggerZero = true;
+        }
+        updateButtonEnabled();
     }
 
 
@@ -744,7 +758,9 @@
     function addCategory() {
         let input = document.getElementById("newCategoryTB").value;
         if (input == "") {
-            alert("@Resources.invalidInput");
+            $("#categoryInvalidInput").show();
+            $("#categoryInvalidInput").delay(3500).fadeOut();
+            //alert("@Resources.invalidInput");
             return;
         }
         let categories = [];
@@ -756,7 +772,9 @@
         }
 
         if (categories.includes(input)) {
-            alert("@Resources.categoryAlreadyExists");
+            //alert("@Resources.categoryAlreadyExists");
+            $("#categoryAlreadyExists").show();
+            $("#categoryAlreadyExists").delay(3500).fadeOut();
             return;
         }
 
