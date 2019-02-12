@@ -62,4 +62,43 @@
     }
 }
 
+#topDiv {
+    height: 10vh;
+    /*background-color: rgb(43, 160, 253);*/
+    background-color: rgb(248, 248, 248);
+}
+
+#leftCol {
+    height: 90vh;
+    width: 260px;
+    z-index: 1;
+    top: 100px;
+    left: 0;
+    background-color: rgb(248, 248, 248);
+}
+
+#rightCol {
+    height: 90vh;
+    margin-left: 260px;
+    overflow-y: auto;
+}
+
+.btn-grey {
+    background-color: rgb(248, 248, 248);
+}
+
+#hideNavbarBtn {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+    border-right: none;
+}
+
+#header {
+    font-family: 'Secular One', sans-serif;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: black;
+}
+
 

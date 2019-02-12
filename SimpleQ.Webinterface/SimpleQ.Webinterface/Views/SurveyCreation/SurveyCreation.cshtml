@@ -89,7 +89,7 @@
                     @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories.OrderBy(sc => sc.CatName), "CatId", "CatName"), new { @id = "categoryDropdown", @class = "form-control rightNotRounded" })
                 </div>
                 <div class="col-1 p-0">
-                    <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" id="openAddCategoryBtn"><i class="material-icons">&#xe145;</i></button>
+                    <button type="button" style="background-color:rgb(0,109,204); color:white" class="btn btn-block pb-0 pl-0 pr-0 leftNotRounded" id="openAddCategoryBtn"><i class="material-icons">&#xe145;</i></button>
                 </div>
             </div>
             <div class="row mr-0 ml-0 mt-2" id="newCategoryDiv">
@@ -178,7 +178,7 @@
                 </span>
             </span>
 
-            <button type="button" class="btn btn-light btn-block mt-2 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="@Resources.periodicQuestionTooltip"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>Periodische Befragung...</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+            <button type="button" class="btn btn-light btn-block mt-3 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="@Resources.periodicQuestionTooltip"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>Periodische Befragung...</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
 
             <div id="periodicSurveyDiv" class="collapse">
                 <div class="row mr-0 ml-0 mt-2">
@@ -201,7 +201,7 @@
                 @*<input type="checkbox" checked="checked" onclick="" name="Survey.Template">*@
                 <span data-toggle="tooltip" title="@Resources.TemplateDescription">@Resources.SaveAsTemplate</span>
             </div>
-            <button type="submit" id="submitBtn" class="btn btn-primary btn-block mb-5" disabled>@Resources.startSurvey</button>
+            <button type="submit" id="submitBtn" class="btn btn-primary btn-block" disabled>@Resources.startSurvey</button>
         </div>
         <div class="col-md-5 p-0">
             @*<h3 class="text-center">@Resources.surveyPreviewHeader</h3>*@

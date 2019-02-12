@@ -26,6 +26,8 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/css?family=Secular+One" rel="stylesheet" >
+
     <script src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous"></script>
@@ -35,6 +37,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css" />
+
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 
@@ -123,99 +126,101 @@
 
 </head>
 <body>
-    <div class="row border-bottom border-dark ml-0 mr-0">
+    <div class="row border-bottom border-dark ml-0 mr-0" id="topDiv">
         <div class="col-md-4">
-            <img src="../../Content/Images/Logos/simpleq.png" style="max-height: 100px;" class="img-fluid" />
+            <img src="../../Content/Images/Logos/simpleq.png" style="max-height: 10vh;" class="img-fluid" />
         </div>
         <div class="col-md-4 text-center d-flex flex-column">
-            <h1 class="mt-auto" id="header">Überschrift</h1>
+            <h1 class="mt-auto text-white black-stroke" id="header">Überschrift</h1>     
         </div>
         <div class="col-md-4 d-flex justify-content-end align-items-center">
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
             <div class="mr-4">
                 <span class="row">
-                    <a href="@Url.Action("Logout", "Account")" class="btn btn-danger btn-block" id="logout">
+                    <a href="@Url.Action("Logout", "Account")" class="btn btn-danger btn-block border border-dark" id="logout">
                         <span class="d-flex justify-content-between">
                             <span>Logout</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe8ac;</i>
                         </span>
                     </a>
                 </span>
-                <span class="row" id="verion" style="font-size:medium">
-                    Version: 2.3.4.5
-                </span>
-
             </div>
 
         </div>
     </div>
     <div class="row m-0">
-        <div class="col-md-2 border-right border-dark p-0 m-0" id="leftCol">
+        <div class="border-right border-dark p-0 m-0" id="leftCol">
             <div class="row m-0">
                 <div class="col-sm-12 p-0" id="navbar">
                     <ul class="list-group">
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "SurveyCreation")'>
+                            <a class="btn btn-light btn-grey border-0 btn-block" href='@Url.Action("Index", "SurveyCreation")'>
                                 <span class="row d-flex">
-                                    <span class="col-9 align-self-center font-size-responsive p-0">
+                                    <span class="col-3 pl-1 pr-1">
+                                        @*<img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />*@
+                                        
+                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe0d4;</i>
+                                    </span>
+                                    <span class="col-9 align-self-center text-left p-0">
                                         Befragung starten
                                     </span>
-                                    <span class="col-3 pl-1 pr-1">
-                                        <img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />
-                                    </span>
                                 </span>
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "SurveyResults")'>
+                            <a class="btn btn-light btn-grey btn-block" href='@Url.Action("Index", "SurveyResults")'>
                                 <span class="row d-flex">
-                                    <span class="col-9 align-self-center font-size-responsive p-0">
+                                    <span class="col-3 pl-1 pr-1">
+                                        @*<img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid navbar-img" />*@
+                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe85c;</i>
+                                    </span>
+                                    <span class="col-9 align-self-center text-left p-0">
                                         @Resources.surveyResultsHeader
                                     </span>
-                                    <span class="col-3 pl-1 pr-1">
-                                        <img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid navbar-img" />
-                                    </span>
                                 </span>
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "GroupAdministration")'>
+                            <a class="btn btn-light btn-grey border-0 btn-block" href='@Url.Action("Index", "GroupAdministration")'>
                                 <span class="row d-flex">
-                                    <span class="col-9 align-self-center font-size-responsive p-0">
+                                    <span class="col-3 pl-1 pr-1">                                        
+                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe8d3;</i>
+                                        @*<img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid navbar-img" />*@
+                                    </span>
+                                    <span class="col-9 align-self-center text-left p-0">
                                         Gruppenverwaltung
                                     </span>
-                                    <span class="col-3 pl-1 pr-1">
-                                        <img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid navbar-img" />
-                                    </span>
                                 </span>
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "Settings")'>
+                            <a class="btn btn-light btn-grey border-0 btn-block" href='@Url.Action("Index", "Settings")'>
                                 <span class="row d-flex">
-                                    <span class="col-9 align-self-center font-size-responsive p-0">
+                                    <span class="col-3 pl-1 pr-1">
+                                        @*<img src="../../Content/Images/Icons/settings.png" class="img-fluid navbar-img" />*@
+                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe869;</i>
+                                    </span>
+                                    <span class="col-9 align-self-center text-left p-0">
                                         Einstellungen
                                     </span>
-                                    <span class="col-3 pl-1 pr-1">
-                                        <img src="../../Content/Images/Icons/settings.png" class="img-fluid navbar-img" />
-                                    </span>
                                 </span>
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-light btn-block" href='@Url.Action("Index", "Support")' style="overflow-wrap: break-word;">
+                            <a class="btn btn-light btn-grey border-0 btn-block" href='@Url.Action("Index", "Support")' style="overflow-wrap: break-word;">
                                 <span class="row d-flex">
-                                    <span class="col-9 align-self-center font-size-responsive p-0">
+                                    <span class="col-3 pl-1 pr-1">                                      
+                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe311;</i>
+                                        @*<img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />*@
+                                    </span>
+                                    <span class="col-9 align-self-center text-left p-0">
                                         Support
                                     </span>
-                                    <span class="col-3 pl-1 pr-1">
-                                        <img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />
-                                    </span>
                                 </span>
                             </a>
                         </li>
-                        <li class="list-group-item p-0">
-                            <button class="btn btn-light btn-block pb-0 border border-primary" id="hideNavbarBtn" onclick="hideNavbar()">
-                                <i class="material-icons">&#xe020;</i>
+                        <li class="p-0 d-flex flex-row-reverse mt-2">
+                            <button class="btn btn-light border pb-0" id="hideNavbarBtn" onclick="hideNavbar()">
+                                <i class="material-icons" style="color:rgb(0,109,204);">&#xe020;</i>
                             </button>
                         </li>
                     </ul>
@@ -267,7 +272,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-10 p-0 m-0" id="rightCol">
+        <div class="col p-0 m-0" id="rightCol">
             @if (ViewBag.emailConfirmed == false)
             {
                 <div class="alert alert-danger ml-4 mr-4 mt-2">
