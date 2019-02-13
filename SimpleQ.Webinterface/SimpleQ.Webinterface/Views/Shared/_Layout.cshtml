@@ -129,6 +129,20 @@
             $(elem).delay(3500).fadeOut();
         }
 
+        function changeBGSun() {
+            $("#rightCol").css("background-image", "url('/Content/Images/mainBGSun.jpg')");
+            $("#leftCol").css("background-image", "url('/Content/Images/leftColBGSun.jpg')");
+            $("#smallLeftCol").css("background-image", "url('/Content/Images/leftColBGSun.jpg')");
+            $("#topDiv").css("background-image", "url('/Content/Images/topBGSun.jpg')");
+        }
+
+        function changeBGCloud() {
+            $("#rightCol").css("background-image", "url('/Content/Images/mainBG.jpg')");
+            $("#leftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
+            $("#smallLeftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
+            $("#topDiv").css("background-image", "url('/Content/Images/topBG.jpg')");
+        }
+
     </script>
 
 </head>
@@ -217,7 +231,7 @@
     </div>
 
     <div class="row m-0">
-        <div class="border-right border-dark p-0 m-0" id="leftCol">
+        <div class="border-right border-dark p-0 m-0 cloud" id="leftCol">
             <div class="row m-0">
                 <div class="col-sm-12 p-0" id="navbar">
                     <ul class="list-group">
@@ -230,7 +244,7 @@
                                         <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe0d4;</i>
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
-                                        Befragung starten
+                                        @Resources.surveyCreationHeader
                                     </span>
                                 </span>
                             </a>
@@ -256,7 +270,7 @@
                                         @*<img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid navbar-img" />*@
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
-                                        Gruppenverwaltung
+                                        @Resources.groupAdministrationHeader
                                     </span>
                                 </span>
                             </a>
@@ -269,7 +283,7 @@
                                         <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe869;</i>
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
-                                        Einstellungen
+                                        @Resources.settings
                                     </span>
                                 </span>
                             </a>
@@ -282,7 +296,7 @@
                                         @*<img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />*@
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
-                                        Support
+                                        @Resources.support
                                     </span>
                                 </span>
                             </a>
@@ -302,7 +316,26 @@
                     </ul>
                 </div>
             </div>
+            <div style="position:absolute; bottom:0px; width:260px;">
+                <div id="bgButtons" class="row mr-0 ml-0 text-center">
+                    <div class="col p-0">
+                        <a onclick="changeBGSun()">
+                            <i class="material-icons smallNavbarIcon" style="font-size:60px; vertical-align: middle;color:rgb(0,109,204);">&#xe430;</i>
+                        </a>       
+                    </div>
+                    <div class="col p-0">
+                        <a onclick="changeBGCloud()">
+                            <i class="material-icons smallNavbarIcon" style="font-size:60px; vertical-align: middle;color:rgb(0,109,204);">&#xe42d;</i>
+                        </a>
+                    </div>
+                    @*<div class="col p-0">
+                        <i class="material-icons smallNavbarIcon" style="font-size:60px; vertical-align: middle;color:rgb(0,109,204);">&#xe020;</i>
+                    </div>*@
+                </div>
+            </div>
+            
         </div>
+
         <div class="border-right border-dark p-0 m-0" id="smallLeftCol">
             <div class="row m-0">
                 <div class="col-sm-12 p-0" id="smallNavbar">

@@ -51,3 +51,8 @@
     /*right: 100%;*/
 }
 
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: rgb(242, 247, 255) !important;
+}
+
