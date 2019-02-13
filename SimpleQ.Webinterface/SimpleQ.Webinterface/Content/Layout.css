@@ -114,6 +114,7 @@
     height: 90vh;
     margin-left: 260px;
     overflow-y: auto;
+    background-image: url("Images/mainBG.jpg");
 }
 
 .btn-grey {
