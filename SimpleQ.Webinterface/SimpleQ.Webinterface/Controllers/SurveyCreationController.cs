@@ -354,10 +354,21 @@ namespace SimpleQ.Webinterface.Controllers
         {
             try
             {
+
+                string custCode = null;
+                try
+                {
+                    custCode = CustCode;
+                }
+                catch
+                {
+
+                }
+
                 logger.Trace($"Requested to load price per click for amount: {amount}");
                 using (var db = new SimpleQDBEntities())
                 {
-                    var price = Convert.ToDouble(await Task.Run(() => db.fn_CalcPricePerClick(amount, CustCode ?? "")));
+                    var price = Convert.ToDouble(await Task.Run(() => db.fn_CalcPricePerClick(amount, custCode ?? "")));
 
                     logger.Trace($"Price per click for {amount} people: ");
                     return price;

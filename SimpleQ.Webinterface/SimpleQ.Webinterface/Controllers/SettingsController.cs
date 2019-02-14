@@ -263,7 +263,6 @@ namespace SimpleQ.Webinterface.Controllers
                         return Http.NotFound("Customer not found.");
                     }
 
-
                     cust.MinGroupSize = size;
                     await db.SaveChangesAsync();
                     logger.Debug("Changed Min Group successfully.");

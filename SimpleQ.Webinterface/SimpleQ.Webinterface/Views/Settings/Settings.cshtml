@@ -418,7 +418,12 @@
     var checkedAnswers = [];
 
     $(function () {
-        document.getElementById("header").innerHTML = "@Resources.settings"; //set Header
+        //document.getElementById("header").innerHTML = "@Resources.settings"; //set Header
+
+        let tops = document.getElementsByClassName("header");
+        tops[0].innerHTML = "@Resources.settings";
+        tops[1].innerHTML = "@Resources.settings";
+
         $("#accordion").accordion();
         umlaute();
         switchToAccountSettings();
@@ -553,7 +558,7 @@
         let val1 = $("#password").val();
         let val2 = $("#passwordConfirm").val();
 
-        if (val1 == val2 && val1 != "" && val2 != "") {
+        if (val1 == val2 && val1 != "" && val2 != "" && val1.length > 8) {
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("ChangePassword", "Settings")",
@@ -741,15 +746,33 @@
 
 
         let normal =
-        '<li class="list-group-item">' +
-            '   <span class="d-flex justify-content-between">' +
-            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
-            '       <span>' +
-            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '<li class="row mr-0 ml-0 mt-2">' +
+            '    <div class="col-9 pr-0 pl-1">' +
+            '        <input class="form-control rightNotRounded withoutBorder" name="Emails" readonly type="text" value="' + input + '" />' +
+            '    </div>' +
+            '    <div class="col-3 pl-0 pr-1">' +
+            '       <span class="row ml-0 mr-0">' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           </span>' +
+            '           <span class="col-6 p-0">'  +
+            '               <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+            '           </span>' +
             '       </span>' +
-            '   </span>' +
+            '    </div>' +
             '</li>';
+
+
+        //let normal =
+        //'<li class="list-group-item">' +
+        //    '   <span class="d-flex justify-content-between">' +
+        //    '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
+        //    '       <span>' +
+        //    '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+        //    '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+        //    '       </span>' +
+        //    '   </span>' +
+        //    '</li>';
         ul.innerHTML += normal;
         $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
     }

@@ -151,13 +151,13 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dear Sir or Madam!
-        ///
-        ///Enclosed you will find your most recent bill.
-        ///For further questions please contact support@simpleq.at.
-        ///
-        ///Sincerely,
-        ///Your SimpleQ team.
+        ///   Looks up a localized string similar to Dear Sir or Madam!&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Enclosed you will find your most recent bill.&lt;br/&gt;
+        ///For further questions please contact support@simpleq.at.&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Sincerely,&lt;br/&gt;
+        ///Your SimpleQ team&lt;br/&gt;.
         /// </summary>
         internal static string BillEmailMessage {
             get {
@@ -436,13 +436,13 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dear Sir or Madam!
-        ///
-        ///To reset your email click the following link: {Url}
-        ///The link is valid for 15 minutes.
-        ///
-        ///Sincerely,
-        ///Your SimpleQ team.
+        ///   Looks up a localized string similar to Dear Sir or Madam!&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///To reset your email click the following link: {Url}&lt;br/&gt;
+        ///The link is valid for 15 minutes.&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Sincerely,&lt;br/&gt;
+        ///Your SimpleQ team&lt;br/&gt;.
         /// </summary>
         internal static string ForgotPasswordEmailMessage {
             get {
@@ -460,14 +460,13 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dear customer,
-        ///you got invited to participate in surveys provided by SimpleQ!
-        ///
-        ///Please scan the attached QR code with your SimpleQ app.
-        ///Alternatively you can enter the following registration code in your app: {RegCode}
-        ///
-        ///Sincerely,
-        ///Your SimpleQ team.
+        ///   Looks up a localized string similar to Dear customer,&lt;br/&gt;
+        ///you got invited to participate in surveys provided by SimpleQ!&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Please scan the attached QR code with your SimpleQ app.&lt;br/&gt;
+        ///Alternatively you can enter the following registration code in your app: {RegCode}&lt;br/&gt;
+        ///Sincerely,&lt;br/&gt;
+        ///Your SimpleQ team&lt;br/&gt;.
         /// </summary>
         internal static string GroupInvitationEmailMessage {
             get {
@@ -712,14 +711,14 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to SimpleQ!
-        ///
-        ///Please confirm your e-mail address now.
-        ///Hence just click the following confirmation link: {Url}
-        ///Your customer code: {CustCode}
-        ///
-        ///Sincerely,
-        ///Your SimpleQ team.
+        ///   Looks up a localized string similar to Welcome to SimpleQ!&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Please confirm your e-mail address now.&lt;br/&gt;
+        ///Hence just click the following confirmation link: {Url}&lt;br/&gt;
+        ///Your customer code: {CustCode}&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Sincerely,&lt;br/&gt;
+        ///Your SimpleQ team&lt;br/&gt;.
         /// </summary>
         internal static string RegistrationEmailMessage {
             get {

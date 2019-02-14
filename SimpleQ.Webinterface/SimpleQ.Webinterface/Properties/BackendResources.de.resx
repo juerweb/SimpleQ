@@ -229,26 +229,26 @@
     <value>Umfrage konnte nicht geladen werden</value>
   </data>
   <data name="ForgotPasswordEmailMessage" xml:space="preserve">
-    <value>Sehr geehrte Damen und Herren!
-
-Um Ihr Passwort zurückzusetzen, klicken sie einfach auf folgenden Link: {Url}
-Dieser Link ist 15 Minuten lang gültig.
-
-Mit freundlichen Grüßen
-Ihr SimpleQ-Team</value>
+    <value>Sehr geehrte Damen und Herren!&lt;br/&gt;
+&lt;br/&gt;
+Um Ihr Passwort zurückzusetzen, klicken sie einfach auf folgenden Link: {Url}&lt;br/&gt;
+Dieser Link ist 15 Minuten lang gültig.&lt;br/&gt;
+&lt;br/&gt;
+Mit freundlichen Grüßen&lt;br/&gt;
+Ihr SimpleQ-Team&lt;br/&gt;</value>
   </data>
   <data name="ForgotPasswordEmailSubject" xml:space="preserve">
     <value>SimpleQ-Passwort zurücksetzen</value>
   </data>
   <data name="GroupInvitationEmailMessage" xml:space="preserve">
-    <value>Sehr geehrter Kunde,
-Sie wurden eingeladen an SimpleQ-Umfragen Ihrer Organisation teilzunehmen!
-
-Bitte scannen Sie den QR-Code im Anhang mit Ihrer SimpleQ-App.
-Alternativ dazu können Sie einfach folgenden Code in Ihrer App eingeben: {RegCode}
-
-Mit freundlichen Grüßen
-Ihr SimpleQ-Team</value>
+    <value>Sehr geehrter Kunde,&lt;br/&gt;
+Sie wurden eingeladen an SimpleQ-Umfragen Ihrer Organisation teilzunehmen!&lt;br/&gt;
+&lt;br/&gt;
+Bitte scannen Sie den QR-Code im Anhang mit Ihrer SimpleQ-App.&lt;br/&gt;
+Alternativ dazu können Sie einfach folgenden Code in Ihrer App eingeben: &lt;br/&gt;{RegCode}&lt;br/&gt;
+&lt;br/&gt;
+Mit freundlichen Grüßen&lt;br/&gt;
+Ihr SimpleQ-Team&lt;br/&gt;</value>
   </data>
   <data name="GroupInvitationEmailMessageCustom" xml:space="preserve">
     <value>Ihr Registrierungscode: {RegCode}
@@ -331,14 +331,14 @@ Nachricht:
     <value>Der Fragetext darf nicht leer sein.</value>
   </data>
   <data name="RegistrationEmailMessage" xml:space="preserve">
-    <value>Herzlich Willkommen bei SimpleQ!
-
-Bitte bestätigen Sie nun Ihre Email-Adresse
-Hierzu einfach auf folgenden Bestätigungslink klicken: {Url}
-Ihr Kunden-Code lautet: {CustCode}
-
-Mit freundlichen Grüßen
-Ihr SimpleQ-Team</value>
+    <value>Herzlich Willkommen bei SimpleQ!&lt;br/&gt;
+&lt;br/&gt;
+Bitte bestätigen Sie nun Ihre Email-Adresse&lt;/br&gt;
+Hierzu einfach auf folgenden Bestätigungslink klicken: {Url}&lt;br/&gt;
+Ihr Kunden-Code lautet: {CustCode}&lt;br/&gt;
+&lt;br/&gt;
+Mit freundlichen Grüßen&lt;br/&gt;
+Ihr SimpleQ-Team&lt;br/&gt;</value>
   </data>
   <data name="RegistrationEmailSubject" xml:space="preserve">
     <value>SimpleQ Email-Bestätigung</value>
@@ -389,13 +389,13 @@ Ihr SimpleQ-Team</value>
     <value>Ihr SimpleQ-Team</value>
   </data>
   <data name="BillEmailMessage" xml:space="preserve">
-    <value>Sehr geehrte Damen und Herren!
-
-Anbei erhalten Sie Ihre neueste Rechnung
-Bei weiteren Fragen wenden Sie sich bitte an support@simpleq.at.
-
-Mit freundlichen Grüßen,
-Ihr SimpleQ-Team</value>
+    <value>Sehr geehrte Damen und Herren!&lt;br/&gt;
+&lt;br/&gt;
+Anbei erhalten Sie Ihre neueste Rechnung&lt;br/&gt;
+Bei weiteren Fragen wenden Sie sich bitte an support@simpleq.at.&lt;br/&gt;
+&lt;br/&gt;
+Mit freundlichen Grüßen,&lt;br/&gt;
+Ihr SimpleQ-Team&lt;br/&gt;</value>
   </data>
   <data name="BillEmailSubject" xml:space="preserve">
     <value>SimpleQ Rechnung</value>
