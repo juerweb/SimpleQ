@@ -32,7 +32,7 @@ create table PaymentMethod
 	PaymentMethodId int primary key,
 	PaymentMethodDesc varchar(max) not null
 );
-go
+
 
 -- Kunde
 create table Customer
@@ -58,13 +58,13 @@ create table Customer
 	LastTokenGenerated datetime null,
 	Rebate int not null default(0) check(Rebate between 0 and 100)
 );
-go
+
 
 -- Unique-Constraint für Customer.AuthToken
 create unique nonclustered index idx_Customer_AuthToken
 on Customer(AuthToken)
 where AuthToken is not null;
-go
+
 
 -- Rechnung
 -- KUNDENSPEZIFISCH
@@ -77,7 +77,7 @@ create table Bill --Clinton
 	[Sent] bit not null,
 	Paid bit not null
 );
-go
+
 
 -- Abteilung
 -- KUNDENSPEZIFISCH
@@ -88,7 +88,7 @@ create table Department
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
     primary key (DepId, CustCode)
 );
-go
+
 
 -- Befragte Person
 -- KUNDENSPEZIFISCH
@@ -98,13 +98,13 @@ create table Person
     DeviceId varchar(max) null,
     AuthToken char(64) null
 );
-go
+
 
 -- Unique-Constraint für Customer.AuthToken
 create unique nonclustered index idx_Person_AuthToken
 on Person(AuthToken)
 where AuthToken is not null;
-go
+
 
 -- In Abteilung angestellte Personen
 -- KUNDENSPEZIFISCH
@@ -116,7 +116,7 @@ create table Employs
     primary key (DepId, CustCode, PersId),
     foreign key (DepId, CustCode) references Department
 );
-go
+
 
 -- Fragetyp (Dichotom, Polytom, ...)
 -- NICHT KUNDENSPEZIFISCH
@@ -125,7 +125,7 @@ create table BaseQuestionType
     BaseId int primary key,
     BaseDesc varchar(max) not null
 );
-go
+
 
 -- Beantwortungsart
 -- NICHT KUNDENSPEZIFISCH
@@ -135,7 +135,7 @@ create table AnswerType
 	TypeDesc varchar(max) not null,
     BaseId int not null references BaseQuestionType
 );
-go
+
 
 -- Vom Kunden aktivierte Beantwortungsarten (standardmäßig alle)
 -- KUNDENSPEZIFISCH
@@ -145,7 +145,7 @@ create table Activates
 	TypeId int references AnswerType,
 	primary key (CustCode, TypeId)
 );
-go
+
 
 -- Vordefinierte Antwortmöglichkeit
 -- NICHT KUNDENSPEZIFISCH
@@ -155,7 +155,7 @@ create table PredefinedAnswerOption
     PreAnsText varchar(max) not null,
     TypeId int not null references AnswerType
 );
-go
+
 
 -- Umfragekategorie
 -- KUNDENSPEZIFISCH
@@ -167,7 +167,7 @@ create table SurveyCategory
 	Deactivated bit not null default 0,
     primary key (CatId, CustCode),
 );
-go
+
 
 -- Umfrage
 -- KUNDENSPEZIFISCH
@@ -188,7 +188,7 @@ create table Survey
     foreign key (CatId, CustCode) references SurveyCategory,
 	check (StartDate < EndDate)
 );
-go
+
 
 -- Mit Umfrage befragte Abteilungen
 -- KUNDENSPEZIFISCH
@@ -200,7 +200,7 @@ create table Asking
 	primary key (SvyId, DepId, CustCode),
     foreign key (DepId, CustCode) references Department
 );
-go
+
 
 -- Antwortmöglichkeit
 -- KUNDENSPEZIFISCH
@@ -211,7 +211,7 @@ create table AnswerOption
 	AnsText varchar(max) not null,
 	FirstPosition bit null default null -- 1: ganz vorne, 0: ganz hinten, NULL: egal
 );
-go
+
 
 -- Antwort auf eine Umfrage
 -- KUNDENSPEZIFISCH
@@ -221,7 +221,7 @@ create table Vote
 	VoteText varchar(max) null, -- optional, nur wenn Antworttyp 1-Wort-Antwort
 	VoteDate datetime null
 );
-go
+
 
 -- Mit Umfragenantwort ausgewählte Antwortmöglichkeit(en)
 -- KUNDENSPEZIFISCH
@@ -231,7 +231,7 @@ create table Chooses
     AnsId int not null references AnswerOption
     primary key (VoteId, AnsId)
 );
-go
+
 
 
 -- Datenspezifische Bestimmung
@@ -241,7 +241,7 @@ create table DataConstraint
 	ConstrName varchar(512) primary key,
 	ConstrValue int not null,
 );
-go
+
 
 
 -- FAQ-Eintrag für Supportbereich
@@ -252,7 +252,7 @@ create table FaqEntry
     FaqContent varchar(max) not null,
     IsMobile bit not null
 );
-go
+
 
 -- Zum Berechnen der Per-Click-Kosten bei einer bestimmten Befragtenanzahl
 drop function fn_CalcPricePerClick;
@@ -701,13 +701,12 @@ end
 go
 
 
-
 -- Fixe inserts (für alle gleich!)
 begin transaction;
 insert into DataConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 
-insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.', 0); -- Nur Testwert
-insert into FaqEntry values ('Por qué no te callas?', 'Sólo no quiero callarme.', 0); -- Nur Testwert
+insert into FaqEntry values ('Wie starte ich eine Befragung?', 'Klicken Sie auf den Register "Befragung erstellen". Dort können Sie nach Eingabe aller Befragungsdaten die Befragung erstellen.', 0); -- Nur Testwert
+insert into FaqEntry values ('Wo kann ich meine Rechnungen ansehen?', 'Unter "Einstellungen" beim Tab "Rechungen" können Sie jede Rechnung im Detail betrachten sowie herunterladen.', 0); -- Nur Testwert
 
 insert into FaqEntry values('Wie beantworte ich eine Frage?', 'Sie müssen auf die entsprechende Benachrichtigung klicken. Danach öffnet sich die entsprechende Fragestellung und Sie können abhänig von dem Fragetyp die Frage einfach beantworten. Die App schließt sich nach erfolgreicher Beantwortung automatisch.', 1)
 insert into FaqEntry values('Wie kann ich aus einer Gruppe/Abteilung austreten?', 'Sie müssen über das Menü auf der linken Seite den Button Einstellungen betätigen. Danach können sie nach einem Klick auf den Button mit dem Namen "Abmelden von Fragen" die entsprechende Gruppe/Abteilung auswählen, von welcher Sie keine Fragen mehr erhalten möchten.', 1)
