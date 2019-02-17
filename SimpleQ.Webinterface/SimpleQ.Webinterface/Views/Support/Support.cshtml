@@ -47,7 +47,7 @@
             </div>
             <div class="form-group">
                 @Html.LabelFor(m => m.Email, "Email")
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0", required="required" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0", required = "required" })
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary btn-block mt-3">@ResourcesN.AskQuestion</button>
@@ -59,7 +59,10 @@
 <script>
 
     $(function () {
-        document.getElementById("header").innerHTML = "@Resources.support"; //set Header
+        //document.getElementById("header").innerHTML = "@Resources.support"; //set Header
+        let tops = document.getElementsByClassName("header");
+        tops[0].innerHTML = "@Resources.support";
+        tops[1].innerHTML = "@Resources.support";
     });
 
 </script>

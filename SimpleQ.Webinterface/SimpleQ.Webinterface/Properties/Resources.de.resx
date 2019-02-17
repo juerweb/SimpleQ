@@ -614,4 +614,10 @@
   <data name="Warning" xml:space="preserve">
     <value>Achtung</value>
   </data>
+  <data name="resetPassword" xml:space="preserve">
+    <value>Passwort zurücksetzen</value>
+  </data>
+  <data name="minimizeNav" xml:space="preserve">
+    <value>Navigation verkleinern</value>
+  </data>
 </root>

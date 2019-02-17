@@ -208,8 +208,8 @@ namespace SimpleQ.Webinterface.Controllers
                     if (req.DataStoragePeriod <= 0)
                         AddModelError("DataStoragePeriod", BackendResources.DataStoragePeriodInvalid, ref err);
 
-                    if (await db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).CountAsync() == 0)
-                        AddModelError("PaymentMethodId", BackendResources.PaymentMethodInvalid, ref err);
+                    //if (await db.PaymentMethods.Where(p => p.PaymentMethodId == req.PaymentMethodId).CountAsync() == 0)
+                    //    AddModelError("PaymentMethodId", BackendResources.PaymentMethodInvalid, ref err);
 
                     if (err)
                     {
@@ -226,7 +226,7 @@ namespace SimpleQ.Webinterface.Controllers
                     cust.City = req.City;
                     cust.Country = req.Country;
                     cust.DataStoragePeriod = req.DataStoragePeriod;
-                    cust.PaymentMethodId = req.PaymentMethodId;
+                    //cust.PaymentMethodId = req.PaymentMethodId;
 
                     await db.SaveChangesAsync();
                     logger.Debug("Updated customer successfully");

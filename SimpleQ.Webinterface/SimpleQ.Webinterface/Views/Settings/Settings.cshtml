@@ -58,10 +58,10 @@
     <strong>@ResourcesN.unregister500</strong>
 </div>
 
-<div class="row pl-4 mt-1 ml-0 mr-0">
+@*<div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>@ResourcesN.Settings</h2>
-</div>
-<div class="row m-0 p-0 mr-0 ml-3 mb-3">
+</div>*@
+<div class="row m-0 p-0 mr-0 mt-3 ml-3 mb-3">
     <div class="btn-group">
         <button id="accountSettings" onclick="switchToAccountSettings()" class="btn btn-primary btn-block mt-0">@ResourcesN.AccountSettings</button>
         <button id="appSettings" onclick="switchToAppSettings()" class="btn btn-secondary btn-block mt-0">@ResourcesN.ApplicationSettings</button>
@@ -90,8 +90,8 @@
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
                 @Html.LabelFor(m => m.DataStoragePeriod, ResourcesN.DataStoragePeriod);
                 @Html.TextBoxFor(m => m.DataStoragePeriod, new { @class = "form-control mr-0" });
-                @Html.LabelFor(m => m.PaymentMethods);
-                @Html.DropDownListFor(m => m.PaymentMethods, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });
+                @*@Html.LabelFor(m => m.PaymentMethods);*@
+                @*@Html.DropDownListFor(m => m.PaymentMethods, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });*@
                 <input type="submit" value="Speichern" class="btn btn-primary btn-block mt-3" />
             }
             <br />

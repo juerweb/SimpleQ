@@ -817,6 +817,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Minimize navigation.
+        /// </summary>
+        public static string minimizeNav {
+            get {
+                return ResourceManager.GetString("minimizeNav", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The customer name must not be empty.
         /// </summary>
         public static string NameMustNotBeEmpty {
@@ -1146,6 +1155,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string RegisteredSuccessfully {
             get {
                 return ResourceManager.GetString("RegisteredSuccessfully", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reset password.
+        /// </summary>
+        public static string resetPassword {
+            get {
+                return ResourceManager.GetString("resetPassword", resourceCulture);
             }
         }
         

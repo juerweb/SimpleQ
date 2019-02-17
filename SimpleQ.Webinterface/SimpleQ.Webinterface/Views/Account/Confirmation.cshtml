@@ -3,7 +3,16 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<h5>@Resources.RegisteredSuccessfully</h5>
-@Resources.YourCustCode @ViewBag.custCode<br />
-@Resources.ConfirmationLinkSentTo @ViewBag.email<br />
-@Resources.PleaseConfirmBefore
+<h3>@Resources.RegisteredSuccessfully</h3>
+<div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2 mt-3">
+    @Resources.YourCustCode @ViewBag.custCode<br />
+    @Resources.ConfirmationLinkSentTo @ViewBag.email<br />
+    @Resources.PleaseConfirmBefore
+</div>
+
+<script>
+    $(function () {
+        $("#lang_select").hide();
+        $("body").css("background-image", "url('../../Content/Images/registrationBG.jpg')");
+    });
+</script>

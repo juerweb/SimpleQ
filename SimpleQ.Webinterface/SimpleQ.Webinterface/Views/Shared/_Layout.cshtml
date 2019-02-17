@@ -317,7 +317,7 @@
                         <li class="p-0 mt-2">
                             <span class="row mr-0 ml-0">
                                 <span class="col-9 align-self-center text-right p-0">
-                                    <a id="hideNavigationText" style="display:none">Navigation verkleinern</a>
+                                    <a id="hideNavigationText" style="display:none">@Resources.minimizeNav</a>
                                 </span>
                                 <span class="col-3 p-0 d-flex flex-row-reverse">
                                     <button class="btn btn-light border pb-0" id="hideNavbarBtn" onclick="hideNavbar()">
@@ -404,7 +404,7 @@
             @if (ViewBag.emailConfirmed == false)
             {
                 <div class="alert alert-danger ml-4 mr-4 mt-2">
-                    <strong>Achtung!</strong> Bitte bestätigen Sie umgehend Ihre E-Mail Adresse.
+                    <strong>@Resources.Warning!</strong> @Resources.PleaseConfirmYourEmail.
                 </div>
             }
             @RenderBody()
@@ -432,7 +432,7 @@
         function lang_change() {
             let lang = $("#lang_select").val();
             localStorage["__simpleq-curr-lang"] = lang;
-            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + lang + "/" + window.location.pathname.split("/", 4)[2]);
+            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + lang + "/" + window.location.pathname.split("/", 4)[2] + window.location.search);
         }
     </script>
 </body>
