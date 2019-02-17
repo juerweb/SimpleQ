@@ -4,7 +4,7 @@ set nocount on;
 go
 
 begin transaction;
-insert into Customer values ('420420', 'ACME Inc.', 'acme@domain.com', 'asdfjklö', null, null, 1, 'Kärtner Straße', '1', 'Wien', 'Österreich', 24, 3, (select getdate()), 1, 5, 0, null, null, 0);
+insert into Customer values ('420420', 'ACME Inc.', 'acme@domain.com', 'asdfjklö', null, null, 1, 'Kärntner Straße 1', '1010', 'Wien', 'Österreich', 24, 3, (select getdate()), 1, 5, 0, null, null, 0);
 
 --insert into Bill values('420420', 420.00, (select dateadd(month, -9, (select getdate()))), 1, 1);
 insert into Bill values('420420', 0.50, (select dateadd(month, -6, convert(date,'2019-01-26'))), 1, 1);
