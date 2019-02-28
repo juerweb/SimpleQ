@@ -157,3 +157,57 @@
     text-shadow:2px 2px black;
 }
 
+
+.lightRedBackground {
+    background-color: rgb(255, 130, 130);
+}
+
+.border-radius-0 {
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+/*----------------------------------*/
+/* Switch Flat
+==========================*/
+.switch-flat {
+    padding: 0;
+    background: #FFF;
+    background-image: none;
+}
+
+.switch-flat .switch-label {
+    background: #FFF;
+    border: solid 2px #eceeef;
+    box-shadow: none;
+}
+
+    .switch-flat .switch-label:after {
+        color: #0088cc;
+    }
+
+.switch-flat .switch-handle {
+    top: 6px;
+    left: 6px;
+    background: #dadada;
+    width: 22px;
+    height: 22px;
+    box-shadow: none;
+}
+
+    .switch-flat .switch-handle:before {
+        background: #eceeef;
+    }
+
+.switch-flat .switch-input:checked ~ .switch-label {
+    background: #FFF;
+    border-color: #0088cc;
+}
+
+.switch-flat .switch-input:checked ~ .switch-handle {
+    left: 72px;
+    background: #0088cc;
+    box-shadow: none;
+}
+

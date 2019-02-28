@@ -4,59 +4,6 @@
 @using System.Resources;
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyCreationModel
 
-<style>
-    .kleinerFont {
-        font-size: 16px;
-    }
-
-    .kleinerAbstand {
-        margin-top: -14px;
-    }
-
-    .kleinerkleinerFont {
-        font-size: 14px;
-    }
-
-    .kleinerkleinerkleinerFont {
-        font-size: 12px;
-    }
-
-    #antwort1 {
-        position: absolute;
-        top: 65px;
-        left: 9px;
-        width: 150px;
-        height: 40px;
-        cursor: pointer;
-    }
-
-    #antwort2 {
-        position: absolute;
-        top: 65px;
-        left: 50px;
-        width: 150px;
-        height: 40px;
-        cursor: pointer;
-    }
-
-    #links {
-        position: absolute;
-        top: 65px;
-        left: 50px;
-        width: 60px;
-        height: 40px;
-        cursor: pointer;
-    }
-
-    #rechts {
-        position: absolute;
-        top: 65px;
-        left: 50px;
-        width: 60px;
-        height: 40px;
-        cursor: pointer;
-    }
-</style>
 
 @{
     int maxCount = 0;
@@ -360,6 +307,33 @@
         });
 
         addGroups();
+
+        $('html').bind('keypress', function (e) {
+            if (e.keyCode == 13) {
+                event.preventDefault();
+                if ($("#answerInput").is(':focus')) {
+                    $("#answerInputButton").click();
+                }
+            }
+        });
+
+        //document.addEventListener("keyup", function (event) {
+        //    // Number 13 is the "Enter" key on the keyboard
+        //    if (event.keyCode === 13) {
+        //        // Cancel the default action, if needed
+        //        event.preventDefault();
+
+        //        if ($("#answerInput").is(':focus')) {
+        //            console.log("oidaaaa");
+        //            $("#answerInputButton").click();
+        //        }
+        //    }
+        //});
+
+        //answerInput
+        //$("#answerInput").focus(function () {
+        //    alert("Handler for .focus() called.");
+        //});
     });
 
 
@@ -546,7 +520,7 @@
             answerBox.innerHTML =
                 '<div class="row mt-1 mb-2 mr-0 ml-0">' +
                 '        <div class="col-9 pr-0 pl-1"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>' +
-                '        <div class="col-3 pl-0 pr-1"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
+                '        <div class="col-3 pl-0 pr-1"><button type="button" id="answerInputButton" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
                 '        <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions"></ul>' +
                 '</div >';
             if (answers.length > 0) {
@@ -591,14 +565,20 @@
         ul.innerHTML = "";
         for (i = 0; i < answers.length; i++) {
             let normal =
-                '<li class="list-group-item">' +
-                '   <span class="d-flex justify-content-between">' +
-                '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + answers[i] + '" />' +
-                '       <span>' +
-                '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-                '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+                '<li class="row mr-0 ml-0 mt-2">' +
+                '    <div class="col-9 pr-0 pl-1">' +
+                '        <input class="form-control rightNotRounded withoutBorder" name="TextAnswerOptions" readonly type="text" value="' + answers[i] + '" />' +
+                '    </div>' +
+                '    <div class="col-3 pl-0 pr-1">' +
+                '       <span class="row ml-0 mr-0">' +
+                '           <span class="col-6 p-0">' +
+                '               <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+                '           </span>' +
+                '           <span class="col-6 p-0">' +
+                '               <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+                '           </span>' +
                 '       </span>' +
-                '   </span>' +
+                '    </div>' +
                 '</li>';
             ul.innerHTML += normal;
         }
@@ -636,6 +616,7 @@
         }
 
         answers.push(input);
+        insertIntoPhone();
         let normal =
             '<li class="row mr-0 ml-0 mt-2">' +
             '    <div class="col-9 pr-0 pl-1">' +
@@ -683,6 +664,7 @@
                 break;
             }
         }
+        insertIntoPhone();
         button.parentElement.parentElement.parentElement.parentElement.remove();
         if (answers.length === 0) {
             $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
@@ -853,13 +835,14 @@
         }
 
         let url = '@Url.Action("CreateCategory", "SurveyCreation", new { catName = "temp"})'.replace("temp", input);
-
         $.get(
             url,
             function (id) {
                 document.getElementById("categoryDropdown").innerHTML += '<option value="' + id + '" selected>' + input + '</option>';
+                insertIntoPhone();
             }
         );
+        
     }
 
 
@@ -931,55 +914,66 @@
         console.log($("#AnswerTypeCB option:selected").val());
         $("#androidHandy").append("<img src='../../Content/Images/Device/header.png' width='315' height='65'/>");
         $("#androidHandy").append("<p id='timePhone' style='font-size:13px; color:white; position:absolute; left:278px; top:0px;'>" + time + "</p>");
+        let textValue = $("#question").val();
+        if (textValue == "") {
+            textValue = "Fragestellung";
+        }
         let type = $("#AnswerTypeCB option:selected").val();
         if (type == 1) {
-            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
-            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone kleinerAbstand ml-2 mr-2'>" + textValue + "</p>");
             $("#androidHandy").append("<img class='kleinerAbstand' src='../../Content/Images/Device/yes_no.png' width='310' height='50'/>");
         } else if (type == 2) {
-            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
-            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
             $("#androidHandy").append("<img class='kleinerAbstand' src='../../Content/Images/Device/yes_no_maybe.png' width='310' height='50'/>");
         } else if (type == 3) {
-            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
-            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
             $("#androidHandy").append("<img class='kleinerAbstand' src='../../Content/Images/Device/ampel.png' width='310' height='50'/>");
         } else if (type == 4) {
-            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
-            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
             $("#androidHandy").append("<input type='text' class='form-control '  />");
         } else if (type == 5) {
             let val1 = $("#dichotomAnswer1").val();
             let val2 = $("#dichotomAnswer2").val();
-            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
-            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
             $("#androidHandy").append("<img id='dichotom' class='kleinerAbstand' src='../../Content/Images/Device/dichotom.png' width='310' height='50'/>");
-            $("#androidHandy").append("<div id='antwort1'><p style='text-align: center; padding-top: 5px;' id='a1text'></p></div>");
-            $("#androidHandy").append("<div id='antwort2'><p style='text-align: center; padding-top: 5px;' id='a2text'></p></div>");
+            $("#androidHandy").append("<div id='answer1Phone'><p style='text-align: center; padding-top: 6px;' id='a1text'></p></div>");
+            $("#androidHandy").append("<div id='answer2Phone'><p style='text-align: center; padding-top: 6px;' id='a2text'></p></div>");
             let pos = $("#dichotom").position();
-            $("#antwort1").css("left", pos.left);
-            $("#antwort1").css("top", pos.top - 8);
-            $("#antwort2").css("left", pos.left + 160);
-            $("#antwort2").css("top", pos.top - 8);
+            $("#answer1Phone").css("left", pos.left);
+            $("#answer1Phone").css("top", pos.top - 8);
+            $("#answer2Phone").css("left", pos.left + 160);
+            $("#answer2Phone").css("top", pos.top - 8);
             if (val1 != undefined && val2 != undefined) {
                 $("#a1text").text(val1);
                 $("#a2text").text(val2);
             } else {
                 // $( "#androidHandy" ).append( "<a href='#' class='btn btn-outline-secondary btn-md ml-5'>"+ "A1" + "</a><a href='#' class='btn btn-outline-secondary btn-md ml-2'>"+ "A2" + "</a>" );
             }
+        } else if (type == 6 || type == 7 || type == 8 || type == 9) {
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
+            $("#androidHandy").append("<table id='multiTable' class='table'><tbody></tbody></table>");
+            for (var i = 0; i < answers.length; i++) {
+                $('#multiTable tbody').append("<tr><td style='width:27px'><img src='../../Content/Images/Device/leer.png'</td><td class='pl-0'>" + answers[i] + "</td></tr>");
+            }
         } else if (type == 10 || type == 11 || type == 12 || type == 13 || type == 14 || type == 15 || type == 16) {
             let val1 = $("#dichotomAnswer1").val();
             let val2 = $("#dichotomAnswer2").val();
-            $("#androidHandy").append("<p class='kleinerFont ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
-            $("#androidHandy").append("<p class='kleinerkleinerFont kleinerAbstand ml-2'>" + $("#question").val() + "</p>");
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
             $("#androidHandy").append("<img id='lik' class='kleinerAbstand' src='../../Content/Images/Device/lik.png' width='310' height='50'/>");
-            $("#androidHandy").append("<div id='links'><p class='kleinerkleinerkleinerFont' style='text-align: center; padding-top: 5px;' id='a1textl'></p></div>");
-            $("#androidHandy").append("<div id='rechts'><p class='kleinerkleinerkleinerFont' style='text-align: center; padding-top: 5px;' id='a2textr'></p></div>");
+            $("#androidHandy").append("<div id='leftPhone'><p class='dichotomPhone ' style='text-align: center; padding-top: 5px;' id='a1textl'></p></div>");
+            $("#androidHandy").append("<div id='rightPhone'><p class='dichotomPhone ' style='text-align: center; padding-top: 5px;' id='a2textr'></p></div>");
             let pos = $("#lik").position();
-            $("#links").css("left", pos.left);
-            $("#links").css("top", pos.top + 20);
-            $("#rechts").css("left", pos.left + 245);
-            $("#rechts").css("top", pos.top + 20);
+            $("#leftPhone").css("left", pos.left);
+            $("#leftPhone").css("top", pos.top + 20);
+            $("#rightPhone").css("left", pos.left + 245);
+            $("#rightPhone").css("top", pos.top + 20);
             if (val1 != undefined && val2 != undefined) {
                 $("#a1textl").text(val1);
                 $("#a2textr").text(val2);
@@ -988,6 +982,7 @@
             }
         }
     }
+
 
 </script>
 

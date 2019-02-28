@@ -10,8 +10,8 @@
     ResourceManager rm = Resources.ResourceManager;
 }
 <div class="row ml-0 mr-0">
-    <div style="overflow-x:auto; width:100%;" class="m-3">
-        <table id="resultsTable" class="table table-bordered table-striped smallCellPadding small w-100" >
+    <div style="overflow-x:auto;" class="m-3 w-100">
+        <table id="resultsTable" class="table table-bordered table-striped smallCellPadding small w-100">
             <thead>
                 <tr>
                     <th>@Resources.survey</th>
@@ -23,94 +23,38 @@
                     <th></th>
                 </tr>
             </thead>
-                <tbody>
-                    @{ 
-                        foreach (SurveyResultsModel.SurveyResultWrapper srw in Model.Surveys)
-                        {
-                            <tr>
-                                <td>@srw.SvyText</td>
-                                <td>@srw.Amount</td>
-                                <td catId="@srw.SurveyCategory.CatId">@srw.SurveyCategory.CatName</td>
-                                <td typeId="@srw.AnswerType.TypeId">@rm.GetString(srw.AnswerType.TypeDesc)</td>
-                                <td>@srw.StartDate.ToShortDateString() - @srw.EndDate.ToShortDateString()</td>
-                                <td>
-                                    @foreach (string s in srw.Departments)
+            <tbody>
+                @{
+                    foreach (SurveyResultsModel.SurveyResultWrapper srw in Model.Surveys)
+                    {
+                        <tr>
+                            <td>@srw.SvyText</td>
+                            <td>@srw.Amount</td>
+                            <td catId="@srw.SurveyCategory.CatId">@srw.SurveyCategory.CatName</td>
+                            <td typeId="@srw.AnswerType.TypeId">@rm.GetString(srw.AnswerType.TypeDesc)</td>
+                            <td>@srw.StartDate.ToShortDateString() - @srw.EndDate.ToShortDateString()</td>
+                            <td>
+                                @foreach (string s in srw.Departments)
+                                {
+                                    if (s != srw.Departments.Last())
                                     {
-                                        if (s != srw.Departments.Last())
-                                        {
-                                            @s@:, 
-                                        }
-                                        else
-                                        {
-                                            @s
-                                        }
+                                        @s@:,
                                     }
-                                </td>
-                                <td><button class="btn btn-primary" onclick="evaluateResults(this.parentElement.parentElement,this.parentElement.parentElement.children[0].innerHTML, @srw.Amount, @srw.AnswerType.TypeId)">@Resources.evaluate</button></td>
-                            </tr>
-                        }
+                                    else
+                                    {
+                                        @s
+                                    }
+                                }
+                            </td>
+                            <td><button class="btn btn-primary" onclick="evaluateResults(this.parentElement.parentElement,this.parentElement.parentElement.children[0].innerHTML, @srw.Amount, @srw.AnswerType.TypeId)">@Resources.evaluate</button></td>
+                        </tr>
                     }
-                </tbody>        
+                }
+            </tbody>
         </table>
     </div>
 </div>
-@*<div class="row ml-0 mr-0">
-        </div>
-    </div>
-    <div class="col-7 pl-0 pr-0 border border-primary twoWayToggleBorder">
-        <div class="row ml-0 mr-0 pt-3">
-            <span class="col-4 text-right pl-0" id="leftToggleText" onclick="toggleResults()">@Resources.trendEvaluation</span>
-            <span class="col-4 bg-primary p-0" id="twoWayToggle" onclick="toggleResults()">
-                <svg id="circle" height="28" width="28">
-                    <circle cx="14" cy="14" r="13" stroke="black" fill="white" />
-                </svg>
-            </span>
-            <span class="col-4 text-left text-secondary pr-0" id="rightToggleText" onclick="toggleResults()">@Resources.singleQuestionEvaluation</span>
-        </div>
-    </div>
-</div>
-<div class="row mt-3 ml-0 mr-0">
-    <div class="col-md-5 pl-4 pr-4">
-        <div id="singleResultOptions">
-            <label for="Surveys">@Resources.survey</label>
-            @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control", onchange = "loadSingleResultAsync()" })
-        </div>
-        <div id="multiResultOptions">
-           
-            <div class="row mr-0 ml-0 mt-1">
-                <div class="col-lg-5 pl-0 pr-2 d-flex flex-row-reverse">
-                    <label class="m-0 align-self-center" for="AnswerTypes">@Resources.answerTypeHeader</label>
-                </div>
-                <div class="col-lg-7 p-0">
-                    <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="answerTypeChanged()"></select>
-                </div>
-            </div>
 
-            <label class="mb-0 mt-2">Passende Befragungen</label>
-            <select class="form-control" id="SurveyTexts" name="SurveyTexts" onchange="surveyTextChanged()"></select>
-
-            <div class="row mt-2">
-                <div class="col-md-6">
-                    <div class="form-group mb-0">
-                        <label for="timeFrom" class="mb-0">@Resources.from</label>
-                        <input type="date" class="form-control" id="dateFrom" value="@DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd")" onchange="loadMultiResultAsync()">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mb-0">
-                        <label for="timeTwo" class="mb-0">@Resources.to</label>
-                        <input type="date" class="form-control" id="dateTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="loadMultiResultAsync()">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-7" id="singleResultPartial">
-    </div>
-    <div class="col-md-7" id="multiResultPartial">
-    </div>
-</div>*@
 
 <div>
     <h2 class="text-center" id="actualSvyText"></h2>
@@ -168,6 +112,42 @@
     </div>
 </div>
 
+
+<div class="modal" id="exportModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ergebnisse exportieren</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-primary btn-block d-flex justify-content-between" onclick="exportAsCSV()" data-dismiss="modal"><a>Excel</a><img style="right:0;height:24px; width:24px;" src="https://img.icons8.com/office/26/000000/csv.png" /></button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-primary btn-block d-flex justify-content-between" onclick="exportAsPDF()" data-dismiss="modal" data-toggle="tooltip">PDF<img style="height:24px; width:24px;" src="http://wwwimages.adobe.com/content/dam/acom/en/legal/images/badges/Adobe_PDF_file_icon_32x32.png" /></button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="notYetImplementedModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">This function is not implemented yet, please wait a few weeks. :(</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script>
     var freeText = false;
     var languageDict = {};
@@ -182,14 +162,24 @@
 
     $(function () {
 
-        $('#resultsTable').DataTable({
+        var table = $('#resultsTable').dataTable({
             "scrollY": "400px",
             "scrollCollapse": true,
-            "dom": 'rt'
+            "dom": 'rt',
+            "order": [[4, "desc"]],
+            "columnDefs": [
+                {"orderable": false, "targets": 6}
+            ],
+            "paging": false
         });
         $('.dataTables_length').addClass('bs-select');
 
-        $('[data-toggle="tooltip"]').tooltip(); 
+        $('[data-toggle="tooltip"]').tooltip();
+
+
+        $(window).resize(function () {
+            table.fnAdjustColumnSizing();
+        });
 
 
         //document.getElementById("header").innerHTML = "@Resources.surveyResultsHeader"; //set Header
@@ -198,19 +188,13 @@
         tops[0].innerHTML = "@Resources.surveyResultsHeader";
         tops[1].innerHTML = "@Resources.surveyResultsHeader";
 
-        //console.log("hallo");
-        //fillLangDict();
-        //loadAnswerTypes();
-        //loadSurveys();
-        //loadDatesByCategory();
-        //switchToMulti();
     });
 
 
     function evaluateResults(elem, svyText, amount, typeId) {
         selectedSingleSurveyId = 0;
         actualSvyText = svyText;
-        actualTableElement = elem;        
+        actualTableElement = elem;
         if (amount > 1 && typeId !== 4) {
             $("#singleOrMultiModal").modal({ backdrop: true });
         } else {
@@ -218,42 +202,6 @@
         }
     }
 
-    //function toggleResults() {
-    //    console.log(resultType);
-    //    if (resultType === "multi") {
-    //        switchToSingle();
-    //        $('#circle').animate({ right: 0 }, 800);
-    //        $('#circle').css("right", 0);
-    //        $('#circle').css("left", "unset");
-    //        $('#rightToggleText').removeClass("text-secondary");
-    //        $('#leftToggleText').addClass("text-secondary");
-    //    } else {
-    //        switchToMulti();
-    //        $('#circle').animate({ left: 0 }, 800);
-    //        $('#circle').css("left", 0);
-    //        $('#circle').css("right", "unset");
-    //        $('#leftToggleText').removeClass("text-secondary");
-    //        $('#rightToggleText').addClass("text-secondary");
-    //    }
-    //}
-
-    //function surveyCategoryChanged() {
-    //    loadAnswerTypes();
-    //    loadSurveys();
-    //    loadDatesByCategory();
-    //    loadMultiResultAsync();
-    //}
-
-    //function answerTypeChanged() {
-    //    loadSurveys();
-    //    loadDatesByCategory();
-    //    loadMultiResultAsync();
-    //}
-
-    //function surveyTextChanged() {
-    //    loadDatesByCategory();
-    //    loadMultiResultAsync();
-    //}
 
 
     function loadSingleResultAsync() {
@@ -269,7 +217,7 @@
                 $("#nextSurveyButton").prop("disabled", true);
                 if (dicts.length > 1) {
                     $("#nextSurveyButton").prop("disabled", false);
-                }             
+                }
                 updateSingleResultDate();
                 $("#multiResultPartial").hide();
                 $("#singleResultPartial").show();
@@ -334,80 +282,6 @@
         document.getElementById("singleResultDate").innerHTML = dicts[selectedSingleSurveyId].date;
     }
 
-
-    @*function loadAnswerTypes() {
-        let id = document.getElementById("SurveyCategories").value;
-        let url = '@Url.Action("LoadTypesByCategory", "SurveyResults", new { catId = "temp"})'.replace("temp", id);
-
-        $.ajax({
-            url,
-            type: "get",
-            async: false,
-            success: function (data) {
-                let elem = document.getElementById("AnswerTypes");
-                elem.innerHTML = "";
-                //console.log(data);
-                //console.log(data.length);
-                for (i = 0; i < data.length; i++) {
-                    let typeId = data[i].TypeId;
-                    //console.log(data[i]);
-                    if (i == 0) {
-                        elem.innerHTML += '<option value="' + typeId + '" selected>' + languageDict[typeId] + '</option>';
-                        //console.log("eingfügt");
-                    } else {
-                        elem.innerHTML += '<option value="' + typeId + '">' + languageDict[typeId] + '</option>';
-                    }
-                }
-            }
-        });
-
-    }
-
-
-    function loadDatesByCategory() {
-        let catId = document.getElementById("SurveyCategories").value;
-        let typeId = document.getElementById("AnswerTypes").value;
-        let surveyText = document.getElementById("SurveyTexts").value;
-
-        let url = "@Url.Action("LoadSurveyDates", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId + "&svyText=" + surveyText;
-        $.ajax({
-            url,
-            type: "get",
-            async: false,
-            success: function (data) {
-                document.getElementById("dateFrom").value = data.StartDate;
-                document.getElementById("dateTo").value = data.EndDate;
-            }
-        });
-    }
-
-
-    function loadSurveys() {
-        let catId = document.getElementById("SurveyCategories").value;
-        let typeId = document.getElementById("AnswerTypes").value;
-        let url = "@Url.Action("LoadSurveys", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId;
-
-        $.ajax({
-            url,
-            type: "get",
-            async: false,
-            success: function (data) {
-                let elem = document.getElementById("SurveyTexts");
-                elem.innerHTML = "";
-                console.log(data);
-                for (i = 0; i < data.SurveyTexts.length; i++) {
-                    console.log(data.SurveyTexts[i]);
-                    if (i == 0) {
-                        elem.innerHTML += '<option value="' + data.SurveyTexts[i] + '" selected>' + data.SurveyTexts[i] + '</option>';
-                    } else {
-                        elem.innerHTML += '<option value="' + data.SurveyTexts[i] + '">' + data.SurveyTexts[i] + '</option>';
-                    }
-                }
-            }
-        });
-    }*@
-
-
             function showMultiCharts() {
                 changeChartMulti('chart1SelectMulti', 'chart1Col', 'chart1');
                 changeChartMulti('chart2SelectMulti', 'chart2Col', 'chart2');
@@ -464,7 +338,7 @@
                     keys.push(dicts[id].dict[i].key);
                     values.push(dicts[id].dict[i].value);
                 }
-           
+
                 while (dicts[id].dict.length > borderColors.length) { //ensures, that there are enough colors
                                                             //alert("drinn");
                     var firstPart = getRandomColor();
@@ -639,14 +513,24 @@
     //modal things
     //   |    Everything down here
     //   v
-    
+
     $(document).ready(function () {
 
         $("#zoomModal").click(function (event) {
             if (event.target.id === "zoomModal") {
                 closeZoomModal();
             }
-        });      
+        });
+        $("#exportModal").click(function (event) {
+            if (event.target.id === "exportModal") {
+                $("#exportModal").hide();
+            }
+        });
+        $("#notYetImplementedModal").click(function (event) {
+            if (event.target.id === "notYetImplementedModal") {
+                $("#notYetImplementedModal").hide();
+            }
+        });
 
         $("#zoomModalContent").click(function (event) {
             if (event.target.id === "dateRightModalBtn") { //for multiResult listing (to be able to switch dates)
@@ -824,6 +708,63 @@
         } else if (dateIndex === multiLabels.length - 1) {
             $("#" + buttonRightId).prop("disabled", true);
         }
+    }
+
+
+    function exportChart() {
+        //$("#exportModal").show();
+        $("#exportModal").modal({ backdrop: true });
+    }
+
+    function notYetImplemented() {
+        $("#notYetImplementedModal").modal({ backdrop: true });
+    }
+
+    function exportAsCSV(type) {
+        let title = document.getElementById("actualSvyText").innerHTML;
+
+        let csv = 'Ergebnisse;' + title + '\n\n';
+
+        if (type === "single") {
+            for (i = 0; i < dicts.length; i++) {
+                csv += dicts[i].date;
+                csv += '\n';
+                for (j = 0; j < dicts[i].dict.length; j++) {
+                    csv += dicts[i].dict[j].key;
+                    csv += ';';
+                    csv += dicts[i].dict[j].value;
+                    csv += '\n';
+                }
+                csv += '\n';
+            }
+        } else {
+            csv += ' ;';
+            for (i = 0; i < multiLabels.length; i++) {
+                csv += multiLabels[i];
+                csv += ';';
+            }
+            csv += '\n';
+            for (i = 0; i < multiDict.length; i++) {
+                csv += multiDict[i].key;
+                csv += ';';
+                console.log(multiDict[i].value);
+                for (j = 0; j < multiDict[i].value.length; j++) {
+                    csv += multiDict[i].value[j];
+                    csv += ';';
+                }
+                csv += '\n';
+            }
+        }
+
+        let hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'people.csv';
+        hiddenElement.click();
+    }
+
+    function exportAsPDF() {
+        notYetImplemented();
     }
 
 </script>
