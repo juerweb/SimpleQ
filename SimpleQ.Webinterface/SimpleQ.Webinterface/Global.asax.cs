@@ -13,19 +13,18 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Net;
+using System.Web.Hosting;
 
 namespace SimpleQ.Webinterface
 {
     public class MvcApplication : System.Web.HttpApplication
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
+        private static JobScheduler jobScheduler = new JobScheduler();
+        private static KeepAlive keepAlive;
 
-        private static Scheduler surveyScheduler = new SurveyScheduler();
-        private static Scheduler exceededSurveyDataScheduler = new ExceededSurveyDataScheduler();
-        private static Scheduler billScheduler = new BillScheduler();
-        private static Scheduler periodicSurveyScheduler = new PeriodicSurveyScheduler();
-
-        protected void Application_Start()
+        protected void Application_Start(object sender, EventArgs e)
         {
             try
             {
@@ -41,15 +40,31 @@ namespace SimpleQ.Webinterface
                 RestoreQueuedSurveys();
 
                 logger.Debug("Starting schedulers");
-                surveyScheduler.Start();
-                exceededSurveyDataScheduler.Start();
-                billScheduler.Start();
-                periodicSurveyScheduler.Start();
+                jobScheduler.Start().Wait();
+                keepAlive = new KeepAlive();
+                keepAlive.Start();
                 logger.Debug("Application started successfully");
             }
             catch (Exception ex)
             {
                 logger.Fatal(ex, "Unexpected error while starting application");
+                throw ex;
+            }
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+            try
+            {
+                keepAlive?.Dispose();
+                keepAlive = null;
+
+                new KeepAlive().KeepAliveRequest();
+                logger.Debug("Performed keep-alive request to prevent shut down.");
+            }
+            catch (Exception ex)
+            {
+                logger.Fatal(ex, "Keeping alive failed");
                 throw ex;
             }
         }
@@ -61,16 +76,19 @@ namespace SimpleQ.Webinterface
                 logger.Debug("Starting to restore queued surveys");
                 using (var db = new SimpleQDBEntities())
                 {
-                    // Alle Umfragen welche vor 00:00 starten schedulen (+10min Toleranz)
+                    // Schedule each survey starting before 00:10
                     var query = db.Surveys.Where(s => !s.Sent)
                         .ToList()
-                        .Where(s => s.StartDate - DateTime.Now < Literal.NextMidnight.Add(TimeSpan.FromMinutes(10)))
+                        .Where(s => s.StartDate < Helper.NextDateTime(00, 10))
                         .ToList();
-                    query.ForEach(s =>
+                    int count = 0;
+
+                    foreach (var s in query)
                     {
-                        Controllers.SurveyCreationController.ScheduleSurvey(s.SvyId, s.StartDate - DateTime.Now, s.CustCode);
-                    });
-                    logger.Debug($"{query.Count} surveys restored successfully");
+                        var success = SurveyQueue.EnqueueSurvey(s.SvyId, s.StartDate, s.CustCode).Result;
+                        count += success ? 1 : 0;
+                    }
+                    logger.Debug($"{count} surveys restored successfully");
                 }
             }
             catch (Exception ex)

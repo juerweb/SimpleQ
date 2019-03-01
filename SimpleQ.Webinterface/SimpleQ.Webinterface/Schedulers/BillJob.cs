@@ -13,7 +13,7 @@ using System.Web.Hosting;
 using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Properties;
 
-namespace SimpleQ.Webinterface.Scheduler
+namespace SimpleQ.Webinterface.Schedulers
 {
     public class BillJob : IJob
     {
