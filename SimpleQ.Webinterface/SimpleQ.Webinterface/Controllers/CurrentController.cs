@@ -11,6 +11,7 @@ using System.Web.Mvc;
 using SimpleQ.Webinterface.Extensions;
 using System.Data.Entity;
 using System.Net.Http;
+using SimpleQ.Webinterface.Schedulers;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -131,10 +132,7 @@ namespace SimpleQ.Webinterface.Controllers
                     else
                     {
                         logger.Debug("Survey not sent yet. Removing from queue");
-                        lock (queuedSurveys)
-                        {
-                            queuedSurveys.Remove(svyId);
-                        }
+                        await SurveyQueue.DequeueSurvey(svyId);
                     }
                     await Task.Run(() => db.sp_DeleteSurvey(svyId));
                     await db.SaveChangesAsync();

@@ -212,6 +212,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CurrentController.cs" />
     <Compile Include="Extensions\Email.cs" />
+    <Compile Include="Extensions\Helper.cs" />
     <Compile Include="Extensions\Pdf.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -302,7 +303,6 @@
     <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\SurveyCreationController.cs" />
     <Compile Include="Controllers\SurveyResultsController.cs" />
-    <Compile Include="Extensions\Literal.cs" />
     <Compile Include="Extensions\Http.cs" />
     <Compile Include="Models\Mobile\RegistrationData.cs" />
     <Compile Include="Models\Mobile\SurveyData.cs" />

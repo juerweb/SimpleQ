@@ -12,12 +12,12 @@ namespace SimpleQ.Webinterface.Extensions
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static async Task<bool> Send(string from, string to, string subject, string body, bool isHtml = false, params Attachment[] attachments)
+        public static async Task<bool> Send(string from, string to, string subject, string body, bool isHtml = true, params Attachment[] attachments)
         {
             return await Send(from, new string[] { to }, subject, body, isHtml, attachments);
         }
 
-        public static async Task<bool> Send(string from, string[] to, string subject, string body, bool isHtml = false, params Attachment[] attachments)
+        public static async Task<bool> Send(string from, string[] to, string subject, string body, bool isHtml = true, params Attachment[] attachments)
         {
             try
             {
