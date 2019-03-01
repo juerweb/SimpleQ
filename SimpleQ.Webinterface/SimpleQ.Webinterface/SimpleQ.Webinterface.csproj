@@ -206,6 +206,7 @@
     <Compile Include="Attributes\RequireAuthAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CurrentController.cs" />
     <Compile Include="Extensions\Email.cs" />
     <Compile Include="Extensions\Pdf.cs" />
     <Compile Include="Models\AnswerOption.cs">
@@ -264,6 +265,7 @@
     <Compile Include="Models\SurveyCategory.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ViewModels\CurrentModel.cs" />
     <Compile Include="Models\ViewModels\ErrorModel.cs" />
     <Compile Include="Models\Vote.cs">
       <DependentUpon>SimpleQModel.tt</DependentUpon>
@@ -324,6 +326,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Current.css" />
     <Content Include="Content\device-mockups\apple_watch\edition\gold.png" />
     <Content Include="Content\device-mockups\apple_watch\edition\rose.png" />
     <Content Include="Content\device-mockups\apple_watch\sport\black.png" />
@@ -690,6 +693,7 @@
     <Content Include="Scripts\texteditor\plugins\table\ui\sass\trumbowyg.table.scss" />
     <Content Include="Scripts\texteditor\ui\sass\trumbowyg.scss" />
     <Content Include="Scripts\qrious.js.map" />
+    <Content Include="Views\Current\Current.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

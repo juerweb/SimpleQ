@@ -1,0 +1,121 @@
+﻿@using SimpleQ.Webinterface.Models;
+@using System.Resources;
+@using SimpleQ.Webinterface.Properties;
+@using SimpleQ.Webinterface.Models.ViewModels;
+
+@model SimpleQ.Webinterface.Models.ViewModels.CurrentModel
+
+<div class="row ml-0 mr-0">
+    <div id="exportNotValidBecauseEmpty" class="alert alert-danger w-100" style="display:none"><strong>You can not export your results because they are empty!</strong></div>
+
+    <div class="col-md-6">
+        <h3 class="m-3">Current and upcoming surveys</h3>
+        <div style="overflow-x:auto;" class="m-3 w-100">
+            <table id="currentSurveysTable" class="table table-bordered smallCellPadding small w-100">
+                <thead>
+                    <tr>
+                        <th>@Resources.survey</th>
+                        <th>@Resources.timespan</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (CurrentModel.SurveyWrapper svw in Model.Surveys)
+                        {
+                            if (svw.StartDate < DateTime.Now) //survey already running
+                            {
+                                <tr style="background-color: rgb(84, 195, 255) !important;">
+                                    <td>@svw.SvyText</td>
+                                    <td>@svw.StartDate.ToShortDateString() - @svw.EndDate.ToShortDateString()</td>
+                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Cancel survey" onclick="cancelSurvey(@svw.SvyId)"><i class="material-icons">cancel</i></button></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>@svw.SvyText</td>
+                                    <td>@svw.StartDate.ToShortDateString() - @svw.EndDate.ToShortDateString()</td>
+                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Cancel survey" onclick="cancelSurvey(@svw.SvyId)"><i class="material-icons">cancel</i></button></td>
+                                </tr>
+                            }
+                        }
+                    }
+
+                </tbody>
+            </table>
+            <h3 class="text-center mt-3">Color coding</h3>
+            <div class="row mr-0 ml-0 mt-2">
+                <div class="col border text-center" style="background-color: rgb(84, 195, 255)">
+                    Already started
+                </div>
+                <div class="col border text-center">
+                    Not yet started
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+
+    </div>   
+</div>
+
+<div class="modal" id="cancelSurveyModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Are you sure you want to Cancel the survey?</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-danger btn-block" onclick="$('#cancelSurveyModal').hide();doCancelling();">Yes</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-secondary btn-block" onclick="$('#cancelSurveyModal').hide()">No</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        var table = $('#currentSurveysTable').dataTable({
+            "scrollY": "700px",
+            "scrollCollapse": true,
+            "dom": 'rt',
+            "order": false,
+            //"order": [[1, "desc"]],
+            "columnDefs": [
+                { "orderable": false, "targets": 2 }
+            ],
+            "paging": false
+        });
+        $('.dataTables_length').addClass('bs-select');
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+
+        $(window).resize(function () {
+            table.fnAdjustColumnSizing();
+        });
+    });
+
+    var svyCancelID = 0;
+
+    function cancelSurvey(svyID) {
+        svyCancelID = svyID;
+        $("#cancelSurveyModal").modal({ backdrop: true });
+    }
+
+    function doCancelling() {
+
+    }
+
+</script>

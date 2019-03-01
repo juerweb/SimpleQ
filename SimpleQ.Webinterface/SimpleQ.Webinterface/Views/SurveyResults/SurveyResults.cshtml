@@ -10,6 +10,8 @@
     ResourceManager rm = Resources.ResourceManager;
 }
 <div class="row ml-0 mr-0">
+    <div id="exportNotValidBecauseEmpty" class="alert alert-danger w-100" style="display:none"><strong>You can not export your results because they are empty!</strong></div>
+
     <div style="overflow-x:auto;" class="m-3 w-100">
         <table id="resultsTable" class="table table-bordered table-striped smallCellPadding small w-100">
             <thead>
@@ -710,32 +712,41 @@
         }
     }
 
+    var exportType = "";
 
-    function exportChart() {
+    function exportChart(type) {
         //$("#exportModal").show();
         $("#exportModal").modal({ backdrop: true });
+        exportType = type;
     }
 
     function notYetImplemented() {
         $("#notYetImplementedModal").modal({ backdrop: true });
     }
 
-    function exportAsCSV(type) {
+    function exportAsCSV() {
         let title = document.getElementById("actualSvyText").innerHTML;
 
         let csv = 'Ergebnisse;' + title + '\n\n';
 
-        if (type === "single") {
+        if (exportType === "single") {
+            let resultCount = 0; //if it stays 0 there are no answers
             for (i = 0; i < dicts.length; i++) {
                 csv += dicts[i].date;
-                csv += '\n';
+                csv += '\n';                  
                 for (j = 0; j < dicts[i].dict.length; j++) {
                     csv += dicts[i].dict[j].key;
                     csv += ';';
                     csv += dicts[i].dict[j].value;
                     csv += '\n';
-                }
+                    resultCount++;
+                }    
                 csv += '\n';
+            }
+            if (resultCount == 0) {
+                $("#exportNotValidBecauseEmpty").show();
+                $('#exportNotValidBecauseEmpty').delay(3000).fadeOut();
+                return;
             }
         } else {
             csv += ' ;';
@@ -744,6 +755,8 @@
                 csv += ';';
             }
             csv += '\n';
+
+            let resultCount = 0; //if it stays 0 there are no answers
             for (i = 0; i < multiDict.length; i++) {
                 csv += multiDict[i].key;
                 csv += ';';
@@ -751,15 +764,21 @@
                 for (j = 0; j < multiDict[i].value.length; j++) {
                     csv += multiDict[i].value[j];
                     csv += ';';
+                    resultCount += multiDict[i].value[j];
                 }
                 csv += '\n';
+            }
+            if (resultCount == 0) {
+                $("#exportNotValidBecauseEmpty").show();
+                $('#exportNotValidBecauseEmpty').delay(3000).fadeOut();
+                return;
             }
         }
 
         let hiddenElement = document.createElement('a');
         hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
         hiddenElement.target = '_blank';
-        hiddenElement.download = 'people.csv';
+        hiddenElement.download = title + '.csv';
         hiddenElement.click();
     }
 
