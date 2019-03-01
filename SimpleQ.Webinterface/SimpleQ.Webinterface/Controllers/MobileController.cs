@@ -236,6 +236,12 @@ namespace SimpleQ.Webinterface.Controllers
                         return NotFound();
                     }
 
+                    if (svy.EndDate < DateTime.Now)
+                    {
+                        logger.Debug($"Loading survey data failed. Survey exceeded. {svyId}");
+                        return Conflict();
+                    }
+
                     var catName = svy.SurveyCategory.CatName;
                     var answerOptions = svy.AnswerOptions
                         .Select(a => new AnswerOption
@@ -282,7 +288,7 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 logger.Error(ex, "[GET]LoadFaqEntries: Unexpected error");
                 return InternalServerError(ex);
-            } 
+            }
         }
 
         [HttpPost]

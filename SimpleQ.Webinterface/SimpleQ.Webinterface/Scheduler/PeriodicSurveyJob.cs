@@ -1,61 +1,52 @@
-﻿using NLog;
+﻿using Quartz;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Web;
+using System.Threading.Tasks;
+using NLog;
 using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Web;
 
 namespace SimpleQ.Webinterface.Schedulers
 {
-    public class PeriodicSurveyScheduler : Scheduler
+    public class PeriodicSurveyJob : IJob
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
-        protected override string Name => "periodic survey scheduler";
 
-        protected override void Schedule()
+        public async Task Execute(IJobExecutionContext context)
         {
             try
             {
-                // Sleep bis um 23:00
-                if ((int)Literal.NextMidnight.Subtract(TimeSpan.FromHours(1)).TotalMilliseconds < 0)
-                {
-                    logger.Debug($"Survey scheduler sleeping for {Literal.NextMidnight.Add(TimeSpan.FromDays(1)).Subtract(TimeSpan.FromHours(1)).ToString(@"hh\:mm\:ss\.fff")}");
-                    Thread.Sleep((int)Literal.NextMidnight.Add(TimeSpan.FromDays(1)).Subtract(TimeSpan.FromHours(1)).TotalMilliseconds);
-                }
-                else
-                {
-                    logger.Debug($"Survey scheduler sleeping for {Literal.NextMidnight.Subtract(TimeSpan.FromHours(1)).ToString(@"hh\:mm\:ss\.fff")}");
-                    Thread.Sleep((int)Literal.NextMidnight.Subtract(TimeSpan.FromHours(1)).TotalMilliseconds);
-                }
+                logger.Debug($"Fired at {context.FireTimeUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss.fff")}");
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    var query = db.Surveys
+                    var query = (await db.Surveys
                         .Where(s => s.Period != null)
-                        .ToList()
-                        .Where(s => (s.StartDate + TimeSpan.FromTicks(s.Period.Value)).Date <= Literal.Tomorrow())
+                        .ToListAsync())
+                        .Where(s => (s.StartDate + TimeSpan.FromTicks(s.Period.Value)).Date <= Helper.Tomorrow)
                         .ToList();
 
-                    query.ForEach(s =>
+                    foreach (var s in query)
                     {
                         logger.Debug($"Survey to create new: {s.SvyId}");
-                        var newSvy = db.Surveys
+                        var newSvy = await db.Surveys
                             .AsNoTracking()
                             .Include("Departments")
                             .Include("AnswerOptions")
-                            .Where(svy => svy.SvyId == s.SvyId).First();
+                            .Where(svy => svy.SvyId == s.SvyId).FirstAsync();
 
-                        if ((newSvy.StartDate + TimeSpan.FromTicks(s.Period.Value)).Date == Literal.Tomorrow())
+                        if ((newSvy.StartDate + TimeSpan.FromTicks(s.Period.Value)).Date == Helper.Tomorrow)
                         {
                             newSvy.StartDate += TimeSpan.FromTicks(newSvy.Period.Value);
                             newSvy.EndDate += TimeSpan.FromTicks(newSvy.Period.Value);
                         }
                         else
                         {
-                            newSvy.StartDate = Literal.Tomorrow()
+                            newSvy.StartDate = Helper.Tomorrow
                                 .AddHours(newSvy.StartDate.Hour)
                                 .AddMinutes(newSvy.StartDate.Minute)
                                 .AddSeconds(newSvy.StartDate.Second);
@@ -77,22 +68,22 @@ namespace SimpleQ.Webinterface.Schedulers
                         newSvy.Departments.Clear();
                         newSvy.AnswerOptions.Clear();
 
-                        int totalPeople = db.Departments.ToList().Where(d => departments.Select(dep => dep.DepId).Contains(d.DepId) && d.CustCode == newSvy.CustCode)
+                        int totalPeople = (await db.Departments.ToListAsync()).Where(d => departments.Select(dep => dep.DepId).Contains(d.DepId) && d.CustCode == newSvy.CustCode)
                             .SelectMany(d => d.People).Distinct().Count();
                         if (newSvy.Amount > totalPeople)
                             newSvy.Amount = totalPeople;
                         logger.Debug($"Total people amount: {totalPeople} (CustCode: {newSvy.CustCode}, SvyText: {newSvy.SvyText})");
 
                         db.Surveys.Add(newSvy);
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                         logger.Debug($"Survey successfully created. SvyId: {newSvy.SvyId}");
 
                         departments.RemoveAll(d => !db.Departments.Any(dep => dep.DepId == d.DepId && dep.CustCode == d.CustCode));
                         departments.ForEach(d => db.Departments.Where(dep => dep.DepId == d.DepId && dep.CustCode == d.CustCode).FirstOrDefault()?.Surveys.Add(newSvy));
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                         logger.Debug($"Departments added successfully for SvyId: {newSvy.SvyId}");
 
-                        var baseId = db.AnswerTypes.Where(a => a.TypeId == newSvy.TypeId).FirstOrDefault().BaseId;
+                        var baseId = await db.AnswerTypes.Where(a => a.TypeId == newSvy.TypeId).Select(a => a.BaseId).FirstOrDefaultAsync();
                         if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion)
                         {
                             db.AnswerOptions.Add(new AnswerOption { SvyId = newSvy.SvyId, AnsText = answerOptions.Where(a => a.FirstPosition == true).First().AnsText, FirstPosition = true });
@@ -107,15 +98,19 @@ namespace SimpleQ.Webinterface.Schedulers
                             });
                             logger.Debug($"Answer options set successfully for SvyId: {newSvy.SvyId}");
                         }
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                         logger.Debug($"{newSvy.SvyId} created successfully");
-                    });
+                    }
                     logger.Debug($"{query.Count()} surveys created successfully");
                 }
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Schedule: Scheduling periodic surveys failed unexpectedly");
+                logger.Error(ex, "Scheduling periodic surveys failed unexpectedly");
+            }
+            finally
+            {
+                logger.Debug($"Next fire time {context.NextFireTimeUtc?.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss.fff")}");
             }
         }
     }

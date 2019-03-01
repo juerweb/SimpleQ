@@ -16,7 +16,6 @@ using System.Web.Mvc;
 
 namespace SimpleQ.Webinterface.Controllers
 {
-    [Globalization]
     public class AccountController : BaseController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -32,11 +31,12 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public ActionResult Login(int? confirmed)
+        public ActionResult Login(int? confirmed, string custCode)
         {
             try
             {
                 ViewBag.confirmed = confirmed == 1;
+                ViewBag.custCode = custCode;
                 logger.Trace($"Loading login page {(confirmed == 1 ? " after confirmation" : "")}");
                 Response.AppendHeader("spn", "sam, dean, castiel and jack were here");
                 return View("Login");
@@ -52,22 +52,24 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            try
-            {
-                using (var db = new SimpleQDBEntities())
-                {
-                    ViewBag.PaymentMethods = db.PaymentMethods.ToList();
-                    logger.Trace("Loading registration page.");
-                    Response.AppendHeader("get-stoned", "it's always 4:20 somewhere");
-                    return View("Register");
-                }
-            }
-            catch (Exception ex)
-            {
-                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
-                logger.Error(ex, "[GET]Register: Unexpected error");
-                return View("AccountError", model);
-            }
+            //try
+            //{
+            //    using (var db = new SimpleQDBEntities())
+            //    {
+            //        ViewBag.PaymentMethods = db.PaymentMethods.ToList();
+
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
+            //    logger.Error(ex, "[GET]Register: Unexpected error");
+            //    return View("AccountError", model);
+            //}
+
+            logger.Trace("Loading registration page.");
+            Response.AppendHeader("get-stoned", "it's always 4:20 somewhere");
+            return View("Register");
         }
 
         [HttpPost]
@@ -106,9 +108,6 @@ namespace SimpleQ.Webinterface.Controllers
                 if (string.IsNullOrEmpty(cust.Country))
                     AddModelError("Country", BackendResources.CountryEmpty, ref err);
 
-                if (string.IsNullOrEmpty(cust.LanguageCode))
-                    AddModelError("LanguageCode", BackendResources.LangCodeEmpty, ref err);
-
                 if (cust.DataStoragePeriod <= 0)
                     AddModelError("DataStoragePeriod", BackendResources.DataStoragePeriodInvalid, ref err);
 
@@ -123,8 +122,8 @@ namespace SimpleQ.Webinterface.Controllers
                     if (await db.Customers.AnyAsync(c => c.CustEmail == cust.CustEmail))
                         AddModelError("CustEmail", BackendResources.EmailAlreadyExists, ref err);
 
-                    if (!await db.PaymentMethods.AnyAsync(p => p.PaymentMethodId == cust.PaymentMethodId))
-                        AddModelError("PaymentMethodId", BackendResources.PaymentMethodInvalid, ref err);
+                    //if (!await db.PaymentMethods.AnyAsync(p => p.PaymentMethodId == cust.PaymentMethodId))
+                    //    AddModelError("PaymentMethodId", BackendResources.PaymentMethodInvalid, ref err);
 
 
                     if (err)
@@ -141,6 +140,7 @@ namespace SimpleQ.Webinterface.Controllers
                     cust.MinGroupSize = minGroupSize;
                     cust.CostBalance = 0m;
                     cust.EmailConfirmed = false;
+                    cust.PaymentMethodId = 1;
 
                     var date = DateTime.Now;
                     day = (DateTime.DaysInMonth(date.Year, date.Month) < day) ? DateTime.DaysInMonth(date.Year, date.Month) : day;
@@ -171,9 +171,9 @@ namespace SimpleQ.Webinterface.Controllers
                             .MaxAsync();
                     }
 
-                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = "Employee satisfaction", Deactivated = false });
-                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = "Workplace design", Deactivated = false });
-                    db.Departments.Add(new Department { DepId = await maxDepId() + 1, CustCode = custCode, DepName = "Everyone" });
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = BackendResources.EmployeeSatisfaction, Deactivated = false });
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = BackendResources.WorkplaceDesign, Deactivated = false });
+                    db.Departments.Add(new Department { DepId = await maxDepId() + 1, CustCode = custCode, DepName = BackendResources.Everyone });
                     await db.SaveChangesAsync();
 
                     logger.Info($"Customer registered: {custCode}");
@@ -227,7 +227,7 @@ namespace SimpleQ.Webinterface.Controllers
                     cust.EmailConfirmed = true;
                     await db.SaveChangesAsync();
                     logger.Debug($"E-mail confirmed successfully for: {cust.CustCode}");
-                    return RedirectToAction("Login", new { confirmed = 1 });
+                    return RedirectToAction("Login", new { confirmed = 1, custCode = cust.CustCode });
                 }
             }
             catch (Exception ex)
@@ -254,7 +254,11 @@ namespace SimpleQ.Webinterface.Controllers
                         logger.Debug($"Login failed. Invalid customer code or password for {custCode}: {password}");
                     }
 
-                    if (err) return View("Login");
+                    if (err)
+                    {
+                        ViewBag.custCode = custCode;
+                        return View("Login");
+                    }
                     logger.Debug("Login validation sucessful");
 
                     SignIn(await db.Customers.Where(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)).FirstOrDefaultAsync(), remember);
