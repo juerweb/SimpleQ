@@ -70,11 +70,38 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount must be at least 1..
+        /// </summary>
+        internal static string AmountMustAtLeast1 {
+            get {
+                return ResourceManager.GetString("AmountMustAtLeast1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Answer options must not be empty..
+        /// </summary>
+        internal static string AnswerOptionsNotEmpty {
+            get {
+                return ResourceManager.GetString("AnswerOptionsNotEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to At least one answer type does not exist..
         /// </summary>
         internal static string AnswerTypeDoesNotExist {
             get {
                 return ResourceManager.GetString("AnswerTypeDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Answer type does not exist..
+        /// </summary>
+        internal static string AnswerTypeNotExist {
+            get {
+                return ResourceManager.GetString("AnswerTypeNotExist", resourceCulture);
             }
         }
         
@@ -124,11 +151,44 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dear Sir or Madam!&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Enclosed you will find your most recent bill.&lt;br/&gt;
+        ///For further questions please contact support@simpleq.at.&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Sincerely,&lt;br/&gt;
+        ///Your SimpleQ team&lt;br/&gt;.
+        /// </summary>
+        internal static string BillEmailMessage {
+            get {
+                return ResourceManager.GetString("BillEmailMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SimpleQ Bill.
+        /// </summary>
+        internal static string BillEmailSubject {
+            get {
+                return ResourceManager.GetString("BillEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Bill number.
         /// </summary>
         internal static string BillNumber {
             get {
                 return ResourceManager.GetString("BillNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category not found..
+        /// </summary>
+        internal static string CategoryNotFound {
+            get {
+                return ResourceManager.GetString("CategoryNotFound", resourceCulture);
             }
         }
         
@@ -156,6 +216,24 @@ namespace SimpleQ.Webinterface.Properties {
         internal static string ConfirmationSendingFailedTitle {
             get {
                 return ResourceManager.GetString("ConfirmationSendingFailedTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please confirm your email before creating surveys..
+        /// </summary>
+        internal static string ConfirmYourEmailMsg {
+            get {
+                return ResourceManager.GetString("ConfirmYourEmailMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm your email.
+        /// </summary>
+        internal static string ConfirmYourEmailTitle {
+            get {
+                return ResourceManager.GetString("ConfirmYourEmailTitle", resourceCulture);
             }
         }
         
@@ -304,11 +382,29 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Employee satisfaction.
+        /// </summary>
+        internal static string EmployeeSatisfaction {
+            get {
+                return ResourceManager.GetString("EmployeeSatisfaction", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {
             get {
                 return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Everyone.
+        /// </summary>
+        internal static string Everyone {
+            get {
+                return ResourceManager.GetString("Everyone", resourceCulture);
             }
         }
         
@@ -331,13 +427,22 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dear Sir or Madam!\r\n
-        ///\r\n
-        ///To reset your email click the following link: {Url}\r\n
-        ///The link is valid for 15 minutes.\r\n
-        ///\r\n\r\n
-        ///Best regards,\r\n
-        ///Your SimpleQ team.
+        ///   Looks up a localized string similar to Loading survey failed.
+        /// </summary>
+        internal static string FailedLoadingSurvey {
+            get {
+                return ResourceManager.GetString("FailedLoadingSurvey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dear Sir or Madam!&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///To reset your email click the following link: {Url}&lt;br/&gt;
+        ///The link is valid for 15 minutes.&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Sincerely,&lt;br/&gt;
+        ///Your SimpleQ team&lt;br/&gt;.
         /// </summary>
         internal static string ForgotPasswordEmailMessage {
             get {
@@ -355,13 +460,13 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You got invited to participate in surveys provided by SimpleQ!\r\n
-        ///\r\n
-        ///Please scan the attached QR code with your SimpleQ app.\r\n
-        ///Alternatively you can enter the following registration code in your app: {RegCode}\r\n
-        ///\r\n\r\n
-        ///Best regards,\r\n
-        ///Your SimpleQ team.
+        ///   Looks up a localized string similar to Dear customer,&lt;br/&gt;
+        ///you got invited to participate in surveys provided by SimpleQ!&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Please scan the attached QR code with your SimpleQ app.&lt;br/&gt;
+        ///Alternatively you can enter the following registration code in your app: {RegCode}&lt;br/&gt;
+        ///Sincerely,&lt;br/&gt;
+        ///Your SimpleQ team&lt;br/&gt;.
         /// </summary>
         internal static string GroupInvitationEmailMessage {
             get {
@@ -370,8 +475,8 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your registration code: {RegCode}\r\n
-        ///Message:\r\n
+        ///   Looks up a localized string similar to Your registration code: {RegCode}
+        ///Message:
         ///{CustomMessage}.
         /// </summary>
         internal static string GroupInvitationEmailMessageCustom {
@@ -480,6 +585,24 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have not created any surveys yet..
+        /// </summary>
+        internal static string NoSurveysMsg {
+            get {
+                return ResourceManager.GetString("NoSurveysMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No surveys.
+        /// </summary>
+        internal static string NoSurveysTitle {
+            get {
+                return ResourceManager.GetString("NoSurveysTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of answers.
         /// </summary>
         internal static string NumOfAnswers {
@@ -503,6 +626,24 @@ namespace SimpleQ.Webinterface.Properties {
         internal static string Period {
             get {
                 return ResourceManager.GetString("Period", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Period must be at least 1 day..
+        /// </summary>
+        internal static string PeriodAtLeast1Day {
+            get {
+                return ResourceManager.GetString("PeriodAtLeast1Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Period must be bigger than the survey&apos;s duration..
+        /// </summary>
+        internal static string PeriodMustBiggerThanDuration {
+            get {
+                return ResourceManager.GetString("PeriodMustBiggerThanDuration", resourceCulture);
             }
         }
         
@@ -570,14 +711,14 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Welcome to SimpleQ!\r\n
-        ///\r\n
-        ///Please confirm your e-mail address now.\r\n
-        ///Hence just click the following confirmation link: {Url}\r\n
-        ///Your customer code: {CustCode}\r\n
-        ///\r\n\r\n
-        ///Best regards,\r\n
-        ///Your SimpleQ team.
+        ///   Looks up a localized string similar to Welcome to SimpleQ!&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Please confirm your e-mail address now.&lt;br/&gt;
+        ///Hence just click the following confirmation link: {Url}&lt;br/&gt;
+        ///Your customer code: {CustCode}&lt;br/&gt;
+        ///&lt;br/&gt;
+        ///Sincerely,&lt;br/&gt;
+        ///Your SimpleQ team&lt;br/&gt;.
         /// </summary>
         internal static string RegistrationEmailMessage {
             get {
@@ -591,6 +732,15 @@ namespace SimpleQ.Webinterface.Properties {
         internal static string RegistrationEmailSubject {
             get {
                 return ResourceManager.GetString("RegistrationEmailSubject", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There must be selected at least one group.
+        /// </summary>
+        internal static string SelectedDepartmentsEmpty {
+            get {
+                return ResourceManager.GetString("SelectedDepartmentsEmpty", resourceCulture);
             }
         }
         
@@ -613,11 +763,38 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start date must be earlier than end date..
+        /// </summary>
+        internal static string StartDateMustEarlierEndDate {
+            get {
+                return ResourceManager.GetString("StartDateMustEarlierEndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Street must not be empty..
         /// </summary>
         internal static string StreetEmpty {
             get {
                 return ResourceManager.GetString("StreetEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There must be specified exactly two answer options..
+        /// </summary>
+        internal static string Submit2AnswerOptions {
+            get {
+                return ResourceManager.GetString("Submit2AnswerOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There must be specified at least one answer option..
+        /// </summary>
+        internal static string SubmitAnswerOptions {
+            get {
+                return ResourceManager.GetString("SubmitAnswerOptions", resourceCulture);
             }
         }
         
@@ -631,11 +808,38 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Survey not found..
+        /// </summary>
+        internal static string SurveyNotFound {
+            get {
+                return ResourceManager.GetString("SurveyNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There must be submitted survey data..
+        /// </summary>
+        internal static string SurveyNull {
+            get {
+                return ResourceManager.GetString("SurveyNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Survey price.
         /// </summary>
         internal static string SurveyPrice {
             get {
                 return ResourceManager.GetString("SurveyPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Survey text must not be empty..
+        /// </summary>
+        internal static string SurveyTextEmpty {
+            get {
+                return ResourceManager.GetString("SurveyTextEmpty", resourceCulture);
             }
         }
         
@@ -654,6 +858,15 @@ namespace SimpleQ.Webinterface.Properties {
         internal static string TotalCost {
             get {
                 return ResourceManager.GetString("TotalCost", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workplace design.
+        /// </summary>
+        internal static string WorkplaceDesign {
+            get {
+                return ResourceManager.GetString("WorkplaceDesign", resourceCulture);
             }
         }
         

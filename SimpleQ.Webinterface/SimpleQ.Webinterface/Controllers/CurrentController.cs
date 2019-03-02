@@ -12,6 +12,7 @@ using SimpleQ.Webinterface.Extensions;
 using System.Data.Entity;
 using System.Net.Http;
 using SimpleQ.Webinterface.Schedulers;
+using SimpleQ.Webinterface.Properties;
 
 namespace SimpleQ.Webinterface.Controllers
 {
@@ -50,7 +51,9 @@ namespace SimpleQ.Webinterface.Controllers
                                     EndDate = g.EndDate
                                 })
                                 .OrderByDescending(x => x.StartDate)
-                             .ToList()
+                             .ToList(),
+
+                        PeriodicSurveys = db.Surveys.Where(s => s.CustCode == CustCode && s.Period != null).ToList()
                     };
 
                     ViewBag.emailConfirmed = cust.EmailConfirmed;
@@ -148,6 +151,66 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
+
+        [HttpGet]
+        public async Task<ActionResult> LoadSurveyInfo(int svyId)
+        {
+            try
+            {
+                logger.Debug($"Requested to load info of survey. (SvyId: {svyId}, CustCode: {CustCode})");
+                using (var db = new SimpleQDBEntities())
+                {
+                    Survey svy = db.Surveys.Where(s => s.CustCode == CustCode && s.SvyId == svyId).First();
+                    List<string> dps = svy.Departments.Select(x => x.DepName).ToList();
+                    string startDate = svy.StartDate.ToShortDateString();
+                    string endDate = svy.EndDate.ToShortDateString();
+                    //return Json(new { svy.SvyText, svy.SurveyCategory, svy.AnswerType.TypeDesc, svy.StartDate, svy.EndDate, svy.Departments }, JsonRequestBehavior.AllowGet);
+                    return Json(new { svy.SvyText, svy.SurveyCategory.CatName, svy.AnswerType.TypeDesc, startDate, endDate, dps}, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
+                logger.Error(ex, "[GET]LoadSingleResult: Unexpected error");
+                return PartialView("_Error", model);
+            }
+        }
+
+
+        [HttpDelete]
+        public async Task<ActionResult> StopPeriodic(int svyId)
+        {
+            try
+            {
+                logger.Debug($"Stopping periodic survey requested: {CustCode} (SvyId: {svyId})");
+                using (var db = new SimpleQDBEntities())
+                {
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
+                    {
+                        logger.Warn($"Stopping periodic survey failed. Customer not found: {CustCode}");
+                        return Http.NotFound("Customer not found");
+                    }
+
+                    var svy = await db.Surveys.Where(s => s.SvyId == svyId && s.Period != null).FirstOrDefaultAsync();
+                    if (svy == null)
+                    {
+                        logger.Debug("Stopping periodic survey. Survey not found");
+                        return Http.NotFound("Survey not found");
+                    }
+
+                    svy.Period = null;
+                    await db.SaveChangesAsync();
+
+                    logger.Debug("Periodic survey stopped successfully");
+                    return Http.Ok/*e gut*/();
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "[DELETE]StopPerodic: Unexpected error");
+                return Http.InternalServerError("Something went wrong. Please try again later.");
+            }
+        }
         #endregion
     }
 }

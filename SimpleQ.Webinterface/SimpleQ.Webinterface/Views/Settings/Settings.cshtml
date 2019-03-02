@@ -417,12 +417,10 @@
     var checkedAnswers = [];
 
     $(function () {
-        //document.getElementById("header").innerHTML = "@Resources.settings"; 
-
+        //document.getElementById("header").innerHTML = "@Resources.settings"; //set Header
         let tops = document.getElementsByClassName("header");
         tops[0].innerHTML = "@Resources.settings";
         tops[1].innerHTML = "@Resources.settings";
-
         $("#accordion").accordion();
         umlaute();
         switchToAccountSettings();

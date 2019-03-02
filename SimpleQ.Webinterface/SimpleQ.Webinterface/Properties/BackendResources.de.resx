@@ -120,8 +120,17 @@
   <data name="AccountingPeriodInvalid" xml:space="preserve">
     <value>Die Rechnungsperiode muss entweder 1, 3, 6 oder 12 Monate betragen.</value>
   </data>
+  <data name="AmountMustAtLeast1" xml:space="preserve">
+    <value>Anzahl muss mindestens 1 betragen.</value>
+  </data>
+  <data name="AnswerOptionsNotEmpty" xml:space="preserve">
+    <value>Antwortoptionen dürfen nicht leer sein.</value>
+  </data>
   <data name="AnswerTypeDoesNotExist" xml:space="preserve">
     <value>Mindestens einer der gewählten Beantwortungstypen existiert nicht.</value>
+  </data>
+  <data name="AnswerTypeNotExist" xml:space="preserve">
+    <value>Antworttyp existiert nicht</value>
   </data>
   <data name="AnswerTypesNull" xml:space="preserve">
     <value>Es must zumindest ein Beantwortungstyp gewählt werden.</value>
@@ -141,6 +150,9 @@
   <data name="BillNumber" xml:space="preserve">
     <value>Rechnungsnummer</value>
   </data>
+  <data name="CategoryNotFound" xml:space="preserve">
+    <value>Kategorie wurde nicht gefunden.</value>
+  </data>
   <data name="CityEmpty" xml:space="preserve">
     <value>Stadt darf nicht leer sein.</value>
   </data>
@@ -149,6 +161,12 @@
   </data>
   <data name="ConfirmationSendingFailedTitle" xml:space="preserve">
     <value>Senden der Bestätigungs-Email fehlgeschlagen</value>
+  </data>
+  <data name="ConfirmYourEmailMsg" xml:space="preserve">
+    <value>Bitte bestätigen Sie Ihre Email-Adresse bevor Sie Befragungen erstellen</value>
+  </data>
+  <data name="ConfirmYourEmailTitle" xml:space="preserve">
+    <value>Email bestätigen</value>
   </data>
   <data name="CountryEmpty" xml:space="preserve">
     <value>Land darf nicht leer sein.</value>
@@ -207,30 +225,34 @@
   <data name="ExpiredPasswordResetTitle" xml:space="preserve">
     <value>Abgelaufener Reset-Link</value>
   </data>
+  <data name="FailedLoadingSurvey" xml:space="preserve">
+    <value>Umfrage konnte nicht geladen werden</value>
+  </data>
   <data name="ForgotPasswordEmailMessage" xml:space="preserve">
-    <value>Sehr geehrte Damen und Herren!\r\n
-\r\n
-Um Ihr Passwort zurückzusetzen, klicken sie einfach auf folgenden Link: {Url}\r\n
-Dieser Link ist 15 Minuten lang gültig.\r\n
-\r\n\r\n
-Mit freundlichen Grüßen\r\n
-Ihr SimpleQ-Team</value>
+    <value>Sehr geehrte Damen und Herren!&lt;br/&gt;
+&lt;br/&gt;
+Um Ihr Passwort zurückzusetzen, klicken sie einfach auf folgenden Link: {Url}&lt;br/&gt;
+Dieser Link ist 15 Minuten lang gültig.&lt;br/&gt;
+&lt;br/&gt;
+Mit freundlichen Grüßen&lt;br/&gt;
+Ihr SimpleQ-Team&lt;br/&gt;</value>
   </data>
   <data name="ForgotPasswordEmailSubject" xml:space="preserve">
     <value>SimpleQ-Passwort zurücksetzen</value>
   </data>
   <data name="GroupInvitationEmailMessage" xml:space="preserve">
-    <value>Sie wurden eingeladen an SimpleQ-Umfragen Ihrer Organisation teilzunehmen!\r\n
-\r\n
-Bitte scannen Sie den QR-Code im Anhang mit Ihrer SimpleQ-App.\r\n
-Alternativ dazu können Sie einfach folgenden Code in Ihrer App eingeben: {RegCode}\r\n
-\r\n\r\n
-Mit freundlichen Grüßen\r\n
-Ihr SimpleQ-Team</value>
+    <value>Sehr geehrter Kunde,&lt;br/&gt;
+Sie wurden eingeladen an SimpleQ-Umfragen Ihrer Organisation teilzunehmen!&lt;br/&gt;
+&lt;br/&gt;
+Bitte scannen Sie den QR-Code im Anhang mit Ihrer SimpleQ-App.&lt;br/&gt;
+Alternativ dazu können Sie einfach folgenden Code in Ihrer App eingeben: &lt;br/&gt;{RegCode}&lt;br/&gt;
+&lt;br/&gt;
+Mit freundlichen Grüßen&lt;br/&gt;
+Ihr SimpleQ-Team&lt;br/&gt;</value>
   </data>
   <data name="GroupInvitationEmailMessageCustom" xml:space="preserve">
-    <value>Ihr Registrierungscode: {RegCode}\r\n
-Nachricht:\r\n
+    <value>Ihr Registrierungscode: {RegCode}
+Nachricht:
 {CustomMessage}</value>
   </data>
   <data name="GroupInvitationEmailSubject" xml:space="preserve">
@@ -266,6 +288,12 @@ Nachricht:\r\n
   <data name="NameEmpty" xml:space="preserve">
     <value>Name darf nicht leer sein.</value>
   </data>
+  <data name="NoSurveysMsg" xml:space="preserve">
+    <value>Sie haben noch keine Befragungen erstellt.</value>
+  </data>
+  <data name="NoSurveysTitle" xml:space="preserve">
+    <value>Keine Befragungen</value>
+  </data>
   <data name="NumOfAnswers" xml:space="preserve">
     <value>Ant- worten</value>
   </data>
@@ -274,6 +302,12 @@ Nachricht:\r\n
   </data>
   <data name="Period" xml:space="preserve">
     <value>Zeitraum</value>
+  </data>
+  <data name="PeriodAtLeast1Day" xml:space="preserve">
+    <value>Periodendauer muss mindestens 1 Tag betragen.</value>
+  </data>
+  <data name="PeriodMustBiggerThanDuration" xml:space="preserve">
+    <value>Periodendauer muss länger als die Dauer der Befragung sein.</value>
   </data>
   <data name="PlzEmpty" xml:space="preserve">
     <value>PLZ darf nicht leer sein.</value>
@@ -297,17 +331,20 @@ Nachricht:\r\n
     <value>Der Fragetext darf nicht leer sein.</value>
   </data>
   <data name="RegistrationEmailMessage" xml:space="preserve">
-    <value>Herzlich Willkommen bei SimpleQ!\r\n
-\r\n
-Bitte bestätigen Sie nun Ihre Email-Adresse\r\n
-Hierzu einfach auf folgenden Bestätigungslink klicken: {Url}\r\n
-Ihr Kunden-Code lautet: {CustCode}\r\n
-\r\n\r\n
-Mit freundlichen Grüßen\r\n
-Ihr SimpleQ-Team</value>
+    <value>Herzlich Willkommen bei SimpleQ!&lt;br/&gt;
+&lt;br/&gt;
+Bitte bestätigen Sie nun Ihre Email-Adresse&lt;/br&gt;
+Hierzu einfach auf folgenden Bestätigungslink klicken: {Url}&lt;br/&gt;
+Ihr Kunden-Code lautet: {CustCode}&lt;br/&gt;
+&lt;br/&gt;
+Mit freundlichen Grüßen&lt;br/&gt;
+Ihr SimpleQ-Team&lt;br/&gt;</value>
   </data>
   <data name="RegistrationEmailSubject" xml:space="preserve">
     <value>SimpleQ Email-Bestätigung</value>
+  </data>
+  <data name="SelectedDepartmentsEmpty" xml:space="preserve">
+    <value>Es muss mindestens eine Gruppe ausgewählt werden.</value>
   </data>
   <data name="ServicePeriod" xml:space="preserve">
     <value>Leistungszeitraum</value>
@@ -315,14 +352,32 @@ Ihr SimpleQ-Team</value>
   <data name="SimpleQBill" xml:space="preserve">
     <value>SimpleQ Rechnung</value>
   </data>
+  <data name="StartDateMustEarlierEndDate" xml:space="preserve">
+    <value>Startdatum muss vor dem Enddatum liegen.</value>
+  </data>
   <data name="StreetEmpty" xml:space="preserve">
     <value>Straße darf nicht leer sein.</value>
+  </data>
+  <data name="Submit2AnswerOptions" xml:space="preserve">
+    <value>Es müssen genau zwei Antwortoptionen angegeben werden.</value>
+  </data>
+  <data name="SubmitAnswerOptions" xml:space="preserve">
+    <value>Es muss mindestens eine Antwortoption aingegeben werden.</value>
   </data>
   <data name="Survey" xml:space="preserve">
     <value>Befragung</value>
   </data>
+  <data name="SurveyNotFound" xml:space="preserve">
+    <value>Befragung nicht gefunden.</value>
+  </data>
+  <data name="SurveyNull" xml:space="preserve">
+    <value>Es müssen Befragungsdaten übermittelt werden.</value>
+  </data>
   <data name="SurveyPrice" xml:space="preserve">
     <value>Befragungs- preis</value>
+  </data>
+  <data name="SurveyTextEmpty" xml:space="preserve">
+    <value>Befragungstext darf nicht leer sein</value>
   </data>
   <data name="To" xml:space="preserve">
     <value>-</value>
@@ -332,5 +387,26 @@ Ihr SimpleQ-Team</value>
   </data>
   <data name="YourSimpleQTeam" xml:space="preserve">
     <value>Ihr SimpleQ-Team</value>
+  </data>
+  <data name="BillEmailMessage" xml:space="preserve">
+    <value>Sehr geehrte Damen und Herren!&lt;br/&gt;
+&lt;br/&gt;
+Anbei erhalten Sie Ihre neueste Rechnung&lt;br/&gt;
+Bei weiteren Fragen wenden Sie sich bitte an support@simpleq.at.&lt;br/&gt;
+&lt;br/&gt;
+Mit freundlichen Grüßen,&lt;br/&gt;
+Ihr SimpleQ-Team&lt;br/&gt;</value>
+  </data>
+  <data name="BillEmailSubject" xml:space="preserve">
+    <value>SimpleQ Rechnung</value>
+  </data>
+  <data name="EmployeeSatisfaction" xml:space="preserve">
+    <value>Mitarbeiterzufriedenheit</value>
+  </data>
+  <data name="Everyone" xml:space="preserve">
+    <value>Jeder</value>
+  </data>
+  <data name="WorkplaceDesign" xml:space="preserve">
+    <value>Arbeitsplatzgestaltung</value>
   </data>
 </root>

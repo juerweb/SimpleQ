@@ -17,6 +17,7 @@ namespace SimpleQ.Webinterface.Models.ViewModels
 
         #region Controller to View
         public List<SurveyWrapper> Surveys { get; set; }
+        public List<Survey> PeriodicSurveys { get; set; }
         #endregion
     }
 }

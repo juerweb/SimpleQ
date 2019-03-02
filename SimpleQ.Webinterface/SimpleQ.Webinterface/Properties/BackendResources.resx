@@ -120,8 +120,17 @@
   <data name="AccountingPeriodInvalid" xml:space="preserve">
     <value>Accounting period must either 1, 3, 6 or 12 months.</value>
   </data>
+  <data name="AmountMustAtLeast1" xml:space="preserve">
+    <value>Amount must be at least 1.</value>
+  </data>
+  <data name="AnswerOptionsNotEmpty" xml:space="preserve">
+    <value>Answer options must not be empty.</value>
+  </data>
   <data name="AnswerTypeDoesNotExist" xml:space="preserve">
     <value>At least one answer type does not exist.</value>
+  </data>
+  <data name="AnswerTypeNotExist" xml:space="preserve">
+    <value>Answer type does not exist.</value>
   </data>
   <data name="AnswerTypesNull" xml:space="preserve">
     <value>There must be selected at least one answer type.</value>
@@ -141,6 +150,9 @@
   <data name="BillNumber" xml:space="preserve">
     <value>Bill number</value>
   </data>
+  <data name="CategoryNotFound" xml:space="preserve">
+    <value>Category not found.</value>
+  </data>
   <data name="CityEmpty" xml:space="preserve">
     <value>City must not be empty.</value>
   </data>
@@ -149,6 +161,12 @@
   </data>
   <data name="ConfirmationSendingFailedTitle" xml:space="preserve">
     <value>Unable to send confirmation e-mail</value>
+  </data>
+  <data name="ConfirmYourEmailMsg" xml:space="preserve">
+    <value>Please confirm your email before creating surveys.</value>
+  </data>
+  <data name="ConfirmYourEmailTitle" xml:space="preserve">
+    <value>Confirm your email</value>
   </data>
   <data name="CountryEmpty" xml:space="preserve">
     <value>Country must not be empty.</value>
@@ -207,30 +225,33 @@
   <data name="ExpiredPasswordResetTitle" xml:space="preserve">
     <value>Expired reset link</value>
   </data>
+  <data name="FailedLoadingSurvey" xml:space="preserve">
+    <value>Loading survey failed</value>
+  </data>
   <data name="ForgotPasswordEmailMessage" xml:space="preserve">
-    <value>Dear Sir or Madam!\r\n
-\r\n
-To reset your email click the following link: {Url}\r\n
-The link is valid for 15 minutes.\r\n
-\r\n\r\n
-Best regards,\r\n
-Your SimpleQ team</value>
+    <value>Dear Sir or Madam!&lt;br/&gt;
+&lt;br/&gt;
+To reset your email click the following link: {Url}&lt;br/&gt;
+The link is valid for 15 minutes.&lt;br/&gt;
+&lt;br/&gt;
+Sincerely,&lt;br/&gt;
+Your SimpleQ team&lt;br/&gt;</value>
   </data>
   <data name="ForgotPasswordEmailSubject" xml:space="preserve">
     <value>SimpleQ password reset</value>
   </data>
   <data name="GroupInvitationEmailMessage" xml:space="preserve">
-    <value>You got invited to participate in surveys provided by SimpleQ!\r\n
-\r\n
-Please scan the attached QR code with your SimpleQ app.\r\n
-Alternatively you can enter the following registration code in your app: {RegCode}\r\n
-\r\n\r\n
-Best regards,\r\n
-Your SimpleQ team</value>
+    <value>Dear customer,&lt;br/&gt;
+you got invited to participate in surveys provided by SimpleQ!&lt;br/&gt;
+&lt;br/&gt;
+Please scan the attached QR code with your SimpleQ app.&lt;br/&gt;
+Alternatively you can enter the following registration code in your app: {RegCode}&lt;br/&gt;
+Sincerely,&lt;br/&gt;
+Your SimpleQ team&lt;br/&gt;</value>
   </data>
   <data name="GroupInvitationEmailMessageCustom" xml:space="preserve">
-    <value>Your registration code: {RegCode}\r\n
-Message:\r\n
+    <value>Your registration code: {RegCode}
+Message:
 {CustomMessage}</value>
   </data>
   <data name="GroupInvitationEmailSubject" xml:space="preserve">
@@ -266,6 +287,12 @@ Message:\r\n
   <data name="NameEmpty" xml:space="preserve">
     <value>Name must not be empty.</value>
   </data>
+  <data name="NoSurveysMsg" xml:space="preserve">
+    <value>You have not created any surveys yet.</value>
+  </data>
+  <data name="NoSurveysTitle" xml:space="preserve">
+    <value>No surveys</value>
+  </data>
   <data name="NumOfAnswers" xml:space="preserve">
     <value>Number of answers</value>
   </data>
@@ -274,6 +301,12 @@ Message:\r\n
   </data>
   <data name="Period" xml:space="preserve">
     <value>Period</value>
+  </data>
+  <data name="PeriodAtLeast1Day" xml:space="preserve">
+    <value>Period must be at least 1 day.</value>
+  </data>
+  <data name="PeriodMustBiggerThanDuration" xml:space="preserve">
+    <value>Period must be bigger than the survey's duration.</value>
   </data>
   <data name="PlzEmpty" xml:space="preserve">
     <value>ZIP code must not be empty.</value>
@@ -297,17 +330,20 @@ Message:\r\n
     <value>The question text must not be empty.</value>
   </data>
   <data name="RegistrationEmailMessage" xml:space="preserve">
-    <value>Welcome to SimpleQ!\r\n
-\r\n
-Please confirm your e-mail address now.\r\n
-Hence just click the following confirmation link: {Url}\r\n
-Your customer code: {CustCode}\r\n
-\r\n\r\n
-Best regards,\r\n
-Your SimpleQ team</value>
+    <value>Welcome to SimpleQ!&lt;br/&gt;
+&lt;br/&gt;
+Please confirm your e-mail address now.&lt;br/&gt;
+Hence just click the following confirmation link: {Url}&lt;br/&gt;
+Your customer code: {CustCode}&lt;br/&gt;
+&lt;br/&gt;
+Sincerely,&lt;br/&gt;
+Your SimpleQ team&lt;br/&gt;</value>
   </data>
   <data name="RegistrationEmailSubject" xml:space="preserve">
     <value>SimpleQ email confirmation</value>
+  </data>
+  <data name="SelectedDepartmentsEmpty" xml:space="preserve">
+    <value>There must be selected at least one group</value>
   </data>
   <data name="ServicePeriod" xml:space="preserve">
     <value>Service period</value>
@@ -315,14 +351,32 @@ Your SimpleQ team</value>
   <data name="SimpleQBill" xml:space="preserve">
     <value>SimpleQ Bill</value>
   </data>
+  <data name="StartDateMustEarlierEndDate" xml:space="preserve">
+    <value>Start date must be earlier than end date.</value>
+  </data>
   <data name="StreetEmpty" xml:space="preserve">
     <value>Street must not be empty.</value>
+  </data>
+  <data name="Submit2AnswerOptions" xml:space="preserve">
+    <value>There must be specified exactly two answer options.</value>
+  </data>
+  <data name="SubmitAnswerOptions" xml:space="preserve">
+    <value>There must be specified at least one answer option.</value>
   </data>
   <data name="Survey" xml:space="preserve">
     <value>Survey</value>
   </data>
+  <data name="SurveyNotFound" xml:space="preserve">
+    <value>Survey not found.</value>
+  </data>
+  <data name="SurveyNull" xml:space="preserve">
+    <value>There must be submitted survey data.</value>
+  </data>
   <data name="SurveyPrice" xml:space="preserve">
     <value>Survey price</value>
+  </data>
+  <data name="SurveyTextEmpty" xml:space="preserve">
+    <value>Survey text must not be empty.</value>
   </data>
   <data name="To" xml:space="preserve">
     <value>to</value>
@@ -332,5 +386,26 @@ Your SimpleQ team</value>
   </data>
   <data name="YourSimpleQTeam" xml:space="preserve">
     <value>Your SimpleQ team</value>
+  </data>
+  <data name="BillEmailMessage" xml:space="preserve">
+    <value>Dear Sir or Madam!&lt;br/&gt;
+&lt;br/&gt;
+Enclosed you will find your most recent bill.&lt;br/&gt;
+For further questions please contact support@simpleq.at.&lt;br/&gt;
+&lt;br/&gt;
+Sincerely,&lt;br/&gt;
+Your SimpleQ team&lt;br/&gt;</value>
+  </data>
+  <data name="BillEmailSubject" xml:space="preserve">
+    <value>SimpleQ Bill</value>
+  </data>
+  <data name="EmployeeSatisfaction" xml:space="preserve">
+    <value>Employee satisfaction</value>
+  </data>
+  <data name="Everyone" xml:space="preserve">
+    <value>Everyone</value>
+  </data>
+  <data name="WorkplaceDesign" xml:space="preserve">
+    <value>Workplace design</value>
   </data>
 </root>
