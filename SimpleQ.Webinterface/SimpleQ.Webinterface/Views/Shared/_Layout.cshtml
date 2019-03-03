@@ -48,9 +48,17 @@
 
     <script>
         var navbarHidden = false;
+
         var bgNumber = 0;
 
         $(function () {
+            if (window.localStorage.getItem('darkTheme') === null) {
+                console.log("oida");
+                window.localStorage.setItem('darkTheme', 'true');
+            }
+
+            setBG(getDarkTheme());
+
             if (window.localStorage.getItem('navbarHidden') === null) {
                 window.localStorage.setItem('navbarHidden', 'false');
             } else {
@@ -71,6 +79,8 @@
             }
             $("#settingsOptions").hide();
 
+            
+           
             //$("body").on("mousemove", function (event) {
             //    if (event.pageX < 30 && navbarHidden) {
             //        $("#smallLeftCol").show('slide', { direction: 'left' }, 500);
@@ -127,23 +137,68 @@
             }
         }
 
+        function setDarkTheme(boolValue) {
+            if (boolValue) {
+                window.localStorage.setItem('darkTheme', 'true');
+            } else {
+                window.localStorage.setItem('darkTheme', 'false');
+            }        
+        }
+
+        function getDarkTheme() {
+            if (window.localStorage.getItem('darkTheme') === 'true') {
+                console.log("dark theme is true");
+                return true;
+            } else {
+                console.log("dark theme is foisch");
+                return false;
+            }
+        }
+
         function fadeErrorOut(elem) {
             $(elem).delay(3500).fadeOut();
         }
 
-        function changeBG() {
-            if (bgNumber == 0) {
-                $("#rightCol").css("background-image", "url('/Content/Images/mainBGSun.jpg')");
-                $("#leftCol").css("background-image", "url('/Content/Images/leftColBGSun.jpg')");
-                $("#smallLeftCol").css("background-image", "url('/Content/Images/leftColBGSun.jpg')");
-                $("#topDiv").css("background-image", "url('/Content/Images/topBGSun.jpg')");
-                bgNumber = 1;
-            } else {
+        function setBG(bool) {
+            if (bool) {
+                //$("#rightCol").css("background-image", "url('/Content/Images/mainBGSun.jpg')");
+                //$("#leftCol").css("background-image", "url('/Content/Images/leftColBGSun.jpg')");
+                //$("#smallLeftCol").css("background-image", "url('/Content/Images/leftColBGSun.jpg')");
+                //$("#topDiv").css("background-image", "url('/Content/Images/topBGSun.jpg')");
                 $("#rightCol").css("background-image", "url('/Content/Images/mainBG.jpg')");
                 $("#leftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
                 $("#smallLeftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
                 $("#topDiv").css("background-image", "url('/Content/Images/topBG.jpg')");
-                bgNumber = 0;
+                $(".btn-dark-theme").removeClass("btn-dark-theme").addClass("btn-light-theme");
+                $(".navbar-icon").removeClass("icon-white").addClass("icon-blue");
+                $("#hideNavigationText").css("color", "black");
+                $("#logout").removeClass("btn-outline-light").addClass("btn-outline-primary");
+                $(".header").removeClass("headerDark").addClass("headerLight");
+            } else {
+                //$("#rightCol").css("background-image", "url('/Content/Images/mainBG.jpg')");
+                //$("#leftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
+                //$("#smallLeftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
+                //$("#topDiv").css("background-image", "url('/Content/Images/topBG.jpg')");
+                $("#rightCol").css("background-image", "none");
+                $("#leftCol").css("background-image", "none");
+                $("#smallLeftCol").css("background-image", "none");
+                $("#topDiv").css("background-image", "none");
+                $(".btn-light-theme").removeClass("btn-light-theme").addClass("btn-dark-theme");
+                $(".navbar-icon").removeClass("icon-blue").addClass("icon-white");
+                $("#hideNavigationText").css("color", "white");
+                $("#logout").removeClass("btn-outline-primary").addClass("btn-outline-light");
+                $(".header").removeClass("headerLight").addClass("headerDark");
+            }
+        }
+
+
+        function changeBG() {
+            if (getDarkTheme()) {
+                setBG(false);
+                setDarkTheme(false);
+            } else {
+                setBG(true);
+                setDarkTheme(true);
             }
         }
 
@@ -159,28 +214,30 @@
             $("#leftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
             $("#smallLeftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
             $("#topDiv").css("background-image", "url('/Content/Images/topBG.jpg')");
+            $(".btn-grey").addClass("btn-light-theme");
         }
 
     </script>
 
 </head>
 <body>
-    <div class="row border-bottom ml-0 mr-0" id="topDiv" style="border-color:rgb(188, 188, 188)!important">
+    <div class="row ml-0 mr-0" id="topDiv" style="border-color:rgb(188, 188, 188)!important">
         <div class="col-md-4">
             <img src="../../Content/Images/Logos/simpleq.png" style="max-height: 10vh;" class="img-fluid" />
         </div>
-        <div class="col-md-4 text-center d-flex flex-column">
-            <div class="card" style="margin-top:auto; margin-bottom:auto">
-                <div class="card-body p-1">
-                    <h1 class="m-0 black-stroke header">Überschrift</h1>
-                </div>
+        <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
+            @*<div class="card" style="margin-top:auto; margin-bottom:auto">
+            <div class="card-body p-1">
+                <h1 class="m-0 black-stroke header">Überschrift</h1>
             </div>
+        </div>*@
+            <h1 class="black-stroke header">Überschrift</h1>
         </div>
         <div class="col-md-4 d-flex justify-content-end align-items-center">
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
             <div class="mr-4">
                 <span class="row">
-                    <a href="@Url.Action("Logout", "Account")" class="btn btn-block btn-outline-primary " id="logout">
+                    <a href="@Url.Action("Logout", "Account")" class="btn btn-block btn-outline-light" id="logout">
                         <span class="d-flex justify-content-between">
                             <span>Logout</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe8ac;</i>
                         </span>
@@ -254,12 +311,13 @@
                 <div class="col-sm-12 p-0" id="navbar">
                     <ul class="list-group">
                         <li class="list-group-item border-radius-0 p-0">
-                            <a class="btn btn-outline-light text-dark btn-grey border-0 btn-block" href='@Url.Action("Index", "SurveyCreation")'>
+                            <a class="btn btn-outline-light btn-dark-theme border-0 btn-block" href='@Url.Action("Index", "SurveyCreation")'>
                                 <span class="row d-flex">
                                     <span class="col-3 pl-1 pr-1">
                                         @*<img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-img" />*@
 
-                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe0d4;</i>
+                                        @*<i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe0d4;</i>*@
+                                        <i class="material-icons navbar-icon" style="font-size:30px; vertical-align: middle;">&#xe0d4;</i>
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
                                         @Resources.surveyCreationHeader
@@ -268,10 +326,10 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-outline-light text-dark btn-grey border-0 btn-block" href='@Url.Action("Index", "Current")' style="overflow-wrap: break-word;">
+                            <a class="btn btn-outline-light btn-dark-theme border-0 btn-block" href='@Url.Action("Index", "Current")' style="overflow-wrap: break-word;">
                                 <span class="row d-flex">
                                     <span class="col-3 pl-1 pr-1">
-                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">format_list_bulleted</i>
+                                        <i class="material-icons navbar-icon" style="font-size:30px; vertical-align: middle;">format_list_bulleted</i>
                                         @*<img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />*@
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
@@ -281,11 +339,11 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-outline-light text-dark btn-grey border-0 btn-block" href='@Url.Action("Index", "SurveyResults")'>
+                            <a class="btn btn-outline-light btn-dark-theme border-0 btn-block" href='@Url.Action("Index", "SurveyResults")'>
                                 <span class="row d-flex">
                                     <span class="col-3 pl-1 pr-1">
                                         @*<img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid navbar-img" />*@
-                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe85c;</i>
+                                        <i class="material-icons navbar-icon" style="font-size:30px; vertical-align: middle;">&#xe85c;</i>
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
                                         @Resources.surveyResultsHeader
@@ -294,10 +352,10 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-outline-light text-dark btn-grey border-0 btn-block" href='@Url.Action("Index", "GroupAdministration")'>
+                            <a class="btn btn-outline-light btn-dark-theme border-0 btn-block" href='@Url.Action("Index", "GroupAdministration")'>
                                 <span class="row d-flex">
                                     <span class="col-3 pl-1 pr-1">
-                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe8d3;</i>
+                                        <i class="material-icons navbar-icon" style="font-size:30px; vertical-align: middle;">&#xe8d3;</i>
                                         @*<img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid navbar-img" />*@
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
@@ -307,11 +365,11 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-outline-light text-dark btn-grey border-0 btn-block" href='@Url.Action("Index", "Settings")'>
+                            <a class="btn btn-outline-light btn-dark-theme border-0 btn-block" href='@Url.Action("Index", "Settings")'>
                                 <span class="row d-flex">
                                     <span class="col-3 pl-1 pr-1">
                                         @*<img src="../../Content/Images/Icons/settings.png" class="img-fluid navbar-img" />*@
-                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe869;</i>
+                                        <i class="material-icons navbar-icon" style="font-size:30px; vertical-align: middle;">&#xe869;</i>
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
                                         @Resources.settings
@@ -320,10 +378,10 @@
                             </a>
                         </li>
                         <li class="list-group-item p-0">
-                            <a class="btn btn-outline-light text-dark btn-grey border-0 btn-block" href='@Url.Action("Index", "Support")' style="overflow-wrap: break-word;">
+                            <a class="btn btn-outline-light btn-dark-theme border-0 btn-block" href='@Url.Action("Index", "Support")' style="overflow-wrap: break-word;">
                                 <span class="row d-flex">
                                     <span class="col-3 pl-1 pr-1">
-                                        <i class="material-icons" style="font-size:30px; vertical-align: middle; color:rgb(0,109,204);">&#xe311;</i>
+                                        <i class="material-icons navbar-icon" style="font-size:30px; vertical-align: middle;">&#xe311;</i>
                                         @*<img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />*@
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
@@ -338,8 +396,8 @@
                                     <a id="hideNavigationText" style="display:none">Navigation verkleinern</a>
                                 </span>
                                 <span class="col-3 p-0 d-flex flex-row-reverse">
-                                    <button class="btn btn-outline-light border pb-0" id="hideNavbarBtn" onclick="hideNavbar()">
-                                        <i class="material-icons" style="color:rgb(0,109,204);">&#xe020;</i>
+                                    <button class="btn btn-outline-light btn-dark-theme border-0 pb-0" id="hideNavbarBtn" onclick="hideNavbar()">
+                                        <i class="material-icons navbar-icon">&#xe020;</i>
                                     </button>
                                 </span>
                             </span>
@@ -350,7 +408,7 @@
             
             <div style="position:absolute; bottom:0px; width:260px;">
                 <a onclick="changeBG()">
-                    <i class="material-icons smallNavbarIcon pl-2 pb-2" style="font-size:37px; vertical-align: middle;color:rgb(0,109,204);">collections</i>
+                    <i class="material-icons smallNavbarIcon navbar-icon pl-2 pb-2" style="font-size:37px; vertical-align: middle;">collections</i>
                 </a>
 
                 @*<label class="switch">
@@ -389,43 +447,42 @@
                         <li class="p-0 mt-3 d-flex justify-content-center">
                             <a href='@Url.Action("Index", "SurveyCreation")'>
                                 @*<img src="../../Content/Images/Icons/createSurvey.png" class="img-fluid navbar-hidden-img" />*@
-                                <i class="material-icons smallNavbarIcon" style="font-size:60px; vertical-align: middle; color:rgb(0,109,204);">&#xe0d4;</i>
+                                <i class="material-icons smallNavbarIcon navbar-icon icon-white" style="font-size:60px; vertical-align: middle;">&#xe0d4;</i>
+                            </a>
+                        </li>
+                        <li id="smallSettingBtn" class="p-0 mt-1 d-flex justify-content-center">
+                            <a href='@Url.Action("Index", "Current")'>
+                                @*<img src="../../Content/Images/Icons/settings.png" class="img-fluid navbar-hidden-img" />*@
+                                <i class="material-icons smallNavbarIcon navbar-icon icon-white" style="font-size:60px; vertical-align: middle;">format_list_bulleted</i>
                             </a>
                         </li>
                         <li class="p-0 mt-1 d-flex justify-content-center">
                             <a href='@Url.Action("Index", "SurveyResults")'>
                                 @*<img src="../../Content/Images/Icons/surveyResults.png" class="img-fluid navbar-hidden-img" />*@
-                                <i class="material-icons smallNavbarIcon" style="font-size:60px; vertical-align: middle; color:rgb(0,109,204);">&#xe85c;</i>
+                                <i class="material-icons smallNavbarIcon navbar-icon icon-white" style="font-size:60px; vertical-align: middle;">&#xe85c;</i>
                             </a>
                         </li>
                         <li class="p-0 mt-1 d-flex justify-content-center">
                             <a href='@Url.Action("Index", "GroupAdministration")'>
-                                <i class="material-icons smallNavbarIcon" style="font-size:60px; vertical-align: middle; color:rgb(0,109,204);">&#xe8d3;</i>
+                                <i class="material-icons smallNavbarIcon navbar-icon icon-white" style="font-size:60px; vertical-align: middle;">&#xe8d3;</i>
                                 @*<img src="../../Content/Images/Icons/groupAdministration.png" class="img-fluid navbar-hidden-img" />*@
                             </a>
                         </li>
                         <li id="smallSettingBtn" class="p-0 mt-1 d-flex justify-content-center">
-                            <a>
+                            <a href='@Url.Action("Index", "Settings")'>
                                 @*<img src="../../Content/Images/Icons/settings.png" class="img-fluid navbar-hidden-img" />*@
-                                <i class="material-icons smallNavbarIcon" style="font-size:60px; vertical-align: middle; color:rgb(0,109,204);">&#xe869;</i>
+                                <i class="material-icons smallNavbarIcon navbar-icon icon-white" style="font-size:60px; vertical-align: middle;">&#xe869;</i>
                             </a>
                         </li>
-                        @*<li id="settingsOptions">
-                                <ul class="list-group">
-                                    <li class="settingsOption mt-1"><button type="button" href="#" class="btn btn-primary btn-block">Anwendung</button></li>
-                                    <li class="settingsOption mt-1"><button type="button" href="#" class="btn btn-primary btn-block">Rechnung</button></li>
-                                    <li class="settingsOption mt-1"><button type="button" href="#" class="btn btn-primary btn-block">Konto</button></li>
-                                </ul>
-                            </li>*@
                         <li class="p-0 mt-1 d-flex justify-content-center">
                             <a href='@Url.Action("Index", "Support")'>
-                                <i class="material-icons smallNavbarIcon" style="font-size:50px; vertical-align: middle; color:rgb(0,109,204);">&#xe311;</i>
+                                <i class="material-icons smallNavbarIcon navbar-icon icon-white" style="font-size:50px; vertical-align: middle;">&#xe311;</i>
                                 @*<img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-hidden-img" />*@
                             </a>
                         </li>
                         <li class="p-0 mt-2 d-flex">
-                            <button class="btn btn-outline-light pb-0 border" id="showNavbarBtn" onclick="showNavbar()">
-                                <i class="material-icons" style="color:rgb(0,109,204);">&#xe01f;</i>
+                            <button class="btn btn-outline-light btn-dark-theme border-0 pb-0" id="showNavbarBtn" onclick="showNavbar()">
+                                <i class="material-icons navbar-icon icon-white">&#xe01f;</i>
                             </button>
                         </li>
                     </ul>
@@ -433,7 +490,7 @@
             </div>
         </div>
 
-        <div class="col p-0 m-0" id="rightCol">
+        <div class="col p-0 m-0 border-top" id="rightCol">
             @if (ViewBag.emailConfirmed == false)
             {
                 <div class="alert alert-danger ml-4 mr-4 mt-2">

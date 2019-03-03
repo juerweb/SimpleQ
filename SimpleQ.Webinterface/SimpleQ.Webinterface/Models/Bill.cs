@@ -21,6 +21,8 @@ namespace SimpleQ.Webinterface.Models
         public bool Sent { get; set; }
         public bool Paid { get; set; }
     
+        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Customer Customer { get; set; }
     }
 }

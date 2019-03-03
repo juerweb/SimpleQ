@@ -24,6 +24,8 @@ namespace SimpleQ.Webinterface.Models
         public string PaymentMethodDesc { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Customer> Customers { get; set; }
     }
 }

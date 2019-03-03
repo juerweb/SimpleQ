@@ -87,8 +87,9 @@
     z-index: 1;
     top: 100px;
     left: 0;
-    background-color: rgb(248, 248, 248);
-    background-image: url("Images/leftColBG.jpg");
+    background-color: rgb(29, 53, 71);
+    color: white;
+    /*background-image: url("Images/leftColBG.jpg");*/
 }
 
 
@@ -98,15 +99,17 @@
     z-index: 1;
     top: 100px;
     left: 0;
-    background-color: rgb(248, 248, 248);
-    background-image: url("Images/leftColBG.jpg");
+    background-color: rgb(29, 53, 71);
+    color: white;
+    /*background-image: url("Images/leftColBG.jpg");*/
 }
 
 #topDiv {
     height: 10vh;
     /*background-color: rgb(43, 160, 253);*/
-    background-color: rgb(248, 248, 248);
-    background-image: url("Images/topBG.jpg");
+    background-color: rgb(29, 53, 71);
+    color: white;
+    /*background-image: url("Images/topBG.jpg");*/
 }
 
 
@@ -114,12 +117,26 @@
     height: 90vh;
     margin-left: 260px;
     overflow-y: auto;
-    background-image: url("Images/mainBG.jpg");
+
+    /*background-image: url("Images/mainBG.jpg");*/
 }
 
-.btn-grey {
-    /*background-color: rgb(248, 248, 248);*/
+.btn-dark-theme:hover {
+    background-color: rgb(24, 104, 165);
+    color: white !important;
     /*background-color:transparent!important;*/
+}
+
+.btn-light-theme {
+    color: black;
+}
+
+.icon-blue {
+    color: rgb(0,109,204);
+}
+
+.icon-white{
+    color:white;
 }
 
 .list-group-item{
@@ -142,11 +159,11 @@
     border-left: none;
 }
 
-.header {
-    /*font-family: 'Francois One', sans-serif;*/
+.headerDark {
+    color:white;
+}
+.headerLight {
     color: rgb(0,109,204);
-    /*-webkit-text-stroke-width: 1px;
-    -webkit-text-stroke-color: black;*/
 }
 
 #hideNavigationText{
@@ -168,46 +185,3 @@
     border-bottom-left-radius: 0px !important;
     border-bottom-right-radius: 0px !important;
 }
-/*----------------------------------*/
-/* Switch Flat
-==========================*/
-.switch-flat {
-    padding: 0;
-    background: #FFF;
-    background-image: none;
-}
-
-.switch-flat .switch-label {
-    background: #FFF;
-    border: solid 2px #eceeef;
-    box-shadow: none;
-}
-
-    .switch-flat .switch-label:after {
-        color: #0088cc;
-    }
-
-.switch-flat .switch-handle {
-    top: 6px;
-    left: 6px;
-    background: #dadada;
-    width: 22px;
-    height: 22px;
-    box-shadow: none;
-}
-
-    .switch-flat .switch-handle:before {
-        background: #eceeef;
-    }
-
-.switch-flat .switch-input:checked ~ .switch-label {
-    background: #FFF;
-    border-color: #0088cc;
-}
-
-.switch-flat .switch-input:checked ~ .switch-handle {
-    left: 72px;
-    background: #0088cc;
-    box-shadow: none;
-}
-
