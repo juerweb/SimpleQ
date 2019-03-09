@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -10,14 +11,25 @@ namespace SimpleQ.Webinterface.Attributes
 {
     public class GlobalizationAttribute : ActionFilterAttribute
     {
+        private Logger logger = LogManager.GetCurrentClassLogger();
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            string language = (string)filterContext.RouteData.Values["language"] ?? "nl";
+            try
+            {
+                string language = (string)filterContext.RouteData.Values["language"] ?? "de";
+                language = (!new[] { "de", "en" }.Contains(language)) ? "de" : language;
+                language = (language == "en") ? "en-GB" : language;
 
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(language);
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+                logger.Debug($"Language: {language}");
 
+                Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(language);
+                Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(language);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Error setting language");
+            }
         }
     }
 }

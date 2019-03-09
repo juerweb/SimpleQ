@@ -18,8 +18,6 @@ namespace SimpleQ.Webinterface.Controllers
 {
     public class CurrentController : BaseController
     {
-        // GET: Current
-        private string errString;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region MVC-Actions
@@ -53,7 +51,7 @@ namespace SimpleQ.Webinterface.Controllers
                                 .OrderByDescending(x => x.StartDate)
                              .ToList(),
 
-                        PeriodicSurveys = db.Surveys.Where(s => s.CustCode == CustCode && s.Period != null).ToList()
+                        PeriodicSurveys = await db.Surveys.Where(s => s.CustCode == CustCode && s.Period != null).ToListAsync()
                     };
 
                     ViewBag.emailConfirmed = cust.EmailConfirmed;
@@ -104,7 +102,7 @@ namespace SimpleQ.Webinterface.Controllers
                                 {
                                     try
                                     {
-                                        // SEND SURVEY
+                                        // CANCEL SURVEY
                                         client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", "ZDNmNGZjODMtNTEzNC00YjA1LTkyZmUtNDRkMWJkZjRhZjVj");
                                         var obj = new
                                         {
@@ -160,7 +158,7 @@ namespace SimpleQ.Webinterface.Controllers
                 logger.Debug($"Requested to load info of survey. (SvyId: {svyId}, CustCode: {CustCode})");
                 using (var db = new SimpleQDBEntities())
                 {
-                    Survey svy = db.Surveys.Where(s => s.CustCode == CustCode && s.SvyId == svyId).First();
+                    Survey svy = await db.Surveys.Where(s => s.CustCode == CustCode && s.SvyId == svyId).FirstOrDefaultAsync();
                     List<string> dps = svy.Departments.Select(x => x.DepName).ToList();
                     string startDate = svy.StartDate.ToShortDateString();
                     string endDate = svy.EndDate.ToShortDateString();

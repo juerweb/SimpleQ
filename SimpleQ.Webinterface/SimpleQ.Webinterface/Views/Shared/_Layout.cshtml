@@ -227,17 +227,22 @@
         </div>
         <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
             @*<div class="card" style="margin-top:auto; margin-bottom:auto">
-            <div class="card-body p-1">
-                <h1 class="m-0 black-stroke header">Überschrift</h1>
-            </div>
-        </div>*@
+                    <div class="card-body p-1">
+                        <h1 class="m-0 black-stroke header">Überschrift</h1>
+                    </div>
+                </div>*@
             <h1 class="black-stroke header">Überschrift</h1>
         </div>
         <div class="col-md-4 d-flex justify-content-end align-items-center">
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
             <div class="mr-4">
                 <span class="row">
-                    <a href="@Url.Action("Logout", "Account")" class="btn btn-block btn-outline-light" id="logout">
+                    <select class="form-control mr-2" id="lang_select" onchange="lang_change()" style="width: 5rem">
+                        <option value="de">DE</option>
+                        <option value="en">EN</option>
+                        @*<option value="es">ES</option>*@
+                    </select>
+                    <a href="@Url.Action("Logout", "Account")" class="btn btn-block btn-outline-light" id="logout" style="width: 8rem;">
                         <span class="d-flex justify-content-between">
                             <span>Logout</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe8ac;</i>
                         </span>
@@ -256,8 +261,8 @@
             <div class="col-4 d-flex justify-content-end align-items-center">
                 <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
                 <div class="mr-4">
-                    <span>
-                        <a href="@Url.Action("Logout", "Account")" class="btn btn-danger btn-block" id="logout">
+                    <span class="row">
+                        <a href="@Url.Action("Logout", "Account")" class="btn btn-danger btn-block" id="logout" style="width: 8rem;">
                             <span class="d-flex justify-content-between">
                                 <span>Logout</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe8ac;</i>
                             </span>
@@ -266,7 +271,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         <div class="row mr-0 ml-0 mt-2 text-center">
             <div class="col p-0">
@@ -333,7 +338,7 @@
                                         @*<img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />*@
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
-                                        Laufendes
+                                        Laufende Befragungen
                                     </span>
                                 </span>
                             </a>
@@ -405,37 +410,37 @@
                     </ul>
                 </div>
             </div>
-            
+
             <div style="position:absolute; bottom:0px; width:260px;">
                 <a onclick="changeBG()">
                     <i class="material-icons smallNavbarIcon navbar-icon pl-2 pb-2" style="font-size:37px; vertical-align: middle;">collections</i>
                 </a>
 
                 @*<label class="switch">
-            <input type="checkbox">
-            <span class="slider round">hallo</span>
-        </label>*@
+                        <input type="checkbox">
+                        <span class="slider round">hallo</span>
+                    </label>*@
                 @*<span class="w-50 d-flex justify-content-between ml-auto mr-auto mb-2 bg-light slider" id="bgSlider" onclick="changeToggle()">
-            <i class="material-icons smallNavbarIcon" style="font-size:50px; vertical-align: middle;color:rgb(0,109,204);">&#xe430;</i>
-            <i class="material-icons smallNavbarIcon" style="font-size:50px; vertical-align: middle;color:rgb(0,109,204);">&#xe410;</i>
-        </span>*@
+                        <i class="material-icons smallNavbarIcon" style="font-size:50px; vertical-align: middle;color:rgb(0,109,204);">&#xe430;</i>
+                        <i class="material-icons smallNavbarIcon" style="font-size:50px; vertical-align: middle;color:rgb(0,109,204);">&#xe410;</i>
+                    </span>*@
                 @*<label>
-            <input class="switch-input" type="checkbox" />
-            <span class="switch-label" data-on="On" data-off="Off"></span>
-            <span class="switch-handle"></span>
-        </label>*@
+                        <input class="switch-input" type="checkbox" />
+                        <span class="switch-label" data-on="On" data-off="Off"></span>
+                        <span class="switch-handle"></span>
+                    </label>*@
                 @*<div id="bgButtons" class="row mr-0 ml-0 text-center">
-            <div class="col p-0">
-                <a onclick="changeBGSun()">
-                    <i class="material-icons smallNavbarIcon" style="font-size:30px; vertical-align: middle;color:rgb(0,109,204);">&#xe430;</i>
-                </a>
-            </div>
-            <div class="col p-0">
-                <a onclick="changeBGCloud()">
-                    <i class="material-icons smallNavbarIcon" style="font-size:30px; vertical-align: middle;color:rgb(0,109,204);">&#xe410;</i>
-                </a>
-            </div>
-        </div>*@
+                        <div class="col p-0">
+                            <a onclick="changeBGSun()">
+                                <i class="material-icons smallNavbarIcon" style="font-size:30px; vertical-align: middle;color:rgb(0,109,204);">&#xe430;</i>
+                            </a>
+                        </div>
+                        <div class="col p-0">
+                            <a onclick="changeBGCloud()">
+                                <i class="material-icons smallNavbarIcon" style="font-size:30px; vertical-align: middle;color:rgb(0,109,204);">&#xe410;</i>
+                            </a>
+                        </div>
+                    </div>*@
             </div>
 
         </div>
@@ -505,5 +510,23 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        $(function () {
+            if (localStorage["__simpleq-curr-lang"] == undefined) {
+                localStorage["__simpleq-curr-lang"] = navigator.language.split("-")[0];
+            }
+
+            $("#lang_select").val(localStorage["__simpleq-curr-lang"]);
+            if (window.location.pathname.split("/")[1] != localStorage["__simpleq-curr-lang"])
+                lang_change();
+        });
+
+        function lang_change() {
+            let lang = $("#lang_select").val();
+            localStorage["__simpleq-curr-lang"] = lang;
+            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + lang + "/" + window.location.pathname.split("/", 4)[2] + window.location.search);
+        }
+    </script>
 </body>
 </html>

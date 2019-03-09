@@ -26,9 +26,9 @@ namespace SimpleQ.Webinterface.Schedulers
                 logger.Debug($"Fired at {context.FireTimeUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss.fff")}");
                 using (var db = new SimpleQDBEntities())
                 {
-                    var result = await Task.Run(() => db.sp_CreateBills());
+                    var result = await Task.Run(() => db.sp_CreateBills().ToList());
                     logger.Debug($"{result.Count()} bills created");
-                    var bills = db.Bills.Where(b => !b.Paid).ToList();
+                    var bills = db.Bills.ToList().Where(b => !b.Paid && result.Contains(b.BillId)).ToList();
                     logger.Debug($"{bills.Count} bills loaded for sending");
 
                     foreach (Bill clinton in bills)

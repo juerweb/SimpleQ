@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using SimpleQ.Webinterface.Properties
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -25,7 +26,37 @@
         <div class="text-center mt-2">
             <a href="@Url.Action("Login", "Account")"><img src="../../Content/Images/Logos/simpleq.png" style="max-height: 100px;" class="img-fluid mx-auto" /></a>
         </div>
+        @if (ViewBag.confirmed == true)
+        {
+            <div class="alert alert-success" id="confirmed_alert">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                <strong>@Resources.emailConfirmed</strong> @Resources.youCanNowLogin
+            </div>
+        }
+        <select class="form-control float-right" id="lang_select" onchange="lang_change()" style="width: 5rem">
+            <option value="de">DE</option>
+            <option value="en">EN</option>
+            @*<option value="es">ES</option>*@
+        </select>
         @RenderBody()
     </div>
+
+    <script>
+        $(function () {
+            if (localStorage["__simpleq-curr-lang"] == undefined) {
+                localStorage["__simpleq-curr-lang"] = navigator.language.split("-")[0];
+            }
+
+            $("#lang_select").val(localStorage["__simpleq-curr-lang"]);
+            if (window.location.pathname.split("/")[1] != localStorage["__simpleq-curr-lang"])
+                lang_change();
+        });
+
+        function lang_change() {
+            let lang = $("#lang_select").val();
+            localStorage["__simpleq-curr-lang"] = lang;
+            window.location.replace("@string.Format("{0}://{1}{2}", Request.Url.Scheme, Request.Url.Authority, Url.Content("~"))" + lang + "/" + window.location.pathname.split("/", 4)[2] + "/" + (window.location.pathname.split("/", 4)[3] || "") + window.location.search);
+        }
+    </script>
 </body>
 </html>

@@ -114,8 +114,8 @@ namespace SimpleQ.Webinterface.Extensions
 
                     var amount = svy.AnswerOptions.SelectMany(a => a.Votes).Distinct().Where(v => v.VoteDate > lastBillDate).Count();
                     row[2].AddParagraph($"{amount}");
-                    row[3].AddParagraph($"€ {Math.Round(svy.PricePerClick.Value, 2)}");
-                    row[4].AddParagraph($"€ {Math.Round((svy.PricePerClick * amount).Value, 2)}");
+                    row[3].AddParagraph($"€ {Math.Round(svy.PricePerClick.Value, 3)}");
+                    row[4].AddParagraph($"€ {Math.Round((svy.PricePerClick * amount).Value, 3)}");
 
                     sum += (svy.PricePerClick * amount).Value;
                     i++;
