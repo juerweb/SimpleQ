@@ -32,6 +32,7 @@ namespace SimpleQ.Webinterface.Schedulers
                     using (var ef = new SimpleQDBEntities())
                     {
                         File.Create(HostingEnvironment.MapPath($"~/Backups/{DateTime.Today.ToString("yyyy-MM-dd")}.sql")).Close();
+                        logger.Debug($"Created backup file {DateTime.Today.ToString("yyyy-MM-dd")}.sql");
                         var arr = ef.Database.Connection.ConnectionString.Split(';');
                         var server = new Server(new ServerConnection(new SqlConnection(string.Join(";", arr.Take(arr.Length - 2)))));
                         var db = server.Databases[ef.Database.Connection.Database];
@@ -56,14 +57,25 @@ namespace SimpleQ.Webinterface.Schedulers
 
                         foreach (var t in tables)
                         {
-                            db.Tables[t].EnumScript(options);
+                            var c = db.Tables[t].EnumScript(options).Count();
+                            logger.Debug($"Finished backup for table {t} successfully ({c} records)");
                         }
                     }
 
                     foreach (var f in Directory.GetFiles(HostingEnvironment.MapPath("~/Backups/")))
                     {
-                        if (DateTime.Now - DateTime.Parse(Path.GetFileNameWithoutExtension(f)) >= TimeSpan.FromDays(7))
-                            File.Delete(f);
+                        if (DateTime.TryParse(Path.GetFileNameWithoutExtension(f), out DateTime date))
+                        {
+                            if (DateTime.Now - date >= TimeSpan.FromDays(7))
+                            {
+                                File.Delete(f);
+                                logger.Debug($"Deleted old backup file {Path.GetFileName(f)}");
+                            }
+                        }
+                        else
+                        {
+                            logger.Warn($"Failed to delete old backup file due to invalid name: {Path.GetFileNameWithoutExtension(f)}");
+                        }
                     }
                 }
                 catch (Exception ex)
