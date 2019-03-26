@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2010
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonIgnorer", "JsonIgnorer\JsonIgnorer.csproj", "{ABF8FAA4-D0B7-482A-B46F-E326832FB45F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABF8FAA4-D0B7-482A-B46F-E326832FB45F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABF8FAA4-D0B7-482A-B46F-E326832FB45F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABF8FAA4-D0B7-482A-B46F-E326832FB45F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABF8FAA4-D0B7-482A-B46F-E326832FB45F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1089CAD2-2B47-4FC3-B14C-884D7AC93577}
+	EndGlobalSection
+EndGlobal

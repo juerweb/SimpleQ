@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:IntelliAbb.Xamarin.Controls;assembly=IntelliAbb.Xamarin.Controls"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.UnregisterPage">
+    <ContentPage.Content>
+        
+        <StackLayout>
+            <Label Text="{ext:Translate Text=SelectUnregisterGroups}" Margin="10,10,10,0"></Label>
+            <ListView ItemsSource="{Binding IsChecked}" SelectionMode="Single" ItemSelected="ListView_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Padding="10,10">
+                                <controls:Checkbox IsCheckedChanged="Checkbox_IsCheckedChanged" IsChecked="{Binding IsChecked, Mode=TwoWay}"></controls:Checkbox>
+                                <Label Text="{Binding AnswerOption.RegistrationData.DepName}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Command="{Binding UnregisterCommand}" Text="{ext:Translate Text=LogOut}" IsEnabled="{Binding IsOneChecked}" Margin="10,10"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

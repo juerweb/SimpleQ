@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.LanguagePage"
+             Title="{ext:Translate Text=Language}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{ext:Translate Text=SelectALanguage}" Style="{DynamicResource BodyStyle}" Margin="10,10,10,0"></Label>
+            <ListView ItemsSource="{Binding Path=LanguageService.SupportedLanguages}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Padding="10,0">
+                                <Label Text="{Binding DisplayName}" Style="{DynamicResource BodyStyle}"></Label>
+                                <Label Text="{Binding  EnglishName}" Style="{DynamicResource BodyStyle}"></Label>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="{ext:Translate Text=ChangeLanguage}" Command="{Binding ChangeLanguageCommand}" IsEnabled="{Binding IsSelected}" Margin="10,10"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

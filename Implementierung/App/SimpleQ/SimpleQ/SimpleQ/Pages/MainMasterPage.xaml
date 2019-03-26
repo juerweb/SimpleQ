@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:extensions="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.MainMasterPage"
+             Title="{extensions:Translate Text=Menu}">
+    <ContentPage.Resources>
+        <DataTemplate x:Key="navigationDataTemplate">
+            <ViewCell>
+                <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal" >
+                    <Image Source="{Binding IconResourceName}" VerticalOptions="Center"></Image>
+                    <Label Text="{Binding Title}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+
+        <DataTemplate x:Key="categorieDataTemplate">
+            <ViewCell>
+                <StackLayout Padding="15,10" HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                    <Image Source="ic_label_black_18.png" VerticalOptions="Center"></Image>
+                    <Label Text="{Binding Title}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
+                </StackLayout>
+            </ViewCell>
+        </DataTemplate>
+
+        <extensions:ItemTemplateSelector x:Key="itemTemplateSelector" 
+                                         NavigationTemplate="{StaticResource navigationDataTemplate}" 
+                                         CategorieTemplate="{StaticResource categorieDataTemplate}"/>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <ListView x:Name="MenuItemsListView" SeparatorVisibility="None" HasUnevenRows="true" ItemsSource="{Binding MenuItems, Mode=TwoWay}" IsGroupingEnabled="True" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" ItemTemplate="{StaticResource itemTemplateSelector}">
+                <ListView.Header>
+                    <Grid BackgroundColor="{StaticResource colorPrimary}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="5"/>
+                        </Grid.RowDefinitions>
+
+                        <Image Source="ic_business_black_48.png" Grid.Column="1" Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start"></Image>
+                        <StackLayout Grid.Column="1" Grid.Row="2">
+                            <Label Text="{Binding Path=RegistrationData.RegistrationData.CustName}" Style="{DynamicResource BodyStyle}" TextColor="White"/>
+                            <Label Text="{Binding Path=RegistrationData.RegistrationData.DepName}" Style="{DynamicResource BodyStyle}" TextColor="White"/>
+                        </StackLayout>
+                    </Grid>
+                </ListView.Header>
+                <ListView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <ViewCell Height="45">
+                            <StackLayout BackgroundColor="White" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                <StackLayout VerticalOptions="CenterAndExpand" Margin="15, 0, 5, 0">
+                                    <Label Text="{Binding Header}" />
+                                </StackLayout>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.GroupHeaderTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
