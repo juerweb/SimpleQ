@@ -1021,7 +1021,7 @@ Nur Container für Subprozese</bpmn:text>
         <bpmn:outgoing>SequenceFlow_0ymqx4a</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:task id="Task_0spaif1" name="Darstellungsart (Diagramm) wählen">
-        <bpmn:incoming>SequenceFlow_0iyufrr</bpmn:incoming>
+        <bpmn:incoming>SequenceFlow_0ymqx4a</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_0j73f2u</bpmn:outgoing>
         <bpmn:standardLoopCharacteristics />
       </bpmn:task>
@@ -1032,10 +1032,10 @@ Nur Container für Subprozese</bpmn:text>
       <bpmn:sequenceFlow id="SequenceFlow_04o8pa0" sourceRef="Task_115kl9v" targetRef="Task_1s1rvry" />
       <bpmn:sequenceFlow id="SequenceFlow_1bpabpc" sourceRef="StartEvent_19jjoea" targetRef="Task_115kl9v" />
       <bpmn:sequenceFlow id="SequenceFlow_0j73f2u" sourceRef="Task_0spaif1" targetRef="EndEvent_0m1yd8g" />
-      <bpmn:sequenceFlow id="SequenceFlow_0ymqx4a" sourceRef="ExclusiveGateway_0pwh95h" targetRef="ExclusiveGateway_1mtl9z3" />
+      <bpmn:sequenceFlow id="SequenceFlow_0ymqx4a" sourceRef="ExclusiveGateway_0pwh95h" targetRef="Task_0spaif1" />
       <bpmn:sequenceFlow id="SequenceFlow_0zl6xq0" sourceRef="IntermediateCatchEvent_03gp5a8" targetRef="ExclusiveGateway_0pwh95h" />
       <bpmn:sequenceFlow id="SequenceFlow_1tsecsy" sourceRef="IntermediateCatchEvent_05su71h" targetRef="ExclusiveGateway_0pwh95h" />
-      <bpmn:sequenceFlow id="SequenceFlow_1kf2n6l" name="Einzel" sourceRef="ExclusiveGateway_0liq7l4" targetRef="IntermediateCatchEvent_05su71h" />
+      <bpmn:sequenceFlow id="SequenceFlow_1kf2n6l" name="Einzel" sourceRef="ExclusiveGateway_0liq7l4" targetRef="ExclusiveGateway_1l3y19c" />
       <bpmn:sequenceFlow id="SequenceFlow_1bo27l0" name="Trend" sourceRef="ExclusiveGateway_0liq7l4" targetRef="IntermediateCatchEvent_03gp5a8" />
       <bpmn:task id="Task_1s1rvry" name="Auswertungstyp wählen">
         <bpmn:incoming>SequenceFlow_04o8pa0</bpmn:incoming>
@@ -1043,10 +1043,8 @@ Nur Container für Subprozese</bpmn:text>
       </bpmn:task>
       <bpmn:sequenceFlow id="SequenceFlow_0xd92pr" sourceRef="Task_1s1rvry" targetRef="ExclusiveGateway_1x9urcx" />
       <bpmn:intermediateThrowEvent id="IntermediateCatchEvent_05su71h" name="Einzelauswertung erstellt">
-        <bpmn:incoming>SequenceFlow_1kf2n6l</bpmn:incoming>
-        <bpmn:incoming>SequenceFlow_1ksd8ai</bpmn:incoming>
+        <bpmn:incoming>SequenceFlow_0qee4l0</bpmn:incoming>
         <bpmn:outgoing>SequenceFlow_1tsecsy</bpmn:outgoing>
-        <bpmn:outgoing>SequenceFlow_0vw9qqf</bpmn:outgoing>
         <bpmn:messageEventDefinition id="MessageEventDefinition_1lcbnd8" />
       </bpmn:intermediateThrowEvent>
       <bpmn:intermediateThrowEvent id="IntermediateCatchEvent_03gp5a8" name="Trendauswertung erstellt">
@@ -1060,14 +1058,13 @@ Nur Container für Subprozese</bpmn:text>
         <bpmn:outgoing>SequenceFlow_1ksd8ai</bpmn:outgoing>
       </bpmn:exclusiveGateway>
       <bpmn:sequenceFlow id="SequenceFlow_0ibng71" name="ja" sourceRef="ExclusiveGateway_1x9urcx" targetRef="ExclusiveGateway_0liq7l4" />
-      <bpmn:exclusiveGateway id="ExclusiveGateway_1mtl9z3">
-        <bpmn:incoming>SequenceFlow_0ymqx4a</bpmn:incoming>
-        <bpmn:incoming>SequenceFlow_0vw9qqf</bpmn:incoming>
-        <bpmn:outgoing>SequenceFlow_0iyufrr</bpmn:outgoing>
+      <bpmn:sequenceFlow id="SequenceFlow_1ksd8ai" name="nein" sourceRef="ExclusiveGateway_1x9urcx" targetRef="ExclusiveGateway_1l3y19c" />
+      <bpmn:exclusiveGateway id="ExclusiveGateway_1l3y19c">
+        <bpmn:incoming>SequenceFlow_1ksd8ai</bpmn:incoming>
+        <bpmn:incoming>SequenceFlow_1kf2n6l</bpmn:incoming>
+        <bpmn:outgoing>SequenceFlow_0qee4l0</bpmn:outgoing>
       </bpmn:exclusiveGateway>
-      <bpmn:sequenceFlow id="SequenceFlow_0iyufrr" sourceRef="ExclusiveGateway_1mtl9z3" targetRef="Task_0spaif1" />
-      <bpmn:sequenceFlow id="SequenceFlow_0vw9qqf" sourceRef="IntermediateCatchEvent_05su71h" targetRef="ExclusiveGateway_1mtl9z3" />
-      <bpmn:sequenceFlow id="SequenceFlow_1ksd8ai" name="nein" sourceRef="ExclusiveGateway_1x9urcx" targetRef="IntermediateCatchEvent_05su71h" />
+      <bpmn:sequenceFlow id="SequenceFlow_0qee4l0" sourceRef="ExclusiveGateway_1l3y19c" targetRef="IntermediateCatchEvent_05su71h" />
     </bpmn:subProcess>
     <bpmn:subProcess id="SubProcess_0polsix" name="Einstellungen aufrufen">
       <bpmn:standardLoopCharacteristics />
@@ -2471,7 +2468,7 @@ Nur Container für Subprozese</bpmn:text>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0ymqx4a_di" bpmnElement="SequenceFlow_0ymqx4a">
         <di:waypoint x="2090" y="2691" />
-        <di:waypoint x="2117" y="2691" />
+        <di:waypoint x="2210" y="2691" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0zl6xq0_di" bpmnElement="SequenceFlow_0zl6xq0">
         <di:waypoint x="1995" y="2767" />
@@ -2479,14 +2476,13 @@ Nur Container für Subprozese</bpmn:text>
         <di:waypoint x="2065" y="2716" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1tsecsy_di" bpmnElement="SequenceFlow_1tsecsy">
-        <di:waypoint x="1995" y="2601" />
-        <di:waypoint x="2065" y="2601" />
+        <di:waypoint x="1995" y="2573" />
+        <di:waypoint x="2065" y="2573" />
         <di:waypoint x="2065" y="2666" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1kf2n6l_di" bpmnElement="SequenceFlow_1kf2n6l">
         <di:waypoint x="1882" y="2666" />
-        <di:waypoint x="1882" y="2601" />
-        <di:waypoint x="1959" y="2601" />
+        <di:waypoint x="1882" y="2598" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1887" y="2645" width="30" height="14" />
         </bpmndi:BPMNLabel>
@@ -2981,9 +2977,9 @@ Nur Container für Subprozese</bpmn:text>
         <di:waypoint x="1757" y="2691" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_12f80ij_di" bpmnElement="IntermediateCatchEvent_05su71h">
-        <dc:Bounds x="1959" y="2583" width="36" height="36" />
+        <dc:Bounds x="1959" y="2555" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1934" y="2626" width="88" height="27" />
+          <dc:Bounds x="1934" y="2598" width="88" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="IntermediateThrowEvent_00a6p1p_di" bpmnElement="IntermediateCatchEvent_03gp5a8">
@@ -3350,25 +3346,20 @@ Nur Container für Subprozese</bpmn:text>
           <dc:Bounds x="1828" y="2673" width="9" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ExclusiveGateway_1mtl9z3_di" bpmnElement="ExclusiveGateway_1mtl9z3" isMarkerVisible="true">
-        <dc:Bounds x="2117" y="2666" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0iyufrr_di" bpmnElement="SequenceFlow_0iyufrr">
-        <di:waypoint x="2142" y="2691" />
-        <di:waypoint x="2210" y="2691" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_0vw9qqf_di" bpmnElement="SequenceFlow_0vw9qqf">
-        <di:waypoint x="1992" y="2592" />
-        <di:waypoint x="2142" y="2592" />
-        <di:waypoint x="2142" y="2666" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ksd8ai_di" bpmnElement="SequenceFlow_1ksd8ai">
         <di:waypoint x="1782" y="2666" />
-        <di:waypoint x="1782" y="2588" />
-        <di:waypoint x="1962" y="2588" />
+        <di:waypoint x="1782" y="2573" />
+        <di:waypoint x="1857" y="2573" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1788" y="2632" width="22" height="14" />
+          <dc:Bounds x="1788" y="2627" width="22" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1l3y19c_di" bpmnElement="ExclusiveGateway_1l3y19c" isMarkerVisible="true">
+        <dc:Bounds x="1857" y="2548" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0qee4l0_di" bpmnElement="SequenceFlow_0qee4l0">
+        <di:waypoint x="1907" y="2573" />
+        <di:waypoint x="1955" y="2573" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

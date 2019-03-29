@@ -100,6 +100,29 @@ namespace SimpleQ.Webinterface.Controllers
                 return View("Error", model);
             }
         }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<ActionResult> ContactForm(string name, string email, string subject, string text)
+        {
+            try
+            {
+                if (await Email.Send("contactform@simpleq.at", "support@simpleq.at", "KONTAKTFORM: " + subject, "Name: " + name + "<br/>" + "Email: " + email + "<br/>" + text))
+                {
+                    return Redirect("http://vhp.simpleq.at/");
+                }
+                else
+                {
+                    logger.Error($"Contafct form e-mail sending failed.");
+                    return Redirect("http://vhp.simpleq.at/");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "[POST]AskQuestion: Unexpected error");
+                return Redirect("http://vhp.simpleq.at/");
+            }
+        }
         #endregion
     }
 }
