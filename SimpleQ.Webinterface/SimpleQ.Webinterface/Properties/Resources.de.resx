@@ -284,7 +284,7 @@
     <value>Beim Anhaken wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
   </data>
   <data name="noTemplate" xml:space="preserve">
-    <value>kein Template</value>
+    <value>Kein Template</value>
   </data>
   <data name="cancel" xml:space="preserve">
     <value>Abbrechen</value>
@@ -619,5 +619,74 @@
   </data>
   <data name="minimizeNav" xml:space="preserve">
     <value>Navigation verkleinern</value>
+  </data>
+  <data name="AlreadyStarted" xml:space="preserve">
+    <value>Bereits gestartet</value>
+  </data>
+  <data name="AnswerAlreadyExists" xml:space="preserve">
+    <value>Die Antwort existiert bereits</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Sind Sie sicher?</value>
+  </data>
+  <data name="ColorCoding" xml:space="preserve">
+    <value>Farblegende</value>
+  </data>
+  <data name="CurrentAndUpcomingSurveys" xml:space="preserve">
+    <value>Aktuelle und bevorstehende Befragungen</value>
+  </data>
+  <data name="CurrentSurveys" xml:space="preserve">
+    <value>Aktuelle Befragungen</value>
+  </data>
+  <data name="DefineYourFirstGroup" xml:space="preserve">
+    <value>Erstellen Sie Ihre erste Gruppe</value>
+  </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>Die Email-Adresse existiert bereits</value>
+  </data>
+  <data name="EmptyResultsExport" xml:space="preserve">
+    <value>Leere Ergebnisse können nicht exportiert werden</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Enddatum</value>
+  </data>
+  <data name="ExportResults" xml:space="preserve">
+    <value>Ergebnisse exportieren</value>
+  </data>
+  <data name="HideNavBar" xml:space="preserve">
+    <value>Collapse navigation</value>
+  </data>
+  <data name="NotImplementedYet" xml:space="preserve">
+    <value>Diese Funktion ist noch nicht verfügbar. Bitte warten Sie ein paar Wochen.</value>
+  </data>
+  <data name="NotYetStarted" xml:space="preserve">
+    <value>Noch nicht gestarted</value>
+  </data>
+  <data name="OriginalDate" xml:space="preserve">
+    <value>Ursprüngliches Datum</value>
+  </data>
+  <data name="OtherQuestion" xml:space="preserve">
+    <value>Sonstige Frage</value>
+  </data>
+  <data name="PaymentQuestion" xml:space="preserve">
+    <value>Frage zur Bezahlung</value>
+  </data>
+  <data name="PeriodicSurveys" xml:space="preserve">
+    <value>Periodische Befragungen</value>
+  </data>
+  <data name="ProductQuestion" xml:space="preserve">
+    <value>Frage zum Produkt</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Email senden</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Startdatum</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Summe</value>
+  </data>
+  <data name="SurveyCancelledSuccessfully" xml:space="preserve">
+    <value>Befragung erfolgreich abgebrochen</value>
   </data>
 </root>

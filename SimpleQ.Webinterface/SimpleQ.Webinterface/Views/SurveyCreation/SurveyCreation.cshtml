@@ -142,7 +142,7 @@
         </div>
 
         <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer" data-toggle="tooltip" title="@Resources.answersButtonTooltip"><span class="d-flex justify-content-between"><span>@Resources.answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
-        <div id="answerAlreadyExists" class="alert alert-danger w-100" style="display:none"><strong>Die Antwort existiert bereits!</strong></div>
+        <div id="answerAlreadyExists" class="alert alert-danger w-100" style="display:none"><strong>@Resources.AnswerAlreadyExists</strong></div>
         <div id="answerBox" class="border border-dark mt-2">
 
         </div>
@@ -196,16 +196,16 @@
             </span>
         </span>
 
-        <button type="button" class="btn btn-light btn-block mt-3 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="@Resources.periodicQuestionTooltip"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>Periodische Befragung...</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+        <button type="button" class="btn btn-light btn-block mt-3 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="@Resources.periodicQuestionTooltip"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>@Resources.PeriodicSurvey</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
 
         <div id="periodicSurveyDiv" class="collapse">
             <div class="row mr-0 ml-0 mt-2">
                 <div class="col-4">
-                    <label>Periodendauer</label>
+                    <label>@Resources.Period</label>
                     <input class="form-control" type="number" min="0" value="" name='Period' onchange="insertHiddenCheckBox()" />
                 </div>
                 <div class="col-8">
-                    <label>Einheit</label>
+                    <label>@Resources.Unit</label>
                     <select class="form-control" id="daysOrWeekCB" name="IsWeek" onchange="insertHiddenCheckBox()">
                         <option value="false" selected>@rm.GetString("days")</option>
                         <option value="true" selected>@rm.GetString("weeks")</option>

@@ -10,7 +10,7 @@
     ResourceManager rm = Resources.ResourceManager;
 }
 <div class="row ml-0 mr-0">
-    <div id="exportNotValidBecauseEmpty" class="alert alert-danger w-100" style="display:none"><strong>You can not export your results because they are empty!</strong></div>
+    <div id="exportNotValidBecauseEmpty" class="alert alert-danger w-100" style="display:none"><strong>@Resources.EmptyResultsExport</strong></div>
 
     <div style="overflow-x:auto;" class="m-3 w-100">
         <table id="resultsTable" class="table table-bordered table-striped smallCellPadding small w-100">
@@ -119,7 +119,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Ergebnisse exportieren</h4>
+                <h4 class="modal-title">@Resources.ExportResults</h4>
             </div>
 
             <!-- Modal body -->
@@ -142,7 +142,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">This function is not implemented yet, please wait a few weeks. :(</h4>
+                <h4 class="modal-title">@Resources.NotImplementedYet</h4>
             </div>
         </div>
     </div>

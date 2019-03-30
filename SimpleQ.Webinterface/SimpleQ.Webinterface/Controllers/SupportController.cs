@@ -27,9 +27,10 @@ namespace SimpleQ.Webinterface.Controllers
                 logger.Debug($"Loading support page requested: {CustCode}");
                 using (var db = new SimpleQDBEntities())
                 {
+                    var lang = (string)RouteData.Values["language"] ?? "de";
                     var model = new SupportModel
                     {
-                        FaqEntries = await db.FaqEntries.Where(f => !f.IsMobile).ToListAsync()
+                        FaqEntries = await db.FaqEntries.Where(f => !f.IsMobile && f.LangCode == lang).ToListAsync()
                     };
 
                     ViewBag.emailConfirmed = (await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync()).EmailConfirmed;

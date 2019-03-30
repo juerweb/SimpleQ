@@ -56,7 +56,8 @@ create table Customer
 	CostBalance money not null,
 	AuthToken char(20) null,
 	LastTokenGenerated datetime null,
-	Rebate int not null default(0) check(Rebate between 0 and 100)
+	Rebate int not null default(0) check(Rebate between 0 and 100),
+	Deactivated bit not null default 0
 );
 
 
@@ -250,7 +251,8 @@ create table FaqEntry
 (
     FaqTitle varchar(128) primary key,
     FaqContent varchar(max) not null,
-    IsMobile bit not null
+    IsMobile bit not null,
+	LangCode char(2) not null
 );
 
 
@@ -705,12 +707,14 @@ go
 begin transaction;
 insert into DataConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 
-insert into FaqEntry values ('Wie starte ich eine Befragung?', 'Klicken Sie auf den Register "Befragung erstellen". Dort können Sie nach Eingabe aller Befragungsdaten die Befragung erstellen.', 0); -- Nur Testwert
-insert into FaqEntry values ('Wo kann ich meine Rechnungen ansehen?', 'Unter "Einstellungen" beim Tab "Rechungen" können Sie jede Rechnung im Detail betrachten sowie herunterladen.', 0); -- Nur Testwert
+insert into FaqEntry values ('Wie starte ich eine Befragung?', 'Klicken Sie auf den Register "Befragung erstellen". Dort können Sie nach Eingabe aller Befragungsdaten die Befragung erstellen.', 0, 'de'); -- Nur Testwert
+insert into FaqEntry values ('Wo kann ich meine Rechnungen ansehen?', 'Unter "Einstellungen" beim Tab "Rechungen" können Sie jede Rechnung im Detail betrachten sowie herunterladen.', 0, 'de'); -- Nur Testwert
+insert into FaqEntry values ('How can I start a survey?', 'Navigate to "Create survey". Here you can create a survey after inserting your desired survey data.', 0, 'en'); -- Nur Testwert
+insert into FaqEntry values ('Where can I find my bills?', 'Navigate to "Settings" to the tab "Bills". Here you obtain a detailled overview about your bills with the additional option of downloading them.', 0, 'en'); -- Nur Testwert
 
-insert into FaqEntry values('Wie beantworte ich eine Frage?', 'Sie müssen auf die entsprechende Benachrichtigung klicken. Danach öffnet sich die entsprechende Fragestellung und Sie können abhänig von dem Fragetyp die Frage einfach beantworten. Die App schließt sich nach erfolgreicher Beantwortung automatisch.', 1)
-insert into FaqEntry values('Wie kann ich aus einer Gruppe/Abteilung austreten?', 'Sie müssen über das Menü auf der linken Seite den Button Einstellungen betätigen. Danach können sie nach einem Klick auf den Button mit dem Namen "Abmelden von Fragen" die entsprechende Gruppe/Abteilung auswählen, von welcher Sie keine Fragen mehr erhalten möchten.', 1)
-insert into FaqEntry values('Wie kann ich die Sprache ändern?', 'Sie müssen über das Menü auf der linken Seite den Button Einstellungen betätigen. Danach können sie nach einem Klick auf den Button mit dem Namen "Sprache" die entsprechende Sprache auswählen.', 1)
+insert into FaqEntry values('Wie beantworte ich eine Frage?', 'Sie müssen auf die entsprechende Benachrichtigung klicken. Danach öffnet sich die entsprechende Fragestellung und Sie können abhänig von dem Fragetyp die Frage einfach beantworten. Die App schließt sich nach erfolgreicher Beantwortung automatisch.', 1, 'de')
+insert into FaqEntry values('Wie kann ich aus einer Gruppe/Abteilung austreten?', 'Sie müssen über das Menü auf der linken Seite den Button Einstellungen betätigen. Danach können sie nach einem Klick auf den Button mit dem Namen "Abmelden von Fragen" die entsprechende Gruppe/Abteilung auswählen, von welcher Sie keine Fragen mehr erhalten möchten.', 1, 'de')
+insert into FaqEntry values('Wie kann ich die Sprache ändern?', 'Sie müssen über das Menü auf der linken Seite den Button Einstellungen betätigen. Danach können sie nach einem Klick auf den Button mit dem Namen "Sprache" die entsprechende Sprache auswählen.', 1, 'de')
 
 
 insert into PaymentMethod values (1, 'OnAccount');
