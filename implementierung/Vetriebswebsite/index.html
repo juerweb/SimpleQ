@@ -1,0 +1,976 @@
+﻿<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SimpleQ</title>
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="SHORTCUT ICON" href="images/favicon.ico" />
+    <link href="css/full.css" rel="stylesheet">
+    <link rel="stylesheet" href="device-mockups/device-mockups.min.css">
+    <link rel="stylesheet" href="icons/css/simple-line-icons.css" />
+    <link href="mdb/css/mdb.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
+    <style>
+        .bg-dark {
+            transition: 750ms ease;
+            background: transparent !important;
+        }
+
+            .bg-dark.scrolled {
+                background: #343a40 !important;
+            }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        .logobra {
+            max-height: 80px;
+            max-width: 140px;
+        }
+
+        @media screen and (max-width: 992px) {
+            .abstandUnten {
+                padding-bottom: 740px !important;
+            }
+
+            .abstandDevice {
+                margin-left: 130px;
+            }
+        }
+
+        @media screen and (max-width: 767px) {
+            .abstandUnten {
+                padding-bottom: 740px !important;
+            }
+
+            .abstandDevice {
+                margin-left: 70px;
+            }
+        }
+
+        @media screen and (max-width: 473px) {
+            .abstandUnten {
+                padding-bottom: 740px !important;
+            }
+
+            .abstandDevice {
+                margin-left: 30px;
+            }
+        }
+
+        @media screen and (max-width: 405px) {
+            .abstandUnten {
+                padding-bottom: 740px !important;
+            }
+
+            .abstandDevice {
+                margin-left: 10px;
+            }
+        }
+
+        @media screen and (max-width: 380px) {
+            .abstandUnten {
+                padding-bottom: 740px !important;
+            }
+
+            .abstandDevice {
+                margin-left: 0px;
+            }
+        }
+
+        .fontNumbers {
+            font-family: 'Amatic SC', cursive;
+            color: blue;
+            font-size: 35px;
+        }
+
+        .blackFonts {
+            color: black !important;
+        }
+
+        .fontNumbersLabel {
+            font-family: 'Amatic SC', cursive;
+            color: blue;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <nav id="navi" class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: #004482a3 !important;">
+        <div class="container">
+            <a class="navbar-brand" href="#top">
+                <img src="images/simpleQ.png" class="navbar-brand img-fluid logobra" />
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto mr-auto">
+                    <li class="nav-item hoverable">
+                        <a class="nav-link" href="#top">
+                            <i class="fas fa-home"></i> Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item hoverable">
+                        <a class="nav-link" href="#funktionen">
+                            <i class="fas fa-clipboard-list"></i> Merkmale
+                        </a>
+                    </li>
+                    <li class="nav-item hoverable">
+                        <a class="nav-link" href="#preise">
+                            <i class="fas fa-money-bill"></i> Preise
+                        </a>
+                    </li>
+                    <li class="nav-item hoverable">
+                        <a class="nav-link" href="#showcase">
+                            <i class="fas fa-desktop"></i> Showcase
+                        </a>
+                    </li>
+                    <li class="nav-item hoverable">
+                        <a class="nav-link" href="#contact">
+                            <i class="fas fa-envelope"></i> Kontakt
+                        </a>
+                    </li>
+                    <li class="nav-item hoverable">
+                        <a class="nav-link" href="about.html">
+                            <i class="fas fa-users"></i> Über uns
+                        </a>
+                    </li>
+                    <li class="nav-item hoverable">
+                        <a class="nav-link" href="https://dev.simpleq.at">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                    </li>
+                </ul>
+                <form class="form-inline">
+                    <a href="https://dev.simpleq.at/de/Account/Register"><button class="btn btn-sm btn-success" type="button">Loslegen</button></a>
+                </form>
+            </div>
+        </div>
+    </nav>
+    <header id="top" class="masthead animated fadeIn slow">
+        <div class="container h-100">
+            <div class="row h-100">
+                <div class="col-lg-9 my-auto">
+                    <div class="header-content mx-auto">
+                        <h1 class="rand">
+                            SimpleQ
+                        </h1>
+                        <h2 class="txt-rotate rand"
+                            data-period="99999"
+                            data-rotate='[ "any questions?"]'></h2>
+                    </div>
+                    <a href="https://dev.simpleq.at/de/Account/Register" class="btn btn-lg btn-success ">Jetzt einsteigen!</a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="parallax d-flex justify-content-center align-items-center" id="para">
+        <div class="text-center p-4">
+            <p class="mx-auto text-center font-weight-bold" id="paratext" style="width: 85%; font-size: 1.8rem;">SimpleQ ist ein einfach zu bedienendes Befragungstool für Organisationen jeglicher Form, das großen Wert auf Benutzerfreundlichkeit und faire Preisgestaltung legt.</p>
+        </div>
+    </div>
+    <section class="funktionen pt-4" id="funktionen">
+        <div class="container">
+            <div class="section-heading text-center">
+                <hr />
+                <cite style="font-size:1.6rem">&bdquo;Was wir wissen ist ein Tropfen, was wir nicht wissen ist ein Ozean.&ldquo;</cite><br />
+                <a class="text-center">- Isaac Newton</a>
+                <hr />
+            </div>
+            <div class="row">
+                <div class="col-lg-4 my-auto">
+                    <div class="device-container">
+                        <div class="device-mockup galaxy_s5 portrait white abstandUnten">
+                            <div class="device abstandDevice" style="height:730px; width:360px;">
+                                
+                                <div id="androidHandy" class="screen aStart">
+                                    <img src="images/klickme.png" data-toggle="tooltip" data-placement="top" title="steuerbare Mobile App" id="klickme" style="height:95px; width:95px; position:absolute; right:20px; bottom:5px;"/>
+                                    <div id="aHomeFrage1" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aHomeFrage2" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aHomeFrage3" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aHomeFrage4" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aHomeFrage5" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage1Ja" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage1Nein" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage3Ja" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage3Nein" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage3Ka" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage5T" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage5A" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage4A" onclick="androidClick(this.id);"></div>
+                                    <div id="aFrage4A2" onclick="androidClick(this.id);"></div>
+                                    <div id="aFrage4A3" onclick="androidClick(this.id);"></div>
+                                    <div id="aFrage4A4" onclick="androidClick(this.id);"></div>
+                                    <div id="aFrage4A5" onclick="androidClick(this.id);"></div>
+                                    <div id="aFrage4S" onclick="androidClick(this.id);"></div>
+                                    <div id="aFrage5S" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aReturn" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage2M" onclick="androidClick(this.id);">
+                                    </div>
+                                    <div id="aFrage2W" onclick="androidClick(this.id);">
+                                    </div>
+                                </div>
+                                <div class="button">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8 my-auto">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="feature-item">
+                                    <i class="icon-screen-smartphone text-primary"></i>
+                                    <h3 class="">Beantwortung per App</h3>
+                                    <p class="text-muted "></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="feature-item">
+                                    <i class="icon-screen-desktop text-primary"></i>
+                                    <h3 class="">selbsterklärendes Dashboard</h3>
+                                    <p class="text-muted "></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="feature-item">
+                                    <i class="icon-user text-primary"></i>
+                                    <h3 class="">Sicherstellung von Anonymität</h3>
+                                    <p class="text-muted "></p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="feature-item">
+                                    <i class="icon-wallet text-primary"></i>
+                                    <h3 class="">Pay for Click System</h3>
+                                    <p class="text-muted "></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="konzept" id="konzept">
+        <div class="parallax2 pt-4 pb-4">
+            <div class="container">
+                <!--<div class="section-heading text-center">
+                    <h1 class="">Das SimpleQ Konzept</h1>
+                    <p class="text-muted ">Wie funktioniert SimpleQ</p>
+                    <hr />
+                </div>-->
+
+                <div class="row ">
+                    <!--<div class="col-lg-5 text-center text-lg-left">
+                        <img id="cool" class="img-fluid" src="images/konzept_1.jpg" alt="Sample image">
+                    </div>-->
+                    <div class="col-lg-12 paddingtop">
+                        <h2>Vorteile von SimpleQ:</h2>
+                        <ul style="font-size:1.3rem;">
+                            <li>Direkte Erreichbarkeit von Befragten via App</li>
+                            <li>Geeignet für jede Organisationsform, in der Menschen zusammenarbeiten</li>
+                            <li>Verrechnung pro erfolgter Befragungsteilnahme</li>
+                            <li>Hohes Einsparungspotenzial</li>
+                            <li>Durchführung kurzfristiger Befragungen und Abstimmungen</li>
+                            <li>Aufzeigen von Entwicklungen innerhalb der Organisation</li>
+                            <li>Abbruch von laufenden Befragungen möglich</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="hideBlock">
+        <img src="./images/deviceImages/frage1.png" />
+        <img src="./images/deviceImages/frage2.png" />
+        <img src="./images/deviceImages/frage3.png" />
+        <img src="./images/deviceImages/frage4.png" />
+        <img src="./images/deviceImages/frage41.png" />
+        <img src="./images/deviceImages/frage42.png" />
+        <img src="./images/deviceImages/frage5.png" />
+        <img src="./images/deviceImages/frage51.png" />
+        <img src="./images/deviceImages/frage5Ans.png" />
+        <img src="./images/deviceImages/navbar.png" />
+        <img src="./images/deviceImages/bg1ml.jpg" />
+        <img src="./images/deviceImages/bg2ml.jpg" />
+        <img src="./images/deviceImages/bg3ml.jpg" />
+        <img src="./images/deviceImages/bg4ml.jpg" />
+        <img src="./images/deviceImages/bg5ml.jpg" />
+    </div>
+    <section id="preise" class="preise grayBack">
+        <div class="container">
+            <div class="section-heading text-center">
+                <h1>Preiskalkulator</h1>
+                <p class="text-muted">Kosten entstehen nur, wenn Personen an der Befragung teilnehmen. Mit unserem Preiskalkulator können Sie Ihre individuelle Kostenschätzung vornehmen.</p>
+                <hr />
+            </div>
+            <div class="topborderxl" id="test">
+                <div class="form-group row mb-0">
+                    <div class="col">
+                        <label for="anzMit" class="col-form-label p-0">Anzahl Befragte</label>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <form class="range-field">
+                            <input oninput="priceCalculator();" type="range" min="1" max="2000" class="custom-range" id="anzMit">
+                        </form>
+                    </div>
+                </div>
+                <div class="row mt-0">
+                    <div class="col">
+
+                    </div>
+                    <div class="col-lg-9 d-flex justify-content-between">
+                        <label class="text-primary font-weight-bold fontNumbersLabel">0</label>
+                        <label class="text-primary font-weight-bold fontNumbersLabel">1000</label>
+                        <label class="text-primary font-weight-bold fontNumbersLabel">2000</label>
+                    </div>
+                </div>
+
+                <div class="form-group row mt-3 mb-0">
+                    <div class="col">
+                        <label for="anzWahr" class="col-form-label p-0">Teilnahmewahrscheinlichkeit</label>
+                    </div>
+                    <div class="col-lg-9">
+                        <input oninput="priceCalculator();" type="range" min="0" max="100" class="custom-range" id="anzWahr">
+                    </div>
+                </div>
+                <div class="row mt-0">
+                    <div class="col">
+
+                    </div>
+                    <div class="col-lg-9 d-flex justify-content-between">
+                        <label class="text-primary font-weight-bold fontNumbersLabel">0%</label>
+                        <label class="text-primary font-weight-bold fontNumbersLabel">50%</label>
+                        <label class="text-primary font-weight-bold fontNumbersLabel">100%</label>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h2 class="text-primary blackFonts">Stichprobengröße</h2>
+                        <h2 class="text-primary font-weight-bold fontNumbers"><a id="mit">0</a></h2>
+                        <hr />
+                    </div>
+                    <!--<div class="col-md-4">
+                        <h2 class="text-primary font-weight-bold">Umfragen pro Monat</h2>
+                        <h2 class="text-primary font-weight-bold"><a id="umf">0</a></h2>
+                    </div>-->
+                    <div class="col-md-6">
+                        <h2 class="text-primary blackFonts">Teilnahmewahrscheinlichkeit</h2>
+                        <h2 class="text-primary font-weight-bold fontNumbers"><a id="pro"></a>%</h2>
+                        <hr />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="text-primary blackFonts">Gesamtkosten der Befragung</h2>
+                        <h2 class="text-primary font-weight-bold fontNumbers"><a id="overallCosts">0</a>€</h2>
+                        <hr />
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="text-primary blackFonts">Kosten pro TeilnehmerIn</h2>
+                        <h2 class="text-primary font-weight-bold fontNumbers"><a id="pricePerClick">0</a> cent</h2>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <br />
+            <!--<h2 class="text-primary font-weight-bold"><a id="preisgeraet" class="h1">0</a>€</h2>-->
+        </div>
+    </section>
+    <section id="showcase" class="my-5">
+        <div class="container">
+            <div class="section-heading text-center">
+                <h1>Showcase</h1>
+                <p class="text-muted">Einblicke in das Dashboard</p>
+                <hr />
+            </div>
+
+            <div class="row">
+                <div class="col-lg-7 col-xl-8">
+                    <div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
+                        <img class="img-fluid" src="./images/surveyCreationScreenshot.jpg" alt="befragung erstellen">
+                        <a>
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-xl-4">
+                    <h3 class="font-weight-bold mb-3"><strong>Befragungserstellung</strong></h3>
+                    <!--<p class="dark-">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, psam voluptatem quia consectetur.</p>-->
+                </div>
+            </div>
+            <hr class="my-5">
+            <div class="row">
+                <div class="col-lg-5 col-xl-4">
+                    <h3 class="font-weight-bold mb-3"><strong>Befragungsauswertung</strong></h3>
+                    <!--<p class="dark-">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, psam voluptatem quia consectetur.</p>-->
+                </div>
+                <div class="col-lg-7 col-xl-8">
+                    <div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
+                        <img class="img-fluid" src="./images/surveyResultsScreenshot.jpg" alt="befragungsauswertung">
+                        <a>
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-5">
+            <div class="row">
+                <div class="col-lg-7 col-xl-8">
+                    <div class="view overlay rounded z-depth-1-half mb-lg-0 mb-4">
+                        <img class="img-fluid" src="./images/groupAdministrationScreenshot.jpg" alt="Sample image">
+                        <a>
+                            <div class="mask rgba-white-slight"></div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-xl-4">
+                    <h3 class="font-weight-bold mb-3"><strong>Gruppenverwaltung</strong></h3>
+                    <!--<p class="dark-">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, psam voluptatem quia consectetur.</p>-->
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section id="contact" class="my-5 contact">
+        <div class="container pad">
+            <h2 class="text-center">Kontakt</h2>
+            <hr />
+            <div class="row">
+                <div class="col-lg-5 mb-lg-0 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="form-header">
+                                <h3 class="mt-2"><i class="fa fa-envelope"></i> Nachricht an SimpleQ</h3>
+                            </div>
+                            <p>Wir melden uns schnellstmöglich bei Ihnen.</p>
+							<form action="https://dev.simpleq.at/de/Support/ContactForm" method="post">
+								<div class="md-form">
+									<i class="fa fa-user prefix grey-text"></i>
+									<input type="text" name="name" id="name" class="form-control">
+									<label for="name">Name</label>
+								</div>
+								<div class="md-form">
+									<i class="fa fa-envelope prefix grey-text"></i>
+									<input type="text" name="email" id="email" class="form-control">
+									<label for="email">Email</label>
+								</div>
+								<div class="md-form">
+									<i class="fa fa-tag prefix grey-text"></i>
+									<input type="text" name="subject" id="subject" class="form-control">
+									<label for="subject">Betreff</label>
+								</div>
+								<div class="md-form">
+									<i class="fa fa-pencil prefix grey-text"></i>
+									<textarea type="text" name="text" id="text" class="form-control md-textarea" rows="3"></textarea>
+									<label for="text">Anliegen</label>
+								</div>
+								<div class="text-center">
+									<button class="btn btn-light-blue">Senden</button>
+								</div>
+							</form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7">
+                    <div id="map-container" class="rounded z-depth-1-half map-container" style="height: 400px"></div>
+                    <br>
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <a class="btn-floating">
+                                <i class="fa fa-map-marker"></i>
+                            </a>
+                            <p><a target="_blank" href="https://www.google.com/maps/dir//Kaunitzgasse+33,+1060+Wien/@48.1960665,16.3533402,19z/data=!4m8!4m7!1m0!1m5!1m1!1s0x476d0788e40f6eb9:0xdcb3ba5fe72c9161!2m2!1d16.3537442!2d48.1959976">Kaunitzgasse 33, 1060 Wien</a></p>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn-floating">
+                                <i class="fa fa-phone"></i>
+                            </a>
+                            <p><a href="callto:+436604905812">+4369919586170</a></p>
+                            <p class="mb-md-0">Mo - Sa, 8:00-22:00</p>
+                        </div>
+                        <div class="col-md-4">
+                            <a class="btn-floating">
+                                <i class="fa fa-envelope"></i>
+                            </a>
+                            <p><a href="mailto:info@simpleq.at">info@simpleq.at</a></p>
+                            <p class="mb-0"><a href="mailto:support@simpleq.at">support@simpleq.at</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="page-footer font-small mdb-color pt-4">
+        <div class="container text-center text-md-left">
+            <div class="row text-center text-md-left mt-3 pb-3">
+
+                <hr class="w-100 clearfix d-md-none">
+                <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Unternehmen</h6>
+                    <p>
+                        <a href="about.html">Über Uns</a>
+                    </p>
+                    <p>
+                        <a href="impressum.html">Impressum</a>
+                    </p>
+                    <p>
+                        <a href="datenschutz.html">Datenschutz</a>
+                    </p>
+                    <p>
+                        <a href="faq.html">FAQ</a>
+                    </p>
+                </div>
+                <hr class="w-100 clearfix d-md-none">
+                <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                    <h6 class="text-uppercase mb-4 font-weight-bold">Kontakt</h6>
+                    <p>
+                        <i class="fa fa-home mr-3"></i> Kaunitzgasse 33, 1060 Wien
+                    </p>
+                    <p>
+                        <i class="fa fa-envelope mr-3"></i> info@simpleq.at
+                    </p>
+                    <p>
+                        <i class="fa fa-phone mr-3"></i> + 43699 19586170
+                    </p>
+                </div>
+            </div>
+            <hr>
+            <div class="row d-flex align-items-center">
+                <div class="col-md-7 col-lg-8">
+                    <p class="text-center text-md-left">
+                        © 2018
+                        <a href="#">
+                            <strong> simpleq.at</strong>
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+    <script>
+
+        $(function () {
+
+            var tag = $("#top");
+            var backgrounds = ['url(./images/bg1ml.jpg)', 'url(./images/bg2ml.jpg)', 'url(./images/bg3ml.jpg)'];
+            var current = 0;
+            var headText = $("#ueberschrift");
+
+            function nextBackground() {
+                if (current == 0) {
+                    //   $("#navi").addClass("scrolled");
+                } else {
+                    //  $("#navi").removeClass("scrolled");
+                }
+                tag.css(
+                 'background',
+                  backgrounds[current = ++current % backgrounds.length]
+               );
+                // headText.toggleClass("changeColor");
+
+                setTimeout(nextBackground, 8000);
+            }
+            setTimeout(nextBackground, 8000);
+            tag.css('background', backgrounds[0]);
+        });
+
+        $(window).scroll(function () {
+            $('nav').toggleClass('scrolled', $(this).scrollTop() > 750);
+        });
+
+        $(document).ready(function () {
+            $("#mit").html(parseInt($("#anzMit").val() - 1));
+            $("#umf").html(parseInt($("#anzUmf").val() - 1));
+            $("#pro").html(parseInt($("#anzWahr").val()));
+
+            $('body').scrollspy({ target: ".navbar", offset: 50 });
+            $("#navi a").on('click', function (event) {
+                if (this.hash !== "") {
+                    event.preventDefault();
+                    var hash = this.hash;
+                    $('html, body').animate({
+                        scrollTop: $(hash).offset().top
+                    }, 900, function () {
+                        window.location.hash = hash;
+                    });
+                }
+            });
+        });
+
+        function uu() {
+            console.log("alles klar");
+        }
+
+        function calcdes(anzahl) {
+
+            let value;
+            let erg;
+
+            if (anzahl > 0 && anzahl <= 20) {		// f(x) = 0.125 | 0 <= x <= 20
+                value = 0.125;
+            }
+            else if (anzahl >= 21 && anzahl <= 200) { // f(x) = -0.000135789x + 0.12631578 | 21 <= x <= 200
+                value = -0.000135789 * anzahl + 0.12631578;
+            }
+            else if (anzahl >= 201 && anzahl <= 5000) {	// f(x) = 0.107*e^(-0.000335*x) | 201 <= x <= 5000
+                value = 0.107 * Math.exp(-0.000335 * anzahl);
+            }
+            else if (anzahl > 5000) {				// f(x) = 0.02 | x > 5000
+                value = 0.02;
+            }
+            else {									// f(x) = -1 | x < 0
+                value = -1;
+            }
+            erg = value;
+            return erg
+        }
+
+        function priceCalculator() {
+            let anzahlP = $("#anzMit").val();
+            let ppc = calcdes(anzahlP);
+            //let anzUmf = $("#anzUmf").val();
+            let wahrscheinlichkeit = $("#anzWahr").val() / 100;
+
+            console.log("PPC: " + ppc);
+            console.log("anzahlP: " + anzahlP);
+            console.log("wahrscheinlichkeit: " + wahrscheinlichkeit);
+
+            let erg = ppc * wahrscheinlichkeit * anzahlP;
+            $("#mit").html(anzahlP);
+            //$("#umf").html(anzUmf);
+            $("#pro").html(parseInt($("#anzWahr").val()));
+            $("#overallCosts").html(erg.toFixed(2));
+            $("#pricePerClick").html((ppc * 100.0).toFixed(2));
+            //$("#preisgeraet").html(parseInt(erg));
+        }
+
+        $("#anzMit").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+        $("#anzUmf").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+        $("#anzWahr").on("keypress keyup blur", function (event) {
+            $(this).val($(this).val().replace(/[^\d].+/, ""));
+            if ((event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        function initMap() {
+            var uluru = { lat: 48.195980, lng: 16.353700 };
+            var map = new google.maps.Map(document.getElementById('map-container'), {
+                zoom: 16,
+                center: uluru
+            });
+            var marker = new google.maps.Marker({
+                position: uluru,
+                map: map
+            });
+        }
+        var TxtRotate = function (el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 10) || 2000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+        };
+
+        TxtRotate.prototype.tick = function () {
+            var i = this.loopNum % this.toRotate.length;
+            var fullTxt = this.toRotate[i];
+
+            if (this.isDeleting) {
+                this.txt = fullTxt.substring(0, this.txt.length - 1);
+            } else {
+                this.txt = fullTxt.substring(0, this.txt.length + 1);
+            }
+
+            this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
+
+            var that = this;
+            var delta = 300 - Math.random() * 100;
+
+            if (this.isDeleting) { delta /= 2; }
+
+            if (!this.isDeleting && this.txt === fullTxt) {
+                delta = this.period;
+                this.isDeleting = true;
+            } else if (this.isDeleting && this.txt === '') {
+                this.isDeleting = false;
+                this.loopNum++;
+                delta = 500;
+            }
+
+            setTimeout(function () {
+                that.tick();
+            }, delta);
+        };
+
+        window.onload = function () {
+            var elements = document.getElementsByClassName('txt-rotate');
+            for (var i = 0; i < elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-rotate');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                    new TxtRotate(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".txt-rotate > .wrap { border-right: 0.08em solid #666 }";
+            document.body.appendChild(css);
+        };
+        
+        var cur = "aStart";
+        var is = true;
+        function androidClick(id) {
+            if (id == "aHomeFrage1") {
+                $("#androidHandy").removeClass("aStart");
+                $("#androidHandy").addClass("aFrage1");
+                $("#aHomeFrage1").css("display", "none");
+                $("#aHomeFrage2").css("display", "none");
+                $("#aHomeFrage3").css("display", "none");
+                $("#aHomeFrage4").css("display", "none");
+                $("#aHomeFrage5").css("display", "none");
+                $("#aFrage1Ja").css("display", "block");
+                $("#aReturn").css("display", "block");
+                $("#klickme").css("display", "none");
+                cur = "aFrage1";
+            } else if (id == "aFrage1Ja" || id == "aFrage1Nein") {
+                $("#androidHandy").addClass("aStart"); // ohne frage1
+                $("#androidHandy").removeClass("aFrage1");
+                $("#aHomeFrage1").css("display", "block");
+                $("#aHomeFrage2").css("display", "block");
+                $("#aHomeFrage3").css("display", "block");
+                $("#aHomeFrage4").css("display", "block");
+                $("#aHomeFrage5").css("display", "block");
+                $("#aFrage1Ja").css("display", "none");
+                $("#aFrage1Nein").css("display", "none");
+                $("#aReturn").css("display", "none");
+                $("#klickme").css("display", "block");
+                cur = "aStart";
+            } else if (id == "aHomeFrage2") {
+                $("#androidHandy").removeClass("aStart");
+                $("#androidHandy").addClass("aFrage2");
+                $("#aHomeFrage1").css("display", "none");
+                $("#aHomeFrage2").css("display", "none");
+                $("#aHomeFrage3").css("display", "none");
+                $("#aHomeFrage4").css("display", "none");
+                $("#aHomeFrage5").css("display", "none");
+                $("#aFrage2M").css("display", "block");
+                $("#aFrage2W").css("display", "block");
+                $("#aReturn").css("display", "block");
+                $("#klickme").css("display", "none");
+                cur = "aFrage2";
+            } else if (id == "aHomeFrage3") {
+                $("#androidHandy").removeClass("aStart");
+                $("#androidHandy").addClass("aFrage3");
+                $("#aHomeFrage1").css("display", "none");
+                $("#aHomeFrage2").css("display", "none");
+                $("#aHomeFrage3").css("display", "none");
+                $("#aHomeFrage4").css("display", "none");
+                $("#aHomeFrage5").css("display", "none");
+                $("#aFrage3Ja").css("display", "block");
+                $("#aFrage3Nein").css("display", "block");
+                $("#aFrage3Ka").css("display", "block");
+                $("#aReturn").css("display", "block");
+                $("#klickme").css("display", "none");
+                cur = "aFrage3";
+            } else if (id == "aFrage3Ja" || id == "aFrage3Nein" || id == "aFrage3Ka") {
+                $("#androidHandy").addClass("aStart"); // ohne frage1
+                $("#androidHandy").removeClass("aFrage3");
+                $("#aHomeFrage1").css("display", "block");
+                $("#aHomeFrage2").css("display", "block");
+                $("#aHomeFrage3").css("display", "block");
+                $("#aHomeFrage4").css("display", "block");
+                $("#aHomeFrage5").css("display", "block");
+                $("#aFrage3Ja").css("display", "none");
+                $("#aFrage3Nein").css("display", "none");
+                $("#aFrage3Ka").css("display", "none");
+                $("#aReturn").css("display", "none");
+                $("#klickme").css("display", "block");
+                cur = "aStart";
+            } else if (id == "aHomeFrage5") {
+                $("#androidHandy").removeClass("aStart");
+                $("#androidHandy").addClass("aFrage5");
+                $("#aHomeFrage1").css("display", "none");
+                $("#aHomeFrage2").css("display", "none");
+                $("#aHomeFrage3").css("display", "none");
+                $("#aHomeFrage4").css("display", "none");
+                $("#aHomeFrage5").css("display", "none");
+                $("#aFrage5T").css("display", "block");
+                $("#aFrage5S").css("display", "block");
+                $("#aReturn").css("display", "block");
+                $("#klickme").css("display", "none");
+                cur = "aFrage5";
+            } else if (id == "aHomeFrage4") {
+                $("#androidHandy").removeClass("aStart");
+                $("#androidHandy").addClass("aFrage4");
+                $("#aHomeFrage1").css("display", "none");
+                $("#aHomeFrage2").css("display", "none");
+                $("#aHomeFrage3").css("display", "none");
+                $("#aHomeFrage4").css("display", "none");
+                $("#aHomeFrage5").css("display", "none");
+                $("#aFrage4A").css("display", "block");
+                $("#aFrage4A2").css("display", "block");
+                $("#aFrage4A3").css("display", "block");
+                $("#aFrage4A4").css("display", "block");
+                $("#aFrage4A5").css("display", "block");
+                $("#aFrage4S").css("display", "block");
+                $("#aReturn").css("display", "block");
+                $("#klickme").css("display", "none");
+                cur = "aFrage4";
+            } else if (id == "aFrage4S") {
+                $("#androidHandy").removeClass(cur);
+                $("#androidHandy").addClass("aStart");
+                $("#aHomeFrage1").css("display", "block");
+                $("#aHomeFrage2").css("display", "block");
+                $("#aHomeFrage3").css("display", "block");
+                $("#aHomeFrage4").css("display", "block");
+                $("#aHomeFrage5").css("display", "block");
+                $("#aFrage4A").css("display", "none");
+                $("#aFrage4A2").css("display", "none");
+                $("#aFrage4A3").css("display", "none");
+                $("#aFrage4A4").css("display", "none");
+                $("#aFrage4A5").css("display", "none");
+                $("#aFrage4S").css("display", "none");
+                $("#aReturn").css("display", "none");
+                $("#klickme").css("display", "block");
+                cur = "aStart";
+            } else if (id == "aFrage4A") {
+                $("#aFrage4A").toggleClass("avoll");
+                $("#aReturn").css("display", "block");
+            } else if (id == "aFrage4A2") {
+                $("#aFrage4A2").toggleClass("avoll");
+                $("#aReturn").css("display", "block");
+            } else if (id == "aFrage4A3") {
+                $("#aFrage4A3").toggleClass("avoll");
+                $("#aReturn").css("display", "block");
+            } else if (id == "aFrage4A4") {
+                $("#aFrage4A4").toggleClass("avoll");
+                $("#aReturn").css("display", "block");
+            } else if (id == "aFrage4A5") {
+                $("#aFrage4A5").toggleClass("avoll");
+                $("#aReturn").css("display", "block");
+            } else if (id == "aFrage5T") {
+                $("#androidHandy").removeClass("aFrage5");
+                $("#androidHandy").addClass("aFrage51");
+                $("#aFrage5T").css("display", "none");
+                $("#aFrage5A").css("display", "block");
+                $("#aFrage5S").css("display", "none");
+            } else if (id == "aFrage5A") {
+                $("#androidHandy").removeClass("aFrage51");
+                $("#androidHandy").addClass("aFrage5Ans");
+                $("#aFrage5T").css("display", "block");
+                $("#aFrage5A").css("display", "none");
+                $("#aFrage5S").css("display", "block");
+                cur = "aFrage5Ans";
+            }
+            else if (id == "aFrage5S") {
+                $("#androidHandy").removeClass(cur);
+                $("#androidHandy").addClass("aStart");
+                $("#aFrage5T").css("display", "none");
+                $("#aFrage5A").css("display", "none");
+                $("#aFrage5S").css("display", "none");
+                $("#aHomeFrage1").css("display", "block");
+                $("#aHomeFrage2").css("display", "block");
+                $("#aHomeFrage3").css("display", "block");
+                $("#aHomeFrage4").css("display", "block");
+                $("#aHomeFrage5").css("display", "block");
+                $("#aReturn").css("display", "none");
+                $("#aFrage5TV").html("");
+                $("#klickme").css("display", "block");
+                cur = "aStart";
+            } else if (id == "aFrage2M" || id == "aFrage2W") {
+                $("#androidHandy").removeClass("aFrage2");
+                $("#androidHandy").addClass("aStart");
+                $("#aFrage2M").css("display", "none");
+                $("#aFrage2W").css("display", "none");
+                $("#aHomeFrage1").css("display", "block");
+                $("#aHomeFrage2").css("display", "block");
+                $("#aHomeFrage3").css("display", "block");
+                $("#aHomeFrage4").css("display", "block");
+                $("#aHomeFrage5").css("display", "block");
+                $("#aReturn").css("display", "none");
+                $("#aFrage5TV").html("");
+                $("#klickme").css("display", "block");
+                cur = "aStart";
+            } else if (id == "aReturn") {
+                console.log(cur);
+                $("#androidHandy").removeClass(cur);
+                $("#androidHandy").addClass("aStart");
+                $("#aHomeFrage1").css("display", "block");
+                $("#aHomeFrage2").css("display", "block");
+                $("#aHomeFrage3").css("display", "block");
+                $("#aHomeFrage4").css("display", "block");
+                $("#aHomeFrage5").css("display", "block");
+                $("#aFrage1Ja").css("display", "none");
+                $("#aFrage1Nein").css("display", "none");
+                $("#aFrage3Ja").css("display", "none");
+                $("#aFrage3Nein").css("display", "none");
+                $("#aFrage3Ka").css("display", "none");
+                $("#aReturn").css("display", "none");
+                $("#aFrage5T").css("display", "none");
+                $("#aFrage5S").css("display", "none");
+                $("#aFrage5A").css("display", "none");
+                $("#aFrage2M").css("display", "none");
+                $("#aFrage5W").css("display", "none");
+                $("#aFrage4A").css("display", "none");
+                $("#aFrage4A2").css("display", "none");
+                $("#aFrage4A3").css("display", "none");
+                $("#aFrage4A4").css("display", "none");
+                $("#aFrage4A5").css("display", "none");
+                $("#aFrage4S").css("display", "none");
+                $("#klickme").css("display", "block");
+                cur = "aStart";
+            }
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAs4e3znCqOlihfr6oYU2dvBXUKp7OSL_M&callback=initMap">
+    </script>
+</body>
+</html>
