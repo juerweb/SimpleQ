@@ -435,7 +435,7 @@
                     }
                     if (survey.TypeId >= 6 && survey.TypeId <= 9) {
                         insertAnswers();
-                        answersULChanged();
+                        //answersULChanged();
                     } else {
                         if (survey.AnswerOptions.length > 1) {
                             firstAnswer = answers[0];
@@ -582,7 +582,11 @@
                 '    </div>' +
                 '</li>';
             ul.innerHTML += normal;
+            $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+            answersFilled = true;
+            updateButtonEnabled();
         }
+        
     }
 
 

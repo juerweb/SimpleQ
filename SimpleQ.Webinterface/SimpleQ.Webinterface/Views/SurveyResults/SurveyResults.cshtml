@@ -34,7 +34,7 @@
                             <td>@srw.Amount</td>
                             <td catId="@srw.SurveyCategory.CatId">@srw.SurveyCategory.CatName</td>
                             <td typeId="@srw.AnswerType.TypeId">@rm.GetString(srw.AnswerType.TypeDesc)</td>
-                            <td>@srw.StartDate.ToShortDateString() - @srw.EndDate.ToShortDateString()</td>
+                            <td data-order="@(srw.StartDate.Ticks / TimeSpan.TicksPerSecond) ">@srw.StartDate.ToShortDateString() - @srw.EndDate.ToShortDateString()</td>
                             <td>
                                 @foreach (string s in srw.Departments)
                                 {
