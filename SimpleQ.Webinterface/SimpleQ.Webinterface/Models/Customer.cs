@@ -44,6 +44,8 @@ namespace SimpleQ.Webinterface.Models
         public Nullable<System.DateTime> LastTokenGenerated { get; set; }
         public int Rebate { get; set; }
         public bool Deactivated { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]

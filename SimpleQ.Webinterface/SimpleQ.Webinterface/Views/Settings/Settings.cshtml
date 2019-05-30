@@ -9,6 +9,9 @@
 <div id="changespw404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.PasswordChange404</strong>
 </div>
+<div id="changespw400" class="alert alert-danger" style="display:none">
+    <strong>Passwort konnte nicht geändert werden.</strong>
+</div>
 <div id="changespw500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.PasswordChange500</strong>
 </div>
@@ -16,13 +19,19 @@
     <strong>@ResourcesN.minimumGroupSize404</strong>
 </div>
 <div id="minimumGroupSize500" class="alert alert-danger" style="display:none">
-    <strong>@ResourcesN.minimumGroupSize500</strong>AddCategory 404
+    <strong>@ResourcesN.minimumGroupSize500</strong>
+</div>
+<div id="minimumGroupSize409" class="alert alert-danger" style="display:none">
+    <strong>Minimale Gruppengröße zu klein</strong>
 </div>
 <div id="addCategory404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.AddCategory404</strong>
 </div>
 <div id="addCategory500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.AddCategory500</strong>
+</div>
+<div id="addCategory400" class="alert alert-danger" style="display:none">
+    <strong>Fehler beim Hinzufügen der Kategorie</strong>
 </div>
 <div id="deleteTemplate404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.deleteTemplate404</strong>
@@ -32,6 +41,9 @@
 </div>
 <div id="changeAbrechnung404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.changeAbrechnung404</strong>
+</div>
+<div id="changeAbrechnung409" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsdatum setzen fehlgeschlagen</strong>
 </div>
 <div id="changeAbrechnung500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.changeAbrechnung500</strong>
@@ -54,7 +66,21 @@
 <div id="unregister500" class="alert alert-danger" style="display:none">
     <strong>Kündigung fehlgeschlagen. Bitte später erneut versuchen.</strong>
 </div>
-
+<div id="deleteCategory404" class="alert alert-danger" style="display:none">
+    <strong>Kategorie löschen fehlgeschlagen</strong>
+</div>
+<div id="deleteCategory500" class="alert alert-danger" style="display:none">
+    <strong>Kategorie löschen fehlgeschlagen</strong>
+</div>
+<div id="changeAccountingPeriod409" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsperiode setzen fehlgeschlagen.</strong>
+</div>
+<div id="changeAccountingPeriod404" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsperiode setzen fehlgeschlagen.</strong>
+</div>
+<div id="changeAccountingPeriod500" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsperiode setzen fehlgeschlagen.</strong>
+</div>
 <div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>@ResourcesN.Settings</h2>
 </div>
@@ -472,10 +498,19 @@
                     $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-                    alert("changeAccountingPeriod 404");
+                    console.log("changeAccountingPeriod 404");
+					$('#changeAccountingPeriod404').css("display", "block");
+                    $('#changeAccountingPeriod404').delay(1000).fadeOut();
+                },
+				409: function () {
+                    console.log("changeAccountingPeriod 409");
+					$('#changeAccountingPeriod409').css("display", "block");
+                    $('#changeAccountingPeriod409').delay(1000).fadeOut();
                 },
                 500: function () {
-                    alert("changeAccountingPeriod 500");
+                    console.log("changeAccountingPeriod 500");
+					$('#changeAccountingPeriod500').css("display", "block");
+                    $('#changeAccountingPeriod500').delay(1000).fadeOut();
                 }
             }
         });
@@ -493,6 +528,11 @@
                     alert("ChangeAccountingDay 404");
                     $('#changeAbrechnung404').css("display", "block");
                     $('#changeAbrechnung404').delay(1000).fadeOut();
+                },
+				409: function () {
+                    alert("ChangeAccountingDay 409");
+                    $('#changeAbrechnung409').css("display", "block");
+                    $('#changeAbrechnung409').delay(1000).fadeOut();
                 },
                 500: function () {
                     alert("ChangeAccountingDay 500");
@@ -549,6 +589,11 @@
                     $("#minimumGroupSize500").modal();
                     $('#minimumGroupSize500').css("display", "block");
                     $("#minimumGroupSize500").delay(1000).fadeOut();
+                },
+				409: function () {
+                    alert("changeMinimumGroupSize 409");
+                    $('#minimumGroupSize409').css("display", "block");
+                    $("#minimumGroupSize409").delay(1000).fadeOut();
                 }
             }
         });
@@ -575,6 +620,11 @@
                         console.log("passwort 404");
                         $('#changespw404').css("display", "block");
                         $("#changespw404").delay(1000).fadeOut();
+                    },
+					400: function () {
+                        console.log("passwort 400");
+                        $('#changespw400').css("display", "block");
+                        $("#changespw400").delay(1000).fadeOut();
                     },
                     500: function () {
                         console.log("passwort 500");
@@ -738,6 +788,11 @@
                     console.log("AddCategory 500");
                     $('#addCategory500').css("display", "block");
                     $('#addCategory500').delay(1000).fadeOut();
+                },
+				400: function () {
+                    console.log("AddCategory 400");
+                    $('#addCategory400').css("display", "block");
+                    $('#addCategory400').delay(1000).fadeOut();
                 }
             },
             success: function(data) {
@@ -867,10 +922,15 @@
                     $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-                    alert("deleteCategory 404");
+                    console.log("deleteCategory 404");
+					$('#deleteCategory404').css("display", "block");
+                    $('#deleteCategory404').delay(1000).fadeOut();
+					
                 },
                 500: function () {
-                    alert("deleteCategory 500");
+                    console.log("deleteCategory 500");
+					$('#deleteCategory500').css("display", "block");
+                    $('#deleteCategory500').delay(1000).fadeOut();
                 }
             }
         });

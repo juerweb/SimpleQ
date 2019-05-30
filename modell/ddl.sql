@@ -57,7 +57,9 @@ create table Customer
 	AuthToken char(20) null,
 	LastTokenGenerated datetime null,
 	Rebate int not null default(0) check(Rebate between 0 and 100),
-	Deactivated bit not null default 0
+	Deactivated bit not null default 0,
+	FirstName varchar(max) not null,
+	LastName varchar(max) not null
 );
 
 
