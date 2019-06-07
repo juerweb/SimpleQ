@@ -689,4 +689,19 @@
   <data name="SurveyCancelledSuccessfully" xml:space="preserve">
     <value>Befragung erfolgreich abgebrochen</value>
   </data>
+  <data name="billingPeriodInMonthsDesc" xml:space="preserve">
+    <value>Zeitraum zwischen dem Erhalt von Rechnungen</value>
+  </data>
+  <data name="dataRetentionPeriodInMonthsDesc" xml:space="preserve">
+    <value>Zeitraum, wie lange Befragungsergebnisse archiviert werden</value>
+  </data>
+  <data name="preferredBillingDayDesc" xml:space="preserve">
+    <value>Tag des Monats an dem die Rechnung zugestellt wird</value>
+  </data>
+  <data name="responsiblePersonFirstName" xml:space="preserve">
+    <value>Verantwortliche Person - Vorname</value>
+  </data>
+  <data name="responsiblePersonLastName" xml:space="preserve">
+    <value>Verantwortliche Person - Nachname</value>
+  </data>
 </root>

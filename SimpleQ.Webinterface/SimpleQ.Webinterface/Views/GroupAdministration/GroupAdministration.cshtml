@@ -58,6 +58,8 @@
                 </div>
             </div>
 
+            <button type="button" class="btn btn-primary btn-block mt-2" onclick="$('#importMailAddressesModal').show()"><span class="d-flex justify-content-between"><span>Adressliste hochladen</span><i id="inviteMatesIcon" class="material-icons">&#xe0d0;</i></span></button>
+
         </div>
         <div class="col-md-5 border-left" id="mailDiv">
             @*<h4 class="text-center">Infos</h4>*@
@@ -89,6 +91,41 @@
             <div class="modal-body">
                 <label for="NewGroupTB">@Resources.GroupName</label>
                 <input id="NewGroupTB" type="text" class="form-control" />
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addNewGroup()">@Resources.Create</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resources.cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="importMailAddressesModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 id="newGroupH" class="modal-title">import mail address file</h4>
+                <h4 id="noGroupH" style="display:none" class="modal-title">@Resources.DefineYourFirstGroup</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <button class="btn btn-success btn-block" onclick="downloadTemplate()">Download template</button>
+                <hr />
+                <button class="btn btn-success btn-block">Upload csv sheet</button>
+                <div class="row pl-3 pr-3 mt-3">
+                    <div class="col-8 text-right ">
+                        <label class="text-right">column with addresses</label>
+                    </div>
+                    <div class="col-4">
+                        <input id="addressColumn" value="2" class="form-control" type="number"/>
+                    </div>
+                </div>
             </div>
 
             <!-- Modal footer -->
@@ -455,4 +492,28 @@
         hiddenElem.value = $("#textEditorDiv").trumbowyg('html');
     }
 
+    function exportChart(type) {
+        //$("#exportModal").show();
+        $("#exportModal").modal({ backdrop: true });
+        exportType = type;
+    }
+
+    function notYetImplemented() {
+        $("#notYetImplementedModal").modal({ backdrop: true });
+    }
+
+    function downloadTemplate() {
+        let csv;
+
+        csv += "Name";
+        csv += ";";
+        csv += "E-Mail Adresse";
+
+
+        let hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'Adressen.csv';
+        hiddenElement.click();
+    }
 </script>

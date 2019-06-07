@@ -689,4 +689,19 @@
   <data name="SurveyCancelledSuccessfully" xml:space="preserve">
     <value>Survey cancelled successfully</value>
   </data>
+  <data name="billingPeriodInMonthsDesc" xml:space="preserve">
+    <value>The time between receiving bills</value>
+  </data>
+  <data name="dataRetentionPeriodInMonthsDesc" xml:space="preserve">
+    <value>The time, how long you survey data is stored until it gets deleted</value>
+  </data>
+  <data name="preferredBillingDayDesc" xml:space="preserve">
+    <value>Day of month, on which the bill is delivered</value>
+  </data>
+  <data name="responsiblePersonFirstName" xml:space="preserve">
+    <value>First name of responsible person</value>
+  </data>
+  <data name="responsiblePersonLastName" xml:space="preserve">
+    <value>Last name of responsible person</value>
+  </data>
 </root>

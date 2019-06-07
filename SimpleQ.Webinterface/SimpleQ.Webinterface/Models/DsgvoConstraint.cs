@@ -12,18 +12,9 @@ namespace SimpleQ.Webinterface.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class BaseQuestionType
+    public partial class DsgvoConstraint
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BaseQuestionType()
-        {
-            this.AnswerTypes = new HashSet<AnswerType>();
-        }
-    
-        public int BaseId { get; set; }
-        public string BaseDesc { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AnswerType> AnswerTypes { get; set; }
+        public string ConstrName { get; set; }
+        public int ConstrValue { get; set; }
     }
 }
