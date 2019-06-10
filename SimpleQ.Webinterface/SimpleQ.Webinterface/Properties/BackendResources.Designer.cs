@@ -475,8 +475,8 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your registration code: {RegCode}
-        ///Message:
+        ///   Looks up a localized string similar to Your registration code: {RegCode}&lt;br/&gt;&lt;br/&gt;
+        ///Message:&lt;br/&gt;
         ///{CustomMessage}.
         /// </summary>
         internal static string GroupInvitationEmailMessageCustom {

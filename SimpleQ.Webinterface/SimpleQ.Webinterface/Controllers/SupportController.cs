@@ -85,7 +85,7 @@ namespace SimpleQ.Webinterface.Controllers
                 if (await Email.Send("contactform@simpleq.at", "support@simpleq.at", "SIMPLEQ SUPPORT: " + req.QuestionCatgeory, req.QuestionText))
                 {
                     logger.Debug("Support e-mail sent successfully");
-                    return await Index();
+                    return RedirectToAction("Index", "Support");
                 }
                 else
                 {
