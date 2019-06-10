@@ -704,4 +704,16 @@
   <data name="responsiblePersonLastName" xml:space="preserve">
     <value>Last name of responsible person</value>
   </data>
+  <data name="downloadTemplate" xml:space="preserve">
+    <value>download template</value>
+  </data>
+  <data name="importAddressFile" xml:space="preserve">
+    <value>import address file</value>
+  </data>
+  <data name="importAddressFileInfo" xml:space="preserve">
+    <value>First download and fill the template file. Then upload it.</value>
+  </data>
+  <data name="uploadChosenFile" xml:space="preserve">
+    <value>upload chosen file</value>
+  </data>
 </root>

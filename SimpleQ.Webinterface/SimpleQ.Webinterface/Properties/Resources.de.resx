@@ -704,4 +704,16 @@
   <data name="responsiblePersonLastName" xml:space="preserve">
     <value>Verantwortliche Person - Nachname</value>
   </data>
+  <data name="downloadTemplate" xml:space="preserve">
+    <value>Template-File herunterladen</value>
+  </data>
+  <data name="importAddressFile" xml:space="preserve">
+    <value>Adressdatei importieren</value>
+  </data>
+  <data name="importAddressFileInfo" xml:space="preserve">
+    <value>Laden Sie zuerst das Template-File herunter. Nachdem Sie es ausgefüllt haben, laden Sie es wieder hoch.</value>
+  </data>
+  <data name="uploadChosenFile" xml:space="preserve">
+    <value>ausgewähltes File hochladen</value>
+  </data>
 </root>

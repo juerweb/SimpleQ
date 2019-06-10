@@ -511,6 +511,15 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die download template ähnelt.
+        /// </summary>
+        public static string downloadTemplate {
+            get {
+                return ResourceManager.GetString("downloadTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Edit ähnelt.
         /// </summary>
         public static string edit {
@@ -732,6 +741,24 @@ namespace SimpleQ.Webinterface.Properties {
         public static string HideNavBar {
             get {
                 return ResourceManager.GetString("HideNavBar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die import address file ähnelt.
+        /// </summary>
+        public static string importAddressFile {
+            get {
+                return ResourceManager.GetString("importAddressFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die First download and fill the template file. Then upload it. ähnelt.
+        /// </summary>
+        public static string importAddressFileInfo {
+            get {
+                return ResourceManager.GetString("importAddressFileInfo", resourceCulture);
             }
         }
         
@@ -1731,6 +1758,15 @@ namespace SimpleQ.Webinterface.Properties {
         public static string Unit {
             get {
                 return ResourceManager.GetString("Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die upload chosen file ähnelt.
+        /// </summary>
+        public static string uploadChosenFile {
+            get {
+                return ResourceManager.GetString("uploadChosenFile", resourceCulture);
             }
         }
         
