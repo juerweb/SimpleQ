@@ -170,7 +170,7 @@
     <value>Liniendiagramm</value>
   </data>
   <data name="radar" xml:space="preserve">
-    <value>Radardiagramm</value>
+    <value>Spinnennetzdiagramm</value>
   </data>
   <data name="listing" xml:space="preserve">
     <value>Auflistung (absolut,%)</value>
@@ -185,7 +185,7 @@
     <value>Prozent</value>
   </data>
   <data name="polarArea" xml:space="preserve">
-    <value>Polarkreisdiagramm</value>
+    <value>Polar-Area-Diagramm</value>
   </data>
   <data name="Dichotomous" xml:space="preserve">
     <value>Dichotom</value>
@@ -252,5 +252,23 @@
   </data>
   <data name="surveyTemplateHeader" xml:space="preserve">
     <value>Umfragetemplate (bisherige Umfragen)</value>
+  </data>
+  <data name="askedPeopleCount" xml:space="preserve">
+    <value>Anzahl der zu befragenden Personen</value>
+  </data>
+  <data name="badAskGroupCount" xml:space="preserve">
+    <value>für eine gute Auswertung wäre eine größere Gruppe von Nöten</value>
+  </data>
+  <data name="goodAskGroupCount" xml:space="preserve">
+    <value>gute Größe für eine Sinnvolle Auswertung</value>
+  </data>
+  <data name="middleAskGroupCount" xml:space="preserve">
+    <value>Anzahl der Befragten ist ok, könnte aber größer sein</value>
+  </data>
+  <data name="SaveAsTemplate" xml:space="preserve">
+    <value>als Template speichern</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>Mitglieder</value>
   </data>
 </root>

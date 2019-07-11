@@ -10,10 +10,10 @@
     <div class="col-lg-6 pl-4 pr-4">
         <div class="row">
             <div class="col-6 pr-0">
-                <button id="trendBtn" onclick="switchToMulti();" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
+                <button id="trendBtn" onclick="switchToMulti()" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
             </div>
             <div class="col-6 pl-0">
-                <button id="singleBtn" onclick="switchToSingle();" class="btn btn-secondary btn-block">Einzelumfrage</button>
+                <button id="singleBtn" onclick="switchToSingle()" class="btn btn-secondary btn-block">Einzelumfrage</button>
             </div>
         </div>
     </div>
@@ -34,14 +34,14 @@
                 <div class="col-md-6">
                     <div class="form-group mb-0">
                         <label for="timeFrom">@Resources.from</label>
-                        @*<input type="time" class="form-control" id="timeFrom">*@
+                        @*<input type="date" class="form-control" id="dateFrom">*@
                         <input type="date" class="form-control" id="dateFrom" value="@DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd")" onchange="loadMultiResultAsync()">
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group mb-0">
                         <label for="timeTwo">@Resources.to</label>
-                        @*<input type="time" class="form-control" id="timeTo">*@
+                        @*<input type="date" class="form-control" id="dateTo">*@
                         <input type="date" class="form-control" id="dateTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="loadMulitResultAsync()">
                     </div>
                 </div>
@@ -81,12 +81,8 @@
 </div>
 
 <script>
-    @*$(function () {
-        $("#singleResultPartial").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + @Model.Surveys.FirstOrDefault().SvyId);
 
-    });*@
-
-    function loadSingleResultAsync() {
+   function loadSingleResultAsync() {
         $("#singleResultPartial").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + $("#Surveys").val());
     }
 
@@ -103,7 +99,7 @@
             });
     }
 
-    var resultType = "mulit";
+    var resultType = "multi";
 
     function switchToMulti() {
         resultType = "multi";
@@ -463,7 +459,7 @@
                     datasets: datasets
                 },
                 options: {
-
+                  
                 }
             });
         }
