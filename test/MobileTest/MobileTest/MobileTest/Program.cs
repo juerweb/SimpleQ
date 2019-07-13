@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Net.Http.Headers;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SimpleQ.Tests.MobileTest
 {
@@ -38,7 +39,7 @@ namespace SimpleQ.Tests.MobileTest
         static string custName;
         static Dictionary<int, string> deps = new Dictionary<int, string>();
 
-        const string SERVER = "https://dev.simpleq.at";
+        const string SERVER = "https://localhost:44338";
         const int YESNO_ID = 1;
         const int SPEC_ID = 4;
         const int FREE_ID = 5;
@@ -120,7 +121,11 @@ namespace SimpleQ.Tests.MobileTest
             {
                 WriteLine("Registration code:");
                 string regCode = ReadLine();
-                using (HttpClient client = new HttpClient())
+
+                //WebRequestHandler handler = new WebRequestHandler();
+                //var cert = X509Certificate.CreateFromCertFile("dev.simpleq.at_ssl_certificate.cer");
+                //handler.ClientCertificates.Add(cert);
+                using (HttpClient client = new HttpClient(/*handler*/))
                 {
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/register?regCode={Uri.EscapeDataString(regCode)}&deviceId=null");

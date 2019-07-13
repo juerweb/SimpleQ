@@ -8,8 +8,8 @@
     border-top-right-radius: unset;
 }
 
-.chartCol:hover{
-    cursor:zoom-in;
+.chartCol{
+    background-color:white!important;
 }
 
 /* The Modal (background) */
@@ -41,8 +41,18 @@
     border-radius: 5px;
 }
 
+.twoWayToggleBorder{
+    border-top: none!important;
+    border-right: none!important;
+}
+
 #circle {
     position:absolute;
     /*right: 100%;*/
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: rgb(242, 247, 255) !important;
 }
 

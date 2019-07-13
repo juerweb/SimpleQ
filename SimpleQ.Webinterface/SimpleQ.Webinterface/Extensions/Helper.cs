@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SimpleQ.Webinterface.Extensions
 {
-    public static class Literal
+    public static class Helper
     {
         public static byte[] GetSHA512(this string str)
         {
@@ -17,9 +17,21 @@ namespace SimpleQ.Webinterface.Extensions
             }
         }
 
-        public static TimeSpan NextMidnight
+        public static DateTime Tomorrow
+        {
+            get => DateTime.Today.AddDays(1);
+        }
+
+        public static TimeSpan UntilNextMidnight
         {
             get => DateTime.Now.AddDays(1).Date - DateTime.Now;
+        }
+
+        public static DateTime NextDateTime(int hour, int minute)
+        {
+            return DateTime.Today.AddHours(hour).AddMinutes(minute) < DateTime.Now
+                ? Tomorrow.AddHours(hour).AddMinutes(minute)
+                : DateTime.Today.AddHours(hour).AddMinutes(minute);
         }
 
         public static string RandomString(int count)

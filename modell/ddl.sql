@@ -60,17 +60,11 @@ create table Customer
 );
 
 
--- Unique-Constraint für Customer.AuthToken
+-- Unique-Constraint f�r Customer.AuthToken
 create unique nonclustered index idx_Customer_AuthToken
 on Customer(AuthToken)
 where AuthToken is not null;
 
-
--- Unique-Constraint für Customer.AuthToken
-create unique nonclustered index idx_AuthToken_NotNull
-on Customer(AuthToken)
-where AuthToken is not null;
-go
 
 -- Rechnung
 -- KUNDENSPEZIFISCH
@@ -104,6 +98,7 @@ create table Person
     DeviceId varchar(max) null,
     AuthToken char(64) null
 );
+
 
 
 -- Unique-Constraint für Customer.AuthToken
@@ -160,7 +155,7 @@ create table Activates
 	TypeId int references AnswerType,
 	primary key (CustCode, TypeId)
 );
-go
+
 
 -- Vordefinierte Antwortmöglichkeit
 -- NICHT KUNDENSPEZIFISCH
@@ -309,55 +304,33 @@ end
 go
 
 
--- FAQ-Eintrag für Supportbereich
--- NICHT KUNDENSPEZIFISCH
-create table FaqEntry
-(
-    FaqTitle varchar(128) primary key,
-    FaqContent varchar(max) not null,
-    IsMobile bit not null
-);
-go
-
--- Zum Berechnen der Per-Click-Kosten bei einer bestimmten Befragtenanzahl
-drop function fn_CalcPricePerClick;
-go
-create function fn_CalcPricePerClick(@amount int, @custCode char(6))
-returns money
-as
+-- Generiert das Authentifikations-Token f�r den Mobil-User
+create trigger tr_PersonIns
+on Person
+after insert as
 begin
-	declare @value money;
-	declare @rebate decimal(5, 2);
+    declare @token char(64);
+    declare @persId int;
+    declare c cursor local for select persId from inserted;
 
-	set @rebate = coalesce((select Rebate from Customer where CustCode = @custCode), 0);
+    open c;
+    fetch c into @persId;
+    while(@@FETCH_STATUS = 0)
+    begin
+        set @token = (select convert(char(64), newid()));
+        while (exists(select * from Person where AuthToken = @token))
+        begin
+            set @token = (select convert(char(64), newid()));
+        end
+        
+        update Person set AuthToken = @token where PersId = @persId;
 
-	if (@amount between 0 and 20)			-- f(x) = 0.125 | 0 <= x <= 20
-		set @value = 0.125;
-	else if (@amount between 21 and 200)	-- f(x) = -0.000135789x + 0.12631578 | 21 <= x <= 200
-		set @value = -0.000135789 * @amount + 0.12631578;
-	else if (@amount between 201 and 5000)	-- f(x) = 0.107*e^(-0.000335*x) | 201 <= x <= 5000
-		set @value = 0.107 * exp(-0.000335 * @amount);
-	else if (@amount > 5000)				-- f(x) = 0.02 | x > 5000
-		set @value = 0.02;
-	else									-- f(x) = -1 | x < 0
-		set @value = -1;
-
-	return @value * (1 - @rebate/100);
+        fetch c into @persId;
+    end
+    close c;
+    deallocate c;
 end
 go
-
-
--- Zum Hashen eines Strings
-drop function fn_GetHash;
-go
-create function fn_GetHash(@str varchar(max))
-returns varbinary(max)
-as
-begin
-	return hashbytes('SHA2_512', @str);
-end
-go
-
 
 
 -- Generiert das Authentifikations-Token für den Mobil-User
