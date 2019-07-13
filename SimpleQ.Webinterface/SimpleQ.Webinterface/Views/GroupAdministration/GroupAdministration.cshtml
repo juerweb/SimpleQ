@@ -48,7 +48,7 @@
             <div id="mailAddressesBox" class="border border-dark mt-2">
                 <div class="row mt-1 mb-1 mr-0 ml-0">
                     <div class="col-9 pr-0 pl-1"><input id="mailAddressInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addMailAddress" /></div>
-                    <div class="col-3 pl-0 pr-1"><button id="mailAddressButton" type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addMailAddress()"><i class="material-icons">&#xe148;</i></button></div>
+                    <div class="col-3 pl-0 pr-1"><button id="mailAddressButton" type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addMailAddress(document.getElementById('mailAddressInput').value);"><i class="material-icons">&#xe148;</i></button></div>
 
                     <div id="mailAddressNotValid" class="alert alert-danger w-100" style="display:none"><strong>@Resources.EmailAddressInvalid</strong></div>
                     <div id="mailAddressAlreadyExists" class="alert alert-danger w-100" style="display:none"><strong>@Resources.EmailAlreadyExists</strong></div>
@@ -57,6 +57,8 @@
 
                 </div>
             </div>
+
+            <button type="button" id="addressListBtn" class="btn btn-primary btn-block mt-2" onclick="$('#importMailAddressesModal').show()"><span class="d-flex justify-content-between"><span>Adressliste hochladen</span><i id="inviteMatesIcon" class="material-icons">&#xe0d0;</i></span></button>
 
         </div>
         <div class="col-md-5 border-left" id="mailDiv">
@@ -95,6 +97,33 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="addNewGroup()">@Resources.Create</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">@Resources.cancel</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="importMailAddressesModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h4 class="modal-title">@Resources.importAddressFile</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                @Resources.importAddressFileInfo
+                <hr />
+                <button class="btn btn-success btn-block" onclick="downloadTemplate()">@Resources.downloadTemplate</button>
+                <hr />
+                <input type="file" name="File Upload" id="csvFileUpload" accept=".csv" />
+                <button class="btn btn-success btn-block mt-2" onclick="uploadCSV(document.getElementById('csvFileUpload')); $('#importMailAddressesModal').hide();">@Resources.uploadChosenFile</button>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="$('#importMailAddressesModal').hide();">@Resources.cancel</button>
             </div>
 
         </div>
@@ -145,6 +174,9 @@
                 }
             }
         });
+
+        
+
     }); // <-- Things to to at startup END
 
     function checkFirstElem() {
@@ -308,6 +340,7 @@
     function mailEditorStartup() {
         $("#mailDiv").hide();
         $("#mailAddressesBox").hide();
+        $("#addressListBtn").hide();
         $("#textEditorDiv").trumbowyg({
             lang: '@Resources.textEditorLanguage'
         });
@@ -320,27 +353,31 @@
             $("#col2").removeClass("col-md-3").addClass("col-md-4");
             $("#mailDiv").show('slide', { direction: 'left' }, 500);
             $("#mailAddressesBox").show('slide', { direction: 'right' }, 500);
-
+            $("#addressListBtn").show('slide', { direction: 'right' }, 500);
             document.getElementById("inviteMatesIcon").innerHTML = "&#xe020;";
         } else {
             $("#col2").removeClass("col-md-4").addClass("col-md-3");
             $("#col1").removeClass("col-md-3").addClass("col-md-4");
             $("#mailDiv").hide('slide', { direction: 'left' }, 500);
             $("#mailAddressesBox").hide('slide', { direction: 'right' }, 500);
+            $("#addressListBtn").hide('slide', { direction: 'right' }, 500);
             document.getElementById("inviteMatesIcon").innerHTML = "&#xe0d0;";
         }
     }
 
     let mailAddresses = [];
 
-    function addMailAddress() {
+    function addMailAddress(input) {
         let ul = document.getElementById("mailAddressUL");
         let inputElem = document.getElementById("mailAddressInput");
-        let input = inputElem.value;
+        //let input = inputElem.value;
 
         if (!validateEmail(input)) {
+            let alertElem = document.getElementById("mailAddressNotValid").innerHTML;
+            document.getElementById("mailAddressNotValid").children[0].innerHTML += "(" + input + ")";
             $("#mailAddressNotValid").show();
-            $('#mailAddressNotValid').delay(1800).fadeOut();
+            $('#mailAddressNotValid').delay(2400).fadeOut();
+            setTimeout(function () { document.getElementById("mailAddressNotValid").innerHTML = alertElem; }, 2600);
             //alert('@Resources.invalidMailAddress');
             inputElem.value = '';
             return;
@@ -351,8 +388,12 @@
             return;
         } else if (mailAddresses.includes(input)) {
             //alert('@Resources.invalidInput');
+            let alertElem = document.getElementById("mailAddressAlreadyExists").innerHTML;
+            document.getElementById("mailAddressAlreadyExists").children[0].innerHTML += "(" + input + ")";
             $("#mailAddressAlreadyExists").show();
-            $('#mailAddressAlreadyExists').delay(1800).fadeOut();
+            $('#mailAddressAlreadyExists').delay(2400).fadeOut();
+            setTimeout(function () { document.getElementById("mailAddressAlreadyExists").innerHTML = alertElem; }, 2600);
+            inputElem.value = '';
             return;
         }
 
@@ -455,4 +496,66 @@
         hiddenElem.value = $("#textEditorDiv").trumbowyg('html');
     }
 
+    function exportChart(type) {
+        //$("#exportModal").show();
+        $("#exportModal").modal({ backdrop: true });
+        exportType = type;
+    }
+
+    function notYetImplemented() {
+        $("#notYetImplementedModal").modal({ backdrop: true });
+    }
+
+    function downloadTemplate() {
+        let csv = "";
+
+        csv += "Name";
+        csv += ";";
+        csv += "E-Mail Adresse";
+
+
+        let hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'Adressen.csv';
+        hiddenElement.click();
+    }
+
+    function uploadCSV(evt) {
+        if (!browserSupportFileUpload()) {
+            alert('The File APIs are not fully supported in this browser!');
+        } else {
+            var data = null;
+            var file = document.getElementById('csvFileUpload').files[0];
+            var reader = new FileReader();
+            reader.readAsText(file);
+            reader.onload = function (event) {
+                var csvData = event.target.result;
+                data = $.csv.toArrays(csvData);
+                if (data && data.length > 0) {
+                    console.log(data);
+                    for (let i = 1; i < data.length; i++) {
+                        let mail = data[i][0].split(";")[1];
+                        console.log(mail);
+                        addMailAddress(mail);
+                    }
+                } else {
+                    alert('No data to import!');
+                }
+            };
+            reader.onerror = function () {
+                alert('Unable to read ' + file.fileName);
+            };
+        }
+    }
+
+
+    //returns if browser is able or not able to upload files
+    function browserSupportFileUpload() {
+        var isCompatible = false;
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            isCompatible = true;
+        }
+        return isCompatible;
+    }
 </script>

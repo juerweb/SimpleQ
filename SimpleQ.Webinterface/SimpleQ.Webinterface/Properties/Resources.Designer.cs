@@ -61,7 +61,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Actions.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Actions ähnelt.
         /// </summary>
         public static string Actions {
             get {
@@ -70,7 +70,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add ähnelt.
         /// </summary>
         public static string add {
             get {
@@ -79,7 +79,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add answer.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add answer ähnelt.
         /// </summary>
         public static string addAnswer {
             get {
@@ -97,7 +97,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add new category.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Add new category ähnelt.
         /// </summary>
         public static string addNewCategory {
             get {
@@ -115,7 +115,16 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Answer.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Already started ähnelt.
+        /// </summary>
+        public static string AlreadyStarted {
+            get {
+                return ResourceManager.GetString("AlreadyStarted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Answer ähnelt.
         /// </summary>
         public static string answer {
             get {
@@ -142,7 +151,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click here to add answers.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click here to add answers ähnelt.
         /// </summary>
         public static string answersButtonTooltip {
             get {
@@ -151,7 +160,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Answer type.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Answer type ähnelt.
         /// </summary>
         public static string answerTypeHeader {
             get {
@@ -178,7 +187,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to For meaningful results a bigger group would be necessary.
+        ///   Sucht eine lokalisierte Zeichenfolge, die For meaningful results a bigger group would be necessary ähnelt.
         /// </summary>
         public static string badAskGroupCount {
             get {
@@ -187,7 +196,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bar.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Bar ähnelt.
         /// </summary>
         public static string bar {
             get {
@@ -205,7 +214,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Billing period in months.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Billing period in months ähnelt.
         /// </summary>
         public static string billingPeriodInMonths {
             get {
@@ -241,7 +250,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to City.
+        ///   Sucht eine lokalisierte Zeichenfolge, die City ähnelt.
         /// </summary>
         public static string city {
             get {
@@ -250,7 +259,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The specified city is invalid.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The specified city is invalid ähnelt.
         /// </summary>
         public static string CityInvalid {
             get {
@@ -259,7 +268,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Close.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Close ähnelt.
         /// </summary>
         public static string close {
             get {
@@ -286,7 +295,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm password.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Confirm password ähnelt.
         /// </summary>
         public static string confirmPassword {
             get {
@@ -295,7 +304,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Content.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Content ähnelt.
         /// </summary>
         public static string content {
             get {
@@ -304,7 +313,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Count.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Count ähnelt.
         /// </summary>
         public static string count {
             get {
@@ -313,7 +322,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Country.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Country ähnelt.
         /// </summary>
         public static string country {
             get {
@@ -322,7 +331,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create ähnelt.
         /// </summary>
         public static string Create {
             get {
@@ -331,7 +340,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create new group.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create new group ähnelt.
         /// </summary>
         public static string CreateNewGroup {
             get {
@@ -367,7 +376,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer code.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Customer code ähnelt.
         /// </summary>
         public static string customerCode {
             get {
@@ -376,7 +385,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Customer name.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Customer name ähnelt.
         /// </summary>
         public static string customerName {
             get {
@@ -385,7 +394,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Data storage period in months.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Data storage period in months ähnelt.
         /// </summary>
         public static string dataRetentionPeriodInMonths {
             get {
@@ -412,7 +421,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You have not created any groups yet, create your first one in group administration.
+        ///   Sucht eine lokalisierte Zeichenfolge, die You have not created any groups yet, create your first one in group administration ähnelt.
         /// </summary>
         public static string defineGroupsModalInfo {
             get {
@@ -439,7 +448,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Diagram.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Diagram ähnelt.
         /// </summary>
         public static string diagram {
             get {
@@ -448,7 +457,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Left diagram type.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Left diagram type ähnelt.
         /// </summary>
         public static string DiagramTypeLeft {
             get {
@@ -457,7 +466,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Right diagram type.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Right diagram type ähnelt.
         /// </summary>
         public static string DiagramTypeRight {
             get {
@@ -466,7 +475,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dichotomous.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Dichotomous ähnelt.
         /// </summary>
         public static string Dichotomous {
             get {
@@ -475,7 +484,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Don&apos;t know.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Don&apos;t know ähnelt.
         /// </summary>
         public static string DontKnow {
             get {
@@ -484,7 +493,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Doughnut.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Doughnut ähnelt.
         /// </summary>
         public static string doughnut {
             get {
@@ -520,7 +529,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Email ähnelt.
         /// </summary>
         public static string email {
             get {
@@ -529,7 +538,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The specified email address is not valid.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The specified email address is not valid ähnelt.
         /// </summary>
         public static string EmailAddressInvalid {
             get {
@@ -556,7 +565,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sending email failed\nPlease try again later.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sending email failed\nPlease try again later ähnelt.
         /// </summary>
         public static string EmailSendingFailed {
             get {
@@ -565,7 +574,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email sent.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Email sent ähnelt.
         /// </summary>
         public static string EmailSent {
             get {
@@ -601,7 +610,16 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Finish.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Export results ähnelt.
+        /// </summary>
+        public static string ExportResults {
+            get {
+                return ResourceManager.GetString("ExportResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Finish ähnelt.
         /// </summary>
         public static string finish {
             get {
@@ -610,7 +628,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Forgot passwort.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Forgot passwort ähnelt.
         /// </summary>
         public static string forgotPassword {
             get {
@@ -619,7 +637,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Free text.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Free text ähnelt.
         /// </summary>
         public static string FreeText {
             get {
@@ -628,7 +646,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to from.
+        ///   Sucht eine lokalisierte Zeichenfolge, die from ähnelt.
         /// </summary>
         public static string from {
             get {
@@ -637,7 +655,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Appropriate group size for meaningful results.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Appropriate group size for meaningful results ähnelt.
         /// </summary>
         public static string goodAskGroupCount {
             get {
@@ -646,7 +664,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to registration.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Go to registration ähnelt.
         /// </summary>
         public static string goToRegistration {
             get {
@@ -655,7 +673,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Green.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Green ähnelt.
         /// </summary>
         public static string Green {
             get {
@@ -664,7 +682,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group administration.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Group administration ähnelt.
         /// </summary>
         public static string groupAdministrationHeader {
             get {
@@ -673,7 +691,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There is already a group with this name.
+        ///   Sucht eine lokalisierte Zeichenfolge, die There is already a group with this name ähnelt.
         /// </summary>
         public static string groupAlreadyExists {
             get {
@@ -682,7 +700,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group code.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Group code ähnelt.
         /// </summary>
         public static string groupCode {
             get {
@@ -691,7 +709,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group name.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Group name ähnelt.
         /// </summary>
         public static string GroupName {
             get {
@@ -700,7 +718,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Groups.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Groups ähnelt.
         /// </summary>
         public static string groups {
             get {
@@ -709,7 +727,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Group selection.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Group selection ähnelt.
         /// </summary>
         public static string GroupSelection {
             get {
@@ -754,7 +772,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid input.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid input ähnelt.
         /// </summary>
         public static string invalidInput {
             get {
@@ -763,7 +781,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid link.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid link ähnelt.
         /// </summary>
         public static string InvalidLink {
             get {
@@ -772,7 +790,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The entered email address in invalid.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The entered email address in invalid ähnelt.
         /// </summary>
         public static string invalidMailAddress {
             get {
@@ -781,7 +799,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid password.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invalid password ähnelt.
         /// </summary>
         public static string InvalidPassword {
             get {
@@ -790,7 +808,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invitation to SimpleQ.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invitation to SimpleQ ähnelt.
         /// </summary>
         public static string invitationToSimpleQ {
             get {
@@ -799,7 +817,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invite members.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Invite members ähnelt.
         /// </summary>
         public static string InviteMembers {
             get {
@@ -808,7 +826,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Language.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Language ähnelt.
         /// </summary>
         public static string language {
             get {
@@ -889,7 +907,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Line.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Line ähnelt.
         /// </summary>
         public static string line {
             get {
@@ -898,7 +916,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Listing (absolute, %).
+        ///   Sucht eine lokalisierte Zeichenfolge, die Listing (absolute, %) ähnelt.
         /// </summary>
         public static string listing {
             get {
@@ -907,7 +925,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Login.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Login ähnelt.
         /// </summary>
         public static string login {
             get {
@@ -925,7 +943,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Medium.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Medium ähnelt.
         /// </summary>
         public static string medium {
             get {
@@ -943,7 +961,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Sufficient group size.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Sufficient group size ähnelt.
         /// </summary>
         public static string middleAskGroupCount {
             get {
@@ -952,7 +970,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Minimize navigation.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Minimize navigation ähnelt.
         /// </summary>
         public static string minimizeNav {
             get {
@@ -961,7 +979,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The customer name must not be empty.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The customer name must not be empty ähnelt.
         /// </summary>
         public static string NameMustNotBeEmpty {
             get {
@@ -970,7 +988,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New category name.
+        ///   Sucht eine lokalisierte Zeichenfolge, die New category name ähnelt.
         /// </summary>
         public static string newCategoryName {
             get {
@@ -979,7 +997,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to New group.
+        ///   Sucht eine lokalisierte Zeichenfolge, die New group ähnelt.
         /// </summary>
         public static string NewGroup {
             get {
@@ -988,7 +1006,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Next.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Next ähnelt.
         /// </summary>
         public static string next {
             get {
@@ -997,7 +1015,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No.
+        ///   Sucht eine lokalisierte Zeichenfolge, die No ähnelt.
         /// </summary>
         public static string No {
             get {
@@ -1006,7 +1024,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No template.
+        ///   Sucht eine lokalisierte Zeichenfolge, die No template ähnelt.
         /// </summary>
         public static string noTemplate {
             get {
@@ -1069,7 +1087,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password changed.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Password changed ähnelt.
         /// </summary>
         public static string PasswordChanged {
             get {
@@ -1078,7 +1096,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Medium password.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Medium password ähnelt.
         /// </summary>
         public static string PasswordMedium {
             get {
@@ -1087,7 +1105,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The entered passwords do not match.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The entered passwords do not match ähnelt.
         /// </summary>
         public static string PasswordsDontMatch {
             get {
@@ -1096,7 +1114,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strong password.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Strong password ähnelt.
         /// </summary>
         public static string PasswordStrong {
             get {
@@ -1105,7 +1123,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weak password.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Weak password ähnelt.
         /// </summary>
         public static string PasswordWeak {
             get {
@@ -1114,7 +1132,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Payment method.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Payment method ähnelt.
         /// </summary>
         public static string paymentMethod {
             get {
@@ -1141,7 +1159,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Period.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Period ähnelt.
         /// </summary>
         public static string Period {
             get {
@@ -1150,7 +1168,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click to repeat a question certain times automatically.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click to repeat a question certain times automatically ähnelt.
         /// </summary>
         public static string periodicQuestionTooltip {
             get {
@@ -1159,7 +1177,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Periodic survey....
+        ///   Sucht eine lokalisierte Zeichenfolge, die Periodic survey... ähnelt.
         /// </summary>
         public static string PeriodicSurvey {
             get {
@@ -1186,7 +1204,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please confirm your email address.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please confirm your email address ähnelt.
         /// </summary>
         public static string PleaseConfirmYourEmail {
             get {
@@ -1195,7 +1213,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please define groups first.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Please define groups first ähnelt.
         /// </summary>
         public static string pleaseDefineGroupsFirst {
             get {
@@ -1204,7 +1222,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The specified ZIP code is invalid.
+        ///   Sucht eine lokalisierte Zeichenfolge, die The specified ZIP code is invalid ähnelt.
         /// </summary>
         public static string PlzInvalid {
             get {
@@ -1213,7 +1231,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Polar area.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Polar area ähnelt.
         /// </summary>
         public static string polarArea {
             get {
@@ -1258,7 +1276,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ZIP code.
+        ///   Sucht eine lokalisierte Zeichenfolge, die ZIP code ähnelt.
         /// </summary>
         public static string postCode {
             get {
@@ -1267,7 +1285,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Predicted price.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Predicted price ähnelt.
         /// </summary>
         public static string predictedPrice {
             get {
@@ -1276,7 +1294,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Preferred billing date for each month.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Preferred billing date for each month ähnelt.
         /// </summary>
         public static string preferredBillingDay {
             get {
@@ -1321,7 +1339,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Date.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Date ähnelt.
         /// </summary>
         public static string questionTimeDateHeader {
             get {
@@ -1330,7 +1348,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Time ähnelt.
         /// </summary>
         public static string questionTimeTimeHeader {
             get {
@@ -1339,7 +1357,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Radar.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Radar ähnelt.
         /// </summary>
         public static string radar {
             get {
@@ -1348,7 +1366,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Red.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Red ähnelt.
         /// </summary>
         public static string Red {
             get {
@@ -1357,7 +1375,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registered successfully.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Registered successfully ähnelt.
         /// </summary>
         public static string RegisteredSuccessfully {
             get {
@@ -1366,7 +1384,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reset password.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Reset password ähnelt.
         /// </summary>
         public static string resetPassword {
             get {
@@ -1402,7 +1420,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save as template.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Save as template ähnelt.
         /// </summary>
         public static string SaveAsTemplate {
             get {
@@ -1411,7 +1429,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save password.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Save password ähnelt.
         /// </summary>
         public static string SavePassword {
             get {
@@ -1420,7 +1438,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected group:.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Selected group: ähnelt.
         /// </summary>
         public static string SelectedGroup {
             get {
@@ -1447,7 +1465,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Settings ähnelt.
         /// </summary>
         public static string settings {
             get {
@@ -1456,7 +1474,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click here to get the results of each survey seperately.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click here to get the results of each survey seperately ähnelt.
         /// </summary>
         public static string singleButtonTooltip {
             get {
@@ -1465,7 +1483,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Single evaluation.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Single evaluation ähnelt.
         /// </summary>
         public static string singleEvaluation {
             get {
@@ -1474,7 +1492,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Single or trend evaluation?.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Single or trend evaluation? ähnelt.
         /// </summary>
         public static string singleOrTrendEvaluation {
             get {
@@ -1483,7 +1501,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Single survey evaluation.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Single survey evaluation ähnelt.
         /// </summary>
         public static string singleQuestionEvaluation {
             get {
@@ -1519,7 +1537,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stay logged in.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Stay logged in ähnelt.
         /// </summary>
         public static string stayLoggedIn {
             get {
@@ -1528,7 +1546,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Street and house number.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Street and house number ähnelt.
         /// </summary>
         public static string streetAndHousenumber {
             get {
@@ -1537,7 +1555,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Street or street number invalid.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Street or street number invalid ähnelt.
         /// </summary>
         public static string StreetInvalid {
             get {
@@ -1546,7 +1564,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Strong.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Strong ähnelt.
         /// </summary>
         public static string strong {
             get {
@@ -1555,7 +1573,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Subject.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Subject ähnelt.
         /// </summary>
         public static string subject {
             get {
@@ -1582,7 +1600,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Survey.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Survey ähnelt.
         /// </summary>
         public static string survey {
             get {
@@ -1609,7 +1627,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create survey.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Create survey ähnelt.
         /// </summary>
         public static string surveyCreationHeader {
             get {
@@ -1627,7 +1645,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Survey results.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Survey results ähnelt.
         /// </summary>
         public static string surveyResultsHeader {
             get {
@@ -1636,7 +1654,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Choose template (recent surveys).
+        ///   Sucht eine lokalisierte Zeichenfolge, die Choose template (recent surveys) ähnelt.
         /// </summary>
         public static string surveyTemplateHeader {
             get {
@@ -1645,7 +1663,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check if you intend to repeat the survey later.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Check if you intend to repeat the survey later ähnelt.
         /// </summary>
         public static string TemplateDescription {
             get {
@@ -1663,7 +1681,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Timespan.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Timespan ähnelt.
         /// </summary>
         public static string timespan {
             get {
@@ -1681,7 +1699,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to To group-administration.
+        ///   Sucht eine lokalisierte Zeichenfolge, die To group-administration ähnelt.
         /// </summary>
         public static string toGroupAdministration {
             get {
@@ -1690,7 +1708,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Go to login.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Go to login ähnelt.
         /// </summary>
         public static string ToLogin {
             get {
@@ -1699,7 +1717,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Traffic lights (red, yellow, green).
+        ///   Sucht eine lokalisierte Zeichenfolge, die Traffic lights (red, yellow, green) ähnelt.
         /// </summary>
         public static string TrafficLight {
             get {
@@ -1708,7 +1726,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Click here to get a trend view of all survey results.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Click here to get a trend view of all survey results ähnelt.
         /// </summary>
         public static string trendButtonTooltip {
             get {
@@ -1717,7 +1735,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Trend evaluation.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Trend evaluation ähnelt.
         /// </summary>
         public static string trendEvaluation {
             get {
@@ -1726,7 +1744,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  type.
+        ///   Sucht eine lokalisierte Zeichenfolge, die  type ähnelt.
         /// </summary>
         public static string typeSmall {
             get {
@@ -1735,7 +1753,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unit.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Unit ähnelt.
         /// </summary>
         public static string Unit {
             get {
@@ -1762,7 +1780,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weak.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Weak ähnelt.
         /// </summary>
         public static string weak {
             get {
@@ -1771,7 +1789,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Weeks.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Weeks ähnelt.
         /// </summary>
         public static string weeks {
             get {
@@ -1780,7 +1798,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yellow.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Yellow ähnelt.
         /// </summary>
         public static string Yellow {
             get {
@@ -1789,7 +1807,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Yes ähnelt.
         /// </summary>
         public static string Yes {
             get {
@@ -1798,7 +1816,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Yes/No.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Yes/No ähnelt.
         /// </summary>
         public static string YesNo {
             get {
@@ -1816,7 +1834,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can log in now.
+        ///   Sucht eine lokalisierte Zeichenfolge, die You can log in now ähnelt.
         /// </summary>
         public static string youCanNowLogin {
             get {
@@ -1825,7 +1843,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your customer code:.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Your customer code: ähnelt.
         /// </summary>
         public static string YourCustCode {
             get {

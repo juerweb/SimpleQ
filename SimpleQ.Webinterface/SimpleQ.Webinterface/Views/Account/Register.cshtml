@@ -20,6 +20,18 @@
                 </div>
 
                 <div class="form-group">
+                    @Html.LabelFor(c => c.FirstName, Resources.responsiblePersonFirstName, new { @class = "ml-2" })
+                    @Html.TextBoxFor(c => c.FirstName, new { @class = "form-control", required = "required", id = "firstName" })
+                    @Html.ValidationMessageFor(c => c.CustEmail)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.LastName, Resources.responsiblePersonLastName, new { @class = "ml-2" })
+                    @Html.TextBoxFor(c => c.LastName, new { @class = "form-control", required = "required", id = "lastName" })
+                    @Html.ValidationMessageFor(c => c.CustEmail)
+                </div>
+
+                <div class="form-group">
                     @Html.LabelFor(c => c.CustEmail, Resources.email, new { @class = "ml-2" })
                     @Html.TextBoxFor(c => c.CustEmail, new { @class = "form-control", required = "required", id = "mail" })
                     @Html.ValidationMessageFor(c => c.CustEmail)
@@ -91,30 +103,25 @@
             <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
                 <div class="form-group">
                     @Html.LabelFor(c => c.DataStoragePeriod, Resources.dataRetentionPeriodInMonths, new { @class = "ml-2" })
+                    <a class="btn" data-toggle="tooltip" title="@Resources.dataRetentionPeriodInMonthsDesc"><i class="material-icons hover-color-white">info_outline</i></a>
                     @Html.TextBoxFor(c => c.DataStoragePeriod, new { @class = "form-control", required = "required", @type = "number", @Value = "12", min = 1, max = 24, step = 1 })
                     @Html.ValidationMessageFor(c => c.DataStoragePeriod)
                 </div>
 
                 <div class="form-group">
                     @Html.LabelFor(c => c.AccountingPeriod, Resources.billingPeriodInMonths, new { @class = "ml-2" })
+                    <a class="btn" data-toggle="tooltip" title="@Resources.billingPeriodInMonthsDesc"><i class="material-icons hover-color-white">info_outline</i></a>
                     @Html.DropDownListFor(c => c.AccountingPeriod, new SelectList(new[] { 1, 3, 6, 12 }), new { @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(c => c.AccountingPeriod)
                 </div>
 
                 <div class="form-group">
                     @Html.Label("day", Resources.preferredBillingDay, new { @class = "ml-2" })
+                    <a class="btn" data-toggle="tooltip" title="@Resources.preferredBillingDayDesc"><i class="material-icons hover-color-white">info_outline</i></a>
                     @Html.TextBox("day", "", new { @class = "form-control", @type = "number", min = 1, max = 31, step = 1, @Value = "1", required = "required" })
                     @Html.ValidationMessage("day")
-                    @*@Html.LabelFor(c => c.AccountingDate, Resources.preferredBillingDay, new { @class = "ml-2" })
-                    @Html.EditorFor(model => model.AccountingDate, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "0.01", @value = "0" } })
-                    @Html.ValidationMessageFor(c => c.AccountingDate)*@
                 </div>
 
-                @*<div class="form-group">
-                    @Html.LabelFor(c => c.PaymentMethodId, Resources.paymentMethod, new { @class = "ml-2" })
-                    @Html.DropDownListFor(c => c.PaymentMethodId, new SelectList(ViewBag.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control", required = "required" })
-                    @Html.ValidationMessageFor(c => c.PaymentMethodId)
-                </div>*@
                 @Html.AntiForgeryToken()
             </div>
             <div class="row">
@@ -152,6 +159,8 @@
             // Keep chainability
             return this;
         };
+
+        $('[data-toggle="tooltip"]').tooltip(); 
 
         $("form").preventDoubleSubmission();
     });

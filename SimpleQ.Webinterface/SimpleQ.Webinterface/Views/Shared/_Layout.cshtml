@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="~/Content/SurveyResults.css" />
     <link rel="stylesheet" href="~/Content/SurveyCreation.css" />
     <link rel="stylesheet" href="~/Content/Site.css" />
-    <link rel="stylesheet" href="~/Content/Current.css"/>
+    <link rel="stylesheet" href="~/Content/Current.css" />
     <link rel="stylesheet" href="~/Content/GroupAdministration.css" />
     <link rel="stylesheet" href="~/Content/device-mockups/device-mockups.css" />
     <link rel="stylesheet" href="~/Scripts/texteditor/ui/trumbowyg.css"><!--Texteditor-->
@@ -40,6 +40,9 @@
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
 
+    <!--jQuery csv plugin-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
+
 
     <script src="@Url.Content("~/Scripts/Chart.js")"></script>
     <script src="@Url.Content("~/Scripts/chartjs-plugin-labels.js")"></script>
@@ -47,7 +50,7 @@
     <script type="text/javascript" src="@Url.Content("~/Scripts/texteditor/langs/de.min.js")"></script>
 
 
-    @{ 
+    @{
         var displaySmallCol = "none";
         var displayWideCol = "block";
 
@@ -62,16 +65,18 @@
         var mainBG = "";
         var theme = "btn-dark-theme";
         var iconClass = "icon-white";
+        var headerColor = "headerDark";
 
         if (Request.Cookies["bgImg"] != null)
         {
-            if(Request.Cookies["bgImg"].Value == "sun")
+            if (Request.Cookies["bgImg"].Value == "sun")
             {
                 leftColBG = "background-image: url('/Content/Images/leftColBG.jpg');";
                 topBG = "background-image: url('/Content/Images/leftColBG.jpg');";
                 mainBG = "background-image: url('/Content/Images/mainBG.jpg')";
                 theme = "btn-light-theme";
                 iconClass = "icon-blue";
+                headerColor = "headerLight";
             }
         }
 
@@ -149,7 +154,7 @@
                 console.log("dark theme wird dark gsetzt");
             } else {
                 setCookie("darkTheme", false, 1000);
-            }        
+            }
         }
 
         function changeBG() {
@@ -188,7 +193,7 @@
                 $(".navbar-icon").removeClass("icon-blue").addClass("icon-white");
                 $("#hideNavigationText").css("color", "white");
                 $("#logout").removeClass("btn-outline-primary").addClass("btn-outline-light");
-                $(".header").removeClass("headerLight").addClass("headerDark");                
+                $(".header").removeClass("headerLight").addClass("headerDark");
             }
         }
 
@@ -221,12 +226,7 @@
             </a>         
         </div>
         <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
-            @*<div class="card" style="margin-top:auto; margin-bottom:auto">
-                    <div class="card-body p-1">
-                        <h1 class="m-0 black-stroke header">Überschrift</h1>
-                    </div>
-                </div>*@
-            <h1 class="black-stroke header"></h1>
+            <h1 class="black-stroke header @headerColor"></h1>
         </div>
         <div class="col-md-4 d-flex justify-content-end align-items-center">
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
