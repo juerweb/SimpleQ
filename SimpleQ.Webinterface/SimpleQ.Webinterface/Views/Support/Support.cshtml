@@ -2,12 +2,13 @@
 @using SimpleQ.Webinterface.Properties
 @model SimpleQ.Webinterface.Models.ViewModels.SupportModel
 
-<div class="row pl-4 mt-1 ml-0 mr-0">
-    <h2>Support</h2>
+<div id="changesOk" class="alert alert-success" style="display:none">
+    <strong>Email erfolgreich gesendet.</strong>
 </div>
-<div class="row mt-1 ml-0 mr-0">
+
+<div class="row mt-1 ml-0 mr-0 mt-3">
     <div class="col-md-6">
-        <h4 class="text-center">Häufige Fragestellungen</h4>
+        <h4 class="text-center">@ResourcesN.Faq</h4>
         <div class="tab-content mt-5" id="faq-tab-content">
             <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
                 <div class="accordion" id="accordion-tab-1">
@@ -36,24 +37,54 @@
         </div>
     </div>
     <div class="col-md-6">
-        <h4 class="text-center">Stelle eine Frage</h4>
-        @using (Html.BeginForm("AskQuestion", "Support", FormMethod.Post))
+        <h4 class="text-center">@ResourcesN.AskAQuestion</h4>
+        @using (Html.BeginForm("AskQuestion", "Support", FormMethod.Post, new { id = "formular" }))
         {
             <div class="form-group mt-2">
-                @Html.LabelFor(m => m.QuestionCatgeory, "Fragekategorie")
-                @Html.DropDownListFor(m => m.QuestionCatgeory, new SelectList(new[] { "1", "2", "3" }), new { @class = "form-control mr-0" })
+                @Html.LabelFor(m => m.QuestionCatgeory, ResourcesN.QuestionCategory)
+                @Html.DropDownListFor(m => m.QuestionCatgeory, new SelectList(new[] { Resources.ProductQuestion, Resources.PaymentQuestion, Resources.OtherQuestion }), new { @class = "form-control mr-0" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.QuestionText, "Fragestellung")
+                @Html.LabelFor(m => m.Email, ResourcesN.Email)
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0", required = "required" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.QuestionText, ResourcesN.Question)
                 @Html.TextAreaFor(m => m.QuestionText, new { @class = "form-control mr-0", required = "required" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Email, "Email")
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0", required="required" })
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-block mt-3">Frage stellen</button>
+                <button type="submit" class="btn btn-primary btn-block mt-3">@ResourcesN.AskQuestion</button>
             </div>
         }
     </div>
 </div>
+
+<script>
+	function wait(ms){
+		$('#changesOk').css("display", "block");
+        $('#changesOk').delay(1000).fadeOut();
+	   var start = new Date().getTime();
+	   var end = start;
+	   while(end < start + ms) {
+		 end = new Date().getTime();
+	  }
+	}
+
+	function submited(){
+		$('#changesOk').css("display", "block");
+        $('#changesOk').delay(1000).fadeOut();
+	}
+	$('#formular').submit(function() {
+		$("#Email").val("");
+		$("#QuestionText").val("");
+		wait(2000);
+		return true; 
+	});
+    $(function () {
+        //document.getElementById("header").innerHTML = "@Resources.support"; //set Header
+        let tops = document.getElementsByClassName("header");
+        tops[0].innerHTML = "@Resources.support";
+        tops[1].innerHTML = "@Resources.support";
+    });
+
+</script>

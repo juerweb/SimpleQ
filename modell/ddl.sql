@@ -32,7 +32,7 @@ create table PaymentMethod
 	PaymentMethodId int primary key,
 	PaymentMethodDesc varchar(max) not null
 );
-go
+
 
 -- Kunde
 create table Customer
@@ -48,7 +48,6 @@ create table Customer
 	Plz varchar(16) not null,
 	City varchar(max) not null,
 	Country varchar(max) not null,
-	LanguageCode char(3) not null,
 	DataStoragePeriod int not null check(DataStoragePeriod > 0), -- in Monaten
 	AccountingPeriod int not null check(AccountingPeriod in (1, 3, 6, 12)), -- in Monaten
     AccountingDate date not null,
@@ -59,9 +58,15 @@ create table Customer
 	LastTokenGenerated datetime null,
 	Rebate int not null default(0) check(Rebate between 0 and 100)
 );
-go
 
--- Unique-Constraint f¸r Customer.AuthToken
+
+-- Unique-Constraint f√ºr Customer.AuthToken
+create unique nonclustered index idx_Customer_AuthToken
+on Customer(AuthToken)
+where AuthToken is not null;
+
+
+-- Unique-Constraint f√ºr Customer.AuthToken
 create unique nonclustered index idx_AuthToken_NotNull
 on Customer(AuthToken)
 where AuthToken is not null;
@@ -78,7 +83,7 @@ create table Bill --Clinton
 	[Sent] bit not null,
 	Paid bit not null
 );
-go
+
 
 -- Abteilung
 -- KUNDENSPEZIFISCH
@@ -89,16 +94,22 @@ create table Department
 	CustCode char(6) collate Latin1_General_CS_AS not null references Customer,
     primary key (DepId, CustCode)
 );
-go
+
 
 -- Befragte Person
 -- KUNDENSPEZIFISCH
 create table Person
 (
 	PersId int identity primary key,
-    DeviceId varchar(max) null
+    DeviceId varchar(max) null,
+    AuthToken char(64) null
 );
-go
+
+
+-- Unique-Constraint f√ºr Customer.AuthToken
+create unique nonclustered index idx_Person_AuthToken
+on Person(AuthToken)
+where AuthToken is not null;
 
 -- In Abteilung angestellte Personen
 -- KUNDENSPEZIFISCH
@@ -110,7 +121,7 @@ create table Employs
     primary key (DepId, CustCode, PersId),
     foreign key (DepId, CustCode) references Department
 );
-go
+
 
 -- Fragetyp (Dichotom, Polytom, ...)
 -- NICHT KUNDENSPEZIFISCH
@@ -119,7 +130,7 @@ create table BaseQuestionType
     BaseId int primary key,
     BaseDesc varchar(max) not null
 );
-go
+
 
 -- Beantwortungsart
 -- NICHT KUNDENSPEZIFISCH
@@ -129,9 +140,19 @@ create table AnswerType
 	TypeDesc varchar(max) not null,
     BaseId int not null references BaseQuestionType
 );
-go
 
--- Vom Kunden aktivierte Beantwortungsarten (standardm‰ﬂig alle)
+
+-- Vom Kunden aktivierte Beantwortungsarten (standardm√§√üig alle)
+-- KUNDENSPEZIFISCH
+create table Activates
+(
+	CustCode char(6) collate Latin1_General_CS_AS references Customer,
+	TypeId int references AnswerType,
+	primary key (CustCode, TypeId)
+);
+
+
+-- Vom Kunden aktivierte Beantwortungsarten (standardm√§√üig alle)
 -- KUNDENSPEZIFISCH
 create table Activates
 (
@@ -141,7 +162,7 @@ create table Activates
 );
 go
 
--- Vordefinierte Antwortmˆglichkeit
+-- Vordefinierte Antwortm√∂glichkeit
 -- NICHT KUNDENSPEZIFISCH
 create table PredefinedAnswerOption
 (
@@ -149,7 +170,7 @@ create table PredefinedAnswerOption
     PreAnsText varchar(max) not null,
     TypeId int not null references AnswerType
 );
-go
+
 
 -- Umfragekategorie
 -- KUNDENSPEZIFISCH
@@ -161,7 +182,7 @@ create table SurveyCategory
 	Deactivated bit not null default 0,
     primary key (CatId, CustCode),
 );
-go
+
 
 -- Umfrage
 -- KUNDENSPEZIFISCH
@@ -178,10 +199,11 @@ create table Survey
 	TypeId int not null references AnswerType,
 	Template bit not null default 0,
 	[Sent] bit not null default 0,
+	Period bigint null default null,
     foreign key (CatId, CustCode) references SurveyCategory,
 	check (StartDate < EndDate)
 );
-go
+
 
 -- Mit Umfrage befragte Abteilungen
 -- KUNDENSPEZIFISCH
@@ -193,9 +215,9 @@ create table Asking
 	primary key (SvyId, DepId, CustCode),
     foreign key (DepId, CustCode) references Department
 );
-go
 
--- Antwortmˆglichkeit
+
+-- Antwortm√∂glichkeit
 -- KUNDENSPEZIFISCH
 create table AnswerOption
 (
@@ -204,7 +226,7 @@ create table AnswerOption
 	AnsText varchar(max) not null,
 	FirstPosition bit null default null -- 1: ganz vorne, 0: ganz hinten, NULL: egal
 );
-go
+
 
 -- Antwort auf eine Umfrage
 -- KUNDENSPEZIFISCH
@@ -214,9 +236,9 @@ create table Vote
 	VoteText varchar(max) null, -- optional, nur wenn Antworttyp 1-Wort-Antwort
 	VoteDate datetime null
 );
-go
 
--- Mit Umfragenantwort ausgew‰hlte Antwortmˆglichkeit(en)
+
+-- Mit Umfragenantwort ausgew√§hlte Antwortm√∂glichkeit(en)
 -- KUNDENSPEZIFISCH
 create table Chooses
 (
@@ -224,20 +246,70 @@ create table Chooses
     AnsId int not null references AnswerOption
     primary key (VoteId, AnsId)
 );
-go
 
 
--- DSGVO-spezifische Bestimmung
+
+-- Datenspezifische Bestimmung
 -- NICHT KUNDENSPEZIFISCH
 create table DataConstraint
 (
 	ConstrName varchar(512) primary key,
 	ConstrValue int not null,
 );
+
+
+
+-- FAQ-Eintrag f√ºr Supportbereich
+-- NICHT KUNDENSPEZIFISCH
+create table FaqEntry
+(
+    FaqTitle varchar(128) primary key,
+    FaqContent varchar(max) not null,
+    IsMobile bit not null
+);
+
+
+-- Zum Berechnen der Per-Click-Kosten bei einer bestimmten Befragtenanzahl
+drop function fn_CalcPricePerClick;
+go
+create function fn_CalcPricePerClick(@amount int, @custCode char(6))
+returns money
+as
+begin
+	declare @value money;
+	declare @rebate decimal(5, 2);
+
+	set @rebate = coalesce((select Rebate from Customer where CustCode = @custCode), 0);
+
+	if (@amount between 0 and 20)			-- f(x) = 0.125 | 0 <= x <= 20
+		set @value = 0.125;
+	else if (@amount between 21 and 200)	-- f(x) = -0.000135789x + 0.12631578 | 21 <= x <= 200
+		set @value = -0.000135789 * @amount + 0.12631578;
+	else if (@amount between 201 and 5000)	-- f(x) = 0.107*e^(-0.000335*x) | 201 <= x <= 5000
+		set @value = 0.107 * exp(-0.000335 * @amount);
+	else if (@amount > 5000)				-- f(x) = 0.02 | x > 5000
+		set @value = 0.02;
+	else									-- f(x) = -1 | x < 0
+		set @value = -1;
+
+	return @value * (1 - @rebate/100);
+end
 go
 
 
--- FAQ-Eintrag f¸r Supportbereich
+-- Zum Hashen eines Strings
+drop function fn_GetHash;
+go
+create function fn_GetHash(@str varchar(max))
+returns varbinary(max)
+as
+begin
+	return hashbytes('SHA2_512', @str);
+end
+go
+
+
+-- FAQ-Eintrag f√ºr Supportbereich
 -- NICHT KUNDENSPEZIFISCH
 create table FaqEntry
 (
@@ -288,7 +360,35 @@ go
 
 
 
--- Hasht das Passwort und setzt das im Klartext Eingegebene NULL, aktiviert standardm‰ﬂig alle AnswerTypes f¸r den neuen Kunden
+-- Generiert das Authentifikations-Token f√ºr den Mobil-User
+create trigger tr_PersonIns
+on Person
+after insert as
+begin
+    declare @token char(64);
+    declare @persId int;
+    declare c cursor local for select persId from inserted;
+
+    open c;
+    fetch c into @persId;
+    while(@@FETCH_STATUS = 0)
+    begin
+        set @token = (select convert(char(64), newid()));
+        while (exists(select * from Person where AuthToken = @token))
+        begin
+            set @token = (select convert(char(64), newid()));
+        end
+        
+        update Person set AuthToken = @token where PersId = @persId;
+
+        fetch c into @persId;
+    end
+    close c;
+    deallocate c;
+end
+go
+
+-- Hasht das Passwort und setzt das im Klartext Eingegebene NULL, aktiviert standardm√§√üig alle AnswerTypes f√ºr den neuen Kunden
 create trigger tr_CustomerIns
 on Customer
 after insert as
@@ -321,7 +421,7 @@ begin
 end
 go
 
--- Hasht das Passwort und setzt das im Klartext Eingegebene NULL (nach Passwort‰nderung)
+-- Hasht das Passwort und setzt das im Klartext Eingegebene NULL (nach Passwort√§nderung)
 create trigger tr_CustomerUpd
 on Customer
 after update as
@@ -354,7 +454,7 @@ go
 
 
 
--- F¸gt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortmˆglichkeit ein
+-- F√ºgt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortm√∂glichkeit ein
 create trigger tr_SurveyIns
 on Survey
 after insert as
@@ -382,7 +482,7 @@ begin
 end
 go
 
--- F¸gt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortmˆglichkeit ein
+-- F√ºgt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortm√∂glichkeit ein
 create trigger tr_SurveyUpd
 on Survey
 after update as
@@ -395,7 +495,9 @@ begin
         open c;
         fetch c into @svyId, @typeId;
 
-        delete from AnswerOption where SvyId = @svyId;
+        delete from AnswerOption
+        where SvyId = @svyId
+        and AnsText in (select PreAnsText from PredefinedAnswerOption);
 
         while(@@FETCH_STATUS = 0)
         begin
@@ -413,7 +515,7 @@ end
 go
 
 
--- Lˆscht ggf. Umfragekategorien falls diese als deaktiviert gekennzeichnet wurden und nicht mehr verwendet werden
+-- L√∂scht ggf. Umfragekategorien falls diese als deaktiviert gekennzeichnet wurden und nicht mehr verwendet werden
 create trigger tr_SurveyDel
 on Survey
 after delete as
@@ -450,7 +552,7 @@ end
 go
 
 
--- Zum ‹berpr¸fen, ob je Vote nur f¸r AnswerOptions einer einzigen Survey gestimmt werden
+-- Zum √úberpr√ºfen, ob je Vote nur f√ºr AnswerOptions einer einzigen Survey gestimmt werden
 -- sowie zum Aufbuchen der Per-Click-Kosten des Kunden
 create trigger tr_ChoosesIns
 on Chooses
@@ -488,7 +590,7 @@ begin
 									join Survey s on a.SvyId = s.SvyId
 									where i.VoteId not in (select VoteId from (select * from Chooses
 																			   except
-																			   select * from inserted) Chooses_before); -- nur f¸r neue VoteIds
+																			   select * from inserted) Chooses_before); -- nur f√ºr neue VoteIds
 
 	
 		open c2;
@@ -509,7 +611,7 @@ begin
 end
 go
 
--- Zum Lˆschen einer bestimmten Umfrage und allen zugehˆrigen Daten
+-- Zum L√∂schen einer bestimmten Umfrage und allen zugeh√∂rigen Daten
 drop procedure sp_DeleteSurvey;
 go
 create procedure sp_DeleteSurvey(@svyId int)
@@ -526,7 +628,7 @@ end
 go
 
 
--- Zum Lˆschen der abgelaufenen Umfragedaten
+-- Zum L√∂schen der abgelaufenen Umfragedaten
 drop procedure sp_CheckExceededSurveyData;
 go
 create procedure sp_CheckExceededSurveyData
@@ -541,7 +643,8 @@ begin
 										 datediff(month, s.EndDate, getdate())
 										) >= c.DataStoragePeriod
 							   and Template = 0
-							   and [Sent] = 1;
+							   and [Sent] = 1
+							   and Period is null;
 	
 	open c;
 	fetch c into @svyId;
@@ -621,7 +724,7 @@ begin
 end
 go
 
--- Zum Generieren eines Authentifizierungs-Tokens f¸r einen Kunden
+-- Zum Generieren eines Authentifizierungs-Tokens f√ºr einen Kunden
 drop procedure sp_GenerateAuthToken;
 go
 create procedure sp_GenerateAuthToken(@custCode char(6))
@@ -664,14 +767,18 @@ go
 
 
 
--- Fixe inserts (f¸r alle gleich!)
+-- Fixe inserts (f√ºr alle gleich!)
 begin transaction;
 insert into DataConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 
-insert into FaqEntry values ('Gegenfrage', 'Aso na doch ned.', 0); -- Nur Testwert
-insert into FaqEntry values ('PorquÈ no te callas?', 'No quiero callarme porque t˙ eres un culo muy grande.', 0); -- Nur Testwert
-insert into FaqEntry values ('Nothing', 'lasts forever, even cold november rain', 1); -- Nur Testwert
-insert into FaqEntry values ('So close', 'no matter how far', 1); -- Nur Testwert
+
+insert into FaqEntry values ('Wie starte ich eine Befragung?', 'Klicken Sie auf den Register "Befragung erstellen". Dort k√∂nnen Sie nach Eingabe aller Befragungsdaten die Befragung erstellen.', 0); -- Nur Testwert
+insert into FaqEntry values ('Wo kann ich meine Rechnungen ansehen?', 'Unter "Einstellungen" beim Tab "Rechungen" k√∂nnen Sie jede Rechnung im Detail betrachten sowie herunterladen.', 0); -- Nur Testwert
+
+insert into FaqEntry values('Wie beantworte ich eine Frage?', 'Sie m√ºssen auf die entsprechende Benachrichtigung klicken. Danach √∂ffnet sich die entsprechende Fragestellung und Sie k√∂nnen abh√§nig von dem Fragetyp die Frage einfach beantworten. Die App schlie√üt sich nach erfolgreicher Beantwortung automatisch.', 1)
+insert into FaqEntry values('Wie kann ich aus einer Gruppe/Abteilung austreten?', 'Sie m√ºssen √ºber das Men√º auf der linken Seite den Button Einstellungen bet√§tigen. Danach k√∂nnen sie nach einem Klick auf den Button mit dem Namen "Abmelden von Fragen" die entsprechende Gruppe/Abteilung ausw√§hlen, von welcher Sie keine Fragen mehr erhalten m√∂chten.', 1)
+insert into FaqEntry values('Wie kann ich die Sprache √§ndern?', 'Sie m√ºssen √ºber das Men√º auf der linken Seite den Button Einstellungen bet√§tigen. Danach k√∂nnen sie nach einem Klick auf den Button mit dem Namen "Sprache" die entsprechende Sprache ausw√§hlen.', 1)
+
 
 insert into PaymentMethod values (1, 'OnAccount');
 

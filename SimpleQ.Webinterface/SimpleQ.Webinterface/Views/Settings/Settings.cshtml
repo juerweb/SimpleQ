@@ -397,7 +397,6 @@
                 }
             }
         });
-
     }
 
     function answerChecked() {
@@ -608,7 +607,6 @@ if (input === "") {
     function isEmpty(obj) {
         return Object.keys(obj).length === 0;
     }
-
     function umlaute() {
         for (var keys in dictionary) {
             if (dictionary.hasOwnProperty(keys)) {
@@ -620,7 +618,17 @@ if (input === "") {
                 dictionary[keys] = dictionary[keys].replace("&#196;", "A");
             }
         }
-        for (var keys in dictionary) {
+        for (var keys in dictionary3) {
+            if (dictionary3.hasOwnProperty(keys)) {
+                dictionary3[keys] = dictionary3[keys].replace("&#246;", "o");
+                dictionary3[keys] = dictionary3[keys].replace("&#214;", "O");
+                dictionary3[keys] = dictionary3[keys].replace("&#252;", "u");
+                dictionary3[keys] = dictionary3[keys].replace("&#220;", "U");
+                dictionary3[keys] = dictionary3[keys].replace("&#228;", "a");
+                dictionary3[keys] = dictionary3[keys].replace("&#196;", "A");
+            }
+        }
+        for (var keys in dictionary2) {
             if (dictionary2.hasOwnProperty(keys)) {
                 dictionary2[keys] = dictionary2[keys].replace("&#246;", "o");
                 dictionary2[keys] = dictionary2[keys].replace("&#214;", "O");
@@ -664,52 +672,65 @@ if (input === "") {
             type: 'GET',
             statusCode: {
                 200: function () {
-                    console.log("amkkkk");
+                    console.log("AddCategory ok");
+                    $('#changesOk').css("display", "block");
+                    $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-
+                    console.log("AddCategory 404");
+                    $('#addCategory404').css("display", "block");
+                    $('#addCategory404').delay(1000).fadeOut();
                 },
                 500: function () {
-
+                    console.log("AddCategory 500");
+                    $('#addCategory500').css("display", "block");
+                    $('#addCategory500').delay(1000).fadeOut();
+                },
+				400: function () {
+                    console.log("AddCategory 400");
+                    $('#addCategory400').css("display", "block");
+                    $('#addCategory400').delay(1000).fadeOut();
                 }
             },
-            success: function (data) {
-                id = data;
+            success: function(data) {
+                dictionary[data] = input;
             }
         });
 
-
-        //survCats.push(input);
-        dictionary[id] = input;
         let normal =
-            '<li class="list-group-item">' +
-            '   <span class="d-flex justify-content-between">' +
-            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
-            '       <span>' +
-            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '<li class="row mr-0 ml-0 mt-2">' +
+            '    <div class="col-9 pr-0 pl-1">' +
+            '        <input class="form-control rightNotRounded withoutBorder" name="Emails" readonly type="text" value="' + input + '" />' +
+            '    </div>' +
+            '    <div class="col-3 pl-0 pr-1">' +
+            '       <span class="row ml-0 mr-0">' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           </span>' +
+            '           <span class="col-6 p-0">'  +
+            '               <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+            '           </span>' +
             '       </span>' +
-            '   </span>' +
+            '    </div>' +
             '</li>';
+
+
+        //let normal =
+        //'<li class="list-group-item">' +
+        //    '   <span class="d-flex justify-content-between">' +
+        //    '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
+        //    '       <span>' +
+        //    '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+        //    '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+        //    '       </span>' +
+        //    '   </span>' +
+        //    '</li>';
         ul.innerHTML += normal;
         $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
     }
 
     function deleteAnswerTemplate(button) {
         let text = button.parentElement.parentElement.children[0].value;
-        console.log(text);
-        //for (i = 0; i < survCats.length; i++) {
-        //    if (survCats[i] === text) {
-        //        survCats.splice(i, 1);
-        //        break;
-        //    }
-        //}
-        //for (i = 0; i < survCats.length; i++) {
-        //    if (survCats[i] === text) {
-        //        survCats.splice(i, 1);
-        //        break;
-        //    }
-        //}
         text = text.replace("ö", "o");
         text = text.replace("ü", "u");
         text = text.replace("ä", "a");
@@ -723,35 +744,65 @@ if (input === "") {
             type: 'GET',
             statusCode: {
                 200: function () {
-                    console.log("amkkkk");
+                    console.log("DeleteTemplate OK");
+                    $('#changesOk').css("display", "block");
+                    $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-
+                    console.log("DeleteTemplate 404");
+                    $('#deleteTemplate404').css("display", "block");
+                    $('#deleteTemplate404').delay(1000).fadeOut();
                 },
                 500: function () {
-
+                    console.log("DeleteTemplate 500");
+                    $('#deleteTemplate500').css("display", "block");
+                    $('#deleteTemplate500').delay(1000).fadeOut();
                 }
             }
         });
         button.parentElement.parentElement.parentElement.remove();
-        console.log(dictionary2);
+    }
+
+    function deletePeriodic(button){
+        let text = button.parentElement.parentElement.children[0].value;
+        text = text.replace("ö", "o");
+        text = text.replace("ü", "u");
+        text = text.replace("ä", "a");
+        let key = getKeyByValue(dictionary3, text);
+        console.log(key);
+        console.log(dictionary3);
+
+        //let url = "@Url.Action("StopPeriodic", "Settings")?svyId=" + key;
+        $.ajax({
+            url: "@Url.Action("StopPeriodic", "Settings")",
+            data: {"svyId": key},
+            type: 'DELETE',
+            statusCode: {
+                200: function () {
+                    console.log("Delete Periodic OK");
+                    $('#changesOk').css("display", "block");
+                    $('#changesOk').delay(1000).fadeOut();
+                    delete dictionary3[key];
+                },
+                404: function () {
+                    console.log("Delete Periodic 404");
+                    $('#deletePeriodic404').css("display", "block");
+                    $('#deletePeriodic404').delay(1000).fadeOut();
+                },
+                500: function () {
+                    console.log("Delete Periodic 500");
+                    $('#deletePeriodic500').css("display", "block");
+                    $('#deletePeriodic500').delay(1000).fadeOut();
+                }
+            }
+        });
+        button.parentElement.parentElement.parentElement.remove();
     }
 
 
     function deleteAnswer(button) {
-        let text = button.parentElement.parentElement.children[0].value;
-        //for (i = 0; i < survCats.length; i++) {
-        //    if (survCats[i] === text) {
-        //        survCats.splice(i, 1);
-        //        break;
-        //    }
-        //}
-        //for (i = 0; i < survCats.length; i++) {
-        //    if (survCats[i] === text) {
-        //        survCats.splice(i, 1);
-        //        break;
-        //    }
-        //}
+        let text = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0].value;
+        console.log(text);
         text = text.replace("ö", "o");
         text = text.replace("ü", "u");
         text = text.replace("ä", "a");
@@ -768,28 +819,37 @@ if (input === "") {
             statusCode: {
                 200: function () {
                     console.log("deleteCategory OK");
+                    $('#changesOk').css("display", "block");
+                    $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-                    alert("deleteCategory 404");
+                    console.log("deleteCategory 404");
+					$('#deleteCategory404').css("display", "block");
+                    $('#deleteCategory404').delay(1000).fadeOut();
+					
                 },
                 500: function () {
-                    alert("deleteCategory 500");
+                    console.log("deleteCategory 500");
+					$('#deleteCategory500').css("display", "block");
+                    $('#deleteCategory500').delay(1000).fadeOut();
                 }
             }
         });
-        button.parentElement.parentElement.parentElement.remove();
-        console.log(dictionary);
-
+        button.parentElement.parentElement.parentElement.parentElement.remove();
     }
 
     function editAnswer(button) {
-        let text = button.parentElement.parentElement.children[0].value;
+        let inputElem = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0];
+        $(inputElem).removeClass("withoutBorder").removeAttr("readonly");
+        let text = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0].value;
+        console.log(text);
         let edit =
-            '       <input type="text" class="" name="TextAnswerOptions" value="' + text + '" />' +
-            '       <span>' +
-            '           <button type="button" class="btn btn-success ml-2 pb-0" onclick="saveAnswer(this,false,\'' + text + '\')"><i class="material-icons">&#xe5ca;</i></button>' +
-            '           <button type="button" class="btn btn-secondary ml-2 pb-0" onclick="saveAnswer(this,true,\'' + text + '\')"><i class="material-icons">&#xe5cd;</i></button>' +
-            '       </span>';
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-success btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="saveAnswer(this,false,\'' + text + '\')"><i class="material-icons">&#xe5ca;</i></button>' +
+            '           </span>' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-secondary btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="saveAnswer(this,true,\'' + text + '\')"><i class="material-icons">&#xe5cd;</i></button>' +
+            '           </span>';
         button.parentElement.parentElement.innerHTML = edit;
         umlaute();
     }
@@ -833,6 +893,85 @@ if (input === "") {
                 },
                 500: function () {
                     alert("addCategory 500");
+        let inputElem = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0];
+        if (canceled) {
+            text = tempText;
+        } else {
+            text = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0].value;
+            if (Object.values(dictionary).includes(text)) {
+                alert('@Resources.invalidInput');
+                return;
+            }
+            let key = getKeyByValue(dictionary, tempText);
+            dictionary[key] = text;
+            let url = "@Url.Action("ModifyCategory", "Settings")?catId=" + key + "&catName=" + encodeURIComponent(text);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                statusCode: {
+                    200: function () {
+                        console.log("addCategory Ok");
+                    },
+                    404: function () {
+                        alert("addCategory 404");
+                    },
+                    500: function () {
+                        alert("addCategory 500");
+                    }
+                }
+            });
+        }
+
+        let edited =
+            '<span class="col-6 p-0">' +
+            '   <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '</span>' +
+            '<span class="col-6 p-0">' +
+            '   <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+            '</span>';
+        tempText = "";
+        //take away input border and make it readonly
+        $(inputElem).addClass("withoutBorder");
+        $(inputElem).prop('readonly', true);
+        button.parentElement.parentElement.innerHTML = edited;
+        umlaute();
+    }
+
+    function saveUmfr() {
+        if (survCats.length > 0) {
+            console.log(survCats);
+        } else {
+            console.log("nix do amk");
+        }
+
+    }
+
+    function call_unregister() {
+        let code = $("#unreg_code").val();
+        let pwd = $("#unreg_pwd").val();
+        $.ajax({
+            url: "@Url.Action("Unregister", "Account")",
+            data: { custCode: code, password: pwd },
+            type: 'DELETE',
+            statusCode: {
+                200: function () {
+                    window.location.reload();
+                },
+                403: function () {
+                    $('#unregister403').css("display", "block");
+                    $('#unregister403').delay(3000).fadeOut();
+                },
+                404: function () {
+                    $('#unregister404').css("display", "block");
+                    $('#unregister404').delay(3000).fadeOut();
+                },
+                409: function () {
+                    $('#unregister409').css("display", "block");
+                    $('#unregister409').delay(3000).fadeOut();
+                },
+                500: function () {
+                    $('#unregister500').css("display", "block");
+                    $('#unregister500').delay(3000).fadeOut();
                 }
             }
         });
@@ -864,5 +1003,3 @@ $(document).ready(function () {
 
 });
     </script>
-
-
