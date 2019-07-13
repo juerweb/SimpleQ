@@ -7,6 +7,14 @@
     max-height: 40px;
 }
 
+.navbar-hidden-img {
+    max-height: 110px;
+}
+
+    .navbar-hidden-img:hover {
+        max-height: 115px;
+    }
+
 #showNavbarBtn {
     float: left;
     height: 100%;
@@ -20,7 +28,7 @@
     border-bottom-right-radius: 10px;
 }
 
-#hideNavbarBtn {
+/*#hideNavbarBtn {
     height: 100%;
     border-radius: 0;
     border-left-style: solid;
@@ -34,4 +42,9 @@
     border-bottom-color: black;
     border-bottom-left-radius: 10px;
     border-top-left-radius: 10px;
+}*/
+
+.btn-rounded {
+    border-style: solid;
+    border-radius: 4px!important;
 }

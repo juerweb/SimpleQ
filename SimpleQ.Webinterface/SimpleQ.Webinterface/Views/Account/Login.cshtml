@@ -1,0 +1,104 @@
+﻿@using SimpleQ.Webinterface.Properties;
+@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+@if (ViewBag.confirmed == true)
+{
+    <div class="alert alert-success">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>E-Mail bestätigt!</strong> Sie können sich nun einloggen.
+    </div>
+}
+
+<a class="btn btn-primary" href="@Url.Action("Register", "Account")">Go to registration</a>
+<br /><br />
+@using (Html.BeginForm("Login", "Account"))
+{
+    <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
+        <div class="form-group">
+            @Html.Label("custCode", Resources.customerCode)
+            @Html.TextBox("custCode", "", new { @class = "form-control" })
+            @Html.ValidationMessage("custCode")
+        </div>
+
+        <div class="form-group">
+            @Html.Label("password", Resources.password)
+            @Html.Password("password", "", new { @class = "form-control" })
+            @Html.ValidationMessage("password")
+        </div>
+
+        <div class="form-group form-check">
+            <label for="remember" class="form-check-label">
+                @Html.CheckBox("remember", false, new { @class = "form-check-input" }) @Resources.stayLoggedIn
+            </label>
+        </div>
+        @Html.AntiForgeryToken()
+        <div class="row">
+            <div class="col-6">
+                <button type="submit" class="btn btn-primary btn-block">@Resources.login</button>
+            </div>
+            <div class="col-6">
+                <a id="forgotPwdBtn" href="#">@Resources.forgotPassword</a>
+            </div>
+        </div>
+    </div>
+}
+
+<div id="resetPwdDiv" style="display: none">
+    <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
+        <div class="form-group">
+            <label for="resCustCode">Kunden-Code</label>
+            <input id="resCustCode" class="form-control" />
+        </div>
+        <button type="button" class="btn btn-primary" id="sendResetBtn">Reset-Link senden</button>
+        <br />
+        <span id="msg"></span>
+    </div>
+</div>
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+}
+
+<script>
+    $(function () {
+        setLoginBackground();
+
+        $("#forgotPwdBtn").click(function () {
+            console.log(2);
+            $("#resetPwdDiv").toggle();
+        });
+
+        $("#sendResetBtn").click(function () {
+            let form = $("#__AjaxAntiForgeryForm");
+            let token = $('input[name="__RequestVerificationToken"]', form).val();
+            let custCode = encodeURIComponent($("#resCustCode").val());
+
+            $.ajax({
+                method: "POST",
+                url: "@Url.Action("ForgotPassword", "Account")",
+                data: {
+                    "__RequestVerificationToken": token,
+                    "custCode": custCode,
+                },
+                statusCode: {
+                    200: function () {
+                        $("#msg").text("E-Mail gesendet.");
+                    },
+                    404: function () {
+                        $("#msg").text("Ungültiger Kunden-Code.");
+                    },
+                    503: function () {
+                        $("#msg").text("E-Mail konnte derzeit nicht gesendet werden.\nBitte später erneut versuchen.")
+                    }
+                }
+            });
+        });
+    });
+
+    function setLoginBackground() {
+        let rand = Math.floor((Math.random() * 11) + 1);
+        $("body").css("background-image", "url('../Content/Images/loginBG" + rand + ".jpg')");
+    }
+</script>

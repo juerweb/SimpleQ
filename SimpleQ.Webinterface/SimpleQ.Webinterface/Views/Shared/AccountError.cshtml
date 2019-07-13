@@ -1,0 +1,12 @@
+﻿@model SimpleQ.Webinterface.Models.ViewModels.ErrorModel
+
+@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<h5>@Model.Title</h5>
+<div>
+    @Model.Message
+</div>
+<br />
+@Html.ActionLink("Zurück zur Login-Page", "Login", "Account", new { @class = "btn btn-primary"})

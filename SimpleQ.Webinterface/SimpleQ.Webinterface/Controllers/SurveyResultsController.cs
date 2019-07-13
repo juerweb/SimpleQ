@@ -1,25 +1,67 @@
-﻿using SimpleQ.Webinterface.Models;
+﻿using SimpleQ.Webinterface.Extensions;
+using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
+using SimpleQ.Webinterface.Models.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Security.Claims;
 
 namespace SimpleQ.Webinterface.Controllers
 {
+    [CAuthorize]
     public class SurveyResultsController : Controller
     {
+        private string errString;
+
+        #region AJAX-Methods
         [HttpGet]
-        public ActionResult LoadSingleResult(int svyId)
+        public ActionResult Index()
         {
             using (var db = new SimpleQDBEntities())
             {
-                // EXCEPTION HANDLING (NO SURVEY FOUND)
+                var cust = db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefault();
+                if (cust == null)
+                    return Http.NotFound("Customer not found.");
+
+                var model = new SurveyResultsModel
+                {
+                    SurveyCategories = cust.SurveyCategories.Where(s => !s.Deactivated).ToList(),
+                    Surveys = db.Surveys.Where(s => s.CustCode == CustCode).ToList(),
+                    AnswerTypes = db.Surveys.Where(s => s.CustCode == CustCode).Select(s => s.AnswerType)
+                        .Where(a => a.BaseId != (int)BaseQuestionTypes.OpenQuestion).Distinct().ToList(),
+                    SurveyTexts = db.Surveys.Select(s => s.SvyText).ToList()
+                };
+
+                ViewBag.emailConfirmed = cust.EmailConfirmed;
+                return View("SurveyResults", model);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult LoadSingleResult(int svyId)
+        {
+            bool err = false;
+            using (var db = new SimpleQDBEntities())
+            {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+
+                if (db.Surveys.Where(s => s.CustCode == CustCode).Count() == 0)
+                    return PartialView("_Error", new ErrorModel { Title = "No Surveys", Message = "You haven't created any surveys yet." });
+
                 Survey survey = db.Surveys
                     .Where(s => s.SvyId == svyId && s.CustCode == CustCode)
                     .FirstOrDefault();
+
+                if (survey == null)
+                    AddModelError("svyId", "Survey not found.", ref err);
+
+                if (err) return PartialView("_Error", new ErrorModel { Title = "Failed to load survey", Message = errString });
+
 
                 var model = new SingleResultModel
                 {
@@ -32,7 +74,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                     TypeName = db.AnswerTypes
                         .Where(a => a.TypeId == survey.TypeId)
-                        .Select(a => a.TypeDesc) // GLOBALIZATION!
+                        .Select(a => a.TypeDesc)
                         .FirstOrDefault(),
 
                     DepartmentNames = db.Surveys
@@ -41,9 +83,9 @@ namespace SimpleQ.Webinterface.Controllers
                         .Select(d => d.DepName)
                         .ToList(),
 
-                    Votes = (survey.TypeId != 4) ? SelectVotesFromSurvey(db, survey) : null,
+                    Votes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? SelectVotesFromSurvey(survey) : null,
 
-                    FreeTextVotes = (survey.TypeId == 4) ? db.Votes
+                    FreeTextVotes = (survey.AnswerType.BaseId != (int)BaseQuestionTypes.OpenQuestion) ? db.Votes
                         .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
                         .Select(v => v.VoteText)
                         .ToList()
@@ -56,35 +98,61 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpPost]
         public ActionResult LoadMultiResult(MultiResultModel req)
         {
-            // SAMPLE DATA
-            //req = new MultiResultModel
-            //{
-            //    CatId = 4,
-            //    TypeId = 1,
-            //    StartDate = DateTime.Now.AddYears(-1),
-            //    EndDate = DateTime.Now,
-            //};
+            bool err = false;
+            //SAMPLE DATA
+            req = new MultiResultModel
+            {
+                CatId = 4,
+                TypeId = 2,
+                StartDate = DateTime.Now.AddYears(-1),
+                EndDate = DateTime.Now,
+                SurveyText = "Ist der Chef leiwand?"//"Finden Sie der Chef ist ein Arschloch?"
+            };
+
+            if (req == null)
+                AddModelError("Model", "Model object must not be null.", ref err);
+            if (req.StartDate > req.EndDate)
+                AddModelError("StartDate", "Start date must be smaller than end date.", ref err);
+            if(string.IsNullOrEmpty(req.SurveyText))
+                AddModelError("SurveyText", "Survey text must not be empty.", ref err);
 
             using (var db = new SimpleQDBEntities())
             {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                    return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+
+                if (db.Surveys.Where(s => s.CustCode == CustCode).Count() == 0)
+                    return PartialView("_Error", new ErrorModel { Title = "No Surveys", Message = "You haven't created any surveys yet." });
+
                 var selectedSurveys = db.Surveys
                     .Where(s => s.CatId == req.CatId && s.TypeId == req.TypeId
-                     && s.StartDate >= req.StartDate && s.StartDate <= req.EndDate);
+                     && s.StartDate >= req.StartDate && s.StartDate <= req.EndDate
+                     && s.SvyText.Trim().ToLower() == req.SurveyText.Trim().ToLower()
+                     && s.CustCode == CustCode);
+
+                string catName = db.SurveyCategories
+                            .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
+                            .Select(c => c.CatName)
+                            .FirstOrDefault();
+                if (catName == null)
+                    AddModelError("CatId", "Category not found.", ref err);
+
+                var type = db.AnswerTypes
+                            .Where(a => a.TypeId == req.TypeId && a.BaseId != (int)BaseQuestionTypes.OpenQuestion)
+                            .FirstOrDefault();
+                if (type == null)
+                    AddModelError("TypeId", "AnswerType does not exist.", ref err);
+
+                if (err) return PartialView("_Error", new ErrorModel { Title = "Failed to load survey", Message = errString });
 
                 MultiResultModel model;
-                if (selectedSurveys.Count() == 0)
+                if (selectedSurveys?.Count() == 0)
                 {
                     model = new MultiResultModel
                     {
-                        CatName = db.SurveyCategories
-                            .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
-                            .Select(c => c.CatName)
-                            .FirstOrDefault(),
+                        CatName = catName,
 
-                        TypeName = db.AnswerTypes
-                            .Where(a => a.TypeId == req.TypeId)
-                            .Select(a => a.TypeDesc) // GLOBALIZATION!
-                            .FirstOrDefault(),
+                        TypeName = type?.TypeDesc,
 
                         AvgAmount = 0,
 
@@ -92,23 +160,16 @@ namespace SimpleQ.Webinterface.Controllers
 
                         SurveyDates = new List<DateTime>(),
 
-                        Votes = new Dictionary<string, List<int>>()
+                        Votes = new List<KeyValuePair<string, List<int>>>()
                     };
                 }
                 else
                 {
-
                     model = new MultiResultModel
                     {
-                        CatName = db.SurveyCategories
-                            .Where(c => c.CatId == req.CatId && c.CustCode == CustCode)
-                            .Select(c => c.CatName)
-                            .FirstOrDefault(),
+                        CatName = catName,
 
-                        TypeName = db.AnswerTypes
-                            .Where(a => a.TypeId == req.TypeId)
-                            .Select(a => a.TypeDesc) // GLOBALIZATION!
-                            .FirstOrDefault(),
+                        TypeName = type.TypeDesc,
 
                         AvgAmount = (selectedSurveys.Sum(s => s.Amount) / (double)selectedSurveys.Count()),
 
@@ -120,7 +181,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                         SurveyDates = selectedSurveys.Select(s => s.StartDate).ToList(),
 
-                        Votes = SelectVotesFromSurveyGrouped(db, selectedSurveys)
+                        Votes = SelectVotesFromSurveyGrouped(selectedSurveys, type.BaseId)
                     };
                 }
 
@@ -128,27 +189,132 @@ namespace SimpleQ.Webinterface.Controllers
             }
         }
 
-        private Dictionary<string, int> SelectVotesFromSurvey(SimpleQDBEntities db, Survey survey)
+        [HttpGet]
+        public ActionResult LoadTypesByCategory(int catId)
         {
-            return db.Votes
-                .Where(v => v.AnswerOptions.FirstOrDefault().SvyId == survey.SvyId)
-                .SelectMany(v => v.AnswerOptions)
-                .GroupBy(a => a.AnsId)
-                .ToDictionary(g => g.Where(a => a.AnsId == g.Key).Select(a => a.AnsText).FirstOrDefault(), g => g.Count())
-                .Concat(db.AnswerOptions.Where(a => a.SvyId == survey.SvyId && a.Votes.Count == 0).AsEnumerable().Select(a => new KeyValuePair<string, int>(a.AnsText, 0)))
-                .ToDictionary(kv => kv.Key, kv => kv.Value);
+            using (var db = new SimpleQDBEntities())
+            {
+                var cat = db.SurveyCategories.Where(c => c.CustCode == CustCode && c.CatId == catId).FirstOrDefault();
+                if (cat == null)
+                    return Http.NotFound("Category not found.");
+
+                var types = cat.Surveys
+                    .Select(s => new AnswerType
+                    {
+                        TypeId = s.AnswerType.TypeId,
+                        TypeDesc = s.AnswerType.TypeDesc,
+                        BaseId = s.AnswerType.BaseId
+                    })
+                    .Where(t => t.BaseId != (int)BaseQuestionTypes.OpenQuestion)
+                    .GroupBy(t => t.TypeId)
+                    .Select(g => g.First())
+                    .ToList();
+
+                return Json(types, JsonRequestBehavior.AllowGet);
+            }
         }
 
-        private Dictionary<string, List<int>> SelectVotesFromSurveyGrouped(SimpleQDBEntities db, IQueryable<Survey> selectedSurveys)
+        [HttpGet]
+        public ActionResult LoadSurveyDates(int catId, int typeId)
         {
-            Dictionary<string, List<int>> dict = new Dictionary<string, List<int>>();
+            using (var db = new SimpleQDBEntities())
+            {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                {
+                    return Http.NotFound("Customer not found");
+                }
 
-            selectedSurveys
-                .SelectMany(s => s.AnswerOptions)
-                .Select(a => a.AnsText)
+                var query = db.Surveys.Where(s => s.CatId == catId && s.TypeId == typeId && s.CustCode == CustCode);
+                if (query.Count() == 0)
+                    return Http.NotFound("No surveys found");
+
+                return Json(new
+                {
+                    StartDate = query.Select(s => s.StartDate).Min().ToString("yyyy-MM-dd"),
+                    EndDate = query.Select(s => s.StartDate).Max().ToString("yyyy-MM-dd")
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult LoadSurveyTexts(int catId, int typeId, DateTime startDate, DateTime endDate)
+        {
+            using (var db = new SimpleQDBEntities())
+            {
+                if (!db.Customers.Any(c => c.CustCode == CustCode))
+                {
+                    return Http.NotFound("Customer not found");
+                }
+
+                var query = db.Surveys
+                    .Where(s => s.CatId == catId 
+                        && s.TypeId == typeId 
+                        && s.StartDate == startDate
+                        && s.EndDate == endDate
+                        && s.CustCode == CustCode)
+                    .Select(s => s.SvyText);
+
+                if (query.Count() == 0)
+                    return Http.NotFound("No surveys found");
+
+                return Json(new { SurveyTexts = query.ToList() }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        #endregion
+
+        #region Helpers
+        private List<KeyValuePair<string, int>> SelectVotesFromSurvey(Survey survey)
+        {
+            var list = new List<KeyValuePair<string, int>>();
+            var query = survey.AnswerOptions.ToList();
+
+            if (survey.AnswerType.BaseId == (int)BaseQuestionTypes.LikertScaleQuestion)
+            {
+                query = query.OrderBy(a => a.AnsText).ToList();
+
+                var first = query.Where(a => a.FirstPosition == true).First();
+                query.Remove(first);
+                query.Insert(0, first);
+
+                var last = query.Where(a => a.FirstPosition == false).First();
+                query.Remove(last);
+                query.Add(last);
+            }
+            else
+            {
+                query = query.OrderByDescending(a => a.Votes.Count()).ToList();
+            }
+
+            query.ForEach(a =>
+            {
+                list.Add(new KeyValuePair<string, int>(a.AnsText, a.Votes.Count()));
+            });
+
+            return list;
+        }
+
+        private List<KeyValuePair<string, List<int>>> SelectVotesFromSurveyGrouped(IQueryable<Survey> selectedSurveys, int baseId)
+        {
+            var list = new List<KeyValuePair<string, List<int>>>();
+            var query = selectedSurveys.SelectMany(s => s.AnswerOptions).ToList();
+
+            if (baseId == (int)BaseQuestionTypes.LikertScaleQuestion)
+            {
+                query = query.OrderBy(a => a.AnsText).ToList();
+
+                var first = query.Where(a => a.FirstPosition == true).ToList();
+                query.RemoveAll(a => a.FirstPosition == true);
+                query.InsertRange(0, first);
+
+                var last = query.Where(a => a.FirstPosition == false).ToList();
+                query.RemoveAll(a => a.FirstPosition == false);
+                query.AddRange(last);
+            }
+
+            query.Select(a => a.AnsText)
                 .Distinct()
                 .ToList()
-                .ForEach(t => dict.Add(t, new List<int>()));
+                .ForEach(t => list.Add(new KeyValuePair<string, List<int>>(t, new List<int>())));
 
             selectedSurveys.ToList()
                 .ForEach(s =>
@@ -157,19 +323,20 @@ namespace SimpleQ.Webinterface.Controllers
                         .ToList()
                         .ForEach(a =>
                         {
-                            dict[a.AnsText].Add(a.Votes.Count());
+                            list.Where(kv => kv.Key == a.AnsText).First().Value.Add(a.Votes.Count());
                         });
                 });
 
-            return dict;
+            return list;
         }
 
-        private string CustCode
+        private void AddModelError(string key, string errorMessage, ref bool error)
         {
-            get
-            {
-                return "m4rku5";//Session["custCode"] as string;
-            }
+            errString += $"{key}: {errorMessage}{Environment.NewLine}";
+            error = true;
         }
+
+        private string CustCode => HttpContext.GetOwinContext().Authentication.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault().Value;
+        #endregion
     }
 }

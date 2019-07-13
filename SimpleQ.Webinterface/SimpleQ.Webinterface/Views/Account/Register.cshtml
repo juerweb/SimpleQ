@@ -1,0 +1,260 @@
+﻿
+@using SimpleQ.Webinterface.Properties;
+@model SimpleQ.Webinterface.Models.Customer
+
+@{
+    Layout = "~/Views/Shared/_AccountLayout.cshtml";
+}
+
+<a class="btn btn-primary" href="@Url.Action("Login", "Account")">Zum Login</a>
+<br /><br />
+@using (Html.BeginForm("Register", "Account"))
+{
+    <div>
+        <div id="baseData">
+            <h3>Basisdaten</h3>
+            <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
+                <div class="form-group">
+                    @Html.LabelFor(c => c.CustName, Resources.customerName, new { @class = "ml-2" })
+                    @Html.TextBoxFor(c => c.CustName, new { @class = "form-control", required = "required", id = "custName" })
+                    @Html.ValidationMessageFor(c => c.CustName)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.CustEmail, Resources.email, new { @class = "ml-2" })
+                    @Html.TextBoxFor(c => c.CustEmail, new { @class = "form-control", required = "required", id = "mail" })
+                    @Html.ValidationMessageFor(c => c.CustEmail)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.CustPwdTmp, Resources.password, new { @class = "ml-2" })
+                    @Html.PasswordFor(c => c.CustPwdTmp, new { @class = "form-control", required = "required", id = "password1", oninput = "checkPw(this)" })
+                    <label class="mt-0" id="strengh"></label>
+                    @Html.ValidationMessageFor(c => c.CustPwdTmp)
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("confirmPassword", Resources.confirmPassword, new { @class = "ml-2" })
+                    @Html.Password("confirmPassword", "", new { @class = "form-control", required = "required", id = "password2" })
+                    @Html.ValidationMessage("confirmPassword")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                </div>
+                <div class="col-lg-6">
+                    <button type="button" id="nextBtn" class="btn btn-primary btn-block" onclick="toNextView()">@Resources.next</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="addressData">
+            <h3>Adressdaten</h3>
+            <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
+                <div class="form-group">
+                    @Html.LabelFor(c => c.Street, Resources.streetAndHousenumber, new { @class = "ml-2" })
+                    @Html.TextBoxFor(c => c.Street, new { @class = "form-control", required = "required", id = "street" })
+                    @Html.ValidationMessageFor(c => c.Street)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.Plz, Resources.postCode, new { @class = "ml-2" })
+                    @Html.TextBoxFor(c => c.Plz, new { @class = "form-control", required = "required", id = "plz" })
+                    @Html.ValidationMessageFor(c => c.Plz)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.City, Resources.city, new { @class = "ml-2" })
+                    @Html.TextBoxFor(c => c.City, new { @class = "form-control", required = "required", id = "town" })
+                    @Html.ValidationMessageFor(c => c.City)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.Country, Resources.country, new { @class = "ml-2" })
+                    @Html.DropDownListFor(c => c.Country, new SelectList(new[] { "Austria", "Germany", "Spain", "other" }), new { @class = "form-control", required = "required", id = "country" })
+                    @*@Html.TextBoxFor(c => c.Country, new { @class = "form-control", required = "required", id = "country" })*@
+                    @Html.ValidationMessageFor(c => c.Country)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.LanguageCode, Resources.language, new { @class = "ml-2" })
+                    @Html.DropDownListFor(c => c.LanguageCode, new SelectList(new[] { "DE", "EN", "ES" }), new { @class = "form-control", required = "required", id = "language" })
+                    @Html.ValidationMessageFor(c => c.LanguageCode)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <button type="button" class="btn btn-primary btn-block" onclick="toLastView()">@Resources.previous</button>
+                </div>
+                <div class="col-6">
+                    <button type="button" class="btn btn-primary btn-block" onclick="toNextView()">@Resources.next</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="specificData">
+            <h3>Spezifische Daten</h3>
+            <div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
+                <div class="form-group">
+                    @Html.LabelFor(c => c.DataStoragePeriod, Resources.dataRetentionPeriodInMonths, new { @class = "ml-2" })
+                    @Html.TextBoxFor(c => c.DataStoragePeriod, new { @class = "form-control", required = "required", @type = "number", min = 1, max = 24 })
+                    @Html.ValidationMessageFor(c => c.DataStoragePeriod)
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.AccountingPeriod, Resources.billingPeriodInMonths, new { @class = "ml-2" })
+                    @Html.DropDownListFor(c => c.AccountingPeriod, new SelectList(new[] { 1, 3, 6, 12 }), new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(c => c.AccountingPeriod)
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("day", Resources.preferredBillingDay, new { @class = "ml-2" })
+                    @Html.TextBox("day", "", new { @class = "form-control", @type = "number", @min = "0", @step = "0.01", @value = "0", required = "required" })
+                    @Html.ValidationMessage("day")
+                    @*@Html.LabelFor(c => c.AccountingDate, Resources.preferredBillingDay, new { @class = "ml-2" })
+                    @Html.EditorFor(model => model.AccountingDate, new { htmlAttributes = new { @class = "form-control", @type = "number", @min = "0", @step = "0.01", @value = "0" } })
+                    @Html.ValidationMessageFor(c => c.AccountingDate)*@
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(c => c.PaymentMethodId, Resources.paymentMethod, new { @class = "ml-2" })
+                    @Html.DropDownListFor(c => c.PaymentMethodId, new SelectList(ViewBag.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(c => c.PaymentMethodId)
+                </div>
+                @Html.AntiForgeryToken()
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <button type="button" class="btn btn-primary btn-block" onclick="toLastView()">@Resources.previous</button>
+                </div>
+                <div class="col-6">
+                    <button type="submit" class="btn btn-primary btn-block">@Resources.finish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(function () {
+        $("body").css("background-image", "url('../Content/Images/registrationBG.jpg')");
+        $("#addressData").hide();
+        $("#specificData").hide();
+    });
+
+    function toNextView() {
+        if ($("#baseData").is(":visible")) {
+            let custNameTB = document.getElementById("custName");
+            let mailTB = document.getElementById("mail");
+            let password1TB = document.getElementById("password1");
+            let password2TB = document.getElementById("password2");
+            if (custNameTB.value == "") {
+                alert("Der Kundenname darf nicht leer sein!");
+                return;
+            }
+            if (!validateEmail(mailTB.value)) {
+                alert("Die angegebene Email-Adresse ist nicht gültig!");
+                return;
+            }
+
+            if (password1TB.value !== password2TB.value) {
+                alert("Die Passwörter sind nicht gleich!");
+                return;
+            }
+
+            if (password1TB.value.length < 6) {
+                alert("Das Passwort ist nicht zulässig!");
+                return;
+            }
+
+            $("#baseData").hide();
+            $("#addressData").show();
+        } else if ($("#addressData").is(":visible")) {
+            let streetTB = document.getElementById("street");
+            let plzTB = document.getElementById("plz");
+            let townTB = document.getElementById("town");
+            let countryTB = document.getElementById("country");
+
+            if (street.value == "" || !hasNumber(street.value)) {
+                alert("Strasse bzw Hausnummer unültig");
+                return;
+            }
+            if (isNaN(parseInt(plzTB.value, 10))) {
+                alert("Die angegebene Postleitzahl ist nicht gültig!");
+                return;
+            }
+
+            if (town.value == "") {
+                alert("Der angegebene Ort ist nicht gültig!");
+                return;
+            }
+
+
+            $("#addressData").hide();
+            $("#specificData").show();
+        }
+    }
+
+    function toLastView() {
+        if ($("#addressData").is(":visible")) {
+            $("#addressData").hide();
+            $("#baseData").show();
+        } else if ($("#specificData").is(":visible")) {
+            $("#specificData").hide();
+            $("#addressData").show();
+        }
+    }
+
+    function validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    function checkPw(input) {
+        let strengh = document.getElementById("strengh");
+        let pw = input.value;
+        let length = 0;
+        let digits = 0;
+        let upper = 0;
+
+        if (pw.length < 8) {
+            input.style.borderColor = "red";
+            strengh.innerHTML = "Passwort unzulässig";
+        } else {
+            if (pw.length > 9) {
+                length = 1;
+            }
+
+            if (hasUpperCase(pw)) {
+                upper = 1;
+            }
+
+            if (hasNumber(pw)) {
+                digits = 1;
+            }
+
+            let sum = length + digits + upper;
+
+            if (sum == 3) {
+                strengh.innerHTML = "Passwort stark";
+                input.style.borderColor = "green";
+            } else if (sum == 2) {
+                strengh.innerHTML = "Passwort mittel";
+                input.style.borderColor = "orange";
+            } else {
+                strengh.innerHTML = "Passwort schwach";
+                input.style.borderColor = "red";
+            }
+        }
+    }
+
+    function hasUpperCase(str) {
+        return str.toLowerCase() !== str;
+    }
+
+    function hasNumber(str) {
+        return /\d/.test(str);
+    }
+
+</script>

@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="answer" xml:space="preserve">
+    <value>answer</value>
+  </data>
+  <data name="answerTypeHeader" xml:space="preserve">
+    <value>answer type</value>
+  </data>
+  <data name="bar" xml:space="preserve">
+    <value>bar</value>
+  </data>
+  <data name="count" xml:space="preserve">
+    <value>count</value>
+  </data>
+  <data name="diagram" xml:space="preserve">
+    <value>diagram</value>
+  </data>
+  <data name="Dichotomous" xml:space="preserve">
+    <value>Dichotomous</value>
+  </data>
+  <data name="doughnut" xml:space="preserve">
+    <value>doughnut</value>
+  </data>
+  <data name="from" xml:space="preserve">
+    <value>from</value>
+  </data>
+  <data name="groupAdministrationHeader" xml:space="preserve">
+    <value>Gruppenverwaltung</value>
+  </data>
+  <data name="groups" xml:space="preserve">
+    <value>groups</value>
+  </data>
+  <data name="LikertSkale3" xml:space="preserve">
+    <value>Likert-skale 3</value>
+  </data>
+  <data name="LikertSkale4" xml:space="preserve">
+    <value>Likert-skale 4</value>
+  </data>
+  <data name="LikertSkale5" xml:space="preserve">
+    <value>Likert-skale 5</value>
+  </data>
+  <data name="LikertSkale6" xml:space="preserve">
+    <value>Likert-skale 6</value>
+  </data>
+  <data name="LikertSkale7" xml:space="preserve">
+    <value>Likert-skale 7</value>
+  </data>
+  <data name="LikertSkale8" xml:space="preserve">
+    <value>Likert-skale 8</value>
+  </data>
+  <data name="LikertSkale9" xml:space="preserve">
+    <value>Likert-skale 9</value>
+  </data>
+  <data name="line" xml:space="preserve">
+    <value>line</value>
+  </data>
+  <data name="listing" xml:space="preserve">
+    <value>listing (absolute, %)</value>
+  </data>
+  <data name="Open" xml:space="preserve">
+    <value>Open text-answer</value>
+  </data>
+  <data name="percent" xml:space="preserve">
+    <value>percent</value>
+  </data>
+  <data name="polarArea" xml:space="preserve">
+    <value>polar-area</value>
+  </data>
+  <data name="PolytomousOrderedMultiple" xml:space="preserve">
+    <value>Many answers, many to choose (ordered)</value>
+  </data>
+  <data name="PolytomousOrderedSingle" xml:space="preserve">
+    <value>Many answers, one to choose (ordered)</value>
+  </data>
+  <data name="PolytomousUnorderedMultiple" xml:space="preserve">
+    <value>Many answers, many to choose (unordered)</value>
+  </data>
+  <data name="PolytomousUnorderedSingle" xml:space="preserve">
+    <value>Many answers, one to choose (unordered)</value>
+  </data>
+  <data name="questionHeader" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="questionTimeDateHeader" xml:space="preserve">
+    <value>date</value>
+  </data>
+  <data name="questionTimeTimeHeader" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="radar" xml:space="preserve">
+    <value>radar</value>
+  </data>
+  <data name="surveyCategoryHeader" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="surveyCreationHeader" xml:space="preserve">
+    <value>Create Survey</value>
+  </data>
+  <data name="surveyPreviewHeader" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="surveyResultsHeader" xml:space="preserve">
+    <value>Survey Results</value>
+  </data>
+  <data name="to" xml:space="preserve">
+    <value>to</value>
+  </data>
+  <data name="TrafficLight" xml:space="preserve">
+    <value>Traffic-lights (red,yellow,green)</value>
+  </data>
+  <data name="typeSmall" xml:space="preserve">
+    <value>type</value>
+    <comment>small written type</comment>
+  </data>
+  <data name="YesNo" xml:space="preserve">
+    <value>Yes-no</value>
+  </data>
+  <data name="YesNoDontKnow" xml:space="preserve">
+    <value>Yes-no-dont know</value>
+  </data>
+  <data name="add" xml:space="preserve">
+    <value>add</value>
+  </data>
+  <data name="addNewCategory" xml:space="preserve">
+    <value>add new category</value>
+  </data>
+  <data name="newCategoryName" xml:space="preserve">
+    <value>new category name ...</value>
+  </data>
+  <data name="addAnswer" xml:space="preserve">
+    <value>add answer</value>
+  </data>
+  <data name="invalidInput" xml:space="preserve">
+    <value>invalid input!</value>
+  </data>
+  <data name="surveyTemplateHeader" xml:space="preserve">
+    <value>choose template (by last surveys)</value>
+  </data>
+  <data name="askedPeopleCount" xml:space="preserve">
+    <value>asked people (count)</value>
+  </data>
+  <data name="badAskGroupCount" xml:space="preserve">
+    <value>small group, to get good results create a bigger one</value>
+  </data>
+  <data name="goodAskGroupCount" xml:space="preserve">
+    <value>good size for good results</value>
+  </data>
+  <data name="middleAskGroupCount" xml:space="preserve">
+    <value>size of the group is ok, could be better for more generic results</value>
+  </data>
+  <data name="SaveAsTemplate" xml:space="preserve">
+    <value>save as template</value>
+  </data>
+  <data name="Members" xml:space="preserve">
+    <value>members</value>
+  </data>
+  <data name="edit" xml:space="preserve">
+    <value>edit</value>
+  </data>
+  <data name="categoryAlreadyExists" xml:space="preserve">
+    <value>There is already an category with this name </value>
+  </data>
+  <data name="groupAlreadyExists" xml:space="preserve">
+    <value>There is already a group with this name!</value>
+  </data>
+  <data name="TemplateDescription" xml:space="preserve">
+    <value>if you do the same question later, you dont have to write everything again</value>
+  </data>
+  <data name="noTemplate" xml:space="preserve">
+    <value>no template</value>
+  </data>
+  <data name="cancel" xml:space="preserve">
+    <value>cancel</value>
+  </data>
+  <data name="content" xml:space="preserve">
+    <value>content</value>
+  </data>
+  <data name="downloadAppHere" xml:space="preserve">
+    <value>You can download the app here</value>
+  </data>
+  <data name="invitationToSimpleQ" xml:space="preserve">
+    <value>invitation to simpleQ</value>
+  </data>
+  <data name="max" xml:space="preserve">
+    <value>max</value>
+  </data>
+  <data name="predictedPrice" xml:space="preserve">
+    <value>predicted price</value>
+  </data>
+  <data name="subject" xml:space="preserve">
+    <value>subject</value>
+    <comment>for mail</comment>
+  </data>
+  <data name="textEditorLanguage" xml:space="preserve">
+    <value>en</value>
+  </data>
+  <data name="addMailAddress" xml:space="preserve">
+    <value>add mail address</value>
+  </data>
+  <data name="invalidMailAddress" xml:space="preserve">
+    <value>the email address in invalid!</value>
+  </data>
+  <data name="addressData" xml:space="preserve">
+    <value>Address data</value>
+  </data>
+  <data name="baseData" xml:space="preserve">
+    <value>Base data</value>
+  </data>
+  <data name="billingPeriodInMonths" xml:space="preserve">
+    <value>billing period in months</value>
+  </data>
+  <data name="city" xml:space="preserve">
+    <value>city</value>
+  </data>
+  <data name="confirmPassword" xml:space="preserve">
+    <value>confirm password</value>
+  </data>
+  <data name="country" xml:space="preserve">
+    <value>country</value>
+  </data>
+  <data name="customerName" xml:space="preserve">
+    <value>customer name</value>
+  </data>
+  <data name="finish" xml:space="preserve">
+    <value>finish</value>
+  </data>
+  <data name="language" xml:space="preserve">
+    <value>language</value>
+  </data>
+  <data name="medium" xml:space="preserve">
+    <value>medium</value>
+  </data>
+  <data name="next" xml:space="preserve">
+    <value>next</value>
+  </data>
+  <data name="password" xml:space="preserve">
+    <value>password</value>
+  </data>
+  <data name="paymentMethod" xml:space="preserve">
+    <value>payment method</value>
+  </data>
+  <data name="postCode" xml:space="preserve">
+    <value>post code</value>
+  </data>
+  <data name="previous" xml:space="preserve">
+    <value>previous</value>
+  </data>
+  <data name="specificData" xml:space="preserve">
+    <value>Specific data</value>
+  </data>
+  <data name="streetAndHousenumber" xml:space="preserve">
+    <value>street and house number</value>
+  </data>
+  <data name="strong" xml:space="preserve">
+    <value>strong</value>
+  </data>
+  <data name="weak" xml:space="preserve">
+    <value>weak</value>
+  </data>
+  <data name="dataRetentionPeriodInMonths" xml:space="preserve">
+    <value>data retention period in months</value>
+  </data>
+  <data name="email" xml:space="preserve">
+    <value>email</value>
+  </data>
+  <data name="preferredBillingDay" xml:space="preserve">
+    <value>preferred billing date for ervery month</value>
+  </data>
+  <data name="customerCode" xml:space="preserve">
+    <value>customer code</value>
+  </data>
+  <data name="forgotPassword" xml:space="preserve">
+    <value>forgot passwort</value>
+  </data>
+  <data name="login" xml:space="preserve">
+    <value>login</value>
+  </data>
+  <data name="startSurvey" xml:space="preserve">
+    <value>send out survey</value>
+  </data>
+  <data name="stayLoggedIn" xml:space="preserve">
+    <value>stay logged in</value>
+  </data>
+  <data name="groupCode" xml:space="preserve">
+    <value>group code</value>
+  </data>
+  <data name="left" xml:space="preserve">
+    <value>left</value>
+  </data>
+  <data name="right" xml:space="preserve">
+    <value>right</value>
+  </data>
+  <data name="singleQuestionEvaluation" xml:space="preserve">
+    <value>single survey evaluation</value>
+  </data>
+  <data name="survey" xml:space="preserve">
+    <value>survey</value>
+  </data>
+  <data name="trendEvaluation" xml:space="preserve">
+    <value>trend evaluation</value>
+  </data>
+</root>

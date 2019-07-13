@@ -7,8 +7,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using System.Collections.Specialized;
-using System.Security.Cryptography.X509Certificates;
 using System.Net.Http.Headers;
 
 namespace SimpleQ.Tests.MobileTest
@@ -37,16 +35,17 @@ namespace SimpleQ.Tests.MobileTest
 
         static int persId;
         static string custCode;
-        static int depId;
-        static string depName;
+        static string custName;
+        static Dictionary<int, string> deps = new Dictionary<int, string>();
 
-        const string SERVER = "https://localhost:44338";
+        const string SERVER = "https://dev.simpleq.at";
         const int YESNO_ID = 1;
         const int SPEC_ID = 4;
         const int FREE_ID = 5;
 
         static void Main(string[] args)
         {
+
             try
             {
                 string input;
@@ -59,6 +58,14 @@ namespace SimpleQ.Tests.MobileTest
                         if (input == "register")
                         {
                             Register();
+                        }
+                        else if (input == "join")
+                        {
+                            Joint();
+                        }
+                        else if (input == "leave")
+                        {
+                            Leave();
                         }
                         else if (input == "unregister")
                         {
@@ -78,7 +85,7 @@ namespace SimpleQ.Tests.MobileTest
                         }
                         else if (input == "props")
                         {
-                            WriteLine($"PersId: {persId}, CustCode: {custCode}, DepId: {depId}, DepName: {depName}");
+                            Props();
                         }
                         else if (input == "cls")
                         {
@@ -113,10 +120,9 @@ namespace SimpleQ.Tests.MobileTest
             {
                 WriteLine("Registration code:");
                 string regCode = ReadLine();
-
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/register?regCode={Uri.EscapeDataString(regCode)}&deviceId=null");
                     string json = await response.Content.ReadAsStringAsync();
                     if (!response.IsSuccessStatusCode)
@@ -129,10 +135,62 @@ namespace SimpleQ.Tests.MobileTest
 
                     persId = reg.PersId;
                     custCode = reg.CustCode;
-                    depId = reg.DepId;
-                    depName = reg.DepName;
+                    custName = reg.CustName;
+                    deps = new Dictionary<int, string>
+                    {
+                        { reg.DepId, reg.DepName }
+                    };
                 }
-                WriteLine($"PersId: {persId}, CustCode: {custCode}, DepId: {depId}, DepName: {depName}");
+                Props();
+            }).Wait();
+        }
+
+        static void Joint()
+        {
+            Task.Run(async () =>
+            {
+                WriteLine("Registration code:");
+                string regCode = ReadLine();
+
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
+                    HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/joinDepartment?regCode={Uri.EscapeDataString(regCode)}&persId={persId}");
+                    string json = await response.Content.ReadAsStringAsync();
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        WriteLine(response.StatusCode);
+                        return;
+                    }
+
+                    RegistrationData reg = JsonConvert.DeserializeObject<RegistrationData>(json);
+
+                    persId = reg.PersId;
+                    custCode = reg.CustCode;
+                    custName = reg.CustName;
+                    deps.Add(reg.DepId, reg.DepName);
+                }
+                Props();
+            }).Wait();
+        }
+
+        static void Leave()
+        {
+            Task.Run(async () =>
+            {
+                WriteLine("DepId:");
+                if (!int.TryParse(ReadLine(), out int depId)) return;
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
+                    HttpResponseMessage response = await client.GetAsync($"{SERVER}/api/mobile/leaveDepartment?persId={persId}&depId={depId}&custCode={Uri.EscapeDataString(custCode)}");
+                    WriteLine(response.StatusCode);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        deps.Remove(depId);
+                        Props();
+                    }
+                }
             }).Wait();
         }
 
@@ -142,13 +200,13 @@ namespace SimpleQ.Tests.MobileTest
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     WriteLine((await client.GetAsync($"{SERVER}/api/mobile/unregister?persId={persId}&custCode={Uri.EscapeDataString(custCode)}")).StatusCode);
 
                     persId = 0;
                     custCode = null;
-                    depId = 0;
-                    depName = null;
+                    custName = null;
+                    deps = new Dictionary<int, string>();
                 }
             }).Wait();
         }
@@ -159,11 +217,11 @@ namespace SimpleQ.Tests.MobileTest
             {
                 HttpResponseMessage response;
                 string json;
-                SurveyNotification survey;
+                SurveyData survey;
 
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={YESNO_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
@@ -173,7 +231,7 @@ namespace SimpleQ.Tests.MobileTest
                         return;
                     }
 
-                    survey = JsonConvert.DeserializeObject<SurveyNotification>(json);
+                    survey = JsonConvert.DeserializeObject<SurveyData>(json);
 
                     WriteLine(survey.SvyText);
                     WriteLine("Possible answers: ");
@@ -204,11 +262,11 @@ namespace SimpleQ.Tests.MobileTest
             {
                 HttpResponseMessage response;
                 string json;
-                SurveyNotification survey;
+                SurveyData survey;
 
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={SPEC_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
@@ -218,7 +276,7 @@ namespace SimpleQ.Tests.MobileTest
                         return;
                     }
 
-                    survey = JsonConvert.DeserializeObject<SurveyNotification>(json);
+                    survey = JsonConvert.DeserializeObject<SurveyData>(json);
 
                     WriteLine(survey.SvyText);
                     WriteLine("Possible answers: ");
@@ -256,11 +314,11 @@ namespace SimpleQ.Tests.MobileTest
             {
                 HttpResponseMessage response;
                 string json;
-                SurveyNotification survey;
+                SurveyData survey;
 
                 using (HttpClient client = new HttpClient())
                 {
-                    client.DefaultRequestHeaders.Add("auth-key", File.ReadAllText("private.key"));
+                    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Pickle", File.ReadAllText("private.key"));
                     response = await client.GetAsync($"{SERVER}/api/mobile/getSurveyData?svyId={FREE_ID}");
                     json = await response.Content.ReadAsStringAsync();
 
@@ -270,7 +328,7 @@ namespace SimpleQ.Tests.MobileTest
                         return;
                     }
 
-                    survey = JsonConvert.DeserializeObject<SurveyNotification>(json);
+                    survey = JsonConvert.DeserializeObject<SurveyData>(json);
 
                     WriteLine(survey.SvyText);
                     WriteLine("Insert your answer:");
@@ -285,6 +343,14 @@ namespace SimpleQ.Tests.MobileTest
             }).Wait();
         }
 
+        static void Props()
+        {
+            WriteLine($"PersId: {persId}, CustCode: {custCode}, CustName: {custName}");
+            WriteLine("Departments:");
+            foreach (KeyValuePair<int, string> kv in deps)
+                WriteLine($"   {kv.Key} {kv.Value}");
+        }
+
         static void Cls()
         {
             Console.Clear();
@@ -293,6 +359,7 @@ namespace SimpleQ.Tests.MobileTest
         static void Help()
         {
             WriteLine("Type 'register' to sign up, 'unregister' to unregister,");
+            WriteLine("'join' to join a group, 'leave' to leave a group,");
             WriteLine("'props' to show the current properties,");
             WriteLine("'answeryesno' to answer a yes/no survey, 'answerspec' to answer a survey with specified text answers,");
             WriteLine("'answerfree' to answer a free-text survey,");

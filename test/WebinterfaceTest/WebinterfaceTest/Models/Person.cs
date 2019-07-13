@@ -14,12 +14,17 @@ namespace SimpleQ.Webinterface.Models
     
     public partial class Person
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Person()
+        {
+            this.Departments = new HashSet<Department>();
+        }
+    
         public int PersId { get; set; }
-        public int DepId { get; set; }
-        public string CustCode { get; set; }
         public string DeviceId { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual Department Department { get; set; }
+        public virtual ICollection<Department> Departments { get; set; }
     }
 }

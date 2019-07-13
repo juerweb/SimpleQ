@@ -1,0 +1,622 @@
+﻿@using SimpleQ.Webinterface.Models;
+@using System.Resources;
+@using SimpleQ.Webinterface.Properties;
+@model SimpleQ.Webinterface.Models.ViewModels.SurveyResultsModel
+@{
+    /**/
+
+    ResourceManager rm = Resources.ResourceManager;
+}
+
+<div class="row pl-4 mt-1 ml-0 mr-0">
+    <div class="col-3">
+        <h2>@Resources.surveyResultsHeader</h2>
+    </div>
+    <div class="col-9">
+        <div class="row ml-0 mr-0 pt-3">
+            <span class="col-4 text-right" id="leftToggleText" onclick="toggleResults()">@Resources.trendEvaluation</span>
+            <span class="col-4 bg-primary p-0" id="twoWayToggle" onclick="toggleResults()">
+                <svg id="circle" height="28" width="28">
+                    <circle cx="14" cy="14" r="13" stroke="black" fill="white" />
+                </svg>
+            </span>
+            <span class="col-4 text-left text-secondary" id="rightToggleText" onclick="toggleResults()">@Resources.singleQuestionEvaluation</span>
+            @*<div class="col-6 pr-0">
+                    <button id="trendBtn" onclick="switchToMulti()" class="btn btn-primary btn-block">Trend (per Kategorie)</button>
+                </div>
+                <div class="col-6 pl-0">
+                    <button id="singleBtn" onclick="switchToSingle()" class="btn btn-secondary btn-block">Einzelumfrage</button>
+                </div>*@
+        </div>
+    </div>
+</div>
+<hr class="mt-1" />
+<div class="row mt-1 ml-0 mr-0">
+    <div class="col-md-4 pl-4 pr-4">
+        <div id="singleResultOptions">
+            <label for="Surveys">@Resources.survey</label>
+            @Html.DropDownListFor(model => model.Surveys, new SelectList(Model.Surveys, "SvyId", "SvyText"), new { @class = "form-control", onchange = "loadSingleResultAsync()" })
+        </div>
+        <div id="multiResultOptions">
+            <label for="SurveyCategories">@Resources.surveyCategoryHeader</label>
+            @Html.DropDownListFor(model => model.SurveyCategories, new SelectList(Model.SurveyCategories, "CatId", "CatName"), new { @class = "form-control", onchange = "loadMultiResultAsync()" })
+            <label for="AnswerTypes">@Resources.answerTypeHeader</label>
+            <select class="form-control" id="AnswerTypes" name="AnswerTypes" onchange="loadMultiResultAsync()"></select>
+
+            <div class="row mt-2">
+                <div class="col-md-6">
+                    <div class="form-group mb-0">
+                        <label for="timeFrom">@Resources.from</label>
+                        <input type="date" class="form-control" id="dateFrom" value="@DateTime.Now.AddMonths(-6).ToString("yyyy-MM-dd")" onchange="loadMultiResultAsync()">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group mb-0">
+                        <label for="timeTwo">@Resources.to</label>
+                        <input type="date" class="form-control" id="dateTo" value="@DateTime.Now.ToString("yyyy-MM-dd")" onchange="loadMultiResultAsync()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8" id="singleResultPartial">
+    </div>
+    <div class="col-md-8" id="multiResultPartial">
+    </div>
+</div>
+<hr />
+<div class="row pr-2 pl-2 ml-0 mr-0">
+    <div class="col-md-6 chartCol" id="chart1Col">
+        <canvas id="chart1"></canvas>
+    </div>
+    <div class="col-md-6 chartCol" id="chart2Col">
+        <canvas id="chart2"></canvas>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div id="zoomModal" class="myModal">
+
+    <!-- Modal content -->
+    <div class="myModal-content">
+        <button class="btn btn-danger btn-block mt-2" onclick="closeZoomModal()">Close</button>
+        <div id="zoomModalContent">
+            <canvas id="chart1" width="800" height="500"></canvas>
+        </div>
+        <button class="btn btn-danger btn-block mt-2" onclick="closeZoomModal()">Close</button>
+    </div>
+
+</div>
+
+<script>
+
+    var languageDict = {};
+    if (resultType == undefined) {
+        var resultType = "multi";
+    }
+
+
+    $(function () {
+        //console.log("hallo");
+        fillLangDict();
+        loadAnswerTypes();
+        loadDatesByCategory();
+        switchToMulti();
+    });
+
+    function fillLangDict() {
+        @{
+            foreach(AnswerType at in Model.AnswerTypes)
+            {
+                @:languageDict['@at.TypeId'] = '@rm.GetString(at.TypeDesc)';
+            }
+        }
+        //console.log(languageDict);
+    }
+
+    function toggleResults() {
+        console.log(resultType);
+        if (resultType === "multi") {
+            switchToSingle();
+            $('#circle').animate({ right: 0 }, 800);
+            $('#circle').css("right", 0);
+            $('#circle').css("left", "unset");
+            $('#rightToggleText').removeClass("text-secondary");
+            $('#leftToggleText').addClass("text-secondary");
+        } else {
+            switchToMulti();
+            $('#circle').animate({ left: 0 }, 800);
+            $('#circle').css("left", 0);
+            $('#circle').css("right", "unset");
+            $('#leftToggleText').removeClass("text-secondary");
+            $('#rightToggleText').addClass("text-secondary");
+        }
+    }
+
+    function loadSingleResultAsync() {
+        $("#singleResultPartial").load("@Url.Action("LoadSingleResult", "SurveyResults")" + "?svyId=" + $("#Surveys").val());
+    }
+
+    function loadMultiResultAsync() {
+        $.post("@Url.Action("LoadMultiResult", "SurveyResults")",
+            {
+                CatId: $("#SurveyCategories").val(),
+                TypeId: $("#AnswerTypes").val(),
+                StartDate: $("#dateFrom").val(),
+                EndDate: $("#dateTo").val()
+            },
+            function (data) {
+                $("#multiResultPartial").html(data);
+                //loadAnswerTypes();
+            });
+    }
+
+    function loadAnswerTypes() {
+        let id = document.getElementById("SurveyCategories").value;
+        let url = '@Url.Action("LoadTypesByCategory", "SurveyResults", new { catId = "temp"})'.replace("temp", id);
+
+        $.ajax({
+            url,
+            type: "get",
+            async: false,
+            success: function (data) {
+                let elem = document.getElementById("AnswerTypes");
+                elem.innerHTML = "";
+                //console.log(data);
+                //console.log(data.length);
+                for (i = 0; i < data.length; i++) {
+                    let typeId = data[i].TypeId;
+                    //console.log(data[i]);
+                    if (i == 0) {
+                        elem.innerHTML += '<option value="' + typeId + '" selected>' + languageDict[typeId] + '</option>';
+                        //console.log("eingfügt");
+                    } else {
+                        elem.innerHTML += '<option value="' + typeId + '">' + languageDict[typeId] + '</option>';
+                    }
+                }
+            }
+            });
+
+    }
+
+    function loadDatesByCategory() {
+        //if (document.getElementById("AnswerTypes").value === "") {
+        //    return;
+        //}
+        let catId = document.getElementById("SurveyCategories").value;
+        let typeId = document.getElementById("AnswerTypes").value;
+        //console.log("type id:" + typeId);
+        let url = "@Url.Action("LoadSurveyDates", "SurveyResults")" + "?catId=" + catId + "&typeId=" + typeId;
+        //let url = '@Url.Action("LoadSurveyDates", "SurveyResults", new { catId = "temp"})'.replace("temp", catId + "&" + typeId);
+        //$.get(
+        //    url,
+        //    function (data) {
+        //        document.getElementById("dateFrom").value = data.StartDate;
+        //        document.getElementById("dateTo").value = data.EndDate;
+        //    });
+        $.ajax({
+            url,
+            type: "get",
+            async: false,
+            success: function (data) {
+                document.getElementById("dateFrom").value = data.StartDate;
+                document.getElementById("dateTo").value = data.EndDate;
+            }
+        });
+    }
+
+
+    function switchToMulti() {
+        resultType = "multi";
+        $("#singleResultOptions").hide();
+        $("#multiResultOptions").show();
+        $("#singleResultPartial").hide();
+        $("#multiResultPartial").show();
+        loadMultiResultAsync();
+        //showMultiCharts();
+    }
+
+    function switchToSingle() {
+        resultType = "single";
+        $("#multiResultOptions").hide();
+        $("#singleResultOptions").show();
+        $("#multiResultPartial").hide();
+        $("#singleResultPartial").show();
+        loadSingleResultAsync();
+        //showSingleCharts();
+    }
+
+    function showMultiCharts() {
+        changeChartMulti('chart1SelectMulti', 'chart1Col', 'chart1');
+        changeChartMulti('chart2SelectMulti', 'chart2Col', 'chart2');
+    }
+
+    function showSingleCharts() {
+        changeChartSingle('chart1SelectSingle', 'chart1Col', 'chart1');
+        changeChartSingle('chart2SelectSingle', 'chart2Col', 'chart2');
+    }
+
+    //all colors, repeat when there are many answer possibilities
+    var borderColors = [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)'
+    ];
+    var bgColors = [
+        'rgba(255, 99, 132, 0.4)',
+        'rgba(54, 162, 235, 0.4)',
+        'rgba(255, 206, 86, 0.4)',
+        'rgba(75, 192, 192, 0.4)',
+        'rgba(153, 102, 255, 0.4)',
+        'rgba(255, 159, 64, 0.4)'
+    ];
+
+    function getRandomColor() {
+        var part1 = Math.floor(Math.random() * 256);
+        var part2 = Math.floor(Math.random() * 256);
+        var part3 = Math.floor(Math.random() * 256);
+        if (part1 > 140 && part2 > 140 && part3 > 140) {
+            getRandomColor();
+        } else if (part1 < 70 && part2 < 70 && part3 < 70) {
+            getRandomColor();
+        }
+        return 'rgba(' + part1 + ', ' + part2 + ', ' + part3;
+    }
+
+    //single chart things
+    //   v
+
+    function changeChartSingle(selector, chartCol, chart) {
+        if ((document.getElementById(selector).value === "listing")) {
+            createSingleListing(chartCol);
+            return;
+        }
+        var keys = [];
+        var values = [];
+        for (i = 0; i < dict.length; i++) {
+            keys.push(dict[i].key);
+            values.push(dict[i].value);
+        }
+
+
+        while (dict.length > borderColors.length) { //ensures, that there are enough colors
+            //alert("drinn");
+            var firstPart = getRandomColor();
+            borderColors = borderColors.concat([(firstPart + ',1)')]);
+            bgColors = bgColors.concat([(firstPart + ',0.4)')]);
+            //alert(firstPart + ',1)');
+        }
+
+
+        var chartType = document.getElementById(selector).value;
+        document.getElementById(chartCol).innerHTML = '<canvas id="' + chart + '" width="800" height="500"></canvas>'; //you have to clean everything up, otherwise the chart is bugging around
+        var canvas = document.getElementById(chart);
+        var ctx = canvas.getContext('2d');
+
+
+        var pluginFontSize = 15;
+        if (window.screen.width < 500) {
+            pluginFontSize = 10;
+        }
+
+
+        if (chartType === "radar") {
+            var myRadarChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: keys,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        backgroundColor: bgColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                }
+            });
+        } else if (chartType === "doughnut" || chartType === "polarArea") {
+
+            var myPieChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: keys,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        backgroundColor: bgColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        labels: {
+                            // render 'label', 'value', 'percentage', 'image' or custom function, default is 'percentage'
+                            render: 'value',
+                            // precision for percentage, default is 0
+                            precision: 0,
+                            // identifies whether or not labels of value 0 are displayed, default is false
+                            showZero: true,
+                            // font size, default is defaultFontSize
+                            fontSize: pluginFontSize,
+                            // font color, can be color array for each data or function for dynamic color, default is defaultFontColor
+                            fontColor: '#000000',
+                            // font style, default is defaultFontStyle
+                            fontStyle: 'normal',
+                            // font family, default is defaultFontFamily
+                            fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                            // draw text shadows under labels, default is false
+                            textShadow: true,
+                            // text shadow intensity, default is 6
+                            shadowBlur: 10,
+                            // text shadow X offset, default is 3
+                            shadowOffsetX: -5,
+                            // text shadow Y offset, default is 3
+                            shadowOffsetY: 5,
+                            // text shadow color, default is 'rgba(0,0,0,0.3)'
+                            shadowColor: 'rgba(255,0,0,0.75)',
+                            // draw label in arc, default is false
+                            arc: true,
+                            // position to draw label, available value is 'default', 'border' and 'outside'
+                            // default is 'default'
+                            position: 'default',
+                            // draw label even it's overlap, default is true
+                            overlap: true,
+                            // show the real calculated percentages from the values and don't apply the additional logic to fit the percentages to 100 in total, default is false
+                            showActualPercentages: true,
+                            // add padding when position is `outside`
+                            // default is 2
+                            outsidePadding: 4,
+                            // add margin of text when position is `outside` or `border`
+                            // default is 2
+                            textMargin: 4
+                        }
+                    }
+                }
+            });
+        } else {
+            var myChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: keys,
+                    datasets: [{
+                        label: '# of Votes',
+                        data: values,
+                        backgroundColor: bgColors,
+                        borderColor: borderColors,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+        }
+    }
+
+    function createSingleListing(chart) {
+        var answerCount = 0;
+        for (i = 0; i < dict.length; i++) {
+            answerCount += parseInt(dict[i].value);
+        }
+        document.getElementById(chart).innerHTML = "";
+        var injection = "";
+
+        for (i = 0; i < dict.length; i++) {
+            injection += ("<tr><td>" + dict[i].key + "</td><td>" + dict[i].value + "</td><td>" + ((dict[i].value / answerCount) * 100).toFixed(2) + "%</td></tr>");
+        }
+        $("#" + chart).append("<table class='table table-bordered'><thead><tr><th>@Resources.answer</th><th>@Resources.count</th><th>@Resources.percent</th></tr></thead><tbody>" + injection + "</tbody></table>");
+    }
+
+    //modal things
+    //   |    Everything down here
+    //   v
+    var dateIndex = 0;
+    $(document).ready(function () {
+        $("#zoomModalContent").click(function () {
+            if (event.target.id === "dateRightModalBtn") { //for multiResult listing (to be able to switch dates)
+                dateIndex += 1;
+                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex, "dateLeftModalBtn", "dateRightModalBtn");
+                $("#dateLeftModalBtn").prop("disabled", false);
+                if (dateIndex === multiLabels.length - 1) {
+                    $("#dateRightModalBtn").prop("disabled", true);
+                }
+                return;
+            }
+            if (event.target.id === "dateLeftModalBtn") { //for multiResult listing (to be able to switch dates)
+                dateIndex -= 1;
+                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex, "dateLeftModalBtn", "dateRightModalBtn");
+                $("#dateRightModalBtn").prop("disabled", false);
+                if (dateIndex === 0) {
+                    $("#dateLeftModalBtn").prop("disabled", true);
+                } else {
+                    $("#dateLeftModalBtn").prop("disabled", false);
+                }
+                return;
+            }
+        });
+        $(".chartCol").click(function (event) {
+            if (event.target.id === "dateRightBtn") { //for multiResult listing (to be able to switch dates)
+                dateIndex += 1;
+                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex, "dateLeftBtn", "dateRightBtn");
+                $("#dateLeftBtn").prop("disabled", false);
+                if (dateIndex === multiLabels.length - 1) {
+                    $("#dateRightBtn").prop("disabled", true);
+                }
+                return;
+            }
+            if (event.target.id === "dateLeftBtn") { //for multiResult listing (to be able to switch dates)
+                dateIndex -= 1;
+                createMultiListing(event.target.parentElement.parentElement.parentElement.id, dateIndex, "dateLeftBtn", "dateRightBtn");
+                $("#dateRightBtn").prop("disabled", false);
+                if (dateIndex === 0) {
+                    $("#dateLeftBtn").prop("disabled", true);
+                } else {
+                    $("#dateLeftBtn").prop("disabled", false);
+                }
+                return;
+            }
+            //create the zoomModal, when clicking on the columns
+            if (event.target.id === "chart1" || event.target.id === "chart1Col" || event.target.parentElement.parentElement.parentElement.parentElement.id === "chart1Col") {
+                if (resultType === "single") {
+                    changeChartSingle("chart1SelectSingle", "zoomModalContent", "modalChart");
+                }
+                else if (resultType === "multi") {
+                    changeChartMulti("chart1SelectMulti", "zoomModalContent", "modalChart");
+                } else {
+                    Console.log("Invalid chartType!");
+                }
+            } else if (event.target.id === "chart2" || event.target.id === "chart2Col" || event.target.parentElement.parentElement.parentElement.parentElement.id === "chart2Col") {
+                if (resultType === "single") {
+                    changeChartSingle("chart2SelectSingle", "zoomModalContent", "modalChart");
+                }
+                else if (resultType === "multi") {
+                    changeChartMulti("chart2SelectMulti", "zoomModalContent", "modalChart");
+                } else {
+                    Console.log("Invalid chartType!");
+                }
+            }
+            var modal = document.getElementById('zoomModal');
+            modal.style.display = "block";
+        });
+    });
+
+    function closeZoomModal() {
+        var modal = document.getElementById('zoomModal');
+        modal.style.display = "none";
+    }
+
+    //multi chart things
+    //   |    Everything down here
+    //   v
+
+    function changeChartMulti(selector, chartCol, chart) {
+
+        if ((document.getElementById(selector).value === "listing")) {
+            if (chartCol === "zoomModalContent") {
+                createMultiListing(chartCol, dateIndex, "dateLeftModalBtn", "dateRightModalBtn");
+            } else {
+                createMultiListing(chartCol, 0, "dateLeftBtn", "dateRightBtn");
+            }
+            return;
+        }
+
+        //alert(multiDict.length + " " + borderColors.length);
+        while (multiDict.length > borderColors.length) { //ensures, that there are enough colors
+            var firstPart = getRandomColor();
+            borderColors = borderColors.concat([(firstPart + ',1)')]);
+            bgColors = bgColors.concat([(firstPart + ',0.4)')]);
+        }
+
+        var chartType = document.getElementById(selector).value;
+        document.getElementById(chartCol).innerHTML = '<canvas id="' + chart + '" width="800" height="500"></canvas>'; //you have to clean everything up, otherwise the chart is bugging around
+        var canvas = document.getElementById(chart);
+        var ctx = canvas.getContext('2d');
+
+        let datasets = [];
+
+        if (chartType === "bar") {
+
+            datasets = createDatasets(true);
+
+            var stackedBar = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: multiLabels,
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        xAxes: [{
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            stacked: true
+                        }]
+                    }
+                }
+            });
+        } else if (chartType === "line") {
+
+             datasets = createDatasets(false);
+
+            var myMultiLineChart = new Chart(ctx, {
+                type: chartType,
+                data: {
+                    labels: multiLabels,
+                    datasets: datasets
+                },
+                options: {
+
+                }
+            });
+        }
+    }
+
+    function createDatasets(withBackground) {
+        var datasets = [];
+        if (withBackground) {
+            for (i = 0; i < multiDict.length; i++) {
+                if (checkedAnswers.includes(multiDict[i].key)) {
+                    datasets.push({
+                        label: multiDict[i].key,
+                        data: multiDict[i].value,
+                        borderColor: borderColors[i],
+                        backgroundColor: bgColors[i],
+                        borderWidth: 1
+                    });
+                }
+            }
+        } else {
+            for (i = 0; i < multiDict.length; i++) {
+                if (checkedAnswers.includes(multiDict[i].key)) {
+                    datasets.push({
+                        label: multiDict[i].key,
+                        data: multiDict[i].value,
+                        borderColor: borderColors[i],
+                        backgroundColor: 'rgba(255,0,0,0)',
+                        borderWidth: 1
+                    });
+                }
+            }
+        }
+        return datasets;
+    }
+
+    function createMultiListing(chartCol, dateIndex, buttonLeftId, buttonRightId) {
+        var answerCount = 0;
+        //alert(multiDict.length + " " + dateIndex);
+        for (i = 0; i < multiDict.length; i++) {
+            answerCount += multiDict[i].value[dateIndex];
+        }
+        document.getElementById(chartCol).innerHTML = "";
+        var injection = "";
+
+        injection += '<div class="row"> <div class="col-3"><button id="' + buttonLeftId + '" class="btn btn-primary btn-block"> < </button></div> <div class="col-6"><h3 class="text-center">' + multiLabels[dateIndex] + '</h3></div> <div class="col-3"><button id="' + buttonRightId + '" class="btn btn-primary  btn-block"> > </button></div> </div>';
+
+        //injection += '<button class="btn btn-primary" style="float:left;"> < </button>';
+
+        for (i = 0; i < multiDict.length; i++) {
+            injection += ("<tr><td>" + multiDict[i].key + "</td><td>" + multiDict[i].value[dateIndex] + "</td><td>" + ((multiDict[i].value[dateIndex] / answerCount) * 100).toFixed(2) + "%</td></tr>");
+        }
+        $("#" + chartCol).append("<table class='table table-bordered'><thead><tr><th>@Resources.answer</th><th>@Resources.count</th><th>@Resources.percent</th></tr></thead><tbody>" + injection + "</tbody></table>");
+
+        if (dateIndex === 0) {
+            $("#" + buttonLeftId).prop("disabled", true);
+        } else if (dateIndex === multiLabels.length - 1) {
+            $("#" + buttonRightId).prop("disabled", true);
+        }
+    }
+
+</script>
+

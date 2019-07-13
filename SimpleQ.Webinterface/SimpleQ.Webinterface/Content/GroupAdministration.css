@@ -1,0 +1,14 @@
+﻿.ga-groups-ul {
+    font-size: medium;
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.textEditor {
+    height: 500px;
+}
+
+#mailAddressesBox {
+    height: 281px;
+    overflow-y: scroll;
+}

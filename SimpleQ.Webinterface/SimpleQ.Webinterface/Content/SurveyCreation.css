@@ -1,0 +1,39 @@
+﻿.withoutBorder{
+    border-color:none;
+    border: none;
+    background-color: #fff!important;
+}
+
+.groups-ul {
+    font-size: medium;
+}
+
+.inputNotUsable{
+
+}
+
+.rightNotRounded {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.leftNotRounded {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.colorSpan{
+    height:10px;
+}
+
+.colorSpanRed{
+    background-color:red;
+}
+
+.colorSpanOrange {
+    background-color: orange;
+}
+
+.colorSpanGreen {
+    background-color: green;
+}

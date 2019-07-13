@@ -19,11 +19,12 @@
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <Use64BitIISExpress>false</Use64BitIISExpress>
+    <Use64BitIISExpress>
+    </Use64BitIISExpress>
     <IISExpressSSLPort>44338</IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
-    <IISExpressUseClassicPipelineMode />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -85,8 +86,47 @@
       <HintPath>..\..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Owin.4.0.0\lib\net451\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Owin.Host.SystemWeb.4.0.0\lib\net451\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Owin.Security.4.0.0\lib\net451\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.DocumentObjectModel, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.DocumentObjectModel.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.Rendering, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.Rendering.dll</HintPath>
+    </Reference>
+    <Reference Include="MigraDoc.RtfRendering, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.RtfRendering.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\NLog.4.5.11\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.32.3057.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\PDFsharp.1.32.3057.0\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
+    <Reference Include="QRCoder, Version=1.3.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\QRCoder.1.3.4\lib\net40\QRCoder.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -94,11 +134,17 @@
       <HintPath>..\..\..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\System.Drawing.Common.4.5.0\lib\net461\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -154,12 +200,83 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_LocalResources\Resources.Designer.cs">
+    <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Attributes\CAuthorizeAttribute.cs" />
+    <Compile Include="Attributes\RequireAuthAttribute.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Extensions\Email.cs" />
+    <Compile Include="Extensions\Pdf.cs" />
+    <Compile Include="Models\AnswerOption.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AnswerType.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BaseQuestionType.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Bill.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DataConstraint.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Department.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Enums\BaseQuestionTypes.cs" />
+    <Compile Include="Models\FaqEntry.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaymentMethod.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Person.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PredefinedAnswerOption.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SimpleQModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleQModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SimpleQModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SimpleQModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SimpleQModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SimpleQModel.Functions.Context.cs" />
+    <Compile Include="Models\Survey.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SurveyCategory.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModels\ErrorModel.cs" />
+    <Compile Include="Models\Vote.cs">
+      <DependentUpon>SimpleQModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\BackendResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BackendResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="App_LocalResources\Resources.de.Designer.cs">
+    <Compile Include="Properties\Resources.de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.de.resx</DependentUpon>
@@ -169,25 +286,29 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\GroupAdministrationController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MobileController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\SurveyCreationController.cs" />
     <Compile Include="Controllers\SurveyResultsController.cs" />
-    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Extensions\Literal.cs" />
+    <Compile Include="Extensions\Http.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Mobile\RegistrationData.cs" />
-    <Compile Include="Models\Mobile\SurveyNotification.cs" />
+    <Compile Include="Models\Mobile\SurveyData.cs" />
     <Compile Include="Models\Mobile\SurveyVote.cs" />
-    <Compile Include="Models\ViewModels\ContainerViewModel.cs" />
+    <Compile Include="Models\ViewModels\GroupAdministrationModel.cs" />
     <Compile Include="Models\ViewModels\MultiResultModel.cs" />
+    <Compile Include="Models\ViewModels\SettingsModel.cs" />
     <Compile Include="Models\ViewModels\SingleResultModel.cs" />
+    <Compile Include="Models\ViewModels\SupportModel.cs" />
     <Compile Include="Models\ViewModels\SurveyCreationModel.cs" />
     <Compile Include="Models\ViewModels\SurveyResultsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\ResourcesN.de.Designer.cs" />
+    <Compile Include="Properties\ResourcesN.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -196,33 +317,87 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\GroupAdministration.css" />
+    <Content Include="Content\Images\Icons\favicon.ico" />
+    <Content Include="Content\Images\Icons\favicon.png" />
     <Content Include="Content\Images\Icons\groupAdministration.png" />
     <Content Include="Content\Images\Icons\logout.png" />
     <Content Include="Content\Images\Icons\settings.png" />
     <Content Include="Content\Images\Icons\createSurvey.png" />
     <Content Include="Content\Images\Icons\support.png" />
     <Content Include="Content\Images\Icons\surveyResults.png" />
+    <Content Include="Content\Images\jquery-ui.min.css" />
+    <Content Include="Content\Images\loginBG1.jpg" />
+    <Content Include="Content\Images\loginBG10.jpg" />
+    <Content Include="Content\Images\loginBG11.jpg" />
+    <Content Include="Content\Images\loginBG2.jpg" />
+    <Content Include="Content\Images\loginBG3.jpg" />
+    <Content Include="Content\Images\loginBG4.jpg" />
+    <Content Include="Content\Images\loginBG5.jpg" />
+    <Content Include="Content\Images\loginBG6.jpg" />
+    <Content Include="Content\Images\loginBG7.jpg" />
+    <Content Include="Content\Images\loginBG8.jpg" />
+    <Content Include="Content\Images\loginBG9.jpg" />
     <Content Include="Content\Images\Logos\simpleQ.png" />
+    <Content Include="Content\Images\registrationBG.jpg" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\jquery-ui.min.css" />
+    <Content Include="Content\jquery-ui.structure.css" />
+    <Content Include="Content\jquery-ui.structure.min.css" />
+    <Content Include="Content\jquery-ui.theme.css" />
+    <Content Include="Content\jquery-ui.theme.min.css" />
     <Content Include="Content\Layout.css" />
+    <Content Include="Content\Login.css" />
+    <Content Include="Content\SurveyCreation.css" />
     <Content Include="Content\SurveyResults.css" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EmbeddedResource Include="App_LocalResources\Resources.de.resx">
+    <EmbeddedResource Include="Properties\BackendResources.de.resx" />
+    <EmbeddedResource Include="Properties\BackendResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BackendResources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.de.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.de.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <Content Include="private.key" />
+    <Content Include="Authorization\private.key" />
     <Content Include="Content\bootstrap-grid.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Models\SimpleQModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SimpleQModel.edmx</DependentUpon>
+      <LastGenOutput>SimpleQModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\SimpleQModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>SimpleQModel.edmx</DependentUpon>
+      <LastGenOutput>SimpleQModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+    <EmbeddedResource Include="Properties\ResourcesN.de.resx" />
+    <EmbeddedResource Include="Properties\ResourcesN.resx" />
+    <EntityDeploy Include="Models\SimpleQModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>SimpleQModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\SimpleQModel.edmx.diagram">
+      <DependentUpon>SimpleQModel.edmx</DependentUpon>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -234,14 +409,9 @@
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
     <Content Include="Scripts\esm\popper.min.js" />
+    <None Include="Properties\PublishProfiles\CustomProfile1.pubxml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.js" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
-    <Content Include="Scripts\jquery.min.js" />
-    <Content Include="Scripts\jquery.signalR-2.3.0.js" />
-    <Content Include="Scripts\jquery.signalR-2.3.0.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -252,15 +422,121 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\qrious.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\texteditor\langs\ar.min.js" />
+    <Content Include="Scripts\texteditor\langs\bg.min.js" />
+    <Content Include="Scripts\texteditor\langs\by.min.js" />
+    <Content Include="Scripts\texteditor\langs\ca.min.js" />
+    <Content Include="Scripts\texteditor\langs\cs.min.js" />
+    <Content Include="Scripts\texteditor\langs\da.min.js" />
+    <Content Include="Scripts\texteditor\langs\de.min.js" />
+    <Content Include="Scripts\texteditor\langs\el.min.js" />
+    <Content Include="Scripts\texteditor\langs\es.min.js" />
+    <Content Include="Scripts\texteditor\langs\es_ar.min.js" />
+    <Content Include="Scripts\texteditor\langs\fa.min.js" />
+    <Content Include="Scripts\texteditor\langs\fi.min.js" />
+    <Content Include="Scripts\texteditor\langs\fr.min.js" />
+    <Content Include="Scripts\texteditor\langs\he.min.js" />
+    <Content Include="Scripts\texteditor\langs\hr.min.js" />
+    <Content Include="Scripts\texteditor\langs\hu.min.js" />
+    <Content Include="Scripts\texteditor\langs\id.min.js" />
+    <Content Include="Scripts\texteditor\langs\it.min.js" />
+    <Content Include="Scripts\texteditor\langs\ja.min.js" />
+    <Content Include="Scripts\texteditor\langs\ko.min.js" />
+    <Content Include="Scripts\texteditor\langs\lt.min.js" />
+    <Content Include="Scripts\texteditor\langs\mn.min.js" />
+    <Content Include="Scripts\texteditor\langs\my.min.js" />
+    <Content Include="Scripts\texteditor\langs\nl.min.js" />
+    <Content Include="Scripts\texteditor\langs\no_nb.min.js" />
+    <Content Include="Scripts\texteditor\langs\ph.min.js" />
+    <Content Include="Scripts\texteditor\langs\pl.min.js" />
+    <Content Include="Scripts\texteditor\langs\pt.min.js" />
+    <Content Include="Scripts\texteditor\langs\pt_br.min.js" />
+    <Content Include="Scripts\texteditor\langs\ro.min.js" />
+    <Content Include="Scripts\texteditor\langs\rs.min.js" />
+    <Content Include="Scripts\texteditor\langs\rs_latin.min.js" />
+    <Content Include="Scripts\texteditor\langs\ru.min.js" />
+    <Content Include="Scripts\texteditor\langs\sk.min.js" />
+    <Content Include="Scripts\texteditor\langs\sq.min.js" />
+    <Content Include="Scripts\texteditor\langs\sv.min.js" />
+    <Content Include="Scripts\texteditor\langs\th.min.js" />
+    <Content Include="Scripts\texteditor\langs\tr.min.js" />
+    <Content Include="Scripts\texteditor\langs\ua.min.js" />
+    <Content Include="Scripts\texteditor\langs\vi.min.js" />
+    <Content Include="Scripts\texteditor\langs\zh_cn.min.js" />
+    <Content Include="Scripts\texteditor\langs\zh_tw.min.js" />
+    <Content Include="Scripts\texteditor\plugins\allowtagsfrompaste\trumbowyg.allowtagsfrompaste.js" />
+    <Content Include="Scripts\texteditor\plugins\allowtagsfrompaste\trumbowyg.allowtagsfrompaste.min.js" />
+    <Content Include="Scripts\texteditor\plugins\base64\trumbowyg.base64.js" />
+    <Content Include="Scripts\texteditor\plugins\base64\trumbowyg.base64.min.js" />
+    <Content Include="Scripts\texteditor\plugins\cleanpaste\trumbowyg.cleanpaste.js" />
+    <Content Include="Scripts\texteditor\plugins\cleanpaste\trumbowyg.cleanpaste.min.js" />
+    <Content Include="Scripts\texteditor\plugins\colors\trumbowyg.colors.js" />
+    <Content Include="Scripts\texteditor\plugins\colors\trumbowyg.colors.min.js" />
+    <Content Include="Scripts\texteditor\plugins\colors\ui\trumbowyg.colors.css" />
+    <Content Include="Scripts\texteditor\plugins\colors\ui\trumbowyg.colors.min.css" />
+    <Content Include="Scripts\texteditor\plugins\emoji\trumbowyg.emoji.js" />
+    <Content Include="Scripts\texteditor\plugins\emoji\trumbowyg.emoji.min.js" />
+    <Content Include="Scripts\texteditor\plugins\emoji\ui\trumbowyg.emoji.css" />
+    <Content Include="Scripts\texteditor\plugins\emoji\ui\trumbowyg.emoji.min.css" />
+    <Content Include="Scripts\texteditor\plugins\fontfamily\trumbowyg.fontfamily.js" />
+    <Content Include="Scripts\texteditor\plugins\fontfamily\trumbowyg.fontfamily.min.js" />
+    <Content Include="Scripts\texteditor\plugins\fontsize\trumbowyg.fontsize.js" />
+    <Content Include="Scripts\texteditor\plugins\fontsize\trumbowyg.fontsize.min.js" />
+    <Content Include="Scripts\texteditor\plugins\highlight\trumbowyg.highlight.js" />
+    <Content Include="Scripts\texteditor\plugins\highlight\trumbowyg.highlight.min.js" />
+    <Content Include="Scripts\texteditor\plugins\highlight\ui\trumbowyg.highlight.css" />
+    <Content Include="Scripts\texteditor\plugins\highlight\ui\trumbowyg.highlight.min.css" />
+    <Content Include="Scripts\texteditor\plugins\history\trumbowyg.history.js" />
+    <Content Include="Scripts\texteditor\plugins\history\trumbowyg.history.min.js" />
+    <Content Include="Scripts\texteditor\plugins\insertaudio\trumbowyg.insertaudio.js" />
+    <Content Include="Scripts\texteditor\plugins\insertaudio\trumbowyg.insertaudio.min.js" />
+    <Content Include="Scripts\texteditor\plugins\lineheight\trumbowyg.lineheight.js" />
+    <Content Include="Scripts\texteditor\plugins\lineheight\trumbowyg.lineheight.min.js" />
+    <Content Include="Scripts\texteditor\plugins\mathml\trumbowyg.mathml.js" />
+    <Content Include="Scripts\texteditor\plugins\mathml\trumbowyg.mathml.min.js" />
+    <Content Include="Scripts\texteditor\plugins\mathml\ui\trumbowyg.mathml.css" />
+    <Content Include="Scripts\texteditor\plugins\mathml\ui\trumbowyg.mathml.min.css" />
+    <Content Include="Scripts\texteditor\plugins\mention\trumbowyg.mention.js" />
+    <Content Include="Scripts\texteditor\plugins\mention\trumbowyg.mention.min.js" />
+    <Content Include="Scripts\texteditor\plugins\mention\ui\trumbowyg.mention.css" />
+    <Content Include="Scripts\texteditor\plugins\mention\ui\trumbowyg.mention.min.css" />
+    <Content Include="Scripts\texteditor\plugins\noembed\trumbowyg.noembed.js" />
+    <Content Include="Scripts\texteditor\plugins\noembed\trumbowyg.noembed.min.js" />
+    <Content Include="Scripts\texteditor\plugins\pasteembed\trumbowyg.pasteembed.js" />
+    <Content Include="Scripts\texteditor\plugins\pasteembed\trumbowyg.pasteembed.min.js" />
+    <Content Include="Scripts\texteditor\plugins\pasteimage\trumbowyg.pasteimage.js" />
+    <Content Include="Scripts\texteditor\plugins\pasteimage\trumbowyg.pasteimage.min.js" />
+    <Content Include="Scripts\texteditor\plugins\preformatted\trumbowyg.preformatted.js" />
+    <Content Include="Scripts\texteditor\plugins\preformatted\trumbowyg.preformatted.min.js" />
+    <Content Include="Scripts\texteditor\plugins\resizimg\trumbowyg.resizimg.js" />
+    <Content Include="Scripts\texteditor\plugins\resizimg\trumbowyg.resizimg.min.js" />
+    <Content Include="Scripts\texteditor\plugins\ruby\trumbowyg.ruby.js" />
+    <Content Include="Scripts\texteditor\plugins\ruby\trumbowyg.ruby.min.js" />
+    <Content Include="Scripts\texteditor\plugins\table\trumbowyg.table.js" />
+    <Content Include="Scripts\texteditor\plugins\table\trumbowyg.table.min.js" />
+    <Content Include="Scripts\texteditor\plugins\table\ui\trumbowyg.table.css" />
+    <Content Include="Scripts\texteditor\plugins\table\ui\trumbowyg.table.min.css" />
+    <Content Include="Scripts\texteditor\plugins\template\trumbowyg.template.js" />
+    <Content Include="Scripts\texteditor\plugins\template\trumbowyg.template.min.js" />
+    <Content Include="Scripts\texteditor\plugins\upload\trumbowyg.upload.js" />
+    <Content Include="Scripts\texteditor\plugins\upload\trumbowyg.upload.min.js" />
+    <Content Include="Scripts\texteditor\trumbowyg.js" />
+    <Content Include="Scripts\texteditor\trumbowyg.min.js" />
+    <Content Include="Scripts\texteditor\ui\icons.svg" />
+    <Content Include="Scripts\texteditor\ui\trumbowyg.css" />
+    <Content Include="Scripts\texteditor\ui\trumbowyg.min.css" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -269,14 +545,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\SurveyCreation\_SurveyCreation.cshtml" />
-    <Content Include="Views\GroupAdministration\_GroupAdministration.cshtml" />
-    <Content Include="Views\Settings\_Settings.cshtml" />
-    <Content Include="Views\Support\_Support.cshtml" />
-    <Content Include="Views\SurveyResults\_SurveyResults.cshtml" />
     <Content Include="Views\SurveyResults\_SingleResult.cshtml" />
     <Content Include="Views\SurveyResults\_MultiResult.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
@@ -288,8 +557,6 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper.min.js.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.map" />
-    <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
@@ -300,19 +567,42 @@
     <Content Include="Scripts\umd\popper-utils.min.js.map" />
     <Content Include="Scripts\umd\popper.js.map" />
     <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Views\GroupAdministration\GroupAdministration.cshtml" />
+    <Content Include="Views\SurveyCreation\SurveyCreation.cshtml" />
+    <Content Include="Views\SurveyResults\SurveyResults.cshtml" />
+    <Content Include="Views\Settings\Settings.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Confirmation.cshtml" />
+    <Content Include="Views\Shared\AccountError.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Shared\_AccountLayout.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\SurveyResults\_Error.cshtml" />
+    <Content Include="Views\Support\Support.cshtml" />
+    <Content Include="Scripts\texteditor\plugins\colors\ui\sass\trumbowyg.colors.scss" />
+    <Content Include="Scripts\texteditor\plugins\emoji\ui\sass\trumbowyg.emoji.scss" />
+    <Content Include="Scripts\texteditor\plugins\highlight\ui\sass\trumbowyg.highlight.scss" />
+    <Content Include="Scripts\texteditor\plugins\mathml\ui\sass\trumbowyg.mathml.scss" />
+    <Content Include="Scripts\texteditor\plugins\mention\ui\sass\trumbowyg.mention.scss" />
+    <Content Include="Scripts\texteditor\plugins\table\ui\sass\trumbowyg.table.scss" />
+    <Content Include="Scripts\texteditor\ui\sass\trumbowyg.scss" />
+    <Content Include="Scripts\qrious.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="App_LocalResources\Resources.resx">
+    <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

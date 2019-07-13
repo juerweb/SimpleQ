@@ -60,11 +60,17 @@ create table Customer
 );
 
 
--- Unique-Constraint für Customer.AuthToken
+-- Unique-Constraint fÃ¼r Customer.AuthToken
 create unique nonclustered index idx_Customer_AuthToken
 on Customer(AuthToken)
 where AuthToken is not null;
 
+
+-- Unique-Constraint fÃ¼r Customer.AuthToken
+create unique nonclustered index idx_AuthToken_NotNull
+on Customer(AuthToken)
+where AuthToken is not null;
+go
 
 -- Rechnung
 -- KUNDENSPEZIFISCH
@@ -100,11 +106,10 @@ create table Person
 );
 
 
--- Unique-Constraint für Customer.AuthToken
+-- Unique-Constraint fÃ¼r Customer.AuthToken
 create unique nonclustered index idx_Person_AuthToken
 on Person(AuthToken)
 where AuthToken is not null;
-
 
 -- In Abteilung angestellte Personen
 -- KUNDENSPEZIFISCH
@@ -137,7 +142,7 @@ create table AnswerType
 );
 
 
--- Vom Kunden aktivierte Beantwortungsarten (standardmäßig alle)
+-- Vom Kunden aktivierte Beantwortungsarten (standardmÃ¤ÃŸig alle)
 -- KUNDENSPEZIFISCH
 create table Activates
 (
@@ -147,7 +152,17 @@ create table Activates
 );
 
 
--- Vordefinierte Antwortmöglichkeit
+-- Vom Kunden aktivierte Beantwortungsarten (standardmÃ¤ÃŸig alle)
+-- KUNDENSPEZIFISCH
+create table Activates
+(
+	CustCode char(6) collate Latin1_General_CS_AS references Customer,
+	TypeId int references AnswerType,
+	primary key (CustCode, TypeId)
+);
+go
+
+-- Vordefinierte AntwortmÃ¶glichkeit
 -- NICHT KUNDENSPEZIFISCH
 create table PredefinedAnswerOption
 (
@@ -202,7 +217,7 @@ create table Asking
 );
 
 
--- Antwortmöglichkeit
+-- AntwortmÃ¶glichkeit
 -- KUNDENSPEZIFISCH
 create table AnswerOption
 (
@@ -223,7 +238,7 @@ create table Vote
 );
 
 
--- Mit Umfragenantwort ausgewählte Antwortmöglichkeit(en)
+-- Mit Umfragenantwort ausgewÃ¤hlte AntwortmÃ¶glichkeit(en)
 -- KUNDENSPEZIFISCH
 create table Chooses
 (
@@ -244,7 +259,7 @@ create table DataConstraint
 
 
 
--- FAQ-Eintrag für Supportbereich
+-- FAQ-Eintrag fÃ¼r Supportbereich
 -- NICHT KUNDENSPEZIFISCH
 create table FaqEntry
 (
@@ -294,7 +309,58 @@ end
 go
 
 
--- Generiert das Authentifikations-Token für den Mobil-User
+-- FAQ-Eintrag fÃ¼r Supportbereich
+-- NICHT KUNDENSPEZIFISCH
+create table FaqEntry
+(
+    FaqTitle varchar(128) primary key,
+    FaqContent varchar(max) not null,
+    IsMobile bit not null
+);
+go
+
+-- Zum Berechnen der Per-Click-Kosten bei einer bestimmten Befragtenanzahl
+drop function fn_CalcPricePerClick;
+go
+create function fn_CalcPricePerClick(@amount int, @custCode char(6))
+returns money
+as
+begin
+	declare @value money;
+	declare @rebate decimal(5, 2);
+
+	set @rebate = coalesce((select Rebate from Customer where CustCode = @custCode), 0);
+
+	if (@amount between 0 and 20)			-- f(x) = 0.125 | 0 <= x <= 20
+		set @value = 0.125;
+	else if (@amount between 21 and 200)	-- f(x) = -0.000135789x + 0.12631578 | 21 <= x <= 200
+		set @value = -0.000135789 * @amount + 0.12631578;
+	else if (@amount between 201 and 5000)	-- f(x) = 0.107*e^(-0.000335*x) | 201 <= x <= 5000
+		set @value = 0.107 * exp(-0.000335 * @amount);
+	else if (@amount > 5000)				-- f(x) = 0.02 | x > 5000
+		set @value = 0.02;
+	else									-- f(x) = -1 | x < 0
+		set @value = -1;
+
+	return @value * (1 - @rebate/100);
+end
+go
+
+
+-- Zum Hashen eines Strings
+drop function fn_GetHash;
+go
+create function fn_GetHash(@str varchar(max))
+returns varbinary(max)
+as
+begin
+	return hashbytes('SHA2_512', @str);
+end
+go
+
+
+
+-- Generiert das Authentifikations-Token fÃ¼r den Mobil-User
 create trigger tr_PersonIns
 on Person
 after insert as
@@ -322,8 +388,7 @@ begin
 end
 go
 
-
--- Hasht das Passwort und setzt das im Klartext Eingegebene NULL, aktiviert standardmäßig alle AnswerTypes für den neuen Kunden
+-- Hasht das Passwort und setzt das im Klartext Eingegebene NULL, aktiviert standardmÃ¤ÃŸig alle AnswerTypes fÃ¼r den neuen Kunden
 create trigger tr_CustomerIns
 on Customer
 after insert as
@@ -356,7 +421,7 @@ begin
 end
 go
 
--- Hasht das Passwort und setzt das im Klartext Eingegebene NULL (nach Passwortänderung)
+-- Hasht das Passwort und setzt das im Klartext Eingegebene NULL (nach PasswortÃ¤nderung)
 create trigger tr_CustomerUpd
 on Customer
 after update as
@@ -389,7 +454,7 @@ go
 
 
 
--- Fügt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortmöglichkeit ein
+-- FÃ¼gt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als AntwortmÃ¶glichkeit ein
 create trigger tr_SurveyIns
 on Survey
 after insert as
@@ -417,7 +482,7 @@ begin
 end
 go
 
--- Fügt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als Antwortmöglichkeit ein
+-- FÃ¼gt bei den entsprechenden Beantwortungsarten die vordefinierten Antworten als AntwortmÃ¶glichkeit ein
 create trigger tr_SurveyUpd
 on Survey
 after update as
@@ -450,7 +515,7 @@ end
 go
 
 
--- Löscht ggf. Umfragekategorien falls diese als deaktiviert gekennzeichnet wurden und nicht mehr verwendet werden
+-- LÃ¶scht ggf. Umfragekategorien falls diese als deaktiviert gekennzeichnet wurden und nicht mehr verwendet werden
 create trigger tr_SurveyDel
 on Survey
 after delete as
@@ -487,7 +552,7 @@ end
 go
 
 
--- Zum Überprüfen, ob je Vote nur für AnswerOptions einer einzigen Survey gestimmt werden
+-- Zum ÃœberprÃ¼fen, ob je Vote nur fÃ¼r AnswerOptions einer einzigen Survey gestimmt werden
 -- sowie zum Aufbuchen der Per-Click-Kosten des Kunden
 create trigger tr_ChoosesIns
 on Chooses
@@ -525,7 +590,7 @@ begin
 									join Survey s on a.SvyId = s.SvyId
 									where i.VoteId not in (select VoteId from (select * from Chooses
 																			   except
-																			   select * from inserted) Chooses_before); -- nur für neue VoteIds
+																			   select * from inserted) Chooses_before); -- nur fÃ¼r neue VoteIds
 
 	
 		open c2;
@@ -546,7 +611,7 @@ begin
 end
 go
 
--- Zum Löschen einer bestimmten Umfrage und allen zugehörigen Daten
+-- Zum LÃ¶schen einer bestimmten Umfrage und allen zugehÃ¶rigen Daten
 drop procedure sp_DeleteSurvey;
 go
 create procedure sp_DeleteSurvey(@svyId int)
@@ -563,7 +628,7 @@ end
 go
 
 
--- Zum Löschen der abgelaufenen Umfragedaten
+-- Zum LÃ¶schen der abgelaufenen Umfragedaten
 drop procedure sp_CheckExceededSurveyData;
 go
 create procedure sp_CheckExceededSurveyData
@@ -659,7 +724,7 @@ begin
 end
 go
 
--- Zum Generieren eines Authentifizierungs-Tokens für einen Kunden
+-- Zum Generieren eines Authentifizierungs-Tokens fÃ¼r einen Kunden
 drop procedure sp_GenerateAuthToken;
 go
 create procedure sp_GenerateAuthToken(@custCode char(6))
@@ -701,16 +766,18 @@ end
 go
 
 
--- Fixe inserts (für alle gleich!)
+
+-- Fixe inserts (fÃ¼r alle gleich!)
 begin transaction;
 insert into DataConstraint values ('MIN_GROUP_SIZE', 3); -- Nur Testwert
 
-insert into FaqEntry values ('Wie starte ich eine Befragung?', 'Klicken Sie auf den Register "Befragung erstellen". Dort können Sie nach Eingabe aller Befragungsdaten die Befragung erstellen.', 0); -- Nur Testwert
-insert into FaqEntry values ('Wo kann ich meine Rechnungen ansehen?', 'Unter "Einstellungen" beim Tab "Rechungen" können Sie jede Rechnung im Detail betrachten sowie herunterladen.', 0); -- Nur Testwert
 
-insert into FaqEntry values('Wie beantworte ich eine Frage?', 'Sie müssen auf die entsprechende Benachrichtigung klicken. Danach öffnet sich die entsprechende Fragestellung und Sie können abhänig von dem Fragetyp die Frage einfach beantworten. Die App schließt sich nach erfolgreicher Beantwortung automatisch.', 1)
-insert into FaqEntry values('Wie kann ich aus einer Gruppe/Abteilung austreten?', 'Sie müssen über das Menü auf der linken Seite den Button Einstellungen betätigen. Danach können sie nach einem Klick auf den Button mit dem Namen "Abmelden von Fragen" die entsprechende Gruppe/Abteilung auswählen, von welcher Sie keine Fragen mehr erhalten möchten.', 1)
-insert into FaqEntry values('Wie kann ich die Sprache ändern?', 'Sie müssen über das Menü auf der linken Seite den Button Einstellungen betätigen. Danach können sie nach einem Klick auf den Button mit dem Namen "Sprache" die entsprechende Sprache auswählen.', 1)
+insert into FaqEntry values ('Wie starte ich eine Befragung?', 'Klicken Sie auf den Register "Befragung erstellen". Dort kÃ¶nnen Sie nach Eingabe aller Befragungsdaten die Befragung erstellen.', 0); -- Nur Testwert
+insert into FaqEntry values ('Wo kann ich meine Rechnungen ansehen?', 'Unter "Einstellungen" beim Tab "Rechungen" kÃ¶nnen Sie jede Rechnung im Detail betrachten sowie herunterladen.', 0); -- Nur Testwert
+
+insert into FaqEntry values('Wie beantworte ich eine Frage?', 'Sie mÃ¼ssen auf die entsprechende Benachrichtigung klicken. Danach Ã¶ffnet sich die entsprechende Fragestellung und Sie kÃ¶nnen abhÃ¤nig von dem Fragetyp die Frage einfach beantworten. Die App schlieÃŸt sich nach erfolgreicher Beantwortung automatisch.', 1)
+insert into FaqEntry values('Wie kann ich aus einer Gruppe/Abteilung austreten?', 'Sie mÃ¼ssen Ã¼ber das MenÃ¼ auf der linken Seite den Button Einstellungen betÃ¤tigen. Danach kÃ¶nnen sie nach einem Klick auf den Button mit dem Namen "Abmelden von Fragen" die entsprechende Gruppe/Abteilung auswÃ¤hlen, von welcher Sie keine Fragen mehr erhalten mÃ¶chten.', 1)
+insert into FaqEntry values('Wie kann ich die Sprache Ã¤ndern?', 'Sie mÃ¼ssen Ã¼ber das MenÃ¼ auf der linken Seite den Button Einstellungen betÃ¤tigen. Danach kÃ¶nnen sie nach einem Klick auf den Button mit dem Namen "Sprache" die entsprechende Sprache auswÃ¤hlen.', 1)
 
 
 insert into PaymentMethod values (1, 'OnAccount');

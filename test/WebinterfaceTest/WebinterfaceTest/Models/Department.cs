@@ -17,8 +17,8 @@ namespace SimpleQ.Webinterface.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Department()
         {
-            this.People = new HashSet<Person>();
             this.Surveys = new HashSet<Survey>();
+            this.People = new HashSet<Person>();
         }
     
         public int DepId { get; set; }
@@ -29,9 +29,9 @@ namespace SimpleQ.Webinterface.Models
         public virtual Customer Customer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Person> People { get; set; }
+        public virtual ICollection<Survey> Surveys { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [Newtonsoft.Json.JsonIgnore]
-        public virtual ICollection<Survey> Surveys { get; set; }
+        public virtual ICollection<Person> People { get; set; }
     }
 }

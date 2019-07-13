@@ -28,19 +28,17 @@ namespace SimpleQ.Webinterface.Models
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
         public int Amount { get; set; }
+        public Nullable<decimal> PricePerClick { get; set; }
         public int TypeId { get; set; }
         public bool Template { get; set; }
         public bool Sent { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        //[Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<AnswerOption> AnswerOptions { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
         public virtual AnswerType AnswerType { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
         public virtual SurveyCategory SurveyCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [Newtonsoft.Json.JsonIgnore]
+
         public virtual ICollection<Department> Departments { get; set; }
     }
 }
