@@ -284,7 +284,7 @@
     <value>Beim Anhaken wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
   </data>
   <data name="noTemplate" xml:space="preserve">
-    <value>kein Template</value>
+    <value>Kein Template</value>
   </data>
   <data name="cancel" xml:space="preserve">
     <value>Abbrechen</value>
@@ -619,5 +619,101 @@
   </data>
   <data name="minimizeNav" xml:space="preserve">
     <value>Navigation verkleinern</value>
+  </data>
+  <data name="AlreadyStarted" xml:space="preserve">
+    <value>Bereits gestartet</value>
+  </data>
+  <data name="AnswerAlreadyExists" xml:space="preserve">
+    <value>Die Antwort existiert bereits</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Sind Sie sicher?</value>
+  </data>
+  <data name="ColorCoding" xml:space="preserve">
+    <value>Farblegende</value>
+  </data>
+  <data name="CurrentAndUpcomingSurveys" xml:space="preserve">
+    <value>Aktuelle und bevorstehende Befragungen</value>
+  </data>
+  <data name="CurrentSurveys" xml:space="preserve">
+    <value>Aktuelle Befragungen</value>
+  </data>
+  <data name="DefineYourFirstGroup" xml:space="preserve">
+    <value>Erstellen Sie Ihre erste Gruppe</value>
+  </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>Die Email-Adresse existiert bereits</value>
+  </data>
+  <data name="EmptyResultsExport" xml:space="preserve">
+    <value>Leere Ergebnisse können nicht exportiert werden</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Enddatum</value>
+  </data>
+  <data name="ExportResults" xml:space="preserve">
+    <value>Ergebnisse exportieren</value>
+  </data>
+  <data name="HideNavBar" xml:space="preserve">
+    <value>Collapse navigation</value>
+  </data>
+  <data name="NotImplementedYet" xml:space="preserve">
+    <value>Diese Funktion ist noch nicht verfügbar. Bitte warten Sie ein paar Wochen.</value>
+  </data>
+  <data name="NotYetStarted" xml:space="preserve">
+    <value>Noch nicht gestartet</value>
+  </data>
+  <data name="OriginalDate" xml:space="preserve">
+    <value>Ursprüngliches Datum</value>
+  </data>
+  <data name="OtherQuestion" xml:space="preserve">
+    <value>Sonstige Frage</value>
+  </data>
+  <data name="PaymentQuestion" xml:space="preserve">
+    <value>Frage zur Bezahlung</value>
+  </data>
+  <data name="PeriodicSurveys" xml:space="preserve">
+    <value>Periodische Befragungen</value>
+  </data>
+  <data name="ProductQuestion" xml:space="preserve">
+    <value>Frage zum Produkt</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Email senden</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Startdatum</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Summe</value>
+  </data>
+  <data name="SurveyCancelledSuccessfully" xml:space="preserve">
+    <value>Befragung erfolgreich abgebrochen</value>
+  </data>
+  <data name="billingPeriodInMonthsDesc" xml:space="preserve">
+    <value>Zeitraum zwischen dem Erhalt von Rechnungen</value>
+  </data>
+  <data name="dataRetentionPeriodInMonthsDesc" xml:space="preserve">
+    <value>Zeitraum, wie lange Befragungsergebnisse archiviert werden</value>
+  </data>
+  <data name="preferredBillingDayDesc" xml:space="preserve">
+    <value>Tag des Monats an dem die Rechnung zugestellt wird</value>
+  </data>
+  <data name="responsiblePersonFirstName" xml:space="preserve">
+    <value>Verantwortliche Person - Vorname</value>
+  </data>
+  <data name="responsiblePersonLastName" xml:space="preserve">
+    <value>Verantwortliche Person - Nachname</value>
+  </data>
+  <data name="downloadTemplate" xml:space="preserve">
+    <value>Template-File herunterladen</value>
+  </data>
+  <data name="importAddressFile" xml:space="preserve">
+    <value>Adressdatei importieren</value>
+  </data>
+  <data name="importAddressFileInfo" xml:space="preserve">
+    <value>Laden Sie zuerst das Template-File herunter. Nachdem Sie es ausgefüllt haben, laden Sie es wieder hoch.</value>
+  </data>
+  <data name="uploadChosenFile" xml:space="preserve">
+    <value>ausgewähltes File hochladen</value>
   </data>
 </root>

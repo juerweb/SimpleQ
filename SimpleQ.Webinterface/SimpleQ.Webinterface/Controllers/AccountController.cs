@@ -248,7 +248,7 @@ namespace SimpleQ.Webinterface.Controllers
                 bool err = false;
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!await db.Customers.AnyAsync(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password) && !c.Deactivated))
                     {
                         AddModelError("password", BackendResources.CustCodeOrPwdInvalid, ref err);
                         logger.Debug($"Login failed. Invalid customer code or password for {custCode}: {password}");
@@ -306,7 +306,7 @@ namespace SimpleQ.Webinterface.Controllers
                         if (DateTime.Now - cust.LastTokenGenerated > TimeSpan.FromMinutes(15))
                         {
                             logger.Debug($"Loading password reset page failed. Expired password reset token: {authToken}");
-                            var model = new ErrorModel { Title = BackendResources.ExpiredPasswordResetTitle , Message = BackendResources.ExpiredPasswordResetMsg };
+                            var model = new ErrorModel { Title = BackendResources.ExpiredPasswordResetTitle, Message = BackendResources.ExpiredPasswordResetMsg };
                             return View("AccountError", model);
                         }
                         else
@@ -442,22 +442,25 @@ namespace SimpleQ.Webinterface.Controllers
                         return Http.Conflict("There are still bills to pay");
                     }
 
-                    var surveys = await db.Surveys.Where(s => s.CustCode == custCode).ToListAsync();
-                    foreach (var s in surveys)
-                    {
-                        db.Votes.RemoveRange((await db.Votes.ToListAsync()).Where(v => s.AnswerOptions.Any(a => a.Votes.Any(vo => vo.VoteId == v.VoteId))));
-                        db.AnswerOptions.RemoveRange(s.AnswerOptions);
-                        s.Departments.Clear();
-                        db.Surveys.Remove(s);
-                    }
-                    await db.SaveChangesAsync();
+                    //var surveys = await db.Surveys.Where(s => s.CustCode == custCode).ToListAsync();
+                    //foreach (var s in surveys)
+                    //{
+                    //    db.Votes.RemoveRange((await db.Votes.ToListAsync()).Where(v => s.AnswerOptions.Any(a => a.Votes.Any(vo => vo.VoteId == v.VoteId))));
+                    //    db.AnswerOptions.RemoveRange(s.AnswerOptions);
+                    //    s.Departments.Clear();
+                    //    db.Surveys.Remove(s);
+                    //}
+                    //await db.SaveChangesAsync();
 
-                    db.SurveyCategories.RemoveRange(db.SurveyCategories.Where(c => c.CustCode == custCode));
-                    cust.AnswerTypes.Clear();
-                    db.Bills.RemoveRange(db.Bills.Where(b => b.CustCode == custCode));
-                    db.People.RemoveRange(cust.Departments.SelectMany(d => d.People));
-                    db.Departments.RemoveRange(db.Departments.Where(d => d.CustCode == custCode));
-                    db.Customers.Remove(cust);
+                    //db.SurveyCategories.RemoveRange(db.SurveyCategories.Where(c => c.CustCode == custCode));
+                    //cust.AnswerTypes.Clear();
+                    //db.Bills.RemoveRange(db.Bills.Where(b => b.CustCode == custCode));
+                    //db.People.RemoveRange(cust.Departments.SelectMany(d => d.People));
+                    //db.Departments.RemoveRange(db.Departments.Where(d => d.CustCode == custCode));
+                    //db.Customers.Remove(cust);
+                    //await db.SaveChangesAsync();
+
+                    cust.Deactivated = true;
                     await db.SaveChangesAsync();
 
                     Response.AppendHeader("msg", "cause nothin' lasts forever even cold november rain");

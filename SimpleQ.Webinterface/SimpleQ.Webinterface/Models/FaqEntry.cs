@@ -17,5 +17,6 @@ namespace SimpleQ.Webinterface.Models
         public string FaqTitle { get; set; }
         public string FaqContent { get; set; }
         public bool IsMobile { get; set; }
+        public string LangCode { get; set; }
     }
 }

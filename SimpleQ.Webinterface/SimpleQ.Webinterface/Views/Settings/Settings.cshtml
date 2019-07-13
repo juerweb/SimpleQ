@@ -12,6 +12,9 @@
 <div id="changespw404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.PasswordChange404</strong>
 </div>
+<div id="changespw400" class="alert alert-danger" style="display:none">
+    <strong>Passwort konnte nicht geändert werden.</strong>
+</div>
 <div id="changespw500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.PasswordChange500</strong>
 </div>
@@ -19,13 +22,19 @@
     <strong>@ResourcesN.minimumGroupSize404</strong>
 </div>
 <div id="minimumGroupSize500" class="alert alert-danger" style="display:none">
-    <strong>@ResourcesN.minimumGroupSize500</strong>AddCategory 404
+    <strong>@ResourcesN.minimumGroupSize500</strong>
+</div>
+<div id="minimumGroupSize409" class="alert alert-danger" style="display:none">
+    <strong>Minimale Gruppengröße zu klein</strong>
 </div>
 <div id="addCategory404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.AddCategory404</strong>
 </div>
 <div id="addCategory500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.AddCategory500</strong>
+</div>
+<div id="addCategory400" class="alert alert-danger" style="display:none">
+    <strong>Fehler beim Hinzufügen der Kategorie</strong>
 </div>
 <div id="deleteTemplate404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.deleteTemplate404</strong>
@@ -35,6 +44,9 @@
 </div>
 <div id="changeAbrechnung404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.changeAbrechnung404</strong>
+</div>
+<div id="changeAbrechnung409" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsdatum setzen fehlgeschlagen</strong>
 </div>
 <div id="changeAbrechnung500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.changeAbrechnung500</strong>
@@ -57,8 +69,22 @@
 <div id="unregister500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.unregister500</strong>
 </div>
-
-@*<div class="row pl-4 mt-1 ml-0 mr-0">
+<div id="deleteCategory404" class="alert alert-danger" style="display:none">
+    <strong>Kategorie löschen fehlgeschlagen</strong>
+</div>
+<div id="deleteCategory500" class="alert alert-danger" style="display:none">
+    <strong>Kategorie löschen fehlgeschlagen</strong>
+</div>
+<div id="changeAccountingPeriod409" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsperiode setzen fehlgeschlagen.</strong>
+</div>
+<div id="changeAccountingPeriod404" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsperiode setzen fehlgeschlagen.</strong>
+</div>
+<div id="changeAccountingPeriod500" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsperiode setzen fehlgeschlagen.</strong>
+</div>
+<div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>@ResourcesN.Settings</h2>
 </div>*@
 <div class="row m-0 p-0 mr-0 mt-3 ml-3 mb-3">
@@ -90,9 +116,9 @@
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
                 @Html.LabelFor(m => m.DataStoragePeriod, ResourcesN.DataStoragePeriod);
                 @Html.TextBoxFor(m => m.DataStoragePeriod, new { @class = "form-control mr-0" });
-                @*@Html.LabelFor(m => m.PaymentMethods);*@
-                @*@Html.DropDownListFor(m => m.PaymentMethods, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });*@
-                <input type="submit" value="Speichern" class="btn btn-primary btn-block mt-3" />
+                @Html.LabelFor(m => m.PaymentMethods);
+                @Html.DropDownListFor(m => m.PaymentMethods, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });
+                <input type="submit" value="@ResourcesN.Save" class="btn btn-primary btn-block mt-3" />
             }
             <br />
         </div>
@@ -148,16 +174,16 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block mt-3" id="save">@ResourcesN.Save</button>
-        }
+                            }
     </div>
     <div class="col-md-4">
         <h4 class="text-center">@Resources.surveyCategoryHeader</h4>
-        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>@ResourcesN.Categories</span></span></button>
-        <div id="answerBox" class="border border-dark mt-2">
+        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Kategorien</span></span></button>
+        <div id="answerBox" style="overflow-y: scroll; height:260px" class="border border-dark mt-2">
             <div class="row mt-1 mb-1 mr-0 ml-0">
                 <div class="col-9 pr-0 pl-1"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addNewCategory" /></div>
                 <div class="col-3 pl-0 pr-1"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>
-                <ul class="list-group w-100" style="width:100%" id="answerUL" name="TextAnswerOptions">
+                <ul class="list-group w-100" style="width:100%;" id="answerUL" name="TextAnswerOptions">
                     @{
                         foreach (var c in Model.Categories)
                         {
@@ -202,7 +228,7 @@
                         {
                             <li class="list-group-item">
                                 <span class="d-flex justify-content-between">
-                                    <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.SvyText" />
+                                    <input class="form-control rightNotRounded withoutBorder" name="TextAnswerOptions" readonly type="text" value="@c.SvyText" />
                                     <span>
                                         <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe92b;</i></button>
                                     </span>
@@ -223,7 +249,7 @@
                         {
                             <li class="list-group-item">
                                 <span class="d-flex justify-content-between">
-                                    <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.SvyText" />
+                                    <input class="form-control rightNotRounded withoutBorder" name="TextAnswerOptions" readonly type="text" value="@c.SvyText" />
                                     <span>
                                         <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deletePeriodic(this)"><i class="material-icons">&#xe92b;</i></button>
                                     </span>
@@ -233,7 +259,7 @@
                     }
                 </ul>
             </div>
-        </div>
+        </div>*@
     </div>
 </div>
 <div class="row mt-1 ml-0 mr-0" id="bi">
@@ -247,14 +273,14 @@
                 <option value="6">6</option>
                 <option value="12">12</option>
             </select>
-            <label for="tag">@ResourcesN.BillingDay 1-31</label>
+            <label for="tag">@ResourcesN.BillingDay (1-31)</label>
             <input id="abrechnungstag" type="number" name="tag" class="form-control" min="1" max="31" value="15">
             <button class="btn btn-primary btn-block mt-3" onclick="changeAbrechnung()">@ResourcesN.Save</button>
         </div>
         <h4 class="text-center">@ResourcesN.OutstandingAmount</h4>
         <div class="form-group mt-2">
             <label for="betrag">@ResourcesN.Amount</label>
-            <input type="text" disabled name="betrag" class="form-control mr-0" value="@Model.OutstandingBalance.ToString("0.00")" />
+            <input type="text" disabled name="betrag" class="form-control mr-0" value="&euro; @Model.OutstandingBalance.ToString("0.00")" />
             <label for="anzUmfragenAbrechn">@ResourcesN.CurrSurveyAmount</label>
             <input type="text" disabled name="anzUmfragenAbrechn" class="form-control mr-0" value="@Model.CurrentSurveyAmount" />
             <label for="anzBeantwFragen">@ResourcesN.CurrAnswerAmount</label>
@@ -306,7 +332,7 @@
                                     }
                                     <tr class="bg-primary text-white">
                                         <td class="pt-0 pb-0 pl-1 pr-1"></td>
-                                        <td class="pt-0 pb-0 pl-1 pr-1">Result</td>
+                                        <td class="pt-0 pb-0 pl-1 pr-1">@Resources.Sum</td>
                                         <td class="pt-0 pb-0 pl-1 pr-1"></td>
                                         <td class="pt-0 pb-0 pl-1 pr-1">&euro; @bill.BillPrice.ToString("0.00")</td>
                                     </tr>
@@ -399,31 +425,33 @@
         foreach (var c in Model.Categories)
         {
             @:dictionary[@c.CatId] = "@c.CatName";
-        }
+            }
     }
     @{
         foreach (var c in Model.Templates)
         {
             @:dictionary2[@c.SvyId] = "@c.SvyText";
-        }
+            }
     }
     @{
         foreach (var c in Model.PeriodicSurveys)
         {
             @:dictionary3[@c.SvyId] = "@c.SvyText";
-        }
+            }
     }
 
     var changed = false;
     var checkedAnswers = [];
 
-    $(function () {
-        //document.getElementById("header").innerHTML = "@Resources.settings"; //set Header
+    function validateEmailSettings() {
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String($("#Email").val()).toLowerCase());
+    }
 
+    $(function () {
         let tops = document.getElementsByClassName("header");
         tops[0].innerHTML = "@Resources.settings";
         tops[1].innerHTML = "@Resources.settings";
-
         $("#accordion").accordion();
         umlaute();
         switchToAccountSettings();
@@ -471,10 +499,19 @@
                     $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-                    alert("changeAccountingPeriod 404");
+                    console.log("changeAccountingPeriod 404");
+					$('#changeAccountingPeriod404').css("display", "block");
+                    $('#changeAccountingPeriod404').delay(1000).fadeOut();
+                },
+				409: function () {
+                    console.log("changeAccountingPeriod 409");
+					$('#changeAccountingPeriod409').css("display", "block");
+                    $('#changeAccountingPeriod409').delay(1000).fadeOut();
                 },
                 500: function () {
-                    alert("changeAccountingPeriod 500");
+                    console.log("changeAccountingPeriod 500");
+					$('#changeAccountingPeriod500').css("display", "block");
+                    $('#changeAccountingPeriod500').delay(1000).fadeOut();
                 }
             }
         });
@@ -492,6 +529,11 @@
                     alert("ChangeAccountingDay 404");
                     $('#changeAbrechnung404').css("display", "block");
                     $('#changeAbrechnung404').delay(1000).fadeOut();
+                },
+				409: function () {
+                    alert("ChangeAccountingDay 409");
+                    $('#changeAbrechnung409').css("display", "block");
+                    $('#changeAbrechnung409').delay(1000).fadeOut();
                 },
                 500: function () {
                     alert("ChangeAccountingDay 500");
@@ -548,6 +590,11 @@
                     $("#minimumGroupSize500").modal();
                     $('#minimumGroupSize500').css("display", "block");
                     $("#minimumGroupSize500").delay(1000).fadeOut();
+                },
+				409: function () {
+                    alert("changeMinimumGroupSize 409");
+                    $('#minimumGroupSize409').css("display", "block");
+                    $("#minimumGroupSize409").delay(1000).fadeOut();
                 }
             }
         });
@@ -574,6 +621,11 @@
                         console.log("passwort 404");
                         $('#changespw404').css("display", "block");
                         $("#changespw404").delay(1000).fadeOut();
+                    },
+					400: function () {
+                        console.log("passwort 400");
+                        $('#changespw400').css("display", "block");
+                        $("#changespw400").delay(1000).fadeOut();
                     },
                     500: function () {
                         console.log("passwort 500");
@@ -965,31 +1017,31 @@
         let code = $("#unreg_code").val();
         let pwd = $("#unreg_pwd").val();
         $.ajax({
-                url: "@Url.Action("Unregister", "Account")",
-                data: { custCode: code, password: pwd },
-                type: 'DELETE',
-                statusCode: {
-                    200: function () {
-                        window.location.reload();
-                    },
-                    403: function () {
-                        $('#unregister403').css("display", "block");
-                        $('#unregister403').delay(3000).fadeOut();
-                    },
-                    404: function () {
-                        $('#unregister404').css("display", "block");
-                        $('#unregister404').delay(3000).fadeOut();
-                    },
-                    409: function () {
-                        $('#unregister409').css("display", "block");
-                        $('#unregister409').delay(3000).fadeOut();
-                    },
-                    500: function () {
-                        $('#unregister500').css("display", "block");
-                        $('#unregister500').delay(3000).fadeOut();
-                    }
+            url: "@Url.Action("Unregister", "Account")",
+            data: { custCode: code, password: pwd },
+            type: 'DELETE',
+            statusCode: {
+                200: function () {
+                    window.location.reload();
+                },
+                403: function () {
+                    $('#unregister403').css("display", "block");
+                    $('#unregister403').delay(3000).fadeOut();
+                },
+                404: function () {
+                    $('#unregister404').css("display", "block");
+                    $('#unregister404').delay(3000).fadeOut();
+                },
+                409: function () {
+                    $('#unregister409').css("display", "block");
+                    $('#unregister409').delay(3000).fadeOut();
+                },
+                500: function () {
+                    $('#unregister500').css("display", "block");
+                    $('#unregister500').delay(3000).fadeOut();
                 }
-            });
+            }
+        });
     }
 
     $( document ).ready(function() {

@@ -312,7 +312,7 @@
     <value>en</value>
   </data>
   <data name="addMailAddress" xml:space="preserve">
-    <value>Add mail address</value>
+    <value>Add email address</value>
   </data>
   <data name="invalidMailAddress" xml:space="preserve">
     <value>The entered email address in invalid</value>
@@ -619,5 +619,101 @@
   </data>
   <data name="minimizeNav" xml:space="preserve">
     <value>Minimize navigation</value>
+  </data>
+  <data name="AlreadyStarted" xml:space="preserve">
+    <value>Already started</value>
+  </data>
+  <data name="AnswerAlreadyExists" xml:space="preserve">
+    <value>The answer already exists</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="ColorCoding" xml:space="preserve">
+    <value>Color coding</value>
+  </data>
+  <data name="CurrentAndUpcomingSurveys" xml:space="preserve">
+    <value>Current and upcoming surveys</value>
+  </data>
+  <data name="CurrentSurveys" xml:space="preserve">
+    <value>Current surveys</value>
+  </data>
+  <data name="DefineYourFirstGroup" xml:space="preserve">
+    <value>Define your first group</value>
+  </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>The email already exists</value>
+  </data>
+  <data name="EmptyResultsExport" xml:space="preserve">
+    <value>Unable to export empty results</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End date</value>
+  </data>
+  <data name="ExportResults" xml:space="preserve">
+    <value>Export results</value>
+  </data>
+  <data name="HideNavBar" xml:space="preserve">
+    <value>Collapse navigation</value>
+  </data>
+  <data name="NotImplementedYet" xml:space="preserve">
+    <value>This function has not been implemented yet. Please wait a few weeks.</value>
+  </data>
+  <data name="NotYetStarted" xml:space="preserve">
+    <value>Not yet started</value>
+  </data>
+  <data name="OriginalDate" xml:space="preserve">
+    <value>Original date</value>
+  </data>
+  <data name="OtherQuestion" xml:space="preserve">
+    <value>Other question</value>
+  </data>
+  <data name="PaymentQuestion" xml:space="preserve">
+    <value>Question concerning payment</value>
+  </data>
+  <data name="PeriodicSurveys" xml:space="preserve">
+    <value>Periodic surveys</value>
+  </data>
+  <data name="ProductQuestion" xml:space="preserve">
+    <value>Question concerning product</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Send email</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Sum</value>
+  </data>
+  <data name="SurveyCancelledSuccessfully" xml:space="preserve">
+    <value>Survey cancelled successfully</value>
+  </data>
+  <data name="billingPeriodInMonthsDesc" xml:space="preserve">
+    <value>The time between receiving bills</value>
+  </data>
+  <data name="dataRetentionPeriodInMonthsDesc" xml:space="preserve">
+    <value>The time, how long you survey data is stored until it gets deleted</value>
+  </data>
+  <data name="preferredBillingDayDesc" xml:space="preserve">
+    <value>Day of month, on which the bill is delivered</value>
+  </data>
+  <data name="responsiblePersonFirstName" xml:space="preserve">
+    <value>First name of responsible person</value>
+  </data>
+  <data name="responsiblePersonLastName" xml:space="preserve">
+    <value>Last name of responsible person</value>
+  </data>
+  <data name="downloadTemplate" xml:space="preserve">
+    <value>download template</value>
+  </data>
+  <data name="importAddressFile" xml:space="preserve">
+    <value>import address file</value>
+  </data>
+  <data name="importAddressFileInfo" xml:space="preserve">
+    <value>First download and fill the template file. Then upload it.</value>
+  </data>
+  <data name="uploadChosenFile" xml:space="preserve">
+    <value>upload chosen file</value>
   </data>
 </root>

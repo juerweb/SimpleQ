@@ -26,11 +26,12 @@ namespace SimpleQ.Webinterface.Controllers
 
         #region MVC-Actions
         [HttpGet]
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int? success = null)
         {
             try
             {
                 logger.Debug("Loading survey creation");
+                ViewBag.success = success == 1;
                 using (var db = new SimpleQDBEntities())
                 {
                     var cust = await db.Customers.Where(c => c.CustCode == CustCode).FirstOrDefaultAsync();
@@ -202,7 +203,7 @@ namespace SimpleQ.Webinterface.Controllers
                 }
 
                 logger.Debug("Creating new survey finished successfully");
-                return await Index();
+                return RedirectToAction("Index", "SurveyCreation", new { success = 1 } );
             }
             catch (Exception ex)
             {

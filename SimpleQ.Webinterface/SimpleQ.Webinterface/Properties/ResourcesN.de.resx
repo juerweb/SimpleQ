@@ -241,7 +241,7 @@
     <value>Periodische Umfrage löschen Fehlercode 500</value>
   </data>
   <data name="Amount" xml:space="preserve">
-    <value>Preis</value>
+    <value>Betrag</value>
   </data>
   <data name="AmountAnswers" xml:space="preserve">
     <value>Anzahl Antworten</value>

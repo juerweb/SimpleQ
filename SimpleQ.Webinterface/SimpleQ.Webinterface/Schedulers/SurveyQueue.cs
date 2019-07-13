@@ -92,11 +92,11 @@ namespace SimpleQ.Webinterface.Schedulers
 
 
                         // Solange Gesamtanzahl der zu Befragenden zu klein, die Anzahl einer zufälligen Abteilung erhöhen
-                        while (depAmounts.Values.Sum() < amount)
+                        while (depAmounts.Count != 0 && depAmounts.Values.Sum() < amount)
                             depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]++;
 
                         // Solange Gesamtanzahl der zu Befragenden zu groß, die Anzahl einer zufälligen Abteilung verringern
-                        while (depAmounts.Values.Sum() > amount)
+                        while (depAmounts.Count != 0 && depAmounts.Values.Sum() > amount)
                             depAmounts[depAmounts.ElementAt(rnd.Next(0, depAmounts.Count)).Key]--;
 
                         logger.Debug($"Survey {svyId} - DepAmounts after correction: {string.Join("; ", depAmounts.Select(x => "Dep" + x.Key + ": " + x.Value))}");

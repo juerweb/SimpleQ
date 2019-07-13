@@ -20,6 +20,7 @@ namespace SimpleQ.Webinterface.Schedulers
         private const string SURVEY_NAME = "__SURVEY_JOB";
         private const string EXCEEDED_NAME = "__EXCEEDED_SURVEY_DATA_JOB";
         private const string BILL_NAME = "__BILL_JOB";
+        private const string BACKUP_NAME = "__BACKUP_JOB";
 
         public async Task Start()
         {
@@ -86,13 +87,27 @@ namespace SimpleQ.Webinterface.Schedulers
                     logger.Debug($"BillJob started successfully. Firing at {billFt.ToString("yyyy-MM-dd HH:mm:ss.fff")}");
                 }
 
-                logger.Debug($"Jobs running currently: {string.Join("; ", await Names())}");
+                IJobDetail backupJob = JobBuilder.Create<BackupJob>().WithIdentity(BACKUP_NAME).Build();
+                ITrigger backupTrigger = TriggerBuilder.Create()
+                    .WithIdentity(BACKUP_NAME)
+                    //.StartNow()
+                    .StartAt(Helper.NextDateTime(05, 00)) // start at 05:00
+                    .WithSimpleSchedule(x => x.WithIntervalInHours(24).RepeatForever()) // daily
+                    .Build();
+                if (await Available(BACKUP_NAME))
+                {
+                    var backupFt = await scheduler.ScheduleJob(backupJob, backupTrigger);
+                    logger.Debug($"BackupJob started successfully. Firing at {backupFt.ToString("yyyy-MM-dd HH:mm:ss.fff")}");
+                }
             }
             catch (Exception ex)
             {
                 logger.Error(ex, "Start: Unexpected error");
                 throw ex;
             }
+
+
+            logger.Debug($"Jobs running currently: {string.Join("; ", await Names())}");
         }
 
         private async Task<IEnumerable<string>> Names()

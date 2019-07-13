@@ -4,7 +4,7 @@ set nocount on;
 go
 
 begin transaction;
-insert into Customer values ('420420', 'ACME Inc.', 'acme@domain.com', 'asdfjklö', null, null, 1, 'Kärntner Straße 1', '1010', 'Wien', 'Österreich', 24, 3, (select getdate()), 1, 5, 0, null, null, 0);
+insert into Customer values ('420420', 'ACME Inc.', 'acme@domain.com', 'asdfjklö', null, null, 1, 'Kärntner Straße 1', '1010', 'Wien', 'Österreich', 24, 3, (select getdate()), 1, 5, 0, null, null, 0, 0, 'Gabi', 'Haas');
 
 --insert into Bill values('420420', 420.00, (select dateadd(month, -9, (select getdate()))), 1, 1);
 insert into Bill values('420420', 0.50, (select dateadd(month, -6, convert(date,'2019-01-26'))), 1, 1);
@@ -236,7 +236,7 @@ commit;
 
 
 begin transaction;
-insert into Customer values ('180517', 'castiel gmbh.', 'jack@castiel.com', 'jackkline', null, null, 1, 'stairway', '0000', 'to', 'heaven', 24, 6, (select getdate()), 1, 3, 0, null, null, 10);
+insert into Customer values ('180517', 'castiel gmbh.', 'jack@castiel.com', 'jackkline', null, null, 1, 'stairway', '0000', 'to', 'heaven', 24, 6, (select getdate()), 1, 3, 0, null, null, 10, 0, 'Jack', 'Kline');
 
 insert into Bill values('180517', 0.34, (select dateadd(month, -7, convert(date,'2019-01-26'))), 1, 1);
 insert into Bill values('180517', 1.35, (select dateadd(month, -1, convert(date,'2019-01-26'))), 1, 1);

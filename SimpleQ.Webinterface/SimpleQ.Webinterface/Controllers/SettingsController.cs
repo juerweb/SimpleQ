@@ -155,8 +155,8 @@ namespace SimpleQ.Webinterface.Controllers
 
                     await db.SaveChangesAsync();
                     logger.Debug("Answer types changed successfully.");
-
-                    return await Index();
+                    
+                    return RedirectToAction("Index", "Settings");
                 }
             }
             catch (Exception ex)
@@ -231,7 +231,7 @@ namespace SimpleQ.Webinterface.Controllers
                     await db.SaveChangesAsync();
                     logger.Debug("Updated customer successfully");
 
-                    return await Index();
+                    return RedirectToAction("Index", "Settings");
                 }
             }
             catch (Exception ex)
