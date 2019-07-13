@@ -1,5 +1,6 @@
 ﻿using Acr.UserDialogs;
 using FreshMvvm;
+using SimpleQ.Logging;
 using SimpleQ.Resources;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,10 @@ namespace SimpleQ.PageModels.Services
             string textCode = "Error" + errorCode;
 
             this.dialogService.Alert(AppResources.ResourceManager.GetString(textCode) + "\n" + AppResources.DialogErrorCode + ": " + errorCode, AppResources.DialogErrorTitle);
-            Debug.WriteLine("Error-Code: " + errorCode, "Error");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Error("Error has occured with the code " + errorCode);
+
+            //Debug.WriteLine("Error-Code: " + errorCode, "Error");
         }
 
         public void ShowDialog(String title, String body)

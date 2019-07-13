@@ -12,7 +12,7 @@ namespace SimpleQ.Models
     public class CodeValidationModel : INotifyPropertyChanged
     {
         #region Constructor(s)
-        public CodeValidationModel(bool isValid, string companyName, string departmentName, int code): this()
+        public CodeValidationModel(bool isValid, string companyName, string departmentName, string code): this()
         {
             this.isValid = isValid;
             this.companyName = companyName;
@@ -30,14 +30,14 @@ namespace SimpleQ.Models
         private Boolean isValid;
         private String companyName;
         private String departmentName;
-        private int code;
+        private string code;
         #endregion
 
         #region Properties + Getter/Setter Methods
         public bool IsValid { get => isValid; set => isValid = value; }
         public string CompanyName { get => companyName; set => companyName = value; }
         public string DepartmentName { get => departmentName; set => departmentName = value; }
-        public int Code { get => code; set => code = value; }
+        public string Code { get => code; set => code = value; }
         #endregion
 
         #region Methods

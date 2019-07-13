@@ -6,12 +6,12 @@
              Title="{ext:Translate Text=Language}">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="{ext:Translate Text=SelectALanguage}" Style="{DynamicResource BodyStyle}"></Label>
+            <Label Text="{ext:Translate Text=SelectALanguage}" Style="{DynamicResource BodyStyle}" Margin="10,10,10,0"></Label>
             <ListView ItemsSource="{Binding Path=LanguageService.SupportedLanguages}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout>
+                            <StackLayout Padding="10,0">
                                 <Label Text="{Binding DisplayName}" Style="{DynamicResource BodyStyle}"></Label>
                                 <Label Text="{Binding  EnglishName}" Style="{DynamicResource BodyStyle}"></Label>
                             </StackLayout>
@@ -19,7 +19,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="{ext:Translate Text=ChangeLanguage}" Command="{Binding ChangeLanguageCommand}" IsEnabled="{Binding IsSelected}"></Button>
+            <Button Text="{ext:Translate Text=ChangeLanguage}" Command="{Binding ChangeLanguageCommand}" IsEnabled="{Binding IsSelected}" Margin="10,10"></Button>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

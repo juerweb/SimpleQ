@@ -5,6 +5,8 @@ using Acr.UserDialogs;
 using Com.OneSignal;
 using Foundation;
 using UIKit;
+using UserNotifications;
+using Xamarin.Forms;
 
 namespace SimpleQ.iOS
 {

@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Xamarin.Forms;
 using System.Reactive.Linq;
+using SimpleQ.Logging;
 
 namespace SimpleQ.PageModels
 {
@@ -49,7 +50,7 @@ namespace SimpleQ.PageModels
 
         #region Fields
         private Boolean closeAppAfterNotification;
-
+        private Boolean showMessageAfterAnswering;
 
         #endregion
 
@@ -63,7 +64,20 @@ namespace SimpleQ.PageModels
                 OnPropertyChanged();
                 BlobCache.UserAccount.InvalidateObject<Boolean>("CloseAppAfterNotification");
                 BlobCache.UserAccount.InsertObject<Boolean>("CloseAppAfterNotification", closeAppAfterNotification);
-                Debug.WriteLine("ShowFrontPageAfterNotification changed...", "Info");
+                //Debug.WriteLine("ShowFrontPageAfterNotification changed...", "Info");
+            } 
+        }
+
+        public bool ShowMessageAfterAnswering
+        {
+            get => showMessageAfterAnswering;
+            set
+            {
+                showMessageAfterAnswering = value;
+                OnPropertyChanged();
+                BlobCache.UserAccount.InvalidateObject<Boolean>("ShowMessageAfterAnswering");
+                BlobCache.UserAccount.InsertObject<Boolean>("ShowMessageAfterAnswering", showMessageAfterAnswering);
+                //Debug.WriteLine("ShowMessageAfterAnswering changed...", "Info");
             } 
         }
 
@@ -78,10 +92,13 @@ namespace SimpleQ.PageModels
             try
             {
                 BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification").Subscribe(obj => { CloseAppAfterNotification = obj; });
+                BlobCache.UserAccount.GetObject<Boolean>("ShowMessageAfterAnswering").Subscribe(obj => { ShowMessageAfterAnswering = obj; });
             }
             catch (Exception e)
             {
-                Debug.WriteLine("Error: " + e.StackTrace, "Error");
+                Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+                logger.Error("Error was occured: " + e.StackTrace);
+                //Debug.WriteLine("Error: " + e.StackTrace, "Error");
             }
         }
         #endregion

@@ -737,13 +737,17 @@
                     console.log("AddCategory 500");
                     $('#addCategory500').css("display", "block");
                     $('#addCategory500').delay(1000).fadeOut();
+                },
+				400: function () {
+                    console.log("AddCategory 400");
+                    $('#addCategory400').css("display", "block");
+                    $('#addCategory400').delay(1000).fadeOut();
                 }
             },
             success: function(data) {
                 dictionary[data] = input;
             }
         });
-
 
         let normal =
             '<li class="row mr-0 ml-0 mt-2">' +
@@ -867,10 +871,15 @@
                     $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-                    alert("deleteCategory 404");
+                    console.log("deleteCategory 404");
+					$('#deleteCategory404').css("display", "block");
+                    $('#deleteCategory404').delay(1000).fadeOut();
+					
                 },
                 500: function () {
-                    alert("deleteCategory 500");
+                    console.log("deleteCategory 500");
+					$('#deleteCategory500').css("display", "block");
+                    $('#deleteCategory500').delay(1000).fadeOut();
                 }
             }
         });

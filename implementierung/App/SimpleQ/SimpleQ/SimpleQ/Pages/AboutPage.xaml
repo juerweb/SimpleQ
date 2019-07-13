@@ -37,18 +37,25 @@
                 </Frame>
 
                 <!--Phone Frame-->
-                <Frame BorderColor="{StaticResource colorBorder}" x:Name="PhoneFrame">
+                <!--<Frame BorderColor="{StaticResource colorBorder}" x:Name="PhoneFrame">
                     <StackLayout Orientation="Horizontal" >
                         <Image Source="ic_phone_black_18.png" VerticalOptions="Center"></Image>
                         <Button Text="{ext:Translate Text=PhoneUs}" VerticalOptions="Center" Command="{Binding PhoneUsCommand}"/>
                     </StackLayout>
-                </Frame>
+                </Frame>-->
 
                 <!--Contact Formular Frame-->
                 <Frame BorderColor="{StaticResource colorBorder}" x:Name="ContactFormFrame">
                     <StackLayout Orientation="Horizontal" >
                         <Image Source="ic_question_answer_black_18.png" VerticalOptions="Center"></Image>
                         <Button Text="{ext:Translate Text=ContactUs}" VerticalOptions="Center" Command="{Binding ContactUsCommand}"/>
+                    </StackLayout>
+                </Frame>
+
+                <Frame BorderColor="{StaticResource colorBorder}" x:Name="PrivacyPolicyFrame">
+                    <StackLayout Orientation="Horizontal" >
+                        <Image Source="ic_security_black_18.png" VerticalOptions="Center"></Image>
+                        <Button Text="{ext:Translate Text=PrivacyPolicy}" VerticalOptions="Center" Command="{Binding OpenPrivacyPolicyCommand}"/>
                     </StackLayout>
                 </Frame>
             </StackLayout>

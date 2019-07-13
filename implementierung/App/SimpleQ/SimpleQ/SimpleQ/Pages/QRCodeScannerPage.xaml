@@ -4,6 +4,7 @@
              xmlns:zxing="clr-namespace:ZXing.Net.Mobile.Forms;assembly=ZXing.Net.Mobile.Forms"
              x:Class="SimpleQ.Pages.QRCodeScannerPage">
     <ContentPage.Content>
-        <zxing:ZXingScannerView IsScanning="{Binding IsScanning}" IsAnalyzing="{Binding IsScanning}" ScanResultCommand="{Binding ScanningResultCommand}"></zxing:ZXingScannerView>
+        <zxing:ZXingScannerView x:Name="scannerView" IsScanning="{Binding IsScanning}" IsAnalyzing="{Binding IsScanning}" ScanResultCommand="{Binding ScanningResultCommand}">
+        </zxing:ZXingScannerView>
     </ContentPage.Content>
 </ContentPage>

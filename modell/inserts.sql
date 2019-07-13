@@ -4,7 +4,7 @@ set nocount on;
 go
 
 begin transaction;
-insert into Customer values ('420420', 'ACME Inc.', 'acme@domain.com', 'asdfjklö', null, null, 1, 'Kärntner Straße 1', '1010', 'Wien', 'Österreich', 24, 3, (select getdate()), 1, 5, 0, null, null, 0);
+insert into Customer values ('420420', 'ACME Inc.', 'acme@domain.com', 'asdfjklÃ¶', null, null, 1, 'KÃ¤rntner StraÃŸe 1', '1010', 'Wien', 'Ã–sterreich', 24, 3, (select getdate()), 1, 5, 0, null, null, 0);
 
 --insert into Bill values('420420', 420.00, (select dateadd(month, -9, (select getdate()))), 1, 1);
 insert into Bill values('420420', 0.50, (select dateadd(month, -6, convert(date,'2019-01-26'))), 1, 1);
@@ -28,13 +28,13 @@ insert into Employs values (2, '420420', 5);
 
 insert into SurveyCategory values (1, '420420', 'Mitarbeiterzufriedenheit', 0);
 insert into SurveyCategory values (2, '420420', 'Arbeitsplatzgestaltung', 0);
-insert into SurveyCategory values (3, '420420', 'Entscheidungsqualität', 0);
+insert into SurveyCategory values (3, '420420', 'EntscheidungsqualitÃ¤t', 0);
 
-insert into Survey values (1, '420420', 'Fühlen Sie sich i.A. im Unternehmen wohl?', '2018-08-24', '2019-08-24', 5, null, 1, 0, 1, null) -- SvyId 1
-insert into Survey values (2, '420420', 'Gefallen Ihnen die neuen Bürostühle?', '2018-08-24', '2019-08-24', 5, null, 1, 0, 1, null) -- SvyId 2
-insert into Survey values (2, '420420', 'Sind die Arbeitsräumlichkeiten Ihrer Ansicht nach hell genug?', '2018-08-24', '2019-08-24', 5, null, 2, 0, 1, null); -- SvyId 3
-insert into Survey values (2, '420420', 'Welche der folgenden Büroeinrichtungen halten Sie für sinnvoll?', '2018-08-24', '2019-08-24', 5, null, 7, 0, 1, null) -- SvyId 4
-insert into Survey values (3, '420420', 'Beschreiben Sie die kürzlich erfolgten Richtungsentscheidungen in einem Wort', '2018-08-24', '2019-08-24', 5, null, 4, 0, 1, null) -- SvyId 5
+insert into Survey values (1, '420420', 'FÃ¼hlen Sie sich i.A. im Unternehmen wohl?', '2018-08-24', '2019-08-24', 5, null, 1, 0, 1, null) -- SvyId 1
+insert into Survey values (2, '420420', 'Gefallen Ihnen die neuen BÃ¼rostÃ¼hle?', '2018-08-24', '2019-08-24', 5, null, 1, 0, 1, null) -- SvyId 2
+insert into Survey values (2, '420420', 'Sind die ArbeitsrÃ¤umlichkeiten Ihrer Ansicht nach hell genug?', '2018-08-24', '2019-08-24', 5, null, 2, 0, 1, null); -- SvyId 3
+insert into Survey values (2, '420420', 'Welche der folgenden BÃ¼roeinrichtungen halten Sie fÃ¼r sinnvoll?', '2018-08-24', '2019-08-24', 5, null, 7, 0, 1, null) -- SvyId 4
+insert into Survey values (3, '420420', 'Beschreiben Sie die kÃ¼rzlich erfolgten Richtungsentscheidungen in einem Wort', '2018-08-24', '2019-08-24', 5, null, 4, 0, 1, null) -- SvyId 5
 
 insert into Asking values (1, 1, '420420');
 insert into Asking values (1, 2, '420420');
@@ -44,18 +44,18 @@ insert into Asking values (3, 2, '420420');
 insert into Asking values (4, 2, '420420');
 insert into Asking values (5, 1, '420420');
 
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 1 nötig (YesNo) => AnsIds 1, 2
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 2 nötig (YesNo) => AnsIds 3, 4
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 3 nötig (YesNoDontKnow) => AnsIds 5, 6, 7
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 5 nötig (Open) => AnsId 8
-insert into AnswerOption values (4, 'Neue Farblaserdrucker mit WLAN-Unterstützung', null); -- AnsId 9
-insert into AnswerOption values (4, 'Hellere Lichtquellen mit Tageslichtqualität', null);  -- AnsId 10
-insert into AnswerOption values (4, 'Wasserspender für jeden Büroraum', null); -- AnsId 11
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 1 nÃ¶tig (YesNo) => AnsIds 1, 2
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 2 nÃ¶tig (YesNo) => AnsIds 3, 4
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 3 nÃ¶tig (YesNoDontKnow) => AnsIds 5, 6, 7
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 5 nÃ¶tig (Open) => AnsId 8
+insert into AnswerOption values (4, 'Neue Farblaserdrucker mit WLAN-UnterstÃ¼tzung', null); -- AnsId 9
+insert into AnswerOption values (4, 'Hellere Lichtquellen mit TageslichtqualitÃ¤t', null);  -- AnsId 10
+insert into AnswerOption values (4, 'Wasserspender fÃ¼r jeden BÃ¼roraum', null); -- AnsId 11
 insert into AnswerOption values (4, 'Monitore mit Curved Displays', null);  -- AnsId 12
-insert into AnswerOption values (4, 'Espressomaschinen für jeden Büroraum', null);  -- AnsId 13
+insert into AnswerOption values (4, 'Espressomaschinen fÃ¼r jeden BÃ¼roraum', null);  -- AnsId 13
 insert into AnswerOption values (4, 'Neue Computer mit aktuellem Technologiestand', null);  -- AnsId 14
 
--- +++ Beantwortungen über Handy +++
+-- +++ Beantwortungen Ã¼ber Handy +++
 insert into Vote values (null, null); -- VoteId 1
 insert into Chooses values (1, 1);
 
@@ -112,19 +112,19 @@ insert into Chooses values (17, 14);
 insert into Vote values ('Richtiger Weg', null); -- VoteId 18
 insert into Chooses values (18, 8);
 
-insert into Vote values ('Längst überfällige', null); -- VoteId 19
+insert into Vote values ('LÃ¤ngst Ã¼berfÃ¤llige', null); -- VoteId 19
 insert into Chooses values (19, 8);
 
-insert into Vote values ('Etwas übereilt', null); -- VoteId 20
+insert into Vote values ('Etwas Ã¼bereilt', null); -- VoteId 20
 insert into Chooses values (20, 8);
 
 -- ++++++++ TRENDANALYSE-TESTDATEN ++++++++
 insert into SurveyCategory values (4, '420420', 'Unternehmensleitung', 0);
 
-insert into Survey values (4, '420420', 'Wünschen Sie einen Wechsel in der Führungsposition?', '2018-07-01', '2018-07-15', 5, null, 2, 1, 1, null); -- SvyId 6
+insert into Survey values (4, '420420', 'WÃ¼nschen Sie einen Wechsel in der FÃ¼hrungsposition?', '2018-07-01', '2018-07-15', 5, null, 2, 1, 1, null); -- SvyId 6
 insert into Asking values (6, 1, '420420');
 insert into Asking values (6, 2, '420420');
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 6 nötig (YesNoDontKnow) => AnsIds 15, 16, 17
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 6 nÃ¶tig (YesNoDontKnow) => AnsIds 15, 16, 17
 insert into Vote values (null, null) -- VoteId 21;
 insert into Chooses values (21, 15);
 insert into Vote values (null, null) -- VoteId 22;
@@ -134,10 +134,10 @@ insert into Chooses values (23, 16);
 insert into Vote values (null, null) -- VoteId 24;
 insert into Chooses values (24, 17);
 
-insert into Survey values (4, '420420', 'Wünschen Sie einen Wechsel in der Führungsposition?', '2018-07-16', '2018-07-31', 5, null, 2, 0, 1, null); -- SvyId 7
+insert into Survey values (4, '420420', 'WÃ¼nschen Sie einen Wechsel in der FÃ¼hrungsposition?', '2018-07-16', '2018-07-31', 5, null, 2, 0, 1, null); -- SvyId 7
 insert into Asking values (7, 1, '420420');
 insert into Asking values (7, 2, '420420');
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 7 nötig (YesNoDontKnow) => AnsIds 18, 19, 20
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 7 nÃ¶tig (YesNoDontKnow) => AnsIds 18, 19, 20
 insert into Vote values (null, null) -- VoteId 25;
 insert into Chooses values (25, 18);
 insert into Vote values (null, null) -- VoteId 26;
@@ -147,10 +147,10 @@ insert into Chooses values (27, 19);
 insert into Vote values (null, null) -- VoteId 28;
 insert into Chooses values (28, 20);
 
-insert into Survey values (4, '420420', 'Wünschen Sie einen Wechsel in der Führungsposition?', '2018-08-01', '2018-08-15', 5, null, 2, 0, 1, null); -- SvyId 8
+insert into Survey values (4, '420420', 'WÃ¼nschen Sie einen Wechsel in der FÃ¼hrungsposition?', '2018-08-01', '2018-08-15', 5, null, 2, 0, 1, null); -- SvyId 8
 insert into Asking values (8, 1, '420420');
 insert into Asking values (8, 2, '420420');
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 8 nötig (YesNoDontKnow) => AnsIds 21, 22, 23
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 8 nÃ¶tig (YesNoDontKnow) => AnsIds 21, 22, 23
 insert into Vote values (null, null) -- VoteId 29;
 insert into Chooses values (29, 21);
 insert into Vote values (null, null) -- VoteId 30;
@@ -164,10 +164,10 @@ insert into Chooses values (33, 23);
 insert into Vote values (null, null) -- VoteId 34;
 insert into Chooses values (34, 23);
 
-insert into Survey values (4, '420420', 'Wünschen Sie einen Wechsel in der Führungsposition?', '2018-08-16', '2018-08-31', 5, null, 2, 0, 1, null); -- SvyId 9
+insert into Survey values (4, '420420', 'WÃ¼nschen Sie einen Wechsel in der FÃ¼hrungsposition?', '2018-08-16', '2018-08-31', 5, null, 2, 0, 1, null); -- SvyId 9
 insert into Asking values (9, 1, '420420');
 insert into Asking values (9, 2, '420420');
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 9 nötig (YesNoDontKnow) => AnsIds 24, 25, 26
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 9 nÃ¶tig (YesNoDontKnow) => AnsIds 24, 25, 26
 insert into Vote values (null, null) -- VoteId 35;
 insert into Chooses values (35, 24);
 insert into Vote values (null, null) -- VoteId 36;
@@ -181,10 +181,10 @@ insert into Chooses values (39, 25);
 insert into Vote values (null, null) -- VoteId 40;
 insert into Chooses values (40, 26);
 
-insert into Survey values (4, '420420', 'Wünschen Sie einen Wechsel in der Führungsposition?', '2018-09-01', '2018-09-15', 5, null, 2, 0, 1, null); -- SvyId 10
+insert into Survey values (4, '420420', 'WÃ¼nschen Sie einen Wechsel in der FÃ¼hrungsposition?', '2018-09-01', '2018-09-15', 5, null, 2, 0, 1, null); -- SvyId 10
 insert into Asking values (10, 1, '420420');
 insert into Asking values (10, 2, '420420');
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 10 nötig (YesNoDontKnow) => AnsIds 27, 28, 29
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 10 nÃ¶tig (YesNoDontKnow) => AnsIds 27, 28, 29
 insert into Vote values (null, null) -- VoteId 41;
 insert into Chooses values (41, 27);
 insert into Vote values (null, null) -- VoteId 42;
@@ -201,7 +201,7 @@ insert into Chooses values (46, 29);
 insert into Survey values (4, '420420', 'Sind Sie mit der Haltung Ihrer Vorgesetzen einverstanden?', '2018-11-01', '2018-11-15', 5, null, 2, 0, 1, null); -- SvyId 11
 insert into Asking values (11, 1, '420420');
 insert into Asking values (11, 2, '420420');
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 11 nötig (YesNoDontKnow) => AnsIds 30, 31, 32
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 11 nÃ¶tig (YesNoDontKnow) => AnsIds 30, 31, 32
 insert into Vote values (null, null) -- VoteId 47;
 insert into Chooses values (47, 31);
 insert into Vote values (null, null) -- VoteId 48;
@@ -218,7 +218,7 @@ insert into Chooses values (52, 31);
 insert into Survey values (4, '420420', 'Sind Sie mit der Haltung Ihrer Vorgesetzen einverstanden?', '2018-11-15', '2018-11-30', 5, null, 2, 0, 1, null); -- SvyId 12
 insert into Asking values (12, 1, '420420');
 insert into Asking values (12, 2, '420420');
--- Wegen Trigger kein insert into AnswerOptions(...) für Svy 12 nötig (YesNoDontKnow) => AnsIds 33, 34, 35
+-- Wegen Trigger kein insert into AnswerOptions(...) fÃ¼r Svy 12 nÃ¶tig (YesNoDontKnow) => AnsIds 33, 34, 35
 insert into Vote values (null, null) -- VoteId 53;
 insert into Chooses values (53, 34);
 insert into Vote values (null, null) -- VoteId 54;
@@ -330,7 +330,7 @@ commit;
 
 
 begin transaction;
-insert into Survey values (1, '420420', 'Wie produktiv würden Sie ihren heutigen Arbeitstag selbst einschätzen?', (select dateadd(day, -2, (select getdate()))), (select dateadd(day, -1, (select getdate()))), 5, null, 16, 1, 1, 2592000000000); -- SvyId 18
+insert into Survey values (1, '420420', 'Wie produktiv wÃ¼rden Sie ihren heutigen Arbeitstag selbst einschÃ¤tzen?', (select dateadd(day, -2, (select getdate()))), (select dateadd(day, -1, (select getdate()))), 5, null, 16, 1, 1, 2592000000000); -- SvyId 18
 insert into Asking values (18, 1, '420420');
 insert into Asking values (18, 2, '420420');
 -- Due to trigger AnswerOptions (53 - 59) are created automatically for SvyId 18 (LikertScale9)
@@ -338,7 +338,6 @@ insert into AnswerOption values (18, 'Wenig', 1);
 insert into AnswerOption values (18, 'Sehr', 0); 
 commit;
 go
-
 
 --select * from Person;
 --select * from Employs order by persId;

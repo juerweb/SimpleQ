@@ -1,0 +1,527 @@
+body {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+header.masthead {
+    height: 100vh;
+    min-height: 775px;
+    padding-top: 0;
+    padding-bottom: 0;
+    width: 100%;
+    background-image: url("../images/bg1ml.jpg");
+    background-position: right 0 !important;
+}
+
+.parallax {
+    /* The image used */
+    background-image: url("../images/parallax.jpg");
+    /* Set a specific height */
+    min-height: 300px;
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.parallax2 {
+    /* The image used */
+    background-image: url("../images/para2.jpg");
+    /* Set a specific height */
+    min-height: 300px;
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/*
+    //////////////////////////////////////////
+    ////////////////SECTIONS//////////////////
+    //////////////////////////////////////////
+*/
+section.mobile {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+section.funktionen {
+    position: relative;
+    padding: 80px 0;
+}
+
+    section.funktionen .feature-item {
+        padding-top: 50px;
+        padding-bottom: 50px;
+        text-align: center;
+    }
+
+        section.funktionen .feature-item i {
+            font-size: 80px;
+            display: block;
+            margin-bottom: 15px;
+            background: -webkit-linear-gradient(to left,#7b4397,#dc2430);
+            background: linear-gradient(to left,#7b4397,#dc2430);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+section.showcase {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+section.preise {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+section.about {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+section.konzept {
+    padding-top: 40px;
+    position: relative;
+}
+
+section.team-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+
+
+
+/*#para {
+    padding-top: 180px;
+}*/
+
+/*
+    //////////////////////////////////////////
+    /////////////BORDERS / PADDINGS///////////
+    //////////////////////////////////////////
+*/
+.smallimg {
+    height: auto;
+    width: 100%;
+}
+
+.topborder {
+    padding-top: 15px;
+}
+
+.topborderxl {
+    padding-top: 35px;
+}
+
+.topborderxxl {
+    padding-top: 45px;
+}
+
+.botborder {
+    padding-bottom: 15px;
+}
+
+.abstand {
+    padding-top: 40px;
+}
+
+.pad {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.konzeptrowborder {
+    padding-top: 20px;
+}
+
+.rowbackground {
+    background-color: #F3F3F3;
+}
+
+@media only screen and (max-width: 500px) {
+    .paddingtop {
+        padding-top: 15px;
+    }
+}
+
+/*
+    //////////////////////////////////////////
+    ////////////////FONT-STYLE////////////////
+    //////////////////////////////////////////
+*/
+
+.rand {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 4px 0 black;
+}
+
+@media screen and (max-width: 400px) {
+    .rand {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 3rem;
+        font-weight: bold;
+        color: white;
+        text-shadow: 0 3px 0 black;
+    }
+}
+
+.changeColor {
+    color: black;
+}
+
+/*
+    //////////////////////////////////////////
+    /////////////Background-Color/////////////
+    //////////////////////////////////////////
+*/
+
+.grayBack {
+    background-color: #fafafa;
+}
+
+.androidbildschirm {
+    background-image: url("../images/androidmockup.jpeg");
+    background-size: contain;
+}
+
+.iosbildschirm {
+    background-image: url("../images/ios.jpg");
+    background-size: contain;
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.card-text {
+    color: black !important;
+}
+/*
+    //////////////////////////////////////////
+    ////////////////Android///////////////////
+    //////////////////////////////////////////
+*/
+
+.yellowTemp {
+    color: lightgreen !important;
+}
+
+.aStart {
+    background-image: url(../images/deviceImages/start.png);
+    background-size: inherit;
+}
+
+.aFrage1 {
+    background-image: url(../images/deviceImages/frage1.png);
+    background-size: inherit;
+}
+
+.aFrage2 {
+    background-image: url(../images/deviceImages/frage2.png);
+    background-size: inherit;
+}
+
+.aFrage3 {
+    background-image: url(../images/deviceImages/frage3.png);
+    background-size: inherit;
+}
+
+.aFrage4 {
+    background-image: url(../images/deviceImages/frage4.png);
+    background-size: inherit;
+}
+
+.aFrage41 {
+    background-image: url(../images/deviceImages/frage41.png);
+    background-size: inherit;
+}
+
+.aFrage42 {
+    background-image: url(../images/deviceImages/frage42.png);
+    background-size: inherit;
+}
+
+.aFrage5 {
+    background-image: url(../images/deviceImages/frage5.png);
+    background-size: inherit;
+}
+
+.aFrage51 {
+    background-image: url(../images/deviceImages/frage51.png);
+    background-size: inherit;
+}
+
+.aFrage5Ans {
+    background-image: url(../images/deviceImages/frage5Ans.png);
+    background-size: inherit;
+}
+
+.aSurvey {
+    background-image: url();
+}
+
+.a.Nav {
+    background-image: url();
+}
+
+.aleer {
+    background-image: url(../images/deviceImages/leer.png);
+    background-size: inherit;
+}
+
+.avoll {
+    background-image: url(../images/deviceImages/voll.png);
+    background-size: inherit;
+}
+
+#aReturn {
+    display: none;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 46px;
+    height: 46px;
+    cursor: pointer;
+}
+
+#aHomeFrage1 {
+    position: absolute;
+    top: 65px;
+    left: 9px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+}
+
+#aHomeFrage2 {
+    position: absolute;
+    top: 122px;
+    left: 9px;
+    width: 200px;
+    height: 50px;
+    cursor: pointer;
+}
+
+#aHomeFrage3 {
+    position: absolute;
+    top: 184px;
+    left: 9px;
+    width: 250px;
+    height: 50px;
+    cursor: pointer;
+}
+
+#aHomeFrage4 {
+    position: absolute;
+    top: 307px;
+    left: 9px;
+    width: 240px;
+    height: 55px;
+    cursor: pointer;
+}
+
+#aHomeFrage5 {
+    position: absolute;
+    top: 240px;
+    left: 9px;
+    width: 220px;
+    height: 53px;
+    cursor: pointer;
+}
+
+#aFrage1Ja {
+    display: none;
+    position: absolute;
+    top: 170px;
+    left: 8px;
+    width: 300px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage2M {
+    display: none;
+    position: absolute;
+    top: 120px;
+    left: 15px;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage2W {
+    display: none;
+    position: absolute;
+    top: 120px;
+    left: 160px;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage3Ja {
+    display: none;
+    position: absolute;
+    top: 120px;
+    left: 8px;
+    width: 90px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage4S {
+    display: none;
+    position: absolute;
+    top: 540px;
+    left: 8px;
+    width: 300px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage4A {
+    display: none;
+    position: absolute;
+    top: 140px;
+    left: 5px;
+    width: 27px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage4A2 {
+    display: none;
+    position: absolute;
+    top: 182px;
+    left: 5px;
+    width: 27px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage4A3 {
+    display: none;
+    position: absolute;
+    top: 224px;
+    left: 5px;
+    width: 27px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage4A4 {
+    display: none;
+    position: absolute;
+    top: 266px;
+    left: 5px;
+    width: 27px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage4A5 {
+    display: none;
+    position: absolute;
+    top: 308px;
+    left: 5px;
+    width: 27px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#aFrage3Nein {
+    display: none;
+    position: absolute;
+    top: 120px;
+    left: 113px;
+    width: 90px;
+    height: 40px;
+    cursor: pointer;
+}
+
+.hideBlock {
+    display: none;
+}
+
+#aFrage3Ka {
+    display: none;
+    position: absolute;
+    top: 120px;
+    left: 215px;
+    width: 90px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage5T {
+    display: none;
+    position: absolute;
+    top: 115px;
+    left: 2px;
+    width: 315px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage5A {
+    display: none;
+    position: absolute;
+    top: 170px;
+    left: 20px;
+    width: 280px;
+    height: 245px;
+    cursor: pointer;
+}
+
+#aFrage5D {
+    display: none;
+    position: absolute;
+    top: 320px;
+    left: 20px;
+    width: 350px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#aFrage5S {
+    display: none;
+    position: absolute;
+    top: 170px;
+    left: 11px;
+    width: 315px;
+    height: 42px;
+    cursor: pointer;
+}
+
+
+
+
+/*
+    //////////////////////////////////////////
+    ////////////////IOs///////////////////
+    //////////////////////////////////////////
+*/
+
+.iStart {
+    background-image: url();
+}
+
+.iSurvey {
+    background-image: url();
+}
+
+.i.Nav {
+    background-image: url();
+}

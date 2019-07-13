@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             xmlns:ia="clr-namespace:IntelliAbb.Xamarin.Controls;assembly=IntelliAbb.Xamarin.Controls"
+             x:Class="SimpleQ.Pages.QuestionPages.PolytomousOMQuestionPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}" Margin="10,10,10,0"></Label>
+            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Margin="10,5,10,0" FontAttributes="Bold"></Label>
+
+            <ListView ItemsSource="{Binding IsChecked}" SelectionMode="Single" ItemSelected="ListView_ItemSelected">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" Margin="10,0,10,0">
+                                <ia:Checkbox Shape="Rectangle" IsChecked="{Binding IsChecked, Mode=TwoWay}" IsCheckedChanged="Checkbox_IsCheckedChanged"/>
+                                <Label Text="{Binding AnswerOption.AnsText}" VerticalTextAlignment="Center"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="{ext:Translate Text=SendAnswer}" Command="{Binding SendAnswerCommand}" HorizontalOptions="FillAndExpand" IsEnabled="{Binding IsQuestionAnswered}" Margin="10,0,10,0"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
