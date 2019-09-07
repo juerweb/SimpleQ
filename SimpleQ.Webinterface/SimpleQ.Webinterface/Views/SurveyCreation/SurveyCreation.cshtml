@@ -510,6 +510,7 @@
 
     }
 
+
     function openAddAnswerBox(){
         var answerBox = document.getElementById("answerBox");
         var answerType = document.getElementById("AnswerTypeCB");
@@ -533,6 +534,7 @@
 
         $("#answerBox").show();
     }
+
 
     function insertDichotomInputs() {
         if (firstAnswer !== "" && secondAnswer !== "") {
@@ -559,7 +561,6 @@
             updateButtonEnabled();
         }
     }
-
 
     function insertAnswers() {
         let ul = document.getElementById("answerUL");
@@ -607,6 +608,7 @@
 
 
     function addAnswer() {
+        console.log(answers);
         let ul = document.getElementById("answerUL");
         let inputElem = document.getElementById("answerInput")
         let input = inputElem.value;
@@ -705,10 +707,11 @@
 
     function saveAnswer(button, canceled,tempText) {
         let text;
+        let inputElem = button.parentElement.parentElement.parentElement.parentElement.children[0].children[0];
         if (canceled) {
             text = tempText;
         } else {
-            text = button.parentElement.parentElement.children[0].value;
+            text = inputElem.value;
             if (answers.includes(text)) {
                 $("#answerAlreadyExists").show();
                 $("#answerAlreadyExists").delay(2000).fadeOut();
@@ -799,19 +802,16 @@
             $("#colorSpan2").removeClass(["colorSpanOrange","colorSpanGreen"]);
             $("#colorSpan3").removeClass("colorSpanGreen");
             document.getElementById("countTextLabel").innerHTML = "@Resources.badAskGroupCount";
-            //$("#countTextLabel").innerHTML = "Sehr kleine Gruppe .. ungenaue Auswertung..";
         } else if (input.value < 50) {
             $("#colorSpan1").removeClass(["colorSpanRed", "colorSpanGreen"]).addClass("colorSpanOrange");
             $("#colorSpan2").removeClass("colorSpanGreen").addClass("colorSpanOrange");
             $("#colorSpan3").removeClass("colorSpanGreen");
             document.getElementById("countTextLabel").innerHTML = "@Resources.middleAskGroupCount";
-            //$("#countTextLabel").innerHTML = "Mittlere Gruppe .. gute Auswertung möglich..";
         } else {
             $("#colorSpan1").removeClass(["colorSpanRed", "colorSpanOrange"]).addClass("colorSpanGreen");
             $("#colorSpan2").removeClass("colorSpanOrange").addClass("colorSpanGreen");
             $("#colorSpan3").addClass("colorSpanGreen");
             document.getElementById("countTextLabel").innerHTML = "@Resources.goodAskGroupCount";
-            //$("#countTextLabel").innerHTML = "Große Gruppe .. sehr genaue Auswertung möglich..";
         }
     }
 
@@ -853,6 +853,7 @@
 
     function changePrice(inputElem) {
 
+    function changePrice(inputElem) {
         let url = '@Url.Action("LoadPricePerClick", "SurveyCreation", new { amount = "temp"})'.replace("temp", inputElem.value);
         $.get(
             url,

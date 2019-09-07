@@ -484,9 +484,7 @@
             '</span>';
         tempText = "";
 
-        //take away input border and make it readonly
-        $(inputElem).addClass("withoutBorder");
-        $(inputElem).prop('readonly', true);
+        button.parentElement.parentElement.parentElement.parentElement.children[0].innerHTML = '<input class="form-control rightNotRounded withoutBorder" name="Email" readonly type="text" value="' + text + '" />';
         button.parentElement.parentElement.innerHTML = edited;
     }
 
