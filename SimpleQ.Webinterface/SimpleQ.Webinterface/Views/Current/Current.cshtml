@@ -6,10 +6,10 @@
 @model SimpleQ.Webinterface.Models.ViewModels.CurrentModel
 
 <div class="row ml-0 mr-0">
-    <div id="surveyCanceledMessage" class="alert alert-primary w-100" style="display:none"><strong>Your survey was cancelled successfully!</strong></div>
+    <div id="surveyCanceledMessage" class="alert alert-primary w-100" style="display:none"><strong>@Resources.SurveyCancelledSuccessfully</strong></div>
 
     <div class="col-md-6">
-        <h3 class="text-center mt-3 mb-3">Current and upcoming surveys</h3>
+        <h3 class="text-center mt-3 mb-3">@Resources.CurrentAndUpcomingSurveys</h3>
         <div style="overflow-x:auto;" class="pl-2 w-100">
             <table id="currentSurveysTable" class="table table-bordered smallCellPadding small w-100">
                 <thead>
@@ -31,7 +31,7 @@
                                     <td>@svw.SvyText <a class="btn" onclick="showInfo(@svw.SvyId)"><i class="material-icons hover-color-white">info_outline</i></a></td>
                                     <td>@svw.StartDate.ToShortDateString()</td>
                                     <td>@svw.EndDate.ToShortDateString()</td>
-                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Cancel survey" onclick="cancelSurvey(@svw.SvyId)"><i class="material-icons">cancel</i></button></td>
+                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="@Resources.cancel" onclick="cancelSurvey(@svw.SvyId)"><i class="material-icons">cancel</i></button></td>
                                 </tr>
                             }
                             else
@@ -40,7 +40,7 @@
                                     <td>@svw.SvyText <a class="btn" onclick="showInfo(@svw.SvyId)"><i class="material-icons hover-color-white">info_outline</i></a></td>
                                     <td>@svw.StartDate.ToShortDateString()</td>
                                     <td>@svw.EndDate.ToShortDateString()</td>
-                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Cancel survey" onclick="cancelSurvey(@svw.SvyId)"><i class="material-icons">cancel</i></button></td>
+                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="@Resources.cancel" onclick="cancelSurvey(@svw.SvyId)"><i class="material-icons">cancel</i></button></td>
                                 </tr>
                             }
                         }
@@ -48,25 +48,25 @@
 
                 </tbody>
             </table>
-            <h3 class="text-center mt-3">Color coding</h3>
+            <h3 class="text-center mt-3">@Resources.ColorCoding</h3>
             <div class="row mr-0 ml-0 mt-2">
                 <div class="col border text-center" style="background-color: rgb(178, 205, 234)">
-                    Already started
+                    @Resources.AlreadyStarted
                 </div>
                 <div class="col border text-center">
-                    Not yet started
+                    @Resources.NotYetStarted
                 </div>
             </div>
         </div>
     </div>
     <div class="col-md-6">
-        <h3 class="text-center mt-3 mb-3">Periodic Surveys</h3>
+        <h3 class="text-center mt-3 mb-3">@Resources.PeriodicSurveys</h3>
         <div style="overflow-x:auto;" class="w-100 pr-3">
             <table id="periodicSurveysTable" class="table table-bordered smallCellPadding small w-100">
                 <thead>
                     <tr>
                         <th>@Resources.survey</th>
-                        <th>First</th>
+                        <th>@Resources.OriginalDate</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -78,7 +78,7 @@
                                 <tr id="@id">
                                     <td>@svy.SvyText <a class="btn" onclick="showInfo(@svy.SvyId)"><i class="material-icons hover-color-white">info_outline</i></a></td>
                                     <td>@svy.StartDate.ToShortDateString()</td>
-                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="Cancel survey" onclick="cancelSurvey(@svy.SvyId)"><i class="material-icons">cancel</i></button></td>
+                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="@Resources.cancel" onclick="cancelSurvey(@svy.SvyId)"><i class="material-icons">cancel</i></button></td>
                                 </tr>
                         }
                     }
@@ -94,17 +94,17 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Are you sure you want to Cancel the survey?</h4>
+                <h4 class="modal-title">@Resources.AreYouSure</h4>
             </div>
 
             <!-- Modal body -->
             <div class="modal-body">
                 <div class="row">
                     <div class="col-6">
-                        <button type="button" class="btn btn-danger btn-block" onclick="$('#cancelSurveyModal').modal('toggle');doCancelling();">Yes</button>
+                        <button type="button" class="btn btn-danger btn-block" onclick="$('#cancelSurveyModal').modal('toggle');doCancelling();">@Resources.Yes</button>
                     </div>
                     <div class="col-6">
-                        <button type="button" class="btn btn-secondary btn-block" onclick="$('#cancelSurveyModal').modal('toggle')">No</button>
+                        <button type="button" class="btn btn-secondary btn-block" onclick="$('#cancelSurveyModal').modal('toggle')">@Resources.No</button>
                     </div>
                 </div>
             </div>
@@ -125,12 +125,12 @@
             <div class="modal-body">
                 <table class="table">
                     <tbody>
-                        <tr><td>Survey text</td><td id="infoSvyText"></td></tr>
-                        <tr><td>Survey category</td><td id="infoSvyCat"></td></tr>
-                        <tr><td>Answer type</td><td id="infoAnswerType"></td></tr>
-                        <tr><td>Start date</td><td id="infoGroups"></td></tr>
-                        <tr><td>End date</td><td id="infoStartDate"></td></tr>
-                        <tr><td>Groups</td><td id="infoEndDate"></td></tr>
+                        <tr><td>@Resources.questionHeader</td><td id="infoSvyText"></td></tr>
+                        <tr><td>@Resources.surveyCategoryHeader</td><td id="infoSvyCat"></td></tr>
+                        <tr><td>@Resources.answerTypeHeader</td><td id="infoAnswerType"></td></tr>
+                        <tr><td>@Resources.StartDate</td><td id="infoGroups"></td></tr>
+                        <tr><td>@Resources.EndDate</td><td id="infoStartDate"></td></tr>
+                        <tr><td>@Resources.groups</td><td id="infoEndDate"></td></tr>
                     </tbody>
                 </table>
                         @*<a id="infoSvyText">Survey text: </a>
@@ -145,7 +145,7 @@
                         <br />
                         <a id="infoGroups">Groups: </a>
                         <br />*@
-                <button class="btn btn-secondary" onclick="$('#infoModal').modal('toggle')">Close</button>
+                <button class="btn btn-secondary" onclick="$('#infoModal').modal('toggle')">@Resources.close</button>
 </div>
 
         </div>
@@ -156,8 +156,8 @@
     $(function () {
 
         let tops = document.getElementsByClassName("header");
-        tops[0].innerHTML = "Current";
-        tops[1].innerHTML = "Current";
+        tops[0].innerHTML = "@Resources.CurrentSurveys";
+        tops[1].innerHTML = "@Resources.CurrentSurveys";
 
         var table = $('#currentSurveysTable').dataTable({
             "scrollY": "700px",

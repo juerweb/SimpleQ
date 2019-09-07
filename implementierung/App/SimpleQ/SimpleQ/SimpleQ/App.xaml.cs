@@ -26,6 +26,11 @@ using SimpleQ.PageModels.QuestionPageModels;
 using SimpleQ.Pages.QuestionPages;
 using Xamarin.Forms.Internals;
 using System.IO;
+using SimpleQ.Shared;
+using System.Net.Http;
+using NLog;
+using SimpleQ.Logging;
+using ILogger = SimpleQ.Logging.ILogger;
 
 [assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace SimpleQ
@@ -34,20 +39,34 @@ namespace SimpleQ
 	{
         private static Boolean WasThereAlreadyANotification = false;
         public static String Key = "";
+        private SurveyModel currentQuestion;
+
+        public App(OSNotificationOpenedResult result): this()
+        {
+            HandleNotificationOpened(result);
+        }
+
         public App ()
 		{
+
+            Debug.WriteLine("NO: App started...", "Info");
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("App started.");
+
+
             //Application.Current.Properties.Remove("IsValidCodeAvailable");
             //Application.Current.Properties["Language"] = "en";
+
 
             SetupIOC();
 
             SetupBlobCache();
 
+            SetDefaultProperties();
+
             //GetKeyFromFile();
-
-
-
             InitializeComponent();
+
 
             if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
             {
@@ -55,49 +74,76 @@ namespace SimpleQ
             }
 
             GoToRightPage();
+            Debug.WriteLine(Xamarin.Forms.Font.Default);
 
+            IFaqService faqService = FreshIOC.Container.Resolve<IFaqService>();
+            faqService.LoadData();
+    }
+
+        private async void SetDefaultProperties()
+        {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Set default Properties.");
+            try
+            {
+                Boolean closeAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
+                Debug.WriteLine("CloseAppAfterNotification is set to " + closeAppAfterNotification, "Info");
+            }
+            catch (KeyNotFoundException e)
+            {
+                Debug.WriteLine("CloseAppAfterNotification is not set... ", "Info");
+                BlobCache.UserAccount.InsertObject<Boolean>("CloseAppAfterNotification", true);
+            }
+
+            try
+            {
+                Boolean showMessageAfterAnswering = await BlobCache.UserAccount.GetObject<Boolean>("ShowMessageAfterAnswering");
+                Debug.WriteLine("CloseAppAfterNotification is set to " + showMessageAfterAnswering, "Info");
+            }
+            catch (KeyNotFoundException e)
+            {
+                Debug.WriteLine("ShowMessageAfterAnswering is not set... ", "Info");
+                BlobCache.UserAccount.InsertObject<Boolean>("ShowMessageAfterAnswering", true);
+            }
         }
 
         public static void GoToRightPage()
         {
-                Debug.WriteLine("T1");
-                if (Application.Current.Properties.ContainsKey("IsValidCodeAvailable"))
-                {
-                    if ((bool)Application.Current.Properties["IsValidCodeAvailable"])
-                    {
-                        Debug.WriteLine("Code is valid now...", "Info");
-                        NavigateToMainPageModel();
-                    }
-                    else
-                    {
-                        //Code is not available => RegisterPage
-                        Debug.WriteLine("Code is not valid now...", "Info");
-                        NavigateToRegisterPageModel();
-                    }
-                }
-                else
-                {
-                    //Code is not available => RegisterPage
-                    Debug.WriteLine("Property 'CodeValidationModel' is not available...", "Info");
-                    NavigateToRegisterPageModel();
-                }
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            if (Application.Current.Properties.ContainsKey("registrations"))
+            {
+                logger.Info("Code is valid now.");
+                Debug.WriteLine("Code is valid now...", "Info");
+                NavigateToMainPageModel();
+            }
+            else
+            {
+                //Code is not available => RegisterPage
+                logger.Info("Property 'CodeValidationModel' is not available.");
+                Debug.WriteLine("Property 'CodeValidationModel' is not available...", "Info");
+                NavigateToRegisterPageModel();
+            }
         }
 
         private static void NavigateToRegisterPageModel()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Navigate to RegisterPageModel.");
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
 
             languageService.SetCurrentLanguage();
             Debug.WriteLine("Current Device Culture Info: " + CrossMultilingual.Current.CurrentCultureInfo.TwoLetterISOLanguageName, "Info");
 
-            var page = FreshPageModelResolver.ResolvePageModel<RegisterPageModel>();
+            var page = FreshPageModelResolver.ResolvePageModel<RegisterPageModel>(true);
             var basicNavContainer = new FreshNavigationContainer(page);
             App.Current.MainPage = basicNavContainer;
         }
 
         private static async void NavigateToMainPageModel()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Navigate to MainPageModel.");
             //Localization Details
             ILanguageService languageService = FreshIOC.Container.Resolve<ILanguageService>();
 
@@ -120,7 +166,7 @@ namespace SimpleQ
             MainMasterPageModel.AddPage(AppResources.Help, new HelpPageModel(), "ic_help_black_18.png");
             MainMasterPageModel.Init("Menu");
 
-            Console.WriteLine("1234: Load Data from Cache");
+            //Console.WriteLine("1234: Load Data from Cache");
             IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
             await questionService.LoadDataFromCache();
 
@@ -128,82 +174,100 @@ namespace SimpleQ
 
             IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
 
-            webAPIService.Register("1234", "1234");
-            webAPIService.Unregister("1234", "123");
+            //RegistrationData data = await webAPIService.Register("1234", "1234");
+            //Debug.WriteLine("RegistrationData: " + data);
+            //webAPIService.Unregister("1234", "123");
 
-            OpenNotification();
+            /*SurveyModel sm = await webAPIService.GetSurveyData(1);
+            Debug.WriteLine("New Survey: " + sm.SurveyDesc);
+
+            SurveyVote vote = new SurveyVote();
+            vote.CustCode = "17ad34fbcf43bd6";
+            vote.ChosenAnswerOptions = new List<AnswerOption>();
+            vote.ChosenAnswerOptions.Add(sm.GivenAnswers[0]);
+
+            Boolean b = await webAPIService.AnswerSurvey(vote);
+            Debug.WriteLine("Erfolgreich?: " + b);*/
         }
 
-        private static async void OpenNotification()
+        public static async void OpenQuestionPage(SurveyModel surveyModel)
         {
-            try
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Open questionpage with the question id: " + surveyModel.SurveyId);
+            IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
+
+            switch (surveyModel.TypeDesc)
             {
-                IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
-                IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
-
-                SurveyModel WasQuestionOpened = await BlobCache.LocalMachine.GetObject<SurveyModel>("WasQuestionOpened");
-                await BlobCache.LocalMachine.InvalidateObject<SurveyModel>("WasQuestionOpened");
-
-                Console.WriteLine("1234: GoTo Question");
-                Debug.WriteLine("WasQuestionOpened: " + WasQuestionOpened.SurveyDesc, "Info");
-
-                questionService.AddQuestion(WasQuestionOpened);
-
-                switch (WasQuestionOpened.TypeDesc)
-                {
-                    case SurveyType.YNQ:
-
-                        YNQPage ynqPage = (YNQPage)FreshPageModelResolver.ResolvePageModel<YNQPageModel>(true);
-                        YNQPageModel ynqPageModel = (YNQPageModel)ynqPage.BindingContext;
-                        ynqPageModel.Question = WasQuestionOpened;
-                        navService.PushPage(ynqPage, ynqPageModel);
-                        break;
-                    case SurveyType.TLQ:
-                        TLQPage tlqPage = (TLQPage)FreshPageModelResolver.ResolvePageModel<TLQPageModel>(true);
-                        TLQPageModel tlqPageModel = (TLQPageModel)tlqPage.BindingContext;
-                        tlqPageModel.Question = WasQuestionOpened;
-                        navService.PushPage(tlqPage, tlqPageModel);
-                        break;
-                    case SurveyType.OWQ:
-                        OWQPage owqPage = (OWQPage)FreshPageModelResolver.ResolvePageModel<OWQPageModel>(true);
-                        OWQPageModel owqPageModel = (OWQPageModel)owqPage.BindingContext;
-                        owqPageModel.Question = WasQuestionOpened;
-                        navService.PushPage(owqPage, owqPageModel);
-
-                        break;
-                    case SurveyType.GAQ:
-                        GAQPage gaqPage = (GAQPage)FreshPageModelResolver.ResolvePageModel<GAQPageModel>(true);
-                        GAQPageModel gaqPageModel = (GAQPageModel)gaqPage.BindingContext;
-                        gaqPageModel.Question = WasQuestionOpened;
-                        navService.PushPage(gaqPage, gaqPageModel);
-                        break;
-                }
-
-                WasThereAlreadyANotification = true;
-
-                try
-                {
-                    Debug.WriteLine("start of try");
-                    List<SurveyModel> list = await BlobCache.LocalMachine.GetObject<List<SurveyModel>>("Questions");
-                    list.Add(WasQuestionOpened);
-
-                    await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", list);
-                    Debug.WriteLine("end of try");
-                }
-                catch (KeyNotFoundException ex)
-                {
-                    Debug.WriteLine("in catch");
-                    await BlobCache.LocalMachine.InsertObject<List<SurveyModel>>("Questions", new List<SurveyModel>(new SurveyModel[] { WasQuestionOpened }));
-                }
+                case SurveyType.YesNoQuestion:
+                    YesNoQuestionPage ynqPage = (YesNoQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoQuestionPageModel>(new List<object> { surveyModel, true });
+                    YesNoQuestionPageModel ynqPageModel = (YesNoQuestionPageModel)ynqPage.BindingContext;
+                    //ynqPageModel.Question = surveyModel;
+                    navService.PushPage(ynqPage, ynqPageModel);
+                    return;
+                case SurveyType.YesNoDontKnowQuestion:
+                    YesNoDontKnowQuestionPage yndkqPage = (YesNoDontKnowQuestionPage)FreshPageModelResolver.ResolvePageModel<YesNoDontKnowQuestionPageModel>(new List<object> { surveyModel, true });
+                    YesNoDontKnowQuestionPageModel yndkqPageModel = (YesNoDontKnowQuestionPageModel)yndkqPage.BindingContext;
+                    //yndkqPageModel.Question = surveyModel;
+                    navService.PushPage(yndkqPage, yndkqPageModel);
+                    return;
+                case SurveyType.TrafficLightQuestion:
+                    TrafficLightQuestionPage tlqPage = (TrafficLightQuestionPage)FreshPageModelResolver.ResolvePageModel<TrafficLightQuestionPageModel>(new List<object> { surveyModel, true });
+                    TrafficLightQuestionPageModel tlqPageModel = (TrafficLightQuestionPageModel)tlqPage.BindingContext;
+                    //tlqPageModel.Question = surveyModel;
+                    navService.PushPage(tlqPage, tlqPageModel);
+                    return;
+                case SurveyType.OpenQuestion:
+                    OpenQuestionPage owqPage = (OpenQuestionPage)FreshPageModelResolver.ResolvePageModel<OpenQuestionPageModel>(new List<object> { surveyModel, true });
+                    OpenQuestionPageModel owqPageModel = (OpenQuestionPageModel)owqPage.BindingContext;
+                    //owqPageModel.Question = surveyModel;
+                    navService.PushPage(owqPage, owqPageModel);
+                    return;
+                case SurveyType.PolytomousUSQuestion:
+                    PolytomousUSQuestionPage polytomousUSPage = (PolytomousUSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUSQuestionPageModel>(new List<object> { surveyModel, true });
+                    PolytomousUSQuestionPageModel polytomousUSPageModel = (PolytomousUSQuestionPageModel)polytomousUSPage.BindingContext;
+                    //polytomousUSPageModel.Question = surveyModel;
+                    navService.PushPage(polytomousUSPage, polytomousUSPageModel);
+                    return;
+                case SurveyType.PolytomousOSQuestion:
+                    PolytomousOSQuestionPage polytomousOSPage = (PolytomousOSQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousOSQuestionPageModel>(new List<object> { surveyModel, true });
+                    PolytomousUSQuestionPageModel polytomousOSPageModel = (PolytomousUSQuestionPageModel)polytomousOSPage.BindingContext;
+                    //polytomousOSPageModel.Question = surveyModel;
+                    navService.PushPage(polytomousOSPage, polytomousOSPageModel);
+                    return;
+                case SurveyType.DichotomousQuestion:
+                    DichotomousQuestionPage dichotomousQuestionPage = (DichotomousQuestionPage)FreshPageModelResolver.ResolvePageModel<DichotomousQuestionPageModel>(new List<object> { surveyModel, true });
+                    DichotomousQuestionPageModel dichotomousQuestionPageModel = (DichotomousQuestionPageModel)dichotomousQuestionPage.BindingContext;
+                    //dichotomousQuestionPageModel.Question = surveyModel;
+                    navService.PushPage(dichotomousQuestionPage, dichotomousQuestionPageModel);
+                    return;
+                case SurveyType.PolytomousOMQuestion:
+                    PolytomousOMQuestionPage polytomousOMQuestionPage = (PolytomousOMQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousOMQuestionPageModel>(new List<object> { surveyModel, true });
+                    PolytomousOMQuestionPageModel polytomousOMQuestionPageModel = (PolytomousOMQuestionPageModel)polytomousOMQuestionPage.BindingContext;
+                    //polytomousOMQuestionPageModel.Question = surveyModel;
+                    navService.PushPage(polytomousOMQuestionPage, polytomousOMQuestionPageModel);
+                    return;
+                case SurveyType.PolytomousUMQuestion:
+                    PolytomousUMQuestionPage polytomousUMQuestionPage = (PolytomousUMQuestionPage)FreshPageModelResolver.ResolvePageModel<PolytomousUMQuestionPageModel>(new List<object> { surveyModel, true });
+                    PolytomousUMQuestionPageModel polytomousUMQuestionPageModel = (PolytomousUMQuestionPageModel)polytomousUMQuestionPage.BindingContext;
+                    //polytomousUMQuestionPageModel.Question = surveyModel;
+                    navService.PushPage(polytomousUMQuestionPage, polytomousUMQuestionPageModel);
+                    return;
             }
-            catch
+
+            List<SurveyType> types = new List<SurveyType>(new SurveyType[]{ SurveyType.LikertScale3Question, SurveyType.LikertScale4Question, SurveyType.LikertScale5Question , SurveyType.LikertScale6Question, SurveyType.LikertScale7Question, SurveyType.LikertScale8Question, SurveyType.LikertScale9Question });
+            if (types.Contains(surveyModel.TypeDesc))
             {
-                Console.WriteLine("1234: No Notification found...");
+                LikertScaleQuestionPage likertScaleQuestionPage = (LikertScaleQuestionPage)FreshPageModelResolver.ResolvePageModel<LikertScaleQuestionPageModel>(new List<object> { surveyModel, true });
+                LikertScaleQuestionPageModel likertScaleQuestionPageModel = (LikertScaleQuestionPageModel)likertScaleQuestionPage.BindingContext;
+                //likertScaleQuestionPageModel.Question = surveyModel;
+                navService.PushPage(likertScaleQuestionPage, likertScaleQuestionPageModel);
             }
         }
 
         private void SetupIOC()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Setup the services.");
             FreshIOC.Container.Register<IUserDialogs>(UserDialogs.Instance);
             FreshIOC.Container.Register<IDialogService, DialogService>();
             FreshIOC.Container.Register<ISimulationService, SimulationService>();
@@ -211,10 +275,14 @@ namespace SimpleQ
             FreshIOC.Container.Register<IQuestionService, QuestionService>();
             FreshIOC.Container.Register<ISettingsService, SettingsService>();
             FreshIOC.Container.Register<IWebAPIService, WebAPIService>();
+            FreshIOC.Container.Register<IToastService, ToastService>();
+            FreshIOC.Container.Register<IFaqService, FaqService>();
         }
 
 		protected override async void OnStart ()
 		{
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Configure the AppCenter.");
             // Handle when your app starts
             AppCenter.Start("android=d9823947-9138-4821-9dca-44c4750cb47e;" +
                   "uwp={Your UWP App secret here};" +
@@ -240,19 +308,44 @@ namespace SimpleQ
 
         private void SetupBlobCache()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Setup BlobCache.");
             BlobCache.ApplicationName = "com.simpleQ.SimpleQ";
         }
 
         private void SetupOneSignal()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Setup OneSignal.");
             OneSignal.Current.StartInit("68b8996a-f664-4130-9854-9ed7f70d5540")
                 .InFocusDisplaying(OSInFocusDisplayOption.Notification)
                 .HandleNotificationOpened(HandleNotificationOpened)
+                .HandleNotificationReceived(HandleNotificationReceived)
                 .EndInit();
+
+            OneSignal.Current.IdsAvailable(IdsAvailable);
+        }
+
+        private void HandleNotificationReceived(OSNotification notification)
+        {
+            Debug.WriteLine("NO: Notification Received...", "Info");
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Notification Received.");
+        }
+
+        private async void IdsAvailable(string userID, string pushToken)
+        {
+            Debug.WriteLine("Ids of OneSignal available...", "Info");
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Ids of OneSignal available.");
+            Application.Current.Properties["userID"] = userID;
+            await Application.Current.SavePropertiesAsync();
         }
 
         private void GetKeyFromFile()
         {
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Get key from file.");
             var assembly = IntrospectionExtensions.GetTypeInfo(typeof(WebAPIService)).Assembly;
             Stream stream = assembly.GetManifestResourceStream("SimpleQ.Resources.private.key");
 
@@ -264,9 +357,46 @@ namespace SimpleQ
         // Called when a notification is opened.
         // The name of the method can be anything as long as the signature matches.
         // Method must be static or this object should be marked as DontDestroyOnLoad
-        private async void HandleNotificationOpened(OSNotificationOpenedResult result)
+        private static async void HandleNotificationOpened(OSNotificationOpenedResult result)
         {
-            Console.WriteLine("1234: HandleNotificationOpened!23");
+            ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Handle Notification Opened.");
+            Debug.WriteLine("NO: Notification Opened in App.xaml.cs ...", "Info");
+            Dictionary<String, object> additionalData = result.notification.payload.additionalData;
+            Debug.WriteLine(additionalData["SvyId"]);
+
+            IWebAPIService webAPIService = FreshIOC.Container.Resolve<IWebAPIService>();
+            Debug.WriteLine(int.Parse(additionalData["SvyId"].ToString()));
+            try
+            {
+                IQuestionService questionService = FreshIOC.Container.Resolve<IQuestionService>();
+                if (additionalData.ContainsKey("Cancel") && Convert.ToBoolean(additionalData["Cancel"].ToString()))
+                {
+                    //Cancel Survey
+                    Debug.WriteLine("Cancel Survey with id: " + additionalData["SvyId"].ToString(), "Info");
+                    questionService.RemoveQuestion(int.Parse(additionalData["SvyId"].ToString()));
+                }
+                else
+                {
+                    IFreshNavigationService navService = FreshIOC.Container.Resolve<IFreshNavigationService>(MainMasterPageModel.NavigationServiceName);
+                    LoadingQuestionPage page = (LoadingQuestionPage)FreshPageModelResolver.ResolvePageModel<LoadingQuestionPageModel>(int.Parse(additionalData["SvyId"].ToString()));
+                    LoadingQuestionPageModel pageModel = (LoadingQuestionPageModel)page.BindingContext;
+                    navService.PushPage(page, pageModel);
+                }
+
+            }
+            catch (HttpRequestException e)
+            {
+                Debug.WriteLine("WebException during the GetSurveyData", "Error");
+                logger.Equals("WebException during the GetSurveyData.");
+                IDialogService dialogService = FreshIOC.Container.Resolve<IDialogService>();
+
+                dialogService.ShowErrorDialog(202);
+            }
+
+
+
+            /*Console.WriteLine("1234: HandleNotificationOpened!23");
 
             Dictionary<String, object> additionalData = result.notification.payload.additionalData;
 
@@ -279,7 +409,7 @@ namespace SimpleQ
             }
 
 
-            SurveyModel newSurveryModel = new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now);
+            SurveyModel newSurveryModel = new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, new List<Shared.AnswerOption>());
 
             Debug.WriteLine("After try/catch");
             await BlobCache.LocalMachine.InsertObject<SurveyModel>("WasQuestionOpened", newSurveryModel);
@@ -292,6 +422,7 @@ namespace SimpleQ
             }
 
             //questionService.AddQuestion(new SurveyModel(int.Parse(additionalData["SvyId"].ToString()), additionalData["SvyDesc"].ToString(), additionalData["CatName"].ToString(), int.Parse(additionalData["TypeId"].ToString()), DateTime.Now, DateTime.Now));
+        */
         }
     }
 }

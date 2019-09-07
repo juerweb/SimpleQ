@@ -203,7 +203,7 @@ namespace SimpleQ.Webinterface.Controllers
                 }
 
                 logger.Debug("Creating new survey finished successfully");
-                return RedirectToAction("Index", "SurveyCreation", new { success = 1} );
+                return RedirectToAction("Index", "SurveyCreation", new { success = 1 } );
             }
             catch (Exception ex)
             {

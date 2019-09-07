@@ -2,12 +2,18 @@
 @using SimpleQ.Webinterface.Properties
 @using SimpleQ.Webinterface.Models
 @model SimpleQ.Webinterface.Models.ViewModels.SettingsModel
+@{ 
+    ResourceManager rm = Resources.ResourceManager;
+}
 
 <div id="changesOk" class="alert alert-success" style="display:none">
     <strong>@ResourcesN.ChangesOk</strong>
 </div>
 <div id="changespw404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.PasswordChange404</strong>
+</div>
+<div id="changespw400" class="alert alert-danger" style="display:none">
+    <strong>Passwort konnte nicht geändert werden.</strong>
 </div>
 <div id="changespw500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.PasswordChange500</strong>
@@ -16,13 +22,19 @@
     <strong>@ResourcesN.minimumGroupSize404</strong>
 </div>
 <div id="minimumGroupSize500" class="alert alert-danger" style="display:none">
-    <strong>@ResourcesN.minimumGroupSize500</strong>AddCategory 404
+    <strong>@ResourcesN.minimumGroupSize500</strong>
+</div>
+<div id="minimumGroupSize409" class="alert alert-danger" style="display:none">
+    <strong>Minimale Gruppengröße zu klein</strong>
 </div>
 <div id="addCategory404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.AddCategory404</strong>
 </div>
 <div id="addCategory500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.AddCategory500</strong>
+</div>
+<div id="addCategory400" class="alert alert-danger" style="display:none">
+    <strong>Fehler beim Hinzufügen der Kategorie</strong>
 </div>
 <div id="deleteTemplate404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.deleteTemplate404</strong>
@@ -32,6 +44,9 @@
 </div>
 <div id="changeAbrechnung404" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.changeAbrechnung404</strong>
+</div>
+<div id="changeAbrechnung409" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsdatum setzen fehlgeschlagen</strong>
 </div>
 <div id="changeAbrechnung500" class="alert alert-danger" style="display:none">
     <strong>@ResourcesN.changeAbrechnung500</strong>
@@ -43,26 +58,40 @@
     <strong>@ResourcesN.deletePeriodic500</strong>
 </div>
 <div id="unregister403" class="alert alert-danger" style="display:none">
-    <strong>Kündigung fehlgeschlagen. Kunden-Code oder Passwort ungültig.</strong>
+    <strong>@ResourcesN.unregister403</strong>
 </div>
 <div id="unregister404" class="alert alert-danger" style="display:none">
-    <strong>Kündigung fehlgeschlagen. Kunde nicht gefunden.</strong>
+    <strong>@ResourcesN.unregister404</strong>
 </div>
 <div id="unregister409" class="alert alert-danger" style="display:none">
-    <strong>Kündigung fehlgeschlagen. Alle offenen Rechnungen müssen vorher bezahlt werden.</strong>
+    <strong>@ResourcesN.unregister409</strong>
 </div>
 <div id="unregister500" class="alert alert-danger" style="display:none">
-    <strong>Kündigung fehlgeschlagen. Bitte später erneut versuchen.</strong>
+    <strong>@ResourcesN.unregister500</strong>
 </div>
-
+<div id="deleteCategory404" class="alert alert-danger" style="display:none">
+    <strong>Kategorie löschen fehlgeschlagen</strong>
+</div>
+<div id="deleteCategory500" class="alert alert-danger" style="display:none">
+    <strong>Kategorie löschen fehlgeschlagen</strong>
+</div>
+<div id="changeAccountingPeriod409" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsperiode setzen fehlgeschlagen.</strong>
+</div>
+<div id="changeAccountingPeriod404" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsperiode setzen fehlgeschlagen.</strong>
+</div>
+<div id="changeAccountingPeriod500" class="alert alert-danger" style="display:none">
+    <strong>Abrechnungsperiode setzen fehlgeschlagen.</strong>
+</div>
 <div class="row pl-4 mt-1 ml-0 mr-0">
     <h2>@ResourcesN.Settings</h2>
-</div>
-<div class="row m-0 p-0 mr-0 ml-3 mb-3">
+</div>*@
+<div class="row m-0 p-0 mr-0 mt-3 ml-3 mb-3">
     <div class="btn-group">
-        <button id="accountSettings" onclick="switchToAccountSettings()" class="btn btn-primary btn-block mt-0">Kontoeinstellungen</button>
-        <button id="appSettings" onclick="switchToAppSettings()" class="btn btn-secondary btn-block mt-0">Anwendungseinstellungen</button>
-        <button id="billSettings" onclick="switchToBillSettings()" class="btn btn-secondary btn-block mt-0">Rechnungsübersicht</button>
+        <button id="accountSettings" onclick="switchToAccountSettings()" class="btn btn-primary btn-block mt-0">@ResourcesN.AccountSettings</button>
+        <button id="appSettings" onclick="switchToAppSettings()" class="btn btn-secondary btn-block mt-0">@ResourcesN.ApplicationSettings</button>
+        <button id="billSettings" onclick="switchToBillSettings()" class="btn btn-secondary btn-block mt-0">@ResourcesN.BillOverview</button>
     </div>
 </div>
 
@@ -83,15 +112,13 @@
                 @Html.TextBoxFor(m => m.Plz, new { @class = "form-control mr-0" });
                 @Html.LabelFor(m => m.Country, ResourcesN.Country);
                 @Html.TextBoxFor(m => m.Country, new { @class = "form-control mr-0" });
-                @Html.LabelFor(m => m.LanguageCode, ResourcesN.Language);
-                @Html.DropDownListFor(m => m.LanguageCode, new SelectList(new[] { "DE", "EN" }), new { @class = "form-control mr-0" })
                 @Html.LabelFor(m => m.Email, ResourcesN.Email);
                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control mr-0" });
                 @Html.LabelFor(m => m.DataStoragePeriod, ResourcesN.DataStoragePeriod);
                 @Html.TextBoxFor(m => m.DataStoragePeriod, new { @class = "form-control mr-0" });
                 @Html.LabelFor(m => m.PaymentMethods);
                 @Html.DropDownListFor(m => m.PaymentMethods, new SelectList(Model.PaymentMethods, "PaymentMethodId", "PaymentMethodDesc"), new { @class = "form-control mr-0" });
-                <input type="submit" value="Speichern" class="btn btn-primary btn-block mt-3" />
+                <input type="submit" value="@ResourcesN.Save" class="btn btn-primary btn-block mt-3" />
             }
             <br />
         </div>
@@ -115,7 +142,7 @@
         <div class="form-group mt-2">
             <label for="minimumGroupSize">@ResourcesN.MinimumGroupSize</label>
             <input type="number" class="form-control mr-0" id="minimumGroupSize" value="@Model.MinGroupSize">
-            <button type="button" class="btn btn-primary btn-block mt-3" onclick="changeMinimumGroupSize()" disabled id="changeMinimumGroupSize">Speichern</button>
+            <button type="button" class="btn btn-primary btn-block mt-3" onclick="changeMinimumGroupSize()" disabled id="changeMinimumGroupSize">@ResourcesN.Save</button>
         </div>
         @using (Html.BeginForm("ChangeAnswerTypes", "Settings", FormMethod.Post))
         {
@@ -129,7 +156,7 @@
                             {
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" checked />@c.TypeDesc
+                                        <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" checked />@rm.GetString(c.TypeDesc)
                                     </label>
                                 </li>
                             }
@@ -137,7 +164,7 @@
                             {
                                 <li>
                                     <label>
-                                        <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" />@c.TypeDesc
+                                        <input type="checkbox" name="CheckedAnswerTypes" value="@c.TypeId" />@rm.GetString(c.TypeDesc)
                                     </label>
                                 </li>
                             }
@@ -147,16 +174,16 @@
                 </div>
             </div>
             <button type="submit" class="btn btn-primary btn-block mt-3" id="save">@ResourcesN.Save</button>
-        }
+                            }
     </div>
     <div class="col-md-4">
         <h4 class="text-center">@Resources.surveyCategoryHeader</h4>
         <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Kategorien</span></span></button>
-        <div id="answerBox" class="border border-dark mt-2">
+        <div id="answerBox" style="overflow-y: scroll; height:260px" class="border border-dark mt-2">
             <div class="row mt-1 mb-1 mr-0 ml-0">
                 <div class="col-9 pr-0 pl-1"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addNewCategory" /></div>
                 <div class="col-3 pl-0 pr-1"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>
-                <ul class="list-group w-100" style="width:100%" id="answerUL" name="TextAnswerOptions">
+                <ul class="list-group w-100" style="width:100%;" id="answerUL" name="TextAnswerOptions">
                     @{
                         foreach (var c in Model.Categories)
                         {
@@ -192,7 +219,7 @@
     </div>
     <div class="col-md-4">
         <h4 class="text-center">@ResourcesN.Template</h4>
-        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Templates</span></span></button>
+        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>@ResourcesN.Template</span></span></button>
         <div id="answerBox" class="border border-dark mt-2 mb-2">
             <div class="row mt-1 mb-1 mr-0 ml-0">
                 <ul class="list-group groups-ul-settings" style="width:100%" id="answerULT" name="TextAnswerOptions">
@@ -201,7 +228,7 @@
                         {
                             <li class="list-group-item">
                                 <span class="d-flex justify-content-between">
-                                    <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.SvyText" />
+                                    <input class="form-control rightNotRounded withoutBorder" name="TextAnswerOptions" readonly type="text" value="@c.SvyText" />
                                     <span>
                                         <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswerTemplate(this)"><i class="material-icons">&#xe92b;</i></button>
                                     </span>
@@ -212,8 +239,8 @@
                 </ul>
             </div>
         </div>
-        <h4 class="text-center">Periodische Umfragen</h4>
-        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>Periodische Umfragen</span></span></button>
+        <h4 class="text-center">@ResourcesN.PeriodicSurveys</h4>
+        <button type="button" class="btn btn-primary btn-block mt-2" id="openAddAnswer"><span class="d-flex justify-content-between"><span>@ResourcesN.PeriodicSurveys</span></span></button>
         <div id="answerBox" class="border border-dark mt-2">
             <div class="row mt-1 mb-1 mr-0 ml-0">
                 <ul class="list-group groups-ul-settings" style="width:100%" id="answerULT" name="TextAnswerOptions">
@@ -222,7 +249,7 @@
                         {
                             <li class="list-group-item">
                                 <span class="d-flex justify-content-between">
-                                    <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="@c.SvyText" />
+                                    <input class="form-control rightNotRounded withoutBorder" name="TextAnswerOptions" readonly type="text" value="@c.SvyText" />
                                     <span>
                                         <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deletePeriodic(this)"><i class="material-icons">&#xe92b;</i></button>
                                     </span>
@@ -232,43 +259,43 @@
                     }
                 </ul>
             </div>
-        </div>
+        </div>*@
     </div>
 </div>
 <div class="row mt-1 ml-0 mr-0" id="bi">
     <div class="col-md-4">
-        <h4 class="text-center">Abrechnungszeitraum</h4>
+        <h4 class="text-center">@ResourcesN.BillingPeriod</h4>
         <div class="form-group mt-2">
-            <label for="zeitraum">Abrechnungszeitraum (in Monaten)</label>
+            <label for="zeitraum">@ResourcesN.BillingPeriod (@ResourcesN.InMonths)</label>
             <select id="zeitraum" class="form-control mr-0" name="zeitraum">
                 <option value="1">1</option>
                 <option value="3">3</option>
                 <option value="6">6</option>
                 <option value="12">12</option>
             </select>
-            <label for="tag">Abrechnungstag 1-31</label>
+            <label for="tag">@ResourcesN.BillingDay (1-31)</label>
             <input id="abrechnungstag" type="number" name="tag" class="form-control" min="1" max="31" value="15">
-            <button class="btn btn-primary btn-block mt-3" onclick="changeAbrechnung()">Speichern</button>
+            <button class="btn btn-primary btn-block mt-3" onclick="changeAbrechnung()">@ResourcesN.Save</button>
         </div>
-        <h4 class="text-center">Offene Gesamtsumme</h4>
+        <h4 class="text-center">@ResourcesN.OutstandingAmount</h4>
         <div class="form-group mt-2">
-            <label for="betrag">Betrag</label>
-            <input type="text" disabled name="betrag" class="form-control mr-0" value="@Model.OutstandingBalance" />
-            <label for="anzUmfragenAbrechn">Anzahl Umfragen im akt. Abrechnungszeitraum</label>
+            <label for="betrag">@ResourcesN.Amount</label>
+            <input type="text" disabled name="betrag" class="form-control mr-0" value="&euro; @Model.OutstandingBalance.ToString("0.00")" />
+            <label for="anzUmfragenAbrechn">@ResourcesN.CurrSurveyAmount</label>
             <input type="text" disabled name="anzUmfragenAbrechn" class="form-control mr-0" value="@Model.CurrentSurveyAmount" />
-            <label for="anzBeantwFragen">Anzahl beantwortete Fragen im akt. Abrechnungszeitraum</label>
+            <label for="anzBeantwFragen">@ResourcesN.CurrAnswerAmount</label>
             <input type="text" disabled name="anzBeantwFragen" class="form-control mr-0" value="@Model.CurrentVoteAmount" />
         </div>
-        <button type="button" class="btn btn-danger btn-block mt-3" onclick="$('#UnregisterPrompt').modal();">Abo kündigen</button>
+        <button type="button" class="btn btn-danger btn-block mt-3" onclick="$('#UnregisterPrompt').modal();">@ResourcesN.Unregister</button>
     </div>
     <div class="col-md-8">
-        <h4 class="text-center">Rechnungen</h4>
+        <h4 class="text-center">@ResourcesN.Bills</h4>
         <div class="form-group mt-2">
             <div class="border border-secondary rounded">
                 <span class="card-header p-1 row ml-0 mr-0 border border-secondary border-left-0 border-right-0 border-top-0">
-                    <span class="col-2 text-center">Rechnungsnummer</span>
-                    <span class="col-6 text-center">Rechnungsdatum</span>
-                    <span class="col-4 text-center">Preis</span>
+                    <span class="col-2 text-center">@ResourcesN.BillNumber</span>
+                    <span class="col-6 text-center">@ResourcesN.BillDate</span>
+                    <span class="col-4 text-center">@ResourcesN.Price</span>
                 </span>
                 <div id="accordion">
                     @foreach (var billWrapper in Model.Bills)
@@ -278,7 +305,7 @@
                         <span class="card-header p-1 row ml-0 mr-0">
                             <span class="col-2 text-center">@bill.BillId</span>
                             <span class="col-6 text-center">@bill.BillDate.ToShortDateString()</span>
-                            <span class="col-4 text-center">@bill.BillPrice.ToString("C")</span>
+                            <span class="col-4 text-center">&euro; @bill.BillPrice.ToString("0.00")</span>
                         </span>
                         //<h4 class="card-header p-1">@bill.BillId | @bill.BillDate.ToShortDateString() | @bill.BillPrice.ToString("C")</h4>
 
@@ -286,10 +313,10 @@
                             <table class="table table-striped table-bordered mb-0">
                                 <thead>
                                     <tr>
-                                        <th class="pt-0 pb-0 pl-1 pr-1">Datum</th>
-                                        <th class="pt-0 pb-0 pl-1 pr-1">Befragung</th>
+                                        <th class="pt-0 pb-0 pl-1 pr-1">@ResourcesN.Date</th>
+                                        <th class="pt-0 pb-0 pl-1 pr-1">@ResourcesN.Survey</th>
                                         <th class="pt-0 pb-0 pl-1 pr-1">*</th>
-                                        <th class="pt-0 pb-0 pl-1 pr-1">Preis</th>
+                                        <th class="pt-0 pb-0 pl-1 pr-1">@ResourcesN.Price</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -300,20 +327,20 @@
                                             <td class="pt-0 pb-0 pl-1 pr-1">@svy.StartDate.ToShortDateString()</td>
                                             <td class="pt-0 pb-0 pl-1 pr-1">@svy.SvyText</td>
                                             <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.NumberOfAnswers</td>
-                                            <td class="pt-0 pb-0 pl-1 pr-1">@surveyWrapper.SurveyPrice.ToString("C")</td>
+                                            <td class="pt-0 pb-0 pl-1 pr-1">&euro; @surveyWrapper.SurveyPrice.ToString("0.00")</td>
                                         </tr>
                                     }
                                     <tr class="bg-primary text-white">
                                         <td class="pt-0 pb-0 pl-1 pr-1"></td>
-                                        <td class="pt-0 pb-0 pl-1 pr-1">Result</td>
+                                        <td class="pt-0 pb-0 pl-1 pr-1">@Resources.Sum</td>
                                         <td class="pt-0 pb-0 pl-1 pr-1"></td>
-                                        <td class="pt-0 pb-0 pl-1 pr-1">@bill.BillPrice.ToString("C")</td>
+                                        <td class="pt-0 pb-0 pl-1 pr-1">&euro; @bill.BillPrice.ToString("0.00")</td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <a class="ml-2"><b>*</b> Anzahl Beantwortungen</a>
+                            <a class="ml-2"><b>*</b> @ResourcesN.AmountAnswers</a>
                             <div class="text-right">
-                                <a target="_blank" role="button" class="btn btn-primary btn-sm mb-2 mr-1" href="@Url.Action("DownloadBill", "Settings")?billId=@bill.BillId">Rechnung herunterladen</a>
+                                <a target="_blank" role="button" class="btn btn-primary btn-sm mb-2 mr-1" href="@Url.Action("DownloadBill", "Settings")?billId=@bill.BillId">@ResourcesN.DownloadBill</a>
                             </div>
                         </div>
                     }
@@ -344,13 +371,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Aktivierte Modi</h5>
+                <h5 class="modal-title">@ResourcesN.ActivatedModes</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Templates, die deaktivierte Modi verwenden werden vorübergehend deaktiviert.</p>
+                <p>@ResourcesN.TemplatesGetDeactivated</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">@ResourcesN.Close</button>
@@ -362,26 +389,26 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Abo kündigen</h5>
+                <h5 class="modal-title">@ResourcesN.Unregister</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>Bitte geben Sie Ihre Login-Daten ein:</p>
+                <p>@ResourcesN.PleaseEnterLoginData</p>
                 <div class="form-group">
-                    <label for="unreg_code">Kunden-Code</label>
+                    <label for="unreg_code">@ResourcesN.CustCode</label>
                     <input type="email" class="form-control" id="unreg_code">
                 </div>
                 <div class="form-group">
-                    <label for="unreg_pwd">Passwort</label>
+                    <label for="unreg_pwd">@ResourcesN.Password</label>
                     <input type="password" class="form-control" id="unreg_pwd">
                 </div>
-                <strong>WARNUNG:</strong> Durch eine Kündigung werden alle Ihre Daten (einschließlich Befragungsergebnisse) endgültig gelöscht!
+                <strong>@ResourcesN.WarningCAP</strong> @ResourcesN.DataWillBeDeleted
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="call_unregister();">Kündigen</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">@ResourcesN.Cancel</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="call_unregister();">@ResourcesN.Unregister</button>
             </div>
         </div>
     </div>
@@ -398,26 +425,30 @@
         foreach (var c in Model.Categories)
         {
             @:dictionary[@c.CatId] = "@c.CatName";
-        }
+            }
     }
     @{
         foreach (var c in Model.Templates)
         {
             @:dictionary2[@c.SvyId] = "@c.SvyText";
-        }
+            }
     }
     @{
         foreach (var c in Model.PeriodicSurveys)
         {
             @:dictionary3[@c.SvyId] = "@c.SvyText";
-        }
+            }
     }
 
     var changed = false;
     var checkedAnswers = [];
 
+    function validateEmailSettings() {
+        var re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String($("#Email").val()).toLowerCase());
+    }
+
     $(function () {
-        //document.getElementById("header").innerHTML = "@Resources.settings"; //set Header
         let tops = document.getElementsByClassName("header");
         tops[0].innerHTML = "@Resources.settings";
         tops[1].innerHTML = "@Resources.settings";
@@ -468,10 +499,19 @@
                     $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-                    alert("changeAccountingPeriod 404");
+                    console.log("changeAccountingPeriod 404");
+					$('#changeAccountingPeriod404').css("display", "block");
+                    $('#changeAccountingPeriod404').delay(1000).fadeOut();
+                },
+				409: function () {
+                    console.log("changeAccountingPeriod 409");
+					$('#changeAccountingPeriod409').css("display", "block");
+                    $('#changeAccountingPeriod409').delay(1000).fadeOut();
                 },
                 500: function () {
-                    alert("changeAccountingPeriod 500");
+                    console.log("changeAccountingPeriod 500");
+					$('#changeAccountingPeriod500').css("display", "block");
+                    $('#changeAccountingPeriod500').delay(1000).fadeOut();
                 }
             }
         });
@@ -489,6 +529,11 @@
                     alert("ChangeAccountingDay 404");
                     $('#changeAbrechnung404').css("display", "block");
                     $('#changeAbrechnung404').delay(1000).fadeOut();
+                },
+				409: function () {
+                    alert("ChangeAccountingDay 409");
+                    $('#changeAbrechnung409').css("display", "block");
+                    $('#changeAbrechnung409').delay(1000).fadeOut();
                 },
                 500: function () {
                     alert("ChangeAccountingDay 500");
@@ -545,6 +590,11 @@
                     $("#minimumGroupSize500").modal();
                     $('#minimumGroupSize500').css("display", "block");
                     $("#minimumGroupSize500").delay(1000).fadeOut();
+                },
+				409: function () {
+                    alert("changeMinimumGroupSize 409");
+                    $('#minimumGroupSize409').css("display", "block");
+                    $("#minimumGroupSize409").delay(1000).fadeOut();
                 }
             }
         });
@@ -555,7 +605,7 @@
         let val1 = $("#password").val();
         let val2 = $("#passwordConfirm").val();
 
-        if (val1 == val2 && val1 != "" && val2 != "") {
+        if (val1 == val2 && val1 != "" && val2 != "" && val1.length > 8) {
             $.ajax({
                 type: "POST",
                 url: "@Url.Action("ChangePassword", "Settings")",
@@ -571,6 +621,11 @@
                         console.log("passwort 404");
                         $('#changespw404').css("display", "block");
                         $("#changespw404").delay(1000).fadeOut();
+                    },
+					400: function () {
+                        console.log("passwort 400");
+                        $('#changespw400').css("display", "block");
+                        $("#changespw400").delay(1000).fadeOut();
                     },
                     500: function () {
                         console.log("passwort 500");
@@ -734,6 +789,11 @@
                     console.log("AddCategory 500");
                     $('#addCategory500').css("display", "block");
                     $('#addCategory500').delay(1000).fadeOut();
+                },
+				400: function () {
+                    console.log("AddCategory 400");
+                    $('#addCategory400').css("display", "block");
+                    $('#addCategory400').delay(1000).fadeOut();
                 }
             },
             success: function(data) {
@@ -741,17 +801,34 @@
             }
         });
 
-
         let normal =
-        '<li class="list-group-item">' +
-            '   <span class="d-flex justify-content-between">' +
-            '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
-            '       <span>' +
-            '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-            '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+            '<li class="row mr-0 ml-0 mt-2">' +
+            '    <div class="col-9 pr-0 pl-1">' +
+            '        <input class="form-control rightNotRounded withoutBorder" name="Emails" readonly type="text" value="' + input + '" />' +
+            '    </div>' +
+            '    <div class="col-3 pl-0 pr-1">' +
+            '       <span class="row ml-0 mr-0">' +
+            '           <span class="col-6 p-0">' +
+            '               <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+            '           </span>' +
+            '           <span class="col-6 p-0">'  +
+            '               <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+            '           </span>' +
             '       </span>' +
-            '   </span>' +
+            '    </div>' +
             '</li>';
+
+
+        //let normal =
+        //'<li class="list-group-item">' +
+        //    '   <span class="d-flex justify-content-between">' +
+        //    '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + input + '" />' +
+        //    '       <span>' +
+        //    '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+        //    '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe5cd;</i></button>' +
+        //    '       </span>' +
+        //    '   </span>' +
+        //    '</li>';
         ul.innerHTML += normal;
         $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
     }
@@ -846,10 +923,15 @@
                     $('#changesOk').delay(1000).fadeOut();
                 },
                 404: function () {
-                    alert("deleteCategory 404");
+                    console.log("deleteCategory 404");
+					$('#deleteCategory404').css("display", "block");
+                    $('#deleteCategory404').delay(1000).fadeOut();
+					
                 },
                 500: function () {
-                    alert("deleteCategory 500");
+                    console.log("deleteCategory 500");
+					$('#deleteCategory500').css("display", "block");
+                    $('#deleteCategory500').delay(1000).fadeOut();
                 }
             }
         });
@@ -935,31 +1017,31 @@
         let code = $("#unreg_code").val();
         let pwd = $("#unreg_pwd").val();
         $.ajax({
-                url: "@Url.Action("Unregister", "Account")",
-                data: { custCode: code, password: pwd },
-                type: 'DELETE',
-                statusCode: {
-                    200: function () {
-                        window.location.reload();
-                    },
-                    403: function () {
-                        $('#unregister403').css("display", "block");
-                        $('#unregister403').delay(3000).fadeOut();
-                    },
-                    404: function () {
-                        $('#unregister404').css("display", "block");
-                        $('#unregister404').delay(3000).fadeOut();
-                    },
-                    409: function () {
-                        $('#unregister409').css("display", "block");
-                        $('#unregister409').delay(3000).fadeOut();
-                    },
-                    500: function () {
-                        $('#unregister500').css("display", "block");
-                        $('#unregister500').delay(3000).fadeOut();
-                    }
+            url: "@Url.Action("Unregister", "Account")",
+            data: { custCode: code, password: pwd },
+            type: 'DELETE',
+            statusCode: {
+                200: function () {
+                    window.location.reload();
+                },
+                403: function () {
+                    $('#unregister403').css("display", "block");
+                    $('#unregister403').delay(3000).fadeOut();
+                },
+                404: function () {
+                    $('#unregister404').css("display", "block");
+                    $('#unregister404').delay(3000).fadeOut();
+                },
+                409: function () {
+                    $('#unregister409').css("display", "block");
+                    $('#unregister409').delay(3000).fadeOut();
+                },
+                500: function () {
+                    $('#unregister500').css("display", "block");
+                    $('#unregister500').delay(3000).fadeOut();
                 }
-            });
+            }
+        });
     }
 
     $( document ).ready(function() {

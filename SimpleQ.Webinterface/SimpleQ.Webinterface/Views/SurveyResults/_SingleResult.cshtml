@@ -1,6 +1,9 @@
 ﻿@using SimpleQ.Webinterface.Properties;
+@using System.Resources;
 @model List<SimpleQ.Webinterface.Models.ViewModels.SingleResultModel>
-
+@{
+    ResourceManager rm = Resources.ResourceManager;
+}
 
 <div class="row mr-0 ml-0">
     <div class="col-1">
@@ -27,7 +30,7 @@
                 dropBoxValues.Add("listing", Resources.listing);
                 dropBoxValues.Add("polarArea", Resources.polarArea);
             }
-            <label for="chart1select">@Resources.diagram@Resources.typeSmall @Resources.left</label>
+            <label for="chart1select">@Resources.DiagramTypeLeft</label>
 
             <div class="row mr-0 ml-0">
                 <div class="col-8 pr-0">
@@ -59,7 +62,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="chart2SelectSingle">@Resources.diagram@Resources.typeSmall @Resources.right</label>
+            <label for="chart2SelectSingle">@Resources.DiagramTypeRight</label>
             <div class="row mr-0 ml-0">
                 <div class="col-8 pr-0">
                     <select class="form-control" id="chart2SelectSingle" onchange="changeChartSingle('chart2SelectSingle','chart2Col','chart2')">
@@ -87,7 +90,7 @@
                 </div>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 
 <script>
@@ -103,9 +106,23 @@
                 @:freeText = false;
                 foreach (KeyValuePair<string, int> kvp in Model[i].Votes)
                 {
+                    string str;
+                    try
+                    {
+                        str = rm.GetString(kvp.Key);
+                    }
+                    catch (MissingManifestResourceException)
+                    {
+                        str = kvp.Key;
+                    }
+
+                    if(string.IsNullOrEmpty(str))
+                    {
+                        str = kvp.Key;
+                    }
 
                 @:dicts[@i].dict.push({
-                    @:key: "@kvp.Key"
+                    @:key: "@Html.Raw(str)"
                 @:,
                     @:value: "@kvp.Value"
                 @:});

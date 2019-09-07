@@ -112,6 +112,8 @@ namespace SimpleQ.Webinterface.Controllers
 
                     if (string.IsNullOrWhiteSpace(req.InvitationSubject))
                         subject = BackendResources.GroupInvitationEmailSubject;
+                    else
+                        subject = req.InvitationSubject;
 
                     if (string.IsNullOrWhiteSpace(req.InvitationText))
                         body = BackendResources.GroupInvitationEmailMessage
@@ -124,7 +126,7 @@ namespace SimpleQ.Webinterface.Controllers
                     if (await Email.Send("invitation@simpleq.at", req.Emails.ToArray(), subject, body, true, new Attachment(new MemoryStream(b), contentType)))
                     {
                         logger.Debug($"Invitation e-mails sent successfully for: {CustCode}");
-                        return await Index();
+                        return RedirectToAction("Index", "GroupAdministration");
                     }
                     else
                     {

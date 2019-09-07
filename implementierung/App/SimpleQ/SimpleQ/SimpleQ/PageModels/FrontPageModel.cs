@@ -1,6 +1,7 @@
 ﻿using Akavache;
 using FreshMvvm;
 using MvvmHelpers;
+using SimpleQ.Logging;
 using SimpleQ.Models;
 using SimpleQ.PageModels.QuestionPageModels;
 using SimpleQ.PageModels.Services;
@@ -50,6 +51,7 @@ namespace SimpleQ.PageModels
         /// <param name="initData">The initialize data.</param>
         public override void Init(object initData)
         {
+            //Debug.WriteLine("Count of Questions in PublicQuestions: " + this.QuestionService.PublicQuestions);
             base.Init(initData);
         }
         #endregion
@@ -89,12 +91,12 @@ namespace SimpleQ.PageModels
             set
             {
                 selectedQuestion = value;
-                Debug.WriteLine(selectedQuestion);
+                //Debug.WriteLine(selectedQuestion);
                 OnPropertyChanged();
 
                 if (selectedQuestion != null)
                 {
-                    Debug.WriteLine(selectedQuestion.SurveyDesc);
+                    //Debug.WriteLine(selectedQuestion.SurveyDesc);
                     NavigateToQuestion();
                 }
             }
@@ -118,35 +120,69 @@ namespace SimpleQ.PageModels
         /// </summary>
         private void NavigateToQuestion()
         {
-            if (selectedQuestion.TypeDesc == SurveyType.YNQ)
+            if (selectedQuestion.TypeDesc == SurveyType.YesNoQuestion)
             {
-                CoreMethods.PushPageModel<YNQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<YesNoQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
-            else if (selectedQuestion.TypeDesc == SurveyType.TLQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.YesNoDontKnowQuestion)
             {
-                CoreMethods.PushPageModel<TLQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<YesNoDontKnowQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
-            else if (selectedQuestion.TypeDesc == SurveyType.OWQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.TrafficLightQuestion)
             {
-                CoreMethods.PushPageModel<OWQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<TrafficLightQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
-            else if (selectedQuestion.TypeDesc == SurveyType.GAQ)
+            else if (selectedQuestion.TypeDesc == SurveyType.OpenQuestion)
             {
-                CoreMethods.PushPageModel<GAQPageModel>(selectedQuestion);
+                CoreMethods.PushPageModel<OpenQuestionPageModel>(new List<object> { selectedQuestion, false });
             }
-            
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousUSQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousUSQuestionPageModel>(new List<object> { selectedQuestion, false });
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.DichotomousQuestion)
+            {
+                CoreMethods.PushPageModel<DichotomousQuestionPageModel>(new List<object> { selectedQuestion, false });
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousOSQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousOSQuestionPageModel>(new List<object> { selectedQuestion, false });
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousOMQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousOMQuestionPageModel>(new List<object> { selectedQuestion, false });
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.PolytomousUMQuestion)
+            {
+                CoreMethods.PushPageModel<PolytomousUMQuestionPageModel>(new List<object> { selectedQuestion, false });
+            }
+            else if (selectedQuestion.TypeDesc == SurveyType.LikertScale3Question 
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale4Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale5Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale6Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale7Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale8Question
+                || selectedQuestion.TypeDesc == SurveyType.LikertScale9Question)
+            {
+                CoreMethods.PushPageModel<LikertScaleQuestionPageModel>(new List<object> { selectedQuestion, false });
+            }
+
             SelectedQuestion = null;
         }
 
         private void DeleteCommandExecuted(object question)
         {
-            Debug.WriteLine("Delete Command Executed with object: " + question, "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Delete Command Executed with object: " + question);
+            //Debug.WriteLine("Delete Command Executed with object: " + question, "Info");
             questionService.RemoveQuestion((SurveyModel)question);
         }
 
         private async void RefreshCommandExecuted()
         {
-            Debug.WriteLine("Refresh Command Executed...", "Info");
+            //Debug.WriteLine("Refresh Command Executed...", "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("Refresh Command Executed.");
             await this.questionService.LoadDataFromCache();
             this.IsRefreshing = false;
         }

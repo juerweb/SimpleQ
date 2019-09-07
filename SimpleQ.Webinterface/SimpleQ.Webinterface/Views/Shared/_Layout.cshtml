@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="~/Content/SurveyResults.css" />
     <link rel="stylesheet" href="~/Content/SurveyCreation.css" />
     <link rel="stylesheet" href="~/Content/Site.css" />
-    <link rel="stylesheet" href="~/Content/Current.css"/>
+    <link rel="stylesheet" href="~/Content/Current.css" />
     <link rel="stylesheet" href="~/Content/GroupAdministration.css" />
     <link rel="stylesheet" href="~/Content/device-mockups/device-mockups.css" />
     <link rel="stylesheet" href="~/Scripts/texteditor/ui/trumbowyg.css"><!--Texteditor-->
@@ -39,6 +39,9 @@
 
 
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.js"></script>
+
+    <!--jQuery csv plugin-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-csv/0.71/jquery.csv-0.71.min.js"></script>
 
 
     <script src="@Url.Content("~/Scripts/Chart.js")"></script>
@@ -62,16 +65,18 @@
         var mainBG = "";
         var theme = "btn-dark-theme";
         var iconClass = "icon-white";
+        var headerColor = "headerDark";
 
         if (Request.Cookies["bgImg"] != null)
         {
-            if(Request.Cookies["bgImg"].Value == "sun")
+            if (Request.Cookies["bgImg"].Value == "sun")
             {
                 leftColBG = "background-image: url('/Content/Images/leftColBG.jpg');";
                 topBG = "background-image: url('/Content/Images/leftColBG.jpg');";
                 mainBG = "background-image: url('/Content/Images/mainBG.jpg')";
                 theme = "btn-light-theme";
                 iconClass = "icon-blue";
+                headerColor = "headerLight";
             }
         }
 
@@ -149,7 +154,7 @@
                 console.log("dark theme wird dark gsetzt");
             } else {
                 setCookie("darkTheme", false, 1000);
-            }        
+            }
         }
 
         function changeBG() {
@@ -192,6 +197,24 @@
             }
         }
 
+        function fadeErrorOut(elem) {
+            $(elem).delay(3500).fadeOut();
+        }
+
+        function changeBGSun() {
+            $("#rightCol").css("background-image", "url('/Content/Images/mainBGSun.jpg')");
+            $("#leftCol").css("background-image", "url('/Content/Images/leftColBGSun.jpg')");
+            $("#smallLeftCol").css("background-image", "url('/Content/Images/leftColBGSun.jpg')");
+            $("#topDiv").css("background-image", "url('/Content/Images/topBGSun.jpg')");
+        }
+
+        function changeBGCloud() {
+            $("#rightCol").css("background-image", "url('/Content/Images/mainBG.jpg')");
+            $("#leftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
+            $("#smallLeftCol").css("background-image", "url('/Content/Images/leftColBG.jpg')");
+            $("#topDiv").css("background-image", "url('/Content/Images/topBG.jpg')");
+        }
+
     </script>
 
 </head>
@@ -203,12 +226,7 @@
             </a>         
         </div>
         <div class="col-md-4 text-center d-flex justify-content-center align-items-center">
-            @*<div class="card" style="margin-top:auto; margin-bottom:auto">
-                    <div class="card-body p-1">
-                        <h1 class="m-0 black-stroke header">Überschrift</h1>
-                    </div>
-                </div>*@
-            <h1 class="black-stroke header"></h1>
+            <h1 class="black-stroke header @headerColor"></h1>
         </div>
         <div class="col-md-4 d-flex justify-content-end align-items-center">
             <!--<a class="btn btn-light border border-danger align-self-center">Logout</a>-->
@@ -315,7 +333,7 @@
                                         @*<img src="../../Content/Images/Icons/support.png" class="img-fluid navbar-img" />*@
                                     </span>
                                     <span class="col-9 align-self-center text-left p-0">
-                                        Laufende Befragungen
+                                        @Resources.CurrentSurveys
                                     </span>
                                 </span>
                             </a>
@@ -375,7 +393,7 @@
                         <li class="p-0 mt-2">
                             <span class="row mr-0 ml-0">
                                 <span class="col-9 align-self-center text-right p-0">
-                                    <a id="hideNavigationText" style="display:none">Navigation verkleinern</a>
+                                    <a id="hideNavigationText" style="display:none">@Resources.HideNavBar</a>
                                 </span>
                                 <span class="col-3 p-0 d-flex flex-row-reverse">
                                     <button class="btn btn-outline-light border-0 pb-0 @theme" id="hideNavbarBtn" onclick="hideNavbar()">
@@ -389,7 +407,7 @@
             </div>
 
             <div style="position:absolute; bottom:0px; width:260px;">
-                <a onclick="changeBG()">
+                <a onclick="changeBG()" style="cursor: pointer">
                     <i class="material-icons smallNavbarIcon navbar-icon pl-2 pb-2  @iconClass" style="font-size:37px; vertical-align: middle;">collections</i>
                 </a>
             </div>
@@ -450,7 +468,7 @@
             @if (ViewBag.emailConfirmed == false)
             {
                 <div class="alert alert-danger ml-4 mr-4 mt-2">
-                    <strong>Achtung!</strong> Bitte bestätigen Sie umgehend Ihre E-Mail Adresse.
+                    <strong>@Resources.Warning!</strong> @Resources.PleaseConfirmYourEmail.
                 </div>
             }
             @RenderBody()

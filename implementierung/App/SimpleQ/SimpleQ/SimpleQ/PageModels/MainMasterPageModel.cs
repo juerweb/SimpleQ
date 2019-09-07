@@ -1,9 +1,11 @@
 ﻿using FreshMvvm;
 using MvvmHelpers;
+using Newtonsoft.Json;
 using SimpleQ.Models;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Pages;
 using SimpleQ.Resources;
+using SimpleQ.Shared;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,35 +26,32 @@ namespace SimpleQ.PageModels
         #region Constructor(s)
         public MainMasterPageModel(): base()
         {
-            Debug.WriteLine("Constructor of MainMasterPageModel...", "Info");
+            //Debug.WriteLine("Constructor of MainMasterPageModel...", "Info");
             MenuItems = new ObservableCollection<MenuItemListModel>();
-            this.MenuItems.Add(new MenuItemListModel(ItemType.Categorie.ToString()));
+            this.MenuItems.Add(new MenuItemListModel(ItemType.Filter.ToString()));
             this.MenuItems.Add(new MenuItemListModel(ItemType.Navigation.ToString()));
 
             //Generate CodeValidationModel from Application Properties
-            Boolean isValidCodeAvailable = (bool)Application.Current.Properties["IsValidCodeAvailable"];
-            String companyName = (string)Application.Current.Properties["CompanyName"];
-            String departmentName = (string)Application.Current.Properties["DepartmentName"];
-            int registerCode = (int)Application.Current.Properties["RegisterCode"];
+            List<RegistrationDataModel> tmp = JsonConvert.DeserializeObject<List<RegistrationDataModel>>(Application.Current.Properties["registrations"].ToString());
 
-            this.CodeValidationModel = new CodeValidationModel(isValidCodeAvailable, companyName, departmentName, registerCode);
+            this.RegistrationData = tmp[0];
         }
         #endregion
 
         #region Fields
-        private CodeValidationModel codeValidationModel;
+        private RegistrationDataModel registrationData;
         private MenuItemModel selectedItem;
 
         private Dictionary<String, Page> _pages = new Dictionary<string, Page>();
         #endregion
 
         #region Properties + Getter/Setter Methods
-        public CodeValidationModel CodeValidationModel
+        public RegistrationDataModel RegistrationData
         {
-            get => codeValidationModel;
+            get => registrationData;
             set
             {
-                codeValidationModel = value;
+                registrationData = value;
                 OnPropertyChanged();
             }
         }
@@ -82,7 +81,7 @@ namespace SimpleQ.PageModels
         #region Methods
         protected override void CreateMenuPage(string menuPageTitle, string menuIcon = null)
         {
-            Debug.WriteLine("Create Menu Page...", "Info");
+            //Debug.WriteLine("Create Menu Page...", "Info");
 
             MainMasterPage mainMasterPage = new MainMasterPage();
             mainMasterPage.BindingContext = this;
@@ -106,7 +105,7 @@ namespace SimpleQ.PageModels
                 }
                 
             }*/
-            Debug.WriteLine("Add new Page");
+            //Debug.WriteLine("Add new Page");
 
             _pages.Add(title, navigationContainer);
 
@@ -145,7 +144,7 @@ namespace SimpleQ.PageModels
             if (selectedItem != null)
             {
 
-                Debug.WriteLine("Navigate to new page: " + selectedItem.Title, "Info");
+                //Debug.WriteLine("Navigate to new page: " + selectedItem.Title, "Info");
 
                 IsPresented = false;
 
@@ -170,7 +169,7 @@ namespace SimpleQ.PageModels
         {
             if (MenuItems[0].Count(mi => mi.Title == title) == 1)
             {
-                Debug.WriteLine("Set new catName to: " + title, "Info");
+                //Debug.WriteLine("Set new catName to: " + title, "Info");
 
                 this.SelectedItem = MenuItems[0].Where(mi => mi.Title == title).ToList()[0];
             }

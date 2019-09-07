@@ -250,8 +250,8 @@ Sincerely,&lt;br/&gt;
 Your SimpleQ team&lt;br/&gt;</value>
   </data>
   <data name="GroupInvitationEmailMessageCustom" xml:space="preserve">
-    <value>Your registration code: {RegCode}
-Message:
+    <value>Your registration code: {RegCode}&lt;br/&gt;&lt;br/&gt;
+Message:&lt;br/&gt;
 {CustomMessage}</value>
   </data>
   <data name="GroupInvitationEmailSubject" xml:space="preserve">

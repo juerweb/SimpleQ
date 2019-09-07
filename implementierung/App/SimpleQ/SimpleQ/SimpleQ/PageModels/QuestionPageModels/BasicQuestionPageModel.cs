@@ -12,6 +12,10 @@ using System.Text;
 using System.Reactive.Linq;
 using SimpleQ.Extensions;
 using Xamarin.Forms;
+using SimpleQ.Shared;
+using System.Linq;
+using System.Threading.Tasks;
+using SimpleQ.Logging;
 
 namespace SimpleQ.PageModels.QuestionPageModels
 {
@@ -50,14 +54,13 @@ namespace SimpleQ.PageModels.QuestionPageModels
         {
             if (initData != null)
             {
-                if (initData.GetType() == typeof(SurveyModel))
+                List<object> objects = (List<object>)initData;
+                this.Question = (SurveyModel)objects[0];
+                if (this.Question.TypeDesc == SurveyType.PolytomousOMQuestion || this.Question.TypeDesc == SurveyType.PolytomousOSQuestion)
                 {
-                    this.Question = (SurveyModel)initData;
+                    this.Question.GivenAnswers = this.Question.GivenAnswers.OrderBy(ga => ga.AnsText).ToList();
                 }
-                else if (initData.GetType() == typeof(Boolean))
-                {
-                    isItAStartQuestion = (Boolean)initData;
-                }
+                this.isItAStartQuestion = (Boolean)objects[1];
             }
 
             base.Init(initData);
@@ -75,6 +78,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
         private IQuestionService questionService;
 
         protected Boolean isItAStartQuestion;
+        private Boolean isRunning;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -90,8 +94,7 @@ namespace SimpleQ.PageModels.QuestionPageModels
             set
             {
                 question = value;
-
-                Debug.WriteLine("QuestionChanged: " + question, "Info");
+                //Debug.WriteLine("QuestionChanged: " + question, "Info");
                 OnPropertyChanged();
             }
         }
@@ -109,33 +112,79 @@ namespace SimpleQ.PageModels.QuestionPageModels
         #endregion
 
         #region Methods
-        protected async void QuestionAnswered(String answer)
+
+        public void QuestionAnswered(string answerText)
         {
-            Debug.WriteLine(String.Format("User answered the question with the id {0} with {1}...", Question.SurveyId, answer), "Info");
+            this.question.SurveyVote.ChosenAnswerOptions = this.question.GivenAnswers;
+            this.question.SurveyVote.VoteText = answerText;
+            QuestionAnswered();
+        }
 
-            this.question.AnsDesc = answer;
+        public void QuestionAnswered(AnswerOption answer)
+        {
+            this.question.SurveyVote.ChosenAnswerOptions.Add(answer);
+            QuestionAnswered();
+        }
 
+        public void QuestionAnswered(List<AnswerOption> answers)
+        {
+            this.question.SurveyVote.ChosenAnswerOptions = answers;
+            QuestionAnswered();
+        }
 
-            Debug.WriteLine("QS: " + this.questionService);
+        private async void QuestionAnswered()
+        {
+            Debug.WriteLine(String.Format("User answered the question with the id {0}...", Question.SurveyId), "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("User answered the question with the id " + Question.SurveyId);
+
+            //Debug.WriteLine("QS: " + this.questionService);
+            Boolean success;
             if (this.questionService == null)
             {
                 IQuestionService qs = FreshIOC.Container.Resolve<IQuestionService>();
-                qs.QuestionAnswered(this.Question);
+                success = await qs.QuestionAnswered(this.Question);
             }
             else
             {
-                this.questionService.QuestionAnswered(this.Question);
+                success = await this.questionService.QuestionAnswered(this.Question);
             }
 
+            Boolean ShowMessageAfterAnswering = false;
+            try
+            {
+                ShowMessageAfterAnswering = await BlobCache.UserAccount.GetObject<Boolean>("ShowMessageAfterAnswering");
+                if (ShowMessageAfterAnswering && success)
+                {
+                    if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS || Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.Android)
+                    {
+                        IToastService toastService = FreshIOC.Container.Resolve<IToastService>();
+                        toastService.LongMessage(AppResources.SuccessfulAnsweringQuestion);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                logger.Error("Exception thrown " + e.StackTrace);
+                //Debug.WriteLine("Exception thrown " + e.StackTrace, "Exception");
+            }
 
             try
             {
                 Boolean CloseAppAfterNotification = await BlobCache.UserAccount.GetObject<Boolean>("CloseAppAfterNotification");
+                //Debug.WriteLine("isItAStartQuestion: " + isItAStartQuestion, "Info");
+                logger.Info("Is it a start question? " + isItAStartQuestion);
+                //Debug.WriteLine("CloseAppAfterNotification: " + CloseAppAfterNotification, "Info");
                 if (CloseAppAfterNotification && isItAStartQuestion)
                 {
-                    Debug.WriteLine("Before Closer...", "Info");
+                    if (ShowMessageAfterAnswering)
+                    {
+                        await Task.Delay(int.Parse(AppResources.CloseInterval));
+                    }
+
+                    //Debug.WriteLine("Before Closer...", "Info");
                     ICloseApplication closer = DependencyService.Get<ICloseApplication>();
-                    Debug.WriteLine("Closer: " + closer, "Info");
+                    //Debug.WriteLine("Closer: " + closer, "Info");
                     closer?.CloseApplication();
                 }
                 else
