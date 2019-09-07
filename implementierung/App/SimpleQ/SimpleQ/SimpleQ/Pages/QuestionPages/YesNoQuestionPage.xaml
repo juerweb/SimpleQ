@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ext="clr-namespace:SimpleQ.Extensions"
+             x:Class="SimpleQ.Pages.QuestionPages.YesNoQuestionPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="{Binding Question.CatName, Mode=TwoWay}" Style="{DynamicResource CaptionStyle}" Margin="10,10,10,0"></Label>
+            <Label Text="{Binding Question.SurveyDesc, Mode=TwoWay}" Margin="10,5,10,0" FontAttributes="Bold"></Label>
+
+            <Grid Padding="10,0,10,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                    <ColumnDefinition Width="6*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Text="{ext:Translate Text=Yes}" Grid.Column="0" Command="{Binding YesCommand}"></Button>
+                <Button Text="{ext:Translate Text=No}" Grid.Column="1" Command="{Binding NoCommand}"></Button>
+            </Grid>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

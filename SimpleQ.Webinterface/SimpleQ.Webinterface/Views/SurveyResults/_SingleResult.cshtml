@@ -1,6 +1,9 @@
 ﻿@using SimpleQ.Webinterface.Properties;
+@using System.Resources;
 @model List<SimpleQ.Webinterface.Models.ViewModels.SingleResultModel>
-
+@{
+    ResourceManager rm = Resources.ResourceManager;
+}
 
 <div class="row mr-0 ml-0">
     <div class="col-1">
@@ -27,10 +30,10 @@
                 dropBoxValues.Add("listing", Resources.listing);
                 dropBoxValues.Add("polarArea", Resources.polarArea);
             }
-            <label for="chart1select">@Resources.diagram@Resources.typeSmall @Resources.left</label>
+            <label for="chart1select">@Resources.DiagramTypeLeft</label>
 
             <div class="row mr-0 ml-0">
-                <div class="col-10 pr-0">
+                <div class="col-8 pr-0">
                     <select class="form-control" id="chart1SelectSingle" onchange="changeChartSingle('chart1SelectSingle', 'chart1Col', 'chart1');">
                         @{
                             foreach (KeyValuePair<string, string> elem in dropBoxValues)
@@ -48,6 +51,9 @@
 
                     </select>
                 </div>
+                <div class="col-2 pl-0 pr-0">
+                    <button class="btn btn-light btn-block border pb-0" onclick="exportChart('single')"><i class="material-icons">cloud_download</i></button>
+                </div>
                 <div class="col-2 pl-0">
                     <button class="btn btn-light btn-block border pb-0" onclick="zoomChart('chart1SelectSingle')"><i class="material-icons">&#xe56b;</i></button>
                 </div>
@@ -56,9 +62,9 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="chart2SelectSingle">@Resources.diagram@Resources.typeSmall @Resources.right</label>
+            <label for="chart2SelectSingle">@Resources.DiagramTypeRight</label>
             <div class="row mr-0 ml-0">
-                <div class="col-10 pr-0">
+                <div class="col-8 pr-0">
                     <select class="form-control" id="chart2SelectSingle" onchange="changeChartSingle('chart2SelectSingle','chart2Col','chart2')">
                         @{
                             foreach (KeyValuePair<string, string> elem in dropBoxValues)
@@ -75,6 +81,9 @@
                         }
 
                     </select>
+                </div>
+                <div class="col-2 pl-0 pr-0">
+                    <button class="btn btn-light btn-block border pb-0" onclick="exportChart('single')"><i class="material-icons">cloud_download</i></button>
                 </div>
                 <div class="col-2 pl-0">
                     <button class="btn btn-light btn-block border pb-0" onclick="zoomChart('chart2SelectSingle')"><i class="material-icons">&#xe56b;</i></button>
@@ -97,9 +106,23 @@
                 @:freeText = false;
                 foreach (KeyValuePair<string, int> kvp in Model[i].Votes)
                 {
+                    string str;
+                    try
+                    {
+                        str = rm.GetString(kvp.Key);
+                    }
+                    catch (MissingManifestResourceException)
+                    {
+                        str = kvp.Key;
+                    }
+
+                    if(string.IsNullOrEmpty(str))
+                    {
+                        str = kvp.Key;
+                    }
 
                 @:dicts[@i].dict.push({
-                    @:key: "@kvp.Key"
+                    @:key: "@Html.Raw(str)"
                 @:,
                     @:value: "@kvp.Value"
                 @:});

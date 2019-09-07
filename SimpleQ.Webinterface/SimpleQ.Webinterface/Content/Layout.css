@@ -48,3 +48,140 @@
     border-style: solid;
     border-radius: 4px!important;
 }
+
+.font-size-responsive {
+    font-size: 1vw;
+}
+
+#topDivMobile {
+    display:none;
+}
+
+@media screen and (max-width: 767px) {
+    #smallLeftCol{
+        display:none;
+    }
+    #leftCol {
+        display: none;
+    }
+    #rightCol{
+        margin-top: 200px;
+    }
+
+    #navbarMobile{
+        display:block;
+    }
+
+    #topDivMobile{
+        display:block;
+    }
+
+    #topDiv{
+        display:none;
+    }
+}
+
+#leftCol {
+    height: 90vh;
+    width: 260px;
+    z-index: 1;
+    top: 100px;
+    left: 0;
+    background-color: rgb(29, 53, 71);
+    color: white;
+    /*background-image: url("Images/leftColBG.jpg");*/
+}
+
+
+
+#smallLeftCol {
+    width: 80px;
+    z-index: 1;
+    top: 100px;
+    left: 0;
+    background-color: rgb(29, 53, 71);
+    color: white;
+    /*background-image: url("Images/leftColBG.jpg");*/
+}
+
+#topDiv {
+    height: 10vh;
+    /*background-color: rgb(43, 160, 253);*/
+    background-color: rgb(29, 53, 71);
+    color: white;
+    /*background-image: url("Images/topBG.jpg");*/
+}
+
+
+#rightCol {
+    height: 90vh;
+    margin-left: 260px;
+    overflow-y: auto;
+
+    /*background-image: url("Images/mainBG.jpg");*/
+}
+
+.btn-dark-theme:hover {
+    background-color: rgb(24, 104, 165);
+    color: white !important;
+    /*background-color:transparent!important;*/
+}
+
+.btn-light-theme {
+    color: black;
+}
+
+.icon-blue {
+    color: rgb(0,109,204);
+}
+
+.icon-white{
+    color:white;
+}
+
+.list-group-item{
+    background-color: transparent;
+}
+
+#hideNavbarBtn {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    border-top-right-radius: unset;
+    border-bottom-right-radius: unset;
+    border-right: none;
+}
+
+#showNavbarBtn {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    border-top-left-radius: unset;
+    border-bottom-left-radius: unset;
+    border-left: none;
+}
+
+.headerDark {
+    color:white;
+}
+.headerLight {
+    color: rgb(0,109,204);
+}
+
+#hideNavigationText{
+    font-size: small;
+}
+
+.smallNavbarIcon:hover {
+    text-shadow:2px 2px black;
+}
+
+
+.lightRedBackground {
+    background-color: rgb(255, 130, 130);
+}
+
+.border-radius-0 {
+    border-top-left-radius: 0px !important;
+    border-top-right-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}

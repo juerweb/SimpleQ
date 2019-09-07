@@ -173,7 +173,7 @@
     <value>Spinnennetzdiagramm</value>
   </data>
   <data name="listing" xml:space="preserve">
-    <value>Auflistung (absolut,%)</value>
+    <value>Auflistung (absolut, %)</value>
   </data>
   <data name="answer" xml:space="preserve">
     <value>Antwort</value>
@@ -191,25 +191,25 @@
     <value>Dichotom</value>
   </data>
   <data name="LikertSkale3" xml:space="preserve">
-    <value>Likertskala 3</value>
+    <value>Likertskala (3 Abstufungen)</value>
   </data>
   <data name="LikertSkale4" xml:space="preserve">
-    <value>Likertskala 4</value>
+    <value>Likertskala (4 Abstufungen)</value>
   </data>
   <data name="LikertSkale5" xml:space="preserve">
-    <value>Likertskala 5</value>
+    <value>Likertskala (5 Abstufungen)</value>
   </data>
   <data name="LikertSkale6" xml:space="preserve">
-    <value>Likertskala 6</value>
+    <value>Likertskala (6 Abstufungen)</value>
   </data>
   <data name="LikertSkale7" xml:space="preserve">
-    <value>Likertskala 7</value>
+    <value>Likertskala (7 Abstufungen)</value>
   </data>
   <data name="LikertSkale8" xml:space="preserve">
-    <value>Likertskala 8</value>
+    <value>Likertskala (8 Abstufungen)</value>
   </data>
   <data name="LikertSkale9" xml:space="preserve">
-    <value>Likertskala 9</value>
+    <value>Likertskala (9 Abstufungen)</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>Offene Antwort (Textantwort)</value>
@@ -227,13 +227,13 @@
     <value>Viele Antwortmöglichkeiten, eine Auswahl (ungeordnet)</value>
   </data>
   <data name="TrafficLight" xml:space="preserve">
-    <value>Ampelsystem(rot,gelb,grün)</value>
+    <value>Ampelsystem (rot, gelb, grün)</value>
   </data>
   <data name="YesNo" xml:space="preserve">
     <value>Ja/Nein</value>
   </data>
   <data name="YesNoDontKnow" xml:space="preserve">
-    <value>Ja/Nein/Weis nicht</value>
+    <value>Ja/Nein/Weiß nicht</value>
   </data>
   <data name="add" xml:space="preserve">
     <value>hinzufügen</value>
@@ -242,13 +242,13 @@
     <value>Kategorie hinzufügen</value>
   </data>
   <data name="newCategoryName" xml:space="preserve">
-    <value>Kategoriebezeichnung ...</value>
+    <value>Kategoriebezeichnung</value>
   </data>
   <data name="addAnswer" xml:space="preserve">
-    <value>Antwort hinzufügen..</value>
+    <value>Antwort hinzufügen</value>
   </data>
   <data name="invalidInput" xml:space="preserve">
-    <value>Ungültige Eingabe!</value>
+    <value>Ungültige Eingabe</value>
   </data>
   <data name="surveyTemplateHeader" xml:space="preserve">
     <value>Befragungstemplate (bisherige Befragungen)</value>
@@ -257,13 +257,13 @@
     <value>Anzahl der zu befragenden Personen</value>
   </data>
   <data name="badAskGroupCount" xml:space="preserve">
-    <value>für eine gute Auswertung wäre eine größere Gruppe von Nöten</value>
+    <value>Für aussagekräftige Resultate wäre eine höhere Gruppengröße vonnöten</value>
   </data>
   <data name="goodAskGroupCount" xml:space="preserve">
-    <value>gute Größe für eine Sinnvolle Auswertung</value>
+    <value>Angebrachte Gruppengröße für eine sinnvolle Auswertung</value>
   </data>
   <data name="middleAskGroupCount" xml:space="preserve">
-    <value>Anzahl der Befragten ist ok, könnte aber größer sein</value>
+    <value>Gruppengröße in Ordnung</value>
   </data>
   <data name="SaveAsTemplate" xml:space="preserve">
     <value>als Template speichern</value>
@@ -278,22 +278,22 @@
     <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
   </data>
   <data name="groupAlreadyExists" xml:space="preserve">
-    <value>Es existiert bereits eine Kategorie mit diesem Namen!</value>
+    <value>Es existiert bereits eine Kategorie mit diesem Namen</value>
   </data>
   <data name="TemplateDescription" xml:space="preserve">
-    <value>Beim Anhaken, wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
+    <value>Beim Anhaken wird die Befragung als Template gespeichert, sodass man sie ohne alles neu einzugeben wiederholen kann.</value>
   </data>
   <data name="noTemplate" xml:space="preserve">
-    <value>kein Template</value>
+    <value>Kein Template</value>
   </data>
   <data name="cancel" xml:space="preserve">
-    <value>abbrechen</value>
+    <value>Abbrechen</value>
   </data>
   <data name="content" xml:space="preserve">
     <value>Inhalt</value>
   </data>
   <data name="downloadAppHere" xml:space="preserve">
-    <value>Die App kann man hier downloaden</value>
+    <value>Die App kann hier heruntergeladen werden</value>
   </data>
   <data name="invitationToSimpleQ" xml:space="preserve">
     <value>Einladung zu SimpleQ</value>
@@ -315,7 +315,7 @@
     <value>Email-Adresse hinzufügen</value>
   </data>
   <data name="invalidMailAddress" xml:space="preserve">
-    <value>Die Email-Adresse ist ungültig!</value>
+    <value>Die Email-Adresse ist ungültig</value>
   </data>
   <data name="addressData" xml:space="preserve">
     <value>Adressdaten</value>
@@ -426,16 +426,16 @@
     <value>Schließen</value>
   </data>
   <data name="defineGroupsModalInfo" xml:space="preserve">
-    <value>Sie haben noch keine Gruppen, gehen Sie zur Gruppenverwaltung und erstellen Sie Ihre erste.</value>
+    <value>Sie haben noch keine Gruppen. Bitte erstellen Sie eine Gruppe in der Gruppenverwaltung.</value>
   </data>
   <data name="evaluate" xml:space="preserve">
     <value>Auswerten</value>
   </data>
   <data name="periodicQuestionTooltip" xml:space="preserve">
-    <value>Klicken Sie hier, wenn Sie eine frage automatisiert mehrere male hintereinander stellen wollen</value>
+    <value>Klicken Sie hier, wenn Sie eine Frage automatisch mehrere Male hintereinander stellen wollen</value>
   </data>
   <data name="pleaseDefineGroupsFirst" xml:space="preserve">
-    <value>Sie müssen erst eine Gruppe erstellen!</value>
+    <value>Bitte erstellen Sie zuerst eine Gruppe</value>
   </data>
   <data name="singleButtonTooltip" xml:space="preserve">
     <value>Klicken Sie hier, um sich die Ergebnisse je Befragung einzeln anzusehen</value>
@@ -474,12 +474,246 @@
     <value>Wochen</value>
   </data>
   <data name="youCanNowLogin" xml:space="preserve">
-    <value>Sie können sich jetzt einloggen</value>
+    <value>Sie können sich jetzt einloggen.</value>
   </data>
   <data name="answers" xml:space="preserve">
     <value>Antwortmöglichkeiten</value>
   </data>
   <data name="answersButtonTooltip" xml:space="preserve">
-    <value>Klicken Sie hier, um Antwortmöglichkeiten hinzuzufügen.</value>
+    <value>Klicken Sie hier um Antwortmöglichkeiten hinzuzufügen.</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Aktionen</value>
+  </data>
+  <data name="CityInvalid" xml:space="preserve">
+    <value>Ort ungültig</value>
+  </data>
+  <data name="ConfirmationLinkSentTo" xml:space="preserve">
+    <value>Email-Bestätigungslink gesendet an:</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Erstellen</value>
+  </data>
+  <data name="CreateNewGroup" xml:space="preserve">
+    <value>Neue Gruppe erstellen</value>
+  </data>
+  <data name="EmailAddressInvalid" xml:space="preserve">
+    <value>Die angegebene Email-Adresse ist ungültig</value>
+  </data>
+  <data name="EmailSendingFailed" xml:space="preserve">
+    <value>Email konnte derzeit nicht gesendet werden\nBitte später erneut versuchen</value>
+  </data>
+  <data name="EmailSent" xml:space="preserve">
+    <value>Email gesendet</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Gruppenname</value>
+  </data>
+  <data name="GroupSelection" xml:space="preserve">
+    <value>Gruppenauswahl</value>
+  </data>
+  <data name="InvalidCustCode" xml:space="preserve">
+    <value>Ungültiger Kunden-Code</value>
+  </data>
+  <data name="InvalidLink" xml:space="preserve">
+    <value>Ungültiger Link</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>Passwort ungültig</value>
+  </data>
+  <data name="NameMustNotBeEmpty" xml:space="preserve">
+    <value>Der Kundenname darf nicht leer sein</value>
+  </data>
+  <data name="NewGroup" xml:space="preserve">
+    <value>Neue Gruppe</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Passwort geändert</value>
+  </data>
+  <data name="PasswordMedium" xml:space="preserve">
+    <value>Passwort mittel</value>
+  </data>
+  <data name="PasswordsDontMatch" xml:space="preserve">
+    <value>Die eingegebenen Passwörter stimmen nicht überein</value>
+  </data>
+  <data name="PasswordStrong" xml:space="preserve">
+    <value>Passwort stark</value>
+  </data>
+  <data name="PasswordWeak" xml:space="preserve">
+    <value>Passwort schwach</value>
+  </data>
+  <data name="Period" xml:space="preserve">
+    <value>Periodendauer</value>
+  </data>
+  <data name="PleaseConfirmBefore" xml:space="preserve">
+    <value>Bitte bestätigen Sie Ihre Email-Adresse bevor Sie sich einloggen.</value>
+  </data>
+  <data name="PlzInvalid" xml:space="preserve">
+    <value>Postleitzahl ungültig</value>
+  </data>
+  <data name="RegisteredSuccessfully" xml:space="preserve">
+    <value>Erfolgreich registriert</value>
+  </data>
+  <data name="SavePassword" xml:space="preserve">
+    <value>Passwort speichern</value>
+  </data>
+  <data name="SelectedGroup" xml:space="preserve">
+    <value>Gewählte Gruppe:</value>
+  </data>
+  <data name="StreetInvalid" xml:space="preserve">
+    <value>Straße oder Hausnr. ungültig</value>
+  </data>
+  <data name="ToLogin" xml:space="preserve">
+    <value>Zum Login</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Einheit</value>
+  </data>
+  <data name="YourCustCode" xml:space="preserve">
+    <value>Ihr Kunden-Code:</value>
+  </data>
+  <data name="DontKnow" xml:space="preserve">
+    <value>Weiß nicht</value>
+  </data>
+  <data name="FreeText" xml:space="preserve">
+    <value>Freitext</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Grün</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>Nein</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Rot</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Gelb</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Gruppe löschen</value>
+  </data>
+  <data name="DiagramTypeLeft" xml:space="preserve">
+    <value>Diagrammtyp links</value>
+  </data>
+  <data name="DiagramTypeRight" xml:space="preserve">
+    <value>Diagrammtyp rechts</value>
+  </data>
+  <data name="InviteMembers" xml:space="preserve">
+    <value>Mitglieder einladen</value>
+  </data>
+  <data name="PeriodicSurvey" xml:space="preserve">
+    <value>Periodische Befragung...</value>
+  </data>
+  <data name="PleaseConfirmYourEmail" xml:space="preserve">
+    <value>Bitte bestätigen Sie umgehend Ihre Email-Adresse </value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Achtung</value>
+  </data>
+  <data name="resetPassword" xml:space="preserve">
+    <value>Passwort zurücksetzen</value>
+  </data>
+  <data name="minimizeNav" xml:space="preserve">
+    <value>Navigation verkleinern</value>
+  </data>
+  <data name="AlreadyStarted" xml:space="preserve">
+    <value>Bereits gestartet</value>
+  </data>
+  <data name="AnswerAlreadyExists" xml:space="preserve">
+    <value>Die Antwort existiert bereits</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Sind Sie sicher?</value>
+  </data>
+  <data name="ColorCoding" xml:space="preserve">
+    <value>Farblegende</value>
+  </data>
+  <data name="CurrentAndUpcomingSurveys" xml:space="preserve">
+    <value>Aktuelle und bevorstehende Befragungen</value>
+  </data>
+  <data name="CurrentSurveys" xml:space="preserve">
+    <value>Aktuelle Befragungen</value>
+  </data>
+  <data name="DefineYourFirstGroup" xml:space="preserve">
+    <value>Erstellen Sie Ihre erste Gruppe</value>
+  </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>Die Email-Adresse existiert bereits</value>
+  </data>
+  <data name="EmptyResultsExport" xml:space="preserve">
+    <value>Leere Ergebnisse können nicht exportiert werden</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>Enddatum</value>
+  </data>
+  <data name="ExportResults" xml:space="preserve">
+    <value>Ergebnisse exportieren</value>
+  </data>
+  <data name="HideNavBar" xml:space="preserve">
+    <value>Collapse navigation</value>
+  </data>
+  <data name="NotImplementedYet" xml:space="preserve">
+    <value>Diese Funktion ist noch nicht verfügbar. Bitte warten Sie ein paar Wochen.</value>
+  </data>
+  <data name="NotYetStarted" xml:space="preserve">
+    <value>Noch nicht gestartet</value>
+  </data>
+  <data name="OriginalDate" xml:space="preserve">
+    <value>Ursprüngliches Datum</value>
+  </data>
+  <data name="OtherQuestion" xml:space="preserve">
+    <value>Sonstige Frage</value>
+  </data>
+  <data name="PaymentQuestion" xml:space="preserve">
+    <value>Frage zur Bezahlung</value>
+  </data>
+  <data name="PeriodicSurveys" xml:space="preserve">
+    <value>Periodische Befragungen</value>
+  </data>
+  <data name="ProductQuestion" xml:space="preserve">
+    <value>Frage zum Produkt</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Email senden</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Startdatum</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Summe</value>
+  </data>
+  <data name="SurveyCancelledSuccessfully" xml:space="preserve">
+    <value>Befragung erfolgreich abgebrochen</value>
+  </data>
+  <data name="billingPeriodInMonthsDesc" xml:space="preserve">
+    <value>Zeitraum zwischen dem Erhalt von Rechnungen</value>
+  </data>
+  <data name="dataRetentionPeriodInMonthsDesc" xml:space="preserve">
+    <value>Zeitraum, wie lange Befragungsergebnisse archiviert werden</value>
+  </data>
+  <data name="preferredBillingDayDesc" xml:space="preserve">
+    <value>Tag des Monats an dem die Rechnung zugestellt wird</value>
+  </data>
+  <data name="responsiblePersonFirstName" xml:space="preserve">
+    <value>Verantwortliche Person - Vorname</value>
+  </data>
+  <data name="responsiblePersonLastName" xml:space="preserve">
+    <value>Verantwortliche Person - Nachname</value>
+  </data>
+  <data name="downloadTemplate" xml:space="preserve">
+    <value>Template-File herunterladen</value>
+  </data>
+  <data name="importAddressFile" xml:space="preserve">
+    <value>Adressdatei importieren</value>
+  </data>
+  <data name="importAddressFileInfo" xml:space="preserve">
+    <value>Laden Sie zuerst das Template-File herunter. Nachdem Sie es ausgefüllt haben, laden Sie es wieder hoch.</value>
+  </data>
+  <data name="uploadChosenFile" xml:space="preserve">
+    <value>ausgewähltes File hochladen</value>
   </data>
 </root>

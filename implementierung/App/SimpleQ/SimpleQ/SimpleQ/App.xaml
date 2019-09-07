@@ -6,8 +6,8 @@
         <ResourceDictionary>
             <!--Default Colors for the whole App-->
             <Color x:Key="launcher_background">#FFFFFF</Color>
-            <Color x:Key="colorPrimary">#2196F3</Color>
-            <Color x:Key="colorPrimaryDark">#1976D2</Color>
+            <Color x:Key="colorPrimary">#006bc9</Color>
+            <Color x:Key="colorPrimaryDark">#004197</Color>
             <Color x:Key="colorAccent">#FF4081</Color>
             <Color x:Key="colorBorder">#000000</Color>
             <Color x:Key="colorWarning">#ff4444</Color>

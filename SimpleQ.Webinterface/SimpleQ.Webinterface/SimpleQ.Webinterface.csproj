@@ -98,6 +98,34 @@
     <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.Owin.Security.Cookies.4.0.0\lib\net451\Microsoft.Owin.Security.Cookies.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfoExtended, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.ConnectionInfoExtended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.Smo.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlClrProvider, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.SqlClrProvider.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SqlEnum, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Unofficial.Microsoft.SQLServer.SMO.2014.12.0.2000.8\lib\Microsoft.SqlServer.SqlEnum.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MigraDoc.DocumentObjectModel, Version=1.32.4334.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\PDFsharp-MigraDoc-GDI.1.32.4334.0\lib\net20\MigraDoc.DocumentObjectModel.dll</HintPath>
     </Reference>
@@ -125,6 +153,9 @@
     <Reference Include="QRCoder, Version=1.3.4.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\QRCoder.1.3.4\lib\net40\QRCoder.dll</HintPath>
     </Reference>
+    <Reference Include="Quartz, Version=3.0.7.0, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Quartz.3.0.7\lib\net452\Quartz.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
     </Reference>
@@ -141,6 +172,7 @@
     <Reference Include="System.Net.Http.Formatting, Version=5.2.6.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.6\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -202,11 +234,17 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Attributes\CAuthorizeAttribute.cs" />
+    <Compile Include="Attributes\GlobalizationAttribute.cs" />
     <Compile Include="Attributes\RequireAuthAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\CurrentController.cs" />
     <Compile Include="Extensions\Email.cs" />
+    <Compile Include="Extensions\Helper.cs" />
     <Compile Include="Extensions\Pdf.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="Models\AnswerOption.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -260,12 +298,22 @@
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SimpleQModel.Functions.Context.cs" />
+    <Compile Include="Models\sp_helpdiagramdefinition_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_helpdiagrams_Result.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Survey.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SurveyCategory.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModels\CurrentModel.cs" />
     <Compile Include="Models\ViewModels\ErrorModel.cs" />
     <Compile Include="Models\Vote.cs">
       <DependentUpon>Model1.tt</DependentUpon>
@@ -295,11 +343,7 @@
     <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\SurveyCreationController.cs" />
     <Compile Include="Controllers\SurveyResultsController.cs" />
-    <Compile Include="Extensions\Literal.cs" />
     <Compile Include="Extensions\Http.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
     <Compile Include="Models\Mobile\RegistrationData.cs" />
     <Compile Include="Models\Mobile\SurveyData.cs" />
     <Compile Include="Models\Mobile\SurveyVote.cs" />
@@ -313,6 +357,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\ResourcesN.de.Designer.cs" />
     <Compile Include="Properties\ResourcesN.Designer.cs" />
+    <Compile Include="Schedulers\BackupJob.cs" />
+    <Compile Include="Schedulers\BillJob.cs" />
+    <Compile Include="Schedulers\ExceededSurveyDataJob.cs" />
+    <Compile Include="Schedulers\JobScheduler.cs" />
+    <Compile Include="Schedulers\KeepAlive.cs" />
+    <Compile Include="Schedulers\PeriodicSurveyJob.cs" />
+    <Compile Include="Schedulers\SurveyJob.cs" />
+    <Compile Include="Schedulers\SurveyQueue.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -321,7 +373,103 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Current.css" />
+    <Content Include="Content\device-mockups\apple_watch\edition\gold.png" />
+    <Content Include="Content\device-mockups\apple_watch\edition\rose.png" />
+    <Content Include="Content\device-mockups\apple_watch\sport\black.png" />
+    <Content Include="Content\device-mockups\apple_watch\sport\blue.png" />
+    <Content Include="Content\device-mockups\apple_watch\sport\green.png" />
+    <Content Include="Content\device-mockups\apple_watch\sport\red.png" />
+    <Content Include="Content\device-mockups\apple_watch\sport\white.png" />
+    <Content Include="Content\device-mockups\apple_watch\watch\metal.png" />
+    <Content Include="Content\device-mockups\apple_watch\watch\steel.png" />
+    <Content Include="Content\device-mockups\device-mockups.css" />
+    <Content Include="Content\device-mockups\device-mockups.min.css" />
+    <Content Include="Content\device-mockups\device-mockups2.css" />
+    <Content Include="Content\device-mockups\device-mockups2.min.css" />
+    <Content Include="Content\device-mockups\galaxy_s3\s3_land_black.png" />
+    <Content Include="Content\device-mockups\galaxy_s3\s3_land_white.png" />
+    <Content Include="Content\device-mockups\galaxy_s3\s3_port_black.png" />
+    <Content Include="Content\device-mockups\galaxy_s3\s3_port_white.png" />
+    <Content Include="Content\device-mockups\galaxy_s5\galaxy_s5_land_black.png" />
+    <Content Include="Content\device-mockups\galaxy_s5\galaxy_s5_land_gold.png" />
+    <Content Include="Content\device-mockups\galaxy_s5\galaxy_s5_land_white.png" />
+    <Content Include="Content\device-mockups\galaxy_s5\galaxy_s5_port_black.png" />
+    <Content Include="Content\device-mockups\galaxy_s5\galaxy_s5_port_gold.png" />
+    <Content Include="Content\device-mockups\galaxy_s5\galaxy_s5_port_white.png" />
+    <Content Include="Content\device-mockups\galaxy_tab4\galaxy_tab4_land_black.png" />
+    <Content Include="Content\device-mockups\galaxy_tab4\galaxy_tab4_land_white.png" />
+    <Content Include="Content\device-mockups\galaxy_tab4_small\galaxy_tab4_black_small.png" />
+    <Content Include="Content\device-mockups\galaxy_tab4_small\galaxy_tab4_white_small.png" />
+    <Content Include="Content\device-mockups\imac\imac.png" />
+    <Content Include="Content\device-mockups\ipad\ipad_land_black.png" />
+    <Content Include="Content\device-mockups\ipad\ipad_land_white.png" />
+    <Content Include="Content\device-mockups\ipad\ipad_port_black.png" />
+    <Content Include="Content\device-mockups\ipad\ipad_port_white.png" />
+    <Content Include="Content\device-mockups\ipad_air\ipad_air_gray_land.png" />
+    <Content Include="Content\device-mockups\ipad_air\ipad_air_gray_port.png" />
+    <Content Include="Content\device-mockups\ipad_air\ipad_air_silver_land.png" />
+    <Content Include="Content\device-mockups\ipad_air\ipad_air_silver_port.png" />
+    <Content Include="Content\device-mockups\ipad_air_2\ipad_air_2_gold_land.png" />
+    <Content Include="Content\device-mockups\ipad_air_2\ipad_air_2_gold_port.png" />
+    <Content Include="Content\device-mockups\ipad_air_2\ipad_air_2_gray_land.png" />
+    <Content Include="Content\device-mockups\ipad_air_2\ipad_air_2_gray_port.png" />
+    <Content Include="Content\device-mockups\ipad_air_2\ipad_air_2_silver_land.png" />
+    <Content Include="Content\device-mockups\ipad_air_2\ipad_air_2_silver_port.png" />
+    <Content Include="Content\device-mockups\ipad_pro\ipad_pro_land_black.png" />
+    <Content Include="Content\device-mockups\ipad_pro\ipad_pro_land_gold.png" />
+    <Content Include="Content\device-mockups\ipad_pro\ipad_pro_land_silver.png" />
+    <Content Include="Content\device-mockups\ipad_pro\ipad_pro_port_black.png" />
+    <Content Include="Content\device-mockups\ipad_pro\ipad_pro_port_gold.png" />
+    <Content Include="Content\device-mockups\ipad_pro\ipad_pro_port_silver.png" />
+    <Content Include="Content\device-mockups\iphone5\iphone5_land_black.png" />
+    <Content Include="Content\device-mockups\iphone5\iphone5_land_white.png" />
+    <Content Include="Content\device-mockups\iphone5\iphone5_port_black.png" />
+    <Content Include="Content\device-mockups\iphone5\iphone5_port_white.png" />
+    <Content Include="Content\device-mockups\iphone_6\iphone_6_land_black.png" />
+    <Content Include="Content\device-mockups\iphone_6\iphone_6_land_gold.png" />
+    <Content Include="Content\device-mockups\iphone_6\iphone_6_land_white.png" />
+    <Content Include="Content\device-mockups\iphone_6\iphone_6_port_black.png" />
+    <Content Include="Content\device-mockups\iphone_6\iphone_6_port_gold.png" />
+    <Content Include="Content\device-mockups\iphone_6\iphone_6_port_white.png" />
+    <Content Include="Content\device-mockups\iphone_6_plus\iphone_6_plus_black_land.png" />
+    <Content Include="Content\device-mockups\iphone_6_plus\iphone_6_plus_black_port.png" />
+    <Content Include="Content\device-mockups\iphone_6_plus\iphone_6_plus_gold_land.png" />
+    <Content Include="Content\device-mockups\iphone_6_plus\iphone_6_plus_gold_port.png" />
+    <Content Include="Content\device-mockups\iphone_6_plus\iphone_6_plus_white_land.png" />
+    <Content Include="Content\device-mockups\iphone_6_plus\iphone_6_plus_white_port.png" />
+    <Content Include="Content\device-mockups\iphone_se\iphone_se_land_black.png" />
+    <Content Include="Content\device-mockups\iphone_se\iphone_se_land_gold.png" />
+    <Content Include="Content\device-mockups\iphone_se\iphone_se_land_rose.png" />
+    <Content Include="Content\device-mockups\iphone_se\iphone_se_land_white.png" />
+    <Content Include="Content\device-mockups\iphone_se\iphone_se_port_black.png" />
+    <Content Include="Content\device-mockups\iphone_se\iphone_se_port_gold.png" />
+    <Content Include="Content\device-mockups\iphone_se\iphone_se_port_rose.png" />
+    <Content Include="Content\device-mockups\iphone_se\iphone_se_port_white.png" />
+    <Content Include="Content\device-mockups\lumia920\lumia920_land.png" />
+    <Content Include="Content\device-mockups\lumia920\lumia920_port.png" />
+    <Content Include="Content\device-mockups\lumia_930\lumia_930_dark_land.png" />
+    <Content Include="Content\device-mockups\lumia_930\lumia_930_dark_port.png" />
+    <Content Include="Content\device-mockups\lumia_930\lumia_930_light_land.png" />
+    <Content Include="Content\device-mockups\lumia_930\lumia_930_light_port.png" />
+    <Content Include="Content\device-mockups\macbook\macbook.png" />
+    <Content Include="Content\device-mockups\macbook_2015\gold.png" />
+    <Content Include="Content\device-mockups\macbook_2015\grey.png" />
+    <Content Include="Content\device-mockups\macbook_2015\silver.png" />
+    <Content Include="Content\device-mockups\nexus7\nexus7_land.png" />
+    <Content Include="Content\device-mockups\nexus7\nexus7_port.png" />
+    <Content Include="Content\device-mockups\nexus_6\nexus_6_land.png" />
+    <Content Include="Content\device-mockups\nexus_6\nexus_6_port.png" />
+    <Content Include="Content\device-mockups\samsung_tv\samsung_tv.png" />
+    <Content Include="Content\device-mockups\surface\surface.png" />
     <Content Include="Content\GroupAdministration.css" />
+    <Content Include="Content\Images\Device\ampel.png" />
+    <Content Include="Content\Images\Device\dichotom.png" />
+    <Content Include="Content\Images\Device\header.png" />
+    <Content Include="Content\Images\Device\leer.png" />
+    <Content Include="Content\Images\Device\lik.png" />
+    <Content Include="Content\Images\Device\yes_no.png" />
+    <Content Include="Content\Images\Device\yes_no_maybe.png" />
     <Content Include="Content\Images\Icons\favicon.ico" />
     <Content Include="Content\Images\Icons\favicon.png" />
     <Content Include="Content\Images\Icons\groupAdministration.png" />
@@ -354,7 +502,6 @@
     <Content Include="Content\Login.css" />
     <Content Include="Content\SurveyCreation.css" />
     <Content Include="Content\SurveyResults.css" />
-    <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -376,6 +523,7 @@
     <Content Include="Content\bootstrap-reboot.min.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Global.asax" />
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model1.edmx</DependentUpon>
@@ -391,8 +539,11 @@
       <SubType>Designer</SubType>
     </Content>
     <EmbeddedResource Include="Properties\ResourcesN.de.resx" />
-    <EmbeddedResource Include="Properties\ResourcesN.resx" />
-    <EntityDeploy Include="Models\Model1.edmx">
+    <EmbeddedResource Include="Properties\ResourcesN.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ResourcesN.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EntityDeploy Include="Models\SimpleQModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model1.Designer.cs</LastGenOutput>
     </EntityDeploy>
@@ -592,9 +743,11 @@
     <Content Include="Scripts\texteditor\plugins\table\ui\sass\trumbowyg.table.scss" />
     <Content Include="Scripts\texteditor\ui\sass\trumbowyg.scss" />
     <Content Include="Scripts\qrious.js.map" />
+    <Content Include="Views\Current\Current.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Backups\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

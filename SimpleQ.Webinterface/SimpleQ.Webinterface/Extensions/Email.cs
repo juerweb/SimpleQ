@@ -3,26 +3,27 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace SimpleQ.Webinterface.Extensions
 {
     public static class Email
     {
-        private static Logger logger = LogManager.GetLogger(nameof(Email));
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public static bool Send(string from, string to, string subject, string body, bool isHtml = false, params Attachment[] attachments)
+        public static async Task<bool> Send(string from, string to, string subject, string body, bool isHtml = true, params Attachment[] attachments)
         {
-            return Send(from, new string[] { to }, subject, body, isHtml, attachments);
+            return await Send(from, new string[] { to }, subject, body, isHtml, attachments);
         }
 
-        public static bool Send(string from, string[] to, string subject, string body, bool isHtml = false, params Attachment[] attachments)
+        public static async Task<bool> Send(string from, string[] to, string subject, string body, bool isHtml = true, params Attachment[] attachments)
         {
             try
             {
                 logger.Debug($"Send e-mail started (From: {from}, To: {(to?.Count() > 0 ? to[0] : null)}, To.Count: {to?.Count()}, " +
                     $"Subject: {subject}, Body: {body}, " +
-                    $"IsHtml: {isHtml}, Attachments.Count: {attachments?.Count()}");
+                    $"IsHtml: {isHtml}, Attachments.Count: {attachments?.Count()})");
                 MailMessage msg = new MailMessage
                 {
                     From = new MailAddress(from),
@@ -39,7 +40,7 @@ namespace SimpleQ.Webinterface.Extensions
                     EnableSsl = true
                 };
 
-                client.Send(msg);
+                await client.SendMailAsync(msg);
                 logger.Debug("E-mail sent successfully");
 
                 return true;

@@ -34,7 +34,6 @@ namespace SimpleQ.Webinterface.Models
         public string Plz { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
-        public string LanguageCode { get; set; }
         public int DataStoragePeriod { get; set; }
         public int AccountingPeriod { get; set; }
         public System.DateTime AccountingDate { get; set; }
@@ -44,25 +43,18 @@ namespace SimpleQ.Webinterface.Models
         public string AuthToken { get; set; }
         public Nullable<System.DateTime> LastTokenGenerated { get; set; }
         public int Rebate { get; set; }
+        public bool Deactivated { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Bill> Bills { get; set; }
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual PaymentMethod PaymentMethod { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Department> Departments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<SurveyCategory> SurveyCategories { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<AnswerType> AnswerTypes { get; set; }
     }
 }

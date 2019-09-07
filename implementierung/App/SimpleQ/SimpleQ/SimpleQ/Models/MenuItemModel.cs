@@ -73,7 +73,7 @@ namespace SimpleQ.Models
     public enum ItemType
     {
         Navigation = 0,
-        Categorie = 1,
+        Filter = 1,
         Test = 2
     }
 }

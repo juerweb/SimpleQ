@@ -3,7 +3,9 @@ using SimpleQ.Webinterface.Attributes;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.Mobile;
 using System;
+using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace SimpleQ.Webinterface.Controllers
@@ -11,10 +13,10 @@ namespace SimpleQ.Webinterface.Controllers
     [RequireAuth]
     public class MobileController : ApiController
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         [HttpGet]
-        public IHttpActionResult Register(string regCode, string deviceId)
+        public async Task<IHttpActionResult> Register(string regCode, string deviceId)
         {
             try
             {
@@ -32,14 +34,14 @@ namespace SimpleQ.Webinterface.Controllers
                         string custCode = regCode.Substring(0, 6);
                         int depId = int.Parse(regCode.Substring(6));
 
-                        var cust = db.Customers.Where(c => c.CustCode == custCode).FirstOrDefault();
+                        var cust = await db.Customers.Where(c => c.CustCode == custCode).FirstOrDefaultAsync();
                         if (cust == null)
                         {
                             logger.Debug($"Mobile registration failed. Invalid RegCode. Customer not found {custCode}");
                             return NotFound();
                         }
 
-                        var dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).FirstOrDefault();
+                        var dep = await db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).FirstOrDefaultAsync();
                         if (dep == null)
                         {
                             logger.Debug($"Mobile registration failed. Invalid RegCode. Department not found {depId}");
@@ -50,10 +52,10 @@ namespace SimpleQ.Webinterface.Controllers
                         //db.People.Add(person);
                         //db.SaveChanges();
                         dep.People.Add(person);
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                         logger.Debug("Mobile registration successful");
 
-                        return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName, CustName = cust.CustName });
+                        return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName, CustName = cust.CustName, AuthToken = person.AuthToken });
                     }
                     catch (Exception ex) when (ex is FormatException || ex is ArgumentOutOfRangeException)
                     {
@@ -70,7 +72,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult JoinDepartment(string regCode, int persId)
+        public async Task<IHttpActionResult> JoinDepartment(string regCode, int persId)
         {
             try
             {
@@ -88,21 +90,21 @@ namespace SimpleQ.Webinterface.Controllers
                         string custCode = regCode.Substring(0, 6);
                         int depId = int.Parse(regCode.Substring(6));
 
-                        var cust = db.Customers.Where(c => c.CustCode == custCode).FirstOrDefault();
+                        var cust = await db.Customers.Where(c => c.CustCode == custCode).FirstOrDefaultAsync();
                         if (cust == null)
                         {
                             logger.Debug($"Joining failed. Invalid RegCode. Customer not found {custCode}");
                             return NotFound();
                         }
 
-                        var dep = db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).FirstOrDefault();
+                        var dep = await db.Departments.Where(d => d.DepId == depId && d.CustCode == custCode).FirstOrDefaultAsync();
                         if (dep == null)
                         {
                             logger.Debug($"Joining failed. Invalid RegCode. Department not found {depId}");
                             return NotFound();
                         }
 
-                        var person = db.People.Where(p => p.PersId == persId).FirstOrDefault();
+                        var person = await db.People.Where(p => p.PersId == persId).FirstOrDefaultAsync();
                         if (person == null)
                         {
                             logger.Debug($"Joining failed. Person not found {persId}");
@@ -110,7 +112,7 @@ namespace SimpleQ.Webinterface.Controllers
                         }
 
                         dep.People.Add(person);
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                         logger.Debug("Joined successfully");
 
                         return Ok(new RegistrationData { CustCode = custCode, PersId = person.PersId, DepId = depId, DepName = dep.DepName, CustName = cust.CustName });
@@ -131,7 +133,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult LeaveDepartment(int persId, int depId, string custCode)
+        public async Task<IHttpActionResult> LeaveDepartment(int persId, int depId, string custCode)
         {
             try
             {
@@ -144,14 +146,14 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    var dep = db.Departments.Where(d => d.CustCode == custCode && d.DepId == depId).FirstOrDefault();
+                    var dep = await db.Departments.Where(d => d.CustCode == custCode && d.DepId == depId).FirstOrDefaultAsync();
                     if (dep == null)
                     {
                         logger.Debug($"Leaving failed. Department not found {depId}");
                         return NotFound();
                     }
 
-                    var pers = db.People.Where(p => p.PersId == persId).FirstOrDefault();
+                    var pers = await db.People.Where(p => p.PersId == persId).FirstOrDefaultAsync();
                     if (pers == null)
                     {
                         logger.Debug($"Leaving failed. Person not found {persId}");
@@ -159,7 +161,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
 
                     dep.People.Remove(pers);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     logger.Debug("Left successfully");
                     return Ok();
@@ -173,7 +175,7 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult Unregister(int persId, string custCode)
+        public async Task<IHttpActionResult> Unregister(int persId, string custCode)
         {
             try
             {
@@ -187,25 +189,25 @@ namespace SimpleQ.Webinterface.Controllers
                 using (var db = new SimpleQDBEntities())
                 {
                     var query = db.Departments.Where(d => d.CustCode == custCode);
-                    if (query.Count() == 0)
+                    if (await query.CountAsync() == 0)
                     {
                         logger.Debug($"Unregister failed. Customer not found {custCode}");
                         return NotFound();
                     }
 
-                    var pers = db.People.Where(p => p.PersId == persId).FirstOrDefault();
+                    var pers = await db.People.Where(p => p.PersId == persId).FirstOrDefaultAsync();
                     if (pers == null)
                     {
                         logger.Debug($"Unregister failed. Person not found {persId}");
                         return NotFound();
                     }
 
-                    query.ToList().ForEach(d =>
+                    await query.ForEachAsync(d =>
                     {
                         d.People.Remove(pers);
                     });
                     db.People.Remove(pers);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     logger.Debug("Unregistered successfully");
 
@@ -220,18 +222,24 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult GetSurveyData(int svyId)
+        public async Task<IHttpActionResult> GetSurveyData(int svyId)
         {
             try
             {
                 logger.Debug($"Get survey data requested. (SvyId: {svyId})");
                 using (var db = new SimpleQDBEntities())
                 {
-                    Survey svy = db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefault();
+                    Survey svy = await db.Surveys.Where(s => s.SvyId == svyId).FirstOrDefaultAsync();
                     if (svy == null)
                     {
                         logger.Debug($"Loading survey data failed. Survey not found. {svyId}");
                         return NotFound();
+                    }
+
+                    if (svy.EndDate < DateTime.Now)
+                    {
+                        logger.Debug($"Loading survey data failed. Survey exceeded. {svyId}");
+                        return Conflict();
                     }
 
                     var catName = svy.SurveyCategory.CatName;
@@ -265,13 +273,13 @@ namespace SimpleQ.Webinterface.Controllers
         }
 
         [HttpGet]
-        public IHttpActionResult LoadFaqEntries()
+        public async Task<IHttpActionResult> LoadFaqEntries()
         {
             try
             {
                 using (var db = new SimpleQDBEntities())
                 {
-                    var query = db.FaqEntries.Where(f => f.IsMobile).ToList();
+                    var query = await db.FaqEntries.Where(f => f.IsMobile).ToListAsync();
 
                     return Ok(query);
                 }
@@ -280,11 +288,11 @@ namespace SimpleQ.Webinterface.Controllers
             {
                 logger.Error(ex, "[GET]LoadFaqEntries: Unexpected error");
                 return InternalServerError(ex);
-            } 
+            }
         }
 
         [HttpPost]
-        public IHttpActionResult AnswerSurvey([FromBody] SurveyVote sv)
+        public async Task<IHttpActionResult> AnswerSurvey([FromBody] SurveyVote sv)
         {
             try
             {
@@ -297,7 +305,7 @@ namespace SimpleQ.Webinterface.Controllers
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.CustCode == sv.CustCode).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == sv.CustCode).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Debug($"Answering failed. Customer not found {sv.CustCode}");
@@ -308,7 +316,7 @@ namespace SimpleQ.Webinterface.Controllers
                     db.Votes.Add(vote);
 
                     var ansIds = sv.ChosenAnswerOptions.Select(a => a.AnsId).ToList();
-                    if (db.AnswerOptions.Where(a => ansIds.Contains(a.AnsId)).Select(a => a.SvyId).Distinct().Count() != 1)
+                    if (await db.AnswerOptions.Where(a => ansIds.Contains(a.AnsId)).Select(a => a.SvyId).Distinct().CountAsync() != 1)
                     {
                         logger.Debug("Answering failed. 1 Answer is only possible for 1 survey");
                         return Conflict();
@@ -316,20 +324,21 @@ namespace SimpleQ.Webinterface.Controllers
 
                     foreach (int ansId in sv.ChosenAnswerOptions.Select(a => a.AnsId))
                     {
-                        if (db.AnswerOptions.Where(a => a.AnsId == ansId).FirstOrDefault() == null)
+                        if (await db.AnswerOptions.Where(a => a.AnsId == ansId).FirstOrDefaultAsync() == null)
                         {
                             logger.Debug($"Answering failed. AnswerOption not found {ansId}");
                             return NotFound();
                         }
                     }
 
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
 
                     sv.ChosenAnswerOptions.Select(a => a.AnsId).ToList().ForEach(id =>
                     {
                         vote.AnswerOptions.Add(db.AnswerOptions.Where(a => a.AnsId == id).FirstOrDefault());
                     });
-                    db.SaveChanges();
+
+                    await db.SaveChangesAsync();
                     logger.Debug("Answered survey successfully");
 
                     return Ok();

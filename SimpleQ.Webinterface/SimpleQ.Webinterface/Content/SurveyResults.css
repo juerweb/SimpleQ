@@ -8,9 +8,9 @@
     border-top-right-radius: unset;
 }
 
-/*.chartCol:hover{
-    cursor:zoom-in;
-}*/
+.chartCol{
+    background-color:white!important;
+}
 
 /* The Modal (background) */
 .myModal {

@@ -1,34 +1,49 @@
 ﻿using Microsoft.Owin.Security;
 using NLog;
+using SimpleQ.Webinterface.Attributes;
 using SimpleQ.Webinterface.Extensions;
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
+using SimpleQ.Webinterface.Properties;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace SimpleQ.Webinterface.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : BaseController
     {
-        private Logger logger = LogManager.GetCurrentClassLogger();
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         #region MVC-Actions
         [HttpGet]
-        public ActionResult Login(int? confirmed)
+        public ActionResult Index()
+        {
+            if (AuthManager.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault() != null)
+                return RedirectToAction("Index", "SurveyCreation");
+            else
+                return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public ActionResult Login(int? confirmed, string custCode)
         {
             try
             {
                 ViewBag.confirmed = confirmed == 1;
+                ViewBag.custCode = custCode;
                 logger.Trace($"Loading login page {(confirmed == 1 ? " after confirmation" : "")}");
+                Response.AppendHeader("spn", "sam, dean, castiel and jack were here");
                 return View("Login");
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]Login: Unexpected error");
                 return View("AccountError", model);
             }
@@ -37,26 +52,29 @@ namespace SimpleQ.Webinterface.Controllers
         [HttpGet]
         public ActionResult Register()
         {
-            try
-            {
-                using (var db = new SimpleQDBEntities())
-                {
-                    ViewBag.PaymentMethods = db.PaymentMethods.ToList();
-                    logger.Trace("Loading registration page.");
-                    return View("Register");
-                }
-            }
-            catch (Exception ex)
-            {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
-                logger.Error(ex, "[GET]Register: Unexpected error");
-                return View("AccountError", model);
-            }
+            //try
+            //{
+            //    using (var db = new SimpleQDBEntities())
+            //    {
+            //        ViewBag.PaymentMethods = db.PaymentMethods.ToList();
+
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
+            //    logger.Error(ex, "[GET]Register: Unexpected error");
+            //    return View("AccountError", model);
+            //}
+
+            logger.Trace("Loading registration page.");
+            Response.AppendHeader("get-stoned", "it's always 4:20 somewhere");
+            return View("Register");
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(Customer cust, string confirmPassword, int day)
+        public async Task<ActionResult> Register(Customer cust, string confirmPassword, int day)
         {
             try
             {
@@ -64,51 +82,48 @@ namespace SimpleQ.Webinterface.Controllers
                 bool err = false;
 
                 if (cust == null)
-                    AddModelError("Model", "Model object must not be null", ref err);
+                    AddModelError("Model", BackendResources.ModelNull, ref err);
 
                 if (string.IsNullOrEmpty(cust.CustName))
-                    AddModelError("CustName", "Name must not be empty.", ref err);
+                    AddModelError("CustName", BackendResources.NameEmpty, ref err);
 
                 if (string.IsNullOrEmpty(cust.CustEmail))
-                    AddModelError("CustEmail", "Email must not be empty.", ref err);
+                    AddModelError("CustEmail", BackendResources.EmailEmpty, ref err);
 
                 if (string.IsNullOrEmpty(cust.CustPwdTmp) || cust.CustPwdTmp.Count() < 8)
-                    AddModelError("CustPwdTmp", "Password must be at least 8 characters long.", ref err);
+                    AddModelError("CustPwdTmp", BackendResources.PwdTooShort, ref err);
 
                 if (cust.CustPwdTmp != confirmPassword)
-                    AddModelError("confirmPassword", "Entered passwords do not match.", ref err);
+                    AddModelError("confirmPassword", BackendResources.PwdDontMatch, ref err);
 
                 if (string.IsNullOrEmpty(cust.Street))
-                    AddModelError("Street", "Street must not be empty.", ref err);
+                    AddModelError("Street", BackendResources.StreetEmpty, ref err);
 
                 if (string.IsNullOrEmpty(cust.Plz))
-                    AddModelError("Plz", "ZIP code must not be empty.", ref err);
+                    AddModelError("Plz", BackendResources.PlzEmpty, ref err);
 
                 if (string.IsNullOrEmpty(cust.City))
-                    AddModelError("City", "City must not be empty.", ref err);
+                    AddModelError("City", BackendResources.CityEmpty, ref err);
 
                 if (string.IsNullOrEmpty(cust.Country))
-                    AddModelError("Country", "Country must not be empty.", ref err);
-
-                if (string.IsNullOrEmpty(cust.LanguageCode))
-                    AddModelError("LanguageCode", "Language code must not be empty.", ref err);
+                    AddModelError("Country", BackendResources.CountryEmpty, ref err);
 
                 if (cust.DataStoragePeriod <= 0)
-                    AddModelError("DataStoragePeriod", "Data storage period must be at least 1 month.", ref err);
+                    AddModelError("DataStoragePeriod", BackendResources.DataStoragePeriodInvalid, ref err);
 
                 if (!new[] { 1, 3, 6, 12 }.Contains(cust.AccountingPeriod))
-                    AddModelError("AccountingPeriod", "Accounting period must either 1, 3, 6 or 12 months", ref err);
+                    AddModelError("AccountingPeriod", BackendResources.AccountingPeriodInvalid, ref err);
 
                 if (day < 1 || day > 31)
-                    AddModelError("day", "Invalid day value", ref err);
+                    AddModelError("day", BackendResources.DayInvalid, ref err);
 
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (db.Customers.Any(c => c.CustEmail == cust.CustEmail))
-                        AddModelError("CustEmail", "Email does already exist.", ref err);
+                    if (await db.Customers.AnyAsync(c => c.CustEmail == cust.CustEmail))
+                        AddModelError("CustEmail", BackendResources.EmailAlreadyExists, ref err);
 
-                    if (!db.PaymentMethods.Any(p => p.PaymentMethodId == cust.PaymentMethodId))
-                        AddModelError("PaymentMethodId", "Payment method does not exist.", ref err);
+                    //if (!await db.PaymentMethods.AnyAsync(p => p.PaymentMethodId == cust.PaymentMethodId))
+                    //    AddModelError("PaymentMethodId", BackendResources.PaymentMethodInvalid, ref err);
 
 
                     if (err)
@@ -118,13 +133,14 @@ namespace SimpleQ.Webinterface.Controllers
                     }
                     logger.Debug("Register validation successful");
 
-                    var custCode = db.sp_GenerateCustCode().First();
+                    var custCode = await Task.Run(() => db.sp_GenerateCustCode().First());
                     var minGroupSize = db.DataConstraints.Where(d => d.ConstrName == "MIN_GROUP_SIZE").First().ConstrValue;
 
                     cust.CustCode = custCode;
                     cust.MinGroupSize = minGroupSize;
                     cust.CostBalance = 0m;
                     cust.EmailConfirmed = false;
+                    cust.PaymentMethodId = 1;
 
                     var date = DateTime.Now;
                     day = (DateTime.DaysInMonth(date.Year, date.Month) < day) ? DateTime.DaysInMonth(date.Year, date.Month) : day;
@@ -133,20 +149,43 @@ namespace SimpleQ.Webinterface.Controllers
                     logger.Debug($"AccountingDate for {custCode}: {cust.AccountingDate}");
 
                     db.Customers.Add(cust);
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
+
+                    async Task<int> maxCatId()
+                    {
+                        await db.SaveChangesAsync();
+                        return await db.SurveyCategories
+                            .Where(c => c.CustCode == custCode)
+                            .Select(c => c.CatId)
+                            .DefaultIfEmpty(0)
+                            .MaxAsync();
+                    }
+
+                    async Task<int> maxDepId()
+                    {
+                        await db.SaveChangesAsync();
+                        return await db.Departments
+                            .Where(d => d.CustCode == custCode)
+                            .Select(d => d.DepId)
+                            .DefaultIfEmpty(0)
+                            .MaxAsync();
+                    }
+
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = BackendResources.EmployeeSatisfaction, Deactivated = false });
+                    db.SurveyCategories.Add(new SurveyCategory { CatId = await maxCatId() + 1, CustCode = custCode, CatName = BackendResources.WorkplaceDesign, Deactivated = false });
+                    db.Departments.Add(new Department { DepId = await maxDepId() + 1, CustCode = custCode, DepName = BackendResources.Everyone });
+                    await db.SaveChangesAsync();
 
                     logger.Info($"Customer registered: {custCode}");
+                    Response.AppendHeader("msg", "so close, no matter how far");
 
-                    var authToken = db.sp_GenerateAuthToken(cust.CustCode).First();
+                    var authToken = await Task.Run(() => db.sp_GenerateAuthToken(cust.CustCode).First());
 
-                    var body = $"You registered successfully! Now please confirm your e-mail address.{Environment.NewLine}" +
-                        $"Your customer code: {cust.CustCode}{Environment.NewLine}" +
-                        $"Confirmation link: {Url.Action("ConfirmEmail", "Account", new { authToken }, Request.Url.Scheme)}{Environment.NewLine}" +
-                        $"{Environment.NewLine}{Environment.NewLine}" +
-                        $"Best regards{Environment.NewLine}" +
-                        $"Your SimpleQ-Team";
+                    var body = BackendResources.RegistrationEmailMessage
+                        .Replace("{CustCode}", cust.CustCode)
+                        .Replace("{Url}", Url.Action("ConfirmEmail", "Account", new { authToken }, Request.Url.Scheme));
 
-                    if (Email.Send("registration@simpleq.at", cust.CustEmail, "E-mail confirmation", body))
+                    if (await Email.Send("registration@simpleq.at", cust.CustEmail, BackendResources.RegistrationEmailSubject, body))
                     {
                         ViewBag.custCode = cust.CustCode;
                         ViewBag.email = cust.CustEmail;
@@ -155,7 +194,7 @@ namespace SimpleQ.Webinterface.Controllers
                     }
                     else
                     {
-                        var model = new ErrorModel { Title = "Unable to send confirmation e-mail", Message = "Sending failed due to internal error(s)." };
+                        var model = new ErrorModel { Title = BackendResources.ConfirmationSendingFailedTitle, Message = BackendResources.ConfirmationSendingFailedMsg };
                         logger.Error($"Failed to send confirmation e-mail to {custCode}");
                         return View("AccountError", model);
                     }
@@ -163,37 +202,37 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[POST]Register: Unexpected error");
                 return View("AccountError", model);
             }
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmail(string authToken)
+        public async Task<ActionResult> ConfirmEmail(string authToken)
         {
             try
             {
                 logger.Debug("Loading e-mail confirmation");
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.AuthToken == authToken).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.AuthToken == authToken).FirstOrDefaultAsync();
                     if (cust == null)
                     {
                         logger.Debug($"Invalid e-mail confirmation token: {authToken}");
-                        var model = new ErrorModel { Title = "Invalid confirmation link!", Message = "This e-mail confirmation link is not valid." };
+                        var model = new ErrorModel { Title = BackendResources.InvalidConfirmationLinkMsg, Message = BackendResources.InvalidConfirmationLinkTitle };
                         return View("AccountError", model);
                     }
 
                     cust.EmailConfirmed = true;
-                    db.SaveChanges();
+                    await db.SaveChangesAsync();
                     logger.Debug($"E-mail confirmed successfully for: {cust.CustCode}");
-                    return RedirectToAction("Login", new { confirmed = 1 });
+                    return RedirectToAction("Login", new { confirmed = 1, custCode = cust.CustCode });
                 }
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]ConfirmEmail: Unexpected error");
                 return View("AccountError", model);
             }
@@ -201,7 +240,7 @@ namespace SimpleQ.Webinterface.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(string custCode, string password, bool remember)
+        public async Task<ActionResult> Login(string custCode, string password, bool remember)
         {
             try
             {
@@ -209,28 +248,27 @@ namespace SimpleQ.Webinterface.Controllers
                 bool err = false;
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == custCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password) && !c.Deactivated))
                     {
-                        AddModelError("custCode", "Invalid customer code.", ref err);
-                        logger.Debug($"Login failed. Invalid customer code: {custCode}");
-                    }
-                    else if (!db.Customers.Any(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)))
-                    {
-                        AddModelError("password", "Invalid password.", ref err);
-                        logger.Debug($"Login failed. Invalid password for {custCode}: {password}");
+                        AddModelError("password", BackendResources.CustCodeOrPwdInvalid, ref err);
+                        logger.Debug($"Login failed. Invalid customer code or password for {custCode}: {password}");
                     }
 
-                    if (err) return View("Login");
+                    if (err)
+                    {
+                        ViewBag.custCode = custCode;
+                        return View("Login");
+                    }
                     logger.Debug("Login validation sucessful");
 
-                    SignIn(db.Customers.Where(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)).FirstOrDefault(), remember);
+                    SignIn(await db.Customers.Where(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)).FirstOrDefaultAsync(), remember);
                     logger.Debug("Logged in successfully");
                     return RedirectToAction("Index", "SurveyCreation");
                 }
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[POST]Login: Unexpected error");
                 return View("AccountError", model);
             }
@@ -248,27 +286,27 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]Logout: Unexpected error");
                 return View("AccountError", model);
             }
         }
 
         [HttpGet]
-        public ActionResult ResetPassword(string authToken)
+        public async Task<ActionResult> ResetPassword(string authToken)
         {
             try
             {
                 logger.Debug("Loading password reset page");
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.AuthToken == authToken).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.AuthToken == authToken).FirstOrDefaultAsync();
                     if (cust != null)
                     {
                         if (DateTime.Now - cust.LastTokenGenerated > TimeSpan.FromMinutes(15))
                         {
                             logger.Debug($"Loading password reset page failed. Expired password reset token: {authToken}");
-                            var model = new ErrorModel { Title = "Expired reset link!", Message = "This password reset link has already expired." };
+                            var model = new ErrorModel { Title = BackendResources.ExpiredPasswordResetTitle, Message = BackendResources.ExpiredPasswordResetMsg };
                             return View("AccountError", model);
                         }
                         else
@@ -281,14 +319,14 @@ namespace SimpleQ.Webinterface.Controllers
                     else
                     {
                         logger.Debug($"Loading password reset page failed. Invalid password reset token: {authToken}");
-                        var model = new ErrorModel { Title = "Invalid reset link!", Message = "This password reset link is not valid." };
+                        var model = new ErrorModel { Title = BackendResources.InvalidPasswordResetTitle, Message = BackendResources.InvalidPasswordResetMsg };
                         return View("AccountError", model);
                     }
                 }
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]ResetPassword: Unexpected error");
                 return View("AccountError", model);
             }
@@ -298,26 +336,23 @@ namespace SimpleQ.Webinterface.Controllers
         #region AJAX-Methods
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ForgotPassword(string custCode)
+        public async Task<ActionResult> ForgotPassword(string custCode)
         {
             try
             {
                 logger.Debug("Requested password resetting email.");
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (db.Customers.Any(c => c.CustCode == custCode))
+                    if (await db.Customers.AnyAsync(c => c.CustCode == custCode))
                     {
-                        var cust = db.Customers.Where(c => c.CustCode == custCode).FirstOrDefault();
-                        var authToken = db.sp_GenerateAuthToken(cust.CustCode).First();
+                        var cust = await db.Customers.Where(c => c.CustCode == custCode).FirstOrDefaultAsync();
+                        var authToken = await Task.Run(() => db.sp_GenerateAuthToken(cust.CustCode).First());
                         var email = cust.CustEmail;
 
-                        var body = $"To reset your email click the following link: {Url.Action("ResetPassword", "Account", new { authToken }, Request.Url.Scheme)}{Environment.NewLine}" +
-                            $"The link is valid for 15 minutes.{Environment.NewLine}" +
-                            $"{Environment.NewLine}{Environment.NewLine}" +
-                            $"Best regards{Environment.NewLine}{Environment.NewLine}" +
-                            $"Your SimpleQ-Team";
+                        var body = BackendResources.ForgotPasswordEmailMessage
+                            .Replace("{Url}", Url.Action("ResetPassword", "Account", new { authToken }, Request.Url.Scheme));
 
-                        if (Email.Send("registration@simpleq.at", email, "Password-Reset", body))
+                        if (await Email.Send("registration@simpleq.at", email, BackendResources.ForgotPasswordEmailSubject, body))
                         {
                             logger.Debug($"Password reset email sent successfully for: {custCode}");
                             return Http.Ok();
@@ -344,18 +379,18 @@ namespace SimpleQ.Webinterface.Controllers
 
         [HttpPut]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePassword(string authToken, string password)
+        public async Task<ActionResult> ChangePassword(string authToken, string password)
         {
             try
             {
                 logger.Debug("Changing password requested");
                 using (var db = new SimpleQDBEntities())
                 {
-                    var cust = db.Customers.Where(c => c.AuthToken == authToken).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.AuthToken == authToken).FirstOrDefaultAsync();
                     if (cust != null)
                     {
                         cust.CustPwdTmp = password;
-                        db.SaveChanges();
+                        await db.SaveChangesAsync();
                         logger.Debug("Password changed");
 
                         return Http.Ok();
@@ -376,40 +411,62 @@ namespace SimpleQ.Webinterface.Controllers
 
         [HttpDelete]
         [CAuthorize]
-        public ActionResult Unregister(string custCode, string password)
+        public async Task<ActionResult> Unregister(string custCode, string password)
         {
             try
             {
                 logger.Debug("Unregister requested.");
+                if (custCode != AuthManager.User.Claims.Where(c => c.Type == ClaimTypes.NameIdentifier).FirstOrDefault()?.Value)
+                {
+                    logger.Debug($"Unregister failed. Invalid customer code {custCode}");
+                    return Http.Forbidden("Invalid customer code");
+                }
+
                 using (var db = new SimpleQDBEntities())
                 {
-                    if (!db.Customers.Any(c => c.CustCode == custCode))
+                    if (!await db.Customers.AnyAsync(c => c.CustCode == custCode))
                     {
                         logger.Debug($"Unregister failed. Invalid customer code {custCode}");
                         return Http.NotFound("Customer not found");
                     }
-                    else if (!db.Customers.Any(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)))
+                    else if (!await db.Customers.AnyAsync(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)))
                     {
                         logger.Debug($"Unregister failed. Invalid password for {custCode}: {password}");
                         return Http.Forbidden("Invalid password.");
                     }
 
-                    var cust = db.Customers.Where(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)).FirstOrDefault();
+                    var cust = await db.Customers.Where(c => c.CustCode == custCode && c.CustPwdHash == db.fn_GetHash(password)).FirstOrDefaultAsync();
                     if (cust.CostBalance != 0)
                     {
                         logger.Debug($"Unregister failed. {custCode} has got bills to pay");
                         return Http.Conflict("There are still bills to pay");
                     }
 
-                    db.Surveys.Where(s => s.CustCode == custCode).ToList().ForEach(s => db.sp_DeleteSurvey(s.SvyId));
-                    cust.SurveyCategories.Clear();
-                    cust.AnswerTypes.Clear();
-                    cust.Bills.Clear();
-                    db.People.RemoveRange(cust.Departments.SelectMany(d => d.People));
-                    cust.Departments.Clear();
+                    //var surveys = await db.Surveys.Where(s => s.CustCode == custCode).ToListAsync();
+                    //foreach (var s in surveys)
+                    //{
+                    //    db.Votes.RemoveRange((await db.Votes.ToListAsync()).Where(v => s.AnswerOptions.Any(a => a.Votes.Any(vo => vo.VoteId == v.VoteId))));
+                    //    db.AnswerOptions.RemoveRange(s.AnswerOptions);
+                    //    s.Departments.Clear();
+                    //    db.Surveys.Remove(s);
+                    //}
+                    //await db.SaveChangesAsync();
 
-                    db.SaveChanges();
+                    //db.SurveyCategories.RemoveRange(db.SurveyCategories.Where(c => c.CustCode == custCode));
+                    //cust.AnswerTypes.Clear();
+                    //db.Bills.RemoveRange(db.Bills.Where(b => b.CustCode == custCode));
+                    //db.People.RemoveRange(cust.Departments.SelectMany(d => d.People));
+                    //db.Departments.RemoveRange(db.Departments.Where(d => d.CustCode == custCode));
+                    //db.Customers.Remove(cust);
+                    //await db.SaveChangesAsync();
+
+                    cust.Deactivated = true;
+                    await db.SaveChangesAsync();
+
+                    Response.AppendHeader("msg", "cause nothin' lasts forever even cold november rain");
                     logger.Info($"Customer unregistered {custCode}");
+
+                    SignOut();
 
                     return Http.Ok();
                 }
@@ -428,11 +485,11 @@ namespace SimpleQ.Webinterface.Controllers
             try
             {
                 var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, cust.CustCode),
-                new Claim(ClaimTypes.Name, cust.CustName),
-                new Claim(ClaimTypes.Email, cust.CustEmail)
-            };
+                {
+                    new Claim(ClaimTypes.NameIdentifier, cust.CustCode),
+                    new Claim(ClaimTypes.Name, cust.CustName),
+                    new Claim(ClaimTypes.Email, cust.CustEmail)
+                };
 
                 var identity = new ClaimsIdentity(claims, "ApplicationCookie");
 
@@ -453,6 +510,7 @@ namespace SimpleQ.Webinterface.Controllers
         {
             try
             {
+                Session.Abandon();
                 AuthManager.SignOut("ApplicationCookie");
             }
             catch (Exception ex)
@@ -460,12 +518,6 @@ namespace SimpleQ.Webinterface.Controllers
                 logger.Error(ex, "SignOut: Unexpected error");
                 throw ex;
             }
-        }
-
-        private void AddModelError(string key, string errorMessage, ref bool error)
-        {
-            ModelState.AddModelError(key, errorMessage);
-            error = true;
         }
 
         private IAuthenticationManager AuthManager
@@ -483,6 +535,8 @@ namespace SimpleQ.Webinterface.Controllers
                 }
             }
         }
+
+        protected override string CustCode => throw new NotSupportedException();
         #endregion
     }
 }

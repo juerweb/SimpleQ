@@ -118,70 +118,70 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="answer" xml:space="preserve">
-    <value>answer</value>
+    <value>Answer</value>
   </data>
   <data name="answerTypeHeader" xml:space="preserve">
-    <value>answer type</value>
+    <value>Answer type</value>
   </data>
   <data name="bar" xml:space="preserve">
-    <value>bar</value>
+    <value>Bar</value>
   </data>
   <data name="count" xml:space="preserve">
-    <value>count</value>
+    <value>Count</value>
   </data>
   <data name="diagram" xml:space="preserve">
-    <value>diagram</value>
+    <value>Diagram</value>
   </data>
   <data name="Dichotomous" xml:space="preserve">
     <value>Dichotomous</value>
   </data>
   <data name="doughnut" xml:space="preserve">
-    <value>doughnut</value>
+    <value>Doughnut</value>
   </data>
   <data name="from" xml:space="preserve">
     <value>from</value>
   </data>
   <data name="groupAdministrationHeader" xml:space="preserve">
-    <value>Gruppenverwaltung</value>
+    <value>Group administration</value>
   </data>
   <data name="groups" xml:space="preserve">
-    <value>groups</value>
+    <value>Groups</value>
   </data>
   <data name="LikertSkale3" xml:space="preserve">
-    <value>Likert-skale 3</value>
+    <value>Likert-skale (3 items)</value>
   </data>
   <data name="LikertSkale4" xml:space="preserve">
-    <value>Likert-skale 4</value>
+    <value>Likert-skale (4 items)</value>
   </data>
   <data name="LikertSkale5" xml:space="preserve">
-    <value>Likert-skale 5</value>
+    <value>Likert-skale (5 items)</value>
   </data>
   <data name="LikertSkale6" xml:space="preserve">
-    <value>Likert-skale 6</value>
+    <value>Likert-skale (6 items)</value>
   </data>
   <data name="LikertSkale7" xml:space="preserve">
-    <value>Likert-skale 7</value>
+    <value>Likert-skale (7 items)</value>
   </data>
   <data name="LikertSkale8" xml:space="preserve">
-    <value>Likert-skale 8</value>
+    <value>Likert-skale (8 items)</value>
   </data>
   <data name="LikertSkale9" xml:space="preserve">
-    <value>Likert-skale 9</value>
+    <value>Likert-skale (9 items)</value>
   </data>
   <data name="line" xml:space="preserve">
-    <value>line</value>
+    <value>Line</value>
   </data>
   <data name="listing" xml:space="preserve">
-    <value>listing (absolute, %)</value>
+    <value>Listing (absolute, %)</value>
   </data>
   <data name="Open" xml:space="preserve">
-    <value>Open text-answer</value>
+    <value>Open text answer</value>
   </data>
   <data name="percent" xml:space="preserve">
-    <value>percent</value>
+    <value>Percent</value>
   </data>
   <data name="polarArea" xml:space="preserve">
-    <value>polar-area</value>
+    <value>Polar area</value>
   </data>
   <data name="PolytomousOrderedMultiple" xml:space="preserve">
     <value>Many answers, many to choose (ordered)</value>
@@ -196,126 +196,126 @@
     <value>Many answers, one to choose (unordered)</value>
   </data>
   <data name="questionHeader" xml:space="preserve">
-    <value>...</value>
+    <value>Question</value>
   </data>
   <data name="questionTimeDateHeader" xml:space="preserve">
-    <value>date</value>
+    <value>Date</value>
   </data>
   <data name="questionTimeTimeHeader" xml:space="preserve">
-    <value>...</value>
+    <value>Time</value>
   </data>
   <data name="radar" xml:space="preserve">
-    <value>radar</value>
+    <value>Radar</value>
   </data>
   <data name="surveyCategoryHeader" xml:space="preserve">
-    <value>...</value>
+    <value>Survey category</value>
   </data>
   <data name="surveyCreationHeader" xml:space="preserve">
-    <value>Create Survey</value>
+    <value>Create survey</value>
   </data>
   <data name="surveyPreviewHeader" xml:space="preserve">
     <value>Preview</value>
   </data>
   <data name="surveyResultsHeader" xml:space="preserve">
-    <value>Survey Results</value>
+    <value>Survey results</value>
   </data>
   <data name="to" xml:space="preserve">
     <value>to</value>
   </data>
   <data name="TrafficLight" xml:space="preserve">
-    <value>Traffic-lights (red,yellow,green)</value>
+    <value>Traffic lights (red, yellow, green)</value>
   </data>
   <data name="typeSmall" xml:space="preserve">
-    <value>type</value>
+    <value> type</value>
     <comment>small written type</comment>
   </data>
   <data name="YesNo" xml:space="preserve">
-    <value>Yes-no</value>
+    <value>Yes/No</value>
   </data>
   <data name="YesNoDontKnow" xml:space="preserve">
-    <value>Yes-no-dont know</value>
+    <value>Yes/No/Don't know</value>
   </data>
   <data name="add" xml:space="preserve">
-    <value>add</value>
+    <value>Add</value>
   </data>
   <data name="addNewCategory" xml:space="preserve">
-    <value>add new category</value>
+    <value>Add new category</value>
   </data>
   <data name="newCategoryName" xml:space="preserve">
-    <value>new category name ...</value>
+    <value>New category name</value>
   </data>
   <data name="addAnswer" xml:space="preserve">
-    <value>add answer</value>
+    <value>Add answer</value>
   </data>
   <data name="invalidInput" xml:space="preserve">
-    <value>invalid input!</value>
+    <value>Invalid input</value>
   </data>
   <data name="surveyTemplateHeader" xml:space="preserve">
-    <value>choose template (by last surveys)</value>
+    <value>Choose template (recent surveys)</value>
   </data>
   <data name="askedPeopleCount" xml:space="preserve">
-    <value>asked people (count)</value>
+    <value>Amount of asked people</value>
   </data>
   <data name="badAskGroupCount" xml:space="preserve">
-    <value>small group, to get good results create a bigger one</value>
+    <value>For meaningful results a bigger group would be necessary</value>
   </data>
   <data name="goodAskGroupCount" xml:space="preserve">
-    <value>good size for good results</value>
+    <value>Appropriate group size for meaningful results</value>
   </data>
   <data name="middleAskGroupCount" xml:space="preserve">
-    <value>size of the group is ok, could be better for more generic results</value>
+    <value>Sufficient group size</value>
   </data>
   <data name="SaveAsTemplate" xml:space="preserve">
-    <value>save as template</value>
+    <value>Save as template</value>
   </data>
   <data name="Members" xml:space="preserve">
     <value>members</value>
   </data>
   <data name="edit" xml:space="preserve">
-    <value>edit</value>
+    <value>Edit</value>
   </data>
   <data name="categoryAlreadyExists" xml:space="preserve">
     <value>There is already an category with this name </value>
   </data>
   <data name="groupAlreadyExists" xml:space="preserve">
-    <value>There is already a group with this name!</value>
+    <value>There is already a group with this name</value>
   </data>
   <data name="TemplateDescription" xml:space="preserve">
-    <value>if you do the same question later, you dont have to write everything again</value>
+    <value>Check if you intend to repeat the survey later</value>
   </data>
   <data name="noTemplate" xml:space="preserve">
-    <value>no template</value>
+    <value>No template</value>
   </data>
   <data name="cancel" xml:space="preserve">
-    <value>cancel</value>
+    <value>Cancel</value>
   </data>
   <data name="content" xml:space="preserve">
-    <value>content</value>
+    <value>Content</value>
   </data>
   <data name="downloadAppHere" xml:space="preserve">
     <value>You can download the app here</value>
   </data>
   <data name="invitationToSimpleQ" xml:space="preserve">
-    <value>invitation to simpleQ</value>
+    <value>Invitation to SimpleQ</value>
   </data>
   <data name="max" xml:space="preserve">
     <value>max</value>
   </data>
   <data name="predictedPrice" xml:space="preserve">
-    <value>predicted price</value>
+    <value>Predicted price</value>
   </data>
   <data name="subject" xml:space="preserve">
-    <value>subject</value>
+    <value>Subject</value>
     <comment>for mail</comment>
   </data>
   <data name="textEditorLanguage" xml:space="preserve">
     <value>en</value>
   </data>
   <data name="addMailAddress" xml:space="preserve">
-    <value>add mail address</value>
+    <value>Add email address</value>
   </data>
   <data name="invalidMailAddress" xml:space="preserve">
-    <value>the email address in invalid!</value>
+    <value>The entered email address in invalid</value>
   </data>
   <data name="addressData" xml:space="preserve">
     <value>Address data</value>
@@ -324,82 +324,82 @@
     <value>Base data</value>
   </data>
   <data name="billingPeriodInMonths" xml:space="preserve">
-    <value>billing period in months</value>
+    <value>Billing period in months</value>
   </data>
   <data name="city" xml:space="preserve">
-    <value>city</value>
+    <value>City</value>
   </data>
   <data name="confirmPassword" xml:space="preserve">
-    <value>confirm password</value>
+    <value>Confirm password</value>
   </data>
   <data name="country" xml:space="preserve">
-    <value>country</value>
+    <value>Country</value>
   </data>
   <data name="customerName" xml:space="preserve">
-    <value>customer name</value>
+    <value>Customer name</value>
   </data>
   <data name="finish" xml:space="preserve">
-    <value>finish</value>
+    <value>Finish</value>
   </data>
   <data name="language" xml:space="preserve">
-    <value>language</value>
+    <value>Language</value>
   </data>
   <data name="medium" xml:space="preserve">
-    <value>medium</value>
+    <value>Medium</value>
   </data>
   <data name="next" xml:space="preserve">
-    <value>next</value>
+    <value>Next</value>
   </data>
   <data name="password" xml:space="preserve">
-    <value>password</value>
+    <value>Password</value>
   </data>
   <data name="paymentMethod" xml:space="preserve">
-    <value>payment method</value>
+    <value>Payment method</value>
   </data>
   <data name="postCode" xml:space="preserve">
-    <value>post code</value>
+    <value>ZIP code</value>
   </data>
   <data name="previous" xml:space="preserve">
-    <value>previous</value>
+    <value>Previous</value>
   </data>
   <data name="specificData" xml:space="preserve">
     <value>Specific data</value>
   </data>
   <data name="streetAndHousenumber" xml:space="preserve">
-    <value>street and house number</value>
+    <value>Street and house number</value>
   </data>
   <data name="strong" xml:space="preserve">
-    <value>strong</value>
+    <value>Strong</value>
   </data>
   <data name="weak" xml:space="preserve">
-    <value>weak</value>
+    <value>Weak</value>
   </data>
   <data name="dataRetentionPeriodInMonths" xml:space="preserve">
-    <value>data retention period in months</value>
+    <value>Data storage period in months</value>
   </data>
   <data name="email" xml:space="preserve">
-    <value>email</value>
+    <value>Email</value>
   </data>
   <data name="preferredBillingDay" xml:space="preserve">
-    <value>preferred billing date for ervery month</value>
+    <value>Preferred billing date for each month</value>
   </data>
   <data name="customerCode" xml:space="preserve">
-    <value>customer code</value>
+    <value>Customer code</value>
   </data>
   <data name="forgotPassword" xml:space="preserve">
-    <value>forgot passwort</value>
+    <value>Forgot passwort</value>
   </data>
   <data name="login" xml:space="preserve">
-    <value>login</value>
+    <value>Login</value>
   </data>
   <data name="startSurvey" xml:space="preserve">
-    <value>send out survey</value>
+    <value>Send survey</value>
   </data>
   <data name="stayLoggedIn" xml:space="preserve">
-    <value>stay logged in</value>
+    <value>Stay logged in</value>
   </data>
   <data name="groupCode" xml:space="preserve">
-    <value>group code</value>
+    <value>Group code</value>
   </data>
   <data name="left" xml:space="preserve">
     <value>left</value>
@@ -408,19 +408,313 @@
     <value>right</value>
   </data>
   <data name="singleQuestionEvaluation" xml:space="preserve">
-    <value>single survey evaluation</value>
+    <value>Single survey evaluation</value>
   </data>
   <data name="survey" xml:space="preserve">
-    <value>survey</value>
+    <value>Survey</value>
   </data>
   <data name="trendEvaluation" xml:space="preserve">
-    <value>trend-evaluation</value>
+    <value>Trend evaluation</value>
   </data>
   <data name="settings" xml:space="preserve">
-    <value>settings</value>
+    <value>Settings</value>
   </data>
   <data name="support" xml:space="preserve">
-    <value>support</value>
+    <value>Support</value>
+  </data>
+  <data name="close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="defineGroupsModalInfo" xml:space="preserve">
+    <value>You have not created any groups yet, create your first one in group administration</value>
+  </data>
+  <data name="evaluate" xml:space="preserve">
+    <value>Evaluate</value>
+  </data>
+  <data name="periodicQuestionTooltip" xml:space="preserve">
+    <value>Click to repeat a question certain times automatically</value>
+  </data>
+  <data name="pleaseDefineGroupsFirst" xml:space="preserve">
+    <value>Please define groups first</value>
+  </data>
+  <data name="singleButtonTooltip" xml:space="preserve">
+    <value>Click here to get the results of each survey seperately</value>
+  </data>
+  <data name="singleEvaluation" xml:space="preserve">
+    <value>Single evaluation</value>
+  </data>
+  <data name="singleOrTrendEvaluation" xml:space="preserve">
+    <value>Single or trend evaluation?</value>
+  </data>
+  <data name="timespan" xml:space="preserve">
+    <value>Timespan</value>
+  </data>
+  <data name="toGroupAdministration" xml:space="preserve">
+    <value>To group-administration</value>
+  </data>
+  <data name="trendButtonTooltip" xml:space="preserve">
+    <value>Click here to get a trend view of all survey results</value>
+  </data>
+  <data name="custCodeTooltip" xml:space="preserve">
+    <value>Insert the customer code you got in your validation mail</value>
+  </data>
+  <data name="days" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="emailConfirmed" xml:space="preserve">
+    <value>Email address confirmed</value>
+  </data>
+  <data name="goToRegistration" xml:space="preserve">
+    <value>Go to registration</value>
+  </data>
+  <data name="sendResetLink" xml:space="preserve">
+    <value>Send reset link</value>
+  </data>
+  <data name="weeks" xml:space="preserve">
+    <value>Weeks</value>
+  </data>
+  <data name="youCanNowLogin" xml:space="preserve">
+    <value>You can log in now</value>
+  </data>
+  <data name="answers" xml:space="preserve">
+    <value>Answers</value>
+  </data>
+  <data name="answersButtonTooltip" xml:space="preserve">
+    <value>Click here to add answers</value>
+  </data>
+  <data name="Actions" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="CityInvalid" xml:space="preserve">
+    <value>The specified city is invalid</value>
+  </data>
+  <data name="ConfirmationLinkSentTo" xml:space="preserve">
+    <value>Email confirmation link sent to:</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="CreateNewGroup" xml:space="preserve">
+    <value>Create new group</value>
+  </data>
+  <data name="EmailAddressInvalid" xml:space="preserve">
+    <value>The specified email address is not valid</value>
+  </data>
+  <data name="EmailSendingFailed" xml:space="preserve">
+    <value>Sending email failed\nPlease try again later</value>
+  </data>
+  <data name="EmailSent" xml:space="preserve">
+    <value>Email sent</value>
+  </data>
+  <data name="GroupName" xml:space="preserve">
+    <value>Group name</value>
+  </data>
+  <data name="GroupSelection" xml:space="preserve">
+    <value>Group selection</value>
+  </data>
+  <data name="InvalidCustCode" xml:space="preserve">
+    <value>Invalid customer code</value>
+  </data>
+  <data name="InvalidLink" xml:space="preserve">
+    <value>Invalid link</value>
+  </data>
+  <data name="InvalidPassword" xml:space="preserve">
+    <value>Invalid password</value>
+  </data>
+  <data name="NameMustNotBeEmpty" xml:space="preserve">
+    <value>The customer name must not be empty</value>
+  </data>
+  <data name="NewGroup" xml:space="preserve">
+    <value>New group</value>
+  </data>
+  <data name="PasswordChanged" xml:space="preserve">
+    <value>Password changed</value>
+  </data>
+  <data name="PasswordMedium" xml:space="preserve">
+    <value>Medium password</value>
+  </data>
+  <data name="PasswordsDontMatch" xml:space="preserve">
+    <value>The entered passwords do not match</value>
+  </data>
+  <data name="PasswordStrong" xml:space="preserve">
+    <value>Strong password</value>
+  </data>
+  <data name="PasswordWeak" xml:space="preserve">
+    <value>Weak password</value>
+  </data>
+  <data name="Period" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="PleaseConfirmBefore" xml:space="preserve">
+    <value>Please confirm your email address before logging in</value>
+  </data>
+  <data name="PlzInvalid" xml:space="preserve">
+    <value>The specified ZIP code is invalid</value>
+  </data>
+  <data name="RegisteredSuccessfully" xml:space="preserve">
+    <value>Registered successfully</value>
+  </data>
+  <data name="SavePassword" xml:space="preserve">
+    <value>Save password</value>
+  </data>
+  <data name="SelectedGroup" xml:space="preserve">
+    <value>Selected group:</value>
+  </data>
+  <data name="StreetInvalid" xml:space="preserve">
+    <value>Street or street number invalid</value>
+  </data>
+  <data name="ToLogin" xml:space="preserve">
+    <value>Go to login</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Unit</value>
+  </data>
+  <data name="YourCustCode" xml:space="preserve">
+    <value>Your customer code:</value>
+  </data>
+  <data name="DontKnow" xml:space="preserve">
+    <value>Don't know</value>
+  </data>
+  <data name="FreeText" xml:space="preserve">
+    <value>Free text</value>
+  </data>
+  <data name="Green" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="Yellow" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="DeleteGroup" xml:space="preserve">
+    <value>Delete group</value>
+  </data>
+  <data name="DiagramTypeLeft" xml:space="preserve">
+    <value>Left diagram type</value>
+  </data>
+  <data name="DiagramTypeRight" xml:space="preserve">
+    <value>Right diagram type</value>
+  </data>
+  <data name="InviteMembers" xml:space="preserve">
+    <value>Invite members</value>
+  </data>
+  <data name="PeriodicSurvey" xml:space="preserve">
+    <value>Periodic survey...</value>
+  </data>
+  <data name="PleaseConfirmYourEmail" xml:space="preserve">
+    <value>Please confirm your email address</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="resetPassword" xml:space="preserve">
+    <value>Reset password</value>
+  </data>
+  <data name="minimizeNav" xml:space="preserve">
+    <value>Minimize navigation</value>
+  </data>
+  <data name="AlreadyStarted" xml:space="preserve">
+    <value>Already started</value>
+  </data>
+  <data name="AnswerAlreadyExists" xml:space="preserve">
+    <value>The answer already exists</value>
+  </data>
+  <data name="AreYouSure" xml:space="preserve">
+    <value>Are you sure?</value>
+  </data>
+  <data name="ColorCoding" xml:space="preserve">
+    <value>Color coding</value>
+  </data>
+  <data name="CurrentAndUpcomingSurveys" xml:space="preserve">
+    <value>Current and upcoming surveys</value>
+  </data>
+  <data name="CurrentSurveys" xml:space="preserve">
+    <value>Current surveys</value>
+  </data>
+  <data name="DefineYourFirstGroup" xml:space="preserve">
+    <value>Define your first group</value>
+  </data>
+  <data name="EmailAlreadyExists" xml:space="preserve">
+    <value>The email already exists</value>
+  </data>
+  <data name="EmptyResultsExport" xml:space="preserve">
+    <value>Unable to export empty results</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End date</value>
+  </data>
+  <data name="ExportResults" xml:space="preserve">
+    <value>Export results</value>
+  </data>
+  <data name="HideNavBar" xml:space="preserve">
+    <value>Collapse navigation</value>
+  </data>
+  <data name="NotImplementedYet" xml:space="preserve">
+    <value>This function has not been implemented yet. Please wait a few weeks.</value>
+  </data>
+  <data name="NotYetStarted" xml:space="preserve">
+    <value>Not yet started</value>
+  </data>
+  <data name="OriginalDate" xml:space="preserve">
+    <value>Original date</value>
+  </data>
+  <data name="OtherQuestion" xml:space="preserve">
+    <value>Other question</value>
+  </data>
+  <data name="PaymentQuestion" xml:space="preserve">
+    <value>Question concerning payment</value>
+  </data>
+  <data name="PeriodicSurveys" xml:space="preserve">
+    <value>Periodic surveys</value>
+  </data>
+  <data name="ProductQuestion" xml:space="preserve">
+    <value>Question concerning product</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Send email</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="Sum" xml:space="preserve">
+    <value>Sum</value>
+  </data>
+  <data name="SurveyCancelledSuccessfully" xml:space="preserve">
+    <value>Survey cancelled successfully</value>
+  </data>
+  <data name="billingPeriodInMonthsDesc" xml:space="preserve">
+    <value>The time between receiving bills</value>
+  </data>
+  <data name="dataRetentionPeriodInMonthsDesc" xml:space="preserve">
+    <value>The time, how long you survey data is stored until it gets deleted</value>
+  </data>
+  <data name="preferredBillingDayDesc" xml:space="preserve">
+    <value>Day of month, on which the bill is delivered</value>
+  </data>
+  <data name="responsiblePersonFirstName" xml:space="preserve">
+    <value>First name of responsible person</value>
+  </data>
+  <data name="responsiblePersonLastName" xml:space="preserve">
+    <value>Last name of responsible person</value>
+  </data>
+  <data name="downloadTemplate" xml:space="preserve">
+    <value>download template</value>
+  </data>
+  <data name="importAddressFile" xml:space="preserve">
+    <value>import address file</value>
+  </data>
+  <data name="importAddressFileInfo" xml:space="preserve">
+    <value>First download and fill the template file. Then upload it.</value>
+  </data>
+  <data name="uploadChosenFile" xml:space="preserve">
+    <value>upload chosen file</value>
   </data>
   <data name="close" xml:space="preserve">
     <value>close</value>

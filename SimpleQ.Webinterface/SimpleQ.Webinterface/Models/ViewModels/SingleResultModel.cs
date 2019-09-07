@@ -10,9 +10,9 @@ namespace SimpleQ.Webinterface.Models.ViewModels
         #region Controller to View
         public int SvyId { get; set; }
         public string SvyText { get; set; }
-        public TimeSpan Period { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+        public TimeSpan Period { get; set; }
         public List<KeyValuePair<string, int>> Votes { get; set; }
         public List<string> FreeTextVotes { get; set; }
         #endregion

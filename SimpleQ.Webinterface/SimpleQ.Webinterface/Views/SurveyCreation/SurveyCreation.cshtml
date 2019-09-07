@@ -1,8 +1,8 @@
-﻿
-@using SimpleQ.Webinterface.Properties;
+﻿@using SimpleQ.Webinterface.Properties;
 @using SimpleQ.Webinterface.Models;
 @using System.Resources;
 @model SimpleQ.Webinterface.Models.ViewModels.SurveyCreationModel
+
 
 @{
     int maxCount = 0;
@@ -10,149 +10,233 @@
 }
 @using (Html.BeginForm("New", "SurveyCreation"))
 {
-    <div class="row mt-1 ml-0 mr-0">
-        <div class="col-md-7 pl-4">
+<div class="row mt-1 ml-0 mr-0">
+    @{
+        bool error = false;
+        MvcHtmlString s = new MvcHtmlString("");
+        if (Html.ValidationMessageFor(model => model.Survey.SvyText).ToString().ElementAt(Html.ValidationMessageFor(model => model.Survey.SvyText).ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessageFor(model => model.Survey.SvyText)</strong></div>
+        }
+        if (Html.ValidationMessageFor(model => model.Survey).ToString().ElementAt(Html.ValidationMessageFor(model => model.Survey).ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessageFor(model => model.Survey)</strong></div>
+        }
+        if (Html.ValidationMessageFor(model => model.SelectedDepartments).ToString().ElementAt(Html.ValidationMessageFor(model => model.SelectedDepartments).ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessageFor(model => model.SelectedDepartments)</strong></div>
+        }
+        if (Html.ValidationMessageFor(model => model.Period).ToString().ElementAt(Html.ValidationMessageFor(model => model.Period).ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessageFor(model => model.Period)</strong></div>
+        }
+        if (Html.ValidationMessageFor(model => model.AnswerTypes).ToString().ElementAt(Html.ValidationMessageFor(model => model.AnswerTypes).ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessageFor(model => model.AnswerTypes)</strong></div>
+        }
+        if (Html.ValidationMessage("Survey.StartDate").ToString().ElementAt(Html.ValidationMessage("Survey.StartDate").ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessage("Survey.StartDate")</strong></div>
+        }
+        if (Html.ValidationMessage("Survey.Amount").ToString().ElementAt(Html.ValidationMessage("Survey.Amount").ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessage("Survey.Amount")</strong></div>
+        }
+        if (Html.ValidationMessage("Survey.CatId").ToString().ElementAt(Html.ValidationMessage("Survey.CatId").ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessage("Survey.CatId")</strong></div>
+        }
+        if (Html.ValidationMessage("Survey.TypeId").ToString().ElementAt(Html.ValidationMessage("Survey.TypeId").ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessage("Survey.TypeId")</strong></div>
+        }
+        if (Html.ValidationMessage("TextAnswerOptions").ToString().ElementAt(Html.ValidationMessage("TextAnswerOptions").ToString().Length - 8) != '>')
+        {
+            error = true;
+            <div class="alert alert-danger w-100 mvcAlert"><strong>@Html.ValidationMessage("TextAnswerOptions")</strong></div>
+        }
 
-            <label class="mt-2">@Resources.surveyTemplateHeader</label>
-            <select class="form-control" id="surveyTemplateCB" onchange="surveyTemplateSelectionChanged()">
+        if (ViewBag.success == true)
+        {
+            <div class="alert alert-primary w-100 mvcAlert"><strong>Befragung erfolgreich ausgesendet!</strong></div>
+        }
+        //@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <script>
+            $(function () {
+                fadeErrorOut(".mvcAlert");
+            });
+        </script>
+
+    }
+
+
+    <div class="col-md-7 pl-4">
+
+        <label class="mt-2">@Resources.surveyTemplateHeader</label>
+        <select class="form-control" id="surveyTemplateCB" onchange="surveyTemplateSelectionChanged()">
+            @{
+                <option value="-1">@Resources.noTemplate</option> //-1 = no template
+                foreach (Survey svy in Model.SurveyTemplates)
+                {
+                    <option value="@svy.SvyId">@svy.SvyText @svy.StartDate</option>
+                }
+            }
+
+        </select>
+
+        <label class="mt-2" for="question">@Resources.questionHeader</label>
+        <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText" oninput="checkIfSurveyTextEmpty(this)">
+
+
+        <label class="mt-2">@Resources.surveyCategoryHeader</label>
+        <div id="categoryAlreadyExists" class="alert alert-danger w-100" style="display:none"><strong>@Resources.categoryAlreadyExists</strong></div>
+        <div id="categoryInvalidInput" class="alert alert-danger w-100" style="display:none"><strong>@Resources.invalidInput</strong></div>
+        <div class="row mr-0 ml-0">
+            <div class="col-11 p-0">
+                @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories.OrderBy(sc => sc.CatName), "CatId", "CatName"), new { @id = "categoryDropdown", @class = "form-control rightNotRounded" })
+            </div>
+            <div class="col-1 p-0">
+                <button type="button" style="background-color:rgb(0,109,204); color:white" class="btn btn-block pb-0 pl-0 pr-0 leftNotRounded" id="openAddCategoryBtn"><i class="material-icons">&#xe145;</i></button>
+            </div>
+        </div>
+        <div class="row mr-0 ml-0 mt-2" id="newCategoryDiv">
+            <div class="col-10 p-0">
+                <input class="form-control border border-success rightNotRounded" id="newCategoryTB" type="text" placeholder="@Resources.newCategoryName" />
+            </div>
+            <div class="col-1 p-0">
+                <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" id="addCategoryBtn" onclick="addCategory()" data-toggle="tooltip" title="@Resources.add"><i class="material-icons">&#xe148;</i></button>
+            </div>
+            <div class="col-1 p-0">
+                <button type="button" class="btn btn-secondary btn-block pb-0 pl-0 pr-0 leftNotRounded" id="cancelAddCategoryBtn" onclick="cancelAddCategory()" data-toggle="tooltip" title="@Resources.cancel"><i class="material-icons">&#xe5cd;</i></button>
+            </div>
+        </div>
+
+        <div class="form-group mt-2">
+            <label for="AnswerTypeCB">@Resources.answerTypeHeader</label>
+            <select class="form-control" id="AnswerTypeCB" onchange="answerTypeSelectionChanged()" name="Survey.TypeId">
                 @{
-                    <option value="-1">@Resources.noTemplate</option> //-1 = no template
-                    foreach (Survey svy in Model.SurveyTemplates)
+                    foreach (AnswerType at in Model.AnswerTypes)
                     {
-                        <option value="@svy.SvyId">@svy.SvyText @svy.StartDate</option>
+                        if (at.TypeId == 1)
+                        {
+                            <option value="@at.TypeId" selected>@rm.GetString(at.TypeDesc)</option>
+                        }
+                        else
+                        {
+                            <option value="@at.TypeId">@rm.GetString(at.TypeDesc)</option>
+                        }
                     }
                 }
 
             </select>
+        </div>
 
-            <label class="mt-2" for="question">@Resources.questionHeader</label>
-            <input type="text" class="form-control mr-0" id="question" name="Survey.SvyText" oninput="checkIfSurveyTextEmpty(this)">
+        <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer" data-toggle="tooltip" title="@Resources.answersButtonTooltip"><span class="d-flex justify-content-between"><span>@Resources.answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+        <div id="answerAlreadyExists" class="alert alert-danger w-100" style="display:none"><strong>@Resources.AnswerAlreadyExists</strong></div>
+        <div id="answerBox" class="border border-dark mt-2">
 
+        </div>
 
-            <label class="mt-2">@Resources.surveyCategoryHeader</label>
-            <div class="row mr-0 ml-0">
-                <div class="col-11 p-0">
-                    @Html.DropDownListFor(model => model.Survey.CatId, new SelectList(Model.SurveyCategories.OrderBy(sc => sc.CatName), "CatId", "CatName"), new { @id = "categoryDropdown", @class = "form-control rightNotRounded" })
-                </div>
-                <div class="col-1 p-0">
-                    <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded" id="openAddCategoryBtn"><i class="material-icons">&#xe145;</i></button>
-                </div>
-            </div>
-            <div class="row mr-0 ml-0 mt-2" id="newCategoryDiv">
-                <div class="col-10 p-0">
-                    <input class="form-control border border-success rightNotRounded" id="newCategoryTB" type="text" placeholder="@Resources.newCategoryName" />
-                </div>
-                <div class="col-1 p-0">
-                    <button type="button" class="btn btn-success btn-block pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" id="addCategoryBtn" onclick="addCategory()" data-toggle="tooltip" title="@Resources.add"><i class="material-icons">&#xe148;</i></button>
-                </div>
-                <div class="col-1 p-0">
-                    <button type="button" class="btn btn-secondary btn-block pb-0 pl-0 pr-0 leftNotRounded" id="cancelAddCategoryBtn" onclick="cancelAddCategory()" data-toggle="tooltip" title="@Resources.cancel"><i class="material-icons">&#xe5cd;</i></button>
-                </div>
-            </div>
-
-            <div class="form-group mt-2">
-                <label for="AnswerTypeCB">@Resources.answerTypeHeader</label>
-                <select class="form-control" id="AnswerTypeCB" onchange="answerTypeSelectionChanged()" name="Survey.TypeId">
+        <div class="form-group mt-2">
+            <label for="groups">@Resources.groups</label>
+            <div class="border border-dark">
+                <ul class="list-group groups-ul pl-2" id="groups">
                     @{
-                        foreach (AnswerType at in Model.AnswerTypes)
+
+                        foreach (KeyValuePair<Department, int> kvp in Model.Departments)
                         {
-                            if (at.TypeId == 1)
-                            {
-                                <option value="@at.TypeId" selected>@rm.GetString(at.TypeDesc)</option>
-                            }
-                            else
-                            {
-                                <option value="@at.TypeId">@rm.GetString(at.TypeDesc)</option>
-                            }
+                            maxCount += kvp.Value;
+                            <li>
+                                <input type="checkbox" checked="checked" name="SelectedDepartments" value="@kvp.Key.DepId" onchange="groupClicked(this)"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
+                            </li>
                         }
                     }
-
-                </select>
+                </ul>
             </div>
-
-            <button type="button" class="btn btn-danger btn-block mt-2" id="openAddAnswer" data-toggle="tooltip" title="@Resources.answersButtonTooltip"><span class="d-flex justify-content-between"><span>@Resources.answers</span><i id="openAddAnswerUpDownIcon" class="material-icons">&#xe313;</i></span></button>
-            <div id="answerBox" class="border border-dark mt-2">
-
-            </div>
-
-            <div class="form-group mt-2">
-                <label for="groups">@Resources.groups</label>
-                <div class="border border-dark">
-                    <ul class="list-group groups-ul pl-2" id="groups">
-                        @{
-
-                            foreach (KeyValuePair<Department, int> kvp in Model.Departments)
-                            {
-                                maxCount += kvp.Value;
-                                <li>
-                                    <input type="checkbox" checked="checked" name="SelectedDepartments" value="@kvp.Key.DepId" onchange="groupClicked(this)"><span>@kvp.Key.DepName</span> | <span>@kvp.Value</span> <span>@Resources.Members</span>
-                                </li>
-                            }
-                        }
-                    </ul>
-                </div>
-            </div>
-
-            <label class="mt-2">@Resources.askedPeopleCount</label>
-            <div class="row">
-                <span class="col-md-6">
-                    <input id="countInput" class="form-control" type="number" min="0" value="0" name="Survey.Amount" oninput="changeSpanColor(); checkCount(); changePrice(this);" />
-                </span>
-                <span class="col-md-6">
-                    <a>@Resources.predictedPrice: <b id="minPrice">0</b> @Resources.to @Resources.max <b id="maxPrice">0</b><b>€</b></a>
-                </span>
-            </div>
-            <span class="row colorSpan pl-4 pr-4 mt-2">
-                <span id="colorSpan1" class="col-4"></span>
-                <span id="colorSpan2" class="col-4"></span>
-                <span id="colorSpan3" class="col-4"></span>
-            </span>
-            <span class="mt-1 pl-2 pr-2" id="countTextLabel" style="font-size:medium"></span>
-
-            <span class="row mt-3">
-                <span class="col-md">
-                    <label for="QuestionFromDatePicker">@Resources.questionTimeDateHeader @Resources.from</label>
-                    <input id="QuestionFromDatePicker" type="date" class="form-control" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
-                    <label for="QuestionToDatePicker" class="mt-2">@Resources.questionTimeDateHeader @Resources.to</label>
-                    <input id="QuestionToDatePicker" type="date" class="form-control" name="EndDate" value="@DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")" />
-                </span>
-                <span class="col-md">
-                    <label for="QuestionFromTimePicker">@Resources.questionTimeTimeHeader @Resources.from</label>
-                    <input id="QuestionFromTimePicker" type="time" class="form-control" name="StartTime" value="12:00" />
-                    <label for="QuestionToTimePicker" class="mt-2">@Resources.questionTimeTimeHeader @Resources.to</label>
-                    <input id="QuestimeToTimePicker" type="time" class="form-control" name="EndTime" value="12:00" />
-                </span>
-            </span>
-
-            <button type="button" class="btn btn-light btn-block mt-2 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="@Resources.periodicQuestionTooltip"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>Periodische Befragung...</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
-
-            <div id="periodicSurveyDiv" class="collapse">
-                <div class="row mr-0 ml-0 mt-2">
-                    <div class="col-4">
-                        <label>Periodendauer</label>
-                        <input id="countInput" class="form-control" type="number" min="0" value="" name='Period' onchange="insertHiddenCheckBox()"/>
-                    </div>
-                    <div class="col-8">
-                        <label>Einheit</label>
-                        <select class="form-control" id="daysOrWeekCB" name="IsWeek" onchange="insertHiddenCheckBox()">
-                            <option value="false" selected>@rm.GetString("days")</option>
-                            <option value="true" selected>@rm.GetString("weeks")</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-2">
-                @Html.CheckBox("Survey.Template")
-                @*<input type="checkbox" checked="checked" onclick="" name="Survey.Template">*@
-                <span data-toggle="tooltip" title="@Resources.TemplateDescription">@Resources.SaveAsTemplate</span>
-            </div>
-            <button type="submit" id="submitBtn" class="btn btn-primary btn-block mb-5" disabled>@Resources.startSurvey</button>
         </div>
-        <div class="col-md-5 p-0">
-            <h3 class="text-center">@Resources.surveyPreviewHeader</h3>
+
+        <label class="mt-2">@Resources.askedPeopleCount</label>
+        <div class="row">
+            <span class="col-md-6">
+                <input id="countInput" class="form-control" type="number" min="0" value="0" name="Survey.Amount" oninput="changeSpanColor(); checkCount(); changePrice(this);" />
+            </span>
+            <span class="col-md-6">
+                <a>@Resources.predictedPrice: <b id="minPrice">0</b> @Resources.to @Resources.max <b id="maxPrice">0</b><b>€</b></a>
+            </span>
+        </div>
+        <span class="row colorSpan pl-4 pr-4 mt-2">
+            <span id="colorSpan1" class="col-4"></span>
+            <span id="colorSpan2" class="col-4"></span>
+            <span id="colorSpan3" class="col-4"></span>
+        </span>
+        <span class="mt-1 pl-2 pr-2" id="countTextLabel" style="font-size:medium"></span>
+
+        <span class="row mt-3">
+            <span class="col-md">
+                <label for="QuestionFromDatePicker">@Resources.questionTimeDateHeader @Resources.from</label>
+                <input id="QuestionFromDatePicker" type="date" class="form-control" name="StartDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <label for="QuestionToDatePicker" class="mt-2">@Resources.questionTimeDateHeader @Resources.to</label>
+                <input id="QuestionToDatePicker" type="date" class="form-control" name="EndDate" value="@DateTime.Now.AddDays(7).ToString("yyyy-MM-dd")" />
+            </span>
+            <span class="col-md">
+                <label for="QuestionFromTimePicker">@Resources.questionTimeTimeHeader @Resources.from</label>
+                <input id="QuestionFromTimePicker" type="time" class="form-control" name="StartTime" value="12:00" />
+                <label for="QuestionToTimePicker" class="mt-2">@Resources.questionTimeTimeHeader @Resources.to</label>
+                <input id="QuestimeToTimePicker" type="time" class="form-control" name="EndTime" value="12:00" />
+            </span>
+        </span>
+
+        <button type="button" class="btn btn-light btn-block mt-3 border" onclick="toggleUpDownIcon()" data-toggle="tooltip" title="@Resources.periodicQuestionTooltip"><span class="d-flex justify-content-between" data-toggle="collapse" data-target="#periodicSurveyDiv"><span>@Resources.PeriodicSurvey</span><i id="periodicUpDownIcon" class="material-icons">&#xe313;</i></span></button>
+
+        <div id="periodicSurveyDiv" class="collapse">
+            <div class="row mr-0 ml-0 mt-2">
+                <div class="col-4">
+                    <label>@Resources.Period</label>
+                    <input class="form-control" type="number" min="0" value="" name='Period' onchange="insertHiddenCheckBox()" />
+                </div>
+                <div class="col-8">
+                    <label>@Resources.Unit</label>
+                    <select class="form-control" id="daysOrWeekCB" name="IsWeek" onchange="insertHiddenCheckBox()">
+                        <option value="false" selected>@rm.GetString("days")</option>
+                        <option value="true" selected>@rm.GetString("weeks")</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-2">
+            @Html.CheckBox("Survey.Template")
+            @*<input type="checkbox" checked="checked" onclick="" name="Survey.Template">*@
+            <span data-toggle="tooltip" title="@Resources.TemplateDescription">@Resources.SaveAsTemplate</span>
+        </div>
+        <button type="submit" id="submitBtn" class="btn btn-primary btn-block" disabled>@Resources.startSurvey</button>
+    </div>
+    <div class="col-md-5 p-0">
+        @*<h3 class="text-center">@Resources.surveyPreviewHeader</h3>*@
+        <div class="device-container">
+            <div class="device-mockup galaxy_s5 portrait white">
+                <div class="device mt-4" style="height:730px; width:360px; margin-left:auto; margin-right:auto">
+                    <div id="androidHandy" class="screen" style="background-color:white;">
+                        <img src="../../Content/Images/Device/header.png" width="315" height="65" />
+                        <p id="timePhone" style="font-size:13px; color:white; position:absolute; left:278px; top:0px;"></p>
+                    </div>
+                    <div class="button">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
     <div class="modal" id="noGroupsModal">
         <div class="modal-dialog">
@@ -185,6 +269,7 @@
 
     let svyTextFilled = false;
     let answersFilled = true;
+    let countBiggerZero = true;
 
     $(function () {
 
@@ -192,7 +277,11 @@
             $("#noGroupsModal").show();
         }
 
-        document.getElementById("header").innerHTML = "@Resources.surveyCreationHeader"; //set Header
+        //document.getElementById("header").innerHTML = "@Resources.surveyCreationHeader"; //set Header
+
+        let tops = document.getElementsByClassName("header");
+        tops[0].innerHTML = "@Resources.surveyCreationHeader";
+        tops[1].innerHTML = "@Resources.surveyCreationHeader";
 
         $("#newCategoryDiv").hide();
         $("#answerBox").hide();
@@ -216,6 +305,33 @@
         });
 
         addGroups();
+
+        $('html').bind('keypress', function (e) {
+            if (e.keyCode == 13) {
+                event.preventDefault();
+                if ($("#answerInput").is(':focus')) {
+                    $("#answerInputButton").click();
+                }
+            }
+        });
+
+        //document.addEventListener("keyup", function (event) {
+        //    // Number 13 is the "Enter" key on the keyboard
+        //    if (event.keyCode === 13) {
+        //        // Cancel the default action, if needed
+        //        event.preventDefault();
+
+        //        if ($("#answerInput").is(':focus')) {
+        //            console.log("oidaaaa");
+        //            $("#answerInputButton").click();
+        //        }
+        //    }
+        //});
+
+        //answerInput
+        //$("#answerInput").focus(function () {
+        //    alert("Handler for .focus() called.");
+        //});
     });
 
 
@@ -230,18 +346,18 @@
     }
 
     function updateButtonEnabled() {
-        if (svyTextFilled && answersFilled) {
+        if (svyTextFilled && answersFilled && countBiggerZero) {
             $("#submitBtn").attr("disabled", false);
-            console.log("yesyes");
+            //console.log("yesyes");
         } else {
             $("#submitBtn").attr("disabled", true);
-            console.log("nonono");
+            //console.log("nonono");
         }
     }
 
 
     function addGroups() {
-        @{ 
+        @{
             foreach (KeyValuePair<Department, int> kvp in Model.Departments)
             {
                 @:groups.push({ id: @kvp.Key.DepId, count: @kvp.Value});
@@ -287,7 +403,7 @@
         $.get(
             url,
             function (survey) {
-            
+
             document.getElementById("question").value = survey.SvyText; //Fill Question input
 
             let ddl = document.getElementById('categoryDropdown'); //change to Surveycategory from Template
@@ -317,19 +433,19 @@
                     for (i = 0; i < survey.AnswerOptions.length; i++) {
                         answers.push(survey.AnswerOptions[i].AnsText);
                     }
-                    if (survey.TypeId >= 6 && survey.TypeId <= 9) {                       
+                    if (survey.TypeId >= 6 && survey.TypeId <= 9) {
                         insertAnswers();
-                        answersULChanged();
+                        //answersULChanged();
                     } else {
                         if (survey.AnswerOptions.length > 1) {
                             firstAnswer = answers[0];
                             secondAnswer = answers[answers.length - 1];
-                            insertDichotomInputs();                          
-                        }                       
+                            insertDichotomInputs();
+                        }
                     }
-                   
-                } 
-                
+
+                }
+
 
             let depIds = [];
             for (i = 0; i < survey.Departments.length; i++) {
@@ -355,9 +471,11 @@
 
                 let countInput = document.getElementById("countInput");
                 countInput.value = survey.Amount;
+                insertIntoPhone();
+                svyTextFilled = true;
+                updateButtonEnabled();
 
         });
-
     }
 
 
@@ -396,14 +514,14 @@
         var answerBox = document.getElementById("answerBox");
         var answerType = document.getElementById("AnswerTypeCB");
         var value = answerType.value;
-        if (value >= 6 && value <= 9) {          
+        if (value >= 6 && value <= 9) {
             if (answers.length === 0) {
                 $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
             }
             answerBox.innerHTML =
                 '<div class="row mt-1 mb-2 mr-0 ml-0">' +
                 '        <div class="col-9 pr-0 pl-1"><input id="answerInput" class="form-control rightNotRounded" type="text" placeholder="@Resources.addAnswer" /></div>' +
-                '        <div class="col-3 pl-0 pr-1"><button type="button" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
+                '        <div class="col-3 pl-0 pr-1"><button type="button" id="answerInputButton" class="btn btn-success btn-block pb-0 leftNotRounded" onclick="addAnswer()"><i class="material-icons">&#xe148;</i></button></div>' +
                 '        <ul class="list-group" style="width:100%" id="answerUL" name="TextAnswerOptions"></ul>' +
                 '</div >';
             if (answers.length > 0) {
@@ -443,26 +561,37 @@
     }
 
 
-    function insertAnswers() {        
+    function insertAnswers() {
         let ul = document.getElementById("answerUL");
         ul.innerHTML = "";
         for (i = 0; i < answers.length; i++) {
             let normal =
-                '<li class="list-group-item">' +
-                '   <span class="d-flex justify-content-between">' +
-                '       <input type="text" class="withoutBorder" readonly name="TextAnswerOptions" value="' + answers[i] + '" />' +
-                '       <span>' +
-                '           <button type="button" class="btn btn-info ml-2 pb-0" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
-                '           <button type="button" class="btn btn-danger ml-2 pb-0" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+                '<li class="row mr-0 ml-0 mt-2">' +
+                '    <div class="col-9 pr-0 pl-1">' +
+                '        <input class="form-control rightNotRounded withoutBorder" name="TextAnswerOptions" readonly type="text" value="' + answers[i] + '" />' +
+                '    </div>' +
+                '    <div class="col-3 pl-0 pr-1">' +
+                '       <span class="row ml-0 mr-0">' +
+                '           <span class="col-6 p-0">' +
+                '               <button type="button" class="btn btn-info btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded rightNotRounded" onclick="editAnswer(this)"><i class="material-icons">&#xe150;</i></button>' +
+                '           </span>' +
+                '           <span class="col-6 p-0">' +
+                '               <button type="button" class="btn btn-danger btn-block m-0 pb-0 pl-0 pr-0 leftNotRounded" onclick="deleteAnswer(this)"><i class="material-icons">&#xe92b;</i></button>' +
+                '           </span>' +
                 '       </span>' +
-                '   </span>' +
+                '    </div>' +
                 '</li>';
             ul.innerHTML += normal;
+            $("#openAddAnswer").removeClass("btn-danger").addClass("btn-success");
+            answersFilled = true;
+            updateButtonEnabled();
         }
+        
     }
 
 
     function dichotomAnswerChanged(inputId) {
+        insertIntoPhone();
         firstAnswer = document.getElementById("dichotomAnswer1").value;
         secondAnswer = document.getElementById("dichotomAnswer2").value;
         if (firstAnswer !== "" && secondAnswer !== "") {
@@ -483,18 +612,20 @@
         let input = inputElem.value;
 
         if (input === "") {
-            alert('@Resources.invalidInput');
             return;
         } else if (answers.includes(input)) {
-            alert('@Resources.invalidInput');
+            $("#answerAlreadyExists").show();
+            $("#answerAlreadyExists").delay(2000).fadeOut();
+            //alert('@Resources.invalidInput');
             return;
         }
 
         answers.push(input);
+        insertIntoPhone();
         let normal =
             '<li class="row mr-0 ml-0 mt-2">' +
             '    <div class="col-9 pr-0 pl-1">' +
-            '        <input class="form-control rightNotRounded withoutBorder" name="Emails" readonly type="text" value="' + input + '" />' +
+            '        <input class="form-control rightNotRounded withoutBorder" name="TextAnswerOptions" readonly type="text" value="' + input + '" />' +
             '    </div>' +
             '    <div class="col-3 pl-0 pr-1">' +
             '       <span class="row ml-0 mr-0">' +
@@ -538,6 +669,7 @@
                 break;
             }
         }
+        insertIntoPhone();
         button.parentElement.parentElement.parentElement.parentElement.remove();
         if (answers.length === 0) {
             $("#openAddAnswer").removeClass("btn-success").addClass("btn-danger");
@@ -578,7 +710,9 @@
         } else {
             text = button.parentElement.parentElement.children[0].value;
             if (answers.includes(text)) {
-                alert('@Resources.invalidInput');
+                $("#answerAlreadyExists").show();
+                $("#answerAlreadyExists").delay(2000).fadeOut();
+                //alert('@Resources.invalidInput');
                 return;
             }
             for (i = 0; i < answers.length; i++) {
@@ -648,6 +782,13 @@
         if (input.value < 0) {
             input.value = 0;
         }
+
+        if (input.value == 0) {
+            countBiggerZero = false;
+        } else {
+            countBiggerZero = true;
+        }
+        updateButtonEnabled();
     }
 
 
@@ -678,7 +819,9 @@
     function addCategory() {
         let input = document.getElementById("newCategoryTB").value;
         if (input == "") {
-            alert("@Resources.invalidInput");
+            $("#categoryInvalidInput").show();
+            $("#categoryInvalidInput").delay(3500).fadeOut();
+            //alert("@Resources.invalidInput");
             return;
         }
         let categories = [];
@@ -690,18 +833,21 @@
         }
 
         if (categories.includes(input)) {
-            alert("@Resources.categoryAlreadyExists");
+            //alert("@Resources.categoryAlreadyExists");
+            $("#categoryAlreadyExists").show();
+            $("#categoryAlreadyExists").delay(3500).fadeOut();
             return;
         }
 
         let url = '@Url.Action("CreateCategory", "SurveyCreation", new { catName = "temp"})'.replace("temp", input);
-
         $.get(
             url,
             function (id) {
                 document.getElementById("categoryDropdown").innerHTML += '<option value="' + id + '" selected>' + input + '</option>';
+                insertIntoPhone();
             }
         );
+        
     }
 
 
@@ -729,6 +875,119 @@
             //$("#periodicUpDownIcon").innerHTML = "&#xe313;";
         }
     }
+
+    $('#categoryDropdown').add("#AnswerTypeCB").on('change', insertIntoPhone);
+    $("#question").change(function () {
+        insertIntoPhone();
+    });
+
+    var dt = new Date();
+    var time = dt.getHours() + ":" + dt.getMinutes();
+    $("#timePhone").html(time);
+    setInterval(function () {
+        var dt = new Date();
+        var time = dt.getHours() + ":" + checkTime(dt.getMinutes());
+        $("#timePhone").html(time);
+    }, 10000);
+
+    $('#dichotomAnswer1').on('input', function () {
+        insertIntoPhone();
+        console.log("oha");
+    });
+
+    $('#dichotomAnswer2').on('input', function () {
+        insertIntoPhone();
+    });
+
+    function getOffset(el) {
+        const rect = el.getBoundingClientRect();
+        return {
+            left: rect.left + window.scrollX,
+            top: rect.top + window.scrollY
+        };
+    }
+
+    function checkTime(i) {
+        if (i < 10) {
+            i = "0" + i;
+        }
+        return i;
+    }
+
+    function insertIntoPhone() {
+        $("#androidHandy").empty();
+        console.log($("#AnswerTypeCB option:selected").val());
+        $("#androidHandy").append("<img src='../../Content/Images/Device/header.png' width='315' height='65'/>");
+        $("#androidHandy").append("<p id='timePhone' style='font-size:13px; color:white; position:absolute; left:278px; top:0px;'>" + time + "</p>");
+        let textValue = $("#question").val();
+        if (textValue == "") {
+            textValue = "Fragestellung";
+        }
+        let type = $("#AnswerTypeCB option:selected").val();
+        if (type == 1) {
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone kleinerAbstand ml-2 mr-2'>" + textValue + "</p>");
+            $("#androidHandy").append("<img class='kleinerAbstand' src='../../Content/Images/Device/yes_no.png' width='310' height='50'/>");
+        } else if (type == 2) {
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
+            $("#androidHandy").append("<img class='kleinerAbstand' src='../../Content/Images/Device/yes_no_maybe.png' width='310' height='50'/>");
+        } else if (type == 3) {
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
+            $("#androidHandy").append("<img class='kleinerAbstand' src='../../Content/Images/Device/ampel.png' width='310' height='50'/>");
+        } else if (type == 4) {
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
+            $("#androidHandy").append("<input type='text' class='form-control '  />");
+        } else if (type == 5) {
+            let val1 = $("#dichotomAnswer1").val();
+            let val2 = $("#dichotomAnswer2").val();
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
+            $("#androidHandy").append("<img id='dichotom' class='kleinerAbstand' src='../../Content/Images/Device/dichotom.png' width='310' height='50'/>");
+            $("#androidHandy").append("<div id='answer1Phone'><p style='text-align: center; padding-top: 6px;' id='a1text'></p></div>");
+            $("#androidHandy").append("<div id='answer2Phone'><p style='text-align: center; padding-top: 6px;' id='a2text'></p></div>");
+            let pos = $("#dichotom").position();
+            $("#answer1Phone").css("left", pos.left);
+            $("#answer1Phone").css("top", pos.top - 8);
+            $("#answer2Phone").css("left", pos.left + 160);
+            $("#answer2Phone").css("top", pos.top - 8);
+            if (val1 != undefined && val2 != undefined) {
+                $("#a1text").text(val1);
+                $("#a2text").text(val2);
+            } else {
+                // $( "#androidHandy" ).append( "<a href='#' class='btn btn-outline-secondary btn-md ml-5'>"+ "A1" + "</a><a href='#' class='btn btn-outline-secondary btn-md ml-2'>"+ "A2" + "</a>" );
+            }
+        } else if (type == 6 || type == 7 || type == 8 || type == 9) {
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
+            $("#androidHandy").append("<table id='multiTable' class='table'><tbody></tbody></table>");
+            for (var i = 0; i < answers.length; i++) {
+                $('#multiTable tbody').append("<tr><td style='width:27px'><img src='../../Content/Images/Device/leer.png'</td><td class='pl-0'>" + answers[i] + "</td></tr>");
+            }
+        } else if (type == 10 || type == 11 || type == 12 || type == 13 || type == 14 || type == 15 || type == 16) {
+            let val1 = $("#dichotomAnswer1").val();
+            let val2 = $("#dichotomAnswer2").val();
+            $("#androidHandy").append("<p class='headingPhone ml-2'>" + $("#categoryDropdown option:selected").text() + "</p>");
+            $("#androidHandy").append("<p class='questionPhone  kleinerAbstand ml-2'>" + textValue + "</p>");
+            $("#androidHandy").append("<img id='lik' class='kleinerAbstand' src='../../Content/Images/Device/lik.png' width='310' height='50'/>");
+            $("#androidHandy").append("<div id='leftPhone'><p class='dichotomPhone ' style='text-align: center; padding-top: 5px;' id='a1textl'></p></div>");
+            $("#androidHandy").append("<div id='rightPhone'><p class='dichotomPhone ' style='text-align: center; padding-top: 5px;' id='a2textr'></p></div>");
+            let pos = $("#lik").position();
+            $("#leftPhone").css("left", pos.left);
+            $("#leftPhone").css("top", pos.top + 20);
+            $("#rightPhone").css("left", pos.left + 245);
+            $("#rightPhone").css("top", pos.top + 20);
+            if (val1 != undefined && val2 != undefined) {
+                $("#a1textl").text(val1);
+                $("#a2textr").text(val2);
+            } else {
+                // $( "#androidHandy" ).append( "<a href='#' class='btn btn-outline-secondary btn-md ml-5'>"+ "A1" + "</a><a href='#' class='btn btn-outline-secondary btn-md ml-2'>"+ "A2" + "</a>" );
+            }
+        }
+    }
+
 
 </script>
 

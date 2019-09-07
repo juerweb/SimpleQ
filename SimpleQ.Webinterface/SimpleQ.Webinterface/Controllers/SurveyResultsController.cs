@@ -2,6 +2,7 @@
 using SimpleQ.Webinterface.Models;
 using SimpleQ.Webinterface.Models.ViewModels;
 using SimpleQ.Webinterface.Models.Enums;
+using SimpleQ.Webinterface.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -62,7 +63,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]Index: Unexpected error");
                 return View("Error", model);
             }
@@ -82,13 +83,13 @@ namespace SimpleQ.Webinterface.Controllers
                     if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Loading single result failed. Customer not found: {CustCode}");
-                        return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+                        return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                     }
 
                     if (await db.Surveys.Where(s => s.CustCode == CustCode).CountAsync() == 0)
                     {
                         logger.Debug($"Loading single result failed. No existing surveys for Customer: {CustCode}");
-                        return PartialView("_Error", new ErrorModel { Title = "No Surveys", Message = "You haven't created any surveys yet." });
+                        return PartialView("_Error", new ErrorModel { Title = BackendResources.NoSurveysTitle, Message = BackendResources.NoSurveysMsg});
                     }
 
                     var surveys = await db.Surveys
@@ -96,12 +97,12 @@ namespace SimpleQ.Webinterface.Controllers
                         .ToListAsync();
 
                     if (surveys.Count() == 0)
-                        AddModelError("Survey", "Survey not found.", ref err);
+                        AddModelError("Survey", BackendResources.SurveyNotFound, ref err);
 
                     if (err)
                     {
                         logger.Debug($"Loading single result failed due to model validation failure. Exiting action.");
-                        return PartialView("_Error", new ErrorModel { Title = "Failed to load survey", Message = errString });
+                        return PartialView("_Error", new ErrorModel { Title = BackendResources.FailedLoadingSurvey, Message = errString });
                     }
 
 
@@ -114,7 +115,7 @@ namespace SimpleQ.Webinterface.Controllers
                             SvyId = s.SvyId,
 
                             SvyText = s.SvyText,
-                            
+
                             StartDate = s.StartDate,
 
                             EndDate = s.EndDate,
@@ -138,7 +139,7 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[GET]LoadSingleResult: Unexpected error");
                 return PartialView("_Error", model);
             }
@@ -161,20 +162,20 @@ namespace SimpleQ.Webinterface.Controllers
                 //    SurveyText = "Ist der Chef leiwand?"//"Finden Sie der Chef ist ein Arschloch?"
                 //};
                 if (string.IsNullOrEmpty(svyText))
-                    AddModelError("Survey", "Survey text must not be empty.", ref err);
+                    AddModelError("Survey", BackendResources.SurveyTextEmpty, ref err);
 
                 using (var db = new SimpleQDBEntities())
                 {
                     if (!await db.Customers.AnyAsync(c => c.CustCode == CustCode))
                     {
                         logger.Warn($"Loading multi result failed. Customer not found: {CustCode}");
-                        return View("Error", new ErrorModel { Title = "Customer not found", Message = "The current customer was not found." });
+                        return View("Error", new ErrorModel { Title = BackendResources.CustomerNotFoundTitle, Message = BackendResources.CustomerNotFoundMsg });
                     }
 
                     if (await db.Surveys.Where(s => s.CustCode == CustCode).CountAsync() == 0)
                     {
                         logger.Debug($"Loading single result failed. No existing surveys for Customer: {CustCode}");
-                        return PartialView("_Error", new ErrorModel { Title = "No Surveys", Message = "You haven't created any surveys yet." });
+                        return PartialView("_Error", new ErrorModel { Title = BackendResources.NoSurveysTitle, Message = BackendResources.NoSurveysMsg });
                     }
 
                     var selectedSurveys = db.Surveys
@@ -191,19 +192,19 @@ namespace SimpleQ.Webinterface.Controllers
                                 .FirstOrDefaultAsync();
                     logger.Debug($"Category name for CatId {catId} of Customer {CustCode}: {catName}");
                     if (catName == null)
-                        AddModelError("Category", "Category not found.", ref err);
+                        AddModelError("Category", BackendResources.CategoryNotFound, ref err);
 
 
                     var type = await db.AnswerTypes
                                 .Where(a => a.TypeId == typeId && a.BaseId != (int)BaseQuestionTypes.OpenQuestion)
                                 .FirstOrDefaultAsync();
                     if (type == null)
-                        AddModelError("Answer type", "Answer type does not exist.", ref err);
+                        AddModelError("Answer type", BackendResources.AnswerTypeNotExist, ref err);
 
                     if (err)
                     {
                         logger.Debug($"Loading single result failed due to model validation failure. Exiting action.");
-                        return PartialView("_Error", new ErrorModel { Title = "Failed to load survey", Message = errString });
+                        return PartialView("_Error", new ErrorModel { Title = BackendResources.FailedLoadingSurvey, Message = errString });
                     }
 
                     MultiResultModel model;
@@ -222,10 +223,10 @@ namespace SimpleQ.Webinterface.Controllers
                     else
                     {
                         logger.Debug("Loading data for multi result model");
-                        List<string> svyTexts = await selectedSurveys.Select(s => s.SvyText).ToListAsync();
                         model = new MultiResultModel
                         {
-                            SvyText = svyTexts.First(),
+
+                            SvyText = svyText,
 
                             SurveyDates = await selectedSurveys.Select(s => s.StartDate).ToListAsync(),
 
@@ -239,134 +240,11 @@ namespace SimpleQ.Webinterface.Controllers
             }
             catch (Exception ex)
             {
-                var model = new ErrorModel { Title = "Error", Message = "Something went wrong. Please try again later." };
+                var model = new ErrorModel { Title = BackendResources.Error, Message = BackendResources.DefaultErrorMsg };
                 logger.Error(ex, "[POST]LoadMultiResult: Unexpected error");
                 return PartialView("_Error", model);
             }
         }
-
-        //[HttpGet]
-        //public ActionResult LoadTypesByCategory(int catId)
-        //{
-        //    try
-        //    {
-        //        logger.Debug($"Requested to load survey types by category. (CatId: {catId}, CustCode: {CustCode})");
-        //        using (var db = new SimpleQDBEntities())
-        //        {
-        //            if (!db.Customers.Any(c => c.CustCode == CustCode))
-        //            {
-        //                logger.Warn($"Loading survey types failed. Customer not found: {CustCode}");
-        //                return Http.NotFound("Customer not found.");
-        //            }
-
-        //            var cat = db.SurveyCategories.Where(c => c.CustCode == CustCode && c.CatId == catId).FirstOrDefault();
-        //            if (cat == null)
-        //            {
-        //                logger.Debug("Category not found: {catId}");
-        //                return Http.NotFound("Category not found.");
-        //            }
-
-        //            var types = cat.Surveys
-        //                .Select(s => new AnswerType
-        //                {
-        //                    TypeId = s.AnswerType.TypeId,
-        //                    TypeDesc = s.AnswerType.TypeDesc,
-        //                    BaseId = s.AnswerType.BaseId
-        //                })
-        //                .Where(t => t.BaseId != (int)BaseQuestionTypes.OpenQuestion)
-        //                .GroupBy(t => t.TypeId)
-        //                .Select(g => g.First())
-        //                .ToList();
-
-        //            logger.Debug($"{types.Count} answer types loaded successfully.");
-
-        //            return Json(types, JsonRequestBehavior.AllowGet);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.Error(ex, "[GET]LoadTypesByCategory: Unexpected error");
-        //        return Http.InternalServerError("Something went wrong. Please try again later.");
-        //    }
-        //}
-
-        //[HttpGet]
-        //public ActionResult LoadSurveys(int catId, int typeId)
-        //{
-        //    try
-        //    {
-        //        logger.Debug($"Requested to load survey texts. (CatId: {catId}, TypeId: {typeId}, CustCode: {CustCode})");
-        //        using (var db = new SimpleQDBEntities())
-        //        {
-        //            if (!db.Customers.Any(c => c.CustCode == CustCode))
-        //            {
-        //                logger.Warn($"Loading survey texts failed. Customer not found: {CustCode}");
-        //                return Http.NotFound("Customer not found");
-        //            }
-
-        //            var query = db.Surveys
-        //                .Where(s => s.CatId == catId
-        //                    && s.TypeId == typeId
-        //                    && s.CustCode == CustCode).ToList()
-        //                .Select(s => s.SvyText)
-        //                .Distinct();
-
-        //            if (query.Count() == 0)
-        //            {
-        //                logger.Debug("Loading survey texts failed. No surveys found.");
-        //                return Http.NotFound("No surveys found");
-        //            }
-
-        //            logger.Debug($"{query.Count()} distinct survey texts loaded successfully.");
-        //            return Json(new { SurveyTexts = query.ToList() }, JsonRequestBehavior.AllowGet);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.Error(ex, "[GET]LoadSurveys: Unexpected error");
-        //        return Http.InternalServerError("Something went wrong. Please try again later.");
-        //    }
-        //}
-
-        //[HttpGet]
-        //public ActionResult LoadSurveyDates(int catId, int typeId, string svyText)
-        //{
-        //    try
-        //    {
-        //        logger.Debug($"Requested to load survey dates (CatId: {catId}, TypeId: {typeId}, SvyText: {svyText}, CustCode: {CustCode})");
-        //        using (var db = new SimpleQDBEntities())
-        //        {
-        //            if (!db.Customers.Any(c => c.CustCode == CustCode))
-        //            {
-        //                logger.Warn($"Loading survey dates failed. Customer not found: {CustCode}");
-        //                return Http.NotFound("Customer not found");
-        //            }
-
-        //            var query = db.Surveys.Where(s => s.CatId == catId && s.TypeId == typeId && s.CustCode == CustCode && s.SvyText.ToLower().Trim() == svyText.ToLower().Trim());
-        //            if (query.Count() == 0)
-        //            {
-        //                logger.Debug("Loading survey dates failed. No surveys found.");
-        //                return Http.NotFound("No surveys found");
-        //            }
-
-        //            var startDate = query.Select(s => s.StartDate).Min().ToString("yyyy-MM-dd");
-        //            var endDate = query.Select(s => s.StartDate).Max().ToString("yyyy-MM-dd");
-
-        //            logger.Debug($"Survey dates loaded successfully: {startDate} - {endDate}");
-
-        //            return Json(new
-        //            {
-        //                StartDate = startDate,
-        //                EndDate = endDate
-        //            }, JsonRequestBehavior.AllowGet);
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        logger.Error(ex, "[GET]LoadSurveyDates: Unexpected error");
-        //        return Http.InternalServerError("Something went wrong. Please try again later.");
-        //    }
-        //}
         #endregion
 
         #region Helpers

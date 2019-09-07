@@ -1,6 +1,7 @@
 ﻿using Acr.UserDialogs;
 using FreshMvvm;
 using SimpleQ.Extensions;
+using SimpleQ.Logging;
 using SimpleQ.PageModels.Commands;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Pages;
@@ -31,9 +32,18 @@ namespace SimpleQ.PageModels
 
         public RegisterPageModel()
         {
+            //Debug.WriteLine("Constructor of RegisterPageModel...", "Info");
             OpenScannerCommand = new Command(OnOpenScanner);
             ManualCodeEntryCommand = new Command(OnManualCodeEntry);
             this.Behavior = new SixDigitCodeBehavior();
+        }
+
+        public override async void Init(object initData)
+        {
+            if (initData != null)
+            {
+                this.isRegistration = (Boolean)initData;
+            }
         }
         #endregion
 
@@ -41,7 +51,7 @@ namespace SimpleQ.PageModels
         /// <summary>
         /// The model field variable
         /// </summary>
-        private int registerCode;
+        private string registerCode;
 
         /// <summary>
         /// The behavior
@@ -52,6 +62,10 @@ namespace SimpleQ.PageModels
         /// The dialog service
         /// </summary>
         private IUserDialogs dialogService;
+
+        private Boolean isRegistration;
+
+        private Boolean debugMode;
         #endregion
 
         #region Properties + Getter/Setter Methods
@@ -61,7 +75,7 @@ namespace SimpleQ.PageModels
         /// <value>
         /// The model.
         /// </value>
-        public int RegisterCode
+        public string RegisterCode
         {
             get
             {
@@ -89,6 +103,11 @@ namespace SimpleQ.PageModels
         /// The dialog service.
         /// </value>
         public IUserDialogs DialogService { get => dialogService; }
+
+        public bool IsRegistration { get => isRegistration; set => isRegistration = value; }
+
+        public bool DebugMode { get => debugMode; set => debugMode = value; }
+
         #endregion
 
         #region Commands
@@ -107,16 +126,20 @@ namespace SimpleQ.PageModels
 
         public void OnManualCodeEntry()
         {
-            Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
-            int code = this.RegisterCode;
-            this.RegisterCode = 0;
-            CoreMethods.PushPageModel<LoadingPageModel>(code);
+            //Debug.WriteLine("ManualCodeEntryCommand executed", "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("ManualCodeEntryCommand executed.");
+            string code = this.RegisterCode;
+            this.RegisterCode = "";
+            CoreMethods.PushPageModel<LoadingPageModel>(new List<object> { code, this.isRegistration, this.DebugMode });
         }
 
         public void OnOpenScanner()
         {
-            Debug.WriteLine("OpenScannerCommand executed", "Info");
-            CoreMethods.PushPageModel<QRCodeScannerPageModel>();
+            //Debug.WriteLine("OpenScannerCommand executed", "Info");
+            Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+            logger.Info("OpenScannerCommand executed.");
+            CoreMethods.PushPageModel<QRCodeScannerPageModel>(this.isRegistration);
         }
         #endregion
 

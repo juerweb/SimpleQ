@@ -1,4 +1,5 @@
 ﻿using FreshMvvm;
+using SimpleQ.Logging;
 using SimpleQ.PageModels.Services;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace SimpleQ.PageModels
         /// <param name="param">The parameter.</param>
         public LanguagePageModel(ILanguageService languageService): this()
         {
-            Debug.WriteLine("Constructor of LanguagePageModel", "Info");
+            //Debug.WriteLine("Constructor of LanguagePageModel", "Info");
             this.languageService = languageService;
 
             this.SelectedItem = languageService.GetCurrentLanguage();
@@ -134,7 +135,10 @@ namespace SimpleQ.PageModels
         {
             if (this.SelectedItem.TwoLetterISOLanguageName != Application.Current.Properties["Language"].ToString())
             {
-                Debug.WriteLine("Change Language to: " + this.SelectedItem.TwoLetterISOLanguageName, "Info");
+                //Debug.WriteLine("Change Language to: " + this.SelectedItem.TwoLetterISOLanguageName, "Info");
+
+                Logging.ILogger logger = DependencyService.Get<ILogManager>().GetLog();
+                logger.Info("Change Language to " + this.SelectedItem.TwoLetterISOLanguageName);
 
                 LanguageService.SetCurrentLanguage(this.SelectedItem.TwoLetterISOLanguageName);
             }
