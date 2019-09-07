@@ -34,7 +34,7 @@ namespace SimpleQ.PageModels
         public StandardMenuPageModel()
         {
             menuItems = new ObservableCollection<MenuItemModel>();
-            Debug.WriteLine("Constructor of StandrdMenuPageModel", "Info");
+            //Debug.WriteLine("Constructor of StandrdMenuPageModel", "Info");
         }
 
 

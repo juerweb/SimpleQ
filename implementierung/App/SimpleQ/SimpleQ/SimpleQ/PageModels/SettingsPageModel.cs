@@ -24,10 +24,11 @@ namespace SimpleQ.PageModels
         /// With Parameter like Services
         /// </summary>
         /// <param name="param">The parameter.</param>
-        public SettingsPageModel(ISimulationService simulationService, IDialogService dialogService): this()
+        public SettingsPageModel(ISimulationService simulationService, IDialogService dialogService, IWebAPIService webAPIService): this()
         {
             this.simulationService = simulationService;
             this.dialogService = dialogService;
+            this.webAPIService = webAPIService;
         }
 
         /// <summary>
@@ -38,8 +39,9 @@ namespace SimpleQ.PageModels
         {
             MenuItems.Add(new MenuItemModel(AppResources.GeneralSettings, new GeneralSettingsPageModel(), "ic_dashboard_black_18.png"));
             MenuItems.Add(new MenuItemModel(AppResources.Language, new LanguagePageModel(), "ic_language_black_18.png"));
+            MenuItems.Add(new MenuItemModel(AppResources.LogOut, new UnregisterPageModel(), "ic_pan_tool_black_18.png"));
 
-            LogOutCommand = new Command(LogOutCommandExecuted);
+            JoinDepartmentCommand = new Command(JoinDepartmentCommandExecuted);
         }
 
 
@@ -56,13 +58,14 @@ namespace SimpleQ.PageModels
         #region Fields
         private ISimulationService simulationService;
         private IDialogService dialogService;
+        private IWebAPIService webAPIService;
         #endregion
 
         #region Properties + Getter/Setter Methods
         #endregion
 
         #region Commands
-        public Command LogOutCommand
+        public Command JoinDepartmentCommand
         {
             get;
             private set;
@@ -70,19 +73,9 @@ namespace SimpleQ.PageModels
         #endregion
 
         #region Methods
-        private async void LogOutCommandExecuted()
+        private void JoinDepartmentCommandExecuted()
         {
-            if (await dialogService.ShowReallySureDialog())
-            {
-                simulationService.Logout((int)Application.Current.Properties["RegisterCode"]);
-                Application.Current.Properties.Remove("IsValidCodeAvailable");
-                Application.Current.Properties.Remove("CompanyName");
-                Application.Current.Properties.Remove("DepartmentName");
-                Application.Current.Properties.Remove("RegisterCode");
-
-                App.GoToRightPage();
-            }
-
+            CoreMethods.PushPageModel<RegisterPageModel>(false);
         }
         #endregion
 

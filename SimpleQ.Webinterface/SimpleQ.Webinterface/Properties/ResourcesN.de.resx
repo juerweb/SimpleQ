@@ -201,4 +201,154 @@
   <data name="Save" xml:space="preserve">
     <value>Speichern</value>
   </data>
+  <data name="ChangesOk" xml:space="preserve">
+    <value>Änderungen übernommen</value>
+  </data>
+  <data name="minimumGroupSize404" xml:space="preserve">
+    <value>Minimale Gruppengröße Fehlercode 404</value>
+  </data>
+  <data name="minimumGroupSize500" xml:space="preserve">
+    <value>Minimale Gruppengröße Fehlercode 500</value>
+  </data>
+  <data name="PasswordChange404" xml:space="preserve">
+    <value>Passwort setzen Fehlercode: 404</value>
+  </data>
+  <data name="PasswordChange500" xml:space="preserve">
+    <value>Passwort setzen Fehlercode: 500</value>
+  </data>
+  <data name="AddCategory404" xml:space="preserve">
+    <value>Kategorie hinzufügen Fehlercode: 404</value>
+  </data>
+  <data name="AddCategory500" xml:space="preserve">
+    <value>Kategorie hinzufügen Fehlercode: 500</value>
+  </data>
+  <data name="changeAbrechnung404" xml:space="preserve">
+    <value>Abrechnungszeitraum ändern Fehlercode: 404</value>
+  </data>
+  <data name="changeAbrechnung500" xml:space="preserve">
+    <value>Abrechnungszeitraum ändern Fehlercode: 500</value>
+  </data>
+  <data name="deleteTemplate404" xml:space="preserve">
+    <value>Template löschen Fehlercode:404</value>
+  </data>
+  <data name="deleteTemplate500" xml:space="preserve">
+    <value>Template löschen Fehlercode: 500</value>
+  </data>
+  <data name="deletePeriodic404" xml:space="preserve">
+    <value>Periodische Umfrage löschen Fehlercode 404</value>
+  </data>
+  <data name="deletePeriodic500" xml:space="preserve">
+    <value>Periodische Umfrage löschen Fehlercode 500</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Betrag</value>
+  </data>
+  <data name="AmountAnswers" xml:space="preserve">
+    <value>Anzahl Antworten</value>
+  </data>
+  <data name="AskAQuestion" xml:space="preserve">
+    <value>Stellen Sie eine Frage</value>
+  </data>
+  <data name="AskQuestion" xml:space="preserve">
+    <value>Frage senden</value>
+  </data>
+  <data name="BillDate" xml:space="preserve">
+    <value>Rechnungsdatum</value>
+  </data>
+  <data name="BillingDay" xml:space="preserve">
+    <value>Abrechnungstag</value>
+  </data>
+  <data name="BillingPeriod" xml:space="preserve">
+    <value>Rechnungsperiode</value>
+  </data>
+  <data name="BillNumber" xml:space="preserve">
+    <value>Rechnungsnummer</value>
+  </data>
+  <data name="BillOverview" xml:space="preserve">
+    <value>Rechnungsübersicht</value>
+  </data>
+  <data name="Bills" xml:space="preserve">
+    <value>Rechnungen</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="Categories" xml:space="preserve">
+    <value>Kategorien</value>
+  </data>
+  <data name="CurrAnswerAmount" xml:space="preserve">
+    <value>Anzahl beantwortete Fragen im akt. Abrechnungszeitraum</value>
+  </data>
+  <data name="CurrSurveyAmount" xml:space="preserve">
+    <value>Anzahl Umfragen im akt. Abrechnungszeitraum</value>
+  </data>
+  <data name="CustCode" xml:space="preserve">
+    <value>Customer code</value>
+  </data>
+  <data name="DataWillBeDeleted" xml:space="preserve">
+    <value>Ihre gesamten Daten (einschließlich Befragungsergebnisse) werden endgültig gelöscht!</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+  <data name="DownloadBill" xml:space="preserve">
+    <value>Rechnung herunterladen</value>
+  </data>
+  <data name="Faq" xml:space="preserve">
+    <value>Häufig gestellte Fragen</value>
+  </data>
+  <data name="InMonths" xml:space="preserve">
+    <value>Monate</value>
+  </data>
+  <data name="OtherQuestion" xml:space="preserve">
+    <value>Andere Frage</value>
+  </data>
+  <data name="OutstandingAmount" xml:space="preserve">
+    <value>Offener Betrag</value>
+  </data>
+  <data name="PaymentQuestion" xml:space="preserve">
+    <value>Frage zur Bezahlung</value>
+  </data>
+  <data name="PeriodicSurveys" xml:space="preserve">
+    <value>Periodische Umfagen</value>
+  </data>
+  <data name="PleaseEnterLoginData" xml:space="preserve">
+    <value>Please enter your login data:</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Preis</value>
+  </data>
+  <data name="ProductQuestion" xml:space="preserve">
+    <value>Frage zum Produkt</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Fragestellung</value>
+  </data>
+  <data name="QuestionCategory" xml:space="preserve">
+    <value>Fragekategorie</value>
+  </data>
+  <data name="Survey" xml:space="preserve">
+    <value>Befragung</value>
+  </data>
+  <data name="TemplatesGetDeactivated" xml:space="preserve">
+    <value>Templates using deactivated modi will get deactivated temporarily.</value>
+  </data>
+  <data name="Unregister" xml:space="preserve">
+    <value>Kündigen</value>
+  </data>
+  <data name="unregister403" xml:space="preserve">
+    <value>Kündigung fehlgeschlagen. Kunden-Code oder Passwort ungültig.</value>
+  </data>
+  <data name="unregister404" xml:space="preserve">
+    <value>Kündigung fehlgeschlagen. Kunde nicht gefunden.</value>
+  </data>
+  <data name="unregister409" xml:space="preserve">
+    <value>Kündigung fehlgeschlagen. Alle offenen Rechnungen müssen vorher bezahlt werden.</value>
+  </data>
+  <data name="unregister500" xml:space="preserve">
+    <value>Kündigung fehlgeschlagen. Bitte später erneut versuchen.</value>
+  </data>
+  <data name="WarningCAP" xml:space="preserve">
+    <value>WARNING:</value>
+  </data>
 </root>

@@ -1,8 +1,10 @@
-﻿using System;
+﻿using SimpleQ.Webinterface.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace SimpleQ.Models
 {
@@ -17,10 +19,9 @@ namespace SimpleQ.Models
         /// </summary>
         /// <param name="question">The question.</param>
         /// <param name="answer">The ansDesc.</param>
-        public FAQModel(string question, string answer): this()
+        public FAQModel(FaqEntry entry): this()
         {
-            this.question = question;
-            this.answer = answer;
+            this.entry = entry;
         }
 
         /// <summary>
@@ -28,19 +29,12 @@ namespace SimpleQ.Models
         /// </summary>
         public FAQModel()
         {
-            this.IsActive = false;
+            this.IsActive = (Device.RuntimePlatform == Device.iOS);
         }
         #endregion
 
         #region Fields
-        /// <summary>
-        /// The question
-        /// </summary>
-        private String question;
-        /// <summary>
-        /// The ansDesc
-        /// </summary>
-        private String answer;
+        private FaqEntry entry;
         /// <summary>
         /// Field, whichs shows the status of the faq.
         /// </summary>
@@ -49,20 +43,6 @@ namespace SimpleQ.Models
         #endregion
 
         #region Properties + Getter/Setter Methods
-        /// <summary>
-        /// Gets or sets the question.
-        /// </summary>
-        /// <value>
-        /// The question.
-        /// </value>
-        public string Question { get => question; set => question = value; }
-        /// <summary>
-        /// Gets or sets the ansDesc.
-        /// </summary>
-        /// <value>
-        /// The ansDesc.
-        /// </value>
-        public string Answer { get => answer; set => answer = value; }
         /// <summary>
         /// Gets or sets a value indicating whether this instance is active.
         /// </summary>
@@ -74,7 +54,25 @@ namespace SimpleQ.Models
             get => isActive;
             set
             {
-                isActive = value;
+                if (value)
+                {
+                    isActive = value;
+                    OnPropertyChanged();
+                }
+                else if (Device.RuntimePlatform != Device.iOS)
+                {
+                    isActive = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+
+        public FaqEntry Entry
+        {
+            get => entry;
+            set
+            {
+                entry = value;
                 OnPropertyChanged();
             }
         }

@@ -1,0 +1,241 @@
+﻿@using SimpleQ.Webinterface.Models;
+@using System.Resources;
+@using SimpleQ.Webinterface.Properties;
+@using SimpleQ.Webinterface.Models.ViewModels;
+
+@model SimpleQ.Webinterface.Models.ViewModels.CurrentModel
+
+<div class="row ml-0 mr-0">
+    <div id="surveyCanceledMessage" class="alert alert-primary w-100" style="display:none"><strong>@Resources.SurveyCancelledSuccessfully</strong></div>
+
+    <div class="col-md-6">
+        <h3 class="text-center mt-3 mb-3">@Resources.CurrentAndUpcomingSurveys</h3>
+        <div style="overflow-x:auto;" class="pl-2 w-100">
+            <table id="currentSurveysTable" class="table table-bordered smallCellPadding small w-100">
+                <thead>
+                    <tr>
+                        <th>@Resources.survey</th>
+                        <th>@Resources.from</th>
+                        <th>@Resources.to</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (CurrentModel.SurveyWrapper svw in Model.Surveys)
+                        {
+                            string id = "tr" + svw.SvyId;
+                            if (svw.StartDate < DateTime.Now) //survey already running
+                            {
+                                <tr style="background-color: rgb(178, 205, 234) !important;" id="@id">
+                                    <td>@svw.SvyText <a class="btn" onclick="showInfo(@svw.SvyId)"><i class="material-icons hover-color-white">info_outline</i></a></td>
+                                    <td>@svw.StartDate.ToShortDateString()</td>
+                                    <td>@svw.EndDate.ToShortDateString()</td>
+                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="@Resources.cancel" onclick="cancelSurvey(@svw.SvyId)"><i class="material-icons">cancel</i></button></td>
+                                </tr>
+                            }
+                            else
+                            {
+                                <tr id="@id">
+                                    <td>@svw.SvyText <a class="btn" onclick="showInfo(@svw.SvyId)"><i class="material-icons hover-color-white">info_outline</i></a></td>
+                                    <td>@svw.StartDate.ToShortDateString()</td>
+                                    <td>@svw.EndDate.ToShortDateString()</td>
+                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="@Resources.cancel" onclick="cancelSurvey(@svw.SvyId)"><i class="material-icons">cancel</i></button></td>
+                                </tr>
+                            }
+                        }
+                    }
+
+                </tbody>
+            </table>
+            <h3 class="text-center mt-3">@Resources.ColorCoding</h3>
+            <div class="row mr-0 ml-0 mt-2">
+                <div class="col border text-center" style="background-color: rgb(178, 205, 234)">
+                    @Resources.AlreadyStarted
+                </div>
+                <div class="col border text-center">
+                    @Resources.NotYetStarted
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h3 class="text-center mt-3 mb-3">@Resources.PeriodicSurveys</h3>
+        <div style="overflow-x:auto;" class="w-100 pr-3">
+            <table id="periodicSurveysTable" class="table table-bordered smallCellPadding small w-100">
+                <thead>
+                    <tr>
+                        <th>@Resources.survey</th>
+                        <th>@Resources.OriginalDate</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        foreach (Survey svy in Model.PeriodicSurveys)
+                        {
+                            string id = "ptr" + svy.SvyId;
+                                <tr id="@id">
+                                    <td>@svy.SvyText <a class="btn" onclick="showInfo(@svy.SvyId)"><i class="material-icons hover-color-white">info_outline</i></a></td>
+                                    <td>@svy.StartDate.ToShortDateString()</td>
+                                    <td class="p-1" style="width:40px;"><button class="btn btn-danger h-100 w-100 d-flex align-items-center justify-content-center" data-toggle="tooltip" title="@Resources.cancel" onclick="cancelSurvey(@svy.SvyId)"><i class="material-icons">cancel</i></button></td>
+                                </tr>
+                        }
+                    }
+
+                </tbody>
+            </table>
+           
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="cancelSurveyModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">@Resources.AreYouSure</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-danger btn-block" onclick="$('#cancelSurveyModal').modal('toggle');doCancelling();">@Resources.Yes</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-secondary btn-block" onclick="$('#cancelSurveyModal').modal('toggle')">@Resources.No</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="modal" id="infoModal">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 80%!important">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Info</h4>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <table class="table">
+                    <tbody>
+                        <tr><td>@Resources.questionHeader</td><td id="infoSvyText"></td></tr>
+                        <tr><td>@Resources.surveyCategoryHeader</td><td id="infoSvyCat"></td></tr>
+                        <tr><td>@Resources.answerTypeHeader</td><td id="infoAnswerType"></td></tr>
+                        <tr><td>@Resources.StartDate</td><td id="infoGroups"></td></tr>
+                        <tr><td>@Resources.EndDate</td><td id="infoStartDate"></td></tr>
+                        <tr><td>@Resources.groups</td><td id="infoEndDate"></td></tr>
+                    </tbody>
+                </table>
+                        @*<a id="infoSvyText">Survey text: </a>
+                        <br />
+                        <a id="infoSvyCat">Survey category: </a>
+                        <br />
+                        <a id="infoAnswerType">Anser type: </a>
+                        <br />
+                        <a id="infoStartDate">Start date: </a>
+                        <br />
+                        <a id="infoEndDate">End date: </a>
+                        <br />
+                        <a id="infoGroups">Groups: </a>
+                        <br />*@
+                <button class="btn btn-secondary" onclick="$('#infoModal').modal('toggle')">@Resources.close</button>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        let tops = document.getElementsByClassName("header");
+        tops[0].innerHTML = "@Resources.CurrentSurveys";
+        tops[1].innerHTML = "@Resources.CurrentSurveys";
+
+        var table = $('#currentSurveysTable').dataTable({
+            "scrollY": "700px",
+            "scrollCollapse": true,
+            "dom": 'rt',
+            "aaSorting": [],
+            //"order": false,
+            //"order": [[1, "desc"]],
+            "columnDefs": [
+                { "orderable": false, "targets": 3 }
+            ],
+            "paging": false
+        });
+        $('.dataTables_length').addClass('bs-select');
+
+        $('[data-toggle="tooltip"]').tooltip();
+
+        var table2 = $("#periodicSurveysTable").dataTable({
+            "scrollY": "700px",
+            "scrollCollapse": true,
+            "dom": 'rt',
+            "aaSorting": [],
+            //"order": false,
+            //"order": [[1, "desc"]],
+            "columnDefs": [
+                { "orderable": false, "targets": 2 }
+            ],
+            "paging": false
+        });
+
+
+        $(window).resize(function () {
+            table.fnAdjustColumnSizing();
+            table2.fnAdjustColumnSizing();
+        });
+    });
+
+    var svyCancelID = 0;
+
+    function cancelSurvey(svyID) {
+        svyCancelID = svyID;
+        $("#cancelSurveyModal").modal({ backdrop: true });
+    }
+
+    function doCancelling() {
+        let url = "@Url.Action("CancelSurvey", "Current")" + "?svyId=" + svyCancelID;
+
+        $.ajax({
+            url,
+            success: function (data) {
+                $("#tr" + svyCancelID).remove();
+                $("#surveyCanceledMessage").show();
+                $("#surveyCanceledMessage").delay(2500).fadeOut;
+            }
+        });
+    }
+
+    function showInfo(svyId) {
+        let url = "@Url.Action("LoadSurveyInfo","Current")" + "?svyId=" + svyId;
+
+        $.ajax({
+            url,
+            async: false,
+            success: function (data) {
+                document.getElementById("infoSvyText").innerHTML=data.SvyText;
+                document.getElementById("infoSvyCat").innerHTML=data.CatName;
+                document.getElementById("infoAnswerType").innerHTML=data.TypeDesc;
+                for (i = 0; i < data.dps.length-1; i++) {
+                    document.getElementById("infoGroups").innerHTML=data.dps[i]+ ", ";
+                }
+                document.getElementById("infoGroups").innerHTML=data.dps[data.dps.length - 1];
+                document.getElementById("infoEndDate").innerHTML=data.endDate;
+                document.getElementById("infoStartDate").innerHTML=data.startDate;
+                //console.log(data);
+            }
+        });
+
+        $("#infoModal").modal({ backdrop: true });
+    }
+
+</script>

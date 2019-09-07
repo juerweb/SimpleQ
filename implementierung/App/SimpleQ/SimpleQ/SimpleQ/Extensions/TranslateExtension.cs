@@ -1,4 +1,5 @@
 ﻿using FreshMvvm;
+using NLog;
 using Plugin.Multilingual;
 using SimpleQ.PageModels.Services;
 using SimpleQ.Resources;
@@ -30,13 +31,13 @@ namespace SimpleQ.Extensions
                 return "";
 
             var ci = CrossMultilingual.Current.CurrentCultureInfo;
-            Debug.WriteLine("Translation in: " + ci.TwoLetterISOLanguageName, "Info");
+            //Debug.WriteLine("Translation in: " + ci.TwoLetterISOLanguageName, "Info");
 
             var translation = resmgr.Value.GetString(Text, ci);
 
             if (translation == null)
             {
-                Debug.WriteLine(Application.Current.Resources[Text]);
+                //Debug.WriteLine(Application.Current.Resources[Text]);
                 #if DEBUG
                 throw new ArgumentException(
                     String.Format("Key '{0}' was not found in resources '{1}' for culture '{2}'.", Text, ResourceId, ci.Name),

@@ -36,6 +36,7 @@ namespace SimpleQ.PageModels
             EmailUsCommand = new Command(EmailUs);
             PhoneUsCommand = new Command(PhoneUs);
             ContactUsCommand = new Command(ContactUs);
+            OpenPrivacyPolicyCommand = new Command(OpenPrivacyPolicy);
         }
 
 
@@ -105,6 +106,8 @@ namespace SimpleQ.PageModels
         /// The contact us command.
         /// </value>
         public Command ContactUsCommand { get; private set; }
+
+        public Command OpenPrivacyPolicyCommand { get; private set; }
         #endregion
 
         #region Methods
@@ -143,6 +146,11 @@ namespace SimpleQ.PageModels
         private void ContactUs(object obj)
         {
             Device.OpenUri(new Uri(AppResources.LinkToContactForm));
+        }
+
+        private void OpenPrivacyPolicy()
+        {
+            Device.OpenUri(new Uri(AppResources.LinkToPrivacyPolicy));
         }
         #endregion
 

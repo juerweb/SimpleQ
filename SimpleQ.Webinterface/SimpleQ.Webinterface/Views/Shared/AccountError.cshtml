@@ -4,9 +4,20 @@
     Layout = "~/Views/Shared/_AccountLayout.cshtml";
 }
 
-<h5>@Model.Title</h5>
-<div>
-    @Model.Message
+@Html.ActionLink("Zurück zur Login-Page", "Login", "Account", new { @class = "btn btn-primary mb-2" })
+<div style="background-color:rgba(255, 255, 255,0.7)" class="p-4 mb-2">
+    <h3>@Model.Title</h3>
+    <div>
+        @Model.Message
+    </div>
+    <br />
 </div>
-<br />
-@Html.ActionLink("Zurück zur Login-Page", "Login", "Account", new { @class = "btn btn-primary"})
+
+<script>
+    function setLoginBackground() {
+        let rand = Math.floor((Math.random() * 11) + 1);
+        $("body").css("background-image", "url('../../Content/Images/loginBG" + rand + ".jpg')");
+    }
+
+    setLoginBackground();
+</script>

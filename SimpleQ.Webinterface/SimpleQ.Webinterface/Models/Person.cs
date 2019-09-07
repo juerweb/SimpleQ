@@ -22,6 +22,7 @@ namespace SimpleQ.Webinterface.Models
     
         public int PersId { get; set; }
         public string DeviceId { get; set; }
+        public string AuthToken { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         [System.Web.Script.Serialization.ScriptIgnore(ApplyToOverrides = true)]

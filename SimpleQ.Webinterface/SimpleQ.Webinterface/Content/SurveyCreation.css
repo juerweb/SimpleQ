@@ -37,3 +37,56 @@
 .colorSpanGreen {
     background-color: green;
 }
+
+/*from nico - i vasprich do nix*/
+.headingPhone {
+    font-size: 17px;
+}
+
+.kleinerAbstand {
+    margin-top: -14px;
+}
+
+.questionPhone {
+    font-size: 14px;
+}
+
+.dichotomPhone {
+    font-size: 12px;
+}
+
+#answer1Phone {
+    position: absolute;
+    top: 65px;
+    left: 9px;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#answer2Phone {
+    position: absolute;
+    top: 65px;
+    left: 50px;
+    width: 150px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#leftPhone {
+    position: absolute;
+    top: 65px;
+    left: 50px;
+    width: 60px;
+    height: 40px;
+    cursor: pointer;
+}
+
+#rightPhone {
+    position: absolute;
+    top: 65px;
+    left: 50px;
+    width: 60px;
+    height: 40px;
+    cursor: pointer;
+}

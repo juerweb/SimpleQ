@@ -6,14 +6,20 @@ using System.Web;
 namespace SimpleQ.Webinterface.Models.ViewModels
 {
     public class SurveyResultsModel
-    {
-        #region Controller to View
-        public List<Survey> Surveys { get; set; }
-        public List<SurveyCategory> SurveyCategories { get; set; }
-        public List<AnswerType> AnswerTypes { get; set; }
-        #endregion
+    { 
+        public struct SurveyResultWrapper
+        {
+            public string SvyText { get; set; }
+            public int Amount { get; set; }
+            public SurveyCategory SurveyCategory { get; set; }
+            public AnswerType AnswerType { get; set; }
+            public DateTime StartDate { get; set; }
+            public DateTime EndDate { get; set; }
+            public List<string> Departments { get; set; }
+        }
 
-        #region View to Controller
+        #region Controller to View
+        public List<SurveyResultWrapper> Surveys { get; set; }
         #endregion
     }
 }

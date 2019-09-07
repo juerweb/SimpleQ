@@ -10,7 +10,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal">
+                            <StackLayout Orientation="Horizontal" Padding="10,10">
                                 <Image Source="{Binding IconResourceName}" VerticalOptions="Center"></Image>
                                 <Label Text="{Binding Title}" Style="{DynamicResource BodyStyle}" VerticalOptions="Center"/>
                             </StackLayout>
