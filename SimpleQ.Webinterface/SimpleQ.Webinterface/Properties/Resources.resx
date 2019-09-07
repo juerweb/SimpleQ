@@ -716,4 +716,64 @@
   <data name="uploadChosenFile" xml:space="preserve">
     <value>upload chosen file</value>
   </data>
+  <data name="close" xml:space="preserve">
+    <value>close</value>
+  </data>
+  <data name="defineGroupsModalInfo" xml:space="preserve">
+    <value>You have no groups yet, switch to group administration and create your first one!</value>
+  </data>
+  <data name="evaluate" xml:space="preserve">
+    <value>evaluate</value>
+  </data>
+  <data name="periodicQuestionTooltip" xml:space="preserve">
+    <value>Klick to repeat a question certain times automatically</value>
+  </data>
+  <data name="pleaseDefineGroupsFirst" xml:space="preserve">
+    <value>Please define groups first!</value>
+  </data>
+  <data name="singleButtonTooltip" xml:space="preserve">
+    <value>If you click here, you can look on the results of every servy each.</value>
+  </data>
+  <data name="singleEvaluation" xml:space="preserve">
+    <value>single-evaluation</value>
+  </data>
+  <data name="singleOrTrendEvaluation" xml:space="preserve">
+    <value>single- or trend-evaluation?</value>
+  </data>
+  <data name="timespan" xml:space="preserve">
+    <value>timespan</value>
+  </data>
+  <data name="toGroupAdministration" xml:space="preserve">
+    <value>to group-administration</value>
+  </data>
+  <data name="trendButtonTooltip" xml:space="preserve">
+    <value>If you click this button, you can see a summarized view of all surveys</value>
+  </data>
+  <data name="custCodeTooltip" xml:space="preserve">
+    <value>insert the customer code you got in your validation mail</value>
+  </data>
+  <data name="days" xml:space="preserve">
+    <value>days</value>
+  </data>
+  <data name="emailConfirmed" xml:space="preserve">
+    <value>email-address confirmed</value>
+  </data>
+  <data name="goToRegistration" xml:space="preserve">
+    <value>go to registration</value>
+  </data>
+  <data name="sendResetLink" xml:space="preserve">
+    <value>send reset link</value>
+  </data>
+  <data name="weeks" xml:space="preserve">
+    <value>weeks</value>
+  </data>
+  <data name="youCanNowLogin" xml:space="preserve">
+    <value>you can now log in</value>
+  </data>
+  <data name="answers" xml:space="preserve">
+    <value>answers</value>
+  </data>
+  <data name="answersButtonTooltip" xml:space="preserve">
+    <value>Klick here to add answers!</value>
+  </data>
 </root>

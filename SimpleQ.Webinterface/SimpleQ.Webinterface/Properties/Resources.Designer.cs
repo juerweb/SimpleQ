@@ -1708,16 +1708,7 @@ namespace SimpleQ.Webinterface.Properties {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Go to login ähnelt.
-        /// </summary>
-        public static string ToLogin {
-            get {
-                return ResourceManager.GetString("ToLogin", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die Traffic lights (red, yellow, green) ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die Traffic-lights (red,yellow,green) ähnelt.
         /// </summary>
         public static string TrafficLight {
             get {

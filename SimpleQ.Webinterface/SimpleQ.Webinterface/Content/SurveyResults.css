@@ -36,6 +36,7 @@
     width: 80%;
 }
 
+
 #twoWayToggle {
     position:relative;
     border-radius: 5px;
@@ -51,8 +52,9 @@
     /*right: 100%;*/
 }
 
-.table-striped > tbody > tr:nth-child(odd) > td,
-.table-striped > tbody > tr:nth-child(odd) > th {
-    background-color: rgb(242, 247, 255) !important;
+.smallCellPadding td {
+    padding-top: 0.1em!important;
+    padding-bottom: 0.1em!important;
 }
+
 
