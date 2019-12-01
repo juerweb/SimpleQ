@@ -19,8 +19,6 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>MinimumOSVersion</key>
-	<string>8.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>SimpleQ</string>
 	<key>CFBundleIdentifier</key>
@@ -32,14 +30,14 @@
 	<key>CFBundleName</key>
 	<string>SimpleQ</string>
 	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<string>Assets.xcassets/AppIcons.appiconset</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
 	</array>
-	<key>XSLaunchImageAssets</key>
-	<string>Assets.xcassets/LaunchImages.launchimage</string>
 	<key>CFBundleShortVersionString</key>
 	<string>0.4.1</string>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImages.launchimage</string>
 </dict>
 </plist>
